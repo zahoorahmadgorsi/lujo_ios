@@ -1,0 +1,137 @@
+import Crashlytics
+import Fabric
+import IQKeyboardManagerSwift
+import UIKit
+import UserNotifications
+import Intercom
+import Firebase
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    var window: UIWindow?
+    var windowRouter: Router!
+    var navigationController: UINavigationController!
+    var isBackground: Bool!
+
+    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        isBackground = false
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        windowRouter = Router(mainVC: window!)
+        
+        UIApplication.shared.registerForRemoteNotifications()
+        
+        LujoSetup().getSetup()
+        
+        if LujoSetup().getCurrentUser() == nil || !(LujoSetup().getCurrentUser()?.approved ?? false) {
+            UserDefaults.standard.set(true, forKey: "isFirstTimeLoggedOut")
+            windowRouter.navigate(from: "/", data: [:])
+        } else {
+            if UserDefaults.standard.bool(forKey: "isFirstTimeLoggedOut") {
+                UserDefaults.standard.set(true, forKey: "showWelcome")
+                window?.rootViewController = MainTabBarController.instantiate()
+            } else {
+                LujoSetup().deleteCurrentUser()
+                
+                if let userId = LujoSetup().getLujoUser()?.id {
+                    removePushToken(userId: userId)
+                }
+                
+                UserDefaults.standard.set(true, forKey: "isFirstTimeLoggedOut")
+                
+                windowRouter.navigate(from: "/", data: [:])
+                
+            }
+        }
+        
+        window?.makeKeyAndVisible()
+        
+        FirebaseApp.configure()
+        
+        IQKeyboardManager.shared.enable = true
+
+        Intercom.setApiKey("ios_sdk-6458822f5722423dbb6aef0b2dd9b0f44a694fe3", forAppId:"vc290ayr")
+
+        Fabric.with([Crashlytics.self])
+        
+        ChatStyling.appyStyling()
+
+        return true
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        if
+            let tabBarController = window?.rootViewController as? MainTabBarController,
+            let navigationController = tabBarController.viewControllers?[0] as? UINavigationController,
+            let viewController = navigationController.viewControllers[0] as? HomeViewController
+        {
+            viewController.checkLocationAuthorizationStatus()
+        }
+    }
+
+    func applicationDidEnterBackground(_: UIApplication) {
+        isBackground = true
+    }
+
+    // Silent push notifications.
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken tokenData: Data) {
+        let tokenParts = tokenData.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+        Intercom.setDeviceToken(tokenData)
+        registerForOurPushService(deviceToken: token)
+    }
+
+    func registerForPushNotifications() {
+        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+            Intercom.registerUser(withUserId: "\(user.id)")
+            let userAttributes = ICMUserAttributes()
+            userAttributes.name = "\(user.firstName) \(user.lastName)"
+            userAttributes.email = user.email
+            Intercom.updateUser(userAttributes)
+        }
+        
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+
+                print("Permission granted: \(granted)")
+
+                guard granted else { return }
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+    }
+
+    func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navController = base as? UINavigationController {
+            return getTopViewController(base: navController.visibleViewController)
+
+        } else if let tabController = base as? UITabBarController, let selected = tabController.selectedViewController {
+            return getTopViewController(base: selected)
+
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
+    }
+
+    func removePushToken(userId: Int) {
+        Intercom.logout()
+        GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
+    }
+    
+    func registerForOurPushService(deviceToken: String) {
+        guard let userId = LujoSetup().getLujoUser()?.id else {
+            print("NO USER ID ERROR!!!")
+           return
+        }
+        
+         GoLujoAPIManager().registerForOurPushService(userId: String(userId), deviceToken: deviceToken)
+    }
+}

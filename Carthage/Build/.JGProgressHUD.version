@@ -1,0 +1,10 @@
+{
+  "commitish" : "v2.1",
+  "iOS" : [
+    {
+      "name" : "JGProgressHUD",
+      "hash" : "6adb4b706050549b5c2e22a6af7a36790e95005a4b9426c9bcf0899f1517c568",
+      "linking" : "dynamic"
+    }
+  ]
+}

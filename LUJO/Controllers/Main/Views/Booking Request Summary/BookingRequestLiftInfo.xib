@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="BookingRequestLiftInfo" customModule="LUJO" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gulfstream G-IV" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dE2-Rw-4dQ">
+                    <rect key="frame" x="152" y="98" width="207" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                    <color key="textColor" name="Palette - Paragraph White"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LU-011915239" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4r-2x-EGp">
+                    <rect key="frame" x="16" y="16" width="93" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <color key="textColor" name="Action Button"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="multy-city" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEO-8J-UgT">
+                    <rect key="frame" x="294.5" y="16" width="64.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <color key="textColor" name="Palette - Placeholder Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="An8-Ec-sRQ">
+                    <rect key="frame" x="0.0" y="49" width="375" height="33"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rfp-KI-neu">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kwo-Ma-QLD">
+                                    <rect key="frame" x="16" y="0.0" width="159.5" height="16"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STAGE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U07-xk-Gbp">
+                                            <rect key="frame" x="0.0" y="0.0" width="40.5" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                            <color key="textColor" name="Palette - Placeholder Text"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Booking Payment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lma-ss-t3n">
+                                            <rect key="frame" x="48.5" y="0.0" width="111" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="kwo-Ma-QLD" firstAttribute="leading" secondItem="Rfp-KI-neu" secondAttribute="leading" constant="16" id="4Kp-q5-fWu"/>
+                                <constraint firstAttribute="bottom" secondItem="kwo-Ma-QLD" secondAttribute="bottom" id="OfG-ei-dHL"/>
+                                <constraint firstAttribute="height" constant="16" id="sjK-mR-T6J"/>
+                                <constraint firstItem="kwo-Ma-QLD" firstAttribute="top" secondItem="Rfp-KI-neu" secondAttribute="top" id="uuE-fn-v7z"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MBw-WV-QsH">
+                            <rect key="frame" x="0.0" y="32" width="375" height="1"/>
+                            <color key="backgroundColor" name="Palette - Background 2"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="poK-UD-Aj8"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sample Jet Image" translatesAutoresizingMaskIntoConstraints="NO" id="Hhv-R7-PFC">
+                    <rect key="frame" x="16" y="98" width="120" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="7nx-9R-ywV"/>
+                        <constraint firstAttribute="width" constant="120" id="WOc-md-LCz"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" name="Navigation Bar"/>
+            <constraints>
+                <constraint firstItem="An8-Ec-sRQ" firstAttribute="top" secondItem="g4r-2x-EGp" secondAttribute="bottom" constant="16" id="3iK-mo-8QJ"/>
+                <constraint firstItem="g4r-2x-EGp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="7z4-cr-3oe"/>
+                <constraint firstItem="dE2-Rw-4dQ" firstAttribute="top" secondItem="Hhv-R7-PFC" secondAttribute="top" id="AZ8-Hp-Diz"/>
+                <constraint firstItem="Hhv-R7-PFC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Bdq-NC-d3m"/>
+                <constraint firstItem="An8-Ec-sRQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="BfZ-nV-rSY"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="dE2-Rw-4dQ" secondAttribute="trailing" constant="16" id="DcK-p4-EiD"/>
+                <constraint firstAttribute="trailing" secondItem="An8-Ec-sRQ" secondAttribute="trailing" id="Gr3-D9-tdU"/>
+                <constraint firstItem="dE2-Rw-4dQ" firstAttribute="leading" secondItem="Hhv-R7-PFC" secondAttribute="trailing" constant="16" id="P6E-sJ-Kz0"/>
+                <constraint firstItem="Hhv-R7-PFC" firstAttribute="top" secondItem="An8-Ec-sRQ" secondAttribute="bottom" constant="16" id="S4W-eM-nI7"/>
+                <constraint firstItem="aEO-8J-UgT" firstAttribute="centerY" secondItem="g4r-2x-EGp" secondAttribute="centerY" id="TeW-ZM-oIv"/>
+                <constraint firstItem="g4r-2x-EGp" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="guz-j9-omN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="aEO-8J-UgT" secondAttribute="trailing" constant="16" id="xhZ-P7-Hoa"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="liftModel" destination="dE2-Rw-4dQ" id="bfe-I4-03n"/>
+                <outlet property="liftPicture" destination="Hhv-R7-PFC" id="AEe-we-8G5"/>
+                <outlet property="multycity" destination="aEO-8J-UgT" id="hvN-vr-0wD"/>
+                <outlet property="requestId" destination="g4r-2x-EGp" id="lAc-g3-Dfz"/>
+                <outlet property="stageContainerView" destination="Rfp-KI-neu" id="mB3-KO-sLr"/>
+            </connections>
+            <point key="canvasLocation" x="138.40000000000001" y="-53.523238380809602"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Sample Jet Image" width="183" height="122"/>
+        <namedColor name="Action Button">
+            <color red="0.95686274509803926" green="0.63921568627450975" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Navigation Bar">
+            <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Background 2">
+            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Paragraph White">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Placeholder Text">
+            <color red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

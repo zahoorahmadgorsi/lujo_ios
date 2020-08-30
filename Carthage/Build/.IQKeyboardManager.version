@@ -1,0 +1,16 @@
+{
+  "commitish" : "v6.5.6",
+  "iOS" : [
+    {
+      "name" : "IQKeyboardManager",
+      "hash" : "66f4e3ba05cb9cce82c6421f402d3fd7f41aa8094febc2945ef1c0e334ecffa3",
+      "linking" : "dynamic"
+    },
+    {
+      "hash" : "61b95af41684f641e4e764f7a1a051ab1a0c930d258e19e0818311f2a4387c7f",
+      "name" : "IQKeyboardManagerSwift",
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+    }
+  ]
+}

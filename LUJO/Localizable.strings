@@ -1,0 +1,6 @@
+// Error Login descriptions
+
+"ErrorLogin_1" = "Missing user name";
+"ErrorLogin_2" = "Missing password";
+"ErrorLogin_3" = "Please complete all required data";
+"ErrorLogin_4" = "Passwords doesn't match";

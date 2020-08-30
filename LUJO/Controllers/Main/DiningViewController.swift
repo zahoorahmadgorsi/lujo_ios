@@ -1,0 +1,448 @@
+//
+//  DiningViewController.swift
+//  LUJO
+//
+//  Created by Iker Kristian on 8/27/19.
+//  Copyright © 2019 Baroque Access. All rights reserved.
+//
+
+import UIKit
+import Crashlytics
+import JGProgressHUD
+import CoreLocation
+
+class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningCityProtocol {
+    
+    //MARK:- Init
+    
+    /// Class storyboard identifier.
+    class var identifier: String { return "DiningViewController" }
+    
+    /// Init method that will init and return view controller.
+    class func instantiate() -> DiningViewController {
+        return UIStoryboard.main.instantiate(identifier)
+    }
+    
+    //MARK:- Globals
+    
+    private var diningInformations: DiningHomeObjects?
+    
+    private let naHUD = JGProgressHUD(style: .dark)
+    
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var dimView: UIView!
+    @IBOutlet weak var membershipView: UIView!
+    
+    @IBOutlet weak var searchBarButton: UIBarButtonItem!
+    @IBOutlet weak var myLocationCityView: DiningCityView!
+    
+    @IBOutlet weak var locationContainerView: UIView!
+    @IBOutlet weak var noNearbyRestaurantsContainerView: UIView!
+    
+    @IBOutlet weak var categorySlider: DiningCategorySlider!
+    
+    @IBOutlet var featured: ImageCarousel!
+    @IBOutlet var currentImageNum: UILabel!
+    @IBOutlet var allImagesNum: UILabel!
+    
+    @IBOutlet var chiefContainerView: UIView!
+    @IBOutlet var gradientView: UIView!
+    @IBOutlet var chiefImageView: UIImageView!
+    @IBOutlet var restaurantName: UILabel!
+    @IBOutlet var starsContainerView: UIView!
+    @IBOutlet var starsLabel: UILabel!
+    @IBOutlet var chiefNameLabel: UILabel!
+    
+    var locationRestaurants: [Restaurants] = []
+    private var canSendRequest: Bool = true
+    
+    /// Refresh control view. Used to display network activity when user pull scroll view down
+    /// view to fetch new data.
+    private lazy var refreshControl: UIRefreshControl = {
+        // Create refresh control and link it with scroll view.
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+        self.scrollView.refreshControl = refreshControl
+        return refreshControl
+    }()
+    
+    /// Preload data object that can store some data fetched earlier so we can instantly present
+    /// this data without needing to fetch it again from the server. Default is nil.
+    private var preloadData: DiningHomeObjects? { return PreloadDataManager.DiningScreen.scrollViewData }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupNavigationBar()
+        
+        featured.overlay = true
+        featured.delegate = self
+        
+        setupTapGesturesForRestaurants()
+        
+        categorySlider.delegate = self
+        
+        locationContainerView.isHidden = true
+        noNearbyRestaurantsContainerView.isHidden = true
+        myLocationCityView.isHidden = true
+        
+        getDiningInformation(showActivity: true)
+        
+        locationManager.delegate = self
+        
+        startAnimation()
+    }
+    
+    
+    
+    @IBAction func noNearbyRestaurantsDismissButton_onClick(_ sender: Any) {
+        noNearbyRestaurantsContainerView.removeFromSuperview()
+    }
+    
+    @IBAction func enableLocationButton_onClick(_ sender: Any) {
+        let status = CLLocationManager.authorizationStatus()
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            updateUIforAuthorizationStatus(status)
+        case .restricted: fallthrough
+        case .denied:
+            UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    @IBAction func buyMembershipButton_onClick(_ sender: Any) {
+        var fullName = ""
+        if let firstName = LujoSetup().getLujoUser()?.firstName {
+            fullName += "\(firstName) "
+        }
+        if let lastName = LujoSetup().getLujoUser()?.lastName {
+            fullName += "\(lastName)"
+        }
+        self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: .buyMembership, paymentType: .dining), animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        updateUIforAuthorizationStatus(status)
+    }
+    
+    func checkLocationAuthorizationStatus() {
+        updateUIforAuthorizationStatus(CLLocationManager.authorizationStatus())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        activateKeyboardManager()
+        
+        dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan != nil
+        membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan != nil
+        searchBarButton.isEnabled = LujoSetup().getLujoUser()?.membershipPlan != nil
+        
+        checkLocationAuthorizationStatus()
+    }
+    
+    func setupNavigationBar() {
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.backBarButtonItem?.title = ""
+    }
+    
+    private let locationManager = CLLocationManager()
+    
+    var isLocationEnabled: Bool {
+        let status = CLLocationManager.authorizationStatus()
+        return (status == .authorizedAlways || status == .authorizedWhenInUse)
+    }
+    
+    
+    private func updateUIforAuthorizationStatus(_ status: CLAuthorizationStatus) {
+        locationContainerView.isHidden = isLocationEnabled
+        if !myLocationCityView.isHidden, !isLocationEnabled {
+            myLocationCityView.isHidden = true
+            locationRestaurants = []
+            updatePopularCities()
+        }
+        if !(noNearbyRestaurantsContainerView?.isHidden ?? true), !isLocationEnabled {
+            noNearbyRestaurantsContainerView?.isHidden = true
+        }
+        if isLocationEnabled {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func update(_ information: DiningHomeObjects?) {
+        guard information != nil else {
+            return
+        }
+        
+        diningInformations = information
+        updateContent()
+
+            // -------------------------------------------------------------------------------------
+            // Refresh control and data caching.
+
+            // Stop refresh control animation and allow scroll to sieze back refresh control space by
+            // scrolling up.
+            refreshControl.endRefreshing()
+
+            // Store data for later use inside preload reference.
+            PreloadDataManager.DiningScreen.scrollViewData = information
+            // -------------------------------------------------------------------------------------
+    }
+    
+    func updateMyRestaurants(_ restaurants: [Restaurants]) {
+        print(restaurants)
+        locationRestaurants = restaurants
+        myLocationCityView.isHidden = restaurants.count == 0
+        noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
+        if let termId = restaurants.first?.location.first?.city?.termId, let name = restaurants.first?.location.first?.city?.name {
+            myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: restaurants)
+            myLocationCityView.delegate = self
+            updatePopularCities()
+        }
+    }
+    
+    fileprivate func updateContent() {
+        if let featuredImages = diningInformations?.getFeaturedImages() {
+            featured.imageURLList = featuredImages
+            featured.titleList = diningInformations!.getFeaturedNames()
+            featured.starList = diningInformations!.getFeaturedStars()
+            featured.locationList = diningInformations!.getFeaturedLocations()
+            allImagesNum.text = "\(featuredImages.count)"
+            currentImageNum.text = "1"
+        }
+        
+        chiefContainerView.isHidden = diningInformations?.starChief == nil
+        if let starChielf = diningInformations?.starChief {
+            chiefNameLabel.text = starChielf.chiefName.uppercased()
+            chiefImageView.downloadImageFrom(link: starChielf.chiefImage ?? "", contentMode: .scaleAspectFill)
+            starsContainerView.isHidden = starChielf.chiefRestaurant.michelinStar?.first == nil
+            starsLabel.text = starChielf.chiefRestaurant.michelinStar?.first?.name.uppercased()
+            restaurantName.text = starChielf.chiefRestaurant.name
+            
+            let gradientColors = [UIColor.blackBackgorund.cgColor,
+                                  UIColor(red: 13 / 255, green: 13 / 255, blue: 13 / 255, alpha: 0.01).cgColor]
+            let gradient = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: gradientColors, type: .axial)
+            gradient.frame = CGRect(x: 0, y: 2, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width * 0.75 * 0.35)
+            gradientView.layer.addSublayer(gradient)
+        }
+        
+        categorySlider.itemsList = diningInformations?.cuisines ?? []
+        
+        updatePopularCities()
+    }
+    
+    func updatePopularCities() {
+        for city in diningInformations?.cities ?? [] {
+            if let cityView = stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
+                if city.termId == locationRestaurants.first?.location.first?.city?.termId {
+                    cityView.removeFromSuperview()
+                }
+            } else if !(city.termId == locationRestaurants.first?.location.first?.city?.termId) {
+                let cityView = DiningCityView()
+                cityView.city = city
+                cityView.delegate = self
+                stackView.addArrangedSubview(cityView)
+            }
+        }
+    }
+    
+    fileprivate func setupTapGesturesForRestaurants() {
+        addTapRecognizer(to: chiefContainerView)
+        addTapRecognizer(to: featured)
+    }
+    
+    fileprivate func addTapRecognizer(to view: UIView) {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(showRestaurantDetail(_:)))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func showRestaurantDetail(_ sender: UITapGestureRecognizer) {
+        if sender.view is ImageCarousel {
+            guard let currentFeatured = featured.currentIndex else { return }
+            guard let featuredItem = diningInformations?.slider?[currentFeatured] else { return }
+            
+            presentRestaurantDetailViewController(restaurant: featuredItem)
+        } else if sender.view == chiefContainerView {
+            guard let restaurant = diningInformations?.starChief?.chiefRestaurant else { return }
+            presentRestaurantDetailViewController(restaurant: restaurant)
+        }
+    }
+    
+    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurants) {
+        let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
+        present(viewController, animated: true, completion: nil)
+    }
+    
+    private var currentLocation: CLLocation? {
+        didSet {
+            if let location = currentLocation {
+                getLocationPlaces(for: location)
+            }
+        }
+    }
+    
+    func getLocationPlaces(for location: CLLocation) {
+        if canSendRequest {
+            canSendRequest = false
+            guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+                self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
+                return
+            }
+            
+            //37.939998626709
+            //23.639999389648
+            
+            GoLujoAPIManager().geopoint(token: token, type: "restaurant", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
+                self.canSendRequest = true
+                
+                if let error = error {
+                    Crashlytics.sharedInstance().recordError(error)
+                    // NEED TO BE REPLACED WITH UI VIEW
+                    self.myLocationCityView.isHidden = true
+                    self.noNearbyRestaurantsContainerView?.isHidden = false
+                    self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"))
+                } else {
+                    if let information = information {
+                        // NEED TO BE REPLACED WITH UI VIEW
+                        self.updateMyRestaurants(information)
+                    } else {
+                        // NEED TO BE REPLACED WITH UI VIEW
+                        self.showFeedback("No nearby Places available")
+                        self.myLocationCityView.isHidden = true
+                        self.noNearbyRestaurantsContainerView?.isHidden = false
+
+                    }
+                }
+            }
+        }
+    }
+    
+    func showFeedback(_ message: String) {
+        showInformationPopup(withTitle: "Information", message: message)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.locationManager.stopUpdatingLocation()
+        self.currentLocation = locations.first
+    }
+    
+    /// Refresh control target action that will trigger once user pull to refresh scroll view.
+    @objc func refresh(_ sender: AnyObject) {
+        // Force data fetch.
+        getDiningInformation(showActivity: false)
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Events Error", error: error)
+    }
+    
+    func showNetworkActivity() {
+        // Safe guard to that won't display both loaders at same time.
+        if !refreshControl.isRefreshing {
+            naHUD.show(in: view)
+        }
+    }
+    
+    func hideNetworkActivity() {
+        // Safe guard that will call dismiss only if HUD is shown on screen.
+        if naHUD.isVisible {
+            naHUD.dismiss()
+        }
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    @IBAction func searchBarButton_onClick(_ sender: UIBarButtonItem) {
+        let viewController = RestaurantSearchViewController.instantiate()
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func startAnimation() {
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
+            if self.featured.titleList.count > 0 {
+                if let index = Int(self.currentImageNum.text ?? "1") {
+                    if index == self.featured.titleList.count {
+                        self.featured.carouselView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
+                    } else {
+                        self.featured.carouselView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
+                    }
+                }
+            }
+        })
+    }
+}
+
+extension DiningViewController: ImageCarouselDelegate {
+    
+    func didMoveTo(position: Int) {
+        currentImageNum.text = "\(position + 1)"
+    }
+    
+}
+
+extension DiningViewController: DidSelectCategotyItemProtocol {
+    func didSelectSliderItemAt(indexPath: IndexPath, sender: DiningCategorySlider) {
+        let categoryName = categorySlider.itemsList[indexPath.row].name
+        let viewController = RestaurantSearchViewController.instantiate(searchTerm: categoryName, currentLocation: currentLocation)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+extension DiningViewController {
+    
+    func getDiningInformation(showActivity: Bool) {
+        if showActivity {
+            self.showNetworkActivity()
+        }
+        getDiningInformation() {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                self.update(informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                self.showError(error)
+            }
+        }
+    }
+    
+    func getDiningInformation(completion: @escaping (DiningHomeObjects?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().home(token) { restaurants, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                completion(nil, error)
+                return
+            }
+            completion(restaurants, error)
+        }
+    }
+    
+    func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView) {
+        if view == myLocationCityView {
+            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: locationRestaurants), animated: true)
+        } else {
+            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: city), animated: true)
+        }
+    }
+    
+    func seeSelectedRestaurant(restaurant: Restaurants) {
+        presentRestaurantDetailViewController(restaurant: restaurant)
+    }
+    
+}

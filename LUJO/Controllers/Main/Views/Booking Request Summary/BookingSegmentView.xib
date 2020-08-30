@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2dc-SG-AFP" userLabel="View" customClass="BookingSegmentView" customModule="LUJO" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Origin (ORI)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkI-BR-wRZ">
+                    <rect key="frame" x="16" y="5" width="154" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <color key="textColor" name="Palette - Paragraph White"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Destination (DES)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akM-ts-jjg">
+                    <rect key="frame" x="205.5" y="5" width="153.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <color key="textColor" name="Palette - Paragraph White"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ObM-l9-a2a">
+                    <rect key="frame" x="179.5" y="13" width="16" height="1"/>
+                    <color key="backgroundColor" name="Action Button"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="16" id="OwL-Nl-pqh"/>
+                        <constraint firstAttribute="height" constant="1" id="dSF-bl-zoP"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 MAR '18" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctm-ow-54N">
+                    <rect key="frame" x="16" y="29" width="57" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                    <color key="textColor" name="Palette - Input Field Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxr-TQ-RnA">
+                    <rect key="frame" x="81" y="29" width="31.5" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                    <color key="textColor" name="TVBorder"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 MAR '18" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hml-Kt-LAA">
+                    <rect key="frame" x="262.5" y="29" width="57" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                    <color key="textColor" name="Palette - Input Field Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3I-ji-cEA">
+                    <rect key="frame" x="327.5" y="29" width="31.5" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                    <color key="textColor" name="TVBorder"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" name="Navigation Bar"/>
+            <constraints>
+                <constraint firstItem="dkI-BR-wRZ" firstAttribute="width" secondItem="2dc-SG-AFP" secondAttribute="width" multiplier="0.41" id="4K9-bJ-HIs"/>
+                <constraint firstItem="dkI-BR-wRZ" firstAttribute="top" secondItem="CiM-ht-cxi" secondAttribute="top" constant="5" id="4sv-pk-lHz"/>
+                <constraint firstItem="I3I-ji-cEA" firstAttribute="leading" secondItem="Hml-Kt-LAA" secondAttribute="trailing" constant="8" id="7er-nz-Xu8"/>
+                <constraint firstItem="ObM-l9-a2a" firstAttribute="centerY" secondItem="dkI-BR-wRZ" secondAttribute="centerY" id="CI7-0d-ztC"/>
+                <constraint firstItem="CiM-ht-cxi" firstAttribute="trailing" secondItem="akM-ts-jjg" secondAttribute="trailing" constant="16" id="MV9-a2-SjY"/>
+                <constraint firstItem="dkI-BR-wRZ" firstAttribute="leading" secondItem="CiM-ht-cxi" secondAttribute="leading" constant="16" id="OKU-69-b6h"/>
+                <constraint firstItem="Zxr-TQ-RnA" firstAttribute="centerY" secondItem="ctm-ow-54N" secondAttribute="centerY" id="W4l-ah-VC0"/>
+                <constraint firstItem="I3I-ji-cEA" firstAttribute="centerY" secondItem="Hml-Kt-LAA" secondAttribute="centerY" id="WiE-oW-1Kl"/>
+                <constraint firstItem="ObM-l9-a2a" firstAttribute="centerX" secondItem="CiM-ht-cxi" secondAttribute="centerX" id="Zjw-HL-lck"/>
+                <constraint firstItem="ctm-ow-54N" firstAttribute="leading" secondItem="dkI-BR-wRZ" secondAttribute="leading" id="aM4-5n-02D"/>
+                <constraint firstItem="ctm-ow-54N" firstAttribute="top" secondItem="dkI-BR-wRZ" secondAttribute="bottom" constant="7" id="d1C-xT-Pmk"/>
+                <constraint firstItem="Hml-Kt-LAA" firstAttribute="centerY" secondItem="Zxr-TQ-RnA" secondAttribute="centerY" id="fJZ-AO-vVd"/>
+                <constraint firstItem="I3I-ji-cEA" firstAttribute="trailing" secondItem="akM-ts-jjg" secondAttribute="trailing" id="fg6-m4-tpQ"/>
+                <constraint firstItem="Zxr-TQ-RnA" firstAttribute="leading" secondItem="ctm-ow-54N" secondAttribute="trailing" constant="8" id="kLy-NI-ego"/>
+                <constraint firstItem="akM-ts-jjg" firstAttribute="width" secondItem="dkI-BR-wRZ" secondAttribute="width" id="tP6-9v-Z6U"/>
+                <constraint firstItem="akM-ts-jjg" firstAttribute="centerY" secondItem="dkI-BR-wRZ" secondAttribute="centerY" id="y3w-Og-Avj"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="CiM-ht-cxi"/>
+            <connections>
+                <outlet property="departureDate" destination="ctm-ow-54N" id="uIa-qq-PLm"/>
+                <outlet property="departureTime" destination="Zxr-TQ-RnA" id="D42-d7-XoD"/>
+                <outlet property="destinationAirport" destination="akM-ts-jjg" id="SAh-fa-sMK"/>
+                <outlet property="originAirport" destination="dkI-BR-wRZ" id="hlY-tR-fUP"/>
+                <outlet property="returnDate" destination="Hml-Kt-LAA" id="Nvn-IN-gff"/>
+                <outlet property="returnTime" destination="I3I-ji-cEA" id="Jhp-ee-zSX"/>
+            </connections>
+            <point key="canvasLocation" x="716" y="-108.84557721139431"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Action Button">
+            <color red="0.95686274509803926" green="0.63921568627450975" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Navigation Bar">
+            <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Input Field Text">
+            <color red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Paragraph White">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TVBorder">
+            <color red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

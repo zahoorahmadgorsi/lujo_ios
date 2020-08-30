@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AviationSearchView" customModule="LUJO" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="XY0-U3-CW6"/>
+                <outlet property="searchAnimationImage" destination="O2V-9j-a1x" id="45X-ZW-gDe"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Content View">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search animation icon" translatesAutoresizingMaskIntoConstraints="NO" id="O2V-9j-a1x">
+                    <rect key="frame" x="166" y="337" width="82" height="82"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="82" id="qVi-m9-fRi"/>
+                        <constraint firstAttribute="width" constant="82" id="vil-2p-8d5"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zen-t7-x9N">
+                    <rect key="frame" x="171.33333333333334" y="435" width="71.333333333333343" height="15.666666666666686"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                    <color key="textColor" name="White Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" name="Black Backgorund"/>
+            <constraints>
+                <constraint firstItem="zen-t7-x9N" firstAttribute="centerX" secondItem="O2V-9j-a1x" secondAttribute="centerX" id="HYz-Tn-C7j"/>
+                <constraint firstItem="zen-t7-x9N" firstAttribute="top" secondItem="O2V-9j-a1x" secondAttribute="bottom" constant="16" id="qS9-Bs-jVh"/>
+                <constraint firstItem="O2V-9j-a1x" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="uXr-uz-97X"/>
+                <constraint firstItem="O2V-9j-a1x" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="yje-47-sBz"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="search animation icon" width="81" height="81"/>
+        <namedColor name="Black Backgorund">
+            <color red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="White Text">
+            <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

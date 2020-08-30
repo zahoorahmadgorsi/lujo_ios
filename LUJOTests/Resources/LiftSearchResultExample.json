@@ -1,0 +1,355 @@
+{
+    "meta": {
+        "errors": [],
+        "warnings": [],
+        "infos": []
+    },
+    "data": {
+        "id": "asearch-23456789",
+        "href": "https://sandbox.avinode.com/api/searches/asearch-23456789",
+        "type": "searches",
+        "results": [
+            {
+                "id": "asearchhit-922300011",
+                "quote": {
+                    "sellerCompany": {
+                        "id": "ABDC0889-13D6-490E-A830-A93FABCD8433",
+                        "displayName": "Acme Air",
+                        "icaoDesignator": "ACA"
+                    },
+                    "sellerPrice": {
+                        "currency": "EUR",
+                        "price": 7300,
+                        "conversionCurrency": "EUR",
+                        "convertedPrice": 7300,
+                        "priceAsString": "7300"
+                    },
+                    "sellerPriceWithoutCommission": {
+                        "currency": "EUR",
+                        "price": 7300,
+                        "conversionCurrency": "EUR",
+                        "convertedPrice": 7300,
+                        "priceAsString": "7300"
+                    },
+                    "convertedPrices": [
+                        {
+                            "currency": "EUR",
+                            "price": 7300,
+                            "conversionCurrency": "SEK",
+                            "convertedPrice": 69307.66,
+                        }
+                    ],
+                    "avinodeGenerated": true,
+                    "reservable": false,
+                    "lift": {
+                        "id": "7947FDC6-3118-4377-A6A1-6BBABCD0B41F",
+                        "aircraftCategory": "Light jet",
+                        "aircraftType": "Citation CJ2",
+                        "aircraftTypeDetails": {
+                            "id": "F662640A-69DF-41AC-BC22-969ADCD24F96",
+                            "type": "aircrafttypes"
+                        },
+                        "aircraftCategoryDetails": {
+                            "id": "acat-220"
+                        },
+                        "aircraftTail": "SP-KCK",
+                        "aircraftTailDetails": {
+                            "yearOfMake": 2003,
+                            "interiorRefurbished": "2013-04-01",
+                            "exteriorRefurbished": "2014-02-22",
+                            "amenities": [
+                                "110V Outlet",
+                                "Certified lav seat",
+                                "Coffee pot",
+                                "Dishware",
+                                "Freon air conditioning",
+                                "Glassware",
+                                "Ice bin",
+                                "Lavatory",
+                                "Leather seats",
+                                "Partial galley"
+                            ],
+                            "insurance": {
+                                "monetaryAmount": {
+                                    "currency": "EUR",
+                                    "price": 50000000,
+                                    "conversionCurrency": "EUR",
+                                    "convertedPrirece": 50000000,
+                                    "priceAsString": "50000000"
+                                }
+                            }
+                        },
+                        "liftPerformance": {
+                            "maxRangeNM": "1200",
+                            "cruiseSpeedKnots": "400"
+                        },
+                        "aircraftCertificate": {
+                            "certificateNumber": "A-1234",
+                            "issuingCountry": {
+                                "code": "PL",
+                                "name": "Poland"
+                            }
+                        },
+                        "maxPax": 6,
+                        "sellerStatistics": {
+                            "averagePriceDiscrepancyPercent": 5,
+                            "quoteCount": 3025,
+                            "underPricedQuoteCount": 1069,
+                            "underPricedQuoteAveragePercent": 5.29,
+                            "overPricedQuoteCount": 1593,
+                            "overPricedQuoteAveragePercent": 8.85
+                        },
+                        "tailPhotos": [
+                            {
+                                "type": "EXTERIOR",
+                                "copies": [
+                                    {
+                                        "size": "SMALL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/557076_30.jpg",
+                                        "anonymized": true
+                                    },
+                                    {
+                                        "size": "LARGE",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/557076.jpg",
+                                        "anonymized": true
+                                    },
+                                    {
+                                        "size": "MEDIUM",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/557076_28.jpg",
+                                        "anonymized": true
+                                    },
+                                    {
+                                        "size": "THUMBNAIL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/557076_31.jpg",
+                                        "anonymized": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "INTERIOR",
+                                "copies": [
+                                    {
+                                        "size": "SMALL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/744622_30.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "MEDIUM",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/744622_28.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "THUMBNAIL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/744622_31.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "LARGE",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/744622_26.jpg",
+                                        "anonymized": false
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "FLOORPLAN",
+                                "copies": [
+                                    {
+                                        "size": "SMALL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/351193_30.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "LARGE",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/351193.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "MEDIUM",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/351193_28.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "THUMBNAIL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/351193_31.jpg",
+                                        "anonymized": false
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "EXTERIOR",
+                                "copies": [
+                                    {
+                                        "size": "LARGE",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/175495.jpg",
+                                        "anonymized": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "INTERIOR",
+                                "copies": [
+                                    {
+                                        "size": "MEDIUM",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/5gagw.exc_28.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "SMALL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/5gagw.exc_30.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "THUMBNAIL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/5gagw.exc_31.jpg",
+                                        "anonymized": false
+                                    },
+                                    {
+                                        "size": "LARGE",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/abcd/5gagw.exc.jpg",
+                                        "anonymized": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "typePhotos": [
+                            {
+                                "type": "EXTERIOR",
+                                "copies": [
+                                    {
+                                        "size": "LARGE",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/fdrruh.zjo.jpg",
+                                        "anonymized": null
+                                    },
+                                    {
+                                        "size": "MEDIUM",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/fdrruh.zjo.jpg",
+                                        "anonymized": null
+                                    },
+                                    {
+                                        "size": "SMALL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/fdrruh.zjo_30.jpg",
+                                        "anonymized": null
+                                    },
+                                    {
+                                        "size": "THUMBNAIL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/fdrruh.zjo_31.jpg",
+                                        "anonymized": null
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "INTERIOR",
+                                "copies": [
+                                    {
+                                        "size": "LARGE",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/ac5fvv.ulg.jpg",
+                                        "anonymized": null
+                                    },
+                                    {
+                                        "size": "MEDIUM",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/ac5fvv.ulg.jpg",
+                                        "anonymized": null
+                                    },
+                                    {
+                                        "size": "SMALL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/ac5fvv.ulg_30.jpg",
+                                        "anonymized": null
+                                    },
+                                    {
+                                        "size": "THUMBNAIL",
+                                        "url": "https://sandbox.avinode.com/mediafiles/store/2582/ac5fvv.ulg_31.jpg",
+                                        "anonymized": null
+                                    }
+                                ]
+                            }
+                        ],
+                        "homebase": {
+                            "id": "aport-5449",
+                            "name": "WARSAW FREDERIC CHOPIN",
+                            "city": "WARSAW",
+                            "country": {
+                                "code": "PL",
+                                "name": "Poland"
+                            },
+                            "icao": "EPWA",
+                            "iata": "WAW"
+                        },
+                        "ownerApprovalRequired": false,
+                        "safetyRatings": [
+                            {
+                                "standard": "ARGUS",
+                                "levelCode": "GOLD",
+                                "levelDisplayName": "Gold"
+                            }
+                        ]
+                    },
+                    "segments": [
+                        {
+                            "startAirport": {
+                                "id": "aport-6002",
+                                "name": "ARLANDA",
+                                "city": "STOCKHOLM",
+                                "country": {
+                                    "code": "SE",
+                                    "name": "Sweden"
+                                },
+                                "icao": "ESSA",
+                                "iata": "ARN"
+                            },
+                            "endAirport": {
+                                "id": "aport-5955",
+                                "name": "LANDVETTER",
+                                "city": "GOTEBORG",
+                                "country": {
+                                    "code": "SE",
+                                    "name": "Sweden"
+                                },
+                                "icao": "ESGG",
+                                "iata": "GOT"
+                            },
+                            "departureDateTime": {
+                                "dateTimeUTC": "2017-11-30T08:00:00Z",
+                                "dateTimeLocal": "2017-11-30T09:00:00+01:00",
+                                "calculated": false
+                            },
+                            "arrivalDateTime": {
+                                "dateTimeUTC": "2017-11-30T08:58:00Z",
+                                "dateTimeLocal": "2017-11-30T09:58:00+01:00",
+                                "calculated": true
+                            },
+                            "timeTBD": false,
+                            "blockMinutes": 58,
+                            "flightMinutes": 46,
+                            "fuelMinutes": 0,
+                            "paxCount": 1,
+                            "paxSegment": true,
+                            "distanceNM": 212,
+                            "fuelStopCount": 0
+                        }
+                    ]
+                },
+                "startPosition": {
+                    "id": "aport-5449",
+                    "name": "WARSAW FREDERIC CHOPIN",
+                    "city": "WARSAW",
+                    "country": {
+                        "code": "PL",
+                        "name": "Poland"
+                    },
+                    "icao": "EPWA",
+                    "iata": "WAW"
+                },
+                "startPositionAvailableFrom": {
+                    "dateTimeUTC": "2017-11-23T05:20:00Z",
+                    "dateTimeLocal": "2017-11-23T06:20:00+01:00"
+                },
+                "startPositionAvailableTo": {
+                    "dateTimeUTC": "2017-12-07T05:20:00Z",
+                    "dateTimeLocal": "2017-12-07T06:20:00+01:00"
+                },
+                "scheduledUpdatedOn": "2017-03-23T03:03:08Z",
+                "initialPositioningMinutes": 100
+            }
+        ]
+    }
+}

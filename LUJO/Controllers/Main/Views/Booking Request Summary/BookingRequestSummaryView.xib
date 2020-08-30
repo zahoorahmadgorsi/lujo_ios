@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaLTStd-Light.otf">
+            <string>HelveticaLTStd-Light</string>
+        </array>
+        <array key="HelveticaNeueLTStd-Roman.otf">
+            <string>HelveticaNeueLTStd-Roman</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BookingRequestSummaryView" customModule="LUJO" customModuleProvider="target">
+            <connections>
+                <outlet property="scrollView" destination="SN2-QC-P7E" id="Orv-m4-pCy"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k2n-Qa-GTH" userLabel="Top Bar">
+                    <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XhE-EP-VbI">
+                            <rect key="frame" x="8" y="6.5" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="a5a-U8-FEU"/>
+                                <constraint firstAttribute="width" constant="32" id="fMp-j1-dyh"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="Back Row Icon"/>
+                            <connections>
+                                <action selector="cancel:" destination="-1" eventType="touchUpInside" id="CZ3-bf-cnJ"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Booking request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mt9-n2-J61">
+                            <rect key="frame" x="125" y="12" width="125" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" name="Palette - Paragraph White"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="Navigation Bar"/>
+                    <constraints>
+                        <constraint firstItem="XhE-EP-VbI" firstAttribute="leading" secondItem="k2n-Qa-GTH" secondAttribute="leading" constant="8" id="DbQ-L6-HQd"/>
+                        <constraint firstAttribute="bottom" secondItem="mt9-n2-J61" secondAttribute="bottom" constant="11" id="E4b-Kd-n2D"/>
+                        <constraint firstItem="XhE-EP-VbI" firstAttribute="centerY" secondItem="mt9-n2-J61" secondAttribute="centerY" id="lm5-Gn-TOw"/>
+                        <constraint firstAttribute="height" constant="44" id="pfU-nl-YCP"/>
+                        <constraint firstItem="mt9-n2-J61" firstAttribute="centerX" secondItem="k2n-Qa-GTH" secondAttribute="centerX" id="w8z-1W-PxI"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xIK-kH-K5S" userLabel="Background">
+                    <rect key="frame" x="0.0" y="64" width="375" height="535"/>
+                    <color key="backgroundColor" name="Palette - Background"/>
+                </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SN2-QC-P7E">
+                    <rect key="frame" x="16" y="80" width="343" height="503"/>
+                    <color key="backgroundColor" name="Palette - Background"/>
+                </scrollView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcl-rJ-RWs" userLabel="Bottom Bar">
+                    <rect key="frame" x="0.0" y="599" width="375" height="68"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="izS-Rc-pHA" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                            <rect key="frame" x="8" y="12" width="299" height="44"/>
+                            <color key="backgroundColor" name="Action Button"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="7Zr-XS-tNq"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaLTStd-Light" family="Helvetica LT Std" pointSize="10"/>
+                            <state key="normal" title="PROCEED TO PAYMENT">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="proceedToPayment:" destination="-1" eventType="touchUpInside" id="4XP-s9-JQG"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5mj-6F-A4I">
+                            <rect key="frame" x="323" y="12" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="cr7-KV-qkV"/>
+                                <constraint firstAttribute="width" constant="44" id="ubr-Jo-d79"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="10"/>
+                            <inset key="titleEdgeInsets" minX="-22" minY="26" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="9" minY="-15" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="C H A T" image="Chat Button Grey">
+                                <color key="titleColor" name="Button Text"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" name="Palette - Separator"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="68" id="6J1-Oq-8is"/>
+                        <constraint firstItem="5mj-6F-A4I" firstAttribute="centerY" secondItem="kcl-rJ-RWs" secondAttribute="centerY" id="87i-NO-17C"/>
+                        <constraint firstItem="5mj-6F-A4I" firstAttribute="leading" secondItem="izS-Rc-pHA" secondAttribute="trailing" constant="16" id="BaX-xj-FIu"/>
+                        <constraint firstAttribute="trailing" secondItem="5mj-6F-A4I" secondAttribute="trailing" constant="8" id="FF7-R4-w1i"/>
+                        <constraint firstItem="izS-Rc-pHA" firstAttribute="centerY" secondItem="kcl-rJ-RWs" secondAttribute="centerY" id="Mwd-o7-jTm"/>
+                        <constraint firstItem="izS-Rc-pHA" firstAttribute="leading" secondItem="kcl-rJ-RWs" secondAttribute="leading" constant="8" id="Ne0-g9-H9o"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="68" id="OMT-ZE-iji"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZ2-bz-8fD">
+                    <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
+                    <color key="backgroundColor" name="Palette - Separator"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" name="Navigation Bar"/>
+            <constraints>
+                <constraint firstItem="k2n-Qa-GTH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6Oh-rM-HZe"/>
+                <constraint firstItem="kcl-rJ-RWs" firstAttribute="top" secondItem="xIK-kH-K5S" secondAttribute="bottom" id="EuS-De-zpS"/>
+                <constraint firstItem="xIK-kH-K5S" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="HvO-WA-mbi"/>
+                <constraint firstItem="EZ2-bz-8fD" firstAttribute="top" secondItem="kcl-rJ-RWs" secondAttribute="bottom" id="KTo-K5-KHF"/>
+                <constraint firstItem="EZ2-bz-8fD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Kpp-lY-4rK"/>
+                <constraint firstItem="kcl-rJ-RWs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ODQ-cl-HD6"/>
+                <constraint firstItem="k2n-Qa-GTH" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="OmR-aT-lfP"/>
+                <constraint firstItem="xIK-kH-K5S" firstAttribute="top" secondItem="k2n-Qa-GTH" secondAttribute="bottom" id="Y8j-Om-JOX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="kcl-rJ-RWs" secondAttribute="bottom" id="aY5-Ko-jA4"/>
+                <constraint firstItem="k2n-Qa-GTH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bKO-7e-qeF"/>
+                <constraint firstItem="kcl-rJ-RWs" firstAttribute="top" secondItem="SN2-QC-P7E" secondAttribute="bottom" constant="16" id="cGJ-Q7-Mpu"/>
+                <constraint firstAttribute="trailing" secondItem="EZ2-bz-8fD" secondAttribute="trailing" id="dLe-YD-MjI"/>
+                <constraint firstAttribute="bottom" secondItem="EZ2-bz-8fD" secondAttribute="bottom" id="fs6-g3-GOi"/>
+                <constraint firstItem="SN2-QC-P7E" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-16" id="g4Z-6d-2yp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kcl-rJ-RWs" secondAttribute="trailing" id="iqX-0X-BDY"/>
+                <constraint firstItem="SN2-QC-P7E" firstAttribute="top" secondItem="k2n-Qa-GTH" secondAttribute="bottom" constant="16" id="ivJ-1W-ftW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xIK-kH-K5S" secondAttribute="trailing" id="jAe-b4-JWF"/>
+                <constraint firstItem="SN2-QC-P7E" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="jto-Gn-dZu"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="5.5999999999999996" y="-255.02248875562222"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Back Row Icon" width="48" height="48"/>
+        <image name="Chat Button Grey" width="19" height="19"/>
+        <namedColor name="Action Button">
+            <color red="0.95686274509803926" green="0.63921568627450975" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Button Text">
+            <color red="0.71372549019607845" green="0.71372549019607845" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Navigation Bar">
+            <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Background">
+            <color red="0.10196078431372549" green="0.10196078431372549" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Paragraph White">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Separator">
+            <color red="0.24705882352941178" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

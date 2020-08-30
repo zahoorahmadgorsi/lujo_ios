@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="hen-JN-44b" userLabel="View" customClass="BookingSegmentsSummaryView" customModule="LUJO" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="431"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="l9w-jc-RtW">
+                    <rect key="frame" x="0.0" y="16" width="375" height="399"/>
+                    <color key="backgroundColor" name="Navigation Bar"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" name="Navigation Bar"/>
+            <constraints>
+                <constraint firstItem="l9w-jc-RtW" firstAttribute="leading" secondItem="UQT-XH-oxa" secondAttribute="leading" id="7wN-mN-zvb"/>
+                <constraint firstItem="UQT-XH-oxa" firstAttribute="trailing" secondItem="l9w-jc-RtW" secondAttribute="trailing" id="MJ4-Fl-kRc"/>
+                <constraint firstItem="l9w-jc-RtW" firstAttribute="top" secondItem="UQT-XH-oxa" secondAttribute="top" constant="16" id="xYL-L0-bcg"/>
+                <constraint firstItem="UQT-XH-oxa" firstAttribute="bottom" secondItem="l9w-jc-RtW" secondAttribute="bottom" constant="16" id="yCz-Vv-wfP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="UQT-XH-oxa"/>
+            <connections>
+                <outlet property="contentView" destination="l9w-jc-RtW" id="8Lk-6g-1gM"/>
+            </connections>
+            <point key="canvasLocation" x="815" y="-400"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Navigation Bar">
+            <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
