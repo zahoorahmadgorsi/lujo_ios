@@ -51,12 +51,12 @@ extension UIImage {
         var imageData: Data?
         var prefix: String!
         switch format {
-        case .pngFormat:
-            imageData = pngData()
-            prefix = "data:image/png;base64,"
-        case let .jpegFormat(compression):
-            prefix = "data:image/jpeg;base64,"
-            imageData = jpegData(compressionQuality: compression)
+            case .pngFormat:
+                imageData = pngData()
+                prefix = "data:image/png;base64,"
+            case let .jpegFormat(compression):
+                prefix = "data:image/jpeg;base64,"
+                imageData = jpegData(compressionQuality: compression)
         }
         return prefix + imageData!.base64EncodedString()
     }

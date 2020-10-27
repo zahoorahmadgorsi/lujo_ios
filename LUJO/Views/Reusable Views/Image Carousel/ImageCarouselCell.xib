@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,9 +18,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="281.5"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="XqX-gf-MHF">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DZX-FI-bND">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="281.5"/>
-                    </imageView>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="XqX-gf-MHF">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="281.5"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XqX-gf-MHF" secondAttribute="trailing" id="0S1-ns-AcR"/>
+                            <constraint firstItem="XqX-gf-MHF" firstAttribute="top" secondItem="DZX-FI-bND" secondAttribute="top" id="efT-jK-kiZ"/>
+                            <constraint firstItem="XqX-gf-MHF" firstAttribute="leading" secondItem="DZX-FI-bND" secondAttribute="leading" id="nrJ-Fz-2sJ"/>
+                            <constraint firstAttribute="bottom" secondItem="XqX-gf-MHF" secondAttribute="bottom" id="zxi-h6-SbX"/>
+                        </constraints>
+                    </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient" translatesAutoresizingMaskIntoConstraints="NO" id="02B-tp-bpK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="281.5"/>
                     </imageView>
@@ -130,18 +140,18 @@
                 </subviews>
             </view>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="DZX-FI-bND" secondAttribute="trailing" id="4Pc-qU-ffU"/>
                 <constraint firstItem="wNd-XQ-aTV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="6vi-Py-efX"/>
                 <constraint firstItem="02B-tp-bpK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="8wH-ME-Dqn"/>
+                <constraint firstItem="DZX-FI-bND" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ACZ-dI-GfS"/>
                 <constraint firstItem="xvR-9y-Vvb" firstAttribute="top" secondItem="wNd-XQ-aTV" secondAttribute="bottom" constant="16" id="F1t-W2-Wqm"/>
-                <constraint firstAttribute="bottom" secondItem="XqX-gf-MHF" secondAttribute="bottom" id="I12-tR-Hp9"/>
+                <constraint firstItem="DZX-FI-bND" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IW3-z7-ser"/>
                 <constraint firstItem="02B-tp-bpK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="NyL-Ox-lSA"/>
                 <constraint firstAttribute="trailing" secondItem="wNd-XQ-aTV" secondAttribute="trailing" constant="16" id="ODa-9O-nQH"/>
-                <constraint firstAttribute="trailing" secondItem="XqX-gf-MHF" secondAttribute="trailing" id="Qst-uN-GOm"/>
                 <constraint firstItem="OSM-dl-hbG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="TUJ-1Q-nyD"/>
                 <constraint firstAttribute="bottom" secondItem="02B-tp-bpK" secondAttribute="bottom" id="X0z-d0-6IX"/>
-                <constraint firstItem="XqX-gf-MHF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="jBJ-yP-MjU"/>
                 <constraint firstAttribute="trailing" secondItem="02B-tp-bpK" secondAttribute="trailing" id="knn-fi-gUF"/>
-                <constraint firstItem="XqX-gf-MHF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="qAv-VA-HO6"/>
+                <constraint firstAttribute="bottom" secondItem="DZX-FI-bND" secondAttribute="bottom" id="paF-kN-WIb"/>
                 <constraint firstAttribute="trailing" secondItem="OSM-dl-hbG" secondAttribute="trailing" constant="16" id="w3X-iv-UcL"/>
                 <constraint firstAttribute="bottom" secondItem="xvR-9y-Vvb" secondAttribute="bottom" constant="14" id="wBI-zM-hLk"/>
                 <constraint firstItem="xvR-9y-Vvb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="zSy-vj-aKF"/>
@@ -149,10 +159,11 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
                 <outlet property="categoryLabel" destination="4yj-XS-3NH" id="PVn-h0-LWz"/>
+                <outlet property="containerView" destination="DZX-FI-bND" id="Cug-Sz-SWL"/>
                 <outlet property="gradientImageView" destination="02B-tp-bpK" id="7sd-6v-i2Y"/>
-                <outlet property="imageView" destination="XqX-gf-MHF" id="Q0i-nw-ZNV"/>
                 <outlet property="locationContainerView" destination="h3l-8a-SDd" id="MgE-Hv-z8g"/>
                 <outlet property="locationLabel" destination="9BU-Ni-WYD" id="6aJ-7X-9vE"/>
+                <outlet property="primaryImage" destination="XqX-gf-MHF" id="Q0i-nw-ZNV"/>
                 <outlet property="starsContainerView" destination="wSK-1S-GvG" id="h56-Ig-T2k"/>
                 <outlet property="starsLabel" destination="SSr-pl-1Rj" id="Rr4-CS-XuR"/>
                 <outlet property="tagLabel" destination="Ag7-QL-7OX" id="AhO-ve-hiN"/>

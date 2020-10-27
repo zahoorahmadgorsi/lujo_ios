@@ -97,9 +97,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
         
     //Zahoor Started 20200822
-    var carousalTimer: Timer?
-    var newOffsetX: CGFloat = 0.0
-    var animationInterval:TimeInterval = 5
+    var animationInterval:TimeInterval = 15
+    //3 is total number of animation s on the screen 1: Featured, 2: Events and 3: Experience
+    var secondsToDelay:TimeInterval = 2 //animation delay between Featured,Events and Experience
+
     //Zahoor finished
     
     override func viewDidLoad() {
@@ -153,9 +154,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         locationManager.delegate = self
         
-        startAnimation()
+        startAnimation()    //will start animating at 0 seconds
         //Zahoor Started
-        startExperienceAnimation()
+//        To call a function after a certain period of time, you can use the perform function:
+        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay ) {
+            self.startEventAndExpAnimation(homeSlider: self.homeEventSlider)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (2*secondsToDelay)) {
+            self.startEventAndExpAnimation(homeSlider: self.homeExperienceSlider)
+        }
         //Zahoor Finished
     }
     
@@ -196,29 +203,31 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     //Zahoor started
-    //This method animates the Experiences slider at the home screen
-    func startExperienceAnimation() {
+    //This method animates the Event and Experiences slider at the home screen
+    func startEventAndExpAnimation(homeSlider : HomeSlider ) {
+        var carousalTimer: Timer?
+        var newOffsetX: CGFloat = 0.0
         carousalTimer = Timer(fire: Date(), interval: self.animationInterval, repeats: true) { (timer) in
-            let initailPoint = CGPoint(x: self.newOffsetX,y :0)
-            if __CGPointEqualToPoint(initailPoint, self.homeExperienceSlider.homeSliderView.contentOffset) {
-                let itemWidthWithMargin = Int(self.homeExperienceSlider.itemWidth + self.homeExperienceSlider.itemMargin) // 166 , total width of a collectionview item
-                if self.newOffsetX < self.homeExperienceSlider.homeSliderView.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
-                    self.newOffsetX += CGFloat(itemWidthWithMargin) //keep increasing the offset to the one colllection view item
+            let initailPoint = CGPoint(x: newOffsetX,y :0)
+            if __CGPointEqualToPoint(initailPoint, homeSlider.homeSliderView.contentOffset) {
+                let itemWidthWithMargin = Int(homeSlider.itemWidth + homeSlider.itemMargin) // 166 , total width of a collectionview item
+                if newOffsetX < homeSlider.homeSliderView.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
+                    newOffsetX += CGFloat(itemWidthWithMargin) //keep increasing the offset to the one colllection view item
                 }
                 //CALCULATING TO WHAT POINT WE SHOULD MOVE THE SLIDER AND WHEN TO RESET IT TO 0
-                let collectionWidth:Int = Int(self.homeExperienceSlider.homeSliderView.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
+                let collectionWidth:Int = Int(homeSlider.homeSliderView.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
                 let fullyVisibleItemCount = collectionWidth.quotientAndRemainder(dividingBy: itemWidthWithMargin).quotient// 414/166 = 2, reset the animation till last item is displayed fully, so getting the quotient by dividing frame width by by width of collection item which will give us number of items can be fully displayed at a single moment
-                print(fullyVisibleItemCount)
+//                print(fullyVisibleItemCount)
                 let offsetShiftTill = itemWidthWithMargin * fullyVisibleItemCount // 166 * 2 , offset till fullyVisibleItemCount items are being displayed
 //                print(self.newOffsetX,offsetShiftTill)
-                if self.newOffsetX > self.homeExperienceSlider.homeSliderView.contentSize.width - CGFloat(offsetShiftTill) { //846-332
-                    self.newOffsetX = 0 //reset to 0 if offset has increased enough that items cant be see as equal to fullyVisibleItemCount
+                if newOffsetX > homeSlider.homeSliderView.contentSize.width - CGFloat(offsetShiftTill) { //846-332
+                        newOffsetX = 0 //reset to 0 if offset has increased enough that items cant be see as equal to fullyVisibleItemCount
                 }
 
-                self.homeExperienceSlider.homeSliderView.setContentOffset(CGPoint(x: self.newOffsetX,y :0), animated: true)
+                homeSlider.homeSliderView.setContentOffset(CGPoint(x: newOffsetX,y :0), animated: true)
 
             } else {
-                self.newOffsetX = self.homeExperienceSlider.homeSliderView.contentOffset.x
+                newOffsetX = homeSlider.homeSliderView.contentOffset.x
             }
         }
         RunLoop.current.add(carousalTimer!, forMode: .common)
@@ -313,7 +322,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     func update(_ information: HomeObjects?) {
         
         guard information != nil else {
-            featured.imageURLList = [""]
+            //Zahoor Start
+//            featured.imageURLList = [""]
+            featured.itemsList = []
             //            featuredPager.numberOfPages = 1
             //            featuredPager.currentPage = 0
             
@@ -443,8 +454,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     fileprivate func updateContent() {
+        
         if let featuredImages = eventsAndExperiences?.getFeaturedImages() {
-            featured.imageURLList = featuredImages
+//            featured.imageURLList = featuredImages    //zahoor
             featured.titleList = eventsAndExperiences!.getFeaturedNames()
             featured.categoryList = eventsAndExperiences!.getFeaturedTypes()
             featured.tagsList = eventsAndExperiences!.getFeaturedTags()
@@ -452,6 +464,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             currentImageNum.text = "1"
         }
         
+        featured.itemsList = eventsAndExperiences?.slider ?? [] //zahoor
         homeEventSlider.itemsList = eventsAndExperiences?.events ?? []
         homeExperienceSlider.itemsList = eventsAndExperiences?.experiences ?? []
         
@@ -541,7 +554,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
     }
     
-    func startAnimation() {
+    @objc func startAnimation() {
         //Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
         Timer.scheduledTimer(withTimeInterval: self.animationInterval, repeats: true, block: { _ in
             if self.featured.titleList.count > 0 {
@@ -558,7 +571,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     /// Mark - Custom request actions
     @IBAction func findTableButton_onClick(_ sender: Any) {
-        self.present(TableViewController.instantiate(), animated: true, completion: nil)
+//        Zahoor started the change
+//        self.present(TableViewController.instantiate(), animated: true, completion: nil)
+        self.tabBarController?.selectedIndex = 1
+//        Zahoor Finished the change
     }
     
     @IBAction func getTicketsButton_onClick(_ sender: Any) {

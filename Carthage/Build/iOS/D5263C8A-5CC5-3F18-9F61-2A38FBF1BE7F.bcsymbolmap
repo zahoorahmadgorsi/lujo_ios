@@ -730,12 +730,13 @@ IQKeyboardManager/IQKeyboardManager.m
 IQKeyboardManager/IQKeyboardManager.h
 __52-[IQKeyboardManager willChangeStatusBarOrientation:]_block_invoke
 UIEdgeInsetsEqualToEdgeInsets
-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIGeometry.h
+Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIGeometry.h
+/Users/imac
 __48-[IQKeyboardManager textFieldViewDidEndEditing:]_block_invoke
 __50-[IQKeyboardManager textFieldViewDidBeginEditing:]_block_invoke_2
 __50-[IQKeyboardManager textFieldViewDidBeginEditing:]_block_invoke
 __CGPointEqualToPoint
-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGGeometry.h
+Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGGeometry.h
 __destroy_helper_block_e8_32s40s48w56w
 __copy_helper_block_e8_32s40s48w56w
 __38-[IQKeyboardManager keyboardWillHide:]_block_invoke
@@ -756,7 +757,7 @@ __44-[IQKeyboardManager optimizedAdjustPosition]_block_invoke
 __destroy_helper_block_e8_
 __copy_helper_block_e8_
 __34+[IQKeyboardManager sharedManager]_block_invoke
-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/usr/include/dispatch/once.h
+Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/usr/include/dispatch/once.h
 __destroy_helper_block_e8_32w
 __copy_helper_block_e8_32w
 __25-[IQKeyboardManager init]_block_invoke

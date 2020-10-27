@@ -52,6 +52,12 @@ extension UIView {
                                          toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
     }
 
+    func removeLayer(layerName: String) {
+        for item in self.layer.sublayers ?? [] where item.name == layerName {
+                item.removeFromSuperlayer()
+        }
+    }
+    
     func addSubview(_ view: UIView, to side: ViewSide, with length: CGFloat) {
         view.removeFromSuperview()
         view.translatesAutoresizingMaskIntoConstraints = false

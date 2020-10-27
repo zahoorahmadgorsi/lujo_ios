@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,17 +21,29 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KKQ-3M-FPU">
                         <rect key="frame" x="0.0" y="0.0" width="150" height="172"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="D91-42-Go7">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hhc-rz-FLL">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="D91-42-Go7">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="999" constant="100" id="4S7-mD-gXj"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" priority="999" constant="100" id="4S7-mD-gXj"/>
+                                    <constraint firstItem="D91-42-Go7" firstAttribute="leading" secondItem="Hhc-rz-FLL" secondAttribute="leading" id="DOG-Wr-1Jv"/>
+                                    <constraint firstAttribute="bottom" secondItem="D91-42-Go7" secondAttribute="bottom" id="GtF-c4-If7"/>
+                                    <constraint firstItem="D91-42-Go7" firstAttribute="top" secondItem="Hhc-rz-FLL" secondAttribute="top" id="f9K-kC-PlH"/>
+                                    <constraint firstAttribute="trailing" secondItem="D91-42-Go7" secondAttribute="trailing" id="lWv-TQ-gy6"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Z9Q-oq-T8g">
                                 <rect key="frame" x="0.0" y="112" width="150" height="60"/>
                                 <subviews>
@@ -153,15 +163,15 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Z9Q-oq-T8g" firstAttribute="leading" secondItem="Fvy-bg-anR" secondAttribute="leading" id="2eV-eQ-S5B"/>
+                            <constraint firstItem="Z9Q-oq-T8g" firstAttribute="top" secondItem="Hhc-rz-FLL" secondAttribute="bottom" constant="12" id="4eZ-EN-1vl"/>
+                            <constraint firstItem="Hhc-rz-FLL" firstAttribute="leading" secondItem="Fvy-bg-anR" secondAttribute="leading" id="7af-5E-nYz"/>
+                            <constraint firstItem="Hhc-rz-FLL" firstAttribute="top" secondItem="Fvy-bg-anR" secondAttribute="top" id="FNn-4i-bkh"/>
                             <constraint firstItem="Z9Q-oq-T8g" firstAttribute="trailing" secondItem="Fvy-bg-anR" secondAttribute="trailing" id="Hqr-He-zVO"/>
-                            <constraint firstAttribute="trailing" secondItem="D91-42-Go7" secondAttribute="trailing" id="Spu-F1-Vuu"/>
+                            <constraint firstItem="Hhc-rz-FLL" firstAttribute="trailing" secondItem="Fvy-bg-anR" secondAttribute="trailing" id="Kcl-0l-mWL"/>
                             <constraint firstAttribute="trailing" secondItem="CnM-B5-LHc" secondAttribute="trailing" constant="8" id="U1w-Ck-lXj"/>
                             <constraint firstItem="CnM-B5-LHc" firstAttribute="top" secondItem="KKQ-3M-FPU" secondAttribute="top" constant="8" id="Vny-IN-0oA"/>
-                            <constraint firstItem="D91-42-Go7" firstAttribute="leading" secondItem="Fvy-bg-anR" secondAttribute="leading" id="aeC-GO-Pyd"/>
-                            <constraint firstItem="D91-42-Go7" firstAttribute="top" secondItem="KKQ-3M-FPU" secondAttribute="top" id="bg5-kF-K5Z"/>
                             <constraint firstItem="CnM-B5-LHc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KKQ-3M-FPU" secondAttribute="leading" constant="8" id="faz-W9-fe5"/>
                             <constraint firstAttribute="bottom" secondItem="Z9Q-oq-T8g" secondAttribute="bottom" id="uli-UR-nKV"/>
-                            <constraint firstItem="Z9Q-oq-T8g" firstAttribute="top" secondItem="D91-42-Go7" secondAttribute="bottom" constant="12" id="ykG-j0-mw4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fvy-bg-anR"/>
                     </view>
@@ -176,6 +186,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="230" height="189"/>
             <connections>
+                <outlet property="containerView" destination="Hhc-rz-FLL" id="18G-z0-fTv"/>
                 <outlet property="date" destination="pfa-gK-WTN" id="nMN-iE-inc"/>
                 <outlet property="dateContainerView" destination="vKJ-pl-mFp" id="EHm-27-K2s"/>
                 <outlet property="name" destination="XKf-h4-LMA" id="EHO-Ox-LAn"/>

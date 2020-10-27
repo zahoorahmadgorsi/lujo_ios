@@ -2,7 +2,7 @@
   "commitish" : "2.0.2",
   "iOS" : [
     {
-      "hash" : "b12d0a49f27e5efc81ee07e7af7f4d8a2642dd268d7d3e6943eccf76a9ff10f3",
+      "hash" : "58f328455a79bf001eb29d7d15c10534ac633c9d135a296ddc65bc13e4391598",
       "name" : "QuickLayout",
       "linking" : "dynamic",
       "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"

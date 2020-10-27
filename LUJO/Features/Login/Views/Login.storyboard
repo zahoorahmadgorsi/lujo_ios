@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Emh-vQ-Hrl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Emh-vQ-Hrl">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -1092,27 +1092,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUX-Jm-n8c">
                                         <rect key="frame" x="0.0" y="290.33333333333337" width="375" height="281.33333333333337"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avio" translatesAutoresizingMaskIntoConstraints="NO" id="U4M-Tl-Ijr">
-                                                <rect key="frame" x="105" y="157.33333333333337" width="165" height="124"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="U4M-Tl-Ijr" secondAttribute="height" multiplier="4:3" id="UzN-KB-cOF"/>
-                                                </constraints>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="watch" translatesAutoresizingMaskIntoConstraints="NO" id="Trw-4L-W6w">
-                                                <rect key="frame" x="316.66666666666669" y="141.33333333333337" width="82.333333333333314" height="124"/>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sport" translatesAutoresizingMaskIntoConstraints="NO" id="ERN-Fg-N4s">
-                                                <rect key="frame" x="-8" y="135.33333333333337" width="88" height="88"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="ERN-Fg-N4s" secondAttribute="height" multiplier="1:1" id="XsI-vv-HgN"/>
-                                                </constraints>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="food" translatesAutoresizingMaskIntoConstraints="NO" id="8vj-Gr-6kq">
-                                                <rect key="frame" x="277.33333333333331" y="0.0" width="109.66666666666669" height="109.66666666666667"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="8vj-Gr-6kq" secondAttribute="height" multiplier="1:1" id="f3V-my-BPW"/>
-                                                </constraints>
-                                            </imageView>
                                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wine" translatesAutoresizingMaskIntoConstraints="NO" id="Cfp-Rl-mIB">
                                                 <rect key="frame" x="16" y="0.0" width="65.666666666666671" height="109.66666666666667"/>
                                                 <constraints>
@@ -1124,6 +1103,27 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="CsL-tm-e05" secondAttribute="height" multiplier="0.96:1" id="n0D-ui-lSq"/>
                                                 </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="food" translatesAutoresizingMaskIntoConstraints="NO" id="8vj-Gr-6kq">
+                                                <rect key="frame" x="277.33333333333331" y="0.0" width="109.66666666666669" height="109.66666666666667"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="8vj-Gr-6kq" secondAttribute="height" multiplier="1:1" id="f3V-my-BPW"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sport" translatesAutoresizingMaskIntoConstraints="NO" id="ERN-Fg-N4s">
+                                                <rect key="frame" x="-8" y="135.33333333333337" width="88" height="88"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="ERN-Fg-N4s" secondAttribute="height" multiplier="1:1" id="XsI-vv-HgN"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avio" translatesAutoresizingMaskIntoConstraints="NO" id="U4M-Tl-Ijr">
+                                                <rect key="frame" x="105" y="157.33333333333337" width="165" height="124"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="U4M-Tl-Ijr" secondAttribute="height" multiplier="4:3" id="UzN-KB-cOF"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="watch" translatesAutoresizingMaskIntoConstraints="NO" id="Trw-4L-W6w">
+                                                <rect key="frame" x="316.66666666666669" y="141.33333333333337" width="82.333333333333314" height="124"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

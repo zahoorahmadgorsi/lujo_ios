@@ -22,10 +22,14 @@ class YachtViewController: UIViewController {
     }
 
     //MARK:- Globals
+    @IBOutlet weak var yachtCharterLabel: UILabel!
+    @IBOutlet weak var yachtCharterButton: UIButton!
     @IBOutlet weak var destinationTextField: UITextField!
     @IBOutlet weak var yachtNameTextField: UITextField!
     @IBOutlet weak var yachtTypeLabel: UILabel!
     @IBOutlet weak var yachtTypeButton: UIButton!
+    @IBOutlet weak var yachtBudgetLabel: UILabel!
+    @IBOutlet weak var yachtBudgetButton: UIButton!
     @IBOutlet weak var lenghtButton: UIButton!
     @IBOutlet weak var lenghtLabel: UILabel!
     @IBOutlet weak var guestsLabel: UILabel!
@@ -34,6 +38,8 @@ class YachtViewController: UIViewController {
    
     private var selectedYachtType: String?
     private var selectedYachtLenght: String?
+    private var selectedYachtBudget: String?
+    private var selectedYachtCharter: String?
     
     private var guestsCount: Int = 0 {
         didSet {
@@ -46,7 +52,9 @@ class YachtViewController: UIViewController {
     private var dateTime: SearchTime = SearchTime(date: "", time: "")
     private var returnDateTime: SearchTime = SearchTime(date: "", time: "")
     
+    var charterPicker: ikDataPickerManger?
     var typeDataPicker: ikDataPickerManger?
+    var budgetPicker: ikDataPickerManger?
     var lenghtDataPicker: ikDataPickerManger?
     
     let dateFormatter: DateFormatter = {
@@ -61,8 +69,14 @@ class YachtViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        yachtCharterButton.layer.borderWidth = 1
+        yachtCharterButton.layer.borderColor = UIColor.inputBorderNoFocus.cgColor
+        
         yachtTypeButton.layer.borderWidth = 1
         yachtTypeButton.layer.borderColor = UIColor.inputBorderNoFocus.cgColor
+        
+        yachtBudgetButton.layer.borderWidth = 1
+        yachtBudgetButton.layer.borderColor = UIColor.inputBorderNoFocus.cgColor
         
         lenghtButton.layer.borderWidth = 1
         lenghtButton.layer.borderColor = UIColor.inputBorderNoFocus.cgColor
@@ -102,6 +116,35 @@ class YachtViewController: UIViewController {
         typeDataPicker?.present()
     }
     
+    @IBAction func budgetPickerButton_onClick(_ sender: UIButton) {
+        self.view.endEditing(true)
+        
+        if budgetPicker == nil {
+            let dataSource: [[String]] = [["10,000 - 30,000" ,"30,000 - 60,000", "60,000 - 100,000", "100,000 - 150,000", "150,000 - 200,000", "200,000 - 300,000" , "300,00+"]]
+            budgetPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select budget for the yacht charter", dataSource: dataSource, callback: { values in
+                self.selectedYachtBudget = values[0]
+                self.yachtBudgetLabel.text = values[0]
+            })
+        }
+        
+        budgetPicker?.present()
+    }
+    
+    @IBAction func yachtCharterButton_onClick(_ sender: UIButton) {
+        self.view.endEditing(true)
+        
+        if charterPicker == nil {
+            let dataSource: [[String]] = [["Day charter" ,"Week charter"]]
+            charterPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select yacht charter", dataSource: dataSource, callback: { values in
+                self.selectedYachtCharter = values[0]
+                self.yachtCharterLabel.text = values[0]
+            })
+        }
+        
+        charterPicker?.present()
+    }
+    
+    
     @IBAction func lenghtButton_onClick(_ sender: UIButton) {
         self.view.endEditing(true)
         
@@ -117,6 +160,12 @@ class YachtViewController: UIViewController {
     }
     
     @IBAction func requestButton_onClick(_ sender: Any) {
+        
+        guard let yachtCharter = selectedYachtCharter, !yachtCharter.isEmpty else {
+            showInformationPopup(withTitle: "Info", message:"Please choose yacht charter.")
+            return
+        }
+        
         guard let destination = destinationTextField.text, !destination.isEmpty else {
             showInformationPopup(withTitle: "Info", message:"Please enter you destination.")
             return
@@ -129,6 +178,11 @@ class YachtViewController: UIViewController {
         
         guard let lenghtText = selectedYachtLenght, !lenghtText.isEmpty else {
             showInformationPopup(withTitle: "Info", message:"Please choose yacht lenght.")
+            return
+        }
+        
+        guard let yachtBudget = selectedYachtBudget, !lenghtText.isEmpty else {
+            showInformationPopup(withTitle: "Info", message:"Please choose yacht budget.")
             return
         }
         
@@ -155,7 +209,7 @@ class YachtViewController: UIViewController {
         let initialMessage = """
         Hi Concierge team,
         
-        I would like to charter a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")with lenght of \(lenghtText)m, to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
+        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")with lenght of \(lenghtText)m, budget range \(yachtBudget), to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
         
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """

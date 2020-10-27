@@ -2,6 +2,20 @@
 
 -----
 
+## [5.15.2 - Xcode 11 Revived](https://github.com/onevcat/Kingfisher/releases/tag/5.15.2) (2020-09-19)
+
+#### Fix
+* Fix a build error introduced by the previous SwiftUI fix for Xcode 12. Now Xcode 11 can also build the KingfisherSwiftUI target. [#1515](https://github.com/onevcat/Kingfisher/pull/1515)
+
+---
+
+## [5.15.1 - SwiftUI Layout](https://github.com/onevcat/Kingfisher/releases/tag/5.15.1) (2020-09-16)
+
+#### Fix
+* A workaround for a SwiftUI issue that embedding an image view inside the `List` > `NavigationLink` > `HStack` hierarchy could crash the app on iOS 14. [#1508](https://github.com/onevcat/Kingfisher/issues/1508)
+
+---
+
 ## [5.15.0 - Video and Text Attachment](https://github.com/onevcat/Kingfisher/releases/tag/5.15.0) (2020-08-17)
 
 #### Add

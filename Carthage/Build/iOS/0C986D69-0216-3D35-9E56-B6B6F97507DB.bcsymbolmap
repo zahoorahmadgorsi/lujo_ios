@@ -130,7 +130,8 @@ _OBJC_SELECTOR_REFERENCES_.37
 __errorBezierPath_block_invoke
 JGProgressHUD/JGProgressHUD/JGProgressHUDErrorIndicatorView.m
 errorBezierPath
-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/usr/include/dispatch/once.h
+Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/usr/include/dispatch/once.h
+/Users/imac
 -[JGProgressHUDSuccessIndicatorView initWithContentView:]
 -[JGProgressHUDSuccessIndicatorView init]
 -[JGProgressHUDSuccessIndicatorView updateAccessibility]
@@ -628,7 +629,7 @@ _OBJC_LABEL_CATEGORY_$
 JGProgressHUD/JGProgressHUD/JGProgressHUD.m
 JGProgressHUD/JGProgressHUD/include/JGProgressHUD.h
 UIEdgeInsetsEqualToEdgeInsets
-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIGeometry.h
+Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIGeometry.h
 __destroy_helper_block_e8_32s40s
 __copy_helper_block_e8_32s40s
 __43-[JGProgressHUD setEffectiveIndicatorView:]_block_invoke

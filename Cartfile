@@ -3,7 +3,6 @@ github "Alamofire/Alamofire" ~> 4.7
 github "Hearst-DD/ObjectMapper" ~> 3.3
 github "nmdias/DefaultsKit" ~> 0.0.9
 github "Marxon13/M13Checkbox" == 3.2.2
-github "optonaut/ActiveLabel.swift"
 github "huri000/SwiftEntryKit" == 0.5.9
 github "JonasGessner/JGProgressHUD" ~> 2.0.3
 github "patchthecode/JTAppleCalendar" ~> 7.0
@@ -11,3 +10,4 @@ github "hackiftekhar/IQKeyboardManager"
 github "onevcat/Kingfisher" ~> 5.0
 github "SwiftKickMobile/SwiftMessages" == 7.0.0
 github "intercom/intercom-ios" == 5.4.1
+github "optonaut/ActiveLabel.swift" == 1.1.0

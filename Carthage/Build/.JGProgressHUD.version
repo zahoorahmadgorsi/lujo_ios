@@ -3,7 +3,7 @@
   "iOS" : [
     {
       "name" : "JGProgressHUD",
-      "hash" : "6adb4b706050549b5c2e22a6af7a36790e95005a4b9426c9bcf0899f1517c568",
+      "hash" : "da026ada3bcf7517256e59832fc0418a843ce046f8dfd8da6dccf1f59d3c6f4f",
       "linking" : "dynamic"
     }
   ]

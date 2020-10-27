@@ -11,7 +11,8 @@ import UIKit
 class ImageCarouselCell: UICollectionViewCell {
     static var identifier: String = "ImageCarouselCell"
 
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet var primaryImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var categoryLabel: UILabel!
 
@@ -35,7 +36,7 @@ class ImageCarouselCell: UICollectionViewCell {
     }
 
     private func reset() {
-        imageView.image = UIImage(named: "placeholder-img")!
+        primaryImage.image = UIImage(named: "placeholder-img")!
         titleLabel.text = ""
         categoryLabel.text = ""
         locationLabel.text = ""

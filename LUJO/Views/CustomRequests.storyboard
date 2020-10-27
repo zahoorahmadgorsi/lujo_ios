@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -799,7 +799,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="MjF-bg-ddv">
-                                        <rect key="frame" x="20" y="44" width="335" height="421"/>
+                                        <rect key="frame" x="20" y="44" width="335" height="573"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBz-T4-h7o">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="64"/>
@@ -835,8 +835,39 @@
                                                     <constraint firstItem="8gL-hB-Jsy" firstAttribute="top" secondItem="mBz-T4-h7o" secondAttribute="top" constant="16" id="vuc-IT-7dB"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z68-ko-EcN">
+                                                <rect key="frame" x="0.0" y="88" width="335" height="52"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yacht charter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nuw-Y0-4oX">
+                                                        <rect key="frame" x="12" y="8" width="295" height="44"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                        <color key="textColor" name="White Text"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqx-cI-hGB">
+                                                        <rect key="frame" x="0.0" y="8" width="335" height="44"/>
+                                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                                        <state key="normal" image="Drop Down Icon"/>
+                                                        <connections>
+                                                            <action selector="yachtCharterButton_onClick:" destination="Gm3-WC-AOr" eventType="touchUpInside" id="K4f-g6-hn6"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="Nuw-Y0-4oX" secondAttribute="bottom" id="3b7-Ha-td8"/>
+                                                    <constraint firstAttribute="trailing" secondItem="eqx-cI-hGB" secondAttribute="trailing" id="CIn-GZ-r3f"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Nuw-Y0-4oX" secondAttribute="trailing" constant="28" id="Ed2-s8-Uk7"/>
+                                                    <constraint firstItem="eqx-cI-hGB" firstAttribute="top" secondItem="z68-ko-EcN" secondAttribute="top" constant="8" id="OHS-Tj-vpp"/>
+                                                    <constraint firstItem="Nuw-Y0-4oX" firstAttribute="top" secondItem="z68-ko-EcN" secondAttribute="top" constant="8" id="P5f-Xi-Xjb"/>
+                                                    <constraint firstAttribute="bottom" secondItem="eqx-cI-hGB" secondAttribute="bottom" id="Pkh-8L-BbA"/>
+                                                    <constraint firstAttribute="height" constant="52" id="R0o-As-Ixf"/>
+                                                    <constraint firstItem="eqx-cI-hGB" firstAttribute="leading" secondItem="z68-ko-EcN" secondAttribute="leading" id="lSF-N1-9EC"/>
+                                                    <constraint firstItem="Nuw-Y0-4oX" firstAttribute="leading" secondItem="z68-ko-EcN" secondAttribute="leading" constant="12" id="wIw-HV-LPF"/>
+                                                </constraints>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6wo-GK-TVj">
-                                                <rect key="frame" x="0.0" y="88" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="164" width="335" height="50"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Destination" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W7S-WH-2DR">
                                                         <rect key="frame" x="12" y="0.0" width="311" height="50"/>
@@ -861,7 +892,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TNE-Nf-Fcv">
-                                                <rect key="frame" x="0.0" y="162" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="238" width="335" height="50"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Yacht name (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cRw-Qo-4Au">
                                                         <rect key="frame" x="12" y="0.0" width="311" height="50"/>
@@ -886,7 +917,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="w66-Fr-hOM">
-                                                <rect key="frame" x="0.0" y="236" width="335" height="52"/>
+                                                <rect key="frame" x="0.0" y="312" width="335" height="52"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Nt-S5-vZr">
                                                         <rect key="frame" x="0.0" y="0.0" width="197" height="52"/>
@@ -953,8 +984,39 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wg6-RV-ZDg">
+                                                <rect key="frame" x="0.0" y="388" width="335" height="52"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budget" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spZ-zE-33U">
+                                                        <rect key="frame" x="12" y="8" width="295" height="44"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                        <color key="textColor" name="White Text"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9O7-hX-JKE">
+                                                        <rect key="frame" x="0.0" y="8" width="335" height="44"/>
+                                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                                        <state key="normal" image="Drop Down Icon"/>
+                                                        <connections>
+                                                            <action selector="budgetPickerButton_onClick:" destination="Gm3-WC-AOr" eventType="touchUpInside" id="DY2-PX-ipH"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="9O7-hX-JKE" firstAttribute="leading" secondItem="wg6-RV-ZDg" secondAttribute="leading" id="2a9-CQ-sOm"/>
+                                                    <constraint firstItem="9O7-hX-JKE" firstAttribute="top" secondItem="wg6-RV-ZDg" secondAttribute="top" constant="8" id="KeK-Iu-Hse"/>
+                                                    <constraint firstAttribute="bottom" secondItem="9O7-hX-JKE" secondAttribute="bottom" id="MQI-ap-U1Y"/>
+                                                    <constraint firstAttribute="bottom" secondItem="spZ-zE-33U" secondAttribute="bottom" id="XzJ-jZ-uF3"/>
+                                                    <constraint firstAttribute="trailing" secondItem="9O7-hX-JKE" secondAttribute="trailing" id="YCf-sa-uKm"/>
+                                                    <constraint firstItem="spZ-zE-33U" firstAttribute="leading" secondItem="wg6-RV-ZDg" secondAttribute="leading" constant="12" id="q0l-Tc-Lb4"/>
+                                                    <constraint firstItem="spZ-zE-33U" firstAttribute="top" secondItem="wg6-RV-ZDg" secondAttribute="top" constant="8" id="uxR-p9-haG"/>
+                                                    <constraint firstAttribute="height" constant="52" id="wzo-Yr-sLF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="spZ-zE-33U" secondAttribute="trailing" constant="28" id="yb4-FK-tfS"/>
+                                                </constraints>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZCi-C6-nbq">
-                                                <rect key="frame" x="0.0" y="312" width="335" height="60"/>
+                                                <rect key="frame" x="0.0" y="464" width="335" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HqF-YY-Lau">
                                                         <rect key="frame" x="0.0" y="8" width="335" height="44"/>
@@ -991,7 +1053,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="KTK-GW-DTh">
-                                                <rect key="frame" x="0.0" y="396" width="335" height="25"/>
+                                                <rect key="frame" x="0.0" y="548" width="335" height="25"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Es1-wZ-55S">
                                                         <rect key="frame" x="0.0" y="0.0" width="203" height="25"/>
@@ -1105,6 +1167,10 @@
                         <outlet property="lenghtButton" destination="hN3-xo-w8s" id="WIj-t2-YmL"/>
                         <outlet property="lenghtLabel" destination="sPX-Cc-f0O" id="wVX-WM-iYH"/>
                         <outlet property="toDateLabel" destination="HZ9-tj-rej" id="Vnq-pA-1P4"/>
+                        <outlet property="yachtBudgetButton" destination="9O7-hX-JKE" id="D3Y-va-X8U"/>
+                        <outlet property="yachtBudgetLabel" destination="spZ-zE-33U" id="QeL-ka-TbX"/>
+                        <outlet property="yachtCharterButton" destination="eqx-cI-hGB" id="KiA-Dg-suz"/>
+                        <outlet property="yachtCharterLabel" destination="Nuw-Y0-4oX" id="IVE-8q-6TU"/>
                         <outlet property="yachtNameTextField" destination="cRw-Qo-4Au" id="hqZ-py-vnV"/>
                         <outlet property="yachtTypeButton" destination="6bf-bd-1gK" id="wax-G7-G9A"/>
                         <outlet property="yachtTypeLabel" destination="ReK-eV-ddM" id="iok-EC-GcV"/>
