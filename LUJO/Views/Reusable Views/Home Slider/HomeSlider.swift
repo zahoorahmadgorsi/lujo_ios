@@ -83,28 +83,18 @@ extension HomeSlider: UICollectionViewDataSource {
                                                       for: indexPath) as! HomeSliderCell
         
         let model = itemsList[indexPath.row]
-
-        //Zahoor started 20201026
-//        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
-//            cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-//        }
-        cell.primaryImage.isHidden = false;
-        //removing video player if was added
-        cell.containerView.removeLayer(layerName: "videoPlayer")
-//        cell.containerView.removeLayer(layerName: "blurrVideoPlayer")
-        var avPlayer: AVPlayer!
-//        var avBlurrPlayer: AVPlayer!
-        if (model.primaryMedia?.type == "image"){
-            
-            if let mediaLink = model.primaryMedia?.mediaUrl {
-                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-            }
+        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
+            cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
-        else if( model.primaryMedia?.type == "video"){
+        //Zahoor started 20201026
+        cell.primaryImage.isHidden = false;
+        cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        if( model.primaryMedia?.type == "video"){
             //Playing the video
             if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
                 cell.primaryImage.isHidden = true;
-                
+
                 avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
                 let avPlayerLayer = AVPlayerLayer(player: avPlayer)
                 avPlayerLayer.name = "videoPlayer"
@@ -116,19 +106,6 @@ extension HomeSlider: UICollectionViewDataSource {
                     avPlayer?.seek(to: CMTime.zero)
                     avPlayer?.play()
                 }
-//                //Blurr player
-//                avBlurrPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
-//                let avPlayerBlurrLayer = AVPlayerLayer(player: avBlurrPlayer)
-//                avPlayerBlurrLayer.name = "blurrVideoPlayer"
-//                avPlayerBlurrLayer.frame = cell.containerView.bounds
-//                avPlayerBlurrLayer.videoGravity = .resize
-//                cell.containerView.layer.insertSublayer(avPlayerBlurrLayer, at: 0)
-//                avBlurrPlayer.play()
-//                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avBlurrPlayer.currentItem, queue: .main) { _ in
-//                    avBlurrPlayer?.seek(to: CMTime.zero)
-//                    avBlurrPlayer?.play()
-//                }
-                
             }else
                 if let mediaLink = model.primaryMedia?.thumbnail {
                 cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)

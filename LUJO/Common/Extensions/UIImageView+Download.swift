@@ -23,7 +23,7 @@ extension UIImageView {
         self.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder-img"), completionHandler: { result in
             switch result {
             case .success(let data):
-                print("✅ Kingfisher - Successfully fetched image from \(link) 💾 cache: \(data.cacheType.asString)")
+                //print("✅ Kingfisher - Successfully fetched image from \(link) 💾 cache: \(data.cacheType.asString)")
                 self.contentMode = contentMode
                 
             case .failure(let error):

@@ -97,10 +97,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
         
     //Zahoor Started 20200822
-    var animationInterval:TimeInterval = 15
-    //3 is total number of animation s on the screen 1: Featured, 2: Events and 3: Experience
-    var secondsToDelay:TimeInterval = 2 //animation delay between Featured,Events and Experience
-
+    var animationInterval:TimeInterval = 9
+    var totalAnimationOnScreen:Int = 3
     //Zahoor finished
     
     override func viewDidLoad() {
@@ -156,11 +154,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         startAnimation()    //will start animating at 0 seconds
         //Zahoor Started
-//        To call a function after a certain period of time, you can use the perform function:
+        //3 is total number of animation s on the screen 1: Featured, 2: Events and 3: Experience
+        let secondsToDelay:TimeInterval = self.animationInterval / Double(totalAnimationOnScreen) //animation delay between Featured,Events and Experience
+//      Calling a function after a certain period of time
         DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay ) {
             self.startEventAndExpAnimation(homeSlider: self.homeEventSlider)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + (2*secondsToDelay)) {
+        DispatchQueue.main.asyncAfter(deadline: (.now() + (2*secondsToDelay))) {
             self.startEventAndExpAnimation(homeSlider: self.homeExperienceSlider)
         }
         //Zahoor Finished
@@ -322,9 +322,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     func update(_ information: HomeObjects?) {
         
         guard information != nil else {
-            //Zahoor Start
-//            featured.imageURLList = [""]
-            featured.itemsList = []
+            
+            featured.imageURLList = [""]
+            featured.itemsList = [] //Zahoor Start
             //            featuredPager.numberOfPages = 1
             //            featuredPager.currentPage = 0
             
@@ -456,7 +456,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     fileprivate func updateContent() {
         
         if let featuredImages = eventsAndExperiences?.getFeaturedImages() {
-//            featured.imageURLList = featuredImages    //zahoor
+            featured.imageURLList = featuredImages    
             featured.titleList = eventsAndExperiences!.getFeaturedNames()
             featured.categoryList = eventsAndExperiences!.getFeaturedTypes()
             featured.tagsList = eventsAndExperiences!.getFeaturedTags()

@@ -108,49 +108,41 @@ class ImageCarousel: UIView {
 
 extension ImageCarousel: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //Zahoor started 20201027
-//        return imageURLList.count
-        return itemsList.count
+        return imageURLList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
         let cell = carouselView.dequeueReusableCell(withReuseIdentifier: ImageCarouselCell.identifier,
                                                     for: indexPath) as! ImageCarouselCell
+        cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
         //Zahoor started 20201027
-//        cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
-        let model = itemsList[indexPath.row]
-        cell.primaryImage.isHidden = false;
-        //removing video player if was added
-        cell.containerView.removeLayer(layerName: "videoPlayer")
-        var avPlayer: AVPlayer!
-        if (model.primaryMedia?.type == "image"){
-            if let mediaLink = model.primaryMedia?.mediaUrl {
-                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-            }
-        }
-        else if( model.primaryMedia?.type == "video"){
-            //Playing the video
-            if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+        if ( itemsList.count > indexPath.row){  //in gallery, itemsList count would be 0
+            let model = itemsList[indexPath.row]
+            if( model.primaryMedia?.type == "video"){
                 
+                cell.primaryImage.isHidden = false;
+                cell.containerView.removeLayer(layerName: "videoPlayer")//removing video player if was added
+                var avPlayer: AVPlayer!
+                //Playing the video
+                if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+                    avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                    let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                    avPlayerLayer.name = "videoPlayer"
+                    avPlayerLayer.frame = cell.containerView.bounds
+                    avPlayerLayer.videoGravity = .resizeAspectFill
+                    cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
+                    avPlayer.play()
+                    cell.primaryImage.isHidden = true;
 
-                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
-                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
-                avPlayerLayer.name = "videoPlayer"
-                avPlayerLayer.frame = cell.containerView.bounds
-                avPlayerLayer.videoGravity = .resizeAspectFill
-                cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
-                
-                avPlayer.play()
-                cell.primaryImage.isHidden = true;
-                
-                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
-                    avPlayer?.seek(to: CMTime.zero)
-                    avPlayer?.play()
+                    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                        avPlayer?.seek(to: CMTime.zero)
+                        avPlayer?.play()
+                    }
+                }else
+                    if let mediaLink = model.primaryMedia?.thumbnail {
+                    cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
-            }else
-                if let mediaLink = model.primaryMedia?.thumbnail {
-                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
         }
         //Zahoor end
