@@ -42,6 +42,8 @@ class RestaurantDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRestaurant(restaurant)
+        //zahoor
+        setRecentlyViewed()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -167,4 +169,25 @@ class RestaurantDetailViewController: UIViewController {
         aString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
         return aString
     }
+    
+    //Zahoor Started
+    fileprivate func setRecentlyViewed() {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+//        print(event.id)
+        RecentlyViewedAPIManager().setRecenltyViewed(token: token, id: restaurant.id){response, error in
+            if let error = error{
+                print(error.localizedDescription );
+            }else{
+                print(response ?? "Error setting recent value");
+            }
+        }
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Recently Viewed Error", error: error)
+    }
+    //Zahoor finished
 }

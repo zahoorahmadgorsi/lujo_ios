@@ -216,7 +216,7 @@ class EEAPIManager {
         }
     }
 
-    fileprivate func handleError(_ response: DataResponse<Any>,
+    func handleError(_ response: DataResponse<Any>,
                                  _ statusCode: Int) -> Error {
         var serverError: String!
         do {

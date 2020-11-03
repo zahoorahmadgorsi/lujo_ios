@@ -105,7 +105,7 @@ enum DiningRouter: URLRequestConvertible {
             if let longitude = longitude {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "longitude", value: "\(longitude)"))
             }
-            
+
         case let .events(token, past):
             newURLComponents.path.append("/events")
             newURLComponents.queryItems = [

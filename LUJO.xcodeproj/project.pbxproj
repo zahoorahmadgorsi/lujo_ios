@@ -104,6 +104,8 @@
 		557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */; };
 		557BB5F02315A87200744188 /* RestaurantRequestReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */; };
 		5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583730D230D559100F9536C /* SwiftMessagesManger.swift */; };
+		882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */; };
+		882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */; };
 		9A0104E52181BC8600783E25 /* LiftSearchResultExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */; };
 		9A091DFD21E891B700B0B5E6 /* UserNotApprovedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */; };
 		9A091E0021EC2CEA00B0B5E6 /* PaymentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */; };
@@ -368,6 +370,8 @@
 		557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRequestReservationViewController.swift; sourceTree = "<group>"; };
 		5583730D230D559100F9536C /* SwiftMessagesManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessagesManger.swift; sourceTree = "<group>"; };
+		882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedAPIManager.swift; sourceTree = "<group>"; };
+		882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedRouter.swift; sourceTree = "<group>"; };
 		9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LiftSearchResultExample.json; sourceTree = "<group>"; };
 		9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotApprovedView.swift; sourceTree = "<group>"; };
 		9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfiguration.swift; sourceTree = "<group>"; };
@@ -886,6 +890,15 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		882AD4CE25515E8A00F0FCDE /* Recently Viewed */ = {
+			isa = PBXGroup;
+			children = (
+				882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */,
+				882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */,
+			);
+			path = "Recently Viewed";
+			sourceTree = "<group>";
+		};
 		9A0104E32181BC6300783E25 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1286,6 +1299,7 @@
 		9AE0B2AB21232F9000E55E6C /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				882AD4CE25515E8A00F0FCDE /* Recently Viewed */,
 				1D618005238AAD7900F01199 /* Custom_Requests */,
 				1D7819B32301A9920044C70B /* Dining */,
 				9A194FDF228DDCC200E3DBD1 /* Events_Experiences */,
@@ -1664,6 +1678,7 @@
 				1D70B11922B95F35007051FA /* ImageCarouselCell.swift in Sources */,
 				1DD785B923749B27001A9CF9 /* PayAlertView.swift in Sources */,
 				9A86F07D218A088E00495E4D /* LiftSpecsSubView.swift in Sources */,
+				882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */,
 				164333AF71D8F174F6F5CC65 /* Protocols.swift in Sources */,
 				9A2C2C4622788B0100CE2591 /* UIStackView+removeAll.swift in Sources */,
 				553A8EE22303EBD90051006E /* PreloadDataManager.swift in Sources */,
@@ -1725,6 +1740,7 @@
 				557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */,
 				9A8E93E9212BDC1700059DD8 /* LoginPresenter.swift in Sources */,
 				1DBC9C062365B97B00F0F133 /* PaymentRouter.swift in Sources */,
+				882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */,
 				9A89D3D221C0D148002D249F /* String+Capitalize.swift in Sources */,
 				3005D48223202CB100401243 /* MultiLegDetailViewControllerNEW.swift in Sources */,
 				9ABCF5C22163E55500D062C9 /* EntityProtocols.swift in Sources */,
