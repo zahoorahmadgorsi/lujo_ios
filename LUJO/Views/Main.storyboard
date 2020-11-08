@@ -115,11 +115,11 @@
             </objects>
             <point key="canvasLocation" x="1842" y="1430"/>
         </scene>
-        <!--My Bookings-->
+        <!--WishList-->
         <scene sceneID="pEn-EV-DlB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="usa-sU-bfL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Bookings" image="bookings_selected" id="nGT-oa-1XU"/>
+                    <tabBarItem key="tabBarItem" title="WishList" image="bookings_selected" id="nGT-oa-1XU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fdo-8e-pJ7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -127,12 +127,66 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="N5y-3h-vG2" kind="relationship" relationship="rootViewController" id="uUA-9G-faW"/>
+                        <segue destination="gai-EP-fT3" kind="relationship" relationship="rootViewController" id="lGf-bQ-pox"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Ce-kl-Qge" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1841" y="2114"/>
+        </scene>
+        <!--Wishlist-->
+        <scene sceneID="OKs-3t-Wue">
+            <objects>
+                <viewController storyboardIdentifier="WishListViewController" id="gai-EP-fT3" customClass="WishListViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qKz-bb-43x">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jsM-8U-o9H">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7F-x2-DYN">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1AD-0i-IkX">
+                                                <rect key="frame" x="184" y="484" width="46" height="54"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" name="Black Backgorund"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="o7F-x2-DYN" secondAttribute="bottom" id="GDU-HX-eRr"/>
+                                    <constraint firstAttribute="trailing" secondItem="o7F-x2-DYN" secondAttribute="trailing" id="QHM-7b-J2j"/>
+                                    <constraint firstItem="o7F-x2-DYN" firstAttribute="leading" secondItem="jsM-8U-o9H" secondAttribute="leading" id="aDc-Ik-rwy"/>
+                                    <constraint firstItem="o7F-x2-DYN" firstAttribute="top" secondItem="jsM-8U-o9H" secondAttribute="top" id="dHM-ew-jRk"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="LQX-cF-Jkm"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="iGL-Ps-Zjg"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jsM-8U-o9H" firstAttribute="bottom" secondItem="KI5-Lv-x2J" secondAttribute="bottom" id="2NM-hY-wdo"/>
+                            <constraint firstItem="jsM-8U-o9H" firstAttribute="top" secondItem="KI5-Lv-x2J" secondAttribute="top" id="8oY-yY-ibV"/>
+                            <constraint firstItem="jsM-8U-o9H" firstAttribute="leading" secondItem="KI5-Lv-x2J" secondAttribute="leading" id="Bxo-e8-CSd"/>
+                            <constraint firstItem="o7F-x2-DYN" firstAttribute="height" secondItem="qKz-bb-43x" secondAttribute="height" id="OGT-mY-PTF"/>
+                            <constraint firstItem="jsM-8U-o9H" firstAttribute="trailing" secondItem="KI5-Lv-x2J" secondAttribute="trailing" id="meW-ZO-Hxb"/>
+                            <constraint firstItem="o7F-x2-DYN" firstAttribute="width" secondItem="qKz-bb-43x" secondAttribute="width" id="pPy-dy-2Uj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="KI5-Lv-x2J"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Wishlist" id="acG-HO-gBl"/>
+                    <connections>
+                        <outlet property="scrollView" destination="jsM-8U-o9H" id="2jV-kH-8Ip"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Npt-RW-FhC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2660.8695652173915" y="2112.7232142857142"/>
         </scene>
         <!--Dining-->
         <scene sceneID="qZu-DZ-jpN">
@@ -5032,7 +5086,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KsT-hB-EfM" userLabel="Content">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJq-vr-Igr">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -5097,7 +5151,7 @@
                                         </constraints>
                                     </view>
                                     <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MxG-Gl-yLz" userLabel="BookingsList">
-                                        <rect key="frame" x="16" y="60" width="382" height="665"/>
+                                        <rect key="frame" x="16" y="60" width="382" height="758"/>
                                         <color key="backgroundColor" name="Black Backgorund"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myBookingCellID" rowHeight="499" id="LWY-QP-DC1" customClass="MyBookingsCell" customModule="LUJO" customModuleProvider="target">
@@ -5229,7 +5283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w5v-tc-nKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2627.536231884058" y="2112.7232142857142"/>
+            <point key="canvasLocation" x="4254" y="2113"/>
         </scene>
         <!--My Bookings-->
         <scene sceneID="vUO-zR-w8Z">
@@ -5342,7 +5396,7 @@ New York, NY 10011 USA</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VdM-Ee-hpI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3438" y="2113"/>
+            <point key="canvasLocation" x="5300" y="2113"/>
         </scene>
         <!--Aviation-->
         <scene sceneID="Wow-fR-WWA">

@@ -13,6 +13,7 @@ struct Restaurants: Codable {
     let id: Int
     let name: String
     let description: String
+    let tripadvisor: String?
     let address: String
     let phone: String?
     let zipCode: String?
@@ -28,12 +29,14 @@ struct Restaurants: Codable {
     let restaurantCategory: [Taxonomy]?
     let cuisineCategory: [Taxonomy]?
     let michelinStar: [Taxonomy]?
+    let priceRange: [Taxonomy]?
     let location: [TaxonomyLocation]
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case description
+        case tripadvisor
         case address
         case zipCode = "zip"
         case phone
@@ -47,6 +50,7 @@ struct Restaurants: Codable {
         case restaurantCategory = "restaurant_category"
         case cuisineCategory = "cuisine_category"
         case michelinStar = "michelin_star"
+        case priceRange = "price_range"
         case location
     }
 
@@ -63,6 +67,7 @@ extension Restaurants {
             id = try values.decode(Int.self, forKey: .id)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
+            tripadvisor = try values.decodeIfPresent(String.self, forKey: .tripadvisor)
             address = try values.decode(String.self, forKey: .address)
             phone = try values.decodeIfPresent(String.self, forKey: .phone)
             zipCode = try values.decodeIfPresent(String.self, forKey: .zipCode)
@@ -79,6 +84,7 @@ extension Restaurants {
             restaurantCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .restaurantCategory)
             cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)
             michelinStar = try values.decodeIfPresent([Taxonomy].self, forKey: .michelinStar)
+            priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
             location = try values.decode([TaxonomyLocation].self, forKey: .location)
         } catch {
             Crashlytics.sharedInstance().recordError(error)

@@ -104,8 +104,16 @@
 		557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */; };
 		557BB5F02315A87200744188 /* RestaurantRequestReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */; };
 		5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583730D230D559100F9536C /* SwiftMessagesManger.swift */; };
+		880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0625582ABC0070D7CD /* Hotel.swift */; };
+		880B9B0925582E350070D7CD /* Yacht.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0825582E350070D7CD /* Yacht.swift */; };
+		880B9B0B255840C10070D7CD /* Villa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0A255840C10070D7CD /* Villa.swift */; };
+		880B9B0D255845B10070D7CD /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0C255845B10070D7CD /* Gift.swift */; };
 		882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */; };
 		882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */; };
+		88EA9F91255408F800514626 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F90255408F800514626 /* WishlistViewController.swift */; };
+		88EA9F9425544E8400514626 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F9325544E8400514626 /* WishList.swift */; };
+		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
+		88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F982554552300514626 /* WishListAPIManager.swift */; };
 		9A0104E52181BC8600783E25 /* LiftSearchResultExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */; };
 		9A091DFD21E891B700B0B5E6 /* UserNotApprovedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */; };
 		9A091E0021EC2CEA00B0B5E6 /* PaymentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */; };
@@ -370,8 +378,16 @@
 		557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRequestReservationViewController.swift; sourceTree = "<group>"; };
 		5583730D230D559100F9536C /* SwiftMessagesManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessagesManger.swift; sourceTree = "<group>"; };
+		880B9B0625582ABC0070D7CD /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
+		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
+		880B9B0A255840C10070D7CD /* Villa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Villa.swift; sourceTree = "<group>"; };
+		880B9B0C255845B10070D7CD /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
 		882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedAPIManager.swift; sourceTree = "<group>"; };
 		882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedRouter.swift; sourceTree = "<group>"; };
+		88EA9F90255408F800514626 /* WishlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
+		88EA9F9325544E8400514626 /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
+		88EA9F962554550D00514626 /* WishListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListRouter.swift; sourceTree = "<group>"; };
+		88EA9F982554552300514626 /* WishListAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListAPIManager.swift; sourceTree = "<group>"; };
 		9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LiftSearchResultExample.json; sourceTree = "<group>"; };
 		9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotApprovedView.swift; sourceTree = "<group>"; };
 		9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfiguration.swift; sourceTree = "<group>"; };
@@ -582,12 +598,17 @@
 		164334DAF647504829A1A768 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				88EA9F9225544E6E00514626 /* WishList */,
 				1DBC9BF6235F4FA700F0F133 /* Bookings */,
 				1D7819BF2301D2A90044C70B /* Dining */,
 				9A194FE4228DE66D00E3DBD1 /* EventsAndExperiences */,
 				164332CBD01DAAB3FC14056B /* User.swift */,
 				9ABCF5C02163DDCD00D062C9 /* Aviation */,
 				9ABCF5C12163E55500D062C9 /* EntityProtocols.swift */,
+				880B9B0625582ABC0070D7CD /* Hotel.swift */,
+				880B9B0825582E350070D7CD /* Yacht.swift */,
+				880B9B0A255840C10070D7CD /* Villa.swift */,
+				880B9B0C255845B10070D7CD /* Gift.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -879,6 +900,7 @@
 		557BB5E62315954F00744188 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				88EA9F8D2554069100514626 /* WishList */,
 				557BB5EB231599F500744188 /* MainTabBarController.swift */,
 				5527641D23165BFD00380BEB /* Home */,
 				1DDD3CB42389A6D20041D346 /* Custom Requests */,
@@ -897,6 +919,31 @@
 				882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */,
 			);
 			path = "Recently Viewed";
+			sourceTree = "<group>";
+		};
+		88EA9F8D2554069100514626 /* WishList */ = {
+			isa = PBXGroup;
+			children = (
+				88EA9F90255408F800514626 /* WishlistViewController.swift */,
+			);
+			name = WishList;
+			sourceTree = "<group>";
+		};
+		88EA9F9225544E6E00514626 /* WishList */ = {
+			isa = PBXGroup;
+			children = (
+				88EA9F9325544E8400514626 /* WishList.swift */,
+			);
+			path = WishList;
+			sourceTree = "<group>";
+		};
+		88EA9F952554548700514626 /* WishList */ = {
+			isa = PBXGroup;
+			children = (
+				88EA9F962554550D00514626 /* WishListRouter.swift */,
+				88EA9F982554552300514626 /* WishListAPIManager.swift */,
+			);
+			path = WishList;
 			sourceTree = "<group>";
 		};
 		9A0104E32181BC6300783E25 /* Resources */ = {
@@ -1299,6 +1346,7 @@
 		9AE0B2AB21232F9000E55E6C /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				88EA9F952554548700514626 /* WishList */,
 				882AD4CE25515E8A00F0FCDE /* Recently Viewed */,
 				1D618005238AAD7900F01199 /* Custom_Requests */,
 				1D7819B32301A9920044C70B /* Dining */,
@@ -1629,6 +1677,7 @@
 				9A817B9A224E2FD500EE7BAC /* AviationSearch.swift in Sources */,
 				9AD6EAC221E49F0B00B695A3 /* Payment Type DataSource.swift in Sources */,
 				9ADC468621590AA600D96C95 /* AviationEntitities.swift in Sources */,
+				88EA9F91255408F800514626 /* WishlistViewController.swift in Sources */,
 				1D7819A822FD67740044C70B /* FeatureListView.swift in Sources */,
 				9A091E0C21EC49D900B0B5E6 /* Result.swift in Sources */,
 				9A0DCC7E21F86F7D00CC9111 /* BARouter.swift in Sources */,
@@ -1640,6 +1689,7 @@
 				9AE0B2AD2123304B00E55E6C /* GoLujoAPIManager.swift in Sources */,
 				9A645BA3226492CD009BF14D /* BookingPriceSummaryView.swift in Sources */,
 				5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */,
+				880B9B0925582E350070D7CD /* Yacht.swift in Sources */,
 				1D618009238AAF0000F01199 /* CustomRequestAPIManager.swift in Sources */,
 				9A5C5CBE22312D0900B8239D /* CardConnectSettings.swift in Sources */,
 				16433E96B29C22A0F8CFD271 /* Router.swift in Sources */,
@@ -1663,6 +1713,7 @@
 				1DBC9C002363355300F0F133 /* PurchaseViewController.swift in Sources */,
 				9A091E4A21EC7BD800B0B5E6 /* DoubleExtension.swift in Sources */,
 				5527642123165D1800380BEB /* EventsViewController.swift in Sources */,
+				880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */,
 				9AC4FE09225CA31F0031E57E /* AppDelegate.swift in Sources */,
 				9A5C5CB7222FD34F00B8239D /* PaymentResult.swift in Sources */,
 				9A8E93E5212BD1AE00059DD8 /* RoutingTable.swift in Sources */,
@@ -1693,6 +1744,7 @@
 				9A40F62A218600FE0038D0C4 /* AviationEmptyResultsView.swift in Sources */,
 				9ABAAC9022560FF300C756A3 /* UIColor.swift in Sources */,
 				9A6583C3221C4E6A00EB8EEA /* CountryCodeSelectionView.swift in Sources */,
+				88EA9F972554550D00514626 /* WishListRouter.swift in Sources */,
 				9AF422672265DF4F003CE562 /* BookingStep2.swift in Sources */,
 				9AC6DA6D217D8F700098B016 /* Lift.swift in Sources */,
 				9A74716E2244D8A60047F4AE /* ImageCarousel.swift in Sources */,
@@ -1709,6 +1761,7 @@
 				1DFE1AC92349FEFD0025410D /* RestaurantListViewController.swift in Sources */,
 				9A87214D21F0D4F80010AA37 /* Error.swift in Sources */,
 				30368DD72339200D00EDF549 /* MainScreenAviationCell.swift in Sources */,
+				88EA9F9425544E8400514626 /* WishList.swift in Sources */,
 				9A53A69C2151F78F00AAE322 /* UIView.swift in Sources */,
 				9AE0B2B121233D7900E55E6C /* BackendError.swift in Sources */,
 				9AD6EAC021E49C9600B695A3 /* PaymentTypeCell.swift in Sources */,
@@ -1758,7 +1811,9 @@
 				9A67F20A22566AE800E06F1D /* LujoIconLabel.swift in Sources */,
 				9A817B98224D0D2C00EE7BAC /* AviationLuggageSelectionView.swift in Sources */,
 				1D618007238AADBA00F01199 /* CustomRequestRouter.swift in Sources */,
+				88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */,
 				9AD6EABE21E3BBAF00B695A3 /* CreditCardsDataSource.swift in Sources */,
+				880B9B0D255845B10070D7CD /* Gift.swift in Sources */,
 				9AE0B2AF212330C700E55E6C /* GoLujoRouter.swift in Sources */,
 				1DEDB9ED22F2109600903CAC /* HomeSliderCell.swift in Sources */,
 				9AA52E552270DC9B003C6A51 /* AviationBooking.swift in Sources */,
@@ -1789,6 +1844,7 @@
 				9A194FE6228DE69A00E3DBD1 /* EventsAndExperiences.swift in Sources */,
 				9A38EF6E2253D6820097BA0B /* ActionButton.swift in Sources */,
 				557BB5EC231599F500744188 /* MainTabBarController.swift in Sources */,
+				880B9B0B255840C10070D7CD /* Villa.swift in Sources */,
 				1D88012C233E49630039DEA6 /* DiningCategorySlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

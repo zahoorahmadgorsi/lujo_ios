@@ -32,6 +32,7 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var pictureUpdateLabel: UILabel!
+    @IBOutlet weak var lblMyBookings: UILabel!
     @IBOutlet weak var lujoCreditsLabel: UILabel!
     
     @IBOutlet weak var updateProfileLabel: UILabel!
@@ -47,6 +48,9 @@ class AccountViewController: UIViewController {
         
         let labelTapResponder = UITapGestureRecognizer(target: self, action: #selector(updateUserPicture(_:)))
         pictureUpdateLabel.addGestureRecognizer(labelTapResponder)
+        
+        let lblMyBookingsTapResponder = UITapGestureRecognizer(target: self, action: #selector(lblMyBookingsTapped))
+        lblMyBookings.addGestureRecognizer(lblMyBookingsTapResponder)
         
         let userProfileTapResponder = UITapGestureRecognizer(target: self, action: #selector(presentUserProfileViewController))
         updateProfileLabel.addGestureRecognizer(userProfileTapResponder)
@@ -126,6 +130,12 @@ class AccountViewController: UIViewController {
             
             present(imagePicker, animated: true, completion: nil)
         }
+    }
+    
+    @objc func lblMyBookingsTapped() {
+        print("lblMyBookingsTapped")
+        let viewController = BookingsViewController.instantiate()
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func inviteFriendsButton_onClick(_ sender: Any) {
