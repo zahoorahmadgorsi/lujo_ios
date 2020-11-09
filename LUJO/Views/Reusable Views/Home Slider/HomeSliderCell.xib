@@ -48,25 +48,37 @@
                                 <rect key="frame" x="0.0" y="112" width="150" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93v-RB-xhI">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="22"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKf-h4-LMA">
-                                                <rect key="frame" x="0.0" y="0.0" width="150" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                                <color key="textColor" name="White Text"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dRT-GE-9UP">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="22"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKf-h4-LMA">
+                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="22"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                        <color key="textColor" name="White Text"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="ylD-NW-kPu">
+                                                        <rect key="frame" x="128" y="0.0" width="22" height="22"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="22" id="8MI-zS-LmR"/>
+                                                            <constraint firstAttribute="height" constant="22" id="KQa-Dr-h0r"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="XKf-h4-LMA" firstAttribute="top" secondItem="93v-RB-xhI" secondAttribute="top" id="2eF-Nk-jQT"/>
-                                            <constraint firstAttribute="trailing" secondItem="XKf-h4-LMA" secondAttribute="trailing" id="9Co-KH-CmX"/>
-                                            <constraint firstItem="XKf-h4-LMA" firstAttribute="leading" secondItem="93v-RB-xhI" secondAttribute="leading" id="FBn-Pb-Mom"/>
-                                            <constraint firstAttribute="bottom" secondItem="XKf-h4-LMA" secondAttribute="bottom" id="dJD-zn-ezE"/>
+                                            <constraint firstItem="dRT-GE-9UP" firstAttribute="leading" secondItem="93v-RB-xhI" secondAttribute="leading" id="LmF-Me-SU8"/>
+                                            <constraint firstAttribute="bottom" secondItem="dRT-GE-9UP" secondAttribute="bottom" id="RSy-26-Yen"/>
+                                            <constraint firstAttribute="trailing" secondItem="dRT-GE-9UP" secondAttribute="trailing" id="g9q-SW-C0E"/>
+                                            <constraint firstItem="dRT-GE-9UP" firstAttribute="top" secondItem="93v-RB-xhI" secondAttribute="top" id="hIP-Z7-nAJ"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vKJ-pl-mFp">
-                                        <rect key="frame" x="0.0" y="17" width="150" height="24"/>
+                                        <rect key="frame" x="0.0" y="22" width="150" height="24"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="W5w-1b-Y7w">
                                                 <rect key="frame" x="0.0" y="8" width="150" height="16"/>
@@ -96,7 +108,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4D-4m-pnW">
-                                        <rect key="frame" x="0.0" y="41" width="150" height="19"/>
+                                        <rect key="frame" x="0.0" y="46" width="150" height="14"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AA8-Ho-L9w">
@@ -189,6 +201,7 @@
                 <outlet property="containerView" destination="Hhc-rz-FLL" id="18G-z0-fTv"/>
                 <outlet property="date" destination="pfa-gK-WTN" id="nMN-iE-inc"/>
                 <outlet property="dateContainerView" destination="vKJ-pl-mFp" id="EHm-27-K2s"/>
+                <outlet property="imgHeart" destination="ylD-NW-kPu" id="36R-Ay-Guz"/>
                 <outlet property="name" destination="XKf-h4-LMA" id="EHO-Ox-LAn"/>
                 <outlet property="primaryImage" destination="D91-42-Go7" id="xf6-qs-NEd"/>
                 <outlet property="primaryImageHeight" destination="4S7-mD-gXj" id="gJw-d0-OFL"/>
@@ -200,6 +213,7 @@
     </objects>
     <resources>
         <image name="calendar_home_white" width="12" height="16"/>
+        <image name="heart_white" width="9" height="8"/>
         <image name="location_home" width="12" height="16"/>
         <image name="placeholder-img" width="600" height="400"/>
         <namedColor name="Palette - Placeholder Text">

@@ -97,8 +97,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
         
     //Zahoor Started 20200822
-    var animationInterval:TimeInterval = 9
-    var totalAnimationOnScreen:Int = 3
+    var animationInterval:TimeInterval = 4
+    var totalAnimationOnScreen:Int = 4
     //Zahoor finished
     
     override func viewDidLoad() {
@@ -154,13 +154,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         startAnimation()    //will start animating at 0 seconds
         //Zahoor Started
-        //3 is total number of animation s on the screen 1: Featured, 2: Events and 3: Experience
+        //4 is total number of animation s on the screen 1: Featured, 2: Events and 3: Experience 4:location events
         let secondsToDelay:TimeInterval = self.animationInterval / Double(totalAnimationOnScreen) //animation delay between Featured,Events and Experience
 //      Calling a function after a certain period of time
-        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + (2*secondsToDelay) ) {
             self.startEventAndExpAnimation(homeSlider: self.homeEventSlider)
         }
-        DispatchQueue.main.asyncAfter(deadline: (.now() + (2*secondsToDelay))) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + (3*secondsToDelay) ) {
+            self.startEventAndExpAnimation(homeSlider: self.locationEventSlider)
+        }
+        DispatchQueue.main.asyncAfter(deadline: (.now() + (4*secondsToDelay))) {
             self.startEventAndExpAnimation(homeSlider: self.homeExperienceSlider)
         }
         //Zahoor Finished
@@ -597,6 +600,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBAction func findAHotelButton_onClick(_ sender: Any) {
         self.present(HotelViewController.instantiate(), animated: true, completion: nil)
     }
+    
+    
 }
 
 extension HomeViewController: ImageCarouselDelegate {
@@ -609,14 +614,68 @@ extension HomeViewController: ImageCarouselDelegate {
 
 extension HomeViewController: DidSelectSliderItemProtocol {
     
+    func didTappedOnHeartAt(index: Int, sender: HomeSlider) {
+        let event: EventsExperiences!
+        switch sender {
+            case homeEventSlider:
+                event = eventsAndExperiences?.events[index]
+            case homeExperienceSlider:
+                event = eventsAndExperiences?.experiences[index]
+            case locationEventSlider:
+                event = locationEventSlider.itemsList[index]
+            default: return
+        }
+        
+        //setting the favourite
+        self.showNetworkActivity()
+        setWishListInformation(id: event.id) {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                print("ItemID:\(event.id)" + ", ItemType:" + event.type  + ", ServerResponse:" + informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                self.showError(error)
+            }
+        }
+        
+    }
+ 
+   
+    func setWishListInformation(id:Int,completion: @escaping (String?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().setFavourites(token: token,id: id) { strResponse, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                completion(nil, error)
+                return
+            }
+            completion(strResponse, error)
+        }
+    }
+    
+    
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider) {
         let event: EventsExperiences!
         
         switch sender {
-        case homeEventSlider:      event = eventsAndExperiences?.events[indexPath.row]
-        case homeExperienceSlider: event = eventsAndExperiences?.experiences[indexPath.row]
-        case locationEventSlider:  event = locationEventSlider.itemsList[indexPath.row]
-        default: return
+            case homeEventSlider:
+                event = eventsAndExperiences?.events[indexPath.row]
+            case homeExperienceSlider:
+                event = eventsAndExperiences?.experiences[indexPath.row]
+            case locationEventSlider:
+                event = locationEventSlider.itemsList[indexPath.row]
+            default: return
         }
         
         let viewController = EventDetailsViewController.instantiate(event: event)

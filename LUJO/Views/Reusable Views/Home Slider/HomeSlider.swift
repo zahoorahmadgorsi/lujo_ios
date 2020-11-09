@@ -11,10 +11,11 @@ import AVFoundation
 
 protocol DidSelectSliderItemProtocol: class {
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider)
+    func didTappedOnHeartAt(index: Int, sender: HomeSlider)
 }
 
 class HomeSlider: UIView {
-    var itemWidth:Int = 150
+    var itemWidth:Int = 175
     var eventItemHeight:Int = 172
     var experienceItemHeight:Int = 148
     var itemMargin:Int = 16
@@ -70,6 +71,7 @@ class HomeSlider: UIView {
     override class var requiresConstraintBasedLayout: Bool {
         return true
     }
+   
 }
 
 extension HomeSlider: UICollectionViewDataSource {
@@ -111,6 +113,18 @@ extension HomeSlider: UICollectionViewDataSource {
                 cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
         }
+        //checking favourite image red or white
+        if (model.isFavourite ?? false){
+            cell.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            cell.imgHeart.image = UIImage(named: "heart_white")
+        }
+        //Add tap gesture on favourite
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeSlider.tappedOnHeart(_:)))
+        cell.imgHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+        cell.imgHeart.tag = indexPath.row
+        cell.imgHeart.addGestureRecognizer(tapGestureRecognizer)
+
         //Zahoor end
         
         cell.name.text = model.name
@@ -147,10 +161,16 @@ extension HomeSlider: UICollectionViewDataSource {
     }
 }
 
+
+
 extension HomeSlider: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didSelectSliderItemAt(indexPath: indexPath, sender: self)
-        print(indexPath)
+    }
+    
+    //Zahoor
+    @objc func tappedOnHeart(_ sender:AnyObject){
+        delegate?.didTappedOnHeartAt(index: sender.view.tag, sender: self)
     }
 }
 

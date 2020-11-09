@@ -12,6 +12,7 @@ import Foundation
 import UIKit
 
 enum WishListRouter: URLRequestConvertible {
+    
     // Obtain backend URL from configuration
     static let baseURLString: String = {
         guard let urlString = Bundle.main.object(forInfoDictionaryKey: "BACKEND_URL") as? String else {
@@ -35,7 +36,7 @@ enum WishListRouter: URLRequestConvertible {
     }()
 
     case getFavourites(String)
-    
+    case setFavourites(String,Int)
 
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -60,9 +61,11 @@ enum WishListRouter: URLRequestConvertible {
 
     func getHTTPMethod() -> HTTPMethod {
         switch self {
-        case .getFavourites:
-            return .get
-        
+            case .getFavourites:
+                return .get
+            
+            case .setFavourites:
+                return .post
         }
     }
 
@@ -79,23 +82,39 @@ enum WishListRouter: URLRequestConvertible {
                     URLQueryItem(name: "token", value: token)
                 ]
             
-            do {
-                let callURL = try newURLComponents.asURL()
-                return callURL
-            } catch {
-                Crashlytics.sharedInstance().recordError(error)
-            }
-
-            return URL(string: "https://\(EERouter.baseURLString)")!
+        case .setFavourites:
+            newURLComponents.path.append("/favorites/set")
         }
+        
+        do {
+            let callURL = try newURLComponents.asURL()
+            return callURL
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+        }
+
+        return URL(string: "https://\(EERouter.baseURLString)")!
+            
+            
+        
+        
     }
+    
     fileprivate func getBodyData() -> Data? {
         switch self {
         case .getFavourites:
             return nil
-        
+        case let .setFavourites(token, id):
+            return getFavouritesAsJSONData(token: token , id : id)
         }
     }
     
+    fileprivate func getFavouritesAsJSONData(token: String , id : Int) -> Data? {
+        let body: [String: Any] = [
+            "id": id,
+            "token": token
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
      
 }
