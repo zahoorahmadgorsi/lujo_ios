@@ -37,7 +37,8 @@ enum WishListRouter: URLRequestConvertible {
 
     case getFavourites(String)
     case setFavourites(String,Int)
-
+    case unSetFavourites(String,Int)
+    
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
             return getHTTPMethod()
@@ -63,8 +64,9 @@ enum WishListRouter: URLRequestConvertible {
         switch self {
             case .getFavourites:
                 return .get
-            
             case .setFavourites:
+                return .post
+            case .unSetFavourites:
                 return .post
         }
     }
@@ -81,9 +83,10 @@ enum WishListRouter: URLRequestConvertible {
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token)
                 ]
-            
-        case .setFavourites:
-            newURLComponents.path.append("/favorites/set")
+            case .setFavourites:
+                newURLComponents.path.append("/favorites/set")
+            case .unSetFavourites:
+                newURLComponents.path.append("/favorites/unset")
         }
         
         do {
@@ -102,10 +105,12 @@ enum WishListRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-        case .getFavourites:
-            return nil
-        case let .setFavourites(token, id):
-            return getFavouritesAsJSONData(token: token , id : id)
+            case .getFavourites:
+                return nil
+            case let .setFavourites(token, id):
+                return getFavouritesAsJSONData(token: token , id : id)
+            case let .unSetFavourites(token, id):
+                return getFavouritesAsJSONData(token: token , id : id)
         }
     }
     

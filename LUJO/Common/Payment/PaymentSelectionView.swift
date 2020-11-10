@@ -111,7 +111,7 @@ class PaymentSelectionView: UIViewController, UITableViewDelegate {
                 optionsTableView.dataSource = tableDatasource
                 addCreditCardLabel.isHidden = false
             default:
-                print("Pending other payment methods")
+//                print("Pending other payment methods")
                 addCreditCardLabel.isHidden = true
             }
             return

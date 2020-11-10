@@ -112,7 +112,7 @@ extension BookingStep3 {
         """
 
         showCardAlertWith(title: "Request Not Processed", body: bodyString, buttonTitle: "Retry Submission", cancelButtonTitle: "Cancel request procedure") {
-            print("Should retry")
+//            print("Should retry")
         }
     }
 
@@ -144,7 +144,7 @@ extension BookingStep3 {
         """
         
         showCardAlertWith(title: "Booking process failed", body: bodyString, buttonTitle: "Ok") {
-            print("Re try")
+//            print("Re try")
         }
     }
 

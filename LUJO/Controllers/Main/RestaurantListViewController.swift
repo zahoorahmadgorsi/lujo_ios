@@ -83,7 +83,7 @@ class RestaurantListViewController: UIViewController {
     
     func update(listOf objects: [Restaurants]) {
         dataSource = objects
-        print("Found \(dataSource.count) items")
+//        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
         collectionView.reloadData()
     }

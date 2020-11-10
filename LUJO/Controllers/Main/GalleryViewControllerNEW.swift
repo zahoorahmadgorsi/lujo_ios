@@ -46,6 +46,10 @@ class GalleryViewControllerNEW: UIViewController {
 }
 
 extension GalleryViewControllerNEW: ImageCarouselDelegate {
+//    func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
+//        print("Allah Ho Akbar")
+//    }
+    
     
     func didMoveTo(position: Int) {
         currentImageNum.text = "\(position + 1)"

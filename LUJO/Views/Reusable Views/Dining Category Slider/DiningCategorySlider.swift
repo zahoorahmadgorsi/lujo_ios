@@ -127,7 +127,7 @@ extension DiningCategorySlider: UICollectionViewDataSource {
 extension DiningCategorySlider: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didSelectSliderItemAt(indexPath: indexPath, sender: self)
-        print(indexPath)
+//        print(indexPath)
     }
 }
 

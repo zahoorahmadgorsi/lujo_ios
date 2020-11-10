@@ -3,6 +3,7 @@ import AVFoundation
 
 protocol ImageCarouselDelegate: class {
     func didMoveTo(position: Int)
+    func didTappedOnHeartAt(index: Int, sender: ImageCarousel)
 }
 
 class ImageCarousel: UIView {
@@ -101,8 +102,14 @@ class ImageCarousel: UIView {
         )
     }
 
+    
     override class var requiresConstraintBasedLayout: Bool {
         return true
+    }
+    
+    //Zahoor
+    @objc func tappedOnHeart(_ sender:AnyObject){
+        delegate?.didTappedOnHeartAt(index: sender.view.tag, sender: self)
     }
 }
 
@@ -117,10 +124,10 @@ extension ImageCarousel: UICollectionViewDataSource {
                                                     for: indexPath) as! ImageCarouselCell
         cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
         //Zahoor started 20201027
+        
         if ( itemsList.count > indexPath.row){  //in gallery, itemsList count would be 0
             let model = itemsList[indexPath.row]
             if( model.primaryMedia?.type == "video"){
-                
                 cell.primaryImage.isHidden = false;
                 cell.containerView.removeLayer(layerName: "videoPlayer")//removing video player if was added
                 var avPlayer: AVPlayer!
@@ -144,8 +151,21 @@ extension ImageCarousel: UICollectionViewDataSource {
                     cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             }
+            //checking favourite image red or white
+            if (model.isFavourite ?? false){
+                cell.imgHeart.image = UIImage(named: "heart_red")
+            }else{
+                cell.imgHeart.image = UIImage(named: "heart_white")
+            }
         }
+        
+        //Add tap gesture on favourite
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageCarousel.tappedOnHeart(_:)))
+        cell.imgHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+        cell.imgHeart.tag = indexPath.row
+        cell.imgHeart.addGestureRecognizer(tapGestureRecognizer)
         //Zahoor end
+
         
         if titleList.count > indexPath.row, !titleList[indexPath.row].isEmpty {
             cell.titleLabel.text = titleList[indexPath.row]
@@ -187,7 +207,7 @@ extension ImageCarousel: UICollectionViewDataSource {
 
 extension ImageCarousel: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+//        print(indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

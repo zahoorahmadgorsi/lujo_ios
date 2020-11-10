@@ -22,8 +22,8 @@ class ImageCarouselCell: UICollectionViewCell {
     @IBOutlet var locationContainerView: UIView!
     @IBOutlet var starsLabel: UILabel!
     @IBOutlet var starsContainerView: UIView!
-    
     @IBOutlet var gradientImageView: UIImageView!
+    @IBOutlet weak var imgHeart: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

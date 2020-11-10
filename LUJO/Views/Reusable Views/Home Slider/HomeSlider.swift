@@ -75,6 +75,7 @@ class HomeSlider: UIView {
 }
 
 extension HomeSlider: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemsList.count
     }
@@ -164,6 +165,7 @@ extension HomeSlider: UICollectionViewDataSource {
 
 
 extension HomeSlider: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didSelectSliderItemAt(indexPath: indexPath, sender: self)
     }
@@ -175,6 +177,7 @@ extension HomeSlider: UICollectionViewDelegate {
 }
 
 extension HomeSlider: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {

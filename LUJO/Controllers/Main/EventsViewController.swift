@@ -135,7 +135,7 @@ class EventsViewController: UIViewController {
     
     func update(listOf objects: [EventsExperiences]) {
         dataSource = objects
-        print("Found \(dataSource.count) items")
+//        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
         collectionView.reloadData()
     }

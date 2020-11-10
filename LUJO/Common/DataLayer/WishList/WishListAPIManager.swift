@@ -13,8 +13,12 @@ import CoreLocation
 
 extension GoLujoAPIManager  {
     
-    func setFavourites(token: String, id: Int, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request( WishListRouter.setFavourites(token, id) )
+    func setUnSetFavourites(token: String, id: Int, isUnSetFavourite: Bool, completion: @escaping (String?, Error?) -> Void) {
+        var wishListRouter = WishListRouter.setFavourites(token, id)
+        if (isUnSetFavourite){
+            wishListRouter = WishListRouter.unSetFavourites(token, id)
+        }
+        Alamofire.request( wishListRouter )
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

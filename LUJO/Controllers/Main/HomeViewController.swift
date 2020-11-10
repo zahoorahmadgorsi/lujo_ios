@@ -36,7 +36,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     //MARK:- Globals
     
-    private var eventsAndExperiences: HomeObjects?
+    private var homeObjects: HomeObjects?
     private var locationEvents:[EventsExperiences] = []
     
     private let naHUD = JGProgressHUD(style: .dark)
@@ -313,8 +313,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
     }
     
-    func update(_ events: [EventsExperiences]) {
-        print(events)
+    func updateEventsByGeoLocation(_ events: [EventsExperiences]) {
+//        print(events)
         locationEvents = events
         locationEventContainerView.isHidden = events.count == 0
         locationEventSlider.itemsList = Array(events.prefix(5))
@@ -327,7 +327,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         guard information != nil else {
             
             featured.imageURLList = [""]
-            featured.itemsList = [] //Zahoor Start
+            featured.itemsList = []
             //            featuredPager.numberOfPages = 1
             //            featuredPager.currentPage = 0
             
@@ -337,7 +337,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             specialEventView2.updateInformation(with: nil)
             return
         }
-        eventsAndExperiences = information
+        homeObjects = information
         updateContent()
         
         // Update location content
@@ -399,8 +399,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         switch sender.view {
         case is ImageCarousel:  event = getCurrentEventInFeatured()
-        case specialEventView1: event = eventsAndExperiences?.specialEvents[0]
-        case specialEventView2: event = eventsAndExperiences?.specialEvents[1]
+        case specialEventView1: event = homeObjects?.specialEvents[0]
+        case specialEventView2: event = homeObjects?.specialEvents[1]
         default: return
         }
         
@@ -458,24 +458,24 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     fileprivate func updateContent() {
         
-        if let featuredImages = eventsAndExperiences?.getFeaturedImages() {
+        if let featuredImages = homeObjects?.getFeaturedImages() {
             featured.imageURLList = featuredImages    
-            featured.titleList = eventsAndExperiences!.getFeaturedNames()
-            featured.categoryList = eventsAndExperiences!.getFeaturedTypes()
-            featured.tagsList = eventsAndExperiences!.getFeaturedTags()
+            featured.titleList = homeObjects!.getFeaturedNames()
+            featured.categoryList = homeObjects!.getFeaturedTypes()
+            featured.tagsList = homeObjects!.getFeaturedTags()
             allImagesNum.text = "\(featuredImages.count)"
             currentImageNum.text = "1"
         }
         
-        featured.itemsList = eventsAndExperiences?.slider ?? [] //zahoor
-        homeEventSlider.itemsList = eventsAndExperiences?.events ?? []
-        homeExperienceSlider.itemsList = eventsAndExperiences?.experiences ?? []
+        featured.itemsList = homeObjects?.slider ?? [] //zahoor
+        homeEventSlider.itemsList = homeObjects?.events ?? []
+        homeExperienceSlider.itemsList = homeObjects?.experiences ?? []
         
-        if eventsAndExperiences?.specialEvents.count ?? 0 > 1 {
-            specialEventView1.updateInformation(with: eventsAndExperiences?.specialEvents[0])
-            specialEventView2.updateInformation(with: eventsAndExperiences?.specialEvents[1])
-        } else if eventsAndExperiences?.specialEvents.count ?? 0 > 0 {
-            specialEventView1.updateInformation(with: eventsAndExperiences?.specialEvents[0])
+        if homeObjects?.specialEvents.count ?? 0 > 1 {
+            specialEventView1.updateInformation(with: homeObjects?.specialEvents[0])
+            specialEventView2.updateInformation(with: homeObjects?.specialEvents[1])
+        } else if homeObjects?.specialEvents.count ?? 0 > 0 {
+            specialEventView1.updateInformation(with: homeObjects?.specialEvents[0])
             specialEventView2.updateInformation(with: nil)
             specialEventContainer2.isHidden = true
         } else {
@@ -601,59 +601,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         self.present(HotelViewController.instantiate(), animated: true, completion: nil)
     }
     
-    
-}
-
-extension HomeViewController: ImageCarouselDelegate {
-    
-    func didMoveTo(position: Int) {
-        currentImageNum.text = "\(position + 1)"
-    }
-    
-}
-
-extension HomeViewController: DidSelectSliderItemProtocol {
-    
-    func didTappedOnHeartAt(index: Int, sender: HomeSlider) {
-        let event: EventsExperiences!
-        switch sender {
-            case homeEventSlider:
-                event = eventsAndExperiences?.events[index]
-            case homeExperienceSlider:
-                event = eventsAndExperiences?.experiences[index]
-            case locationEventSlider:
-                event = locationEventSlider.itemsList[index]
-            default: return
-        }
-        
-        //setting the favourite
-        self.showNetworkActivity()
-        setWishListInformation(id: event.id) {information, error in
-            self.hideNetworkActivity()
-            
-            if let error = error {
-                self.showError(error)
-                return
-            }
-            
-            if let informations = information {
-                print("ItemID:\(event.id)" + ", ItemType:" + event.type  + ", ServerResponse:" + informations)
-            } else {
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
-                self.showError(error)
-            }
-        }
-        
-    }
- 
-   
-    func setWishListInformation(id:Int,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
         
-        GoLujoAPIManager().setFavourites(token: token,id: id) { strResponse, error in
+        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
                 let error = BackendError.parsing(reason: "Could not obtain Dining information")
@@ -664,15 +618,125 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         }
     }
     
+}
+
+extension HomeViewController: ImageCarouselDelegate {
+    func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
+        var item: EventsExperiences!
+        item = featured.itemsList[index]
+        
+        //setting the favourite
+        self.showNetworkActivity()
+        setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                    var featuredExperiences = self.featured.itemsList //events in locationEventSlider
+                    featuredExperiences[index].isFavourite = !(featuredExperiences[index].isFavourite ?? false)
+                    sender.itemsList = featuredExperiences
+                    // Store data for later use inside preload reference.
+//                        PreloadDataManager.HomeScreen.scrollViewData = information
+                print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                self.showError(error)
+            }
+        }
+    }
+    
+    
+    func didMoveTo(position: Int) {
+        currentImageNum.text = "\(position + 1)"
+    }
+    
+}
+
+extension HomeViewController: DidSelectSliderItemProtocol {
+    
+    func didTappedOnHeartAt(index: Int, sender: HomeSlider) {
+        var item: EventsExperiences!
+        switch sender {
+            case homeEventSlider:
+                item = homeObjects?.events[index]
+            case homeExperienceSlider:
+                item = homeObjects?.experiences[index]
+            case locationEventSlider:
+                item = locationEventSlider.itemsList[index]
+            default: return
+        }
+        
+        //setting the favourite
+        self.showNetworkActivity()
+        setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {                
+                switch sender {
+                case self.homeEventSlider:
+                    var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
+                    var homeEvents = self.homeEventSlider.itemsList     //events in homeEventSlider
+                    
+                    //Event updated in homeEventList , might also be present in locationlist
+                    //Get the element and its offset
+                    if let item = locationEvents.enumerated().first(where: {$0.element.id == homeEvents[index].id}) {
+                        print("HomeEventIndex:\(index) , : LocationEventIndex:\(item.offset) ")
+                        locationEvents[item.offset].isFavourite = !(locationEvents[item.offset].isFavourite ?? false)  //update location events list as well
+                        self.locationEventSlider.itemsList = locationEvents //re-assigning as it will automatically reload the collection
+                    }
+                    homeEvents[index].isFavourite = !(homeEvents[index].isFavourite ?? false)
+                    sender.itemsList = homeEvents   //re-assigning as it will automatically reload the collection
+                case self.homeExperienceSlider:
+                    var homeExperiences = self.homeExperienceSlider.itemsList //events in locationEventSlider
+                    homeExperiences[index].isFavourite = !(homeExperiences[index].isFavourite ?? false)
+                    sender.itemsList = homeExperiences   //re-assigning as it will automatically reload the collection
+                case self.locationEventSlider:
+                    var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
+                    var homeEvents = self.homeEventSlider.itemsList     //events in homeEventSlider
+                    
+                    //Event updated in locationlist, might also be present in home event list,
+                    //Get the element and its offset
+                    if let item = homeEvents.enumerated().first(where: {$0.element.id == locationEvents[index].id}) {
+                        print("LocationEventIndex:\(index) , HomeEventIndex: \(item.offset) ")
+                        homeEvents[item.offset].isFavourite = !(homeEvents[item.offset].isFavourite ?? false)    //update home events list as well
+                        self.homeEventSlider.itemsList = homeEvents //re-assigning as it will automatically reload the collection
+                    }
+                    locationEvents[index].isFavourite = !(locationEvents[index].isFavourite ?? false)
+                    sender.itemsList = locationEvents   //re-assigning as it will automatically reload the collection
+                    // Store data for later use inside preload reference.
+//                        PreloadDataManager.HomeScreen.scrollViewData = information
+                default: return
+                }
+                print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                self.showError(error)
+            }
+        }
+        
+    }
+ 
+   
+    
+    
     
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider) {
         let event: EventsExperiences!
         
         switch sender {
             case homeEventSlider:
-                event = eventsAndExperiences?.events[indexPath.row]
+                event = homeObjects?.events[indexPath.row]
             case homeExperienceSlider:
-                event = eventsAndExperiences?.experiences[indexPath.row]
+                event = homeObjects?.experiences[indexPath.row]
             case locationEventSlider:
                 event = locationEventSlider.itemsList[indexPath.row]
             default: return
@@ -690,7 +754,7 @@ extension HomeViewController {
     
     func getCurrentEventInFeatured() -> EventsExperiences? {
         if let index = featured.currentIndex {
-            return eventsAndExperiences?.slider[index]
+            return homeObjects?.slider[index]
         }
         return nil
     }
@@ -718,7 +782,7 @@ extension HomeViewController {
                 } else {
                     if let information = information {
                         // NEED TO BE REPLACED WITH UI VIEW
-                        self.update(information)
+                        self.updateEventsByGeoLocation(information)
                     } else {
                         // NEED TO BE REPLACED WITH UI VIEW
                         self.showFeedback("No nearby Places available")

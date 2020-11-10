@@ -49,7 +49,7 @@ class AviationLuggageSelectionViewController: UIViewController {
     
     @IBAction func increase(_ sender: Any) {
         guard let caller = sender as? UIView else {
-            print("This is not a button")
+//            print("This is not a button")
             return
         }
         
@@ -68,7 +68,7 @@ class AviationLuggageSelectionViewController: UIViewController {
     
     @IBAction func decrease(_ sender: Any) {
         guard let caller = sender as? UIView else {
-            print("This is not a button")
+//            print("This is not a button")
             return
         }
         

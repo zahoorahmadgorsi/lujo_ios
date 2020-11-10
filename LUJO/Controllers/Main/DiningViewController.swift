@@ -194,7 +194,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     }
     
     func updateMyRestaurants(_ restaurants: [Restaurants]) {
-        print(restaurants)
+//        print(restaurants)
         locationRestaurants = restaurants
         myLocationCityView.isHidden = restaurants.count == 0
         noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
@@ -375,9 +375,30 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             }
         })
     }
+    
+    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                completion(nil, error)
+                return
+            }
+            completion(strResponse, error)
+        }
+    }
 }
 
 extension DiningViewController: ImageCarouselDelegate {
+//    func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
+//        print("Allah Ho Akbar")
+//    }
+    
     
     func didMoveTo(position: Int) {
         currentImageNum.text = "\(position + 1)"

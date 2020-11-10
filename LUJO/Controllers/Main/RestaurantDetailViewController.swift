@@ -72,7 +72,7 @@ class RestaurantDetailViewController: UIViewController {
             let latitude = Double(latitudeString),
             let longitude = Double(longitudeString)
             else {
-                print("🛑 - Error: Missing latitude and logitude for Restaurants with id: \(restaurant.id) and name: \(restaurant.name)")
+//                print("🛑 - Error: Missing latitude and logitude for Restaurants with id: \(restaurant.id) and name: \(restaurant.name)")
                 return
         }
         

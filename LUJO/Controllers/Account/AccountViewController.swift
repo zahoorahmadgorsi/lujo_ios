@@ -133,7 +133,7 @@ class AccountViewController: UIViewController {
     }
     
     @objc func lblMyBookingsTapped() {
-        print("lblMyBookingsTapped")
+//        print("lblMyBookingsTapped")
         let viewController = BookingsViewController.instantiate()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
@@ -191,7 +191,7 @@ extension AccountViewController: UINavigationControllerDelegate, UIImagePickerCo
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[.editedImage] as? UIImage else {
-            print("No image selected")
+//            print("No image selected")
             return
         }
         
@@ -199,7 +199,7 @@ extension AccountViewController: UINavigationControllerDelegate, UIImagePickerCo
         GoLujoAPIManager().update(user: self.user, image: image) { path, error in
             self.hideNetworkActivity()
             if let path = path {
-                print("😇😇😇😇😇😇😇😇😇😇😇😇😇\(path)")
+//                print("😇😇😇😇😇😇😇😇😇😇😇😇😇\(path)")
                 KingfisherManager.shared.cache.store(image, forKey: path)
                 if let user = LujoSetup().getLujoUser() {
                     user.avatar = path  
@@ -225,7 +225,7 @@ extension AccountViewController {
     
     func logoutUser() {
         guard let userId = LujoSetup().getLujoUser()?.id else {
-            print("NO USER ID ERROR!!!")
+//            print("NO USER ID ERROR!!!")
             return
         }
         

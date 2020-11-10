@@ -346,7 +346,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(dataSource[indexPath.row].cityName)
+//        print(dataSource[indexPath.row].cityName)
         let city = dataSource[indexPath.row]
         searchTextField.text = city.cityName
         searchTextField.resignFirstResponder()
@@ -403,7 +403,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     //MARK:- API methods
     
     func fetchResults(for text: String) {
-        print("Text Searched: \(text)")
+//        print("Text Searched: \(text)")
         
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             showFeedback("User does not exist or is not verified")

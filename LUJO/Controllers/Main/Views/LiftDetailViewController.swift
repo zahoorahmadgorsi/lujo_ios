@@ -135,7 +135,7 @@ class LiftDetailViewController: UIViewController {
 
         lift?.departure.getCoordinate { coordinates, error in
             guard error == nil else {
-                print(error!)
+//                print(error!)
                 return
             }
 
@@ -150,7 +150,7 @@ class LiftDetailViewController: UIViewController {
 
         lift?.arrival.getCoordinate { coordinates, error in
             guard error == nil else {
-                print(error!)
+//                print(error!)
                 return
             }
 

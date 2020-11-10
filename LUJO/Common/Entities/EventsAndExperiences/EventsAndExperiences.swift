@@ -86,7 +86,7 @@ struct EventsExperiences: Codable {
     let eventVenue: [Taxonomy]?
     let priceRange: [Taxonomy]?
     let location: [TaxonomyLocation]
-    let isFavourite: Bool?
+    var isFavourite: Bool?
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -176,7 +176,7 @@ extension EventsExperiences {
 
 struct HomeObjects: Codable {
     let slider: [EventsExperiences]
-    let events: [EventsExperiences]
+    var events: [EventsExperiences]
     let experiences: [EventsExperiences]
     let specialEvents: [EventsExperiences]
 

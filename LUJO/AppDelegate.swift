@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken tokenData: Data) {
         let tokenParts = tokenData.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-        print("Device Token: \(token)")
+//        print("Device Token: \(token)")
         Intercom.setDeviceToken(tokenData)
         registerForOurPushService(deviceToken: token)
     }
@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current()
             .requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
 
-                print("Permission granted: \(granted)")
+//                print("Permission granted: \(granted)")
 
                 guard granted else { return }
                 DispatchQueue.main.async {
