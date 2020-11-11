@@ -31,7 +31,8 @@ struct Restaurants: Codable {
     let michelinStar: [Taxonomy]?
     let priceRange: [Taxonomy]?
     let location: [TaxonomyLocation]
-
+    var isFavourite: Bool?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -52,6 +53,7 @@ struct Restaurants: Codable {
         case michelinStar = "michelin_star"
         case priceRange = "price_range"
         case location
+        case isFavourite
     }
 
     func getAllImagesURL() -> [String] {
@@ -86,6 +88,7 @@ extension Restaurants {
             michelinStar = try values.decodeIfPresent([Taxonomy].self, forKey: .michelinStar)
             priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
             location = try values.decode([TaxonomyLocation].self, forKey: .location)
+            isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

@@ -29,6 +29,13 @@ class ImageCarousel: UIView {
         }
     }
 
+    //Zahoor to be used in dining only
+    var restaurantsList: [Restaurants] = [] {
+        didSet {
+            carouselView.reloadData()
+        }
+    }
+    
     var itemsList: [EventsExperiences] = [] {
         didSet {
             carouselView.reloadData()
@@ -124,7 +131,9 @@ extension ImageCarousel: UICollectionViewDataSource {
                                                     for: indexPath) as! ImageCarouselCell
         cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
         //Zahoor started 20201027
-        
+        //*****
+        //Home*
+        //*****
         if ( itemsList.count > indexPath.row){  //in gallery, itemsList count would be 0
             let model = itemsList[indexPath.row]
             if( model.primaryMedia?.type == "video"){
@@ -157,7 +166,44 @@ extension ImageCarousel: UICollectionViewDataSource {
             }else{
                 cell.imgHeart.image = UIImage(named: "heart_white")
             }
+        }else
+        //********
+        //Dinning*
+        //********
+        if ( restaurantsList.count > indexPath.row){  //in gallery, itemsList count would be 0
+            let model = restaurantsList[indexPath.row]
+            if( model.primaryMedia?.type == "video"){
+                cell.primaryImage.isHidden = false;
+                cell.containerView.removeLayer(layerName: "videoPlayer")//removing video player if was added
+                var avPlayer: AVPlayer!
+                //Playing the video
+                if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+                    avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                    let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                    avPlayerLayer.name = "videoPlayer"
+                    avPlayerLayer.frame = cell.containerView.bounds
+                    avPlayerLayer.videoGravity = .resizeAspectFill
+                    cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
+                    avPlayer.play()
+                    cell.primaryImage.isHidden = true;
+
+                    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                        avPlayer?.seek(to: CMTime.zero)
+                        avPlayer?.play()
+                    }
+                }else
+                    if let mediaLink = model.primaryMedia?.thumbnail {
+                    cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                }
+            }
+            //checking favourite image red or white
+            if (model.isFavourite ?? false){
+                cell.imgHeart.image = UIImage(named: "heart_red")
+            }else{
+                cell.imgHeart.image = UIImage(named: "heart_white")
+            }
         }
+        
         
         //Add tap gesture on favourite
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageCarousel.tappedOnHeart(_:)))

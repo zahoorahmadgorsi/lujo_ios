@@ -636,10 +636,10 @@ extension HomeViewController: ImageCarouselDelegate {
             }
             
             if let informations = information {
-                    var featuredExperiences = self.featured.itemsList //events in locationEventSlider
-                    featuredExperiences[index].isFavourite = !(featuredExperiences[index].isFavourite ?? false)
-                    sender.itemsList = featuredExperiences
-                    // Store data for later use inside preload reference.
+                var featuredExperiences = self.featured.itemsList //events in locationEventSlider
+                featuredExperiences[index].isFavourite = !(featuredExperiences[index].isFavourite ?? false)
+                sender.itemsList = featuredExperiences
+                // Store data for later use inside preload reference.
 //                        PreloadDataManager.HomeScreen.scrollViewData = information
                 print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
             } else {

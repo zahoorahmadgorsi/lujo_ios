@@ -384,7 +384,7 @@
         <image name="Location White" width="12" height="16"/>
         <image name="Michelin Star Icon" width="16.5" height="18"/>
         <image name="See All Icon" width="16" height="16"/>
-        <image name="heart_white" width="6" height="5.5"/>
+        <image name="heart_white" width="22" height="19.5"/>
         <image name="placeholder-img" width="600" height="400"/>
         <namedColor name="Navigation Bar">
             <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -229,7 +229,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             gradient.frame = CGRect(x: 0, y: 2, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width * 0.75 * 0.35)
             gradientView.layer.addSublayer(gradient)
         }
-        
+        featured.restaurantsList = diningInformations?.slider ?? [] //zahoor
         categorySlider.itemsList = diningInformations?.cuisines ?? []
         
         updatePopularCities()
@@ -395,9 +395,33 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
 }
 
 extension DiningViewController: ImageCarouselDelegate {
-//    func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
-//        print("Allah Ho Akbar")
-//    }
+    func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
+        var item: Restaurants!
+        item = featured.restaurantsList[index]
+        
+        //setting the favourite
+        self.showNetworkActivity()
+        setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                var restaurants = self.featured.restaurantsList
+                restaurants[index].isFavourite = !(restaurants[index].isFavourite ?? false)
+                sender.restaurantsList = restaurants
+                // Store data for later use inside preload reference.
+//                        PreloadDataManager.HomeScreen.scrollViewData = information
+                print("ItemID:\(item.id)" + ", ServerResponse:" + informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                self.showError(error)
+            }
+        }
+    }
     
     
     func didMoveTo(position: Int) {
