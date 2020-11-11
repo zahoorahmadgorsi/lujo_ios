@@ -215,14 +215,19 @@ extension ImageCarousel: UICollectionViewDataSource {
         
         if titleList.count > indexPath.row, !titleList[indexPath.row].isEmpty {
             cell.titleLabel.text = titleList[indexPath.row]
+            cell.imgHeart.isHidden = false
+        }else{  // on gallery there are no titles
+            cell.imgHeart.isHidden = true
         }
 
         if categoryList.count > indexPath.row, !categoryList[indexPath.row].isEmpty {
             cell.categoryLabel.isHidden = false
+            cell.imgHeart.isHidden = false
             cell.categoryLabel.text = "featured".uppercased() // categoryList[indexPath.row].uppercased()
             cell.categoryLabel.setCharacterSpacing(characterSpacing: 5)
         } else {
             cell.categoryLabel.isHidden = true
+            
         }
 
         if starList.count > indexPath.row, !starList[indexPath.row].isEmpty {

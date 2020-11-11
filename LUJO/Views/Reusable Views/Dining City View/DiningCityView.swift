@@ -10,7 +10,8 @@ import UIKit
 
 protocol DiningCityProtocol:class {
     func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView)
-    func seeSelectedRestaurant(restaurant: Restaurants)
+    func didTappedOnRestaurantAt(restaurant: Restaurants)
+    func didTappedOnHeartAt(index: Int, sender: Restaurants)
 }
 
 class DiningCityView: UIView {
@@ -26,6 +27,7 @@ class DiningCityView: UIView {
     @IBOutlet weak var restaurant1locationContainerView: UIView!
     @IBOutlet weak var restaurant1starCountLabel: UILabel!
     @IBOutlet weak var restaurant1starImageContainerView: UIView!
+    @IBOutlet weak var imgHeart1: UIImageView!
     
     @IBOutlet weak var restaurant2ContainerView: UIView!
     @IBOutlet weak var restaurant2ImageView: UIImageView!
@@ -34,6 +36,7 @@ class DiningCityView: UIView {
     @IBOutlet weak var restaurant2locationContainerView: UIView!
     @IBOutlet weak var restaurant2starCountLabel: UILabel!
     @IBOutlet weak var restaurant2starImageContainerView: UIView!
+    @IBOutlet weak var imgHeart2: UIImageView!
     
     weak var delegate: DiningCityProtocol?
     
@@ -58,6 +61,22 @@ class DiningCityView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        //zahoor
+        //Adding tap gesture on whol restaurant view
+        let tgrOnRestaurant1 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnRestaurant(_:)))
+        restaurant1ContainerView.addGestureRecognizer(tgrOnRestaurant1)
+        let tgrOnRestaurant2 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnRestaurant(_:)))
+        restaurant2ContainerView.addGestureRecognizer(tgrOnRestaurant2)
+        //Add tap gestures on heart image
+        let tgrOnHeart1 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnHeart(_:)))
+//        imgHeart1.isUserInteractionEnabled = true   //enabled from IB
+//        imgHeart1.tag = 0   //enabled from IB
+        imgHeart1.addGestureRecognizer(tgrOnHeart1)
+        //Image heart 2
+        let tgrOnHeart2 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnHeart(_:)))
+//        imgHeart2.isUserInteractionEnabled = true   //enabled from IB
+//        imgHeart2.tag = 1   //enabled from IB
+        imgHeart2.addGestureRecognizer(tgrOnHeart2)
     }
     
     private func setupViewUI() {
@@ -89,9 +108,26 @@ class DiningCityView: UIView {
             delegate?.seeAllRestaurantsForCity(city: city, view: self)
         }
     }
-    @IBAction func seeRestaurantDetailsButton_onClick(_ sender: UIButton) {
-        if let restaurant = city?.restaurants[sender.tag] {
-            delegate?.seeSelectedRestaurant(restaurant: restaurant)
+    
+//    @IBAction func seeRestaurantDetailsButton_onClick(_ sender: UIButton) {
+//        if let restaurant = city?.restaurants[sender.tag] {
+//            delegate?.seeSelectedRestaurant(restaurant: restaurant)
+//        }
+//    }
+    
+    //Zahoor start
+    @objc func tappedOnHeart(_ sender:AnyObject){
+        print("Heart:\(sender.view.tag)")
+        if let restaurant = city?.restaurants[sender.view.tag] {
+            delegate?.didTappedOnHeartAt(index: sender.view.tag, sender: restaurant)
         }
     }
+    
+    @objc func tappedOnRestaurant(_ sender:AnyObject){
+        print("Restaurant:\(sender.view.tag)")
+        if let restaurant = city?.restaurants[sender.view.tag] {
+            delegate?.didTappedOnRestaurantAt(restaurant: restaurant)
+        }
+    }
+    //Zahoor end
 }

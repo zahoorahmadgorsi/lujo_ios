@@ -12,7 +12,7 @@ import JGProgressHUD
 import CoreLocation
 
 class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningCityProtocol {
-    
+
     //MARK:- Init
     
     /// Class storyboard identifier.
@@ -486,8 +486,42 @@ extension DiningViewController {
         }
     }
     
-    func seeSelectedRestaurant(restaurant: Restaurants) {
+    func didTappedOnRestaurantAt(restaurant: Restaurants) {
         presentRestaurantDetailViewController(restaurant: restaurant)
     }
     
+    func didTappedOnHeartAt(index: Int, sender: Restaurants) {
+        print("Allah Ho Akbar")
+//        var item: Restaurants!
+//        item = featured.itemsList[index]
+
+        //setting the favourite
+        self.showNetworkActivity()
+        setUnSetFavourites(id: sender.id ,isUnSetFavourite: sender.isFavourite ?? false) {information, error in
+            self.hideNetworkActivity()
+
+            if let error = error {
+                self.showError(error)
+                return
+            }
+
+            if let informations = information {
+                var locationRestaurants = self.locationRestaurants //restaurants in locationDiningCityView
+//                var homeAllRestaurants = self.diningInformations?.cities     //restaurants of all cities
+//
+//                //Event updated in homeEventList , might also be present in locationlist
+//                //Get the element and its offset
+//                if let item = locationRestaurants.enumerated().first(where: {$0.element.id == homeAllRestaurants[index].}) {
+//                    print("HomeEventIndex:\(index) , : LocationEventIndex:\(item.offset) ")
+//                    locationRestaurants[item.offset].isFavourite = !(locationRestaurants[item.offset].isFavourite ?? false)  //update location events list as well
+//                    self.locationEventSlider.itemsList = locationRestaurants //re-assigning as it will automatically reload the collection
+//                }
+//                homeAllRestaurants[index].isFavourite = !(homeAllRestaurants[index].isFavourite ?? false)
+//                sender.itemsList = homeAllRestaurants   //re-assigning as it will automatically reload the collection
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                self.showError(error)
+            }
+        }
+    }
 }

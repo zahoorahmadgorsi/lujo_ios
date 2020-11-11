@@ -12,6 +12,8 @@
             <connections>
                 <outlet property="cityNameLabel" destination="GSL-Cr-MPb" id="kDG-qM-NqE"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="WkR-2E-XHP"/>
+                <outlet property="imgHeart1" destination="vAI-cv-o05" id="gWh-Xc-70B"/>
+                <outlet property="imgHeart2" destination="XTH-ys-nER" id="DqG-8S-kut"/>
                 <outlet property="restaurant1ContainerView" destination="yQT-hY-x8X" id="Vi5-TM-AUs"/>
                 <outlet property="restaurant1ImageView" destination="Hrz-xa-OHB" id="dgi-kG-N6Y"/>
                 <outlet property="restaurant1NameLabel" destination="V5e-ww-R2x" id="6zZ-7W-qPb"/>
@@ -94,7 +96,7 @@
                                                     <color key="textColor" name="White Text"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-cv-o05">
+                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-cv-o05">
                                                     <rect key="frame" x="161" y="0.0" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="UsL-Mr-IqI"/>
@@ -184,12 +186,6 @@
                                         <constraint firstAttribute="height" constant="37" id="4LU-sd-xF4"/>
                                     </constraints>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQ8-3k-nCE">
-                                    <rect key="frame" x="0.0" y="0.0" width="183" height="196"/>
-                                    <connections>
-                                        <action selector="seeRestaurantDetailsButton_onClick:" destination="-1" eventType="touchUpInside" id="ubW-Eh-2fD"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -199,17 +195,13 @@
                                 <constraint firstItem="Rc4-fE-orn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="nvT-TS-gRL" secondAttribute="bottom" constant="4" id="OKM-dU-PMJ"/>
                                 <constraint firstItem="Hrz-xa-OHB" firstAttribute="top" secondItem="yQT-hY-x8X" secondAttribute="top" id="TfX-Ig-0jM"/>
                                 <constraint firstAttribute="trailing" secondItem="Rc4-fE-orn" secondAttribute="trailing" id="UVy-HZ-YeQ"/>
-                                <constraint firstItem="AQ8-3k-nCE" firstAttribute="leading" secondItem="yQT-hY-x8X" secondAttribute="leading" id="aIE-Hf-uFQ"/>
                                 <constraint firstItem="nvT-TS-gRL" firstAttribute="top" secondItem="Hrz-xa-OHB" secondAttribute="bottom" constant="8" id="cAs-hB-R1v"/>
-                                <constraint firstAttribute="bottom" secondItem="AQ8-3k-nCE" secondAttribute="bottom" id="d0c-b5-6jv"/>
                                 <constraint firstAttribute="trailing" secondItem="Hrz-xa-OHB" secondAttribute="trailing" id="eKC-lh-NPo"/>
-                                <constraint firstItem="AQ8-3k-nCE" firstAttribute="top" secondItem="yQT-hY-x8X" secondAttribute="top" id="fpE-N8-S2Y"/>
                                 <constraint firstItem="nvT-TS-gRL" firstAttribute="leading" secondItem="yQT-hY-x8X" secondAttribute="leading" id="nDW-a1-iP6"/>
                                 <constraint firstAttribute="trailing" secondItem="nvT-TS-gRL" secondAttribute="trailing" id="t0x-SU-5V8"/>
-                                <constraint firstAttribute="trailing" secondItem="AQ8-3k-nCE" secondAttribute="trailing" id="uCJ-9N-DvZ"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1I-TR-whJ">
+                        <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1I-TR-whJ">
                             <rect key="frame" x="199" y="0.0" width="183" height="196"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="uQa-cg-Mtg">
@@ -235,7 +227,7 @@
                                                     <color key="textColor" name="White Text"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="XTH-ys-nER">
+                                                <imageView clipsSubviews="YES" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="XTH-ys-nER">
                                                     <rect key="frame" x="161" y="0.0" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="cAr-Dy-jZ8"/>
@@ -325,21 +317,11 @@
                                         <constraint firstAttribute="height" constant="37" id="L8o-DW-T4f"/>
                                     </constraints>
                                 </stackView>
-                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G50-yw-1bf">
-                                    <rect key="frame" x="0.0" y="0.0" width="183" height="196"/>
-                                    <connections>
-                                        <action selector="seeRestaurantDetailsButton_onClick:" destination="-1" eventType="touchUpInside" id="MDt-6v-xgo"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="G50-yw-1bf" secondAttribute="bottom" id="9WM-pp-pQF"/>
                                 <constraint firstAttribute="trailing" secondItem="8cY-JJ-aTO" secondAttribute="trailing" id="D3c-J2-Jcj"/>
-                                <constraint firstItem="G50-yw-1bf" firstAttribute="leading" secondItem="m1I-TR-whJ" secondAttribute="leading" id="JZg-VB-jad"/>
-                                <constraint firstAttribute="trailing" secondItem="G50-yw-1bf" secondAttribute="trailing" id="KIi-t7-OaZ"/>
                                 <constraint firstAttribute="bottom" secondItem="8cY-JJ-aTO" secondAttribute="bottom" id="S9H-dP-68L"/>
-                                <constraint firstItem="G50-yw-1bf" firstAttribute="top" secondItem="m1I-TR-whJ" secondAttribute="top" id="Sj2-UJ-eSU"/>
                                 <constraint firstAttribute="trailing" secondItem="uQa-cg-Mtg" secondAttribute="trailing" id="WmZ-n6-nwb"/>
                                 <constraint firstItem="8cY-JJ-aTO" firstAttribute="leading" secondItem="m1I-TR-whJ" secondAttribute="leading" id="awq-1h-qSc"/>
                                 <constraint firstAttribute="trailing" secondItem="qJG-7I-tLe" secondAttribute="trailing" id="ceg-bB-5Vg"/>

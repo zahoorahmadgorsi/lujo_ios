@@ -213,7 +213,7 @@
     </objects>
     <resources>
         <image name="calendar_home_white" width="12" height="16"/>
-        <image name="heart_white" width="9" height="8"/>
+        <image name="heart_white" width="22" height="19.5"/>
         <image name="location_home" width="12" height="16"/>
         <image name="placeholder-img" width="600" height="400"/>
         <namedColor name="Palette - Placeholder Text">

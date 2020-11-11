@@ -15,7 +15,7 @@ class ImageCarouselCell: UICollectionViewCell {
     @IBOutlet var primaryImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var categoryLabel: UILabel!
-
+    
     @IBOutlet var tagsContainerView: UIView!
     @IBOutlet var tagLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
