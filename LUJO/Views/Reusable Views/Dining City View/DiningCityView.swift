@@ -69,19 +69,16 @@ class DiningCityView: UIView {
         restaurant2ContainerView.addGestureRecognizer(tgrOnRestaurant2)
         //Add tap gestures on heart image
         let tgrOnHeart1 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnHeart(_:)))
-//        imgHeart1.isUserInteractionEnabled = true   //enabled from IB
-//        imgHeart1.tag = 0   //enabled from IB
         imgHeart1.addGestureRecognizer(tgrOnHeart1)
         //Image heart 2
         let tgrOnHeart2 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnHeart(_:)))
-//        imgHeart2.isUserInteractionEnabled = true   //enabled from IB
-//        imgHeart2.tag = 1   //enabled from IB
         imgHeart2.addGestureRecognizer(tgrOnHeart2)
     }
     
     private func setupViewUI() {
         cityNameLabel.text = city?.name
         restaurant2ContainerView.isHidden = true
+        
         for (index, restaurant) in city?.restaurants.enumerated() ?? [].enumerated() {
             if index == 0 {
                 restaurant1ImageView.downloadImageFrom(link: restaurant.primaryMedia?.mediaUrl ?? "", contentMode: .scaleAspectFill)
@@ -90,6 +87,14 @@ class DiningCityView: UIView {
                 restaurant1locationLabel.text = restaurant.location.first?.city?.name.uppercased()
                 restaurant1starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
                 restaurant1starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
+                //Zahoor
+                //checking favourite image red or white
+                if (restaurant.isFavourite ?? false){
+                    imgHeart1.image = UIImage(named: "heart_red")
+                }else{
+                    imgHeart1.image = UIImage(named: "heart_white")
+                }
+                
             } else if index == 1 {
                 restaurant2ContainerView.isHidden = false
                 
@@ -99,6 +104,13 @@ class DiningCityView: UIView {
                 restaurant2locationLabel.text = restaurant.location.first?.city?.name.uppercased()
                 restaurant2starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
                 restaurant2starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
+                //Zahoor
+                //checking favourite image red or white
+                if (restaurant.isFavourite ?? false){
+                    imgHeart2.image = UIImage(named: "heart_red")
+                }else{
+                    imgHeart2.image = UIImage(named: "heart_white")
+                }
             }
         }
     }
@@ -117,14 +129,12 @@ class DiningCityView: UIView {
     
     //Zahoor start
     @objc func tappedOnHeart(_ sender:AnyObject){
-        print("Heart:\(sender.view.tag)")
         if let restaurant = city?.restaurants[sender.view.tag] {
             delegate?.didTappedOnHeartAt(index: sender.view.tag, sender: restaurant)
         }
     }
     
     @objc func tappedOnRestaurant(_ sender:AnyObject){
-        print("Restaurant:\(sender.view.tag)")
         if let restaurant = city?.restaurants[sender.view.tag] {
             delegate?.didTappedOnRestaurantAt(restaurant: restaurant)
         }

@@ -156,7 +156,7 @@ struct DiningCity: Codable {
     let termId: Int
     let name: String
     let restaurantsNum: Int
-    let restaurants: [Restaurants]
+    var restaurants: [Restaurants]
     
     enum CodingKeys: String, CodingKey {
         case termId = "term_id"
@@ -187,7 +187,7 @@ struct DiningHomeObjects: Codable {
     let slider: [Restaurants]?
     let starChief: StarChief?
     let cuisines: [Cuisine]
-    let cities: [DiningCity]
+    var cities: [DiningCity]
 
     enum CodingKeys: String, CodingKey {
         case slider

@@ -490,11 +490,10 @@ extension DiningViewController {
         presentRestaurantDetailViewController(restaurant: restaurant)
     }
     
+    
     func didTappedOnHeartAt(index: Int, sender: Restaurants) {
-        print("Allah Ho Akbar")
-//        var item: Restaurants!
-//        item = featured.itemsList[index]
-
+//        print("index:\(index)" + "Restaurant:\(sender.name)")
+//
         //setting the favourite
         self.showNetworkActivity()
         setUnSetFavourites(id: sender.id ,isUnSetFavourite: sender.isFavourite ?? false) {information, error in
@@ -506,22 +505,44 @@ extension DiningViewController {
             }
 
             if let informations = information {
-                var locationRestaurants = self.locationRestaurants //restaurants in locationDiningCityView
-//                var homeAllRestaurants = self.diningInformations?.cities     //restaurants of all cities
-//
-//                //Event updated in homeEventList , might also be present in locationlist
-//                //Get the element and its offset
-//                if let item = locationRestaurants.enumerated().first(where: {$0.element.id == homeAllRestaurants[index].}) {
-//                    print("HomeEventIndex:\(index) , : LocationEventIndex:\(item.offset) ")
-//                    locationRestaurants[item.offset].isFavourite = !(locationRestaurants[item.offset].isFavourite ?? false)  //update location events list as well
-//                    self.locationEventSlider.itemsList = locationRestaurants //re-assigning as it will automatically reload the collection
-//                }
-//                homeAllRestaurants[index].isFavourite = !(homeAllRestaurants[index].isFavourite ?? false)
-//                sender.itemsList = homeAllRestaurants   //re-assigning as it will automatically reload the collection
+                //**************************************************
+                //all restaurants on this page other then myLocation
+                //**************************************************
+                if let allCitiesAtDining = self.diningInformations?.cities{
+                    for i in 0..<allCitiesAtDining.count {  //looping all cities on dining page
+                        //Finding restaurant which user has just favourited/unfavourited
+                        if let itemRestaurant = allCitiesAtDining[i].restaurants.enumerated().first(where: {$0.element.id == sender.id}) {
+                            //Just got the city by value else we can also use long like like self.diningInformations?.cities[i]
+                            if let city = self.diningInformations?.cities[i]{
+                                //toggling the isFavourite value
+                                self.diningInformations?.cities[i].restaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
+                                //finding current cityview from the stackview, to remove and then again adding updated by red/white heart
+                                if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
+                                    if let termId = sender.location.first?.city?.termId, let name = sender.location.first?.city?.name {
+                                        (cityView as? DiningCityView)?.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: (self.diningInformations?.cities[i].restaurants)! )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //*****************************
+                //all restaurants on myLocation
+                //*****************************
+                //Finding restaurant which user has just favourited/unfavourited
+                if let itemRestaurant = self.locationRestaurants.enumerated().first(where: {$0.element.id == sender.id}) {
+                    //toggling the isFavourite value
+                    self.locationRestaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
+                    if let termId = sender.location.first?.city?.termId, let name = sender.location.first?.city?.name {
+                        self.myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: self.locationRestaurants)
+                    }
+                }
+                print(" ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
                 self.showError(error)
             }
         }
     }
+    
 }
