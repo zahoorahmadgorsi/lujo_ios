@@ -18,7 +18,7 @@ class RestaurantListViewController: UIViewController {
     class var identifier: String { return "RestaurantListViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(dataSource: [Restaurants] = [], city: DiningCity? = nil) -> RestaurantListViewController {
+    class func instantiate(dataSource: [Restaurant] = [], city: DiningCity? = nil) -> RestaurantListViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantListViewController
         viewController.dataSource = dataSource
         viewController.city = city
@@ -28,7 +28,7 @@ class RestaurantListViewController: UIViewController {
     //MARK:- Globals
     
     @IBOutlet weak var collectionView: UICollectionView!
-    private var dataSource: [Restaurants]!
+    private var dataSource: [Restaurant]!
     private var city: DiningCity?
     
     private let naHUD = JGProgressHUD(style: .dark)
@@ -81,7 +81,7 @@ class RestaurantListViewController: UIViewController {
         naHUD.dismiss()
     }
     
-    func update(listOf objects: [Restaurants]) {
+    func update(listOf objects: [Restaurant]) {
         dataSource = objects
 //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()

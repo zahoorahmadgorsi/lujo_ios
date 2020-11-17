@@ -212,25 +212,25 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         var newOffsetX: CGFloat = 0.0
         carousalTimer = Timer(fire: Date(), interval: self.animationInterval, repeats: true) { (timer) in
             let initailPoint = CGPoint(x: newOffsetX,y :0)
-            if __CGPointEqualToPoint(initailPoint, homeSlider.homeSliderView.contentOffset) {
+            if __CGPointEqualToPoint(initailPoint, homeSlider.collHomeSlider.contentOffset) {
                 let itemWidthWithMargin = Int(homeSlider.itemWidth + homeSlider.itemMargin) // 166 , total width of a collectionview item
-                if newOffsetX < homeSlider.homeSliderView.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
+                if newOffsetX < homeSlider.collHomeSlider.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
                     newOffsetX += CGFloat(itemWidthWithMargin) //keep increasing the offset to the one colllection view item
                 }
                 //CALCULATING TO WHAT POINT WE SHOULD MOVE THE SLIDER AND WHEN TO RESET IT TO 0
-                let collectionWidth:Int = Int(homeSlider.homeSliderView.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
+                let collectionWidth:Int = Int(homeSlider.collHomeSlider.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
                 let fullyVisibleItemCount = collectionWidth.quotientAndRemainder(dividingBy: itemWidthWithMargin).quotient// 414/166 = 2, reset the animation till last item is displayed fully, so getting the quotient by dividing frame width by by width of collection item which will give us number of items can be fully displayed at a single moment
 //                print(fullyVisibleItemCount)
                 let offsetShiftTill = itemWidthWithMargin * fullyVisibleItemCount // 166 * 2 , offset till fullyVisibleItemCount items are being displayed
 //                print(self.newOffsetX,offsetShiftTill)
-                if newOffsetX > homeSlider.homeSliderView.contentSize.width - CGFloat(offsetShiftTill) { //846-332
+                if newOffsetX > homeSlider.collHomeSlider.contentSize.width - CGFloat(offsetShiftTill) { //846-332
                         newOffsetX = 0 //reset to 0 if offset has increased enough that items cant be see as equal to fullyVisibleItemCount
                 }
 
-                homeSlider.homeSliderView.setContentOffset(CGPoint(x: newOffsetX,y :0), animated: true)
+                homeSlider.collHomeSlider.setContentOffset(CGPoint(x: newOffsetX,y :0), animated: true)
 
             } else {
-                newOffsetX = homeSlider.homeSliderView.contentOffset.x
+                newOffsetX = homeSlider.collHomeSlider.contentOffset.x
             }
         }
         RunLoop.current.add(carousalTimer!, forMode: .common)
@@ -454,7 +454,61 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         addTapRecognizer(to: specialEventView1)
         addTapRecognizer(to: specialEventView2)
         addTapRecognizer(to: featured)
+        //zahoor start
+        //Add tap gestures on heart images
+        let tgrOnHeart1 = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
+        specialEventView1.imgHeart.addGestureRecognizer(tgrOnHeart1)
+        let tgrOnHeart2 = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
+        specialEventView2.imgHeart.addGestureRecognizer(tgrOnHeart2)
+        
+        //zahoor end
+        
     }
+    
+    //Zahoor start
+    @objc func tappedOnHeart(_ sender:UITapGestureRecognizer){
+        var item: EventsExperiences?
+        var index: Int = 0
+        
+        if (sender.view == specialEventView1.imgHeart && homeObjects?.specialEvents.count ?? 0 >= 1){
+            item = homeObjects?.specialEvents[0]
+            index = 0
+        }else if (sender.view == specialEventView2.imgHeart && homeObjects?.specialEvents.count ?? 0 >= 2){
+            item = homeObjects?.specialEvents[1]
+            index = 1
+        }
+        //setting the favourite
+        if let item = item{
+            self.showNetworkActivity()
+            setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
+                self.hideNetworkActivity()
+                
+                if let error = error {
+                    self.showError(error)
+                    return
+                }
+                
+                if let informations = information {
+                    self.homeObjects?.specialEvents[index].isFavourite = !(item.isFavourite ?? false)
+                    if (index == 0){
+                        self.specialEventView1.updateInformation(with: self.homeObjects?.specialEvents[index])
+                    }else if (index == 1){
+                        self.specialEventView2.updateInformation(with: self.homeObjects?.specialEvents[index])
+                    }
+                    print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
+                } else {
+                    let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                    self.showError(error)
+                }
+            }
+        }
+    }
+//    @objc func tappedOnHeart2(_ sender:HomeSpecialEventSummary){
+//        if (homeObjects?.specialEvents.count ?? 0 >= 2){
+//            print(homeObjects?.specialEvents[1] as Any)
+//        }
+//    }
+    //zahoor end
     
     fileprivate func updateContent() {
         

@@ -9,7 +9,7 @@
 import Crashlytics
 import UIKit
 
-struct Restaurants: Codable {
+struct Restaurant: Codable {
     let id: Int
     let name: String
     let description: String
@@ -53,7 +53,7 @@ struct Restaurants: Codable {
         case michelinStar = "michelin_star"
         case priceRange = "price_range"
         case location
-        case isFavourite
+        case isFavourite = "is_favorite"
     }
 
     func getAllImagesURL() -> [String] {
@@ -61,7 +61,7 @@ struct Restaurants: Codable {
     }
 }
 
-extension Restaurants {
+extension Restaurant {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -99,7 +99,7 @@ extension Restaurants {
 struct StarChief: Codable {
     let chiefName: String
     let chiefImage: String?
-    let chiefRestaurant: Restaurants
+    let chiefRestaurant: Restaurant
 
     enum CodingKeys: String, CodingKey {
         case chiefName = "chef_name"
@@ -115,7 +115,7 @@ extension StarChief {
 
             chiefName = try values.decode(String.self, forKey: .chiefName)
             chiefImage = try values.decodeIfPresent(String.self, forKey: .chiefImage)
-            chiefRestaurant = try values.decode(Restaurants.self, forKey: .chiefRestaurant)
+            chiefRestaurant = try values.decode(Restaurant.self, forKey: .chiefRestaurant)
 
         } catch {
             Crashlytics.sharedInstance().recordError(error)
@@ -156,7 +156,7 @@ struct DiningCity: Codable {
     let termId: Int
     let name: String
     let restaurantsNum: Int
-    var restaurants: [Restaurants]
+    var restaurants: [Restaurant]
     
     enum CodingKeys: String, CodingKey {
         case termId = "term_id"
@@ -174,7 +174,7 @@ extension DiningCity {
             termId = try values.decode(Int.self, forKey: .termId)
             name = try values.decode(String.self, forKey: .name)
             restaurantsNum = try values.decode(Int.self, forKey: .restaurantsNum)
-            restaurants = try values.decode([Restaurants].self, forKey: .restaurants)
+            restaurants = try values.decode([Restaurant].self, forKey: .restaurants)
             
         } catch {
             Crashlytics.sharedInstance().recordError(error)
@@ -184,7 +184,7 @@ extension DiningCity {
 }
 
 struct DiningHomeObjects: Codable {
-    let slider: [Restaurants]?
+    let slider: [Restaurant]?
     let starChief: StarChief?
     let cuisines: [Cuisine]
     var cities: [DiningCity]
@@ -242,7 +242,7 @@ extension DiningHomeObjects {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
-            slider = try values.decodeIfPresent([Restaurants].self, forKey: .slider)
+            slider = try values.decodeIfPresent([Restaurant].self, forKey: .slider)
             starChief = try values.decodeIfPresent(StarChief.self, forKey: .starChief)
             cuisines = try values.decode([Cuisine].self, forKey: .cuisines)
             cities = try values.decode([DiningCity].self, forKey: .cities)

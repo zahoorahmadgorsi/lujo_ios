@@ -45,7 +45,6 @@
 		1D7819B72301A9EE0044C70B /* DiningAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819B62301A9EE0044C70B /* DiningAPIManager.swift */; };
 		1D7819BD2301CF140044C70B /* DiningViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819BB2301CF140044C70B /* DiningViewCell.swift */; };
 		1D7819BE2301CF140044C70B /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D7819BC2301CF140044C70B /* DiningViewCell.xib */; };
-		1D7819C12301D2EA0044C70B /* Restaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Restaurants.swift */; };
 		1D81515722DE442E00B203D8 /* HomeSpecialEventSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81515622DE442E00B203D8 /* HomeSpecialEventSummary.swift */; };
 		1D81515922DE448900B203D8 /* HomeSpecialEventSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D81515822DE448900B203D8 /* HomeSpecialEventSummary.xib */; };
 		1D88012C233E49630039DEA6 /* DiningCategorySlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D88012B233E49630039DEA6 /* DiningCategorySlider.swift */; };
@@ -110,6 +109,11 @@
 		880B9B0D255845B10070D7CD /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0C255845B10070D7CD /* Gift.swift */; };
 		882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */; };
 		882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */; };
+		8844D9B22563F712002FF846 /* FavouriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8844D9B02563F712002FF846 /* FavouriteCell.swift */; };
+		8844D9B32563F712002FF846 /* FavouriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8844D9B12563F712002FF846 /* FavouriteCell.xib */; };
+		8894D02825629CD200BF84D8 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Restaurant.swift */; };
+		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
+		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
 		88EA9F91255408F800514626 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F90255408F800514626 /* WishlistViewController.swift */; };
 		88EA9F9425544E8400514626 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F9325544E8400514626 /* WishList.swift */; };
 		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
@@ -320,7 +324,7 @@
 		1D7819B62301A9EE0044C70B /* DiningAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPIManager.swift; sourceTree = "<group>"; };
 		1D7819BB2301CF140044C70B /* DiningViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningViewCell.swift; sourceTree = "<group>"; };
 		1D7819BC2301CF140044C70B /* DiningViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiningViewCell.xib; sourceTree = "<group>"; };
-		1D7819C02301D2EA0044C70B /* Restaurants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurants.swift; sourceTree = "<group>"; };
+		1D7819C02301D2EA0044C70B /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		1D81515622DE442E00B203D8 /* HomeSpecialEventSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSpecialEventSummary.swift; sourceTree = "<group>"; };
 		1D81515822DE448900B203D8 /* HomeSpecialEventSummary.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeSpecialEventSummary.xib; sourceTree = "<group>"; };
 		1D83391A22B654A7006DEEC4 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
@@ -384,6 +388,10 @@
 		880B9B0C255845B10070D7CD /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
 		882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedAPIManager.swift; sourceTree = "<group>"; };
 		882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedRouter.swift; sourceTree = "<group>"; };
+		8844D9B02563F712002FF846 /* FavouriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCell.swift; sourceTree = "<group>"; };
+		8844D9B12563F712002FF846 /* FavouriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouriteCell.xib; sourceTree = "<group>"; };
+		8894D02F2562E61300BF84D8 /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
+		8894D0312562E63C00BF84D8 /* WishListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WishListView.xib; sourceTree = "<group>"; };
 		88EA9F90255408F800514626 /* WishlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
 		88EA9F9325544E8400514626 /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
 		88EA9F962554550D00514626 /* WishListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListRouter.swift; sourceTree = "<group>"; };
@@ -690,7 +698,7 @@
 		1D7819BF2301D2A90044C70B /* Dining */ = {
 			isa = PBXGroup;
 			children = (
-				1D7819C02301D2EA0044C70B /* Restaurants.swift */,
+				1D7819C02301D2EA0044C70B /* Restaurant.swift */,
 			);
 			path = Dining;
 			sourceTree = "<group>";
@@ -772,6 +780,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				883A86BF2561767D00E41A27 /* Wish List View */,
 				1DFE1AC323476EA50025410D /* Dining City View */,
 				1D88012A233E48420039DEA6 /* Dining Category Slider */,
 				1DEDB9E822F20D0B00903CAC /* Home Slider */,
@@ -919,6 +928,17 @@
 				882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */,
 			);
 			path = "Recently Viewed";
+			sourceTree = "<group>";
+		};
+		883A86BF2561767D00E41A27 /* Wish List View */ = {
+			isa = PBXGroup;
+			children = (
+				8894D02F2562E61300BF84D8 /* WishListView.swift */,
+				8894D0312562E63C00BF84D8 /* WishListView.xib */,
+				8844D9B02563F712002FF846 /* FavouriteCell.swift */,
+				8844D9B12563F712002FF846 /* FavouriteCell.xib */,
+			);
+			path = "Wish List View";
 			sourceTree = "<group>";
 		};
 		88EA9F8D2554069100514626 /* WishList */ = {
@@ -1529,6 +1549,7 @@
 				9A2F0C3421250C7200C52BE3 /* Login.storyboard in Resources */,
 				9A0E586B2260E50300F7848A /* BookingSegmentsSummaryView.xib in Resources */,
 				9AA95FDF2189BE6F00156AB6 /* LiftDetailViewController.xib in Resources */,
+				8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */,
 				9A41571421301E6C00D85B56 /* HelveticaNeueLTStd-Md.otf in Resources */,
 				9A9EC8AE2253BA2800098E7D /* AviationLegCell.xib in Resources */,
 				9A72C3C72138456D009FE9E2 /* Localizable.strings in Resources */,
@@ -1540,6 +1561,7 @@
 				557BB5E3231592F100744188 /* Main.storyboard in Resources */,
 				9A818F5520EE74CC005B6455 /* LaunchScreen.storyboard in Resources */,
 				9AF422652265D534003CE562 /* Booking.storyboard in Resources */,
+				8844D9B32563F712002FF846 /* FavouriteCell.xib in Resources */,
 				1DD785B823749B27001A9CF9 /* PayAlertView.xib in Resources */,
 				1D7819BE2301CF140044C70B /* DiningViewCell.xib in Resources */,
 				9A18716921130D4800B81BFD /* Lora-Regular.ttf in Resources */,
@@ -1674,6 +1696,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8894D02825629CD200BF84D8 /* Restaurant.swift in Sources */,
 				9A817B9A224E2FD500EE7BAC /* AviationSearch.swift in Sources */,
 				9AD6EAC221E49F0B00B695A3 /* Payment Type DataSource.swift in Sources */,
 				9ADC468621590AA600D96C95 /* AviationEntitities.swift in Sources */,
@@ -1735,6 +1758,7 @@
 				553A8EE22303EBD90051006E /* PreloadDataManager.swift in Sources */,
 				9A5C5CBB222FDD8000B8239D /* PaymentSessionToken.swift in Sources */,
 				1D7819A622FCB8F30044C70B /* WelcomeView.swift in Sources */,
+				8894D0302562E61300BF84D8 /* WishListView.swift in Sources */,
 				5527644D23195D5600380BEB /* MembershipViewControllerNEW.swift in Sources */,
 				9A0DCC8221F876CB00CC9111 /* BAAirport.swift in Sources */,
 				557BB5E52315930400744188 /* GlobalExtensions.swift in Sources */,
@@ -1780,8 +1804,8 @@
 				552764302317FE8200380BEB /* ChatViewController.swift in Sources */,
 				9A8D0F0B2289D98F001C0B15 /* UINavigationController+StatusBar.swift in Sources */,
 				164331801802251D8B984178 /* LoginView.swift in Sources */,
-				1D7819C12301D2EA0044C70B /* Restaurants.swift in Sources */,
 				9A194FF22294614B00E3DBD1 /* HomeEventsLayout.swift in Sources */,
+				8844D9B22563F712002FF846 /* FavouriteCell.swift in Sources */,
 				9A72C3C121380617009FE9E2 /* UIViewController.swift in Sources */,
 				9AAA102022773540008CE1D2 /* MyBookingsCell.swift in Sources */,
 				9A194FE3228DDD0200E3DBD1 /* EEAPIManager.swift in Sources */,

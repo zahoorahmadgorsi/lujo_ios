@@ -148,18 +148,27 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7F-x2-DYN">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1AD-0i-IkX">
-                                                <rect key="frame" x="184" y="484" width="46" height="54"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Button"/>
-                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yE1-vX-uSi">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1AD-0i-IkX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                                        <state key="normal" title="Button"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                         <color key="backgroundColor" name="Black Backgorund"/>
+                                        <constraints>
+                                            <constraint firstItem="yE1-vX-uSi" firstAttribute="leading" secondItem="o7F-x2-DYN" secondAttribute="leading" id="Aoy-Je-VXX"/>
+                                            <constraint firstAttribute="trailing" secondItem="yE1-vX-uSi" secondAttribute="trailing" id="QKA-3y-iGL"/>
+                                            <constraint firstItem="yE1-vX-uSi" firstAttribute="top" secondItem="o7F-x2-DYN" secondAttribute="top" id="RuI-kH-7Ti"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="o7F-x2-DYN" secondAttribute="bottom" id="GDU-HX-eRr"/>
+                                    <constraint firstAttribute="bottom" secondItem="o7F-x2-DYN" secondAttribute="bottom" constant="100" id="GDU-HX-eRr"/>
                                     <constraint firstAttribute="trailing" secondItem="o7F-x2-DYN" secondAttribute="trailing" id="QHM-7b-J2j"/>
                                     <constraint firstItem="o7F-x2-DYN" firstAttribute="leading" secondItem="jsM-8U-o9H" secondAttribute="leading" id="aDc-Ik-rwy"/>
                                     <constraint firstItem="o7F-x2-DYN" firstAttribute="top" secondItem="jsM-8U-o9H" secondAttribute="top" id="dHM-ew-jRk"/>
@@ -173,7 +182,7 @@
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="bottom" secondItem="KI5-Lv-x2J" secondAttribute="bottom" id="2NM-hY-wdo"/>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="top" secondItem="KI5-Lv-x2J" secondAttribute="top" id="8oY-yY-ibV"/>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="leading" secondItem="KI5-Lv-x2J" secondAttribute="leading" id="Bxo-e8-CSd"/>
-                            <constraint firstItem="o7F-x2-DYN" firstAttribute="height" secondItem="qKz-bb-43x" secondAttribute="height" id="OGT-mY-PTF"/>
+                            <constraint firstItem="o7F-x2-DYN" firstAttribute="height" secondItem="qKz-bb-43x" secondAttribute="height" priority="250" id="OGT-mY-PTF"/>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="trailing" secondItem="KI5-Lv-x2J" secondAttribute="trailing" id="meW-ZO-Hxb"/>
                             <constraint firstItem="o7F-x2-DYN" firstAttribute="width" secondItem="qKz-bb-43x" secondAttribute="width" id="pPy-dy-2Uj"/>
                         </constraints>
@@ -182,6 +191,7 @@
                     <navigationItem key="navigationItem" title="Wishlist" id="acG-HO-gBl"/>
                     <connections>
                         <outlet property="scrollView" destination="jsM-8U-o9H" id="2jV-kH-8Ip"/>
+                        <outlet property="stackView" destination="yE1-vX-uSi" id="QeY-2n-77l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Npt-RW-FhC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -17,7 +17,7 @@ class RestaurantDetailViewController: UIViewController {
     class var identifier: String { return "RestaurantDetailViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(restaurant: Restaurants) -> RestaurantDetailViewController {
+    class func instantiate(restaurant: Restaurant) -> RestaurantDetailViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantDetailViewController
         viewController.restaurant = restaurant
         return viewController
@@ -37,7 +37,7 @@ class RestaurantDetailViewController: UIViewController {
     @IBOutlet var descriptionLabel: UITextView!
     @IBOutlet var iPhoneAspectRatioConstraint: NSLayoutConstraint!
     
-    var restaurant: Restaurants!
+    var restaurant: Restaurant!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,7 +115,7 @@ class RestaurantDetailViewController: UIViewController {
         present(viewController, animated: true, completion: nil)
     }
     
-    fileprivate func setupRestaurant(_ restaurant: Restaurants) {
+    fileprivate func setupRestaurant(_ restaurant: Restaurant) {
         
         iPhoneAspectRatioConstraint.isActive = UIDevice.current.userInterfaceIdiom == .phone
         

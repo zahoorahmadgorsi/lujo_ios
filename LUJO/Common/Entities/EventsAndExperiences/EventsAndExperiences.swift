@@ -59,7 +59,7 @@ struct CityInfo: Codable {
 
 struct RestaurantCity: Codable {
     let num: Int
-    let items: [Restaurants]
+    let items: [Restaurant]
 }
 
 struct EventExperienceCity: Codable {
@@ -107,7 +107,7 @@ struct EventsExperiences: Codable {
         case eventVenue = "event_venue"
         case priceRange = "price_range"
         case location
-        case isFavourite
+        case isFavourite = "is_favorite"
     }
 
     func getAllImagesURL() -> [String] {
@@ -178,7 +178,7 @@ struct HomeObjects: Codable {
     let slider: [EventsExperiences]
     var events: [EventsExperiences]
     let experiences: [EventsExperiences]
-    let specialEvents: [EventsExperiences]
+    var specialEvents: [EventsExperiences]
 
     enum CodingKeys: String, CodingKey {
         case slider

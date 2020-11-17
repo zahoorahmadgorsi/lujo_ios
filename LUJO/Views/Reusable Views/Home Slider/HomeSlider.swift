@@ -21,7 +21,7 @@ class HomeSlider: UIView {
     var itemMargin:Int = 16
     
     
-    lazy var homeSliderView: UICollectionView = {
+    lazy var collHomeSlider: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -39,7 +39,7 @@ class HomeSlider: UIView {
 
     var itemsList: [EventsExperiences] = [] {
         didSet {
-            homeSliderView.reloadData()
+            collHomeSlider.reloadData()
         }
     }
 
@@ -55,16 +55,16 @@ class HomeSlider: UIView {
 
     private func setupView() {
         backgroundColor = .clear
-        addSubview(homeSliderView)
+        addSubview(collHomeSlider)
         setupLayout()
     }
 
     private func setupLayout() {
         NSLayoutConstraint.activate(
-            [homeSliderView.topAnchor.constraint(equalTo: topAnchor),
-             homeSliderView.bottomAnchor.constraint(equalTo: bottomAnchor),
-             homeSliderView.leadingAnchor.constraint(equalTo: leadingAnchor),
-             homeSliderView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+            [collHomeSlider.topAnchor.constraint(equalTo: topAnchor),
+             collHomeSlider.bottomAnchor.constraint(equalTo: bottomAnchor),
+             collHomeSlider.leadingAnchor.constraint(equalTo: leadingAnchor),
+             collHomeSlider.trailingAnchor.constraint(equalTo: trailingAnchor)]
         )
     }
 
@@ -82,7 +82,7 @@ extension HomeSlider: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = homeSliderView.dequeueReusableCell(withReuseIdentifier: HomeSliderCell.identifier,
+        let cell = collHomeSlider.dequeueReusableCell(withReuseIdentifier: HomeSliderCell.identifier,
                                                       for: indexPath) as! HomeSliderCell
         
         let model = itemsList[indexPath.row]

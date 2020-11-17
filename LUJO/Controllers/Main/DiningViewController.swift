@@ -54,7 +54,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     @IBOutlet var starsLabel: UILabel!
     @IBOutlet var chiefNameLabel: UILabel!
     
-    var locationRestaurants: [Restaurants] = []
+    var locationRestaurants: [Restaurant] = []
     private var canSendRequest: Bool = true
     
     /// Refresh control view. Used to display network activity when user pull scroll view down
@@ -193,7 +193,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             // -------------------------------------------------------------------------------------
     }
     
-    func updateMyRestaurants(_ restaurants: [Restaurants]) {
+    func updateMyRestaurants(_ restaurants: [Restaurant]) {
 //        print(restaurants)
         locationRestaurants = restaurants
         myLocationCityView.isHidden = restaurants.count == 0
@@ -273,7 +273,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         }
     }
     
-    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurants) {
+    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurant) {
         let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
         present(viewController, animated: true, completion: nil)
     }
@@ -396,7 +396,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
 
 extension DiningViewController: ImageCarouselDelegate {
     func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
-        var item: Restaurants!
+        var item: Restaurant!
         item = featured.restaurantsList[index]
         
         //setting the favourite
@@ -486,12 +486,12 @@ extension DiningViewController {
         }
     }
     
-    func didTappedOnRestaurantAt(restaurant: Restaurants) {
+    func didTappedOnRestaurantAt(restaurant: Restaurant) {
         presentRestaurantDetailViewController(restaurant: restaurant)
     }
     
     
-    func didTappedOnHeartAt(index: Int, sender: Restaurants) {
+    func didTappedOnHeartAt(index: Int, sender: Restaurant) {
 //        print("index:\(index)" + "Restaurant:\(sender.name)")
 //
         //setting the favourite

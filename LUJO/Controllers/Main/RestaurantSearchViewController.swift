@@ -38,7 +38,7 @@ class RestaurantSearchViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     
     private var currentLayout: LiftLayout?
-    private var dataSource: [Restaurants] = []
+    private var dataSource: [Restaurant] = []
     
     @IBOutlet weak var noResultsContainerView: UIStackView!
     @IBOutlet weak var noResultsTitleLabel: UILabel!
@@ -106,7 +106,7 @@ class RestaurantSearchViewController: UIViewController {
         startChatWithInitialMessage("Hi Concierge team, I could not find any restaurants when I typed '\(keyword)'. Can you assist?")
     }
     
-    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurants) {
+    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurant) {
         let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
         present(viewController, animated: true, completion: nil)
     }
@@ -121,7 +121,7 @@ class RestaurantSearchViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func updateSearch(_ information: [Restaurants]?) {
+    func updateSearch(_ information: [Restaurant]?) {
         dataSource = information ?? []
         currentLayout?.clearCache()
         collectionView.reloadData()
@@ -209,7 +209,7 @@ extension RestaurantSearchViewController {
         }
     }
     
-    func searchRestaurants(term: String, completion: @escaping ([Restaurants]?, Error?) -> Void) {
+    func searchRestaurants(term: String, completion: @escaping ([Restaurant]?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return

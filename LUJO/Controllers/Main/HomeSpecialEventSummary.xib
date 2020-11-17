@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeSpecialEventSummary" customModule="LUJO" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="FDn-Fh-Jtb" id="p3n-o7-wfd"/>
+                <outlet property="imgHeart" destination="guB-Q7-hjp" id="Fcy-fE-M0t"/>
                 <outlet property="name" destination="4NI-uF-qhi" id="bKB-Km-UsN"/>
                 <outlet property="primaryImage" destination="tyN-sF-49J" id="JzA-ZB-VQK"/>
                 <outlet property="tagContainerView" destination="55g-7e-90P" id="IGG-Hc-3Ho"/>
@@ -40,7 +41,7 @@
                             <color key="textColor" name="White Text"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="guB-Q7-hjp">
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="guB-Q7-hjp">
                             <rect key="frame" x="360" y="0.0" width="22" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="22" id="DEx-9S-shs"/>
@@ -92,7 +93,7 @@
         </view>
     </objects>
     <resources>
-        <image name="heart_white" width="6" height="5.5"/>
+        <image name="heart_white" width="22" height="19.5"/>
         <image name="placeholder-img" width="600" height="400"/>
         <namedColor name="Black Backgorund">
             <color red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

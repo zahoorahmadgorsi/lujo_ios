@@ -10,8 +10,8 @@ import UIKit
 
 protocol DiningCityProtocol:class {
     func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView)
-    func didTappedOnRestaurantAt(restaurant: Restaurants)
-    func didTappedOnHeartAt(index: Int, sender: Restaurants)
+    func didTappedOnRestaurantAt(restaurant: Restaurant)
+    func didTappedOnHeartAt(index: Int, sender: Restaurant)
 }
 
 class DiningCityView: UIView {
@@ -62,7 +62,7 @@ class DiningCityView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         //zahoor
-        //Adding tap gesture on whol restaurant view
+        //Adding tap gesture on whole restaurant view
         let tgrOnRestaurant1 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnRestaurant(_:)))
         restaurant1ContainerView.addGestureRecognizer(tgrOnRestaurant1)
         let tgrOnRestaurant2 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnRestaurant(_:)))

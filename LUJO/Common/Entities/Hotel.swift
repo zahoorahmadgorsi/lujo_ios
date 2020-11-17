@@ -31,7 +31,8 @@ struct Hotel: Codable {
     let priceRange: [Taxonomy]?
     let hotelStar: [Taxonomy]?
     let location: [TaxonomyLocation]
-
+    var isFavourite: Bool?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -53,6 +54,7 @@ struct Hotel: Codable {
         case hotelStar = "hotel_star"
         case priceRange = "price_range"
         case location
+        case isFavourite = "is_favorite"
     }
 
     
@@ -86,6 +88,7 @@ extension Hotel {
             hotelStar = try values.decodeIfPresent([Taxonomy].self, forKey: .hotelStar)
             priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
             location = try values.decode([TaxonomyLocation].self, forKey: .location)
+            isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

@@ -30,7 +30,7 @@ class ImageCarousel: UIView {
     }
 
     //Zahoor to be used in dining only
-    var restaurantsList: [Restaurants] = [] {
+    var restaurantsList: [Restaurant] = [] {
         didSet {
             carouselView.reloadData()
         }

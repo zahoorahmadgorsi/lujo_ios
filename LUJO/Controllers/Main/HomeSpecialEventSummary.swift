@@ -19,6 +19,8 @@ class HomeSpecialEventSummary: UIView {
     @IBOutlet var locationContainerView: UIView!
     @IBOutlet var dateContainerView: UIView!
 
+    @IBOutlet weak var imgHeart: UIImageView!
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -32,6 +34,7 @@ class HomeSpecialEventSummary: UIView {
     func initSubviews() {
         Bundle.main.loadNibNamed(HomeSpecialEventSummary.kCONTENTXIBNAME, owner: self, options: nil)
         contentView.fixInView(self)
+
     }
 
     func updateInformation(with data: Any?) {
@@ -41,6 +44,7 @@ class HomeSpecialEventSummary: UIView {
         }
 
         if let event = data as? EventsExperiences, event.type == "special-event" {
+//            specialEvent = event
             if let mediaLink = event.primaryMedia?.mediaUrl, event.primaryMedia?.type == "image" {
                 primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
@@ -53,7 +57,13 @@ class HomeSpecialEventSummary: UIView {
             } else {
                 tagContainerView.isHidden = true
             }
-
+            //Zahoor start
+            if (event.isFavourite ?? false){
+                imgHeart.image = UIImage(named: "heart_red")
+            }else{
+                imgHeart.image = UIImage(named: "heart_white")
+            }
+            //Zahoor end
             return
         }
 

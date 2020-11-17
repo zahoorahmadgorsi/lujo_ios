@@ -17,7 +17,7 @@ class RestaurantRequestReservationViewController: UIViewController {
     class var identifier: String { return "RestaurantRequestReservationViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(restaurant: Restaurants) -> RestaurantRequestReservationViewController {
+    class func instantiate(restaurant: Restaurant) -> RestaurantRequestReservationViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantRequestReservationViewController
         viewController.restaurant = restaurant
         return viewController
@@ -29,7 +29,7 @@ class RestaurantRequestReservationViewController: UIViewController {
     @IBOutlet var datePicker: UIDatePicker!
     @IBOutlet var contentViewBottomConstraint: NSLayoutConstraint!
     
-    private(set) var restaurant: Restaurants!
+    private(set) var restaurant: Restaurant!
     
     override func viewDidLoad() {
         super.viewDidLoad()
