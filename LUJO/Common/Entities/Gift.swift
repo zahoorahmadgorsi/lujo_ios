@@ -19,7 +19,9 @@ struct Gift: Codable {
     let gallery: [Gallery]?
     let gift_category : [Taxonomy]?
     let lujo_tag: [Taxonomy]?
-
+    let location: [TaxonomyLocation]?
+    var isFavourite: Bool?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -30,6 +32,8 @@ struct Gift: Codable {
         case gallery
         case gift_category
         case lujo_tag
+        case location
+        case isFavourite = "is_favorite"
     }
 }
 
@@ -46,6 +50,8 @@ extension Gift {
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
             gift_category = try values.decodeIfPresent([Taxonomy].self, forKey: .gift_category)
             lujo_tag = try values.decodeIfPresent([Taxonomy].self, forKey: .lujo_tag)
+            location = try values.decodeIfPresent([TaxonomyLocation].self, forKey: .location)
+            isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

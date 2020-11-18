@@ -10,11 +10,6 @@ import UIKit
 import JGProgressHUD
 
 class WishListViewController: UIViewController, WishListViewProtocol{
-
-    
-     
-    
-
     /// Class storyboard identifier.
     class var identifier: String { return "WishListViewController" }
     
@@ -29,6 +24,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     private var wishListInformations: WishListObjects?
     private let naHUD = JGProgressHUD(style: .dark)
     @IBOutlet var scrollView: UIScrollView!
+    var animationInterval:TimeInterval = 4
+    var totalAnimationOnScreen:Int = 8
     
     /// Refresh control view. Used to display network activity when user pull scroll view down
     /// view to fetch new data.
@@ -42,11 +39,14 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        getWishListInformation(showActivity: true)
+        //data is loading in viewWillAppear
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        //if data is already loaded then re-load silently
+        let isAlreadyLoaded:Bool = (wishListInformations == nil) ? false : true
+        getWishListInformation(showActivity: !isAlreadyLoaded)
+    }
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
@@ -95,6 +95,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
     
     func updateContent() {
+         let secondsToDelay:TimeInterval = self.animationInterval / Double(totalAnimationOnScreen) //animation delay between Featured,Events and Experience
 //        removing all subview first then adding new
         for view in self.stackView.subviews {
             view.removeFromSuperview()
@@ -123,6 +124,10 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
+            //Animation
+//            DispatchQueue.main.asyncAfter(deadline: .now() + (1*secondsToDelay) ) {
+//                self.startAnimation(wishListView: wishListView)
+//            }
         }
         //***********
         // EXPERIENCE
@@ -130,7 +135,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         count = (wishListInformations?.experiences?.count ?? 0)
         if count > 0 , let items = wishListInformations?.experiences{
 //            let wishListView = WishListView()
-            var wishListView: WishListView = {
+            let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
                 return tv
@@ -154,6 +159,10 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
+            //Animation
+//            DispatchQueue.main.asyncAfter(deadline: .now() + (1*secondsToDelay) ) {
+//                self.startAnimation(wishListView: wishListView)
+//            }
         }
         //**************
         // Special Event
@@ -168,7 +177,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }()
             
             wishListView.delegate = self
-            wishListView.itemType = .experience
+            wishListView.itemType = .specialEvent
             wishListView.imgTitle.image = UIImage(named: "Event Icon White")
             wishListView.lblTitle.text = "Special Event"
             //preparing data of collection view
@@ -199,7 +208,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }()
             
             wishListView.delegate = self
-            wishListView.itemType = .experience
+            wishListView.itemType = .restaurant
             wishListView.imgTitle.image = UIImage(named: "Dining Icon White")
             wishListView.lblTitle.text = "Dining"
             //preparing data of collection view
@@ -230,8 +239,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }()
             
             wishListView.delegate = self
-            wishListView.itemType = .experience
-            wishListView.imgTitle.image = UIImage(named: "Dining Icon White")
+            wishListView.itemType = .hotel
+            wishListView.imgTitle.image = UIImage(named: "Hotel Icon")
             wishListView.lblTitle.text = "Hotel"
             //preparing data of collection view
             var itemsList = [Favourite]()
@@ -251,8 +260,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //******************
         // Villa
         //******************
-        count = (wishListInformations?.hotels?.count ?? 0)
-        if count > 0 , let items = wishListInformations?.hotels{
+        count = (wishListInformations?.villas?.count ?? 0)
+        if count > 0 , let items = wishListInformations?.villas{
 //            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
@@ -261,18 +270,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }()
             
             wishListView.delegate = self
-            wishListView.itemType = .experience
+            wishListView.itemType = .villa
             wishListView.imgTitle.image = UIImage(named: "Dining Icon White")
             wishListView.lblTitle.text = "Villa"
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.hotel?.id
-                    , name: item.hotel?.name
-                    , description: item.hotel?.description
-                    , primaryMedia:item.hotel?.primaryMedia
-                    , location: item.hotel?.location
-                    , isFavourite: item.hotel?.isFavourite))
+                itemsList.append( Favourite(id: item.villa?.id
+                    , name: item.villa?.name
+                    , description: item.villa?.description
+                    , primaryMedia:item.villa?.primaryMedia
+                    , location: item.villa?.location
+                    , isFavourite: item.villa?.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -292,8 +301,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }()
             
             wishListView.delegate = self
-            wishListView.itemType = .experience
-            wishListView.imgTitle.image = UIImage(named: "Dining Icon White")
+            wishListView.itemType = .yacht
+            wishListView.imgTitle.image = UIImage(named: "Yacht Icon")
             wishListView.lblTitle.text = "Yacht"
             //preparing data of collection view
             var itemsList = [Favourite]()
@@ -304,6 +313,37 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , primaryMedia:item.yacht?.primaryMedia
                     , location: item.yacht?.location
                     , isFavourite: item.yacht?.isFavourite))
+            }
+            wishListView.itemsList = itemsList
+            stackView.addArrangedSubview(wishListView)
+            //applying constraints on wishListView
+            setupWishListLayout(wishListView: wishListView)
+        }
+        //******************
+        // Gifts/Goods
+        //******************
+        count = (wishListInformations?.gifts?.count ?? 0)
+        if count > 0 , let items = wishListInformations?.gifts{
+//            let wishListView = WishListView()
+            let wishListView: WishListView = {
+                let tv = WishListView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            
+            wishListView.delegate = self
+            wishListView.itemType = .gift
+            wishListView.imgTitle.image = UIImage(named: "Goods Icon")
+            wishListView.lblTitle.text = "Goods"
+            //preparing data of collection view
+            var itemsList = [Favourite]()
+            for item in items{
+                itemsList.append( Favourite(id: item.gift?.id
+                    , name: item.gift?.name
+                    , description: item.gift?.description
+                    , primaryMedia:item.gift?.primaryMedia
+                    , location: item.gift?.location
+                    , isFavourite: item.gift?.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -323,7 +363,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2+64   // 64 is height of "see all" control
         wishListView.heightAnchor.constraint(equalToConstant: CGFloat(itemHeight)).isActive = true
     }
-    
     
     func getWishListInformation(completion: @escaping (WishListObjects?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
@@ -366,106 +405,126 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         print(itemType)
     }
     
-    func didTappedOnItem() {
-        print("didTappedOnItem")
+    func didTappedOnItem(indexPath: IndexPath, itemType:FavouriteType, sender: WishListView) {
+//        print("didTappedOnItem")
+        switch itemType {
+            case .event:
+                if let event = wishListInformations?.events?[indexPath.row].eventsExperience{
+                    let viewController = EventDetailsViewController.instantiate(event: event)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
+            case .experience:
+            if let event = wishListInformations?.experiences?[indexPath.row].eventsExperience{
+                let viewController = EventDetailsViewController.instantiate(event: event)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+            case .specialEvent:
+            if let event = wishListInformations?.specialEvents?[indexPath.row].eventsExperience{
+                let viewController = EventDetailsViewController.instantiate(event: event)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+            case .restaurant:
+            if let item = wishListInformations?.restaurants?[indexPath.row].restaurant{
+                let viewController = RestaurantDetailViewController.instantiate(restaurant: item)
+//                self.navigationController?.pushViewController(viewController, animated: true)
+                present(viewController, animated: true, completion: nil)
+            }
+            
+            default:
+                print("default")
+        }
+        
     }
     
-    func didTappedOnHeartAt(){
-        print("didTappedOnHeartAt")
+    func didTappedOnHeartAt(index: Int,itemType:FavouriteType, sender: WishListView){
+        var itemID: Int = 0
+        var isFavourite:Bool = false
+        switch itemType {
+        case .event:
+            if let id = wishListInformations?.events?[index].eventsExperience?.id,
+                let isFav = wishListInformations?.events?[index].eventsExperience?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        case .specialEvent:
+            if let id = wishListInformations?.specialEvents?[index].eventsExperience?.id,
+                let isFav = wishListInformations?.specialEvents?[index].eventsExperience?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        case .experience:
+            if let id = wishListInformations?.experiences?[index].eventsExperience?.id,
+                let isFav = wishListInformations?.experiences?[index].eventsExperience?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        case .restaurant:
+            if let id = wishListInformations?.restaurants?[index].restaurant?.id,
+                let isFav = wishListInformations?.restaurants?[index].restaurant?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        case .hotel:
+            if let id = wishListInformations?.hotels?[index].hotel?.id,
+                let isFav = wishListInformations?.hotels?[index].hotel?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        case .villa:
+            if let id = wishListInformations?.villas?[index].villa?.id,
+                let isFav = wishListInformations?.villas?[index].villa?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        case .gift:
+            if let id = wishListInformations?.gifts?[index].gift?.id,
+                let isFav = wishListInformations?.gifts?[index].gift?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        case .yacht:
+            if let id = wishListInformations?.yachts?[index].yacht?.id,
+                let isFav = wishListInformations?.yachts?[index].yacht?.isFavourite{
+                    itemID = id
+                    isFavourite = isFav
+            }
+        }
+        //setting the favourite
+        self.showNetworkActivity()
+        setUnSetFavourites(id: itemID ,isUnSetFavourite: isFavourite ) {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                // data re-fetch.
+                self.getWishListInformation(showActivity: false)
+                print("ItemID:\(itemID)" + ", ServerResponse:" + informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                self.showError(error)
+            }
+        }
     }
 
+    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                completion(nil, error)
+                return
+            }
+            completion(strResponse, error)
+        }
+    }
 }
 
-//extension WishListViewController: DidSelectWishListItemProtocol {
-//
-//    func didTappedOnHeartAt(index: Int, sender: WishListView) {
-//        print("HomeViewController.didTappedOnHeartAt")
-//        var item: EventsExperiences!
-//        switch sender {
-//            case homeEventSlider:
-//                item = homeObjects?.events[index]
-//            case homeExperienceSlider:
-//                item = homeObjects?.experiences[index]
-//            case locationEventSlider:
-//                item = locationEventSlider.itemsList[index]
-//            default: return
-//        }
-//
-//        //setting the favourite
-//        self.showNetworkActivity()
-//        setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
-//            self.hideNetworkActivity()
-//
-//            if let error = error {
-//                self.showError(error)
-//                return
-//            }
-//
-//            if let informations = information {
-//                switch sender {
-//                case self.homeEventSlider:
-//                    var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
-//                    var homeEvents = self.homeEventSlider.itemsList     //events in homeEventSlider
-//
-//                    //Event updated in homeEventList , might also be present in locationlist
-//                    //Get the element and its offset
-//                    if let item = locationEvents.enumerated().first(where: {$0.element.id == homeEvents[index].id}) {
-//                        print("HomeEventIndex:\(index) , : LocationEventIndex:\(item.offset) ")
-//                        locationEvents[item.offset].isFavourite = !(locationEvents[item.offset].isFavourite ?? false)  //update location events list as well
-//                        self.locationEventSlider.itemsList = locationEvents //re-assigning as it will automatically reload the collection
-//                    }
-//                    homeEvents[index].isFavourite = !(homeEvents[index].isFavourite ?? false)
-//                    sender.itemsList = homeEvents   //re-assigning as it will automatically reload the collection
-//                case self.homeExperienceSlider:
-//                    var homeExperiences = self.homeExperienceSlider.itemsList //events in locationEventSlider
-//                    homeExperiences[index].isFavourite = !(homeExperiences[index].isFavourite ?? false)
-//                    sender.itemsList = homeExperiences   //re-assigning as it will automatically reload the collection
-//                case self.locationEventSlider:
-//                    var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
-//                    var homeEvents = self.homeEventSlider.itemsList     //events in homeEventSlider
-//
-//                    //Event updated in locationlist, might also be present in home event list,
-//                    //Get the element and its offset
-//                    if let item = homeEvents.enumerated().first(where: {$0.element.id == locationEvents[index].id}) {
-//                        print("LocationEventIndex:\(index) , HomeEventIndex: \(item.offset) ")
-//                        homeEvents[item.offset].isFavourite = !(homeEvents[item.offset].isFavourite ?? false)    //update home events list as well
-//                        self.homeEventSlider.itemsList = homeEvents //re-assigning as it will automatically reload the collection
-//                    }
-//                    locationEvents[index].isFavourite = !(locationEvents[index].isFavourite ?? false)
-//                    sender.itemsList = locationEvents   //re-assigning as it will automatically reload the collection
-//                    // Store data for later use inside preload reference.
-////                        PreloadDataManager.HomeScreen.scrollViewData = information
-//                default: return
-//                }
-//                print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
-//            } else {
-//                let error = BackendError.parsing(reason: "Could not obtain Dining information")
-//                self.showError(error)
-//            }
-//        }
-        
-//    }
- 
-   
-    
-    
-    
-//    func didSelectItemAt(indexPath: IndexPath, sender: WishListView) {
-//        print("HomeViewController.didSelectItemAt")
-////        let event: EventsExperiences!
-////
-////        switch sender {
-////            case homeEventSlider:
-////                event = homeObjects?.events[indexPath.row]
-////            case homeExperienceSlider:
-////                event = homeObjects?.experiences[indexPath.row]
-////            case locationEventSlider:
-////                event = locationEventSlider.itemsList[indexPath.row]
-////            default: return
-////        }
-////
-////        let viewController = EventDetailsViewController.instantiate(event: event)
-////        self.navigationController?.pushViewController(viewController, animated: true)
-//    }
-    
-//}

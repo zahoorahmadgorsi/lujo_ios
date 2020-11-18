@@ -153,20 +153,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         locationManager.delegate = self
         
         startAnimation()    //will start animating at 0 seconds
-        //Zahoor Started
-        //4 is total number of animation s on the screen 1: Featured, 2: Events and 3: Experience 4:location events
-        let secondsToDelay:TimeInterval = self.animationInterval / Double(totalAnimationOnScreen) //animation delay between Featured,Events and Experience
-//      Calling a function after a certain period of time
-        DispatchQueue.main.asyncAfter(deadline: .now() + (2*secondsToDelay) ) {
-            self.startEventAndExpAnimation(homeSlider: self.homeEventSlider)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + (3*secondsToDelay) ) {
-            self.startEventAndExpAnimation(homeSlider: self.locationEventSlider)
-        }
-        DispatchQueue.main.asyncAfter(deadline: (.now() + (4*secondsToDelay))) {
-            self.startEventAndExpAnimation(homeSlider: self.homeExperienceSlider)
-        }
-        //Zahoor Finished
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -177,7 +163,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 let avatarURLString = LujoSetup().getLujoUser()?.avatar,
                 let url = URL(string: avatarURLString)
             {
-                print("😇😇😇😇😇😇😇😇😇😇😇😇😇\(url)")
+                print("URL:\(url)")
                 imageView.kf.setImage(with: url, placeholder: UIImage(named: "User Anonimous Image"), completionHandler: { result in
                     switch result {
                     case .success(_):
@@ -204,38 +190,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         // Check for location permission.
         checkLocationAuthorizationStatus()
     }
-    
-    //Zahoor started
-    //This method animates the Event and Experiences slider at the home screen
-    func startEventAndExpAnimation(homeSlider : HomeSlider ) {
-        var carousalTimer: Timer?
-        var newOffsetX: CGFloat = 0.0
-        carousalTimer = Timer(fire: Date(), interval: self.animationInterval, repeats: true) { (timer) in
-            let initailPoint = CGPoint(x: newOffsetX,y :0)
-            if __CGPointEqualToPoint(initailPoint, homeSlider.collHomeSlider.contentOffset) {
-                let itemWidthWithMargin = Int(homeSlider.itemWidth + homeSlider.itemMargin) // 166 , total width of a collectionview item
-                if newOffsetX < homeSlider.collHomeSlider.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
-                    newOffsetX += CGFloat(itemWidthWithMargin) //keep increasing the offset to the one colllection view item
-                }
-                //CALCULATING TO WHAT POINT WE SHOULD MOVE THE SLIDER AND WHEN TO RESET IT TO 0
-                let collectionWidth:Int = Int(homeSlider.collHomeSlider.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
-                let fullyVisibleItemCount = collectionWidth.quotientAndRemainder(dividingBy: itemWidthWithMargin).quotient// 414/166 = 2, reset the animation till last item is displayed fully, so getting the quotient by dividing frame width by by width of collection item which will give us number of items can be fully displayed at a single moment
-//                print(fullyVisibleItemCount)
-                let offsetShiftTill = itemWidthWithMargin * fullyVisibleItemCount // 166 * 2 , offset till fullyVisibleItemCount items are being displayed
-//                print(self.newOffsetX,offsetShiftTill)
-                if newOffsetX > homeSlider.collHomeSlider.contentSize.width - CGFloat(offsetShiftTill) { //846-332
-                        newOffsetX = 0 //reset to 0 if offset has increased enough that items cant be see as equal to fullyVisibleItemCount
-                }
-
-                homeSlider.collHomeSlider.setContentOffset(CGPoint(x: newOffsetX,y :0), animated: true)
-
-            } else {
-                newOffsetX = homeSlider.collHomeSlider.contentOffset.x
-            }
-        }
-        RunLoop.current.add(carousalTimer!, forMode: .common)
-    }
-    //Zahoor finished
     
     var isLocationEnabled: Bool {
         let status = CLLocationManager.authorizationStatus()
@@ -664,7 +618,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not obtain favourites information")
                 completion(nil, error)
                 return
             }
@@ -772,7 +726,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                 }
                 print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not obtain wishlist information")
                 self.showError(error)
             }
         }

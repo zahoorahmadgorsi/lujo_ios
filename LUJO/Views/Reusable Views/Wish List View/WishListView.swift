@@ -11,7 +11,13 @@ import AVFoundation
 
 enum FavouriteType {
     case event
+    case specialEvent
     case experience
+    case restaurant
+    case hotel
+    case villa
+    case gift
+    case yacht
 }
 
 enum CollectionSize:Int{
@@ -22,15 +28,11 @@ enum CollectionSize:Int{
 
 protocol WishListViewProtocol:class {
     func didTappedOnSeeAll(itemType:FavouriteType)
-    func didTappedOnItem()
-    func didTappedOnHeartAt()
+    func didTappedOnItem(indexPath: IndexPath,itemType:FavouriteType, sender: WishListView)
+    func didTappedOnHeartAt(index: Int,itemType:FavouriteType, sender: WishListView)
 }
 
 class WishListView: UIView {
-
-//    var itemWidth:Int = 175
-//    var itemHeight:Int = 150
-//    var itemMargin:Int = 16
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -50,7 +52,7 @@ class WishListView: UIView {
     @IBOutlet weak var collContainerView: UIView!
     
     let nibName = "WishListView"
-    var itemType:FavouriteType?
+    var itemType:FavouriteType = .event //default
     weak var delegate: WishListViewProtocol?
     
     var itemsList: [Favourite] = [] {
@@ -72,11 +74,15 @@ class WishListView: UIView {
     func commonInit() {
         guard let view = loadViewFromNib() else { return }
         view.frame = self.bounds
-        view.backgroundColor = .green
         self.addSubview(view)
-        self.collContainerView.backgroundColor = .yellow
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
+        //to make animation random
+        let randomNumber:TimeInterval = TimeInterval(Int(arc4random_uniform(3)))
+        //It’ll return a random number between 0 and this upper bound, minus 1.
+        DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber ) {
+            self.startAnimation()
+        }
     }
     
     private func applyConstraints() {
@@ -97,13 +103,44 @@ class WishListView: UIView {
     }
 
     @IBAction func btnSeeAllTapped(_ sender: Any) {
-        if let type = itemType{
-            delegate?.didTappedOnSeeAll(itemType: type)
-        }
+//        if let itemType = itemType{
+            delegate?.didTappedOnSeeAll(itemType: itemType)
+//        }
     }
     
-}
+//This method animates the Event and Experiences slider at the home screen
+    func startAnimation( ) {
+        var carousalTimer: Timer?
+        var newOffsetX: CGFloat = 0.0
+        let animationInterval:TimeInterval = 4
+        
+        carousalTimer = Timer(fire: Date(), interval: animationInterval, repeats: true) { (timer) in
+            let initailPoint = CGPoint(x: newOffsetX,y :0)
+            if __CGPointEqualToPoint(initailPoint, self.collectionView.contentOffset) {
+                let itemWidthWithMargin = Int(CollectionSize.itemWidth.rawValue + CollectionSize.itemMargin.rawValue) // 166 , total width of a collectionview item
+                if newOffsetX < self.collectionView.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
+                    newOffsetX += CGFloat(itemWidthWithMargin) //keep increasing the offset to the one colllection view item
+                }
+                //CALCULATING TO WHAT POINT WE SHOULD MOVE THE SLIDER AND WHEN TO RESET IT TO 0
+                let collectionWidth:Int = Int(self.collectionView.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
+                let fullyVisibleItemCount = collectionWidth.quotientAndRemainder(dividingBy: itemWidthWithMargin).quotient// 414/166 = 2, reset the animation till last item is displayed fully, so getting the quotient by dividing frame width by by width of collection item which will give us number of items can be fully displayed at a single moment
+//                print(fullyVisibleItemCount)
+                let offsetShiftTill = itemWidthWithMargin * fullyVisibleItemCount // 166 * 2 , offset till fullyVisibleItemCount items are being displayed
+//                print(self.newOffsetX,offsetShiftTill)
+                if newOffsetX > self.collectionView.contentSize.width - CGFloat(offsetShiftTill) { //846-332
+                        newOffsetX = 0 //reset to 0 if offset has increased enough that items cant be see as equal to fullyVisibleItemCount
+                }
 
+                self.collectionView.setContentOffset(CGPoint(x: newOffsetX,y :0), animated: true)
+
+            } else {
+                newOffsetX = self.collectionView.contentOffset.x
+            }
+        }
+        RunLoop.current.add(carousalTimer!, forMode: .common)
+    }
+}
+//
 extension WishListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -113,16 +150,58 @@ extension WishListView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavouriteCell.identifier, for: indexPath) as! FavouriteCell
-        cell.backgroundColor = .blue
-//        let model = itemsList[indexPath.row]
-//        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
-//            cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-//        }
+        
+        let model = itemsList[indexPath.row]
+        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
+            cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+        }
+        //Zahoor started 20201026
+        cell.primaryImage.isHidden = false;
+        cell.imgContainerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        if( model.primaryMedia?.type == "video"){
+            //Playing the video
+            if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+                cell.primaryImage.isHidden = true;
+
+                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                avPlayerLayer.name = "videoPlayer"
+                avPlayerLayer.frame = cell.imgContainerView.bounds
+                avPlayerLayer.videoGravity = .resizeAspectFill
+                cell.imgContainerView.layer.insertSublayer(avPlayerLayer, at: 0)
+                avPlayer.play()
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                    avPlayer?.seek(to: CMTime.zero)
+                    avPlayer?.play()
+                }
+            }else
+                if let mediaLink = model.primaryMedia?.thumbnail {
+                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+        }
+        //checking favourite image red or white
+        if (model.isFavourite ?? false){
+            cell.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            cell.imgHeart.image = UIImage(named: "heart_white")
+        }
+        //Add tap gesture on favourite
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(WishListView.tappedOnHeart(_:)))
+        cell.imgHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+        cell.imgHeart.tag = indexPath.row
+        cell.imgHeart.addGestureRecognizer(tapGestureRecognizer)
+
+        //Zahoor end
+        
+        cell.lblTitle.text = model.name
         
 
         return cell
         // swiftlint:enable force_cast
     }
+    
+    
 }
 
 
@@ -130,12 +209,11 @@ extension WishListView: UICollectionViewDataSource {
 extension WishListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.didTappedOnItem()
+        delegate?.didTappedOnItem(indexPath: indexPath, itemType:self.itemType,sender: self)
     }
     
-    //Zahoor
     @objc func tappedOnHeart(_ sender:AnyObject){
-        delegate?.didTappedOnHeartAt()
+        delegate?.didTappedOnHeartAt(index: sender.view.tag,itemType:self.itemType, sender: self)
     }
 }
 

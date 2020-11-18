@@ -10,7 +10,10 @@ import UIKit
 
 class FavouriteCell: UICollectionViewCell {
     static var identifier: String = "FavouriteCell"
+    @IBOutlet weak var imgContainerView: UIView!
     @IBOutlet var primaryImage: UIImageView!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var imgHeart: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +26,9 @@ class FavouriteCell: UICollectionViewCell {
     }
 
     private func reset() {
-        //primaryImage.image = UIImage(named: "placeholder-img")
+        primaryImage.image = UIImage(named: "placeholder-img")
+        lblTitle.text = ""
+        imgHeart.image = UIImage(named: "heart_white")
     }
     
 }
