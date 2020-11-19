@@ -188,9 +188,9 @@ extension WishListView: UICollectionViewDataSource {
         }
         //Add tap gesture on favourite
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(WishListView.tappedOnHeart(_:)))
-        cell.imgHeart.isUserInteractionEnabled = true   //can also be enabled from IB
-        cell.imgHeart.tag = indexPath.row
-        cell.imgHeart.addGestureRecognizer(tapGestureRecognizer)
+        cell.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+        cell.viewHeart.tag = indexPath.row
+        cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
 
         //Zahoor end
         

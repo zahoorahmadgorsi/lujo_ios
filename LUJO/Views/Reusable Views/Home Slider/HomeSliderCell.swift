@@ -20,6 +20,7 @@ class HomeSliderCell: UICollectionViewCell {
     @IBOutlet var tagContainerView: UIView!
     @IBOutlet var tagLabel: UILabel!
     @IBOutlet var primaryImageHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewHeart: UIView!
     @IBOutlet weak var imgHeart: UIImageView!
     
     override func awakeFromNib() {

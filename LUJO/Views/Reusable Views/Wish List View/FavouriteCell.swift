@@ -13,6 +13,7 @@ class FavouriteCell: UICollectionViewCell {
     @IBOutlet weak var imgContainerView: UIView!
     @IBOutlet var primaryImage: UIImageView!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var viewHeart: UIView!
     @IBOutlet weak var imgHeart: UIImageView!
     
     override func awakeFromNib() {

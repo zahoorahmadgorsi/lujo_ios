@@ -27,6 +27,7 @@ class DiningCityView: UIView {
     @IBOutlet weak var restaurant1locationContainerView: UIView!
     @IBOutlet weak var restaurant1starCountLabel: UILabel!
     @IBOutlet weak var restaurant1starImageContainerView: UIView!
+    @IBOutlet weak var viewHeart1: UIView!
     @IBOutlet weak var imgHeart1: UIImageView!
     
     @IBOutlet weak var restaurant2ContainerView: UIView!
@@ -36,6 +37,7 @@ class DiningCityView: UIView {
     @IBOutlet weak var restaurant2locationContainerView: UIView!
     @IBOutlet weak var restaurant2starCountLabel: UILabel!
     @IBOutlet weak var restaurant2starImageContainerView: UIView!
+    @IBOutlet weak var viewHeart2: UIView!
     @IBOutlet weak var imgHeart2: UIImageView!
     
     weak var delegate: DiningCityProtocol?
@@ -69,10 +71,10 @@ class DiningCityView: UIView {
         restaurant2ContainerView.addGestureRecognizer(tgrOnRestaurant2)
         //Add tap gestures on heart image
         let tgrOnHeart1 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnHeart(_:)))
-        imgHeart1.addGestureRecognizer(tgrOnHeart1)
+        viewHeart1.addGestureRecognizer(tgrOnHeart1)
         //Image heart 2
         let tgrOnHeart2 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnHeart(_:)))
-        imgHeart2.addGestureRecognizer(tgrOnHeart2)
+        viewHeart2.addGestureRecognizer(tgrOnHeart2)
     }
     
     private func setupViewUI() {
