@@ -162,7 +162,6 @@ extension HomeSlider: UICollectionViewDataSource {
         cell.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
         cell.viewHeart.tag = indexPath.row
         cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
-
         //Zahoor end
         
         cell.name.text = model.name

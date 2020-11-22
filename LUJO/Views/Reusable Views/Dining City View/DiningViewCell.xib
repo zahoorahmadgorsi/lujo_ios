@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,19 +18,73 @@
                 <rect key="frame" x="0.0" y="0.0" width="150" height="196"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="9Xh-bO-zuV">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Myx-PC-Omx">
                         <rect key="frame" x="0.0" y="0.0" width="150" height="122"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="9Xh-bO-zuV">
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="122"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="122" id="8al-4h-XDq"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="122" id="8al-4h-XDq"/>
+                            <constraint firstAttribute="height" constant="122" id="7ut-og-Zc4"/>
+                            <constraint firstItem="9Xh-bO-zuV" firstAttribute="top" secondItem="Myx-PC-Omx" secondAttribute="top" id="AB1-lj-D5D"/>
+                            <constraint firstAttribute="bottom" secondItem="9Xh-bO-zuV" secondAttribute="bottom" id="BpU-Cq-7ok"/>
+                            <constraint firstItem="9Xh-bO-zuV" firstAttribute="leading" secondItem="Myx-PC-Omx" secondAttribute="leading" id="dIq-Je-1pU"/>
+                            <constraint firstAttribute="trailing" secondItem="9Xh-bO-zuV" secondAttribute="trailing" id="mVf-9C-X4X"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <integer key="value" value="4"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </imageView>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JSo-aN-oVK">
+                        <rect key="frame" x="0.0" y="122" width="150" height="38"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1a-n8-RTG">
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="38"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSP-iY-0EL">
+                                        <rect key="frame" x="0.0" y="0.0" width="132" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                        <color key="textColor" name="White Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oR8-wA-cke">
+                                        <rect key="frame" x="132" y="0.0" width="18" height="38"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="9JD-dK-IJW">
+                                                <rect key="frame" x="0.0" y="10" width="18" height="18"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="18" id="G1E-wF-isj"/>
+                                                    <constraint firstAttribute="width" constant="18" id="pDV-iI-aOi"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="18" id="4Ub-QD-ihf"/>
+                                            <constraint firstAttribute="trailing" secondItem="9JD-dK-IJW" secondAttribute="trailing" id="GHf-9k-rtT"/>
+                                            <constraint firstItem="9JD-dK-IJW" firstAttribute="centerY" secondItem="oR8-wA-cke" secondAttribute="centerY" id="w1k-sd-cIh"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="D1a-n8-RTG" secondAttribute="trailing" id="BX4-qD-mA5"/>
+                            <constraint firstItem="D1a-n8-RTG" firstAttribute="leading" secondItem="JSo-aN-oVK" secondAttribute="leading" id="LsK-Dn-7jE"/>
+                            <constraint firstItem="D1a-n8-RTG" firstAttribute="top" secondItem="JSo-aN-oVK" secondAttribute="top" id="RgA-mx-o2R"/>
+                            <constraint firstAttribute="bottom" secondItem="D1a-n8-RTG" secondAttribute="bottom" id="jL1-ub-Iae"/>
+                        </constraints>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="X6o-J1-0CM">
-                        <rect key="frame" x="0.0" y="159" width="150" height="37"/>
+                        <rect key="frame" x="0.0" y="160" width="150" height="37"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmr-WU-jp4">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="21"/>
@@ -103,53 +155,39 @@
                             <constraint firstAttribute="height" constant="37" id="aXp-tD-mLj"/>
                         </constraints>
                     </stackView>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JSo-aN-oVK">
-                        <rect key="frame" x="0.0" y="130" width="150" height="17"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSP-iY-0EL">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="17"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                <color key="textColor" name="White Text"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="aSP-iY-0EL" firstAttribute="leading" secondItem="JSo-aN-oVK" secondAttribute="leading" id="I9O-st-GDc"/>
-                            <constraint firstAttribute="trailing" secondItem="aSP-iY-0EL" secondAttribute="trailing" id="OOd-OP-pkU"/>
-                            <constraint firstItem="aSP-iY-0EL" firstAttribute="top" secondItem="JSo-aN-oVK" secondAttribute="top" id="gJ8-kc-8IO"/>
-                            <constraint firstAttribute="bottom" secondItem="aSP-iY-0EL" secondAttribute="bottom" id="i4X-An-sfM"/>
-                        </constraints>
-                    </view>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="JSo-aN-oVK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6mX-AI-68W"/>
-                <constraint firstAttribute="bottom" secondItem="X6o-J1-0CM" secondAttribute="bottom" id="LBM-Ez-LQF"/>
-                <constraint firstItem="JSo-aN-oVK" firstAttribute="top" secondItem="9Xh-bO-zuV" secondAttribute="bottom" constant="8" id="LeO-jV-pMK"/>
-                <constraint firstItem="9Xh-bO-zuV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="PGL-NY-Eca"/>
+                <constraint firstItem="X6o-J1-0CM" firstAttribute="top" secondItem="JSo-aN-oVK" secondAttribute="bottom" id="CU3-tH-RaZ"/>
+                <constraint firstItem="JSo-aN-oVK" firstAttribute="top" secondItem="Myx-PC-Omx" secondAttribute="bottom" id="D4R-wu-tUU"/>
+                <constraint firstAttribute="bottom" secondItem="X6o-J1-0CM" secondAttribute="bottom" constant="-1" id="LBM-Ez-LQF"/>
                 <constraint firstItem="X6o-J1-0CM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XsC-Wz-PAe"/>
-                <constraint firstItem="X6o-J1-0CM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JSo-aN-oVK" secondAttribute="bottom" constant="4" id="ey8-ff-R8J"/>
-                <constraint firstItem="9Xh-bO-zuV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ich-Dv-d0z"/>
+                <constraint firstAttribute="trailing" secondItem="Myx-PC-Omx" secondAttribute="trailing" id="dut-Sz-rQT"/>
+                <constraint firstItem="Myx-PC-Omx" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lyk-o0-k3Y"/>
+                <constraint firstItem="Myx-PC-Omx" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="o9G-c1-1rd"/>
                 <constraint firstAttribute="trailing" secondItem="JSo-aN-oVK" secondAttribute="trailing" id="oHn-pJ-SRD"/>
                 <constraint firstAttribute="trailing" secondItem="X6o-J1-0CM" secondAttribute="trailing" id="poF-C9-JVQ"/>
-                <constraint firstAttribute="trailing" secondItem="9Xh-bO-zuV" secondAttribute="trailing" id="qh8-qW-wBH"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
+                <outlet property="containerView" destination="Myx-PC-Omx" id="cuH-3O-e2i"/>
+                <outlet property="imgHeart" destination="9JD-dK-IJW" id="dDH-Uz-Faj"/>
                 <outlet property="location" destination="Ocu-ot-paV" id="PVG-Kv-UoK"/>
                 <outlet property="locationContainerView" destination="lmr-WU-jp4" id="wYF-Sc-YP6"/>
                 <outlet property="name" destination="aSP-iY-0EL" id="ip9-s0-W6S"/>
                 <outlet property="primaryImage" destination="9Xh-bO-zuV" id="BBk-I6-jDB"/>
                 <outlet property="starCountLabel" destination="tQc-DK-PbI" id="VDs-Hu-IlM"/>
                 <outlet property="starImageContainerView" destination="MEO-1j-neG" id="2MO-LZ-Uux"/>
+                <outlet property="viewHeart" destination="oR8-wA-cke" id="d38-ws-LTa"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="153.82308845577214"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="Location White" width="12" height="16"/>
-        <image name="Michelin Star Icon" width="16" height="18"/>
+        <image name="Michelin Star Icon" width="16.5" height="18"/>
+        <image name="heart_white" width="22" height="19.5"/>
         <image name="placeholder-img" width="600" height="400"/>
         <namedColor name="Palette - Placeholder Text">
             <color red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

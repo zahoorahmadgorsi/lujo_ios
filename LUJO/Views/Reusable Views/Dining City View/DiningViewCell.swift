@@ -10,14 +10,17 @@ import UIKit
 
 class DiningViewCell: UICollectionViewCell {
     static var identifier: String = "DiningViewCell"
-
+    @IBOutlet var containerView: UIView!
+    
     @IBOutlet var primaryImage: UIImageView!
     @IBOutlet var name: UILabel!
     @IBOutlet var location: UILabel!
     @IBOutlet var locationContainerView: UIView!
     @IBOutlet var starCountLabel: UILabel!
     @IBOutlet var starImageContainerView: UIView!
-
+    @IBOutlet weak var viewHeart: UIView!
+    @IBOutlet weak var imgHeart: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         reset()
@@ -35,5 +38,6 @@ class DiningViewCell: UICollectionViewCell {
         locationContainerView.isHidden = false
         starCountLabel.text = ""
         starImageContainerView.isHidden = false
+        
     }
 }

@@ -598,7 +598,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func bookJetButton_onClick(_ sender: Any) {
-        self.tabBarController?.selectedIndex = 3
+        //self.tabBarController?.selectedIndex = 3
     }
     
     @IBAction func findAYachtButton_onClick(_ sender: Any) {

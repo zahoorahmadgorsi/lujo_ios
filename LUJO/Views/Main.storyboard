@@ -119,7 +119,7 @@
         <scene sceneID="pEn-EV-DlB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="usa-sU-bfL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="WishList" image="bookings_selected" id="nGT-oa-1XU"/>
+                    <tabBarItem key="tabBarItem" title="WishList" image="heart_white" id="nGT-oa-1XU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fdo-8e-pJ7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -175,6 +175,7 @@
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="leading" secondItem="qKz-bb-43x" secondAttribute="leading" id="nOG-Na-Bmg"/>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="trailing" secondItem="qKz-bb-43x" secondAttribute="trailing" id="qRb-WJ-mOx"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="k6j-xL-gEF"/>
                     </view>
                     <navigationItem key="navigationItem" title="Wishlist" id="acG-HO-gBl"/>
                     <connections>
@@ -1827,7 +1828,7 @@
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VtP-Up-DBg">
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="127" height="44"/>
                                                                                                 <subviews>
-                                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Book Jet Icon" translatesAutoresizingMaskIntoConstraints="NO" id="8X6-U6-3TW">
+                                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="villa cta" translatesAutoresizingMaskIntoConstraints="NO" id="8X6-U6-3TW">
                                                                                                         <rect key="frame" x="41.5" y="0.0" width="44" height="44"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="width" constant="44" id="fDp-XJ-Cfz"/>
@@ -1845,7 +1846,7 @@
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MR9-mq-tO2">
                                                                                                 <rect key="frame" x="0.0" y="48" width="127" height="14"/>
                                                                                                 <subviews>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book a Jet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLW-tr-F5L">
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Villa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLW-tr-F5L">
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="127" height="14"/>
                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                                                         <color key="textColor" name="White Text"/>
@@ -7042,7 +7043,6 @@ New York, NY 10011 USA</string>
     </scenes>
     <resources>
         <image name="Back Button Top" width="11.5" height="21"/>
-        <image name="Book Jet Icon" width="44" height="44"/>
         <image name="Book Table Icon" width="44" height="44"/>
         <image name="Charter Yacht Icon" width="44" height="44"/>
         <image name="Chat Button" width="20" height="20"/>
@@ -7073,15 +7073,16 @@ New York, NY 10011 USA</string>
         <image name="aviation_selected" width="20" height="20"/>
         <image name="bg_aviationSlider" width="414" height="150"/>
         <image name="bookings_placeholder" width="140" height="140"/>
-        <image name="bookings_selected" width="20" height="20"/>
         <image name="calendar_home" width="12" height="16"/>
         <image name="calendar_home_white" width="12" height="16"/>
         <image name="chat_selected" width="30" height="30"/>
         <image name="dining_selected" width="20" height="20"/>
         <image name="discover_selected" width="20" height="20"/>
+        <image name="heart_white" width="22" height="19.5"/>
         <image name="ic_close" width="16" height="16"/>
         <image name="location_home" width="12" height="16"/>
         <image name="placeholder-img" width="600" height="400"/>
+        <image name="villa cta" width="36" height="36"/>
         <namedColor name="Action Button">
             <color red="0.95686274509803926" green="0.63921568627450975" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
