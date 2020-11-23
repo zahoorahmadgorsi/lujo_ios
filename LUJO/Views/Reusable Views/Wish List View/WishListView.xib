@@ -24,7 +24,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
                     <subviews>
                         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KpS-Gw-V7O">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                            <rect key="frame" x="16" y="0.0" width="382" height="64"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="rnC-As-iz9">
                                     <rect key="frame" x="16" y="22" width="78" height="20"/>
@@ -43,9 +43,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </stackView>
                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="750" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EoW-D1-xcx">
-                                    <rect key="frame" x="0.0" y="0.0" width="398" height="64"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="366" height="64"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
                                     <state key="normal" title="SEE ALL " image="See All Icon">
@@ -67,6 +68,11 @@
                                 <constraint firstAttribute="height" constant="64" id="n2E-ac-Lb7"/>
                                 <constraint firstItem="EoW-D1-xcx" firstAttribute="leading" secondItem="KpS-Gw-V7O" secondAttribute="leading" id="rtD-Pf-F1k"/>
                             </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELu-mD-fJp">
                             <rect key="frame" x="0.0" y="64" width="414" height="236"/>
@@ -77,10 +83,10 @@
                     <constraints>
                         <constraint firstItem="ELu-mD-fJp" firstAttribute="top" secondItem="KpS-Gw-V7O" secondAttribute="bottom" id="Dvw-bJ-LDM"/>
                         <constraint firstAttribute="trailing" secondItem="ELu-mD-fJp" secondAttribute="trailing" id="J8Q-4I-Ekc"/>
-                        <constraint firstItem="KpS-Gw-V7O" firstAttribute="top" secondItem="3tT-Wq-X3y" secondAttribute="top" id="KFZ-jp-oEV"/>
-                        <constraint firstAttribute="trailing" secondItem="KpS-Gw-V7O" secondAttribute="trailing" id="NOi-mp-D7o"/>
+                        <constraint firstAttribute="trailing" secondItem="KpS-Gw-V7O" secondAttribute="trailing" constant="16" id="NOi-mp-D7o"/>
+                        <constraint firstItem="KpS-Gw-V7O" firstAttribute="top" secondItem="3tT-Wq-X3y" secondAttribute="top" id="RLS-rP-MlB"/>
                         <constraint firstItem="ELu-mD-fJp" firstAttribute="leading" secondItem="3tT-Wq-X3y" secondAttribute="leading" id="fYy-1m-k93"/>
-                        <constraint firstItem="KpS-Gw-V7O" firstAttribute="leading" secondItem="3tT-Wq-X3y" secondAttribute="leading" id="miN-27-F5w"/>
+                        <constraint firstItem="KpS-Gw-V7O" firstAttribute="leading" secondItem="3tT-Wq-X3y" secondAttribute="leading" constant="16" id="miN-27-F5w"/>
                         <constraint firstAttribute="bottom" secondItem="ELu-mD-fJp" secondAttribute="bottom" id="qGb-mS-04X"/>
                     </constraints>
                 </view>

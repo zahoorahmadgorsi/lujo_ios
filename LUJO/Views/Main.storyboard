@@ -146,7 +146,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yE1-vX-uSi">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data is available." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4m-tf-fiX">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
@@ -163,7 +163,7 @@
                                     <constraint firstItem="yE1-vX-uSi" firstAttribute="width" secondItem="jsM-8U-o9H" secondAttribute="width" id="0Sx-Vm-jPi"/>
                                     <constraint firstAttribute="trailing" secondItem="yE1-vX-uSi" secondAttribute="trailing" id="2HL-px-9s6"/>
                                     <constraint firstAttribute="bottom" secondItem="yE1-vX-uSi" secondAttribute="bottom" id="97g-m1-sAK"/>
-                                    <constraint firstItem="yE1-vX-uSi" firstAttribute="top" secondItem="jsM-8U-o9H" secondAttribute="top" id="MRg-8k-ODs"/>
+                                    <constraint firstItem="yE1-vX-uSi" firstAttribute="top" secondItem="jsM-8U-o9H" secondAttribute="top" constant="16" id="MRg-8k-ODs"/>
                                     <constraint firstItem="yE1-vX-uSi" firstAttribute="leading" secondItem="jsM-8U-o9H" secondAttribute="leading" id="t2a-zD-bsz"/>
                                 </constraints>
                             </scrollView>

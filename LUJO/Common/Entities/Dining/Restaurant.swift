@@ -189,6 +189,7 @@ struct DiningHomeObjects: Codable {
     let cuisines: [Cuisine]
     var cities: [DiningCity]
 
+    
     enum CodingKeys: String, CodingKey {
         case slider
         case starChief = "star-chef"
