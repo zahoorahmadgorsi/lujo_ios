@@ -33,7 +33,10 @@ enum EERouter: URLRequestConvertible {
     case geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
-
+    case villas(String, String?, Int?)
+    case goods(String, String?, Int?)
+    case yachts(String, String?, Int?)
+    
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
             return getHTTPMethod()
@@ -57,20 +60,26 @@ enum EERouter: URLRequestConvertible {
 
     func getHTTPMethod() -> HTTPMethod {
         switch self {
-        case .home:
-            return .get
-        case .events:
-            return .get
-        case .experiences:
-            return .get
-        case .salesforce:
-            return .post
-        case .geopoint:
-            return .post
-        case .citySearch:
-            return .get
-        case .cityInfo:
-            return .get
+            case .home:
+                return .get
+            case .events:
+                return .get
+            case .experiences:
+                return .get
+            case .salesforce:
+                return .post
+            case .geopoint:
+                return .post
+            case .citySearch:
+                return .get
+            case .cityInfo:
+                return .get
+            case .villas:
+                return .get
+            case .goods:
+                return .get
+            case .yachts:
+                return .get
         }
     }
 
@@ -111,7 +120,39 @@ enum EERouter: URLRequestConvertible {
             if let cityId = cityId {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
             }
-
+        case let .villas(token, term, cityId):
+            newURLComponents.path.append("/villas")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+            ]
+            if let term = term {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+            }
+            if let cityId = cityId {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+            }
+        case let .goods(token, term, cityId):
+            newURLComponents.path.append("/gifts")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+            ]
+            if let term = term {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+            }
+            if let cityId = cityId {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+            }
+        case let .yachts(token, term, cityId):
+            newURLComponents.path.append("/yachts")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+            ]
+            if let term = term {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+            }
+            if let cityId = cityId {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+            }
         case .salesforce:
             newURLComponents.path.append("/request")
 
@@ -145,20 +186,26 @@ enum EERouter: URLRequestConvertible {
 
     fileprivate func getBodyData() -> Data? {
         switch self {
-        case .home:
-            return nil
-        case .events:
-            return nil
-        case .experiences:
-            return nil
-        case let .salesforce(itemId, token):
-            return getSalesforceDataAsJSONData(itemId: itemId, token: token)
-        case let .geopoint(token, type, latitude, longitude, _):
-            return getGeopointDataAsJSONData(type: type, latitude: latitude, longitude: longitude, token: token)
-        case .citySearch:
-            return nil
-        case .cityInfo:
-            return nil
+            case .home:
+                return nil
+            case .events:
+                return nil
+            case .experiences:
+                return nil
+            case .villas:
+                return nil
+            case .goods:
+                return nil
+            case .yachts:
+                return nil
+            case let .salesforce(itemId, token):
+                return getSalesforceDataAsJSONData(itemId: itemId, token: token)
+            case let .geopoint(token, type, latitude, longitude, _):
+                return getGeopointDataAsJSONData(type: type, latitude: latitude, longitude: longitude, token: token)
+            case .citySearch:
+                return nil
+            case .cityInfo:
+                return nil
         }
     }
     

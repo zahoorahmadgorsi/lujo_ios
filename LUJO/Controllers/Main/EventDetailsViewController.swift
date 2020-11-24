@@ -68,6 +68,9 @@ class EventDetailsViewController: UIViewController {
             case "event":         fallthrough
             case "special-event": setupEvents(event)
             case "experience":    setupExperience(event)
+            case "villa":    setupExperience(event)
+            case "gift":    setupExperience(event)
+            case "yacht":    setupExperience(event)
             default: break
         }
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
@@ -96,7 +99,7 @@ class EventDetailsViewController: UIViewController {
     }
     
     private func presentGalleryViewControllerIfNeeded() {
-        let dataSource = event.getAllImagesURL()
+        let dataSource = event.getGalleryImagesURL()
         if dataSource.isEmpty {
             showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
         } else {
@@ -110,16 +113,18 @@ extension EventDetailsViewController {
     
     fileprivate func setupEvents(_ event: EventsExperiences) {
         // imagesList.imageURLList = event.allImages ?? []
-        if let firstImageLink = event.getAllImagesURL().first {
+        if let firstImageLink = event.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+        }else{
+            print("Image not found")
         }
         name.text = event.name
         
         var locationText = ""
-        if let cityName = event.location.first?.city?.name {
+        if let cityName = event.location?.first?.city?.name {
             locationText = "\(cityName), "
         }
-        locationText += event.location.first?.country.name ?? ""
+        locationText += event.location?.first?.country.name ?? ""
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         
@@ -160,16 +165,19 @@ extension EventDetailsViewController {
     }
     
     fileprivate func setupExperience(_ experience: EventsExperiences) {
-        if let firstImageLink = experience.getAllImagesURL().first {
+        if let firstImageLink = experience.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+        } else if let primaryImageLink = experience.primaryMedia?.mediaUrl{
+            mainImageView.downloadImageFrom(link: primaryImageLink, contentMode: .scaleAspectFill)
         }
+        
         name.text = experience.name
         
         var locationText = ""
-        if let cityName = experience.location.first?.city?.name {
+        if let cityName = experience.location?.first?.city?.name {
             locationText = "\(cityName), "
         }
-        locationText += experience.location.first?.country.name ?? ""
+        locationText += experience.location?.first?.country.name ?? ""
         locationLabel.text = locationText.uppercased()
         
         dateContainerView.isHidden = true
@@ -204,19 +212,25 @@ extension EventDetailsViewController {
 extension EventDetailsViewController {
     
     fileprivate func sendInitialInformation() {
-        guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+        let isEqual = (event.type == "yacht")
+        if !isEqual{
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            
+            EEAPIManager().sendRequestForSalesForce(itemId: event.id)
+            
+            let initialMessage = """
+            Hi Concierge team,
+            
+            I am interested in \(event.name), can you assist me?
+            
+            \(userFirstName)
+            """
+            
+            startChatWithInitialMessage(initialMessage)
+        }else{  //yacht
+            self.present(YachtViewController.instantiate(event: event), animated: true, completion: nil)
+        }
         
-        EEAPIManager().sendRequestForSalesForce(itemId: event.id)
-        
-        let initialMessage = """
-        Hi Concierge team,
-        
-        I am interested in \(event.name), can you assist me?
-        
-        \(userFirstName)
-        """
-        
-        startChatWithInitialMessage(initialMessage)
     }
     
     //Zahoor Started

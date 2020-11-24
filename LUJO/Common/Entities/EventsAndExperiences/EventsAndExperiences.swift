@@ -82,10 +82,11 @@ struct EventsExperiences: Codable {
     let gallery: [Gallery]?
     let eventCategory: [Taxonomy]?
     let experienceCategory: [Taxonomy]?
+    let giftCategory: [Taxonomy]?
     let tags: [Taxonomy]?
     let eventVenue: [Taxonomy]?
     let priceRange: [Taxonomy]?
-    let location: [TaxonomyLocation]
+    let location: [TaxonomyLocation]?
     var isFavourite: Bool?
     
     enum CodingKeys: String, CodingKey {
@@ -103,6 +104,7 @@ struct EventsExperiences: Codable {
         case gallery
         case eventCategory = "event_category"
         case experienceCategory = "experience_category"
+        case giftCategory = "gift_category"
         case tags = "lujo_tag"
         case eventVenue = "event_venue"
         case priceRange = "price_range"
@@ -110,7 +112,7 @@ struct EventsExperiences: Codable {
         case isFavourite = "is_favorite"
     }
 
-    func getAllImagesURL() -> [String] {
+    func getGalleryImagesURL() -> [String] {
         return gallery?.filter({ $0.type == "image" }).map({ $0.mediaUrl }) ?? []
     }
 }
@@ -162,10 +164,11 @@ extension EventsExperiences {
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
             eventCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .eventCategory)
             experienceCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .experienceCategory)
+            giftCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .giftCategory)
             tags = try values.decodeIfPresent([Taxonomy].self, forKey: .tags)
             eventVenue = try values.decodeIfPresent([Taxonomy].self, forKey: .eventVenue)
             priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
-            location = try values.decode([TaxonomyLocation].self, forKey: .location)
+            location = try values.decodeIfPresent([TaxonomyLocation].self, forKey: .location)
             isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
         } catch {
             Crashlytics.sharedInstance().recordError(error)

@@ -273,7 +273,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         locationEventContainerView.isHidden = events.count == 0
         locationEventSlider.itemsList = Array(events.prefix(5))
         noNearbyEventsContainerView?.isHidden = events.count > 0
-        locationEventTitleLabel.text = "Upcoming in \(events.first?.location.first?.city?.name ?? "your city")"
+        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? "your city")"
     }
     
     func update(_ information: HomeObjects?) {
@@ -282,8 +282,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             
             featured.imageURLList = [""]
             featured.itemsList = []
-            //            featuredPager.numberOfPages = 1
-            //            featuredPager.currentPage = 0
+//            featuredPager.numberOfPages = 1
+//            featuredPager.currentPage = 0
             
             homeEventSlider.itemsList = []
             homeExperienceSlider.itemsList = []
@@ -594,15 +594,20 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
-        self.present(GoodsViewController.instantiate(), animated: true, completion: nil)
+//        self.present(GoodsViewController.instantiate(), animated: true, completion: nil)
+        let viewController = EventsViewController.instantiate(category: .good)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func bookJetButton_onClick(_ sender: Any) {
-        //self.tabBarController?.selectedIndex = 3
+    @IBAction func villaButton_onClick(_ sender: Any) {
+        let viewController = EventsViewController.instantiate(category: .villa)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func findAYachtButton_onClick(_ sender: Any) {
-        self.present(YachtViewController.instantiate(), animated: true, completion: nil)
+        //self.present(YachtViewController.instantiate(), animated: true, completion: nil)
+        let viewController = EventsViewController.instantiate(category: .yacht)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func findAHotelButton_onClick(_ sender: Any) {

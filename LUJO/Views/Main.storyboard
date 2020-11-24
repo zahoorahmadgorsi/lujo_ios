@@ -1866,7 +1866,7 @@
                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jc7-zT-o09">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="127" height="62"/>
                                                                                         <connections>
-                                                                                            <action selector="bookJetButton_onClick:" destination="diB-LJ-Odk" eventType="touchUpInside" id="CI8-n8-KDr"/>
+                                                                                            <action selector="villaButton_onClick:" destination="diB-LJ-Odk" eventType="touchUpInside" id="eGg-s9-AiH"/>
                                                                                         </connections>
                                                                                     </button>
                                                                                 </subviews>

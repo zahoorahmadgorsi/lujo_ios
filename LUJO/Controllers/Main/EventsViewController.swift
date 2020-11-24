@@ -14,6 +14,9 @@ import AVFoundation
 enum EventCategory: String {
     case event = "Events"
     case experience = "Experiences"
+    case villa = "Villas"
+    case good = "Goods"
+    case yacht = "Yachts"
 }
 
 class EventsViewController: UIViewController {
@@ -50,10 +53,16 @@ class EventsViewController: UIViewController {
         navigationItem.backBarButtonItem?.title = ""
         currentLayout = collectionView.collectionViewLayout as? LiftLayout
         switch category! {
-        case .event:
-            currentLayout?.setCustomCellHeight(194)
-        case .experience:
-            currentLayout?.setCustomCellHeight(170)
+            case .event:
+                currentLayout?.setCustomCellHeight(194)
+            case .experience:
+                currentLayout?.setCustomCellHeight(170)
+            case .villa:
+                currentLayout?.setCustomCellHeight(170)
+            case .good:
+                currentLayout?.setCustomCellHeight(170)
+            case .yacht:
+                currentLayout?.setCustomCellHeight(170)
         }
         
         collectionView.register(UINib(nibName: HomeSliderCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeSliderCell.identifier)
@@ -109,7 +118,7 @@ class EventsViewController: UIViewController {
         var titleString = category.rawValue
         
         if dataSource.count > 0 {
-            titleString = "\(dataSource[0].location.first?.city?.name ?? "") \(category == EventCategory.experience ? "experiances" : "events")"
+            titleString = "\(dataSource[0].location?.first?.city?.name ?? "") \(category == EventCategory.experience ? "experiances" : "events")"
         } else if let city = city {
             titleString = "\(city.name) \(category == EventCategory.experience ? "experiances" : "events")"
         }
@@ -154,6 +163,8 @@ extension EventsViewController: UICollectionViewDataSource, UICollectionViewDele
         let model = dataSource[indexPath.row]
         if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
             cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+        }else if let firstImageLink = model.getGalleryImagesURL().first {
+            cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }
         //Zahoor started 20201026
         cell.primaryImage.isHidden = false;
@@ -254,25 +265,54 @@ extension EventsViewController {
         }
         
         switch category {
-        case .event:
-            EEAPIManager().getEvents(token, past: past, term: term, cityId: cityId) { list, error in
-                guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Home Events information")
-                    completion([], error)
-                    return
+            case .event:
+                EEAPIManager().getEvents(token, past: past, term: term, cityId: cityId) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Home Events information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
                 }
-                
+            case .experience:
+                EEAPIManager().getExperiences(token, term: term, cityId: cityId) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home experience information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
+                }
+            case .villa:
+                EEAPIManager().getVillas(token, term: term, cityId: cityId) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home villas information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
+                }
+            case .good:
+                EEAPIManager().getGoods(token, term: term, cityId: cityId) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home goods information")
+                        completion([], error)
+                        return
+                    }
                 completion(list, error)
             }
-        case .experience:
-            EEAPIManager().getExperiences(token, term: term, cityId: cityId) { list, error in
-                guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Home Events information")
-                    completion([], error)
-                    return
-                }
+            case .yacht:
+                EEAPIManager().getYachts(token, term: term, cityId: cityId) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home yachts information")
+                        completion([], error)
+                        return
+                    }
                 completion(list, error)
             }
         }

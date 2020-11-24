@@ -44,12 +44,21 @@ class SearchEventsViewController: UIViewController {
         
         currentLayout = collectionView.collectionViewLayout as? LiftLayout
         switch category! {
-        case .event:
-            currentLayout?.setCustomCellHeight(194)
-            title = "Search events"
-        case .experience:
-            currentLayout?.setCustomCellHeight(170)
-            title = "Search experiences"
+            case .event:
+                currentLayout?.setCustomCellHeight(194)
+                title = "Search events"
+            case .experience:
+                currentLayout?.setCustomCellHeight(170)
+                title = "Search experiences"
+            case .villa:
+                currentLayout?.setCustomCellHeight(170)
+                title = "Search villas"
+            case .good:
+                currentLayout?.setCustomCellHeight(170)
+                title = "Search goods"
+            case .yacht:
+                currentLayout?.setCustomCellHeight(170)
+                title = "Search yachts"
         }
         
         collectionView.register(UINib(nibName: HomeSliderCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeSliderCell.identifier)
@@ -234,26 +243,56 @@ extension SearchEventsViewController {
         }
         
         switch category {
-        case .event:
-            EEAPIManager().getEvents(token, past: past, term: term, cityId: nil) { list, error in
-                guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Home Events information")
-                    completion([], error)
-                    return
+            case .event:
+                EEAPIManager().getEvents(token, past: past, term: term, cityId: nil) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home events information")
+                        completion([], error)
+                        return
+                    }
+                    
+                    completion(list, error)
                 }
-                
-                completion(list, error)
+            case .experience:
+                EEAPIManager().getExperiences(token, term: term, cityId: nil) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home experiences information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
+                }
+            case .villa:
+                EEAPIManager().getVillas(token, term: term, cityId: nil) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home villas information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
+                }
+            case .good:
+                EEAPIManager().getGoods(token, term: term, cityId: nil) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home goods information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
             }
-        case .experience:
-            EEAPIManager().getExperiences(token, term: term, cityId: nil) { list, error in
-                guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Home Events information")
-                    completion([], error)
-                    return
-                }
-                completion(list, error)
+            case .yacht:
+                EEAPIManager().getYachts(token, term: term, cityId: nil) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home yachts information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
             }
         }
     }

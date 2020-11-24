@@ -303,8 +303,8 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func seeAllEventsButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.event.items.first?.location.first?.city?.termId {
-            self.navigationController?.pushViewController(EventsViewController.instantiate(category: .event, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.event.items.first?.location.first?.city?.name ?? "", restaurantsNum: cityInformation?.event.num ?? 0, restaurants: [])), animated: true)
+        if let termId = cityInformation?.event.items.first?.location?.first?.city?.termId {
+            self.navigationController?.pushViewController(EventsViewController.instantiate(category: .event, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.event.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.event.num ?? 0, restaurants: [])), animated: true)
         }
     }
     
@@ -315,8 +315,8 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func seeAllExperiancesButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.experience.items.first?.location.first?.city?.termId {
-            self.navigationController?.pushViewController(EventsViewController.instantiate(category: .experience, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.experience.items.first?.location.first?.city?.name ?? "", restaurantsNum: cityInformation?.experience.num ?? 0, restaurants: [])), animated: true)
+        if let termId = cityInformation?.experience.items.first?.location?.first?.city?.termId {
+            self.navigationController?.pushViewController(EventsViewController.instantiate(category: .experience, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.experience.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.experience.num ?? 0, restaurants: [])), animated: true)
         }
     }
     
