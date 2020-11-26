@@ -16,7 +16,7 @@ class EventDetailsViewController: UIViewController {
     class var identifier: String { return "EventDetailsViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(event: EventsExperiences) -> EventDetailsViewController {
+    class func instantiate(event: Product) -> EventDetailsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! EventDetailsViewController
         viewController.event = event
         return viewController
@@ -24,7 +24,7 @@ class EventDetailsViewController: UIViewController {
     
     //MARK:- Globals
     
-    private(set) var event: EventsExperiences!
+    private(set) var event: Product!
     
     @IBOutlet var mainImageView: UIImageView!
     @IBOutlet var name: UILabel!
@@ -111,7 +111,7 @@ class EventDetailsViewController: UIViewController {
 
 extension EventDetailsViewController {
     
-    fileprivate func setupEvents(_ event: EventsExperiences) {
+    fileprivate func setupEvents(_ event: Product) {
         // imagesList.imageURLList = event.allImages ?? []
         if let firstImageLink = event.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
@@ -164,7 +164,7 @@ extension EventDetailsViewController {
         }
     }
     
-    fileprivate func setupExperience(_ experience: EventsExperiences) {
+    fileprivate func setupExperience(_ experience: Product) {
         if let firstImageLink = experience.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         } else if let primaryImageLink = experience.primaryMedia?.mediaUrl{

@@ -14,7 +14,7 @@ class HomeEventCell: UICollectionViewCell {
     var item: Any?
 
     func setupContent(_ item: Any) {
-        if let event = item as? EventsExperiences, event.type == "event" {
+        if let event = item as? Product, event.type == "event" {
             if let mediaLink = event.primaryMedia?.mediaUrl, event.primaryMedia?.type == "image" {
                 image.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
@@ -59,7 +59,7 @@ class HomeEventCell: UICollectionViewCell {
             return
         }
 
-        if let experience = item as? EventsExperiences, experience.type == "experience" {
+        if let experience = item as? Product, experience.type == "experience" {
             if let mediaLink = experience.primaryMedia?.mediaUrl, experience.primaryMedia?.type == "image" {
                 image.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }

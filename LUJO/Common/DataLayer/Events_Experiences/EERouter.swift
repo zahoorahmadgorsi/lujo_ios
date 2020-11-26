@@ -131,6 +131,7 @@ enum EERouter: URLRequestConvertible {
             if let cityId = cityId {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
             }
+            newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
         case let .goods(token, term, cityId):
             newURLComponents.path.append("/gifts")
             newURLComponents.queryItems = [
@@ -142,6 +143,7 @@ enum EERouter: URLRequestConvertible {
             if let cityId = cityId {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
             }
+            newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
         case let .yachts(token, term, cityId):
             newURLComponents.path.append("/yachts")
             newURLComponents.queryItems = [
@@ -153,6 +155,7 @@ enum EERouter: URLRequestConvertible {
             if let cityId = cityId {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
             }
+            newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
         case .salesforce:
             newURLComponents.path.append("/request")
 

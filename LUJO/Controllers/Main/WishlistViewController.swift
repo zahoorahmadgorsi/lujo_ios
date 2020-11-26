@@ -122,6 +122,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
+            
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
             //Animation
@@ -360,7 +361,11 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //wishListView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 100).isActive = true
         wishListView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         //if height is 200 and marging is 15 then total height is 230
-        let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2+64   // 64 is height of "see all" control
+        //let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2+64   // 64 is height of "see all" control
+//        var itemHeight = wishListView.collectionView.collectionViewLayout.collectionViewContentSize.height
+//        print(itemHeight)
+        let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2+64 // 64 is height of "see all" control
+//        print(itemHeight)
         wishListView.heightAnchor.constraint(equalToConstant: CGFloat(itemHeight)).isActive = true
     }
     

@@ -37,7 +37,7 @@ class HomeSlider: UIView {
 
     weak var delegate: DidSelectSliderItemProtocol?
 
-    var itemsList: [EventsExperiences] = [] {
+    var itemsList: [Product] = [] {
         didSet {
             collectionView.reloadData()
         }

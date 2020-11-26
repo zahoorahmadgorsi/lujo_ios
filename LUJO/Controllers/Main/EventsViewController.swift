@@ -27,7 +27,7 @@ class EventsViewController: UIViewController {
     class var identifier: String { return "EventsViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(category: EventCategory, dataSource: [EventsExperiences] = [], city: DiningCity? = nil) -> EventsViewController {
+    class func instantiate(category: EventCategory, dataSource: [Product] = [], city: DiningCity? = nil) -> EventsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! EventsViewController
         viewController.category = category
         viewController.dataSource = dataSource
@@ -41,7 +41,7 @@ class EventsViewController: UIViewController {
     private var city: DiningCity?
     
     @IBOutlet var collectionView: UICollectionView!
-    private var dataSource: [EventsExperiences]!
+    private var dataSource: [Product]!
     
     private let naHUD = JGProgressHUD(style: .dark)
     
@@ -143,7 +143,7 @@ class EventsViewController: UIViewController {
         naHUD.dismiss()
     }
     
-    func update(listOf objects: [EventsExperiences]) {
+    func update(listOf objects: [Product]) {
         dataSource = objects
 //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
@@ -258,7 +258,7 @@ extension EventsViewController {
         }
     }
     
-    func getList(for category: EventCategory, past: Bool, term: String?, cityId: Int?, completion: @escaping ([EventsExperiences], Error?) -> Void) {
+    func getList(for category: EventCategory, past: Bool, term: String?, cityId: Int?, completion: @escaping ([Product], Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -319,7 +319,7 @@ extension EventsViewController {
     }
     
     @objc func didTappedOnHeartAt( _ sender:AnyObject) {
-        var item: EventsExperiences!
+        var item: Product!
         if let index = sender.view?.tag{
             item = dataSource[index]
             

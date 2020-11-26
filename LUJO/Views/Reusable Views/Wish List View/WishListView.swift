@@ -58,6 +58,7 @@ class WishListView: UIView {
     var itemsList: [Favourite] = [] {
         didSet {
             collectionView.reloadData()
+            collectionView.layoutIfNeeded() //forces the reload to happen immediately instead of on the next runloop cycle.
         }
     }
     
@@ -70,6 +71,8 @@ class WishListView: UIView {
         super.init(frame: frame)
         commonInit()
     }
+
+    
     
     func commonInit() {
         guard let view = loadViewFromNib() else { return }
@@ -90,7 +93,8 @@ class WishListView: UIView {
         collectionView.trailingAnchor.constraint(equalTo: self.collContainerView.trailingAnchor).isActive = true
         collectionView.topAnchor.constraint(equalTo: self.collContainerView.topAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: self.collContainerView.bottomAnchor).isActive = true
-
+//        self.collContainerView.heightAnchor.constraint(equalTo: collectionView.heightAnchor).isActive = true
+        
     }
 
     override class var requiresConstraintBasedLayout: Bool {
@@ -139,6 +143,8 @@ class WishListView: UIView {
         }
         RunLoop.current.add(carousalTimer!, forMode: .common)
     }
+    
+    
 }
 //
 extension WishListView: UICollectionViewDataSource {
@@ -244,4 +250,6 @@ extension WishListView: UICollectionViewDelegateFlowLayout {
         //return 16
         return CGFloat(CollectionSize.itemMargin.rawValue)
     }
+    
+    
 }

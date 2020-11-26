@@ -64,10 +64,11 @@ struct RestaurantCity: Codable {
 
 struct EventExperienceCity: Codable {
     let num: Int
-    let items: [EventsExperiences]
+    let items: [Product]
 }
 
-struct EventsExperiences: Codable {
+//it could be an event, experience, gift, villa or yacht
+struct Product: Codable {
     let type: String
     let id: Int
     let name: String
@@ -82,12 +83,28 @@ struct EventsExperiences: Codable {
     let gallery: [Gallery]?
     let eventCategory: [Taxonomy]?
     let experienceCategory: [Taxonomy]?
-    let giftCategory: [Taxonomy]?
     let tags: [Taxonomy]?
     let eventVenue: [Taxonomy]?
     let priceRange: [Taxonomy]?
     let location: [TaxonomyLocation]?
     var isFavourite: Bool?
+    //Gifts related
+    let giftCategory: [Taxonomy]?
+    //Villas related
+    let headline: String?
+    let numberOfBedrooms: String?
+    let numberOfBathrooms: String?
+    let numberOfGuests: String?
+    let rentPricePerWeekLowSeason: String?
+    let rentPricePerWeekHighSeason: String?
+    let salePrice: String?
+    let latitude: String?
+    let longtitude: String?
+    let villaAmenities: [Taxonomy]?
+    let villaFacilities: [Taxonomy]?
+    let villaStyle: [Taxonomy]?
+    let villaStatus: [Taxonomy]?
+    
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -104,12 +121,27 @@ struct EventsExperiences: Codable {
         case gallery
         case eventCategory = "event_category"
         case experienceCategory = "experience_category"
-        case giftCategory = "gift_category"
         case tags = "lujo_tag"
         case eventVenue = "event_venue"
         case priceRange = "price_range"
         case location
         case isFavourite = "is_favorite"
+        //Gifts related
+        case giftCategory = "gift_category"
+        //Villas related
+        case headline
+        case numberOfBedrooms = "number_of_bedrooms"
+        case numberOfBathrooms = "number_of_bathrooms"
+        case numberOfGuests = "number_of_guests"
+        case rentPricePerWeekLowSeason = "rent_price_per_week_low_season"
+        case rentPricePerWeekHighSeason = "rent_price_per_week_high_season"
+        case salePrice = "sale_price"
+        case latitude
+        case longtitude
+        case villaAmenities = "villa_amenities"
+        case villaFacilities = "villa_facilities"
+        case villaStyle = "villa_style"
+        case villaStatus = "villa_status"
     }
 
     func getGalleryImagesURL() -> [String] {
@@ -117,7 +149,7 @@ struct EventsExperiences: Codable {
     }
 }
 
-extension EventsExperiences {
+extension Product {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -170,6 +202,21 @@ extension EventsExperiences {
             priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
             location = try values.decodeIfPresent([TaxonomyLocation].self, forKey: .location)
             isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
+            //Villas related
+            headline = try values.decodeIfPresent(String.self, forKey: .headline)
+            numberOfBedrooms = try values.decodeIfPresent(String.self, forKey: .numberOfBedrooms)
+            numberOfBathrooms = try values.decodeIfPresent(String.self, forKey: .numberOfBathrooms)
+            numberOfGuests = try values.decodeIfPresent(String.self, forKey: .numberOfGuests)
+            rentPricePerWeekLowSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekLowSeason)
+            rentPricePerWeekHighSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekHighSeason)
+            salePrice = try values.decodeIfPresent(String.self, forKey: .salePrice)
+            latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
+            longtitude = try values.decodeIfPresent(String.self, forKey: .longtitude)
+            villaAmenities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaAmenities)
+            villaFacilities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaFacilities)
+            villaStyle = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStyle)
+            villaStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStatus)
+            
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -178,10 +225,10 @@ extension EventsExperiences {
 }
 
 struct HomeObjects: Codable {
-    let slider: [EventsExperiences]
-    var events: [EventsExperiences]
-    let experiences: [EventsExperiences]
-    var specialEvents: [EventsExperiences]
+    let slider: [Product]
+    var events: [Product]
+    let experiences: [Product]
+    var specialEvents: [Product]
 
     enum CodingKeys: String, CodingKey {
         case slider

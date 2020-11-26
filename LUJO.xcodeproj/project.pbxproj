@@ -114,6 +114,10 @@
 		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
 		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
+		88E731A9256FC5B700BEDD00 /* ProductDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */; };
+		88E731AA256FC5B700BEDD00 /* ProductDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */; };
+		88E731AC256FFA7200BEDD00 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */; };
+		88E731AE256FFAAF00BEDD00 /* ProductDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88E731AD256FFAAF00BEDD00 /* ProductDetailView.xib */; };
 		88EA9F91255408F800514626 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F90255408F800514626 /* WishlistViewController.swift */; };
 		88EA9F9425544E8400514626 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F9325544E8400514626 /* WishList.swift */; };
 		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
@@ -392,6 +396,10 @@
 		8894D02F2562E61300BF84D8 /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
 		8894D0312562E63C00BF84D8 /* WishListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WishListView.xib; sourceTree = "<group>"; };
 		88B57274256AC32000FF9E4C /* DiningViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiningViewCell.xib; sourceTree = "<group>"; };
+		88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCell.swift; sourceTree = "<group>"; };
+		88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailCell.xib; sourceTree = "<group>"; };
+		88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
+		88E731AD256FFAAF00BEDD00 /* ProductDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailView.xib; sourceTree = "<group>"; };
 		88EA9F90255408F800514626 /* WishlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
 		88EA9F9325544E8400514626 /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
 		88EA9F962554550D00514626 /* WishListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListRouter.swift; sourceTree = "<group>"; };
@@ -780,6 +788,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				88E731A6256FC58100BEDD00 /* Product Details */,
 				883A86BF2561767D00E41A27 /* Wish List View */,
 				1DFE1AC323476EA50025410D /* Dining City View */,
 				1D88012A233E48420039DEA6 /* Dining Category Slider */,
@@ -939,6 +948,17 @@
 				8844D9B12563F712002FF846 /* FavouriteCell.xib */,
 			);
 			path = "Wish List View";
+			sourceTree = "<group>";
+		};
+		88E731A6256FC58100BEDD00 /* Product Details */ = {
+			isa = PBXGroup;
+			children = (
+				88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */,
+				88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */,
+				88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */,
+				88E731AD256FFAAF00BEDD00 /* ProductDetailView.xib */,
+			);
+			path = "Product Details";
 			sourceTree = "<group>";
 		};
 		88EA9F8D2554069100514626 /* WishList */ = {
@@ -1543,6 +1563,7 @@
 				9A990C1B21C94E4A00056E31 /* SF-Pro-Text-Regular.otf in Resources */,
 				9A2AEBC12162683A00F92FB3 /* HelveticaNeueLTStd-Bd.otf in Resources */,
 				9A40F6282185FC520038D0C4 /* AviationEmptyResult.xib in Resources */,
+				88E731AA256FC5B700BEDD00 /* ProductDetailCell.xib in Resources */,
 				9A645B9F22648524009BF14D /* BookingRequestLiftInfo.xib in Resources */,
 				1D81515922DE448900B203D8 /* HomeSpecialEventSummary.xib in Resources */,
 				9A61F59C21788C2A00D67907 /* CalendarHeaderView.xib in Resources */,
@@ -1564,6 +1585,7 @@
 				8844D9B32563F712002FF846 /* FavouriteCell.xib in Resources */,
 				1DD785B823749B27001A9CF9 /* PayAlertView.xib in Resources */,
 				9A18716921130D4800B81BFD /* Lora-Regular.ttf in Resources */,
+				88E731AE256FFAAF00BEDD00 /* ProductDetailView.xib in Resources */,
 				9AF1A0D22248EFD500E0680B /* AviationSearchOptions.xib in Resources */,
 				88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */,
 				1DFE1AC523476FCD0025410D /* DiningCityView.xib in Resources */,
@@ -1821,6 +1843,7 @@
 				9A89D3D221C0D148002D249F /* String+Capitalize.swift in Sources */,
 				3005D48223202CB100401243 /* MultiLegDetailViewControllerNEW.swift in Sources */,
 				9ABCF5C22163E55500D062C9 /* EntityProtocols.swift in Sources */,
+				88E731A9256FC5B700BEDD00 /* ProductDetailCell.swift in Sources */,
 				9A6583C5221C4EC900EB8EEA /* CountryCodeCell.swift in Sources */,
 				553BF858230D4E9F00EF4671 /* CardAlertView.swift in Sources */,
 				1D7819B52301A9DF0044C70B /* DiningRouter.swift in Sources */,
@@ -1840,6 +1863,7 @@
 				880B9B0D255845B10070D7CD /* Gift.swift in Sources */,
 				9AE0B2AF212330C700E55E6C /* GoLujoRouter.swift in Sources */,
 				1DEDB9ED22F2109600903CAC /* HomeSliderCell.swift in Sources */,
+				88E731AC256FFA7200BEDD00 /* ProductDetailView.swift in Sources */,
 				9AA52E552270DC9B003C6A51 /* AviationBooking.swift in Sources */,
 				1D618012238D6F6200F01199 /* YachtViewController.swift in Sources */,
 				9A0E58672260D4CA00F7848A /* BookingSegmentView.swift in Sources */,
@@ -2065,7 +2089,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.4;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2125,7 +2149,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.4;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2330,7 +2354,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.4;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

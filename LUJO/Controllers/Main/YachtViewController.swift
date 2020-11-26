@@ -16,10 +16,10 @@ class YachtViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "YachtViewController" }
     
-    private(set) var event: EventsExperiences?
+    private(set) var event: Product?
     
     /// Init method that will init and return view controller.
-    class func instantiate(event: EventsExperiences) -> YachtViewController {
+    class func instantiate(event: Product) -> YachtViewController {
         let viewController = UIStoryboard.customRequest.instantiate(identifier) as! YachtViewController
         viewController.event = event
         return viewController

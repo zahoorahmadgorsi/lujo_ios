@@ -31,7 +31,7 @@ class SearchEventsViewController: UIViewController {
     private(set) var category: EventCategory!
     
     @IBOutlet var collectionView: UICollectionView!
-    private var dataSource: [EventsExperiences] = []
+    private var dataSource: [Product] = []
     
     private let naHUD = JGProgressHUD(style: .dark)
     
@@ -93,7 +93,7 @@ class SearchEventsViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func update(listOf objects: [EventsExperiences]) {
+    func update(listOf objects: [Product]) {
         dataSource = objects
 //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
@@ -236,7 +236,7 @@ extension SearchEventsViewController {
         }
     }
     
-    func getList(for category: EventCategory, past: Bool, term: String?, completion: @escaping ([EventsExperiences], Error?) -> Void) {
+    func getList(for category: EventCategory, past: Bool, term: String?, completion: @escaping ([Product], Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -298,7 +298,7 @@ extension SearchEventsViewController {
     }
     
     @objc func didTappedOnHeartAt( _ sender:AnyObject) {
-        var item: EventsExperiences!
+        var item: Product!
         if let index = sender.view?.tag{
             item = dataSource[index]
             

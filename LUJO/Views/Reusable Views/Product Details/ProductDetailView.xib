@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductDetailView" customModule="LUJO" customModuleProvider="target">
+            <connections>
+                <outlet property="collContainerView" destination="NtN-2k-9Qm" id="MM0-qB-iDe"/>
+                <outlet property="lblTitle" destination="dpB-AK-YcP" id="f5Y-hL-6zF"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EWC-0i-oDi">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtn-Y2-EcT">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zk2-3f-7eU">
+                            <rect key="frame" x="16" y="0.0" width="382" height="30"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="EXK-sz-q6i">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Experiences" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpB-AK-YcP">
+                                            <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" name="White Text"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Event Icon White" translatesAutoresizingMaskIntoConstraints="NO" id="Vcx-Zu-Q3k">
+                                            <rect key="frame" x="199" y="0.0" width="183" height="30"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="EXK-sz-q6i" secondAttribute="bottom" id="4Fg-WE-CnC"/>
+                                <constraint firstAttribute="height" constant="30" id="CwT-s6-sxx"/>
+                                <constraint firstItem="EXK-sz-q6i" firstAttribute="leading" secondItem="Zk2-3f-7eU" secondAttribute="leading" id="MX7-Kl-EFY"/>
+                                <constraint firstItem="EXK-sz-q6i" firstAttribute="top" secondItem="Zk2-3f-7eU" secondAttribute="top" id="Vp5-Ir-f8F"/>
+                                <constraint firstAttribute="trailing" secondItem="EXK-sz-q6i" secondAttribute="trailing" id="WWF-hY-Yg6"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NtN-2k-9Qm">
+                            <rect key="frame" x="0.0" y="30" width="414" height="40"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Zk2-3f-7eU" secondAttribute="trailing" constant="16" id="4Pp-ne-VUq"/>
+                        <constraint firstItem="NtN-2k-9Qm" firstAttribute="top" secondItem="Zk2-3f-7eU" secondAttribute="bottom" id="4Xm-rw-ryc"/>
+                        <constraint firstItem="NtN-2k-9Qm" firstAttribute="leading" secondItem="dtn-Y2-EcT" secondAttribute="leading" id="5Xx-Lf-lo7"/>
+                        <constraint firstAttribute="trailing" secondItem="NtN-2k-9Qm" secondAttribute="trailing" id="Au9-yy-ryJ"/>
+                        <constraint firstItem="Zk2-3f-7eU" firstAttribute="leading" secondItem="dtn-Y2-EcT" secondAttribute="leading" constant="16" id="bp6-yc-YyQ"/>
+                        <constraint firstItem="Zk2-3f-7eU" firstAttribute="leading" secondItem="dtn-Y2-EcT" secondAttribute="leading" constant="16" id="jdy-g4-beT"/>
+                        <constraint firstItem="Zk2-3f-7eU" firstAttribute="top" secondItem="dtn-Y2-EcT" secondAttribute="top" id="n5G-ZR-wap"/>
+                        <constraint firstAttribute="bottom" secondItem="NtN-2k-9Qm" secondAttribute="bottom" id="rcP-Ft-n1m"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="dtn-Y2-EcT" secondAttribute="bottom" id="VIf-xt-7AN"/>
+                <constraint firstItem="dtn-Y2-EcT" firstAttribute="top" secondItem="EWC-0i-oDi" secondAttribute="top" id="VU0-gY-STF"/>
+                <constraint firstAttribute="trailing" secondItem="dtn-Y2-EcT" secondAttribute="trailing" id="e95-b7-Mam"/>
+                <constraint firstItem="dtn-Y2-EcT" firstAttribute="leading" secondItem="EWC-0i-oDi" secondAttribute="leading" id="obE-Wy-XRR"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="LgQ-rS-avw"/>
+            <point key="canvasLocation" x="213" y="113"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Event Icon White" width="20" height="20"/>
+        <namedColor name="White Text">
+            <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

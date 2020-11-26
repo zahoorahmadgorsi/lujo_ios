@@ -89,12 +89,12 @@ struct wishListRestaurants: Codable {
 }
 
 struct wishListEventsExperiences: Codable {
-    let eventsExperience: EventsExperiences?
+    let eventsExperience: Product?
 
     init(from decoder: Decoder) throws {
         do {
             var container = try decoder.unkeyedContainer()  // having no key
-            self.eventsExperience = try container.decodeIfPresent(EventsExperiences.self)
+            self.eventsExperience = try container.decodeIfPresent(Product.self)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

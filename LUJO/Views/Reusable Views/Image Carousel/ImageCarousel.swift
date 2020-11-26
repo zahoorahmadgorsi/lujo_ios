@@ -36,7 +36,7 @@ class ImageCarousel: UIView {
         }
     }
     
-    var itemsList: [EventsExperiences] = [] {
+    var itemsList: [Product] = [] {
         didSet {
             carouselView.reloadData()
         }

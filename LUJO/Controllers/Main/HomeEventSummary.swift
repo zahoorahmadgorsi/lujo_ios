@@ -33,7 +33,7 @@ class HomeEventSummary: UIView {
             fillWithEmptyInformation()
             return
         }
-        if let event = data as? EventsExperiences, event.type == "event" {
+        if let event = data as? Product, event.type == "event" {
             if let mediaLink = event.primaryMedia?.mediaUrl, event.primaryMedia?.type == "image" {
                 primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
@@ -73,7 +73,7 @@ class HomeEventSummary: UIView {
             return
         }
 
-        if let experience = data as? EventsExperiences, experience.type == "experience" {
+        if let experience = data as? Product, experience.type == "experience" {
             if let mediaLink = experience.primaryMedia?.mediaUrl, experience.primaryMedia?.type == "image" {
                 primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }

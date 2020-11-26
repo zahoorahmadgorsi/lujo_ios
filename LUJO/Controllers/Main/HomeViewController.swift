@@ -37,7 +37,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     //MARK:- Globals
     
     private var homeObjects: HomeObjects?
-    private var locationEvents:[EventsExperiences] = []
+    private var locationEvents:[Product] = []
     
     private let naHUD = JGProgressHUD(style: .dark)
     
@@ -267,7 +267,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
     }
     
-    func updateEventsByGeoLocation(_ events: [EventsExperiences]) {
+    func updateEventsByGeoLocation(_ events: [Product]) {
 //        print(events)
         locationEvents = events
         locationEventContainerView.isHidden = events.count == 0
@@ -349,7 +349,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @objc func showEventDetail(_ sender: UITapGestureRecognizer) {
-        let event: EventsExperiences!
+        let event: Product!
         
         switch sender.view {
         case is ImageCarousel:  event = getCurrentEventInFeatured()
@@ -421,7 +421,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     //Zahoor start
     @objc func tappedOnHeart(_ sender:UITapGestureRecognizer){
-        var item: EventsExperiences?
+        var item: Product?
         var index: Int = 0
         
         if (sender.view == specialEventView1.imgHeart && homeObjects?.specialEvents.count ?? 0 >= 1){
@@ -635,7 +635,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 
 extension HomeViewController: ImageCarouselDelegate {
     func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
-        var item: EventsExperiences!
+        var item: Product!
         item = featured.itemsList[index]
         
         //setting the favourite
@@ -672,7 +672,7 @@ extension HomeViewController: ImageCarouselDelegate {
 extension HomeViewController: DidSelectSliderItemProtocol {
     
     func didTappedOnHeartAt(index: Int, sender: HomeSlider) {
-        var item: EventsExperiences!
+        var item: Product!
         switch sender {
             case homeEventSlider:
                 item = homeObjects?.events[index]
@@ -743,7 +743,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
     
     
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider) {
-        let event: EventsExperiences!
+        let event: Product!
         
         switch sender {
             case homeEventSlider:
@@ -765,7 +765,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
 // Helper functions
 extension HomeViewController {
     
-    func getCurrentEventInFeatured() -> EventsExperiences? {
+    func getCurrentEventInFeatured() -> Product? {
         if let index = featured.currentIndex {
             return homeObjects?.slider[index]
         }
