@@ -4596,7 +4596,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrA-QL-o01">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="750"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xPJ-4E-Ygl">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="527"/>
@@ -4895,12 +4895,12 @@
                             <constraint firstItem="PrA-QL-o01" firstAttribute="top" secondItem="yQa-rc-7lj" secondAttribute="top" id="9Ju-hZ-zq7"/>
                             <constraint firstItem="e0o-qu-0K3" firstAttribute="leading" secondItem="p1f-0p-2pL" secondAttribute="leading" id="9zT-3g-q0q"/>
                             <constraint firstItem="xPJ-4E-Ygl" firstAttribute="width" secondItem="p1f-0p-2pL" secondAttribute="width" id="Dg1-Vz-IKb"/>
-                            <constraint firstItem="yQa-rc-7lj" firstAttribute="bottom" secondItem="PrA-QL-o01" secondAttribute="bottom" id="RaB-Kw-69T"/>
                             <constraint firstItem="e0o-qu-0K3" firstAttribute="bottom" secondItem="p1f-0p-2pL" secondAttribute="bottom" id="afk-qf-ccM"/>
                             <constraint firstItem="Kff-3y-LQo" firstAttribute="trailing" secondItem="yQa-rc-7lj" secondAttribute="trailing" id="k8D-dn-P6K"/>
                             <constraint firstItem="e0o-qu-0K3" firstAttribute="top" secondItem="Kff-3y-LQo" secondAttribute="bottom" id="n7I-IM-lRO"/>
                             <constraint firstItem="PrA-QL-o01" firstAttribute="leading" secondItem="yQa-rc-7lj" secondAttribute="leading" id="o7j-za-YZ1"/>
                             <constraint firstAttribute="trailing" secondItem="PrA-QL-o01" secondAttribute="trailing" id="pbn-4l-E7A"/>
+                            <constraint firstItem="Kff-3y-LQo" firstAttribute="top" secondItem="PrA-QL-o01" secondAttribute="bottom" id="qjv-SP-FAp"/>
                             <constraint firstAttribute="trailing" secondItem="e0o-qu-0K3" secondAttribute="trailing" id="tjg-kc-HGh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yQa-rc-7lj"/>
@@ -4919,6 +4919,7 @@
                         <outlet property="mainImageView" destination="aat-xw-pfm" id="JiX-Ar-ukU"/>
                         <outlet property="name" destination="hX0-ph-tg3" id="jF1-Yv-Lhx"/>
                         <outlet property="requestButton" destination="7Tm-fi-Nnv" id="nnT-Gy-cQf"/>
+                        <outlet property="stackView" destination="xPJ-4E-Ygl" id="SbQ-zg-npH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aR2-rM-bGx" userLabel="First Responder" sceneMemberID="firstResponder"/>

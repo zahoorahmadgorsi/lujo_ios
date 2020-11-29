@@ -10,6 +10,8 @@ import UIKit
 
 class ProductDetailCell: UICollectionViewCell {
     static var identifier: String = "ProductDetailCell"
+//    var itemType:ProductType = .summary //default
+//    var dictionary =  [String:String]()
     
     @IBOutlet weak var imgDot: UIImageView!
     @IBOutlet weak var lblTopLeft: UILabel!
@@ -31,4 +33,6 @@ class ProductDetailCell: UICollectionViewCell {
         lblTopRight.text = ""
         lblBottom.text = ""
     }
+    
+
 }

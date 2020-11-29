@@ -7,38 +7,38 @@
 //
 
 import UIKit
-enum ProductType {
-    case summary
-    case price
-    case amenities
+enum ProductType:String {
+    case summary = "Summary"
+    case price = "Price"
+    case amenities = "Amenities"
 }
 
 enum ProdCollSize:Int{
     case itemWidth = 175
-    case itemHeight = 50
+    case summaryHeight = 40
+    case priceAmenitiesHeight = 20
     case itemMargin = 16
 }
 
 class ProductDetail{
-    internal init(lblTopLeft: String? = nil, lblTopRight: String? = nil, lblBottom: String? = nil) {
-        self.lblTopLeft = lblTopLeft
-        self.lblTopRight = lblTopRight
-        self.lblBottom = lblBottom
+    internal init(key: String, value: String) {
+        self.key = key
+        self.value = value
     }
-    var lblTopLeft: String?
-    var lblTopRight: String?
-    var lblBottom: String?
+    var key: String?
+    var value: String?
+
 }
 
 class ProductDetailView: UIView {
 
        lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .horizontal
+        flowLayout.scrollDirection = .vertical
         let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         contentView.dataSource = self
         contentView.delegate = self
-        contentView.register(UINib(nibName: FavouriteCell.identifier, bundle: nil), forCellWithReuseIdentifier: FavouriteCell.identifier)
+        contentView.register(UINib(nibName: ProductDetailCell.identifier, bundle: nil), forCellWithReuseIdentifier: ProductDetailCell.identifier)
         contentView.backgroundColor = .clear
         contentView.showsHorizontalScrollIndicator = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,15 +73,10 @@ class ProductDetailView: UIView {
         func commonInit() {
             guard let view = loadViewFromNib() else { return }
             view.frame = self.bounds
+            
             self.addSubview(view)
             self.collContainerView.addSubview(collectionView)
             applyConstraints()
-            //to make animation random
-            let randomNumber:TimeInterval = TimeInterval(Int(arc4random_uniform(3)))
-            //It’ll return a random number between 0 and this upper bound, minus 1.
-            DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber ) {
-               
-            }
         }
         
         private func applyConstraints() {
@@ -117,9 +112,9 @@ extension ProductDetailView: UICollectionViewDataSource {
         
         let model = itemsList[indexPath.row]
         
-        cell.lblTopLeft.text = model.lblTopLeft
-        cell.lblTopRight.text = model.lblTopRight
-        cell.lblBottom.text = model.lblBottom
+        cell.lblTopLeft.text = model.key
+        cell.lblTopRight.text = model.value
+        cell.lblBottom.text = model.value
         
         if (itemType == .summary){
             cell.imgDot.isHidden = true
@@ -144,8 +139,11 @@ extension ProductDetailView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.itemHeight.rawValue)
+        if (self.itemType == .summary){
+            return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.summaryHeight.rawValue)
+        }else{
+            return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.priceAmenitiesHeight.rawValue)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView,

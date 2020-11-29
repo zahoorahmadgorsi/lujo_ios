@@ -26,17 +26,17 @@
                         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zk2-3f-7eU">
                             <rect key="frame" x="16" y="0.0" width="382" height="30"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="EXK-sz-q6i">
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="EXK-sz-q6i">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Experiences" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpB-AK-YcP">
-                                            <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Summary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpB-AK-YcP">
+                                            <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" name="White Text"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Event Icon White" translatesAutoresizingMaskIntoConstraints="NO" id="Vcx-Zu-Q3k">
-                                            <rect key="frame" x="199" y="0.0" width="183" height="30"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_line" translatesAutoresizingMaskIntoConstraints="NO" id="Vcx-Zu-Q3k">
+                                            <rect key="frame" x="171" y="0.0" width="211" height="30"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -57,14 +57,14 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NtN-2k-9Qm">
-                            <rect key="frame" x="0.0" y="30" width="414" height="40"/>
+                            <rect key="frame" x="0.0" y="38" width="414" height="32"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Zk2-3f-7eU" secondAttribute="trailing" constant="16" id="4Pp-ne-VUq"/>
-                        <constraint firstItem="NtN-2k-9Qm" firstAttribute="top" secondItem="Zk2-3f-7eU" secondAttribute="bottom" id="4Xm-rw-ryc"/>
+                        <constraint firstItem="NtN-2k-9Qm" firstAttribute="top" secondItem="Zk2-3f-7eU" secondAttribute="bottom" constant="8" id="4Xm-rw-ryc"/>
                         <constraint firstItem="NtN-2k-9Qm" firstAttribute="leading" secondItem="dtn-Y2-EcT" secondAttribute="leading" id="5Xx-Lf-lo7"/>
                         <constraint firstAttribute="trailing" secondItem="NtN-2k-9Qm" secondAttribute="trailing" id="Au9-yy-ryJ"/>
                         <constraint firstItem="Zk2-3f-7eU" firstAttribute="leading" secondItem="dtn-Y2-EcT" secondAttribute="leading" constant="16" id="bp6-yc-YyQ"/>
@@ -88,7 +88,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Event Icon White" width="20" height="20"/>
+        <image name="horizontal_line" width="211" height="18"/>
         <namedColor name="White Text">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
