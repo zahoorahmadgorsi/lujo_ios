@@ -47,6 +47,7 @@ class ProductDetailView: UIView {
     
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var collContainerView: UIView!
+    @IBOutlet weak var viewSeeMore: UIView!
     
     let nibName = "ProductDetailView"
     var itemType:ProductType = .summary //default

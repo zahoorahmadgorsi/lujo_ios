@@ -104,7 +104,26 @@ struct Product: Codable {
     let villaFacilities: [Taxonomy]?
     let villaStyle: [Taxonomy]?
     let villaStatus: [Taxonomy]?
-    
+    //Yachts related
+    let guestsNumber: String?
+    let cabinNumber: String?
+    let crewNumber: String?
+    let builderName: String?
+    let interiorDesigner: String?
+    let exteriorDesigner: String?
+    let buildYear: String?
+    let refitYear: String?
+    let lengthM: String?
+    let beamM: String?
+    let draftM: String?
+    let grossTonnage: String?
+    let cruisingSpeedKnot: String?
+    let topSpeedKnot: String?
+    let charterPriceLowSeasonPerWeek: String?
+    let charterPriceHighSeasonPerWeek: String?
+    let yachtType: [Taxonomy]?
+    let yachtStatus: [Taxonomy]?
+    let yachtExtras: [Taxonomy]?
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -142,6 +161,27 @@ struct Product: Codable {
         case villaFacilities = "villa_facilities"
         case villaStyle = "villa_style"
         case villaStatus = "villa_status"
+        //Yachts related
+        case guestsNumber = "guests_number"
+        case cabinNumber = "cabin_number"
+        case crewNumber = "crew_number"
+        case builderName = "builder_name"
+        case interiorDesigner = "interior_designer"
+        case exteriorDesigner = "exterior_designer"
+        case buildYear = "build_year"
+        case refitYear = "refit_year"
+        case lengthM = "length_m"
+        case beamM = "beam_m"
+        case draftM = "draft_m"
+        case grossTonnage = "gross_tonnage"
+        case cruisingSpeedKnot = "cruising_speed_knot"
+        case topSpeedKnot = "top_speed_knot"
+        case charterPriceLowSeasonPerWeek = "charter_price_low_season_per_week"
+        case charterPriceHighSeasonPerWeek = "charter_price_high_season_per_week"
+        case yachtType = "yacht_type"
+        case yachtStatus = "yacht_status"
+        case yachtExtras = "yacht_extras"
+        
     }
 
     func getGalleryImagesURL() -> [String] {
@@ -216,7 +256,26 @@ extension Product {
             villaFacilities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaFacilities)
             villaStyle = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStyle)
             villaStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStatus)
-            
+            //Yachts related
+            guestsNumber = try values.decodeIfPresent(String.self, forKey: .guestsNumber)
+            cabinNumber = try values.decodeIfPresent(String.self, forKey: .cabinNumber)
+            crewNumber = try values.decodeIfPresent(String.self, forKey: .crewNumber)
+            builderName = try values.decodeIfPresent(String.self, forKey: .builderName)
+            interiorDesigner = try values.decodeIfPresent(String.self, forKey: .interiorDesigner)
+            exteriorDesigner = try values.decodeIfPresent(String.self, forKey: .exteriorDesigner)
+            buildYear = try values.decodeIfPresent(String.self, forKey: .buildYear)
+            refitYear = try values.decodeIfPresent(String.self, forKey: .refitYear)
+            lengthM = try values.decodeIfPresent(String.self, forKey: .lengthM)
+            beamM = try values.decodeIfPresent(String.self, forKey: .beamM)
+            draftM = try values.decodeIfPresent(String.self, forKey: .draftM)
+            grossTonnage = try values.decodeIfPresent(String.self, forKey: .grossTonnage)
+            cruisingSpeedKnot = try values.decodeIfPresent(String.self, forKey: .cruisingSpeedKnot)
+            topSpeedKnot = try values.decodeIfPresent(String.self, forKey: .topSpeedKnot)
+            charterPriceLowSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerWeek)
+            charterPriceHighSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerWeek)
+            yachtType = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtType)
+            yachtStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtStatus)
+            yachtExtras = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtExtras)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

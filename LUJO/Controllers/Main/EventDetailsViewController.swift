@@ -71,7 +71,7 @@ class EventDetailsViewController: UIViewController {
             case "experience":      setupExperience(product)
             case "villa":           setupVilla(product)
             case "gift":            setupExperience(product)
-            case "yacht":           setupExperience(product)
+            case "yacht":           setupYacht(product)
             default: break
         }
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
@@ -232,12 +232,11 @@ extension EventDetailsViewController {
                 tv.translatesAutoresizingMaskIntoConstraints = false
                 return tv
             }()
-            //productDetailView.delegate = self
             productDetailView.itemType = .summary
             productDetailView.lblTitle.text = productDetailView.itemType.rawValue
             productDetailView.itemsList = itemsList
             stackView.addArrangedSubview(productDetailView)
-            //applying constraints on wishListView
+            //applying constraints on productDetailView
             setupProductDetailLayout(productDetailView: productDetailView)
         }
         //preparing price data of collection view
@@ -274,6 +273,150 @@ extension EventDetailsViewController {
                 itemsList.append(ProductDetail(key: "name",value: item.name))
             }
         }
+        if (itemsList.count > 0){
+            let productDetailView: ProductDetailView = {
+                let tv = ProductDetailView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            //productDetailView.delegate = self
+            productDetailView.itemType = .amenities
+            productDetailView.lblTitle.text = productDetailView.itemType.rawValue
+            productDetailView.itemsList = itemsList
+            stackView.addArrangedSubview(productDetailView)
+            //applying constraints on wishListView
+            setupProductDetailLayout(productDetailView: productDetailView)
+        }
+        descriptionTextView.attributedText = convertToAttributedString(product.description)
+        requestButton.setTitle("R E Q U E S T", for: .normal)
+    }
+    
+    fileprivate func setupYacht(_ product: Product) {
+        if let firstImageLink = product.getGalleryImagesURL().first {
+            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+        } else if let primaryImageLink = product.primaryMedia?.mediaUrl{
+            mainImageView.downloadImageFrom(link: primaryImageLink, contentMode: .scaleAspectFill)
+        }
+        
+        name.text = product.name
+        
+        var locationText = ""
+        if let cityName = product.location?.first?.city?.name {
+            locationText = "\(cityName), "
+        }
+        locationText += product.location?.first?.country.name ?? ""
+        locationLabel.text = locationText.uppercased()
+        
+        dateContainerView.isHidden = true
+        //preparing summary data of collection view
+        var itemsList =  [ProductDetail]()
+//        if let val = product.headline , val.count > 0{
+//            itemsList.append(ProductDetail(key: "Headline",value: val))
+//        }
+        if let val = product.guestsNumber, val.count > 0{
+            itemsList.append(ProductDetail(key: "Number Of Guests",value: val))
+        }
+        if let val = product.cabinNumber, val.count > 0{
+            itemsList.append(ProductDetail(key: "Number Of Cabins",value: val))
+        }
+        if let val = product.crewNumber, val.count > 0{
+            itemsList.append(ProductDetail(key: "Number Of Crews",value: val))
+        }
+        if let val = product.builderName, val.count > 0{
+            itemsList.append(ProductDetail(key: "Builder Name",value: val))
+        }
+        if let val = product.interiorDesigner, val.count > 0{
+            itemsList.append(ProductDetail(key: "Interior Designer",value: val))
+        }
+        if let val = product.exteriorDesigner , val.count > 0{
+            itemsList.append(ProductDetail(key: "Exterior Designer",value: val))
+        }
+        if let val = product.buildYear, val.count > 0{
+            itemsList.append(ProductDetail(key: "Build Year",value: val))
+        }
+        if let val = product.refitYear, val.count > 0{
+            itemsList.append(ProductDetail(key: "Refit Year",value: val))
+        }
+        if let val = product.lengthM, val.count > 0{
+            itemsList.append(ProductDetail(key: "Length (Meters)",value: val))
+        }
+        if let val = product.beamM, val.count > 0{
+            itemsList.append(ProductDetail(key: "Beam",value: val))
+        }
+        if let val = product.draftM , val.count > 0{
+            itemsList.append(ProductDetail(key: "Draft",value: val))
+        }
+        if let val = product.grossTonnage, val.count > 0{
+            itemsList.append(ProductDetail(key: "Gross Tonnage",value: val))
+        }
+        if let val = product.cruisingSpeedKnot, val.count > 0{
+            itemsList.append(ProductDetail(key: "Cruising Speed (Knots)",value: val))
+        }
+        if let val = product.topSpeedKnot, val.count > 0{
+            itemsList.append(ProductDetail(key: "Top Speed (Knots)",value: val))
+        }
+        if let val = product.charterPriceLowSeasonPerWeek, val.count > 0{
+            itemsList.append(ProductDetail(key: "Low Season Weekly Charter",value: val))
+        }
+        if let val = product.charterPriceHighSeasonPerWeek, val.count > 0{
+            itemsList.append(ProductDetail(key: "High Season Weekly Charter",value: val))
+        }
+        
+        if (itemsList.count > 0){
+            let productDetailView: ProductDetailView = {
+                let tv = ProductDetailView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            productDetailView.itemType = .summary
+            productDetailView.lblTitle.text = productDetailView.itemType.rawValue
+            productDetailView.itemsList = itemsList
+            stackView.addArrangedSubview(productDetailView)
+            //applying constraints on productDetailView
+            setupProductDetailLayout(productDetailView: productDetailView)
+        }
+        //preparing price data of collection view
+        itemsList =  [ProductDetail]()
+        if let val = product.price , val > 0.0{
+            itemsList.append(ProductDetail(key: "Price",value: String(val)))
+        }
+        if (itemsList.count > 0){
+            let productDetailView: ProductDetailView = {
+                let tv = ProductDetailView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            //productDetailView.delegate = self
+            productDetailView.itemType = .price
+            productDetailView.lblTitle.text = productDetailView.itemType.rawValue
+            productDetailView.itemsList = itemsList
+            stackView.addArrangedSubview(productDetailView)
+            //applying constraints on wishListView
+            setupProductDetailLayout(productDetailView: productDetailView)
+        }
+        //preparing amenities (yachtExtras) data of collection view
+        var count = (product.yachtExtras?.count ?? 0)
+        if count > 0 , let items = product.yachtExtras{
+            itemsList =  [ProductDetail]()
+            for item in items{
+                itemsList.append(ProductDetail(key: "name",value: item.name))
+            }
+        }
+//        //preparing facilites(yachtStatus) data of collection view
+//        count = (product.yachtStatus?.count ?? 0)
+//        if count > 0 , let items = product.yachtStatus{
+//            for item in items{
+//                itemsList.append(ProductDetail(key: "name",value: item.name))
+//            }
+//        }
+//        //preparing facilites (yachtType) data of collection view
+//        count = (product.yachtType?.count ?? 0)
+//        if count > 0 , let items = product.yachtType{
+//            for item in items{
+//                itemsList.append(ProductDetail(key: "name",value: item.name))
+//            }
+//        }
+        
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()
