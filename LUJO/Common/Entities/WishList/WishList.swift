@@ -29,17 +29,18 @@ class Favourite{
 }
 
 struct WishListObjects: Codable {
-    let events: [wishListEventsExperiences]?
-    let experiences: [wishListEventsExperiences]?
-    let specialEvents: [wishListEventsExperiences]?
-    
-    
+    let events: [wishListProducts]?
+    let experiences: [wishListProducts]?
+    let specialEvents: [wishListProducts]?
+       
     let restaurants: [wishListRestaurants]?
     let hotels: [wishListHotel]?
-    let villas: [wishListVilla]?
-    let gifts: [wishListGift]?
-    let yachts: [wishListYacht]?
-    
+//    let villas: [wishListVilla]?
+//    let gifts: [wishListGift]?
+//    let yachts: [wishListYacht]?
+    let villas: [wishListProducts]?
+    let gifts: [wishListProducts]?
+    let yachts: [wishListProducts]?
 
     enum CodingKeys: String, CodingKey {
         case restaurants = "restaurant"
@@ -60,13 +61,16 @@ extension WishListObjects {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
             restaurants = try values.decodeIfPresent([wishListRestaurants].self, forKey: .restaurants)
-            events = try values.decodeIfPresent([wishListEventsExperiences].self, forKey: .events)
-            specialEvents = try values.decodeIfPresent([wishListEventsExperiences].self, forKey: .specialEvents)
-            experiences = try values.decodeIfPresent([wishListEventsExperiences].self, forKey: .experiences)
+            events = try values.decodeIfPresent([wishListProducts].self, forKey: .events)
+            specialEvents = try values.decodeIfPresent([wishListProducts].self, forKey: .specialEvents)
+            experiences = try values.decodeIfPresent([wishListProducts].self, forKey: .experiences)
             hotels = try values.decodeIfPresent([wishListHotel].self, forKey: .hotels)
-            villas = try values.decodeIfPresent([wishListVilla].self, forKey: .villas)
-            gifts = try values.decodeIfPresent([wishListGift].self, forKey: .gifts)
-            yachts = try values.decodeIfPresent([wishListYacht].self, forKey: .yachts)
+//            villas = try values.decodeIfPresent([wishListVilla].self, forKey: .villas)
+//            gifts = try values.decodeIfPresent([wishListGift].self, forKey: .gifts)
+//            yachts = try values.decodeIfPresent([wishListYacht].self, forKey: .yachts)
+            villas = try values.decodeIfPresent([wishListProducts].self, forKey: .villas)
+            gifts = try values.decodeIfPresent([wishListProducts].self, forKey: .gifts)
+            yachts = try values.decodeIfPresent([wishListProducts].self, forKey: .yachts)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -88,13 +92,13 @@ struct wishListRestaurants: Codable {
     }
 }
 
-struct wishListEventsExperiences: Codable {
-    let eventsExperience: Product?
+struct wishListProducts: Codable {
+    let product: Product?
 
     init(from decoder: Decoder) throws {
         do {
             var container = try decoder.unkeyedContainer()  // having no key
-            self.eventsExperience = try container.decodeIfPresent(Product.self)
+            self.product = try container.decodeIfPresent(Product.self)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -116,44 +120,44 @@ struct wishListHotel: Codable {
     }
 }
 
-struct wishListYacht: Codable {
-    let yacht: Yacht?
-
-    init(from decoder: Decoder) throws {
-        do {
-            var container = try decoder.unkeyedContainer()  // having no key
-            self.yacht = try container.decodeIfPresent(Yacht.self)
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
-
-struct wishListVilla: Codable {
-    let villa: Villa?
-
-    init(from decoder: Decoder) throws {
-        do {
-            var container = try decoder.unkeyedContainer()  // having no key
-            self.villa = try container.decodeIfPresent(Villa.self)
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
-
-struct wishListGift: Codable {
-    let gift: Gift?
-
-    init(from decoder: Decoder) throws {
-        do {
-            var container = try decoder.unkeyedContainer()  // having no key
-            self.gift = try container.decodeIfPresent(Gift.self)
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
+//struct wishListYacht: Codable {
+//    let yacht: Yacht?
+//
+//    init(from decoder: Decoder) throws {
+//        do {
+//            var container = try decoder.unkeyedContainer()  // having no key
+//            self.yacht = try container.decodeIfPresent(Yacht.self)
+//        } catch {
+//            Crashlytics.sharedInstance().recordError(error)
+//            throw error
+//        }
+//    }
+//}
+//
+//struct wishListVilla: Codable {
+//    let villa: Villa?
+//
+//    init(from decoder: Decoder) throws {
+//        do {
+//            var container = try decoder.unkeyedContainer()  // having no key
+//            self.villa = try container.decodeIfPresent(Villa.self)
+//        } catch {
+//            Crashlytics.sharedInstance().recordError(error)
+//            throw error
+//        }
+//    }
+//}
+//
+//struct wishListGift: Codable {
+//    let gift: Gift?
+//
+//    init(from decoder: Decoder) throws {
+//        do {
+//            var container = try decoder.unkeyedContainer()  // having no key
+//            self.gift = try container.decodeIfPresent(Gift.self)
+//        } catch {
+//            Crashlytics.sharedInstance().recordError(error)
+//            throw error
+//        }
+//    }
+//}

@@ -74,7 +74,13 @@ class LiftLayout: UICollectionViewLayout {
     }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return cache[indexPath.item]
+//        return cache[indexPath.item] //crashing at this
+        print("indexPath.item : \(indexPath.item)")
+        if (indexPath.item < cache.capacity){
+            return cache[indexPath.item]
+        }else{
+            return cache[0]
+        }
     }
 
     func clearCache() {
