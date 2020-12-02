@@ -28,7 +28,8 @@ class LiftLayout: UICollectionViewLayout {
     }
 
     override func prepare() {
-        guard cache.isEmpty == true, let collectionView = collectionView else {
+        //guard cache.isEmpty == true, let collectionView = collectionView else {
+        guard let collectionView = collectionView else {
             return
         }
 
@@ -74,13 +75,8 @@ class LiftLayout: UICollectionViewLayout {
     }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-//        return cache[indexPath.item] //crashing at this
-        print("indexPath.item : \(indexPath.item)")
-        if (indexPath.item < cache.capacity){
-            return cache[indexPath.item]
-        }else{
-            return cache[0]
-        }
+        print("indexPath.item : \(indexPath.item) cache.count: \(cache.count)")
+        return cache[indexPath.item] //crashing at this
     }
 
     func clearCache() {

@@ -116,20 +116,18 @@ class AviationResultsViewController: UIViewController, UICollectionViewDataSourc
     
     func show(lifts list: [Lift], filter: [Filter]) {
         self.filter = filter
-        
-        showNetworkActivity()
-        let toAdd = list.filter { !lifts.contains($0) }
-            .map { IndexPath(item: list.firstIndex(of: $0)!, section: 0) }
-        let toDel = lifts.filter { !list.contains($0) }
-            .map { IndexPath(item: lifts.firstIndex(of: $0)!, section: 0) }
-        
         lifts = list
+     
+        let toAdd = list.filter { !lifts.contains($0) }.map { IndexPath(item: list.firstIndex(of: $0)!, section: 0) }
+        let toDel = lifts.filter { !list.contains($0) }.map { IndexPath(item: lifts.firstIndex(of: $0)!, section: 0) }
+               
+//        showNetworkActivity()
         liftsCollection.performBatchUpdates({
             liftsCollection.deleteItems(at: toDel)
             liftsCollection.insertItems(at: toAdd)
         }, completion: { _ in
             self.liftsCollection.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-            self.hideNetworkActivity()
+//            self.hideNetworkActivity()
         })
     }
     
@@ -239,10 +237,10 @@ extension AviationResultsViewController {
     }
     
     func filterFlights(matching criteria: [Filter]) {
-        waitingAnimation(show: true)
+//        waitingAnimation(show: true)//app is crashing due to animation
         
         AviationAPIManagerNEW.shared.filterFlights(matching: criteria) { list, filter, error in
-            self.waitingAnimation(show: false)
+//            self.waitingAnimation(show: false)
             
             guard error == nil else {
                 self.showEmptyResult()
