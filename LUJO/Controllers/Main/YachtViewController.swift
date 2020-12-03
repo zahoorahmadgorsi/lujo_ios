@@ -16,12 +16,12 @@ class YachtViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "YachtViewController" }
     
-    private(set) var event: Product?
+    private(set) var product: Product?
     
     /// Init method that will init and return view controller.
-    class func instantiate(event: Product) -> YachtViewController {
+    class func instantiate(product: Product) -> YachtViewController {
         let viewController = UIStoryboard.customRequest.instantiate(identifier) as! YachtViewController
-        viewController.event = event
+        viewController.product = product
         return viewController
     }
 
@@ -88,6 +88,11 @@ class YachtViewController: UIViewController {
         guestsCount = 2
         
         addGestureRecognizers()
+        if let product = self.product{
+            self.yachtNameTextField.text = product.name
+            selectedYachtLenght = product.lengthM
+            self.lenghtLabel.text = product.lengthM
+        }
     }
 
     //MARK: - User interaction

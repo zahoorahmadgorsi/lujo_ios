@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class EventDetailsViewController: UIViewController {
     
@@ -35,13 +36,13 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var descriptionTextView: UITextView!
-    
     @IBOutlet var requestButton: ActionButton!
     @IBOutlet var chatButton: UIButton!
-    
     @IBOutlet weak var bottomLineViewHeight: NSLayoutConstraint!
-    
     var isEventPast: Bool = false
+    @IBOutlet weak var viewHeart: UIView!
+    @IBOutlet weak var imgHeart: UIImageView!
+    private let naHUD = JGProgressHUD(style: .dark)
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -75,9 +76,15 @@ class EventDetailsViewController: UIViewController {
             default: break
         }
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
-        //zahoor
+        //zahoor start
+        //setting tapping event on viewheart
+        //Add tap gesture on favourite
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
+        self.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+        self.viewHeart.addGestureRecognizer(tapGestureRecognizer)
+        
         setRecentlyViewed()
-            
+        //zahoor end
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,6 +127,13 @@ extension EventDetailsViewController {
             print("Image not found")
         }
         name.text = event.name
+        
+        //checking favourite image red or white
+        if (self.product.isFavourite ?? false){
+            self.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            self.imgHeart.image = UIImage(named: "heart_white")
+        }
         
         var locationText = ""
         if let cityName = event.location?.first?.city?.name {
@@ -490,7 +504,7 @@ extension EventDetailsViewController {
             
             startChatWithInitialMessage(initialMessage)
         }else{  //yacht
-            self.present(YachtViewController.instantiate(event: product), animated: true, completion: nil)
+            self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
         }
         
     }
@@ -514,5 +528,60 @@ extension EventDetailsViewController {
     func showError(_ error: Error) {
         showErrorPopup(withTitle: "Recently Viewed Error", error: error)
     }
+    
+    func showNetworkActivity() {
+        naHUD.show(in: view)
+    }
+    
+    func hideNetworkActivity() {
+        naHUD.dismiss()
+    }
+    
+    @objc func tappedOnHeart(_ sender:AnyObject) {
+            
+            //setting the favourite
+            self.showNetworkActivity()
+            setUnSetFavourites(id: product.id ,isUnSetFavourite: product.isFavourite ?? false) {information, error in
+                self.hideNetworkActivity()
+                
+                if let error = error {
+                    self.showError(error)
+                    return
+                }
+                
+                if let informations = information {
+                    self.product.isFavourite = !(self.product.isFavourite ?? false)
+                    //checking favourite image red or white
+                    if (self.product.isFavourite ?? false){
+                        self.imgHeart.image = UIImage(named: "heart_red")
+                    }else{
+                        self.imgHeart.image = UIImage(named: "heart_white")
+                    }
+                    
+                    print("ItemID:\(self.product.id)" + ", ItemType:" + self.product.type  + ", ServerResponse:" + informations)
+                } else {
+                    let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                    self.showError(error)
+                }
+            }
+        }
+    
+    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain favourites information")
+                completion(nil, error)
+                return
+            }
+            completion(strResponse, error)
+        }
+    }
+    
     //Zahoor finished
 }

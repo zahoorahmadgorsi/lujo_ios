@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import JGProgressHUD
 
 class RestaurantDetailViewController: UIViewController {
     
@@ -36,14 +37,23 @@ class RestaurantDetailViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var descriptionLabel: UITextView!
     @IBOutlet var iPhoneAspectRatioConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewHeart: UIView!
+    @IBOutlet weak var imgHeart: UIImageView!
+    private let naHUD = JGProgressHUD(style: .dark)
     
     var restaurant: Restaurant!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRestaurant(restaurant)
-        //zahoor
+        //zahoor start
+        //Add tap gesture on favourite
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
+        self.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+        self.viewHeart.addGestureRecognizer(tapGestureRecognizer)
         setRecentlyViewed()
+        //zahoor end
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +137,12 @@ class RestaurantDetailViewController: UIViewController {
             firstGalleryImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }
         nameLabel.text = restaurant.name
-        
+        //checking favourite image red or white
+        if (self.restaurant.isFavourite ?? false){
+            self.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            self.imgHeart.image = UIImage(named: "heart_white")
+        }
         descriptionLabel.attributedText = convertToAttributedString(restaurant.description)
         
         starsContainerView.isHidden = restaurant.michelinStar?.first == nil
@@ -188,6 +203,59 @@ class RestaurantDetailViewController: UIViewController {
     
     func showError(_ error: Error) {
         showErrorPopup(withTitle: "Recently Viewed Error", error: error)
+    }
+    
+    func showNetworkActivity() {
+        naHUD.show(in: view)
+    }
+    
+    func hideNetworkActivity() {
+        naHUD.dismiss()
+    }
+    
+    @objc func tappedOnHeart(_ sender:AnyObject) {
+        //setting the favourite
+        self.showNetworkActivity()
+        setUnSetFavourites(id: restaurant.id ,isUnSetFavourite: restaurant.isFavourite ?? false) {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                self.restaurant.isFavourite = !(self.restaurant.isFavourite ?? false)
+                //checking favourite image red or white
+                if (self.restaurant.isFavourite ?? false){
+                    self.imgHeart.image = UIImage(named: "heart_red")
+                }else{
+                    self.imgHeart.image = UIImage(named: "heart_white")
+                }
+                
+                print("ItemID:\(self.restaurant.id), ServerResponse:" + informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                self.showError(error)
+            }
+        }
+    }
+
+    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain favourites information")
+                completion(nil, error)
+                return
+            }
+            completion(strResponse, error)
+        }
     }
     //Zahoor finished
 }

@@ -798,8 +798,8 @@
                                             <constraint firstAttribute="trailing" secondItem="dpL-x6-ib6" secondAttribute="trailing" constant="16" id="ZaP-N5-hVa"/>
                                         </constraints>
                                     </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="MjF-bg-ddv">
-                                        <rect key="frame" x="20" y="44" width="335" height="573"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MjF-bg-ddv">
+                                        <rect key="frame" x="20" y="44" width="335" height="451"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBz-T4-h7o">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="64"/>
@@ -836,7 +836,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z68-ko-EcN">
-                                                <rect key="frame" x="0.0" y="88" width="335" height="52"/>
+                                                <rect key="frame" x="0.0" y="80" width="335" height="52"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yacht charter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nuw-Y0-4oX">
                                                         <rect key="frame" x="12" y="8" width="295" height="44"/>
@@ -867,7 +867,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6wo-GK-TVj">
-                                                <rect key="frame" x="0.0" y="164" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="148" width="335" height="50"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Destination" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W7S-WH-2DR">
                                                         <rect key="frame" x="12" y="0.0" width="311" height="50"/>
@@ -891,8 +891,8 @@
                                                     <constraint firstAttribute="trailing" secondItem="W7S-WH-2DR" secondAttribute="trailing" constant="12" id="yEV-ot-ZQZ"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TNE-Nf-Fcv">
-                                                <rect key="frame" x="0.0" y="238" width="335" height="50"/>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TNE-Nf-Fcv">
+                                                <rect key="frame" x="0.0" y="206" width="335" height="50"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Yacht name (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cRw-Qo-4Au">
                                                         <rect key="frame" x="12" y="0.0" width="311" height="50"/>
@@ -917,19 +917,19 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="w66-Fr-hOM">
-                                                <rect key="frame" x="0.0" y="312" width="335" height="52"/>
+                                                <rect key="frame" x="0.0" y="214" width="335" height="52"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Nt-S5-vZr">
-                                                        <rect key="frame" x="0.0" y="0.0" width="197" height="52"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yacht type (optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReK-eV-ddM">
-                                                                <rect key="frame" x="12" y="8" width="157" height="44"/>
+                                                                <rect key="frame" x="12" y="8" width="295" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                                 <color key="textColor" name="White Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bf-bd-1gK">
-                                                                <rect key="frame" x="0.0" y="8" width="197" height="44"/>
+                                                                <rect key="frame" x="0.0" y="8" width="335" height="44"/>
                                                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                                                 <state key="normal" image="Drop Down Icon"/>
                                                                 <connections>
@@ -950,8 +950,8 @@
                                                             <constraint firstItem="6bf-bd-1gK" firstAttribute="top" secondItem="1Nt-S5-vZr" secondAttribute="top" constant="8" id="oaY-oA-wab"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h37-40-XbG">
-                                                        <rect key="frame" x="213" y="0.0" width="122" height="52"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h37-40-XbG">
+                                                        <rect key="frame" x="0.0" y="0.0" width="122" height="52"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Length (m)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPX-Cc-f0O">
                                                                 <rect key="frame" x="12" y="8" width="83" height="44"/>
@@ -985,7 +985,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wg6-RV-ZDg">
-                                                <rect key="frame" x="0.0" y="388" width="335" height="52"/>
+                                                <rect key="frame" x="0.0" y="282" width="335" height="52"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budget" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spZ-zE-33U">
                                                         <rect key="frame" x="12" y="8" width="295" height="44"/>
@@ -1016,7 +1016,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZCi-C6-nbq">
-                                                <rect key="frame" x="0.0" y="464" width="335" height="60"/>
+                                                <rect key="frame" x="0.0" y="350" width="335" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HqF-YY-Lau">
                                                         <rect key="frame" x="0.0" y="8" width="335" height="44"/>
@@ -1053,7 +1053,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="KTK-GW-DTh">
-                                                <rect key="frame" x="0.0" y="548" width="335" height="25"/>
+                                                <rect key="frame" x="0.0" y="426" width="335" height="25"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Es1-wZ-55S">
                                                         <rect key="frame" x="0.0" y="0.0" width="203" height="25"/>
