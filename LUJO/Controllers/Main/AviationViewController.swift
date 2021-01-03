@@ -63,7 +63,7 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
     
     private let maxPASSENGERS: Int = 50
     
-    var searchOptionsView: SearchCriteriaDelegate?
+    var searchCriteriaDelegate: SearchCriteriaDelegate?
     private var currentSearch: AviationSearch?
     
     private var lastSearch: [Lift]?
@@ -182,25 +182,31 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
                                                       options: nil) else {
                                                         fatalError("Nib file not found at Aviation Options")
         }
-        
         // swiftlint:disable line_length
         switch type {
         case .oneWay, .roundTrip:
             guard let newView = subviews.first(where: { $0 is AviationSingleLegSearchOptionsView }), newView is SearchCriteriaDelegate else {
                 fatalError("Nib file not found at Aviation Options")
             }
-            searchOptionsView = newView as? SearchCriteriaDelegate
+            //Zahoor change started
+            //No need to reInitialized self.searchCriteriaDelegate in case of return trip
+            if (self.searchCriteriaDelegate == nil ) ||
+                ((searchCriteriaDelegate as? AviationMultiLegSearchOptionsView) != nil) {
+                searchCriteriaDelegate = newView as? SearchCriteriaDelegate
+            }
+//            searchCriteriaDelegate = newView as? SearchCriteriaDelegate
+            //zahoor change finished
         default:
             guard let newView = subviews.first(where: { $0 is AviationMultiLegSearchOptionsView }), newView is AviationMultiLegSearchOptionsView else {
                 fatalError("Nib file not found at Aviation Options")
             }
-            searchOptionsView = newView as? SearchCriteriaDelegate
+            searchCriteriaDelegate = newView as? SearchCriteriaDelegate
         }
         // swiftlint:enable line_length
-        searchOptionsView?.delegate = self
-        searchOptionsView?.tripType = type
+        searchCriteriaDelegate?.aviationSearchCriteriaDelegate = self
+        searchCriteriaDelegate?.tripType = type
         
-        guard let searchOptionsView = searchOptionsView as? UIView else {
+        guard let searchOptionsView = searchCriteriaDelegate as? UIView else {
             fatalError("Nib file not fount at Aviation Options")
         }
         searchOptionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 32).isActive = true
@@ -208,7 +214,7 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
         searchOptionsContainer.subviews.forEach({ $0.removeFromSuperview() })
         searchOptionsView.translatesAutoresizingMaskIntoConstraints = false
         searchOptionsContainer.addSubview(searchOptionsView)
-        self.searchOptionsView = searchOptionsView as? SearchCriteriaDelegate
+        self.searchCriteriaDelegate = searchOptionsView as? SearchCriteriaDelegate
         
         NSLayoutConstraint.activate(
             [searchOptionsView.topAnchor.constraint(equalTo: searchOptionsContainer.topAnchor),
@@ -219,14 +225,15 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
     }
     
     func tripDatesSelected(departure: Date, return returnDate: Date?) {
-        searchOptionsView?.set(departure: departure, returnDate: returnDate)
+//        print(departure,returnDate as Any)
+        searchCriteriaDelegate?.set(departure: departure, returnDate: returnDate)
     }
     
     func select(_ airport: Airport, forOrigin: OriginAirport) {
         if forOrigin == .returnAirport {
             destinationAirport = nil
         }
-        searchOptionsView?.set(airport, for: forOrigin)
+        searchCriteriaDelegate?.set(airport, for: forOrigin)
     }
     
     func showEmptyResult() {
@@ -269,7 +276,7 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
     
     
     func select(_ luggage: AviationLuggage) {
-        searchOptionsView?.set(luggage: luggage)
+        searchCriteriaDelegate?.set(luggage: luggage)
     }
     
     func get(destination airport: OriginAirport) {
@@ -308,7 +315,7 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
     }
     
     func updateDataSource(newDataSource: [AviationSegment]) {
-        (searchOptionsView as? AviationMultiLegSearchOptionsView)?.segments = newDataSource
+        (searchCriteriaDelegate as? AviationMultiLegSearchOptionsView)?.segments = newDataSource
     }
 }
 

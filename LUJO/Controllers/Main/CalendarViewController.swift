@@ -106,7 +106,7 @@ class CalendarViewController: UIViewController {
         guard let startDate = calendar.selectedDates.first else {
             return
         }
-        
+//        print (startDate)
         delegate?.tripDatesSelected(departure: oneWay ? startDate : self.firstValidDate!, return: !oneWay ? startDate : nil)
         
         dismiss(animated: true, completion: nil)

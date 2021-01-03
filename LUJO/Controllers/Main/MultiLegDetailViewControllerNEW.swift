@@ -71,7 +71,7 @@ class MultiLegDetailViewControllerNEW: UIViewController, CalendarViewDelegate, A
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addLegView.delegate = self
+        addLegView.aviationSearchCriteriaDelegate = self
         if addMore {
             addLegView.setupAsNextLegFor(departure: segments.last!.endAirport)
         } else if let index = selectedIndex, let currentSegment = try? AviationSegmentInformation(segments[index]) {

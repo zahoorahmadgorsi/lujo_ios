@@ -12,7 +12,7 @@ protocol AviationSearchCriteriaDelegate: class {
 
 protocol SearchCriteriaDelegate: class {
     var tripType: AviationTripType { get set }
-    var delegate: AviationSearchCriteriaDelegate? { get set }
+    var aviationSearchCriteriaDelegate: AviationSearchCriteriaDelegate? { get set }
     func set(_ airport: Airport, for destination: OriginAirport)
     func set(departure: Date, returnDate: Date?)
     func set(luggage: AviationLuggage)

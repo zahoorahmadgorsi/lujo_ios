@@ -47,7 +47,7 @@ class AviationMultiLegSearchOptionsView: UIView {
     }
 
     var tripType: AviationTripType = .multiCity
-    weak var delegate: AviationSearchCriteriaDelegate?
+    weak var aviationSearchCriteriaDelegate: AviationSearchCriteriaDelegate?
 
     private func setupSubViews() {
         tableView.rowHeight = AviationLegCell.cellHeight
@@ -72,16 +72,16 @@ class AviationMultiLegSearchOptionsView: UIView {
     }
 
     @IBAction func addNewLeg(_ sender: Any) {
-        delegate?.showMultiLegDetailVC(selectedIndex: nil, segments: segments, addMore: false)
+        aviationSearchCriteriaDelegate?.showMultiLegDetailVC(selectedIndex: nil, segments: segments, addMore: false)
     }
 
     @objc func addMoreLegs(_ sender: UIButton!) {
-        delegate?.showMultiLegDetailVC(selectedIndex: nil, segments: segments, addMore: true)
+        aviationSearchCriteriaDelegate?.showMultiLegDetailVC(selectedIndex: nil, segments: segments, addMore: true)
     }
 
     @objc func performSearch() {
         guard (2 ... 5).contains(segments.count) else {
-            delegate?.showSearchFeedback("Multi Leg search should contain between 2 and 5 legs")
+            aviationSearchCriteriaDelegate?.showSearchFeedback("Multi Leg search should contain between 2 and 5 legs")
             return
         }
 
@@ -89,7 +89,7 @@ class AviationMultiLegSearchOptionsView: UIView {
                                       data: segments,
                                       additional: AviationAditionalRequirements(smoker: 0))
 
-        delegate?.search(using: criteria)
+        aviationSearchCriteriaDelegate?.search(using: criteria)
     }
 }
 
@@ -123,7 +123,7 @@ extension AviationMultiLegSearchOptionsView: SearchCriteriaDelegate {
 extension AviationMultiLegSearchOptionsView: AviationLegCellDelegate {
     func editRow(at index: Int) {
         if (try? AviationSegmentInformation(segments[index])) != nil {
-            delegate?.showMultiLegDetailVC(selectedIndex: index, segments: segments, addMore: false)
+            aviationSearchCriteriaDelegate?.showMultiLegDetailVC(selectedIndex: index, segments: segments, addMore: false)
         }
     }
 

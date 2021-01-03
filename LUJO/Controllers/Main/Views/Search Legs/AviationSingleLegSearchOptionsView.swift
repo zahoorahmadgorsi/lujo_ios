@@ -3,7 +3,7 @@ import UIKit
 struct AviationSegmentInformation {
     var startAirport: Airport?
     var endAirport: Airport?
-    var dateTime: SearchTime
+    var departureDateTime: SearchTime
     var returnDate: SearchTime?
     var passengers: Int
     var luggage: AviationLuggage?
@@ -13,7 +13,7 @@ extension AviationSegmentInformation {
     init(_ segment: AviationSegment) throws {
         self.init(startAirport: segment.startAirport,
                   endAirport: segment.endAirport,
-                  dateTime: segment.dateTime,
+                  departureDateTime: segment.dateTime,
                   returnDate: segment.returnDate,
                   passengers: segment.passengers.adults,
                   luggage: segment.luggage)
@@ -55,14 +55,14 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
     var segmentData = AviationSegmentInformation(startAirport: nil,
                                                  endAirport: nil,
-                                                 dateTime: SearchTime(date: "", time: ""),
+                                                 departureDateTime: SearchTime(date: "", time: ""),
                                                  returnDate: nil,
                                                  passengers: 1,
                                                  luggage: nil) {
         didSet { updateAllLabels() }
     }
 
-    weak var delegate: AviationSearchCriteriaDelegate?
+    weak var aviationSearchCriteriaDelegate: AviationSearchCriteriaDelegate?
 
     private let formatter = DateFormatter()
     private let timeFormatter = DateFormatter()
@@ -72,7 +72,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
     var legNumber: Int?
 
-    private lazy var timePickerView: UIView = {
+    private lazy var originTimePickerView: UIView = {
         let pickerView = UIView(frame: .zero)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         pickerView.backgroundColor = UIColor(named: "Black Backgorund")?.withAlphaComponent(0.75)
@@ -92,38 +92,16 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         originTimePicker.backgroundColor = UIColor.inputFieldText
         originTimePicker.addTarget(self, action: #selector(originTimeChanged(picker:)), for: .valueChanged)
         // swiftlint:disable line_length
-        originTimePicker.date = segmentData.dateTime.time.isEmpty ? Date() : timeFormatter.date(from: segmentData.dateTime.time) ?? Date()
+        originTimePicker.date = segmentData.departureDateTime.time.isEmpty ? Date() : timeFormatter.date(from: segmentData.departureDateTime.time) ?? Date()
         // swiftlint:enable line_length
         pickerView.addSubview(originTimePicker)
 
-        if tripType == .roundTrip {
-            let destinTimePicker = UIDatePicker(frame: .zero)
-            destinTimePicker.translatesAutoresizingMaskIntoConstraints = false
-            destinTimePicker.datePickerMode = .time
-            destinTimePicker.backgroundColor = UIColor.inputFieldText
-            destinTimePicker.addTarget(self, action: #selector(returnTimeChanged(picker:)), for: .valueChanged)
-            if let returnTime = segmentData.returnDate?.time {
-                destinTimePicker.date = timeFormatter.date(from: returnTime) ?? Date()
-            } else { destinTimePicker.date = Date() }
-
-            pickerView.addSubview(destinTimePicker)
-
-            NSLayoutConstraint.activate(
-                [originTimePicker.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
-                 originTimePicker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
-                 originTimePicker.trailingAnchor.constraint(equalTo: destinTimePicker.leadingAnchor, constant: -5),
-                 originTimePicker.widthAnchor.constraint(equalTo: destinTimePicker.widthAnchor, multiplier: 1),
-                 destinTimePicker.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
-                 destinTimePicker.leadingAnchor.constraint(equalTo: originTimePicker.trailingAnchor, constant: 5),
-                 destinTimePicker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor)]
-            )
-        } else {
             NSLayoutConstraint.activate(
                 [originTimePicker.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
                  originTimePicker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
                  originTimePicker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor)]
             )
-        }
+        
         // Toolbar
         let toolbar = UIToolbar()
         toolbar.barStyle = .black
@@ -131,9 +109,9 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         toolbar.sizeToFit()
 
         // swiftlint:disable line_length
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneDatePicker))
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneOriginDatePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelOriginDatePicker))
 
         toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolbar.translatesAutoresizingMaskIntoConstraints = false
@@ -149,31 +127,98 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         return pickerView
     }()
 
+
+        private lazy var destinationTimePickerView: UIView = {
+            let pickerView = UIView(frame: .zero)
+            pickerView.translatesAutoresizingMaskIntoConstraints = false
+            pickerView.backgroundColor = UIColor(named: "Black Backgorund")?.withAlphaComponent(0.75)
+            pickerView.isHidden = true
+
+            addSubview(pickerView)
+            NSLayoutConstraint.activate(
+                [pickerView.topAnchor.constraint(equalTo: topAnchor),
+                 pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                 pickerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                 pickerView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+            )
+
+                let destinTimePicker = UIDatePicker(frame: .zero)
+                destinTimePicker.translatesAutoresizingMaskIntoConstraints = false
+                destinTimePicker.datePickerMode = .time
+                destinTimePicker.backgroundColor = UIColor.inputFieldText
+                destinTimePicker.addTarget(self, action: #selector(returnTimeChanged(picker:)), for: .valueChanged)
+                if let returnTime = segmentData.returnDate?.time {
+                    destinTimePicker.date = timeFormatter.date(from: returnTime) ?? Date()
+                } else { destinTimePicker.date = Date() }
+
+                pickerView.addSubview(destinTimePicker)
+
+                NSLayoutConstraint.activate(
+                    [destinTimePicker.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
+                     destinTimePicker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
+                     destinTimePicker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor)]
+                )
+
+            // Toolbar
+            let toolbar = UIToolbar()
+            toolbar.barStyle = .black
+            toolbar.tintColor = .rgMid
+            toolbar.sizeToFit()
+
+            // swiftlint:disable line_length
+            let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(destinationDoneDatePicker))
+            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+            let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(destinationCancelDatePicker))
+
+            toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+            toolbar.translatesAutoresizingMaskIntoConstraints = false
+            pickerView.addSubview(toolbar)
+
+            NSLayoutConstraint.activate(
+                [toolbar.bottomAnchor.constraint(equalTo: destinTimePicker.topAnchor),
+                 toolbar.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
+                 toolbar.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
+                 toolbar.heightAnchor.constraint(equalToConstant: 50)]
+            )
+
+            return pickerView
+        }()
+
+    
     fileprivate func addGestureRecognizers() {
         let departureTapRecognizer = UITapGestureRecognizer(target: self,
                                                             action: #selector(selectAirport(sender:)))
         departureTapRecognizer.delegate = self
         departureLabel.addGestureRecognizer(departureTapRecognizer)
 
+        
         let arrivalTapRecognizer = UITapGestureRecognizer(target: self,
                                                           action: #selector(selectAirport(sender:)))
         arrivalTapRecognizer.delegate = self
         arrivalLabel.addGestureRecognizer(arrivalTapRecognizer)
 
+        
         let datesTapRecognizer = UITapGestureRecognizer(target: self,
-                                                        action: #selector(selectDates(sender:)))
+                                                        action: #selector(selectDepartureDate(sender:)))
         datesTapRecognizer.delegate = self
         datesLabel.addGestureRecognizer(datesTapRecognizer)
+        
         
         let returnDateTapRecognizer = UITapGestureRecognizer(target: self,
                                                         action: #selector(selectReturnDate(sender:)))
         returnDateTapRecognizer.delegate = self
         returnDateLabel.addGestureRecognizer(returnDateTapRecognizer)
 
+        
         let timesTapRecognizer = UITapGestureRecognizer(target: self,
                                                         action: #selector(selectTimes(sender:)))
         timesTapRecognizer.delegate = self
         timesLabel.addGestureRecognizer(timesTapRecognizer)
+        
+        let returnTimeTapRecognizer = UITapGestureRecognizer(target: self,
+                                                        action: #selector(selectReturnTimes(sender:)))
+        returnTimeTapRecognizer.delegate = self
+        returnTimeLabel.addGestureRecognizer(returnTimeTapRecognizer)
     }
 
     fileprivate func updateAirportsLabels() {
@@ -194,9 +239,9 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         datesLabel.text = ""
         returnDateLabel.text = ""
 
-        guard !segmentData.dateTime.date.isEmpty else { return }
+        guard !segmentData.departureDateTime.date.isEmpty else { return }
 
-        datesLabel.text = segmentData.dateTime.date
+        datesLabel.text = segmentData.departureDateTime.date
 
         guard let returnDate = segmentData.returnDate?.date, !returnDate.isEmpty else { return }
 
@@ -222,9 +267,9 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         timesLabel.text = ""
         returnTimeLabel.text = ""
 
-        guard !segmentData.dateTime.time.isEmpty else { return }
+        guard !segmentData.departureDateTime.time.isEmpty else { return }
 
-        timesLabel.text = segmentData.dateTime.time
+        timesLabel.text = segmentData.departureDateTime.time
 
         guard let returnTime = segmentData.returnDate?.time, !returnTime.isEmpty else { return }
 
@@ -275,7 +320,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
     }
 
     func set(departure: Date, returnDate: Date?) {
-        segmentData.dateTime.date = formatter.string(from: departure)
+        segmentData.departureDateTime.date = formatter.string(from: departure)
         if let returnDate = returnDate {
             segmentData.returnDate?.date = formatter.string(from: returnDate)
         } else {
@@ -304,7 +349,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
     @IBAction func performSearch(_ sender: Any) {
         guard let originAirport = segmentData.startAirport,
             let destinationAirport = segmentData.endAirport,
-            !segmentData.dateTime.isEmpty else {
+            !segmentData.departureDateTime.isEmpty else {
             // TODO: Present error on missing information
             return
         }
@@ -331,7 +376,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
         let segment = AviationSegment(startAirport: originAirport,
                                       endAirport: destinationAirport,
-                                      dateTime: segmentData.dateTime,
+                                      dateTime: segmentData.departureDateTime,
                                       returnDate: returnDateTime,
                                       passengers: passengersInfo,
                                       luggage: luggage)
@@ -340,7 +385,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
                                       data: [segment],
                                       additional: AviationAditionalRequirements(smoker: smokingSwitch.isOn ? 1 : 0))
 
-        delegate?.search(using: criteria)
+        aviationSearchCriteriaDelegate?.search(using: criteria)
         legNumber = nil
     }
 
@@ -356,22 +401,25 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
     @IBAction private func selectAirport(sender: UIGestureRecognizer) {
         let airportType = sender.view == departureLabel ? OriginAirport.departureAirport : OriginAirport.returnAirport
-        delegate?.get(destination: airportType)
+        aviationSearchCriteriaDelegate?.get(destination: airportType)
     }
 
-    @IBAction func selectDates(sender: UIGestureRecognizer) {
-        if tripType == .roundTrip, segmentData.returnDate == nil {
+    @IBAction func selectDepartureDate(sender: UIGestureRecognizer) {
+        //zahoor start
+        //if tripType == .roundTrip, segmentData.returnDate == nil {
+        if segmentData.returnDate == nil {
+        //zahoor end
             segmentData.returnDate = SearchTime(date: "", time: "")
         }
-        delegate?.getTripDates(from: Date(), isReturnDate: false)
+        aviationSearchCriteriaDelegate?.getTripDates(from: Date(), isReturnDate: false)
     }
     
     @IBAction func selectReturnDate(sender: UIGestureRecognizer) {
-        if segmentData.dateTime.date == "" {
+        if segmentData.departureDateTime.date == "" {
             showCardAlertWith(title: "Info", body: "You must first select departure date.")
             return
         }
-        delegate?.getTripDates(from: segmentData.dateTime.toDate, isReturnDate: true)
+        aviationSearchCriteriaDelegate?.getTripDates(from: segmentData.departureDateTime.toDate, isReturnDate: true)
     }
 
     @IBAction func selectTimes(sender: UIGestureRecognizer) {
@@ -379,27 +427,52 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
             newOriginTime = Date()
         }
 
+//        if newReturnTime == nil {
+//            newReturnTime = Date()
+//        }
+
+        originTimePickerView.isHidden = false
+    }
+
+    
+    
+    @IBAction func selectReturnTimes(sender: UIGestureRecognizer) {
+//        if newOriginTime == nil {
+//            newOriginTime = Date()
+//        }
         if newReturnTime == nil {
             newReturnTime = Date()
         }
 
-        timePickerView.isHidden = false
+        destinationTimePickerView.isHidden = false
     }
-
-    @IBAction func doneDatePicker() {
-        if let time = newOriginTime { segmentData.dateTime.time = timeFormatter.string(from: time) }
+    
+    @IBAction func doneOriginDatePicker() {
+        if let time = newOriginTime { segmentData.departureDateTime.time = timeFormatter.string(from: time) }
         if tripType == .roundTrip {
             if let time = newReturnTime { segmentData.returnDate?.time = timeFormatter.string(from: time) }
         }
-        timePickerView.isHidden = true
+        originTimePickerView.isHidden = true
     }
 
-    @IBAction func cancelDatePicker() {
-        timePickerView.isHidden = true
+    @IBAction func cancelOriginDatePicker() {
+        originTimePickerView.isHidden = true
     }
 
+    @IBAction func destinationDoneDatePicker() {
+        if let time = newOriginTime { segmentData.departureDateTime.time = timeFormatter.string(from: time) }
+        if tripType == .roundTrip {
+            if let time = newReturnTime { segmentData.returnDate?.time = timeFormatter.string(from: time) }
+        }
+        destinationTimePickerView.isHidden = true
+    }
+
+    @IBAction func destinationCancelDatePicker() {
+        destinationTimePickerView.isHidden = true
+    }
+    
     @IBAction func setLuggage(_ sender: Any) {
-        delegate?.getLuggage(from: segmentData.luggage)
+        aviationSearchCriteriaDelegate?.getLuggage(from: segmentData.luggage)
     }
 }
 
@@ -407,7 +480,7 @@ extension AviationSingleLegSearchOptionsView {
     func setupAsNextLegFor(departure airport: Airport) {
         segmentData = AviationSegmentInformation(startAirport: airport,
                                                  endAirport: nil,
-                                                 dateTime: SearchTime(date: "", time: ""),
+                                                 departureDateTime: SearchTime(date: "", time: ""),
                                                  returnDate: nil,
                                                  passengers: 1,
                                                  luggage: nil)
@@ -417,7 +490,7 @@ extension AviationSingleLegSearchOptionsView {
     func resetValues() {
         segmentData = AviationSegmentInformation(startAirport: nil,
                                                  endAirport: nil,
-                                                 dateTime: SearchTime(date: "", time: ""),
+                                                 departureDateTime: SearchTime(date: "", time: ""),
                                                  returnDate: nil,
                                                  passengers: 1,
                                                  luggage: nil)

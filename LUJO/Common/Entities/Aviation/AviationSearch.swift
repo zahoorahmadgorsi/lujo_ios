@@ -12,9 +12,11 @@ struct SearchTime: Codable {
         
         if time == "" {
             formatter.dateFormat = "MM/dd/yyyy"
+//            print(formatter.date(from: date)! )
             return formatter.date(from: date)
         } else {
             formatter.dateFormat = "MM/dd/yyyy HH:mm"
+//            print(formatter.date(from: "\(date) \(time)") as Any)
             return formatter.date(from: "\(date) \(time)")
         }
         
