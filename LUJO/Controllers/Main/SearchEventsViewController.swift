@@ -53,12 +53,18 @@ class SearchEventsViewController: UIViewController {
             case .villa:
                 currentLayout?.setCustomCellHeight(170)
                 title = "Search villas"
-            case .good:
+            case .gift:
                 currentLayout?.setCustomCellHeight(170)
-                title = "Search goods"
+                title = "Search gifts"
             case .yacht:
                 currentLayout?.setCustomCellHeight(170)
                 title = "Search yachts"
+            case .topRated:
+                currentLayout?.setCustomCellHeight(170)
+                title = "Search top rated"
+            case .recent:
+                currentLayout?.setCustomCellHeight(170)
+                title = "Search recenlty viewed"
         }
         
         collectionView.register(UINib(nibName: HomeSliderCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeSliderCell.identifier)
@@ -274,11 +280,11 @@ extension SearchEventsViewController {
                     }
                     completion(list, error)
                 }
-            case .good:
+            case .gift:
                 EEAPIManager().getGoods(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home goods information")
+                        let error = BackendError.parsing(reason: "Could not obtain home gifts information")
                         completion([], error)
                         return
                     }
@@ -294,6 +300,27 @@ extension SearchEventsViewController {
                     }
                     completion(list, error)
             }
+            case .topRated:
+                EEAPIManager().getYachts(token, term: term, cityId: nil) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home top rated information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
+            }
+            case .recent:
+                EEAPIManager().getYachts(token, term: term, cityId: nil) { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")
+                        completion([], error)
+                        return
+                    }
+                    completion(list, error)
+            }
+                
         }
     }
     

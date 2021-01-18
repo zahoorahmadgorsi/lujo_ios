@@ -321,7 +321,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             setupWishListLayout(wishListView: wishListView)
         }
         //******************
-        // Gifts/Goods
+        // Gifts
         //******************
         count = (wishListInformations?.gifts?.count ?? 0)
         if count > 0 , let items = wishListInformations?.gifts{
@@ -335,7 +335,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.delegate = self
             wishListView.itemType = .gift
             wishListView.imgTitle.image = UIImage(named: "Goods Icon")
-            wishListView.lblTitle.text = "Goods"
+            wishListView.lblTitle.text = "Gifts"
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{

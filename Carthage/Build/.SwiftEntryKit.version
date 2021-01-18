@@ -2,10 +2,10 @@
   "commitish" : "0.5.9",
   "iOS" : [
     {
-      "hash" : "eccb8034271ea5fedcd904ab6119a7d28a77c03b6e33031af44d039d1b8e0d0e",
+      "hash" : "bdb30c2ae9ce4effd6400e90dbc84f6c7c5db771e7646b4cb0a590952dd9b270",
       "name" : "SwiftEntryKit",
       "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ]
 }

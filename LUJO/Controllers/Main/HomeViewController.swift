@@ -54,8 +54,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBOutlet weak var locationEventContainerView: UIView!
     @IBOutlet weak var locationEventTitleLabel: UILabel!
     @IBOutlet weak var locationEventSlider: HomeSlider!
+    
+    @IBOutlet var homeRecentSlider: HomeSlider!
+    @IBOutlet var homeTopRatedSlider: HomeSlider!
+    @IBOutlet var homeGiftsSlider: HomeSlider!
+    @IBOutlet var homeVillasSlider: HomeSlider!
+    @IBOutlet var homeYachtsSlider: HomeSlider!
+    
     @IBOutlet var homeEventSlider: HomeSlider!
     @IBOutlet var homeExperienceSlider: HomeSlider!
+    
     
     @IBOutlet var specialEventContainer1: UIView!
     @IBOutlet var specialEventView1: HomeSpecialEventSummary!
@@ -108,6 +116,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         featured.overlay = true
         featured.delegate = self
         locationEventSlider.delegate = self
+        
+        homeRecentSlider.delegate = self
+        homeTopRatedSlider.delegate = self
+        homeGiftsSlider.delegate = self
+        homeVillasSlider.delegate = self
+        homeYachtsSlider.delegate = self
+        
         homeEventSlider.delegate = self
         homeExperienceSlider.delegate = self
         
@@ -284,6 +299,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             featured.itemsList = []
 //            featuredPager.numberOfPages = 1
 //            featuredPager.currentPage = 0
+            homeRecentSlider.itemsList = []
+            homeTopRatedSlider.itemsList = []
+            homeGiftsSlider.itemsList = []
+            homeVillasSlider.itemsList = []
+            homeYachtsSlider.itemsList = []
             
             homeEventSlider.itemsList = []
             homeExperienceSlider.itemsList = []
@@ -336,6 +356,30 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBAction func seeAllEventsButton_onClick(_ sender: UIButton) {
         let viewController = EventsViewController.instantiate(category: .event)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+//    @IBAction func seeAllRecentButton_onClick(_ sender: UIButton) {
+//        let viewController = EventsViewController.instantiate(category: .recent)
+//        self.navigationController?.pushViewController(viewController, animated: true)
+//    }
+    
+    @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
+        let viewController = EventsViewController.instantiate(category: .topRated)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func seeAllGiftsButton_onClick(_ sender: UIButton) {
+        let viewController = EventsViewController.instantiate(category: .gift)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func seeAllVillasButton_onClick(_ sender: UIButton) {
+        let viewController = EventsViewController.instantiate(category: .villa)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func seeAllYachtsButton_onClick(_ sender: UIButton) {
+        let viewController = EventsViewController.instantiate(category: .yacht)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -476,6 +520,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
         
         featured.itemsList = homeObjects?.slider ?? [] //zahoor
+//        homeRecentSlider.itemsList = homeObjects?.recent ?? []
+//        homeTopRatedSlider.itemsList = homeObjects?.topRated ?? []
+        homeGiftsSlider.itemsList = homeObjects?.gifts ?? []
+        homeVillasSlider.itemsList = homeObjects?.villas ?? []
+        homeYachtsSlider.itemsList = homeObjects?.yachts ?? []
+        
         homeEventSlider.itemsList = homeObjects?.events ?? []
         homeExperienceSlider.itemsList = homeObjects?.experiences ?? []
         
@@ -595,7 +645,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
 //        self.present(GoodsViewController.instantiate(), animated: true, completion: nil)
-        let viewController = EventsViewController.instantiate(category: .good)
+        let viewController = EventsViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -674,6 +724,16 @@ extension HomeViewController: DidSelectSliderItemProtocol {
     func didTappedOnHeartAt(index: Int, sender: HomeSlider) {
         var item: Product!
         switch sender {
+//            case homeRecentSlider:
+//                item = homeObjects?.recent[index]
+//            case homeTopRatedSlider:
+//                item = homeObjects?.topRated[index]
+            case homeGiftsSlider:
+                item = homeObjects?.gifts[index]
+            case homeVillasSlider:
+                item = homeObjects?.villas[index]
+            case homeYachtsSlider:
+                item = homeObjects?.yachts[index]
             case homeEventSlider:
                 item = homeObjects?.events[index]
             case homeExperienceSlider:
@@ -695,6 +755,26 @@ extension HomeViewController: DidSelectSliderItemProtocol {
             
             if let informations = information {                
                 switch sender {
+                case self.homeRecentSlider:
+                    var items = self.homeRecentSlider.itemsList
+                    items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
+                case self.homeTopRatedSlider:
+                    var items = self.homeTopRatedSlider.itemsList
+                    items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
+                case self.homeGiftsSlider:
+                    var items = self.homeGiftsSlider.itemsList
+                    items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
+                case self.homeVillasSlider:
+                    var items = self.homeVillasSlider.itemsList
+                    items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
+                case self.homeYachtsSlider:
+                    var items = self.homeYachtsSlider.itemsList
+                    items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
                 case self.homeEventSlider:
                     var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
                     var homeEvents = self.homeEventSlider.itemsList     //events in homeEventSlider
@@ -746,6 +826,16 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         let event: Product!
         
         switch sender {
+//            case homeRecentSlider:
+//                event = homeObjects?.recent[indexPath.row]
+//            case homeTopRatedSlider:
+//                event = homeObjects?.topRated[indexPath.row]
+            case homeGiftsSlider:
+                event = homeObjects?.gifts[indexPath.row]
+            case homeVillasSlider:
+                event = homeObjects?.villas[indexPath.row]
+            case homeYachtsSlider:
+                event = homeObjects?.yachts[indexPath.row]
             case homeEventSlider:
                 event = homeObjects?.events[indexPath.row]
             case homeExperienceSlider:

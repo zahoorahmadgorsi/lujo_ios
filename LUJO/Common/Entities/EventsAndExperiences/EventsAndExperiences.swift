@@ -124,6 +124,8 @@ struct Product: Codable {
     let yachtType: [Taxonomy]?
     let yachtStatus: [Taxonomy]?
     let yachtExtras: [Taxonomy]?
+    let charterPriceLowSeasonPerDay: String?
+    let charterPriceHighSeasonPerDay: String?
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -181,7 +183,8 @@ struct Product: Codable {
         case yachtType = "yacht_type"
         case yachtStatus = "yacht_status"
         case yachtExtras = "yacht_extras"
-        
+        case charterPriceLowSeasonPerDay = "charter_price_low_season_per_day"
+        case charterPriceHighSeasonPerDay = "charter_price_high_season_per_day"
     }
 
     func getGalleryImagesURL() -> [String] {
@@ -276,6 +279,8 @@ extension Product {
             yachtType = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtType)
             yachtStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtStatus)
             yachtExtras = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtExtras)
+            charterPriceLowSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerDay)
+            charterPriceHighSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerDay)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -289,11 +294,22 @@ struct HomeObjects: Codable {
     let experiences: [Product]
     var specialEvents: [Product]
 
+//    var recent: [Product]
+//    var topRated: [Product]
+    var gifts: [Product]
+    var villas: [Product]
+    var yachts: [Product]
+    
     enum CodingKeys: String, CodingKey {
         case slider
         case events
         case experiences
         case specialEvents = "special-events"
+//        case recent
+//        case topRated = "top-rated"
+        case gifts
+        case villas
+        case yachts
     }
 
     func getFeaturedImages() -> [String] {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -390,6 +390,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="QQ2-ch-Xdm"/>
                         <color key="backgroundColor" name="Black Backgorund"/>
                         <constraints>
                             <constraint firstItem="zKq-QG-EpW" firstAttribute="top" secondItem="QQ2-ch-Xdm" secondAttribute="top" constant="24" id="8hl-ax-U8P"/>
@@ -397,7 +398,6 @@
                             <constraint firstItem="QQ2-ch-Xdm" firstAttribute="bottom" secondItem="zKq-QG-EpW" secondAttribute="bottom" id="QTY-YA-wTS"/>
                             <constraint firstItem="zKq-QG-EpW" firstAttribute="leading" secondItem="PFS-Yv-5pS" secondAttribute="leading" id="YiT-8u-GCc"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="QQ2-ch-Xdm"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Account" id="JMI-m4-n0E">
                         <barButtonItem key="backBarButtonItem" title="   " id="drs-qb-GVP"/>
@@ -484,13 +484,13 @@
                                 <rect key="frame" x="96" y="208" width="263" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+381" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fas-tG-ba8" userLabel="Prefix">
-                                        <rect key="frame" x="10" y="12" width="39" height="20"/>
+                                        <rect key="frame" x="10" y="12" width="37.666666666666664" height="20"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" name="Palette - R-G Mid"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QkV-mi-ZUW" userLabel="PhoneNumber">
-                                        <rect key="frame" x="59" y="11" width="194" height="22"/>
+                                        <rect key="frame" x="57.666666666666643" y="11" width="195.33333333333337" height="22"/>
                                         <color key="textColor" name="White Text"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -523,7 +523,7 @@
                                 <rect key="frame" x="16" y="208" width="70" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llS-I0-yJI" userLabel="CountryCodeLabel">
-                                        <rect key="frame" x="10" y="12" width="33.666666666666664" height="20"/>
+                                        <rect key="frame" x="10" y="12" width="33" height="20"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
@@ -535,7 +535,7 @@
                                             <constraint firstAttribute="width" constant="11" id="GIy-yp-iyi"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fG4-Sj-fvx">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fG4-Sj-fvx">
                                         <rect key="frame" x="0.0" y="0.0" width="70" height="44"/>
                                         <connections>
                                             <action selector="countryCodeButton_onClick:" destination="tN4-AI-EKu" eventType="touchUpInside" id="SG5-46-qM9"/>
@@ -565,6 +565,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="DuE-mp-cxT"/>
                         <color key="backgroundColor" name="Black Backgorund"/>
                         <constraints>
                             <constraint firstItem="RuP-pP-mlQ" firstAttribute="trailing" secondItem="fzK-gA-Oyv" secondAttribute="trailing" id="2dc-cZ-IFc"/>
@@ -588,7 +589,6 @@
                             <constraint firstItem="fzK-gA-Oyv" firstAttribute="trailing" secondItem="pB6-IF-Eab" secondAttribute="trailing" id="qRy-kt-Huq"/>
                             <constraint firstItem="XWI-kK-3Z3" firstAttribute="top" secondItem="9vK-Nd-jRz" secondAttribute="bottom" constant="32" id="z6s-Q4-djQ"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="DuE-mp-cxT"/>
                     </view>
                     <connections>
                         <outlet property="countryCodeContainer" destination="Cgk-5q-bWK" id="3eX-Ph-eTP"/>
@@ -924,13 +924,13 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Fls-AD-4rw">
                                                                 <rect key="frame" x="36" y="0.0" width="275" height="54"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Luxury and fine goods" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKS-VG-G5Y">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Luxury and fine gifts" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKS-VG-G5Y">
                                                                         <rect key="frame" x="0.0" y="0.0" width="275" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="The finest and best goods on the planet sourced for you and your loved ones" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpU-Z7-8Lm">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="The finest and best gifts on the planet sourced for you and your loved ones" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpU-Z7-8Lm">
                                                                         <rect key="frame" x="0.0" y="18" width="275" height="36"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                                         <color key="textColor" name="TVBorder"/>
@@ -1260,7 +1260,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeX-4k-jxT">
                                 <rect key="frame" x="0.0" y="998" width="375" height="68"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utH-ax-hDN" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utH-ax-hDN" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                         <rect key="frame" x="24" y="12" width="327" height="44"/>
                                         <color key="backgroundColor" name="Action Button"/>
                                         <constraints>
@@ -1297,13 +1297,13 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="$ 1500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcu-83-a98">
-                                                <rect key="frame" x="32" y="0.0" width="62" height="24"/>
+                                                <rect key="frame" x="32" y="0.0" width="60.333333333333343" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                 <color key="textColor" name="White Text"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="/ YEAR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHS-Kl-Rw4">
-                                                <rect key="frame" x="102" y="0.0" width="39" height="24"/>
+                                                <rect key="frame" x="100.33333333333334" y="0.0" width="40.666666666666657" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                 <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1357,6 +1357,7 @@
                                 <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="IX4-0N-Sxd"/>
                         <color key="backgroundColor" name="Navigation Bar"/>
                         <constraints>
                             <constraint firstItem="Twh-Fh-j94" firstAttribute="top" secondItem="IX4-0N-Sxd" secondAttribute="top" id="393-RN-MBJ"/>
@@ -1381,7 +1382,6 @@
                             <constraint firstItem="CVt-Ji-wmD" firstAttribute="leading" secondItem="nBd-aW-Lcz" secondAttribute="leading" id="x5n-Cf-8dg"/>
                             <constraint firstItem="CVt-Ji-wmD" firstAttribute="top" secondItem="Twh-Fh-j94" secondAttribute="bottom" priority="250" id="zNG-TL-bQE"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="IX4-0N-Sxd"/>
                     </view>
                     <size key="freeformSize" width="375" height="1100"/>
                     <connections>

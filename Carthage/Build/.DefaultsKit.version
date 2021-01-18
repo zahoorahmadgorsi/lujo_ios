@@ -2,10 +2,10 @@
   "commitish" : "0.0.9",
   "iOS" : [
     {
-      "hash" : "ca410f9f0acda6f56f444a284c38b4d5e63761848aa7f4e42b03c89a02d79521",
+      "hash" : "5a78ffcff030c698716a1e41fee82067a27d07f691908d4cf9ff33bc032c5920",
       "name" : "DefaultsKit",
       "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ]
 }

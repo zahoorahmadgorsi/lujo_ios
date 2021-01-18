@@ -375,7 +375,12 @@ extension EventDetailsViewController {
         if let val = product.charterPriceHighSeasonPerWeek, val.count > 0{
             itemsList.append(ProductDetail(key: "High Season Weekly Charter",value: val))
         }
-        
+        if let val = product.charterPriceLowSeasonPerDay, val.count > 0{
+            itemsList.append(ProductDetail(key: "Low Season Daily Charter",value: val))
+        }
+        if let val = product.charterPriceHighSeasonPerDay, val.count > 0{
+            itemsList.append(ProductDetail(key: "High Season Daily Charter",value: val))
+        }
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()

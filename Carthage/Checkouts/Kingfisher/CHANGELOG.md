@@ -2,6 +2,49 @@
 
 -----
 
+## [5.15.8 - KFImage handler](https://github.com/onevcat/Kingfisher/releases/tag/5.15.8) (2020-11-27)
+
+#### Fix
+* An issue caused the `onSuccess` handler not be called when the image is already cached. [#1570](https://github.com/onevcat/Kingfisher/pull/1570)
+
+---
+
+## [5.15.7 - Cancel Lock](https://github.com/onevcat/Kingfisher/releases/tag/5.15.7) (2020-10-29)
+
+#### Fix
+* A potential crash when cancelling image downloading task while accessing its original request on iOS 13 or earlier. [#1558](https://github.com/onevcat/Kingfisher/pull/1558)
+
+---
+
+## [5.15.6 - ImageBinder Callback](https://github.com/onevcat/Kingfisher/releases/tag/5.15.6) (2020-10-11)
+
+#### Fix
+* Prevent main queue dispatching in `ImageBinder` if it is already on main thread. This prevents unintended flickering when reloading. [#1551](https://github.com/onevcat/Kingfisher/pull/1551)
+
+---
+
+## [5.15.5 - Cancelling Fix](https://github.com/onevcat/Kingfisher/releases/tag/5.15.5) (2020-09-29)
+
+#### Fix
+* A possible fix for the crashes when cancelling a huge amount of image tasks too fast. [#1537]
+
+---
+
+## [5.15.4 - Farewell Objective-C (CocoaPods)](https://github.com/onevcat/Kingfisher/releases/tag/5.15.4) (2020-09-24)
+
+#### Fix
+* Give `SessionDelegate` an Objective-C name so it can work with other libraries even added by a dependency which generates Objective-C header. [#1532](https://github.com/onevcat/Kingfisher/pull/1532)
+
+---
+
+## [5.15.3 - Farewell Objective-C](https://github.com/onevcat/Kingfisher/releases/tag/5.15.3) (2020-09-21)
+
+#### Fix
+* Removed the unnecessary ObjC header generating and module defining due to Xcode 12 is now generating conflicted types even for different libraries. [#1517](https://github.com/onevcat/Kingfisher/issues/1517)
+* Set deploy target for SwiftUI target and its pod spec to iOS 10 and macOS 10.12, which aligns to the settings of core framework. That resolves some dependency issues when using CocoaPods for both app target and extension targets. But it does not mean you can use the SwiftUI support on those minimal target. All related APIs are still unavailable on old system versions. [#1524](https://github.com/onevcat/Kingfisher/pull/1524)
+
+---
+
 ## [5.15.2 - Xcode 11 Revived](https://github.com/onevcat/Kingfisher/releases/tag/5.15.2) (2020-09-19)
 
 #### Fix

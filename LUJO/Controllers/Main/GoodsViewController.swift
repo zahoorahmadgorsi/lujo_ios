@@ -79,7 +79,7 @@ class GoodsViewController: UIViewController {
                     return
                 }
                 
-                print ("Success: custom request goods.")
+                print ("Success: custom request gifts.")
                 self.dismiss(animated: true, completion: nil)
                 /*
                 showCardAlertWith(title: "Info", body: "Your request is being processed. We will get back to you shortly. You can follow the status of your request in My bookings.", buttonTitle: "Ok", cancelButtonTitle: nil, buttonTapHandler: {

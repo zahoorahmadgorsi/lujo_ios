@@ -15,8 +15,10 @@ enum EventCategory: String {
     case event = "Events"
     case experience = "Experiences"
     case villa = "Villas"
-    case good = "Goods"
+    case gift = "Gifts"
     case yacht = "Yachts"
+    case recent = "Recenlty Viewed"
+    case topRated = "Top Rated"
 }
 
 class EventsViewController: UIViewController {
@@ -59,9 +61,13 @@ class EventsViewController: UIViewController {
                 currentLayout?.setCustomCellHeight(170)
             case .villa:
                 currentLayout?.setCustomCellHeight(170)
-            case .good:
+            case .gift:
                 currentLayout?.setCustomCellHeight(170)
             case .yacht:
+                currentLayout?.setCustomCellHeight(170)
+            case .recent:
+                currentLayout?.setCustomCellHeight(170)
+            case .topRated:
                 currentLayout?.setCustomCellHeight(170)
         }
         
@@ -295,11 +301,11 @@ extension EventsViewController {
                     }
                     completion(list, error)
                 }
-            case .good:
+            case .gift:
                 EEAPIManager().getGoods(token, term: term, cityId: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home goods information")
+                        let error = BackendError.parsing(reason: "Could not obtain home gifts information")
                         completion([], error)
                         return
                     }
@@ -310,6 +316,27 @@ extension EventsViewController {
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home yachts information")
+                        completion([], error)
+                        return
+                    }
+                completion(list, error)
+            }
+            case .topRated:
+                //since type is not optional thats why sending hardcoded "event"
+                EEAPIManager().getTopRated(token, type: "event") { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home top rated items information")
+                        completion([], error)
+                        return
+                    }
+                completion(list, error)
+            }
+            case .recent:
+                EEAPIManager().getRecents(token, limit: "30", type: "") { list, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")
                         completion([], error)
                         return
                     }

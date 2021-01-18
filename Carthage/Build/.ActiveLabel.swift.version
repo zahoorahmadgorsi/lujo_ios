@@ -1,11 +1,11 @@
 {
-  "commitish" : "1.1.0",
+  "commitish" : "1.1.5",
   "iOS" : [
     {
-      "hash" : "3834b478efd45d5b263b0c34187a2adc276b82e6a970f0f87ae644c487f87fc2",
+      "hash" : "774b681ba89b1593f78fe3023307b5265854a12a3c2cc139b45404d32debd2fb",
       "name" : "ActiveLabel",
       "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ]
 }

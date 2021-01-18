@@ -36,6 +36,8 @@ enum EERouter: URLRequestConvertible {
     case villas(String, String?, Int?)
     case goods(String, String?, Int?)
     case yachts(String, String?, Int?)
+    case topRated(token: String, type: String)
+    case recents(String, String?, String?)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -79,6 +81,10 @@ enum EERouter: URLRequestConvertible {
             case .goods:
                 return .get
             case .yachts:
+                return .get
+            case .topRated:
+                return .post
+            case .recents:
                 return .get
         }
     }
@@ -156,6 +162,20 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
             }
             newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
+        case .topRated:
+            newURLComponents.path.append("/top-rated")
+        case let .recents(token, limit, type):
+            newURLComponents.path.append("/recent")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+            ]
+            if let limit = limit {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "limit", value: limit))
+            }
+            if let type = type {
+                newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
+            }
+        
         case .salesforce:
             newURLComponents.path.append("/request")
 
@@ -201,6 +221,10 @@ enum EERouter: URLRequestConvertible {
                 return nil
             case .yachts:
                 return nil
+            case let .topRated(token,type):
+                return getTopRatedDataAsJSONData(token: token,type: type)
+            case .recents:
+                return nil
             case let .salesforce(itemId, token):
                 return getSalesforceDataAsJSONData(itemId: itemId, token: token)
             case let .geopoint(token, type, latitude, longitude, _):
@@ -210,6 +234,14 @@ enum EERouter: URLRequestConvertible {
             case .cityInfo:
                 return nil
         }
+    }
+    
+    fileprivate func getTopRatedDataAsJSONData(token: String, type: String) -> Data? {
+        let body: [String: Any] = [
+            "token": token,
+            "type": type
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
     fileprivate func getGeopointDataAsJSONData(type: String, latitude: Float, longitude: Float, token: String) -> Data? {

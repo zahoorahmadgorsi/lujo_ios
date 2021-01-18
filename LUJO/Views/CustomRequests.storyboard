@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,7 +23,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qo5-Ta-2uH" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="su7-xx-Y0f">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="su7-xx-Y0f">
                                                 <rect key="frame" x="314" y="9" width="45" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <state key="normal" title="CANCEL">
@@ -64,7 +64,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find a Table" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGO-64-0ID">
-                                                        <rect key="frame" x="31.999999999999993" y="16" width="101.33333333333331" height="32"/>
+                                                        <rect key="frame" x="32.000000000000007" y="16" width="102.66666666666669" height="32"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
@@ -256,7 +256,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mpI-hb-YKE" userLabel="Bottom Bar">
                                         <rect key="frame" x="0.0" y="666" width="375" height="68"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfK-SR-rGR" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfK-SR-rGR" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
                                                 <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                                 <constraints>
@@ -304,6 +304,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="drg-Pg-502"/>
                         <color key="backgroundColor" name="Navigation Bar"/>
                         <constraints>
                             <constraint firstItem="lil-OG-wom" firstAttribute="top" secondItem="drg-Pg-502" secondAttribute="top" id="NFR-9H-qDy"/>
@@ -312,7 +313,6 @@
                             <constraint firstAttribute="bottom" secondItem="lil-OG-wom" secondAttribute="bottom" id="sNU-IL-86W"/>
                             <constraint firstItem="drg-Pg-502" firstAttribute="trailing" secondItem="lil-OG-wom" secondAttribute="trailing" id="wBb-gp-XeQ"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="drg-Pg-502"/>
                     </view>
                     <connections>
                         <outlet property="cuisineLabel" destination="GJX-Sx-zTu" id="ya7-My-Le9"/>
@@ -342,7 +342,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFC-Y3-WTf" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="308-47-vFK">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="308-47-vFK">
                                                 <rect key="frame" x="314" y="9" width="45" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <state key="normal" title="CANCEL">
@@ -382,7 +382,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N70-Sb-isE">
-                                                        <rect key="frame" x="32.000000000000007" y="16" width="96.666666666666686" height="32"/>
+                                                        <rect key="frame" x="32.000000000000007" y="16" width="97.666666666666686" height="32"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
@@ -477,7 +477,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="drK-hl-XSz" userLabel="Bottom Bar">
                                         <rect key="frame" x="0.0" y="666" width="375" height="68"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QxX-i2-qVN" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QxX-i2-qVN" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
                                                 <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                                 <constraints>
@@ -521,6 +521,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="vXx-dv-dTR"/>
                         <color key="backgroundColor" name="Navigation Bar"/>
                         <constraints>
                             <constraint firstItem="vXx-dv-dTR" firstAttribute="top" secondItem="9VW-wW-t1o" secondAttribute="top" id="3mJ-Tg-woI"/>
@@ -532,7 +533,6 @@
                             <constraint firstItem="vXx-dv-dTR" firstAttribute="trailing" secondItem="IFC-Y3-WTf" secondAttribute="trailing" id="qRV-tX-4M3"/>
                             <constraint firstItem="IFC-Y3-WTf" firstAttribute="top" secondItem="vXx-dv-dTR" secondAttribute="top" id="upc-4Y-s7t"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="vXx-dv-dTR"/>
                     </view>
                     <connections>
                         <outlet property="descriptionTextField" destination="FT2-uI-qoj" id="JfZ-10-B8q"/>
@@ -557,7 +557,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q6M-bY-g9v" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="366" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEc-4u-k5D">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEc-4u-k5D">
                                                 <rect key="frame" x="305" y="9" width="45" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <state key="normal" title="CANCEL">
@@ -597,8 +597,8 @@
                                                             <constraint firstAttribute="width" constant="20" id="wwb-jU-VBr"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Goods" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKm-sy-nvs">
-                                                        <rect key="frame" x="32" y="16" width="140.66666666666666" height="32"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Gifts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKm-sy-nvs">
+                                                        <rect key="frame" x="32.000000000000007" y="16" width="125.66666666666669" height="32"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
@@ -636,7 +636,7 @@
                                                         </connections>
                                                     </textView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Describe what you are looking for" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amc-V8-Mqk">
-                                                        <rect key="frame" x="13" y="7.9999999999999982" width="308" height="26.333333333333329"/>
+                                                        <rect key="frame" x="13" y="7.9999999999999982" width="309.66666666666669" height="26.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
@@ -689,7 +689,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5W-oD-F8G" userLabel="Bottom Bar">
                                         <rect key="frame" x="0.0" y="666" width="375" height="68"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCd-A6-uaS" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCd-A6-uaS" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
                                                 <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                                 <constraints>
@@ -736,6 +736,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="2Pm-Ag-av8"/>
                         <color key="backgroundColor" name="Navigation Bar"/>
                         <constraints>
                             <constraint firstItem="6fm-cH-KBk" firstAttribute="top" secondItem="2Pm-Ag-av8" secondAttribute="top" id="05w-vj-FKZ"/>
@@ -744,7 +745,6 @@
                             <constraint firstItem="6fm-cH-KBk" firstAttribute="trailing" secondItem="2Pm-Ag-av8" secondAttribute="trailing" id="a2d-ee-iEc"/>
                             <constraint firstItem="6fm-cH-KBk" firstAttribute="leading" secondItem="2Pm-Ag-av8" secondAttribute="leading" id="qHV-gY-UdP"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="2Pm-Ag-av8"/>
                     </view>
                     <connections>
                         <outlet property="asGiftButton" destination="s57-mb-d56" id="Rwe-du-1WB"/>
@@ -770,7 +770,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9X-jd-mxl" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpL-x6-ib6">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpL-x6-ib6">
                                                 <rect key="frame" x="314" y="9" width="45" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <state key="normal" title="CANCEL">
@@ -812,7 +812,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charter a Yacht" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gL-hB-Jsy">
-                                                        <rect key="frame" x="32" y="16" width="131.33333333333334" height="32"/>
+                                                        <rect key="frame" x="32" y="16" width="133.66666666666666" height="32"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
@@ -1103,7 +1103,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gld-IX-6Ms" userLabel="Bottom Bar">
                                         <rect key="frame" x="0.0" y="666" width="375" height="68"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OrY-4b-VAf" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OrY-4b-VAf" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
                                                 <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                                 <constraints>
@@ -1150,6 +1150,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="2CN-ZD-qeX"/>
                         <color key="backgroundColor" name="Navigation Bar"/>
                         <constraints>
                             <constraint firstItem="h7k-aa-RJd" firstAttribute="trailing" secondItem="2CN-ZD-qeX" secondAttribute="trailing" id="HWC-gn-D2y"/>
@@ -1158,7 +1159,6 @@
                             <constraint firstItem="Gld-IX-6Ms" firstAttribute="bottom" secondItem="2CN-ZD-qeX" secondAttribute="bottom" id="fBt-Q7-LlN"/>
                             <constraint firstAttribute="bottom" secondItem="h7k-aa-RJd" secondAttribute="bottom" id="uKJ-qU-7qq"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="2CN-ZD-qeX"/>
                     </view>
                     <connections>
                         <outlet property="destinationTextField" destination="W7S-WH-2DR" id="gx0-fa-F38"/>
@@ -1194,7 +1194,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZNV-Hi-fPK" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDK-uV-TxN">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDK-uV-TxN">
                                                 <rect key="frame" x="314" y="9" width="45" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <state key="normal" title="CANCEL">
@@ -1226,7 +1226,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ul5-dp-GHi" userLabel="Bottom Bar">
                                         <rect key="frame" x="0.0" y="666" width="375" height="68"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccO-4C-vbW" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccO-4C-vbW" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
                                                 <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                                 <constraints>
@@ -1271,7 +1271,7 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find a Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qiq-jJ-sPS">
-                                                                <rect key="frame" x="32" y="16" width="101" height="32"/>
+                                                                <rect key="frame" x="31.999999999999993" y="16" width="102.33333333333331" height="32"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                                 <color key="textColor" name="White Text"/>
                                                                 <nil key="highlightedColor"/>
@@ -1357,11 +1357,11 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uc8-ty-NZL">
-                                                                        <rect key="frame" x="153.33333333333334" y="0.0" width="142.00000000000003" height="20"/>
+                                                                        <rect key="frame" x="153.33333333333331" y="0.0" width="142.33333333333331" height="20"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 mi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eE5-73-AGb">
-                                                                        <rect key="frame" x="295.33333333333331" y="0.0" width="39.666666666666686" height="20"/>
+                                                                        <rect key="frame" x="295.66666666666669" y="0.0" width="39.333333333333314" height="20"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                                         <color key="textColor" name="Button Text"/>
                                                                         <nil key="highlightedColor"/>
@@ -1691,6 +1691,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="dDp-c2-rfK"/>
                         <color key="backgroundColor" name="Navigation Bar"/>
                         <constraints>
                             <constraint firstItem="dDp-c2-rfK" firstAttribute="trailing" secondItem="OR6-UF-G2L" secondAttribute="trailing" id="1Su-Ne-9GN"/>
@@ -1699,7 +1700,6 @@
                             <constraint firstItem="OR6-UF-G2L" firstAttribute="top" secondItem="dDp-c2-rfK" secondAttribute="top" id="haB-8u-4Uh"/>
                             <constraint firstItem="ul5-dp-GHi" firstAttribute="bottom" secondItem="dDp-c2-rfK" secondAttribute="bottom" id="uM2-zE-wUb"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="dDp-c2-rfK"/>
                     </view>
                     <connections>
                         <outlet property="adultsLabel" destination="ryO-vT-iri" id="dV7-oh-ebZ"/>
