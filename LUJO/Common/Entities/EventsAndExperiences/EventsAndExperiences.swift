@@ -293,9 +293,8 @@ struct HomeObjects: Codable {
     var events: [Product]
     let experiences: [Product]
     var specialEvents: [Product]
-
-//    var recent: [Product]
-//    var topRated: [Product]
+    var recent: [Product]
+    var topRated: [Product]
     var gifts: [Product]
     var villas: [Product]
     var yachts: [Product]
@@ -305,8 +304,8 @@ struct HomeObjects: Codable {
         case events
         case experiences
         case specialEvents = "special-events"
-//        case recent
-//        case topRated = "top-rated"
+        case recent
+        case topRated = "top-rated"
         case gifts
         case villas
         case yachts

@@ -2498,7 +2498,7 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Event Icon" translatesAutoresizingMaskIntoConstraints="NO" id="lu7-H1-UK2">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="top_rated" translatesAutoresizingMaskIntoConstraints="NO" id="lu7-H1-UK2">
                                                                 <rect key="frame" x="32" y="38" width="20" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="5c6-3B-NAl"/>
@@ -7410,6 +7410,7 @@ New York, NY 10011 USA</string>
         <image name="ic_close" width="16" height="16"/>
         <image name="location_home" width="12" height="16"/>
         <image name="placeholder-img" width="600" height="400"/>
+        <image name="top_rated" width="16.5" height="13.5"/>
         <image name="villa cta" width="36" height="36"/>
         <image name="villa icon" width="7.5" height="8.5"/>
         <namedColor name="Action Button">

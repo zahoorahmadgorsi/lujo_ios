@@ -520,8 +520,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
         
         featured.itemsList = homeObjects?.slider ?? [] //zahoor
-//        homeRecentSlider.itemsList = homeObjects?.recent ?? []
-//        homeTopRatedSlider.itemsList = homeObjects?.topRated ?? []
+        homeRecentSlider.itemsList = homeObjects?.recent ?? []
+        homeTopRatedSlider.itemsList = homeObjects?.topRated ?? []
         homeGiftsSlider.itemsList = homeObjects?.gifts ?? []
         homeVillasSlider.itemsList = homeObjects?.villas ?? []
         homeYachtsSlider.itemsList = homeObjects?.yachts ?? []
@@ -724,10 +724,10 @@ extension HomeViewController: DidSelectSliderItemProtocol {
     func didTappedOnHeartAt(index: Int, sender: HomeSlider) {
         var item: Product!
         switch sender {
-//            case homeRecentSlider:
-//                item = homeObjects?.recent[index]
-//            case homeTopRatedSlider:
-//                item = homeObjects?.topRated[index]
+            case homeRecentSlider:
+                item = homeObjects?.recent[index]
+            case homeTopRatedSlider:
+                item = homeObjects?.topRated[index]
             case homeGiftsSlider:
                 item = homeObjects?.gifts[index]
             case homeVillasSlider:
@@ -823,29 +823,29 @@ extension HomeViewController: DidSelectSliderItemProtocol {
     
     
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider) {
-        let event: Product!
+        let product: Product!
         
         switch sender {
-//            case homeRecentSlider:
-//                event = homeObjects?.recent[indexPath.row]
-//            case homeTopRatedSlider:
-//                event = homeObjects?.topRated[indexPath.row]
+            case homeRecentSlider:
+                product = homeObjects?.recent[indexPath.row]
+            case homeTopRatedSlider:
+                product = homeObjects?.topRated[indexPath.row]
             case homeGiftsSlider:
-                event = homeObjects?.gifts[indexPath.row]
+                product = homeObjects?.gifts[indexPath.row]
             case homeVillasSlider:
-                event = homeObjects?.villas[indexPath.row]
+                product = homeObjects?.villas[indexPath.row]
             case homeYachtsSlider:
-                event = homeObjects?.yachts[indexPath.row]
+                product = homeObjects?.yachts[indexPath.row]
             case homeEventSlider:
-                event = homeObjects?.events[indexPath.row]
+                product = homeObjects?.events[indexPath.row]
             case homeExperienceSlider:
-                event = homeObjects?.experiences[indexPath.row]
+                product = homeObjects?.experiences[indexPath.row]
             case locationEventSlider:
-                event = locationEventSlider.itemsList[indexPath.row]
+                product = locationEventSlider.itemsList[indexPath.row]
             default: return
         }
         
-        let viewController = EventDetailsViewController.instantiate(event: event)
+        let viewController = EventDetailsViewController.instantiate(event: product)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

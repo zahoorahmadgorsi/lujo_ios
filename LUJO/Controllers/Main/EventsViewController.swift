@@ -323,7 +323,7 @@ extension EventsViewController {
             }
             case .topRated:
                 //since type is not optional thats why sending hardcoded "event"
-                EEAPIManager().getTopRated(token, type: "event") { list, error in
+                EEAPIManager().getTopRated(token, type: "") { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home top rated items information")
