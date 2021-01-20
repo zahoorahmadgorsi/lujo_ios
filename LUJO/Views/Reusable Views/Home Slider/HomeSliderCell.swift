@@ -15,6 +15,7 @@ class HomeSliderCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet var primaryImage: UIImageView!
     @IBOutlet var name: UILabel!
+    @IBOutlet weak var imgDate: UIImageView!
     @IBOutlet var date: UILabel!
     @IBOutlet var dateContainerView: UIView!
     @IBOutlet var tagContainerView: UIView!

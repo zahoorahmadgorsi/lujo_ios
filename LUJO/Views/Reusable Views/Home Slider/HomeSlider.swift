@@ -16,8 +16,8 @@ protocol DidSelectSliderItemProtocol: class {
 
 class HomeSlider: UIView {
     var itemWidth:Int = 175
-    var eventItemHeight:Int = 172
-    var experienceItemHeight:Int = 148
+    var itemHeight:Int = 172
+    var giftItemHeight:Int = 148
     var itemMargin:Int = 16
     
     
@@ -166,7 +166,7 @@ extension HomeSlider: UICollectionViewDataSource {
         
         cell.name.text = model.name
 
-        if model.type == "event" {
+        if model.type == "event" {  //showing start - end date in case of event
             cell.dateContainerView.isHidden = false
 
             let startDateText = EventDetailsViewController.convertDateFormate(date: model.startDate!)
@@ -180,10 +180,19 @@ extension HomeSlider: UICollectionViewDataSource {
             if let timezone = model.timezone {
                 startTimeText = "\(startTimeText) (\(timezone))"
             }
-            
+
             cell.date.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
-        } else {
-            cell.dateContainerView.isHidden = true
+            cell.imgDate.image = UIImage(named: "calendar_home_white")
+        } else { //showing location if available
+            //cell.dateContainerView.isHidden = true
+            var locationText = ""
+            if let cityName = model.location?.first?.city?.name {
+                locationText = "\(cityName), "
+            }
+            locationText += model.location?.first?.country.name ?? ""
+            cell.date.text = locationText.uppercased()
+            cell.dateContainerView.isHidden = locationText.isEmpty
+            cell.imgDate.image = UIImage(named: "Location White")
         }
 
         if model.tags?.count ?? 0 > 0, let fistTag = model.tags?[0] {
@@ -217,12 +226,13 @@ extension HomeSlider: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if itemsList.first?.type == "event" {
+        if itemsList.first?.type == "gift" {
             //return CGSize(width: 150, height: 172)
-            return CGSize(width: itemWidth, height: eventItemHeight) //150x172
+            return CGSize(width: itemWidth, height: giftItemHeight)  //150x148
         }
         //return CGSize(width: 150, height: 148)
-        return CGSize(width: itemWidth, height: experienceItemHeight)  //150x148
+        return CGSize(width: itemWidth, height: itemHeight) //150x172
+        
     }
 
     func collectionView(_ collectionView: UICollectionView,
