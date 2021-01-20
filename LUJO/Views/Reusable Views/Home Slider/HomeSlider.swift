@@ -125,8 +125,10 @@ extension HomeSlider: UICollectionViewDataSource {
         let model = itemsList[indexPath.row]
         if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
             cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-        }
-        //Zahoor started 20201026
+        }//Zahoor started 20201026
+        else if let firstImageLink = model.getGalleryImagesURL().first {
+            cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+    }
         cell.primaryImage.isHidden = false;
         cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
@@ -226,10 +228,10 @@ extension HomeSlider: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if itemsList.first?.type == "gift" {
-            //return CGSize(width: 150, height: 172)
-            return CGSize(width: itemWidth, height: giftItemHeight)  //150x148
-        }
+//        if itemsList.first?.type == "gift" {
+//            //return CGSize(width: 150, height: 172)
+//            return CGSize(width: itemWidth, height: giftItemHeight)  //150x148
+//        }
         //return CGSize(width: 150, height: 148)
         return CGSize(width: itemWidth, height: itemHeight) //150x172
         

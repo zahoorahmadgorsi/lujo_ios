@@ -2337,7 +2337,7 @@
                                                         <rect key="frame" x="0.0" y="1355.5" width="414" height="72"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9V-gB-9v4">
-                                                                <rect key="frame" x="16" y="32" width="382" height="30"/>
+                                                                <rect key="frame" x="16" y="10" width="382" height="52"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -2348,7 +2348,7 @@
                                                             <constraint firstAttribute="trailing" secondItem="x9V-gB-9v4" secondAttribute="trailing" constant="16" id="9Vn-jt-0Ct"/>
                                                             <constraint firstItem="x9V-gB-9v4" firstAttribute="leading" secondItem="XKt-sf-CGt" secondAttribute="leading" constant="16" id="BTv-vr-3Yx"/>
                                                             <constraint firstAttribute="bottom" secondItem="x9V-gB-9v4" secondAttribute="bottom" constant="10" id="dxa-a2-XBs"/>
-                                                            <constraint firstItem="x9V-gB-9v4" firstAttribute="top" secondItem="XKt-sf-CGt" secondAttribute="top" constant="32" id="hzF-7k-zqW"/>
+                                                            <constraint firstItem="x9V-gB-9v4" firstAttribute="top" secondItem="XKt-sf-CGt" secondAttribute="top" constant="10" id="hzF-7k-zqW"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4N7-wh-iWT">
@@ -7364,7 +7364,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

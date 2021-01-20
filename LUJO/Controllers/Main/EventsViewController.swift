@@ -229,8 +229,16 @@ extension EventsViewController: UICollectionViewDataSource, UICollectionViewDele
             }
             
             cell.date.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
-        } else {
-            cell.dateContainerView.isHidden = true
+        }else { //showing location if available
+            //cell.dateContainerView.isHidden = true
+            var locationText = ""
+            if let cityName = model.location?.first?.city?.name {
+                locationText = "\(cityName), "
+            }
+            locationText += model.location?.first?.country.name ?? ""
+            cell.date.text = locationText.uppercased()
+            cell.dateContainerView.isHidden = locationText.isEmpty
+            cell.imgDate.image = UIImage(named: "Location White")
         }
         
         if model.tags?.count ?? 0 > 0, let fistTag = model.tags?[0] {
