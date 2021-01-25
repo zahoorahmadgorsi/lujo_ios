@@ -9,13 +9,15 @@
 import Foundation
 
 class Favourite{
-    internal init(id: Int? = nil, name: String? = nil, description: String? = nil, primaryMedia: Gallery? = nil, location: [TaxonomyLocation]? = nil, isFavourite: Bool? = nil) {
+    internal init(id: Int? = nil, name: String? = nil, description: String? = nil, primaryMedia: Gallery? = nil, location: [TaxonomyLocation]? = nil, isFavourite: Bool? = nil
+                  , gallery: [Gallery]? = nil) {
         self.id = id
         self.name = name
         self.description = description
         self.primaryMedia = primaryMedia
         self.location = location
         self.isFavourite = isFavourite
+        self.gallery = gallery
     }
     
     var id: Int?
@@ -24,8 +26,11 @@ class Favourite{
     var primaryMedia: Gallery?
     var location: [TaxonomyLocation]?
     var isFavourite: Bool?
-    
-    
+    let gallery: [Gallery]?
+ 
+    func getGalleryImagesURL() -> [String] {
+        return gallery?.filter({ $0.type == "image" }).map({ $0.mediaUrl }) ?? []
+    }
 }
 
 struct WishListObjects: Codable {
@@ -53,6 +58,7 @@ struct WishListObjects: Codable {
         case yachts = "yacht"
     }
 
+    
 }
 
 extension WishListObjects {

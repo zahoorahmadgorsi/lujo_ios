@@ -38,6 +38,7 @@ enum EERouter: URLRequestConvertible {
     case yachts(String, String?, Int?)
     case topRated(token: String, type: String)
     case recents(String, String?, String?)
+    case perCity(String, String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -86,6 +87,8 @@ enum EERouter: URLRequestConvertible {
                 return .post
             case .recents:
                 return .get
+            case .perCity:
+                return .get
         }
     }
 
@@ -96,107 +99,113 @@ enum EERouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
 
         switch self {
-        case let .home(token):
-            newURLComponents.path.append("/home")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-        case let .events(token, past, term, cityId):
-            newURLComponents.path.append("/events")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-            if past {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "show_past", value: "true"))
-            }
-            if let term = term {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-            }
-            if let cityId = cityId {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-            }
-        case let .experiences(token, term, cityId):
-            newURLComponents.path.append("/experiences")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-            if let term = term {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-            }
-            if let cityId = cityId {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-            }
-        case let .villas(token, term, cityId):
-            newURLComponents.path.append("/villas")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-            if let term = term {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-            }
-            if let cityId = cityId {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-            }
-            newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-        case let .goods(token, term, cityId):
-            newURLComponents.path.append("/gifts")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-            if let term = term {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-            }
-            if let cityId = cityId {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-            }
-            newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-        case let .yachts(token, term, cityId):
-            newURLComponents.path.append("/yachts")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-            if let term = term {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-            }
-            if let cityId = cityId {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-            }
-            newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-        case .topRated:
-            newURLComponents.path.append("/top-rated")
-        case let .recents(token, limit, type):
-            newURLComponents.path.append("/recent")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-            if let limit = limit {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "limit", value: limit))
-            }
-            if let type = type {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
-            }
-        
-        case .salesforce:
-            newURLComponents.path.append("/request")
+            case let .home(token):
+                newURLComponents.path.append("/home")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+            case let .events(token, past, term, cityId):
+                newURLComponents.path.append("/events")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+                if past {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "show_past", value: "true"))
+                }
+                if let term = term {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+                }
+                if let cityId = cityId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+                }
+            case let .experiences(token, term, cityId):
+                newURLComponents.path.append("/experiences")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+                if let term = term {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+                }
+                if let cityId = cityId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+                }
+            case let .villas(token, term, cityId):
+                newURLComponents.path.append("/villas")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+                if let term = term {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+                }
+                if let cityId = cityId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+                }
+                newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
+            case let .goods(token, term, cityId):
+                newURLComponents.path.append("/gifts")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+                if let term = term {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+                }
+                if let cityId = cityId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+                }
+                newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
+            case let .yachts(token, term, cityId):
+                newURLComponents.path.append("/yachts")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+                if let term = term {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+                }
+                if let cityId = cityId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+                }
+                newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
+            case .topRated:
+                newURLComponents.path.append("/top-rated")
+            case let .recents(token, limit, type):
+                newURLComponents.path.append("/recent")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+                if let limit = limit {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "limit", value: limit))
+                }
+                if let type = type {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
+                }
+            case .salesforce:
+                newURLComponents.path.append("/request")
 
-        case .geopoint:
-            newURLComponents.path.append("/geopoint")
-        
-        case let .citySearch(token, searchTerm):
-            newURLComponents.path.append("/search-cities")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-                URLQueryItem(name: "search", value: searchTerm)
-            ]
+            case .geopoint:
+                newURLComponents.path.append("/geopoint")
             
-        case let .cityInfo(token, cityId):
-            newURLComponents.path.append("/discover")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-                URLQueryItem(name: "place_id", value: cityId)
-            ]
-        }
+            case let .citySearch(token, searchTerm):
+                newURLComponents.path.append("/search-cities")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                    URLQueryItem(name: "search", value: searchTerm)
+                ]
+                
+            case let .cityInfo(token, cityId):
+                newURLComponents.path.append("/discover")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                    URLQueryItem(name: "place_id", value: cityId)
+                ]
+            case let .perCity(token, type):
+                newURLComponents.path.append("/per-city")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "token", value: token),
+                ]
+                newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
 
+        }
+        
         do {
             let callURL = try newURLComponents.asURL()
             return callURL
@@ -232,6 +241,8 @@ enum EERouter: URLRequestConvertible {
             case .citySearch:
                 return nil
             case .cityInfo:
+                return nil
+            case .perCity:
                 return nil
         }
     }

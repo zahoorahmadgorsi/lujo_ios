@@ -122,6 +122,15 @@
 		88EA9F9425544E8400514626 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F9325544E8400514626 /* WishList.swift */; };
 		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
 		88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F982554552300514626 /* WishListAPIManager.swift */; };
+		918BA97F25BDCD49007B4D43 /* CityView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918BA97E25BDCD49007B4D43 /* CityView2.xib */; };
+		918BA98425BDCD79007B4D43 /* CityView3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918BA98325BDCD79007B4D43 /* CityView3.xib */; };
+		918BA98925BDCDA5007B4D43 /* CityView4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918BA98825BDCDA5007B4D43 /* CityView4.xib */; };
+		918BA99625BDFAD2007B4D43 /* PerCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA99525BDFAD2007B4D43 /* PerCityViewController.swift */; };
+		918BA99E25BF47E9007B4D43 /* CityView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA99D25BF47E8007B4D43 /* CityView1.swift */; };
+		918BA9A325BF480A007B4D43 /* CityView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9A225BF480A007B4D43 /* CityView2.swift */; };
+		918BA9A825BF481A007B4D43 /* CityView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9A725BF481A007B4D43 /* CityView3.swift */; };
+		918BA9AD25BF482C007B4D43 /* CityView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9AC25BF482C007B4D43 /* CityView4.swift */; };
+		91F610CE25BDB216005BCDA2 /* CityView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F610CD25BDB215005BCDA2 /* CityView1.xib */; };
 		9A0104E52181BC8600783E25 /* LiftSearchResultExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */; };
 		9A091DFD21E891B700B0B5E6 /* UserNotApprovedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */; };
 		9A091E0021EC2CEA00B0B5E6 /* PaymentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */; };
@@ -405,6 +414,15 @@
 		88EA9F962554550D00514626 /* WishListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListRouter.swift; sourceTree = "<group>"; };
 		88EA9F982554552300514626 /* WishListAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListAPIManager.swift; sourceTree = "<group>"; };
 		917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tmp.xcconfig; sourceTree = "<group>"; };
+		918BA97E25BDCD49007B4D43 /* CityView2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView2.xib; sourceTree = "<group>"; };
+		918BA98325BDCD79007B4D43 /* CityView3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView3.xib; sourceTree = "<group>"; };
+		918BA98825BDCDA5007B4D43 /* CityView4.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView4.xib; sourceTree = "<group>"; };
+		918BA99525BDFAD2007B4D43 /* PerCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerCityViewController.swift; sourceTree = "<group>"; };
+		918BA99D25BF47E8007B4D43 /* CityView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView1.swift; sourceTree = "<group>"; };
+		918BA9A225BF480A007B4D43 /* CityView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView2.swift; sourceTree = "<group>"; };
+		918BA9A725BF481A007B4D43 /* CityView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView3.swift; sourceTree = "<group>"; };
+		918BA9AC25BF482C007B4D43 /* CityView4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView4.swift; sourceTree = "<group>"; };
+		91F610CD25BDB215005BCDA2 /* CityView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView1.xib; sourceTree = "<group>"; };
 		9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LiftSearchResultExample.json; sourceTree = "<group>"; };
 		9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotApprovedView.swift; sourceTree = "<group>"; };
 		9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfiguration.swift; sourceTree = "<group>"; };
@@ -789,6 +807,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				91F610CC25BDB1C9005BCDA2 /* City View */,
 				88E731A6256FC58100BEDD00 /* Product Details */,
 				883A86BF2561767D00E41A27 /* Wish List View */,
 				1DFE1AC323476EA50025410D /* Dining City View */,
@@ -850,6 +869,7 @@
 				1D81515822DE448900B203D8 /* HomeSpecialEventSummary.xib */,
 				1D81515622DE442E00B203D8 /* HomeSpecialEventSummary.swift */,
 				1D44A6F92356250F0073C682 /* GlobalSearchViewController.swift */,
+				918BA99525BDFAD2007B4D43 /* PerCityViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -985,6 +1005,21 @@
 				88EA9F982554552300514626 /* WishListAPIManager.swift */,
 			);
 			path = WishList;
+			sourceTree = "<group>";
+		};
+		91F610CC25BDB1C9005BCDA2 /* City View */ = {
+			isa = PBXGroup;
+			children = (
+				91F610CD25BDB215005BCDA2 /* CityView1.xib */,
+				918BA97E25BDCD49007B4D43 /* CityView2.xib */,
+				918BA98325BDCD79007B4D43 /* CityView3.xib */,
+				918BA98825BDCDA5007B4D43 /* CityView4.xib */,
+				918BA99D25BF47E8007B4D43 /* CityView1.swift */,
+				918BA9A225BF480A007B4D43 /* CityView2.swift */,
+				918BA9A725BF481A007B4D43 /* CityView3.swift */,
+				918BA9AC25BF482C007B4D43 /* CityView4.swift */,
+			);
+			path = "City View";
 			sourceTree = "<group>";
 		};
 		9A0104E32181BC6300783E25 /* Resources */ = {
@@ -1564,9 +1599,11 @@
 				9A990C1A21C94E4A00056E31 /* SF-Pro-Text-Bold.otf in Resources */,
 				9A990C1B21C94E4A00056E31 /* SF-Pro-Text-Regular.otf in Resources */,
 				9A2AEBC12162683A00F92FB3 /* HelveticaNeueLTStd-Bd.otf in Resources */,
+				918BA97F25BDCD49007B4D43 /* CityView2.xib in Resources */,
 				9A40F6282185FC520038D0C4 /* AviationEmptyResult.xib in Resources */,
 				88E731AA256FC5B700BEDD00 /* ProductDetailCell.xib in Resources */,
 				9A645B9F22648524009BF14D /* BookingRequestLiftInfo.xib in Resources */,
+				91F610CE25BDB216005BCDA2 /* CityView1.xib in Resources */,
 				1D81515922DE448900B203D8 /* HomeSpecialEventSummary.xib in Resources */,
 				9A61F59C21788C2A00D67907 /* CalendarHeaderView.xib in Resources */,
 				9A2F0C3421250C7200C52BE3 /* Login.storyboard in Resources */,
@@ -1575,6 +1612,7 @@
 				8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */,
 				9A41571421301E6C00D85B56 /* HelveticaNeueLTStd-Md.otf in Resources */,
 				9A9EC8AE2253BA2800098E7D /* AviationLegCell.xib in Resources */,
+				918BA98425BDCD79007B4D43 /* CityView3.xib in Resources */,
 				9A72C3C72138456D009FE9E2 /* Localizable.strings in Resources */,
 				1DBC9C02236567C200F0F133 /* Assets.xcassets in Resources */,
 				9A0E586D2260E5B800F7848A /* BookingSegmentView.xib in Resources */,
@@ -1585,6 +1623,7 @@
 				9A818F5520EE74CC005B6455 /* LaunchScreen.storyboard in Resources */,
 				9AF422652265D534003CE562 /* Booking.storyboard in Resources */,
 				8844D9B32563F712002FF846 /* FavouriteCell.xib in Resources */,
+				918BA98925BDCDA5007B4D43 /* CityView4.xib in Resources */,
 				1DD785B823749B27001A9CF9 /* PayAlertView.xib in Resources */,
 				9A18716921130D4800B81BFD /* Lora-Regular.ttf in Resources */,
 				88E731AE256FFAAF00BEDD00 /* ProductDetailView.xib in Resources */,
@@ -1761,6 +1800,7 @@
 				9A091E4A21EC7BD800B0B5E6 /* DoubleExtension.swift in Sources */,
 				5527642123165D1800380BEB /* EventsViewController.swift in Sources */,
 				880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */,
+				918BA9AD25BF482C007B4D43 /* CityView4.swift in Sources */,
 				9AC4FE09225CA31F0031E57E /* AppDelegate.swift in Sources */,
 				9A5C5CB7222FD34F00B8239D /* PaymentResult.swift in Sources */,
 				9A8E93E5212BD1AE00059DD8 /* RoutingTable.swift in Sources */,
@@ -1770,6 +1810,7 @@
 				1DFE1AC7234772E60025410D /* DiningCityView.swift in Sources */,
 				9ADB1D1E21EE041F00FAB2E9 /* AddCreditCardView.swift in Sources */,
 				9AA95FDE2189BE6F00156AB6 /* LiftDetailViewController.swift in Sources */,
+				918BA99625BDFAD2007B4D43 /* PerCityViewController.swift in Sources */,
 				9ADB535A222D4BC5004CD759 /* PaymentMethod.swift in Sources */,
 				9AA8571A2162317E00DFC4A5 /* UITextField+LeftView.swift in Sources */,
 				9AD1CE02228182B2007A0D63 /* BookingPaymentSummaryView.swift in Sources */,
@@ -1819,6 +1860,7 @@
 				1DBC9BFC235F6BCA00F0F133 /* BookingDetailCell.swift in Sources */,
 				9AD6EABC21E3B78300B695A3 /* PaymentSelectionView.swift in Sources */,
 				9ADEC471223FD698006D1435 /* Regex.swift in Sources */,
+				918BA9A325BF480A007B4D43 /* CityView2.swift in Sources */,
 				1D618010238C3BDE00F01199 /* ikDataPickerManager.swift in Sources */,
 				9A53E35D218207A000594AA6 /* AviationSearchView.swift in Sources */,
 				5527644B23195D4300380BEB /* UserProfileViewController.swift in Sources */,
@@ -1839,6 +1881,7 @@
 				9A2AEBC321626A0300F92FB3 /* AirportSearchCell.swift in Sources */,
 				1D88012F233E4AB30039DEA6 /* DiningCategorySliderCell.swift in Sources */,
 				557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */,
+				918BA9A825BF481A007B4D43 /* CityView3.swift in Sources */,
 				9A8E93E9212BDC1700059DD8 /* LoginPresenter.swift in Sources */,
 				1DBC9C062365B97B00F0F133 /* PaymentRouter.swift in Sources */,
 				882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */,
@@ -1856,6 +1899,7 @@
 				9A229E8021347574007F1F7A /* ConfirmationView.swift in Sources */,
 				1D44A6FA2356250F0073C682 /* GlobalSearchViewController.swift in Sources */,
 				5527642C2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift in Sources */,
+				918BA99E25BF47E9007B4D43 /* CityView1.swift in Sources */,
 				9A87214B21F0CDDB0010AA37 /* PaymentData.swift in Sources */,
 				9A67F20A22566AE800E06F1D /* LujoIconLabel.swift in Sources */,
 				9A817B98224D0D2C00EE7BAC /* AviationLuggageSelectionView.swift in Sources */,
@@ -2091,7 +2135,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2152,7 +2196,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2358,7 +2402,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

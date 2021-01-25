@@ -639,7 +639,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func getTicketsButton_onClick(_ sender: Any) {
-        let viewController = EventsViewController.instantiate(category: .event)
+        //let viewController = EventsViewController.instantiate(category: .event)
+        let viewController = PerCityViewController.instantiate(category: .event)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

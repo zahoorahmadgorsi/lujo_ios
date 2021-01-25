@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,7 +34,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="122" id="7ut-og-Zc4"/>
                             <constraint firstItem="9Xh-bO-zuV" firstAttribute="top" secondItem="Myx-PC-Omx" secondAttribute="top" id="AB1-lj-D5D"/>
@@ -157,6 +158,7 @@
                     </stackView>
                 </subviews>
             </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="JSo-aN-oVK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6mX-AI-68W"/>
                 <constraint firstItem="X6o-J1-0CM" firstAttribute="top" secondItem="JSo-aN-oVK" secondAttribute="bottom" id="CU3-tH-RaZ"/>
@@ -169,7 +171,6 @@
                 <constraint firstAttribute="trailing" secondItem="JSo-aN-oVK" secondAttribute="trailing" id="oHn-pJ-SRD"/>
                 <constraint firstAttribute="trailing" secondItem="X6o-J1-0CM" secondAttribute="trailing" id="poF-C9-JVQ"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
                 <outlet property="containerView" destination="Myx-PC-Omx" id="cuH-3O-e2i"/>
                 <outlet property="imgHeart" destination="9JD-dK-IJW" id="dDH-Uz-Faj"/>
@@ -195,5 +196,8 @@
         <namedColor name="White Text">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

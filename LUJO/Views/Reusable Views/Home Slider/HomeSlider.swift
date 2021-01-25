@@ -128,7 +128,7 @@ extension HomeSlider: UICollectionViewDataSource {
         }//Zahoor started 20201026
         else if let firstImageLink = model.getGalleryImagesURL().first {
             cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-    }
+        }
         cell.primaryImage.isHidden = false;
         cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
