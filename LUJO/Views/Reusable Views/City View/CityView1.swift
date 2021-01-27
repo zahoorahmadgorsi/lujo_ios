@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol CityView1Protocol:class {
     func seeAllProductsForCity(city: Cities)
@@ -19,6 +20,7 @@ class CityView1: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var product1ContainerView: UIStackView!
+    @IBOutlet weak var product1ImageContainer: UIView!
     @IBOutlet weak var product1ImageView: UIImageView!
     @IBOutlet weak var product1NameLabel: UILabel!
     
@@ -66,15 +68,42 @@ class CityView1: UIView {
         
         for (index, product) in city?.items?.enumerated() ?? [].enumerated() {
             if index == 0 {
-                if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
-                    print(mediaLink)
-                    product1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-                }else if let firstImageLink = product.getGalleryImagesURL().first {
-                    print(firstImageLink)
-                    product1ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+                if (product.primaryMedia?.type == "image"){
+                    if let mediaLink = product.primaryMedia?.mediaUrl {
+                        print(mediaLink)
+                        product1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                    }else if let firstImageLink = product.getGalleryImagesURL().first {
+                        print(firstImageLink)
+                        product1ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+                    }
+                }else if( product.primaryMedia?.type == "video"){
+                    var avPlayer: AVPlayer!
+                    //Playing the video
+                    if let videoLink = URL(string: product.primaryMedia?.mediaUrl ?? ""){
+                        product1ImageView.isHidden = true;
+                        product1ImageContainer.removeLayer(layerName: "videoPlayer") //removing video player if was added
+                        
+                        avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                        let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                        avPlayerLayer.name = "videoPlayer"
+                        avPlayerLayer.frame = product1ImageContainer.bounds
+                        avPlayerLayer.videoGravity = .resizeAspectFill
+                        product1ImageContainer.layer.insertSublayer(avPlayerLayer, at: 0)
+                        avPlayer.play()
+                        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                            avPlayer?.seek(to: CMTime.zero)
+                            avPlayer?.play()
+                        }
+                    }else if let mediaLink = product.primaryMedia?.mediaUrl {
+                            print(mediaLink)
+                            product1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                        }else if let firstImageLink = product.getGalleryImagesURL().first {
+                            print(firstImageLink)
+                            product1ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+                        }
+                    
                 }
-                
-                product1ImageView.downloadImageFrom(link: "http://admin-stage.golujo.com/wp-content/uploads/07a8a464c98a71c796bd8a02a750d7be_user_297-1-768x576.png", contentMode: .scaleAspectFill)
+//                product1ImageView.downloadImageFrom(link: "http://admin-stage.golujo.com/wp-content/uploads/07a8a464c98a71c796bd8a02a750d7be_user_297-1-768x576.png", contentMode: .scaleAspectFill)
                 product1NameLabel.text = product.name
 
                 if product.type == "event" {
