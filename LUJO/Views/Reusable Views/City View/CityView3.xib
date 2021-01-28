@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityView3" customModule="LUJO" customModuleProvider="target">
             <connections>
+                <outlet property="cityNameLabel" destination="uhz-Xq-nHH" id="mqu-3e-NUH"/>
+                <outlet property="contentView" destination="5d4-Ud-xLk" id="ZUO-K7-Jdz"/>
                 <outlet property="imgHeart1" destination="JCL-SG-eDp" id="GcL-gI-7EU"/>
                 <outlet property="imgHeart2" destination="T1g-ix-bx4" id="sxM-4r-q7X"/>
                 <outlet property="imgHeart3" destination="KES-E6-Elj" id="xSu-TT-VWj"/>

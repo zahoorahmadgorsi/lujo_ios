@@ -190,7 +190,7 @@ class CityView4: UIView {
                 }
                 //setting indecies to handle the tap events
                 product1ContainerView.tag = index
-                imgHeart1.tag = index
+                viewHeart1.tag = index
             }
             else if index == 1 {
                 if (product.primaryMedia?.type == "image"){
@@ -265,7 +265,7 @@ class CityView4: UIView {
                 }
                 //setting indecies to handle the tap events
                 product2ContainerView.tag = index
-                imgHeart2.tag = index
+                viewHeart2.tag = index
             }else if index == 2 {
                 if (product.primaryMedia?.type == "image"){
                     if let mediaLink = product.primaryMedia?.mediaUrl {
@@ -339,7 +339,7 @@ class CityView4: UIView {
                 }
                 //setting indecies to handle the tap events
                 product3ContainerView.tag = index
-                imgHeart3.tag = index
+                viewHeart3.tag = index
             }else if index == 3 {
                 if (product.primaryMedia?.type == "image"){
                     if let mediaLink = product.primaryMedia?.mediaUrl {
@@ -413,7 +413,7 @@ class CityView4: UIView {
                 }
                 //setting indecies to handle the tap events
                 product4ContainerView.tag = index
-                imgHeart4.tag = index
+                viewHeart4.tag = index
             }
         }
     }

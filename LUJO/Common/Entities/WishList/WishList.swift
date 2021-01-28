@@ -34,19 +34,24 @@ class Favourite{
 }
 
 struct WishListObjects: Codable {
-    let events: [wishListProducts]?
-    let experiences: [wishListProducts]?
-    let specialEvents: [wishListProducts]?
-       
-    let restaurants: [wishListRestaurants]?
-    let hotels: [wishListHotel]?
-//    let villas: [wishListVilla]?
-//    let gifts: [wishListGift]?
-//    let yachts: [wishListYacht]?
-    let villas: [wishListProducts]?
-    let gifts: [wishListProducts]?
-    let yachts: [wishListProducts]?
-
+//    let events: [wishListProducts]?
+//    let experiences: [wishListProducts]?
+//    let specialEvents: [wishListProducts]?
+//    let restaurants: [wishListRestaurants]?
+//    let hotels: [wishListHotel]?
+//    let villas: [wishListProducts]?
+//    let gifts: [wishListProducts]?
+//    let yachts: [wishListProducts]?
+    
+    let events: [Product]?
+    let experiences: [Product]?
+    let specialEvents: [Product]?
+    let restaurants: [Restaurant]?
+    let hotels: [Hotel]?
+    let villas: [Product]?
+    let gifts: [Product]?
+    let yachts: [Product]?
+    
     enum CodingKeys: String, CodingKey {
         case restaurants = "restaurant"
         case events = "event"
@@ -66,17 +71,22 @@ extension WishListObjects {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
-            restaurants = try values.decodeIfPresent([wishListRestaurants].self, forKey: .restaurants)
-            events = try values.decodeIfPresent([wishListProducts].self, forKey: .events)
-            specialEvents = try values.decodeIfPresent([wishListProducts].self, forKey: .specialEvents)
-            experiences = try values.decodeIfPresent([wishListProducts].self, forKey: .experiences)
-            hotels = try values.decodeIfPresent([wishListHotel].self, forKey: .hotels)
-//            villas = try values.decodeIfPresent([wishListVilla].self, forKey: .villas)
-//            gifts = try values.decodeIfPresent([wishListGift].self, forKey: .gifts)
-//            yachts = try values.decodeIfPresent([wishListYacht].self, forKey: .yachts)
-            villas = try values.decodeIfPresent([wishListProducts].self, forKey: .villas)
-            gifts = try values.decodeIfPresent([wishListProducts].self, forKey: .gifts)
-            yachts = try values.decodeIfPresent([wishListProducts].self, forKey: .yachts)
+//            restaurants = try values.decodeIfPresent([wishListRestaurants].self, forKey: .restaurants)
+//            events = try values.decodeIfPresent([wishListProducts].self, forKey: .events)
+//            specialEvents = try values.decodeIfPresent([wishListProducts].self, forKey: .specialEvents)
+//            experiences = try values.decodeIfPresent([wishListProducts].self, forKey: .experiences)
+//            hotels = try values.decodeIfPresent([wishListHotel].self, forKey: .hotels)
+//            villas = try values.decodeIfPresent([wishListProducts].self, forKey: .villas)
+//            gifts = try values.decodeIfPresent([wishListProducts].self, forKey: .gifts)
+//            yachts = try values.decodeIfPresent([wishListProducts].self, forKey: .yachts)
+            restaurants = try values.decodeIfPresent([Restaurant].self, forKey: .restaurants)
+            events = try values.decodeIfPresent([Product].self, forKey: .events)
+            specialEvents = try values.decodeIfPresent([Product].self, forKey: .specialEvents)
+            experiences = try values.decodeIfPresent([Product].self, forKey: .experiences)
+            hotels = try values.decodeIfPresent([Hotel].self, forKey: .hotels)
+            villas = try values.decodeIfPresent([Product].self, forKey: .villas)
+            gifts = try values.decodeIfPresent([Product].self, forKey: .gifts)
+            yachts = try values.decodeIfPresent([Product].self, forKey: .yachts)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

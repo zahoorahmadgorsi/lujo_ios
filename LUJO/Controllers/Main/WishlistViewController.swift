@@ -113,12 +113,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.product?.id
-                    , name: item.product?.name
-                    , description: item.product?.description
-                    , primaryMedia:item.product?.primaryMedia
-                    , location: item.product?.location
-                    , isFavourite: item.product?.isFavourite))
+//                itemsList.append( Favourite(id: item.product?.id
+//                    , name: item.product?.name
+//                    , description: item.product?.description
+//                    , primaryMedia:item.product?.primaryMedia
+//                    , location: item.product?.location
+//                    , isFavourite: item.product?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -149,12 +155,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.product?.id
-                    , name: item.product?.name
-                    , description: item.product?.description
-                    , primaryMedia:item.product?.primaryMedia
-                    , location: item.product?.location
-                    , isFavourite: item.product?.isFavourite))
+//                itemsList.append( Favourite(id: item.product?.id
+//                    , name: item.product?.name
+//                    , description: item.product?.description
+//                    , primaryMedia:item.product?.primaryMedia
+//                    , location: item.product?.location
+//                    , isFavourite: item.product?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -184,12 +196,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.product?.id
-                    , name: item.product?.name
-                    , description: item.product?.description
-                    , primaryMedia:item.product?.primaryMedia
-                    , location: item.product?.location
-                    , isFavourite: item.product?.isFavourite))
+//                itemsList.append( Favourite(id: item.product?.id
+//                    , name: item.product?.name
+//                    , description: item.product?.description
+//                    , primaryMedia:item.product?.primaryMedia
+//                    , location: item.product?.location
+//                    , isFavourite: item.product?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -215,12 +233,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.restaurant?.id
-                    , name: item.restaurant?.name
-                    , description: item.restaurant?.description
-                    , primaryMedia:item.restaurant?.primaryMedia
-                    , location: item.restaurant?.location
-                    , isFavourite: item.restaurant?.isFavourite))
+//                itemsList.append( Favourite(id: item.restaurant?.id
+//                    , name: item.restaurant?.name
+//                    , description: item.restaurant?.description
+//                    , primaryMedia:item.restaurant?.primaryMedia
+//                    , location: item.restaurant?.location
+//                    , isFavourite: item.restaurant?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -246,12 +270,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.hotel?.id
-                    , name: item.hotel?.name
-                    , description: item.hotel?.description
-                    , primaryMedia:item.hotel?.primaryMedia
-                    , location: item.hotel?.location
-                    , isFavourite: item.hotel?.isFavourite))
+//                itemsList.append( Favourite(id: item.hotel?.id
+//                    , name: item.hotel?.name
+//                    , description: item.hotel?.description
+//                    , primaryMedia:item.hotel?.primaryMedia
+//                    , location: item.hotel?.location
+//                    , isFavourite: item.hotel?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -277,12 +307,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.product?.id
-                    , name: item.product?.name
-                    , description: item.product?.description
-                    , primaryMedia:item.product?.primaryMedia
-                    , location: item.product?.location
-                    , isFavourite: item.product?.isFavourite))
+//                itemsList.append( Favourite(id: item.product?.id
+//                    , name: item.product?.name
+//                    , description: item.product?.description
+//                    , primaryMedia:item.product?.primaryMedia
+//                    , location: item.product?.location
+//                    , isFavourite: item.product?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -308,12 +344,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.product?.id
-                    , name: item.product?.name
-                    , description: item.product?.description
-                    , primaryMedia:item.product?.primaryMedia
-                    , location: item.product?.location
-                    , isFavourite: item.product?.isFavourite))
+//                itemsList.append( Favourite(id: item.product?.id
+//                    , name: item.product?.name
+//                    , description: item.product?.description
+//                    , primaryMedia:item.product?.primaryMedia
+//                    , location: item.product?.location
+//                    , isFavourite: item.product?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -339,12 +381,18 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-                itemsList.append( Favourite(id: item.product?.id
-                    , name: item.product?.name
-                    , description: item.product?.description
-                    , primaryMedia:item.product?.primaryMedia
-                    , location: item.product?.location
-                    , isFavourite: item.product?.isFavourite))
+//                itemsList.append( Favourite(id: item.product?.id
+//                    , name: item.product?.name
+//                    , description: item.product?.description
+//                    , primaryMedia:item.product?.primaryMedia
+//                    , location: item.product?.location
+//                    , isFavourite: item.product?.isFavourite))
+                itemsList.append( Favourite(id: item.id
+                    , name: item.name
+                    , description: item.description
+                    , primaryMedia:item.primaryMedia
+                    , location: item.location
+                    , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
             stackView.addArrangedSubview(wishListView)
@@ -414,38 +462,38 @@ class WishListViewController: UIViewController, WishListViewProtocol{
 //        print("didTappedOnItem")
         switch itemType {
             case .event:
-                if let event = wishListInformations?.events?[indexPath.row].product{
+                if let event = wishListInformations?.events?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
             case .experience:
-                if let event = wishListInformations?.experiences?[indexPath.row].product{
+                if let event = wishListInformations?.experiences?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
             case .specialEvent:
-                if let event = wishListInformations?.specialEvents?[indexPath.row].product{
+                if let event = wishListInformations?.specialEvents?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
             case .restaurant:
-                if let item = wishListInformations?.restaurants?[indexPath.row].restaurant{
+                if let item = wishListInformations?.restaurants?[indexPath.row]{
                     let viewController = RestaurantDetailViewController.instantiate(restaurant: item)
     //                self.navigationController?.pushViewController(viewController, animated: true)
                     present(viewController, animated: true, completion: nil)
                 }
             case .villa:
-                if let event = wishListInformations?.villas?[indexPath.row].product{
+                if let event = wishListInformations?.villas?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
             case .yacht:
-                if let event = wishListInformations?.yachts?[indexPath.row].product{
+                if let event = wishListInformations?.yachts?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
             case .gift:
-                if let event = wishListInformations?.gifts?[indexPath.row].product{
+                if let event = wishListInformations?.gifts?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }
@@ -460,50 +508,51 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         var isFavourite:Bool = false
         switch itemType {
         case .event:
-            if let id = wishListInformations?.events?[index].product?.id,
-                let isFav = wishListInformations?.events?[index].product?.isFavourite{
+            //if let id = wishListInformations?.events?[index].product?.id,
+            if let id = wishListInformations?.events?[index].id,
+                let isFav = wishListInformations?.events?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }
         case .specialEvent:
-            if let id = wishListInformations?.specialEvents?[index].product?.id,
-                let isFav = wishListInformations?.specialEvents?[index].product?.isFavourite{
+            if let id = wishListInformations?.specialEvents?[index].id,
+                let isFav = wishListInformations?.specialEvents?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }
         case .experience:
-            if let id = wishListInformations?.experiences?[index].product?.id,
-                let isFav = wishListInformations?.experiences?[index].product?.isFavourite{
+            if let id = wishListInformations?.experiences?[index].id,
+                let isFav = wishListInformations?.experiences?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }
         case .restaurant:
-            if let id = wishListInformations?.restaurants?[index].restaurant?.id,
-                let isFav = wishListInformations?.restaurants?[index].restaurant?.isFavourite{
+            if let id = wishListInformations?.restaurants?[index].id,
+                let isFav = wishListInformations?.restaurants?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }
         case .hotel:
-            if let id = wishListInformations?.hotels?[index].hotel?.id,
-                let isFav = wishListInformations?.hotels?[index].hotel?.isFavourite{
+            if let id = wishListInformations?.hotels?[index].id,
+                let isFav = wishListInformations?.hotels?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }
         case .villa:
-            if let id = wishListInformations?.villas?[index].product?.id,
-                let isFav = wishListInformations?.villas?[index].product?.isFavourite{
+            if let id = wishListInformations?.villas?[index].id,
+                let isFav = wishListInformations?.villas?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }
         case .gift:
-            if let id = wishListInformations?.gifts?[index].product?.id,
-                let isFav = wishListInformations?.gifts?[index].product?.isFavourite{
+            if let id = wishListInformations?.gifts?[index].id,
+                let isFav = wishListInformations?.gifts?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }
         case .yacht:
-            if let id = wishListInformations?.yachts?[index].product?.id,
-                let isFav = wishListInformations?.yachts?[index].product?.isFavourite{
+            if let id = wishListInformations?.yachts?[index].id,
+                let isFav = wishListInformations?.yachts?[index].isFavourite{
                     itemID = id
                     isFavourite = isFav
             }

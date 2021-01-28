@@ -156,7 +156,7 @@ class CityView2: UIView {
                 }
                 //setting indecies to handle the tap events
                 product1ContainerView.tag = index
-                imgHeart1.tag = index
+                viewHeart1.tag = index
             }
             else if index == 1 {
                 if (product.primaryMedia?.type == "image"){
@@ -231,7 +231,7 @@ class CityView2: UIView {
                 }
                 //setting indecies to handle the tap events
                 product2ContainerView.tag = index
-                imgHeart2.tag = index
+                viewHeart2.tag = index
             }
         }
     }

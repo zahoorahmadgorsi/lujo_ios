@@ -334,6 +334,9 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-Ud-HVT">
                                                     <rect key="frame" x="0.0" y="0.0" width="187" height="304"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="304" id="FzY-mu-H6R"/>
+                                                    </constraints>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

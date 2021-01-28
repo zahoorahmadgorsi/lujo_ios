@@ -7375,7 +7375,7 @@ New York, NY 10011 USA</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Fch-I8-Oui">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="920"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="350"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GxF-f2-yKu">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -7516,10 +7516,6 @@ New York, NY 10011 USA</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="172" id="UCs-Lr-7KT"/>
                                                 </constraints>
-                                            </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ls-S9-bdu">
-                                                <rect key="frame" x="0.0" y="366" width="414" height="554"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
                                     </stackView>

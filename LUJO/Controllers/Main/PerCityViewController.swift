@@ -158,8 +158,32 @@ class PerCityViewController: UIViewController {
                 cityView.city = city
                 cityView.delegate = self
                 svPerCity.addArrangedSubview(cityView)
+            case 2:
+                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView2)?.city?.termID == city.termID && $0.tag != 999 }) {
+                        cityView.removeFromSuperview() //remove if already added
+                }
+                let cityView = CityView2()
+                cityView.city = city
+                cityView.delegate = self
+                svPerCity.addArrangedSubview(cityView)
+            case 3:
+                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView3)?.city?.termID == city.termID && $0.tag != 999 }) {
+                        cityView.removeFromSuperview() //remove if already added
+                }
+                let cityView = CityView3()
+                cityView.city = city
+                cityView.delegate = self
+                svPerCity.addArrangedSubview(cityView)
             default:
-                print("Default")
+                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView4)?.city?.termID == city.termID && $0.tag != 999 }) {
+                        cityView.removeFromSuperview() //remove if already added
+                }
+                let cityView = CityView4()
+                cityView.city = city
+                cityView.delegate = self
+                svPerCity.addArrangedSubview(cityView)
+            
+                print("Default is 4 and above")
             }
         }
     }

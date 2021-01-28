@@ -141,7 +141,7 @@ class CityView1: UIView {
                 }
                 //setting indecies to handle the tap events
                 product1ContainerView.tag = index
-                imgHeart1.tag = index
+                viewHeart1.tag = index
             }
         }
     }
