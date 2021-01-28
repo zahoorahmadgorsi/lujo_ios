@@ -104,6 +104,13 @@ class CityView4: UIView {
         //Add tap gestures on heart3 image
         let tgrOnHeart3 = UITapGestureRecognizer(target: self, action: #selector(CityView4.tappedOnHeart(_:)))
         viewHeart3.addGestureRecognizer(tgrOnHeart3)
+        
+        //Adding tap gesture on whole product4 view
+        let tgrOnProduct4 = UITapGestureRecognizer(target: self, action: #selector(CityView4.tappedOnProduct(_:)))
+        product4ContainerView.addGestureRecognizer(tgrOnProduct4)
+        //Add tap gestures on heart4 image
+        let tgrOnHeart4 = UITapGestureRecognizer(target: self, action: #selector(CityView4.tappedOnHeart(_:)))
+        viewHeart4.addGestureRecognizer(tgrOnHeart4)
     }
     
     private func setupViewUI() {
