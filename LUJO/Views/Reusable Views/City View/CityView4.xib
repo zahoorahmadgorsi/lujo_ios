@@ -6,12 +6,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityView4">
             <connections>
+                <outlet property="btnSeeAll" destination="zbq-2u-COS" id="yL2-gV-xOq"/>
                 <outlet property="cityNameLabel" destination="TuZ-C2-hsi" id="H0E-nX-snd"/>
                 <outlet property="contentView" destination="uZt-fl-7BL" id="VUS-6L-W2k"/>
                 <outlet property="imgHeart1" destination="ODj-d8-gIT" id="AIh-h6-xxa"/>
@@ -69,13 +69,27 @@
                             <color key="textColor" name="White Text"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="750" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbq-2u-COS">
+                            <rect key="frame" x="16" y="24" width="350" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                            <state key="normal" title="SEE ALL " image="See All Icon">
+                                <color key="titleColor" name="White Text"/>
+                            </state>
+                            <connections>
+                                <action selector="seeAllButton_onClick:" destination="-1" eventType="touchUpInside" id="mfD-4G-3XD"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" name="Navigation Bar"/>
                     <constraints>
                         <constraint firstItem="TuZ-C2-hsi" firstAttribute="top" secondItem="4ci-mf-veJ" secondAttribute="top" id="DDV-d0-KBb"/>
+                        <constraint firstItem="zbq-2u-COS" firstAttribute="centerY" secondItem="4ci-mf-veJ" secondAttribute="centerY" id="DMU-pS-apb"/>
                         <constraint firstAttribute="bottom" secondItem="TuZ-C2-hsi" secondAttribute="bottom" id="Kvp-63-1bL"/>
                         <constraint firstItem="TuZ-C2-hsi" firstAttribute="leading" secondItem="4ci-mf-veJ" secondAttribute="leading" constant="16" id="Nsv-Ob-BYi"/>
+                        <constraint firstAttribute="trailing" secondItem="zbq-2u-COS" secondAttribute="trailing" constant="16" id="P4D-PX-msJ"/>
                         <constraint firstAttribute="height" constant="64" id="WKO-71-rvV"/>
+                        <constraint firstItem="zbq-2u-COS" firstAttribute="leading" secondItem="4ci-mf-veJ" secondAttribute="leading" constant="16" id="pxr-Y9-Zgp"/>
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="o04-qP-ZgG">
@@ -92,9 +106,14 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="122" id="9QT-eD-SK7"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="mPN-nn-t1t" secondAttribute="trailing" id="8ev-7B-501"/>
                                         <constraint firstItem="mPN-nn-t1t" firstAttribute="top" secondItem="Rvo-b7-hsZ" secondAttribute="top" id="EFZ-fC-Aw7"/>
@@ -177,9 +196,14 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="122" id="4xV-0L-yGV"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <integer key="value" value="2"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="GSU-ym-TWL" secondAttribute="trailing" id="1Hk-n7-bc4"/>
                                                         <constraint firstAttribute="bottom" secondItem="GSU-ym-TWL" secondAttribute="bottom" id="C10-PY-Zvv"/>
@@ -256,9 +280,14 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="122" id="54c-lZ-xEz"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <integer key="value" value="2"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="IIG-Ty-jFy" secondAttribute="bottom" id="QZY-cV-aVB"/>
                                                         <constraint firstAttribute="trailing" secondItem="IIG-Ty-jFy" secondAttribute="trailing" id="ljy-eb-JpK"/>
@@ -337,9 +366,14 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="304" id="FzY-mu-H6R"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="JIn-Ud-HVT" secondAttribute="trailing" id="MNH-wC-wpW"/>
                                                 <constraint firstItem="JIn-Ud-HVT" firstAttribute="leading" secondItem="M8g-3D-NDo" secondAttribute="leading" id="aNQ-RJ-EgI"/>
@@ -427,6 +461,7 @@
         </view>
     </objects>
     <resources>
+        <image name="See All Icon" width="16" height="16"/>
         <image name="calendar_home_white" width="12" height="16"/>
         <image name="heart_white" width="22" height="19.5"/>
         <image name="placeholder-img" width="600" height="400"/>
@@ -439,8 +474,5 @@
         <namedColor name="White Text">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

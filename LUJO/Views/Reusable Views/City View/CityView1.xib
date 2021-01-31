@@ -5,12 +5,12 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityView1" customModule="LUJO" customModuleProvider="target">
             <connections>
+                <outlet property="btnSeeAll" destination="CRp-ug-Rfz" id="Y8x-OU-v0e"/>
                 <outlet property="cityNameLabel" destination="BjU-6h-bAK" id="hER-cg-PM6"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="KLc-hn-ys2"/>
                 <outlet property="imgHeart1" destination="2ql-ux-uSU" id="3f7-Mp-jkp"/>
@@ -41,12 +41,27 @@
                             <color key="textColor" name="White Text"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="750" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRp-ug-Rfz">
+                            <rect key="frame" x="16" y="24" width="350" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                            <state key="normal" title="SEE ALL " image="See All Icon">
+                                <color key="titleColor" name="White Text"/>
+                            </state>
+                            <connections>
+                                <action selector="seeAllButton_onClick:" destination="-1" eventType="touchUpInside" id="Gmt-4p-E6d"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" name="Navigation Bar"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="BjU-6h-bAK" secondAttribute="bottom" id="4oc-Hm-Juo"/>
                         <constraint firstAttribute="height" constant="64" id="Khs-YS-2u4"/>
+                        <constraint firstItem="CRp-ug-Rfz" firstAttribute="leading" secondItem="MUV-2k-vSP" secondAttribute="leading" constant="16" id="QSS-hE-bp3"/>
                         <constraint firstItem="BjU-6h-bAK" firstAttribute="leading" secondItem="MUV-2k-vSP" secondAttribute="leading" constant="16" id="ZyT-md-wCc"/>
+                        <constraint firstAttribute="trailing" secondItem="CRp-ug-Rfz" secondAttribute="trailing" constant="16" id="brV-7n-w0T"/>
+                        <constraint firstItem="BjU-6h-bAK" firstAttribute="centerY" secondItem="MUV-2k-vSP" secondAttribute="centerY" id="fCa-hR-EEG"/>
+                        <constraint firstItem="CRp-ug-Rfz" firstAttribute="centerY" secondItem="MUV-2k-vSP" secondAttribute="centerY" id="n9N-fe-dCu"/>
                         <constraint firstItem="BjU-6h-bAK" firstAttribute="top" secondItem="MUV-2k-vSP" secondAttribute="top" id="woB-RE-wyz"/>
                     </constraints>
                 </view>
@@ -61,9 +76,14 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="122" id="9J5-jv-54t"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <integer key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="84g-G9-pRX" firstAttribute="top" secondItem="uGf-lq-j6b" secondAttribute="top" id="AKc-g7-iew"/>
                                 <constraint firstAttribute="trailing" secondItem="84g-G9-pRX" secondAttribute="trailing" id="bUK-41-JDB"/>
@@ -146,6 +166,7 @@
         </view>
     </objects>
     <resources>
+        <image name="See All Icon" width="16" height="16"/>
         <image name="calendar_home_white" width="12" height="16"/>
         <image name="heart_white" width="22" height="19.5"/>
         <image name="placeholder-img" width="600" height="400"/>
@@ -158,8 +179,5 @@
         <namedColor name="White Text">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

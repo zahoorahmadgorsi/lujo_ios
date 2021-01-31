@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -297,6 +297,7 @@
                     </constraints>
                 </scrollView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="Black Backgorund"/>
             <constraints>
                 <constraint firstItem="QQH-B2-zwd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="9Fm-J3-qqF"/>
@@ -306,7 +307,6 @@
                 <constraint firstItem="QQH-B2-zwd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kNq-Cd-A7r"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="addLuggageButton" destination="wxv-0R-rsM" id="4r3-sh-zmO"/>
                 <outlet property="arrivalLabel" destination="BjE-Oe-S0n" id="r69-Y2-aiP"/>
@@ -331,7 +331,7 @@
                     <rect key="frame" x="32" y="0.0" width="288" height="472"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's start with adding a first leg!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pw-qa-icy">
-                            <rect key="frame" x="19" y="126" width="250" height="20"/>
+                            <rect key="frame" x="19.5" y="126" width="249" height="20"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" name="White Text"/>
                             <nil key="highlightedColor"/>
@@ -377,6 +377,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="4VT-1t-Seg"/>
             <color key="backgroundColor" name="Black Backgorund"/>
             <constraints>
                 <constraint firstItem="6a0-Od-wsV" firstAttribute="top" secondItem="C2q-yK-DPy" secondAttribute="top" id="8CC-Q3-ghA"/>
@@ -385,7 +386,6 @@
                 <constraint firstAttribute="trailing" secondItem="6a0-Od-wsV" secondAttribute="trailing" constant="32" id="evN-0A-3xw"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="4VT-1t-Seg"/>
             <connections>
                 <outlet property="addLeg" destination="Rwx-YI-vwy" id="oMc-ea-LpV"/>
                 <outlet property="tableView" destination="ID8-ah-4o0" id="gaC-4b-KrT"/>

@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -250,7 +249,7 @@
                                                             <constraint firstAttribute="trailing" secondItem="Y3G-vk-QpQ" secondAttribute="trailing" constant="16" id="msr-X0-BKN"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="">
                                                                 <integer key="value" value="5"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
@@ -7375,7 +7374,7 @@ New York, NY 10011 USA</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Fch-I8-Oui">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="350"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="318"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GxF-f2-yKu">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -7389,14 +7388,14 @@ New York, NY 10011 USA</string>
                                                                 <color key="textColor" name="White Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrival Icon" translatesAutoresizingMaskIntoConstraints="NO" id="5XE-sT-fHZ">
-                                                                <rect key="frame" x="75" y="16" width="20" height="18"/>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Filter Icon" translatesAutoresizingMaskIntoConstraints="NO" id="5XE-sT-fHZ">
+                                                                <rect key="frame" x="75" y="15" width="20" height="20.5"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="20" id="QJ5-vo-IB6"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_close" translatesAutoresizingMaskIntoConstraints="NO" id="cdf-cD-S8A">
-                                                                <rect key="frame" x="100" y="17" width="20" height="16"/>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vertical_line" translatesAutoresizingMaskIntoConstraints="NO" id="cdf-cD-S8A">
+                                                                <rect key="frame" x="100" y="2" width="20" height="46"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="20" id="bsB-rk-nJ4"/>
                                                                 </constraints>
@@ -7423,7 +7422,7 @@ New York, NY 10011 USA</string>
                                                     </view>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="T4B-6r-GM5">
                                                         <rect key="frame" x="138" y="0.0" width="276" height="50"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2GM-X8-wha">
                                                             <size key="itemSize" width="128" height="128"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -7446,7 +7445,9 @@ New York, NY 10011 USA</string>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </collectionViewCellContentView>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </collectionViewCell>
                                                         </cells>
                                                     </collectionView>
@@ -7456,10 +7457,10 @@ New York, NY 10011 USA</string>
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oMz-3i-rDL">
-                                                <rect key="frame" x="0.0" y="66" width="414" height="96"/>
+                                                <rect key="frame" x="0.0" y="66" width="414" height="64"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c31-WQ-FsR">
-                                                        <rect key="frame" x="16" y="16" width="382" height="64"/>
+                                                        <rect key="frame" x="16" y="0.0" width="382" height="64"/>
                                                         <color key="backgroundColor" name="Navigation Bar"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -7468,20 +7469,20 @@ New York, NY 10011 USA</string>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="top_rated" translatesAutoresizingMaskIntoConstraints="NO" id="gUK-jj-0mU">
-                                                        <rect key="frame" x="32" y="38" width="20" height="20"/>
+                                                        <rect key="frame" x="32" y="22" width="20" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="6MI-Ok-nv0"/>
                                                             <constraint firstAttribute="height" constant="20" id="8cO-aG-RV9"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Rated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4O-dU-KNa">
-                                                        <rect key="frame" x="64" y="16" width="86.5" height="64"/>
+                                                        <rect key="frame" x="64" y="16" width="86.5" height="32"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="750" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DGC-Xh-yIo">
-                                                        <rect key="frame" x="32" y="16" width="350" height="64"/>
+                                                        <rect key="frame" x="32" y="16" width="350" height="32"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
                                                         <state key="normal" title="SEE ALL " image="See All Icon">
@@ -7499,10 +7500,10 @@ New York, NY 10011 USA</string>
                                                     <constraint firstItem="gUK-jj-0mU" firstAttribute="leading" secondItem="oMz-3i-rDL" secondAttribute="leading" constant="32" id="ept-Lw-XzV"/>
                                                     <constraint firstItem="gUK-jj-0mU" firstAttribute="centerY" secondItem="oMz-3i-rDL" secondAttribute="centerY" id="f68-sa-D4w"/>
                                                     <constraint firstAttribute="bottom" secondItem="DGC-Xh-yIo" secondAttribute="bottom" constant="16" id="hC8-WO-J8P"/>
-                                                    <constraint firstAttribute="height" constant="96" id="i7o-ZL-kZO"/>
-                                                    <constraint firstAttribute="bottom" secondItem="c31-WQ-FsR" secondAttribute="bottom" constant="16" id="iga-0I-ePk"/>
+                                                    <constraint firstAttribute="height" constant="64" id="i7o-ZL-kZO"/>
+                                                    <constraint firstAttribute="bottom" secondItem="c31-WQ-FsR" secondAttribute="bottom" id="iga-0I-ePk"/>
                                                     <constraint firstItem="c31-WQ-FsR" firstAttribute="leading" secondItem="oMz-3i-rDL" secondAttribute="leading" constant="16" id="j3g-Bz-bB8"/>
-                                                    <constraint firstItem="c31-WQ-FsR" firstAttribute="top" secondItem="oMz-3i-rDL" secondAttribute="top" constant="16" id="l9i-8z-r3I"/>
+                                                    <constraint firstItem="c31-WQ-FsR" firstAttribute="top" secondItem="oMz-3i-rDL" secondAttribute="top" id="l9i-8z-r3I"/>
                                                     <constraint firstItem="c4O-dU-KNa" firstAttribute="leading" secondItem="gUK-jj-0mU" secondAttribute="trailing" constant="12" id="qUK-Zh-BSZ"/>
                                                     <constraint firstAttribute="trailing" secondItem="c31-WQ-FsR" secondAttribute="trailing" constant="16" id="v4t-Zu-esb"/>
                                                     <constraint firstAttribute="trailing" secondItem="DGC-Xh-yIo" secondAttribute="trailing" constant="32" id="v89-CE-LXf"/>
@@ -7511,7 +7512,7 @@ New York, NY 10011 USA</string>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cy9-SS-CkE" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="178" width="414" height="172"/>
+                                                <rect key="frame" x="0.0" y="146" width="414" height="172"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="172" id="UCs-Lr-7KT"/>
@@ -7565,7 +7566,6 @@ New York, NY 10011 USA</string>
         </designable>
     </designables>
     <resources>
-        <image name="Arrival Icon" width="18" height="18"/>
         <image name="Back Button Top" width="11.5" height="21"/>
         <image name="Book Table Icon" width="44" height="44"/>
         <image name="Charter Yacht Icon" width="44" height="44"/>
@@ -7577,6 +7577,7 @@ New York, NY 10011 USA</string>
         <image name="Dining Icon" width="20" height="20"/>
         <image name="Event Icon" width="20" height="20"/>
         <image name="Experience Icon" width="20" height="20"/>
+        <image name="Filter Icon" width="20.5" height="20.5"/>
         <image name="Filter Icon White" width="19" height="17"/>
         <image name="Find Hotel Icon" width="44" height="44"/>
         <image name="Get Tickets Icon" width="44" height="44"/>
@@ -7609,6 +7610,7 @@ New York, NY 10011 USA</string>
         <image name="location_home" width="12" height="16"/>
         <image name="placeholder-img" width="600" height="400"/>
         <image name="top_rated" width="16.5" height="13.5"/>
+        <image name="vertical_line" width="1" height="46"/>
         <image name="villa cta" width="36" height="36"/>
         <image name="villa icon" width="7.5" height="8.5"/>
         <namedColor name="Action Button">
@@ -7656,8 +7658,5 @@ New York, NY 10011 USA</string>
         <namedColor name="White Text">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

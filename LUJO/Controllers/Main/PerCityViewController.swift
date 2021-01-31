@@ -150,6 +150,8 @@ class PerCityViewController: UIViewController {
     func updatePopularCities() {
         for city in homeObjects?.cities ?? [] {
             switch city.itemsNum {
+            case 0:
+                print("No city to show")
             case 1:
                 if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termID == city.termID && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
@@ -291,9 +293,9 @@ extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
-extension PerCityViewController: CityView1Protocol {
+extension PerCityViewController: CityViewProtocol {
     func seeAllProductsForCity(city: Cities) {
-        print("seeAllProductsForCity")
+        print(city.name as Any)
     }
     
     func didTappedOnProductAt(product: Product) {
@@ -355,6 +357,8 @@ extension PerCityViewController: CityView1Protocol {
                 categoryType = "villa"
             case .yacht:
                 categoryType = "yacht"
+            case .gift:
+                categoryType = "gift"
             default:
                 categoryType = "event"
        
@@ -380,7 +384,7 @@ extension PerCityViewController: CityView1Protocol {
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain favourites information")
+                let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return
             }

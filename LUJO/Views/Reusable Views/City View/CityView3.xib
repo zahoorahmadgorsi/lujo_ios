@@ -6,12 +6,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityView3" customModule="LUJO" customModuleProvider="target">
             <connections>
+                <outlet property="btnSeeAll" destination="Asn-9G-d3u" id="NKv-J5-qYK"/>
                 <outlet property="cityNameLabel" destination="uhz-Xq-nHH" id="mqu-3e-NUH"/>
                 <outlet property="contentView" destination="5d4-Ud-xLk" id="ZUO-K7-Jdz"/>
                 <outlet property="imgHeart1" destination="JCL-SG-eDp" id="GcL-gI-7EU"/>
@@ -51,6 +51,17 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X94-w6-tj7">
                     <rect key="frame" x="16" y="0.0" width="382" height="64"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="750" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Asn-9G-d3u">
+                            <rect key="frame" x="16" y="24" width="350" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                            <state key="normal" title="SEE ALL " image="See All Icon">
+                                <color key="titleColor" name="White Text"/>
+                            </state>
+                            <connections>
+                                <action selector="seeAllButton_onClick:" destination="-1" eventType="touchUpInside" id="zP6-9E-o6H"/>
+                            </connections>
+                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhz-Xq-nHH">
                             <rect key="frame" x="16" y="0.0" width="77" height="64"/>
                             <constraints>
@@ -65,7 +76,10 @@
                     <constraints>
                         <constraint firstItem="uhz-Xq-nHH" firstAttribute="top" secondItem="X94-w6-tj7" secondAttribute="top" id="6LR-WT-Ksz"/>
                         <constraint firstItem="uhz-Xq-nHH" firstAttribute="leading" secondItem="X94-w6-tj7" secondAttribute="leading" constant="16" id="83e-o0-jjh"/>
+                        <constraint firstItem="Asn-9G-d3u" firstAttribute="leading" secondItem="X94-w6-tj7" secondAttribute="leading" constant="16" id="E3e-Yv-Mod"/>
                         <constraint firstAttribute="height" constant="64" id="MZR-Hw-yiu"/>
+                        <constraint firstAttribute="trailing" secondItem="Asn-9G-d3u" secondAttribute="trailing" constant="16" id="Pdk-FI-7nr"/>
+                        <constraint firstItem="Asn-9G-d3u" firstAttribute="centerY" secondItem="X94-w6-tj7" secondAttribute="centerY" id="fyk-NS-Dax"/>
                         <constraint firstAttribute="bottom" secondItem="uhz-Xq-nHH" secondAttribute="bottom" id="gCh-n4-sQW"/>
                     </constraints>
                 </view>
@@ -83,9 +97,14 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="122" id="VTR-yx-3Qb"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="8fS-PU-rTg" firstAttribute="top" secondItem="BW2-Ak-lYv" secondAttribute="top" id="EqO-pM-g9q"/>
                                         <constraint firstAttribute="bottom" secondItem="8fS-PU-rTg" secondAttribute="bottom" id="Exc-62-3KT"/>
@@ -165,9 +184,14 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="122" id="2uj-q5-ckD"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="EcO-Pb-1Dv" secondAttribute="trailing" id="4aY-Ok-Q2d"/>
                                                 <constraint firstItem="EcO-Pb-1Dv" firstAttribute="top" secondItem="RYj-HG-Kg2" secondAttribute="top" id="DMk-Qy-C0x"/>
@@ -244,9 +268,14 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="122" id="Kz2-Pu-U78"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="c9d-Mq-Sat" firstAttribute="leading" secondItem="4vC-y3-BGa" secondAttribute="leading" id="MKZ-7g-t86"/>
                                                 <constraint firstAttribute="trailing" secondItem="c9d-Mq-Sat" secondAttribute="trailing" id="MeI-TP-9CK"/>
@@ -334,6 +363,7 @@
         </view>
     </objects>
     <resources>
+        <image name="See All Icon" width="16" height="16"/>
         <image name="calendar_home_white" width="12" height="16"/>
         <image name="heart_white" width="22" height="19.5"/>
         <image name="placeholder-img" width="600" height="400"/>
@@ -346,8 +376,5 @@
         <namedColor name="White Text">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

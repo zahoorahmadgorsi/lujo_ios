@@ -19,6 +19,7 @@ class CityView3: UIView {
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var cityNameLabel: UILabel!
+    @IBOutlet weak var btnSeeAll: UIButton!
     
     @IBOutlet weak var product1ContainerView: UIStackView!
     @IBOutlet weak var product1ImageContainer: UIView!
@@ -50,7 +51,7 @@ class CityView3: UIView {
     @IBOutlet weak var viewHeart3: UIView!
     @IBOutlet weak var imgHeart3: UIImageView!
     
-    weak var delegate: CityView1Protocol?
+    weak var delegate: CityViewProtocol?
     
     var city: Cities? {
         didSet {
@@ -327,11 +328,11 @@ class CityView3: UIView {
         }
     }
     
-//    @IBAction func seeAllButton_onClick(_ sender: Any) {
-//        if let city = city {
-//            delegate?.seeAllProductsForCity(city: city, view: self)
-//        }
-//    }
+    @IBAction func seeAllButton_onClick(_ sender: Any) {
+        if let city = city {
+            delegate?.seeAllProductsForCity(city: city)
+        }
+    }
     
 
     @objc func tappedOnHeart(_ sender:AnyObject){

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-protocol CityView1Protocol:class {
+protocol CityViewProtocol:class {
     func seeAllProductsForCity(city: Cities)
     func didTappedOnProductAt(product: Product)
     func didTappedOnHeartAt(city: Cities, itemIndex: Int)
@@ -19,6 +19,9 @@ class CityView1: UIView {
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var cityNameLabel: UILabel!
+    @IBOutlet weak var btnSeeAll: UIButton!
+    
+    
     @IBOutlet weak var product1ContainerView: UIStackView!
     @IBOutlet weak var product1ImageContainer: UIView!
     @IBOutlet weak var product1ImageView: UIImageView!
@@ -31,7 +34,7 @@ class CityView1: UIView {
     @IBOutlet weak var viewHeart1: UIView!
     @IBOutlet weak var imgHeart1: UIImageView!
     
-    weak var delegate: CityView1Protocol?
+    weak var delegate: CityViewProtocol?
     
     var city: Cities? {
         didSet {
@@ -146,11 +149,11 @@ class CityView1: UIView {
         }
     }
     
-//    @IBAction func seeAllButton_onClick(_ sender: Any) {
-//        if let city = city {
-//            delegate?.seeAllProductsForCity(city: city, view: self)
-//        }
-//    }
+    @IBAction func seeAllButton_onClick(_ sender: Any) {
+        if let city = city {
+            delegate?.seeAllProductsForCity(city: city)
+        }
+    }
     
 //    @IBAction func seeProductDetailsButton_onClick(_ sender: UIButton) {
 //        if let product = city?.products[sender.tag] {

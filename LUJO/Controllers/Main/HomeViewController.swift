@@ -647,17 +647,20 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
 //        self.present(GoodsViewController.instantiate(), animated: true, completion: nil)
         let viewController = EventsViewController.instantiate(category: .gift)
+//        let viewController = PerCityViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func villaButton_onClick(_ sender: Any) {
-        let viewController = EventsViewController.instantiate(category: .villa)
+//        let viewController = EventsViewController.instantiate(category: .villa)
+        let viewController = PerCityViewController.instantiate(category: .villa)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func findAYachtButton_onClick(_ sender: Any) {
         //self.present(YachtViewController.instantiate(), animated: true, completion: nil)
-        let viewController = EventsViewController.instantiate(category: .yacht)
+        //let viewController = EventsViewController.instantiate(category: .yacht)
+        let viewController = PerCityViewController.instantiate(category: .yacht)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -674,7 +677,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain favourites information")
+                let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return
             }
@@ -873,7 +876,8 @@ extension HomeViewController {
             
             //37.939998626709
             //23.639999389648
-            
+            print(token)
+            print(Float(location.coordinate.latitude),Float(location.coordinate.longitude))
             EEAPIManager().geopoint(token: token, type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
                 self.canSendRequest = true
                 

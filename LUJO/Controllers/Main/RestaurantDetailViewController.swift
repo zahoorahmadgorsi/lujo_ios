@@ -250,7 +250,7 @@ class RestaurantDetailViewController: UIViewController {
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain favourites information")
+                let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return
             }
