@@ -29,9 +29,10 @@ class EventsViewController: UIViewController {
     class var identifier: String { return "EventsViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(category: EventCategory, dataSource: [Product] = [], city: DiningCity? = nil) -> EventsViewController {
+    class func instantiate(category: EventCategory, subCategory: EventCategory? = nil, dataSource: [Product] = [], city: DiningCity? = nil) -> EventsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! EventsViewController
         viewController.category = category
+        viewController.subCategory = subCategory
         viewController.dataSource = dataSource
         viewController.city = city
         return viewController
@@ -40,6 +41,8 @@ class EventsViewController: UIViewController {
     //MARK:- Globals
     
     private(set) var category: EventCategory!
+    private(set) var subCategory: EventCategory! //e.g. toprated event
+    
     private var city: DiningCity?
     
     @IBOutlet var collectionView: UICollectionView!
@@ -48,6 +51,7 @@ class EventsViewController: UIViewController {
     private let naHUD = JGProgressHUD(style: .dark)
     
     private var currentLayout: LiftLayout?
+    private var subCategoryType = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,14 +126,29 @@ class EventsViewController: UIViewController {
         }
         
         var titleString = category.rawValue
+        //Deciding the title
+        switch subCategory {
+            case .event:
+                subCategoryType = "event"
+            case .experience:
+                subCategoryType = "experience"
+            case .villa:
+                subCategoryType = "villa"
+            case .yacht:
+                subCategoryType = "yacht"
+            default:
+                subCategoryType = ""
+        }
         
         if dataSource.count > 0 {
             titleString = "\(dataSource[0].location?.first?.city?.name ?? "") \(category == EventCategory.experience ? "experiances" : "events")"
         } else if let city = city {
             titleString = "\(city.name) \(category == EventCategory.experience ? "experiances" : "events")"
         }
-        
-        title = titleString
+        //sub category will exist e.g. toprated events (event is subcategory) if user is coming from percity view controller by clicking on see all button at top rated
+        //if subcategory exists then append it with appending s (to make it plural)
+        title = titleString + (subCategoryType.count > 0 ? " " + subCategoryType.capitalizingFirstLetter() + "s" : "")
+        print(title as Any)
 //        naHUD.textLabel.text = "Loading " + category.rawValue
     }
     
@@ -331,7 +350,7 @@ extension EventsViewController {
             }
             case .topRated:
                 //since type is not optional thats why sending hardcoded "event"
-                EEAPIManager().getTopRated(token, type: "") { list, error in
+                EEAPIManager().getTopRated(token, type: subCategoryType) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home top rated items information")

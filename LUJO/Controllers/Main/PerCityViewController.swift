@@ -189,6 +189,11 @@ class PerCityViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
+        let viewController = EventsViewController.instantiate(category: .topRated, subCategory: self.category)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -291,6 +296,7 @@ extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDel
 //        let viewController = EventDetailsViewController.instantiate(event: event)
 //        self.navigationController?.pushViewController(viewController, animated: true)
     }
+    
 }
 
 extension PerCityViewController: CityViewProtocol {

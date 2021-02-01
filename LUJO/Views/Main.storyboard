@@ -7365,7 +7365,7 @@ New York, NY 10011 USA</string>
         <!--PerCity-->
         <scene sceneID="YMc-N1-fg9">
             <objects>
-                <viewController storyboardIdentifier="PerCityViewController" title="PerCity" id="ghi-Md-xBC" customClass="PerCityViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PerCityViewController" title="PerCity" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ghi-Md-xBC" customClass="PerCityViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DZq-dp-J3a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -7490,6 +7490,7 @@ New York, NY 10011 USA</string>
                                                         </state>
                                                         <connections>
                                                             <action selector="seeAllGiftsButton_onClick:" destination="diB-LJ-Odk" eventType="touchUpInside" id="WQ6-TC-gcj"/>
+                                                            <action selector="seeAllTopRatedButton_onClick:" destination="ghi-Md-xBC" eventType="touchUpInside" id="ZLn-63-MTz"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
