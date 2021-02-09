@@ -233,12 +233,7 @@ extension EventDetailsViewController {
         if let val = product.numberOfBathrooms, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: val))
         }
-        if let val = product.rentPricePerWeekLowSeason, val.count > 0{
-            itemsList.append(ProductDetail(key: "Low Season Weekly Rent",value: val))
-        }
-        if let val = product.rentPricePerWeekHighSeason, val.count > 0{
-            itemsList.append(ProductDetail(key: "High Season Weekly Rent",value: val))
-        }
+        
         
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
@@ -258,6 +253,13 @@ extension EventDetailsViewController {
         if let val = product.price , val > 0.0{
             itemsList.append(ProductDetail(key: "Price",value: String(val)))
         }
+        if let val = product.rentPricePerWeekLowSeason, val.count > 0{
+            itemsList.append(ProductDetail(key: "Low Season Weekly Rent",value: "$ " + val))
+        }
+        if let val = product.rentPricePerWeekHighSeason, val.count > 0{
+            itemsList.append(ProductDetail(key: "High Season Weekly Rent",value: "$ " + val))
+        }
+        
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()
@@ -369,18 +371,7 @@ extension EventDetailsViewController {
         if let val = product.topSpeedKnot, val.count > 0{
             itemsList.append(ProductDetail(key: "Top Speed (Knots)",value: val))
         }
-        if let val = product.charterPriceLowSeasonPerWeek, val.count > 0{
-            itemsList.append(ProductDetail(key: "Low Season Weekly Charter",value: val))
-        }
-        if let val = product.charterPriceHighSeasonPerWeek, val.count > 0{
-            itemsList.append(ProductDetail(key: "High Season Weekly Charter",value: val))
-        }
-        if let val = product.charterPriceLowSeasonPerDay, val.count > 0{
-            itemsList.append(ProductDetail(key: "Low Season Daily Charter",value: val))
-        }
-        if let val = product.charterPriceHighSeasonPerDay, val.count > 0{
-            itemsList.append(ProductDetail(key: "High Season Daily Charter",value: val))
-        }
+        
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()
@@ -397,8 +388,21 @@ extension EventDetailsViewController {
         //preparing price data of collection view
         itemsList =  [ProductDetail]()
         if let val = product.price , val > 0.0{
-            itemsList.append(ProductDetail(key: "Price",value: String(val)))
+            itemsList.append(ProductDetail(key: "Price",value: "$ " + String(val)))
         }
+        if let val = product.charterPriceLowSeasonPerWeek, val.count > 0{
+            itemsList.append(ProductDetail(key: "Low Season Weekly Charter",value: "$ " + val))
+        }
+        if let val = product.charterPriceHighSeasonPerWeek, val.count > 0{
+            itemsList.append(ProductDetail(key: "High Season Weekly Charter",value: "$ " + val))
+        }
+        if let val = product.charterPriceLowSeasonPerDay, val.count > 0{
+            itemsList.append(ProductDetail(key: "Low Season Daily Charter",value: "$ " + val))
+        }
+        if let val = product.charterPriceHighSeasonPerDay, val.count > 0{
+            itemsList.append(ProductDetail(key: "High Season Daily Charter",value: "$ " + val))
+        }
+        
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()

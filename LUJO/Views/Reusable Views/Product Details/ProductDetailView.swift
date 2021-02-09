@@ -31,7 +31,6 @@ class ProductDetail{
 }
 
 class ProductDetailView: UIView {
-
        lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -69,8 +68,6 @@ class ProductDetailView: UIView {
             commonInit()
         }
 
-        
-        
         func commonInit() {
             guard let view = loadViewFromNib() else { return }
             view.frame = self.bounds
@@ -117,13 +114,15 @@ extension ProductDetailView: UICollectionViewDataSource {
         cell.lblTopRight.text = model.value
         cell.lblBottom.text = model.value
         
-        if (itemType == .summary){
+        if (itemType == .summary || itemType == .price){
             cell.imgDot.isHidden = true
             cell.lblTopRight.isHidden = true
-        }else if (itemType == .price){
-            cell.imgDot.isHidden = true
-            cell.lblBottom.isHidden = true
-        }else if (itemType == .amenities){
+        }
+//        else if (itemType == .price){
+//            cell.imgDot.isHidden = true
+//            cell.lblBottom.isHidden = true
+//        }
+        else if (itemType == .amenities){
             cell.lblTopLeft.isHidden = true
             cell.lblBottom.isHidden = true
         }
@@ -140,7 +139,7 @@ extension ProductDetailView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if (self.itemType == .summary){
+        if (self.itemType == .summary || self.itemType == .price){
             return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.summaryHeight.rawValue)
         }else{
             return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.priceAmenitiesHeight.rawValue)
