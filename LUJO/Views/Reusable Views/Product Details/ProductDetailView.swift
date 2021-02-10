@@ -16,18 +16,20 @@ enum ProductType:String {
 enum ProdCollSize:Int{
     case itemWidth = 175
     case summaryHeight = 40
-    case priceAmenitiesHeight = 20
+    case priceHeight = 60
+    case amenitiesHeight = 20
     case itemMargin = 16
 }
 
 class ProductDetail{
-    internal init(key: String, value: String) {
+    internal init(key: String, value: String, isHighSeason:Bool? ) {
         self.key = key
         self.value = value
+        self.isHighSeason = isHighSeason
     }
     var key: String?
     var value: String?
-
+    var isHighSeason: Bool?
 }
 
 class ProductDetailView: UIView {
@@ -113,18 +115,33 @@ extension ProductDetailView: UICollectionViewDataSource {
         cell.lblTopLeft.text = model.key
         cell.lblTopRight.text = model.value
         cell.lblBottom.text = model.value
+        cell.lblPrice.text = model.value
         
-        if (itemType == .summary || itemType == .price){
+        if (itemType == .summary ){
             cell.imgDot.isHidden = true
             cell.lblTopRight.isHidden = true
+            cell.svPrice.isHidden = true
         }
-//        else if (itemType == .price){
-//            cell.imgDot.isHidden = true
-//            cell.lblBottom.isHidden = true
-//        }
+        else if (itemType == .price){
+            cell.imgDot.isHidden = true
+            cell.lblTopRight.isHidden = true
+//            cell.lblBottom.isHidden = false
+            cell.svPrice.isHidden = false
+            if(model.isHighSeason == true){
+                cell.lblBottom.text = "(High Season)"
+            }else if(model.isHighSeason == false){
+                cell.lblBottom.text = "(Low Season)"
+            }else{
+                cell.lblBottom.text = ""
+            }
+            cell.lblBottom.font = cell.lblBottom.font.withSize(11)
+            //cell.lblBottom.font = UIFont(name: "SF Pro Display",size: 9)
+            cell.lblBottom.textColor = .lightGray
+        }
         else if (itemType == .amenities){
             cell.lblTopLeft.isHidden = true
             cell.lblBottom.isHidden = true
+            cell.svPrice.isHidden = true
         }
 
         return cell
@@ -139,10 +156,12 @@ extension ProductDetailView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if (self.itemType == .summary || self.itemType == .price){
+        if (self.itemType == .summary){
             return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.summaryHeight.rawValue)
+        }else if (self.itemType == .price){
+            return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.priceHeight.rawValue)
         }else{
-            return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.priceAmenitiesHeight.rawValue)
+            return CGSize(width: ProdCollSize.itemWidth.rawValue, height: ProdCollSize.amenitiesHeight.rawValue)
         }
     }
 

@@ -221,17 +221,17 @@ extension EventDetailsViewController {
         //preparing summary data of collection view
         var itemsList =  [ProductDetail]()
         if let val = product.headline , val.count > 0{
-            itemsList.append(ProductDetail(key: "Headline",value: val))
+            itemsList.append(ProductDetail(key: "Headline",value: val,isHighSeason: nil))
         }
         if let val = product.numberOfBedrooms, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Bedrooms",value: val))
+            itemsList.append(ProductDetail(key: "Number Of Bedrooms",value: val,isHighSeason: nil))
         }
         if let val = product.numberOfGuests, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Guests",value: val))
+            itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
 
         }
         if let val = product.numberOfBathrooms, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: val))
+            itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: val,isHighSeason: nil))
         }
         
         
@@ -250,16 +250,15 @@ extension EventDetailsViewController {
         }
         //preparing price data of collection view
         itemsList =  [ProductDetail]()
-        if let val = product.price , val > 0.0{
-            itemsList.append(ProductDetail(key: "Price",value: String(val)))
-        }
         if let val = product.rentPricePerWeekLowSeason, val.count > 0{
-            itemsList.append(ProductDetail(key: "Low Season Weekly Rent",value: "$ " + val))
+            itemsList.append(ProductDetail(key: "Weekly Rent",value: "$" + val,isHighSeason: false)) // Low Season
         }
         if let val = product.rentPricePerWeekHighSeason, val.count > 0{
-            itemsList.append(ProductDetail(key: "High Season Weekly Rent",value: "$ " + val))
+            itemsList.append(ProductDetail(key: "Weekly Rent",value: "$" + val,isHighSeason: true)) //High Season
         }
-        
+        if let val = product.salePrice , val.count > 0{
+            itemsList.append(ProductDetail(key: "Sale Price",value: "$" + val,isHighSeason: nil))
+        }
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()
@@ -275,18 +274,18 @@ extension EventDetailsViewController {
             setupProductDetailLayout(productDetailView: productDetailView)
         }
         //preparing amenities data of collection view
+        itemsList =  [ProductDetail]()
         var count = (product.villaAmenities?.count ?? 0)
         if count > 0 , let items = product.villaAmenities{
-            itemsList =  [ProductDetail]()
             for item in items{
-                itemsList.append(ProductDetail(key: "name",value: item.name))
+                itemsList.append(ProductDetail(key: "name",value: item.name,isHighSeason: nil))
             }
         }
         //preparing facilites data of collection view
         count = (product.villaFacilities?.count ?? 0)
         if count > 0 , let items = product.villaFacilities{
             for item in items{
-                itemsList.append(ProductDetail(key: "name",value: item.name))
+                itemsList.append(ProductDetail(key: "name",value: item.name,isHighSeason: nil))
             }
         }
         if (itemsList.count > 0){
@@ -330,46 +329,46 @@ extension EventDetailsViewController {
 //            itemsList.append(ProductDetail(key: "Headline",value: val))
 //        }
         if let val = product.guestsNumber, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Guests",value: val))
+            itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
         }
         if let val = product.cabinNumber, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Cabins",value: val))
+            itemsList.append(ProductDetail(key: "Number Of Cabins",value: val,isHighSeason: nil))
         }
         if let val = product.crewNumber, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Crews",value: val))
+            itemsList.append(ProductDetail(key: "Number Of Crews",value: val,isHighSeason: nil))
         }
         if let val = product.builderName, val.count > 0{
-            itemsList.append(ProductDetail(key: "Builder Name",value: val))
+            itemsList.append(ProductDetail(key: "Builder Name",value: val,isHighSeason: nil))
         }
         if let val = product.interiorDesigner, val.count > 0{
-            itemsList.append(ProductDetail(key: "Interior Designer",value: val))
+            itemsList.append(ProductDetail(key: "Interior Designer",value: val,isHighSeason: nil))
         }
         if let val = product.exteriorDesigner , val.count > 0{
-            itemsList.append(ProductDetail(key: "Exterior Designer",value: val))
+            itemsList.append(ProductDetail(key: "Exterior Designer",value: val,isHighSeason: nil))
         }
         if let val = product.buildYear, val.count > 0{
-            itemsList.append(ProductDetail(key: "Build Year",value: val))
+            itemsList.append(ProductDetail(key: "Build Year",value: val,isHighSeason: nil))
         }
         if let val = product.refitYear, val.count > 0{
-            itemsList.append(ProductDetail(key: "Refit Year",value: val))
+            itemsList.append(ProductDetail(key: "Refit Year",value: val,isHighSeason: nil))
         }
         if let val = product.lengthM, val.count > 0{
-            itemsList.append(ProductDetail(key: "Length (Meters)",value: val))
+            itemsList.append(ProductDetail(key: "Length (Meters)",value: val,isHighSeason: nil))
         }
         if let val = product.beamM, val.count > 0{
-            itemsList.append(ProductDetail(key: "Beam",value: val))
+            itemsList.append(ProductDetail(key: "Beam",value: val,isHighSeason: nil))
         }
         if let val = product.draftM , val.count > 0{
-            itemsList.append(ProductDetail(key: "Draft",value: val))
+            itemsList.append(ProductDetail(key: "Draft",value: val,isHighSeason: nil))
         }
         if let val = product.grossTonnage, val.count > 0{
-            itemsList.append(ProductDetail(key: "Gross Tonnage",value: val))
+            itemsList.append(ProductDetail(key: "Gross Tonnage",value: val,isHighSeason: nil))
         }
         if let val = product.cruisingSpeedKnot, val.count > 0{
-            itemsList.append(ProductDetail(key: "Cruising Speed (Knots)",value: val))
+            itemsList.append(ProductDetail(key: "Cruising Speed (Knots)",value: val,isHighSeason: nil))
         }
         if let val = product.topSpeedKnot, val.count > 0{
-            itemsList.append(ProductDetail(key: "Top Speed (Knots)",value: val))
+            itemsList.append(ProductDetail(key: "Top Speed (Knots)",value: val,isHighSeason: nil))
         }
         
         if (itemsList.count > 0){
@@ -387,20 +386,21 @@ extension EventDetailsViewController {
         }
         //preparing price data of collection view
         itemsList =  [ProductDetail]()
-        if let val = product.price , val > 0.0{
-            itemsList.append(ProductDetail(key: "Price",value: "$ " + String(val)))
-        }
+        
         if let val = product.charterPriceLowSeasonPerWeek, val.count > 0{
-            itemsList.append(ProductDetail(key: "Low Season Weekly Charter",value: "$ " + val))
+            itemsList.append(ProductDetail(key: "Weekly Charter",value: "$" + val,isHighSeason: false)) //low season
         }
         if let val = product.charterPriceHighSeasonPerWeek, val.count > 0{
-            itemsList.append(ProductDetail(key: "High Season Weekly Charter",value: "$ " + val))
+            itemsList.append(ProductDetail(key: "Weekly Charter",value: "$" + val,isHighSeason: true)) // high season
         }
         if let val = product.charterPriceLowSeasonPerDay, val.count > 0{
-            itemsList.append(ProductDetail(key: "Low Season Daily Charter",value: "$ " + val))
+            itemsList.append(ProductDetail(key: "Daily Charter",value: "$" + val,isHighSeason: false)) // low season
         }
         if let val = product.charterPriceHighSeasonPerDay, val.count > 0{
-            itemsList.append(ProductDetail(key: "High Season Daily Charter",value: "$ " + val))
+            itemsList.append(ProductDetail(key: "Daily Charter",value: "$" + val,isHighSeason: true)) // high season
+        }
+        if let val = product.salePrice , val.count > 0{
+            itemsList.append(ProductDetail(key: "Sale Price",value: "$" + val,isHighSeason: nil))
         }
         
         if (itemsList.count > 0){
@@ -417,12 +417,14 @@ extension EventDetailsViewController {
             //applying constraints on wishListView
             setupProductDetailLayout(productDetailView: productDetailView)
         }
+        
         //preparing amenities (yachtExtras) data of collection view
+        itemsList =  [ProductDetail]()
         var count = (product.yachtExtras?.count ?? 0)
         if count > 0 , let items = product.yachtExtras{
             itemsList =  [ProductDetail]()
             for item in items{
-                itemsList.append(ProductDetail(key: "name",value: item.name))
+                itemsList.append(ProductDetail(key: "name",value: item.name,isHighSeason: nil))
             }
         }
 //        //preparing facilites(yachtStatus) data of collection view

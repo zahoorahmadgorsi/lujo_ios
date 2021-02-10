@@ -17,6 +17,9 @@ class ProductDetailCell: UICollectionViewCell {
     @IBOutlet weak var lblTopLeft: UILabel!
     @IBOutlet weak var lblTopRight: UILabel!
     @IBOutlet weak var lblBottom: UILabel!
+    @IBOutlet weak var svPrice: UIStackView!
+    @IBOutlet weak var lblUSD: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
