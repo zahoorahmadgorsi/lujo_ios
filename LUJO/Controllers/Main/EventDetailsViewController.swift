@@ -15,8 +15,12 @@ class EventDetailsViewController: UIViewController {
     
     /// Class storyboard identifier.
     class var identifier: String { return "EventDetailsViewController" }
-    @IBOutlet weak var stackView: UIStackView!
     
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var lblDescriptionHeight: NSLayoutConstraint!
+    var isLabelAtMaxHeight = false
+    @IBOutlet weak var btnReadMore: UIButton!
+    var descHeightToShowReadMore:CGFloat = 300.0
     /// Init method that will init and return view controller.
     class func instantiate(event: Product) -> EventDetailsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! EventDetailsViewController
@@ -66,6 +70,7 @@ class EventDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         switch product.type {
             case "event":           fallthrough
             case "special-event":   setupEvents(product)
@@ -74,6 +79,15 @@ class EventDetailsViewController: UIViewController {
             case "gift":            setupExperience(product)
             case "yacht":           setupYacht(product)
             default: break
+        }
+        if let font = descriptionTextView.font{
+            let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+            print(currentHeight,descHeightToShowReadMore)
+            if (currentHeight > descHeightToShowReadMore){
+                btnReadMore.isHidden = false
+            }else{
+                btnReadMore.isHidden = true
+            }
         }
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
         //zahoor start
@@ -115,6 +129,42 @@ class EventDetailsViewController: UIViewController {
             self.present(viewController, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func btnSeeMoreTapped(_ sender: Any) {
+        if isLabelAtMaxHeight {
+                btnReadMore.setTitle("Read more", for: .normal)
+                isLabelAtMaxHeight = false
+
+                if let font = descriptionTextView.font{
+                    let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+                    print(currentHeight,descHeightToShowReadMore)
+                    if (currentHeight > descHeightToShowReadMore){
+                        lblDescriptionHeight.constant = descHeightToShowReadMore
+                    }else{
+                        lblDescriptionHeight.constant = currentHeight
+                    }
+                }
+
+            }
+            else {
+                btnReadMore.setTitle("Read less", for: .normal)
+                isLabelAtMaxHeight = true
+                if let font = descriptionTextView.font{
+                    lblDescriptionHeight.constant = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+                }
+            }
+    }
+    
+    func getTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
+            let lbl = UITextView(frame: .zero)
+            lbl.frame.size.width = width
+            lbl.font = font
+//            lbl.numberOfLines = 0
+            lbl.text = text
+            lbl.attributedText = convertToAttributedString(text)
+            lbl.sizeToFit()
+            return lbl.frame.height
+        }
 }
 
 extension EventDetailsViewController {
@@ -493,6 +543,7 @@ extension EventDetailsViewController {
         aString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
         return aString
     }
+    
 }
 
 // Chat functionality
@@ -593,6 +644,7 @@ extension EventDetailsViewController {
             completion(strResponse, error)
         }
     }
+    
     
     //Zahoor finished
 }
