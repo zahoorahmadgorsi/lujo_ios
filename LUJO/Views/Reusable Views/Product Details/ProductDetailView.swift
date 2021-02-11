@@ -134,7 +134,7 @@ extension ProductDetailView: UICollectionViewDataSource {
             }else{
                 cell.lblBottom.text = ""
             }
-            cell.lblBottom.font = cell.lblBottom.font.withSize(11)
+            cell.lblBottom.font = UIFont.italicSystemFont(ofSize: 11) // cell.lblBottom.font.withSize(11)
             //cell.lblBottom.font = UIFont(name: "SF Pro Display",size: 9)
             cell.lblBottom.textColor = .lightGray
         }

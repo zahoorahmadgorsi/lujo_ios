@@ -4903,7 +4903,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="750"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xPJ-4E-Ygl">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="547.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="575.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WNi-9q-iiv">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
@@ -5135,7 +5135,7 @@
                                                 <rect key="frame" x="0.0" y="479.5" width="414" height="68"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Description" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="otK-4q-hsx" customClass="NoSelectTextView" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="12" y="0.0" width="390" height="33"/>
+                                                        <rect key="frame" x="12" y="0.0" width="390" height="68"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="tintColor" name="Palette - R-G Mid"/>
                                                         <constraints>
@@ -5146,8 +5146,23 @@
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                                     </textView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E54-Az-beE">
-                                                        <rect key="frame" x="328" y="34" width="74" height="30"/>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="otK-4q-hsx" secondAttribute="bottom" id="2d1-ol-nc9"/>
+                                                    <constraint firstItem="otK-4q-hsx" firstAttribute="top" secondItem="tgk-nG-WKv" secondAttribute="top" id="T2A-5y-Etl"/>
+                                                    <constraint firstItem="otK-4q-hsx" firstAttribute="leading" secondItem="tgk-nG-WKv" secondAttribute="leading" constant="12" id="UHW-hm-HdN"/>
+                                                    <constraint firstAttribute="trailing" secondItem="otK-4q-hsx" secondAttribute="trailing" constant="12" id="a8I-xY-81S"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXc-j2-jin">
+                                                <rect key="frame" x="0.0" y="555.5" width="414" height="20"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E54-Az-beE">
+                                                        <rect key="frame" x="328" y="0.0" width="74" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="XQ4-VP-QLF"/>
+                                                        </constraints>
                                                         <state key="normal" title="Read More">
                                                             <color key="titleColor" name="Palette - R-G Mid"/>
                                                         </state>
@@ -5158,12 +5173,9 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="E54-Az-beE" firstAttribute="top" secondItem="otK-4q-hsx" secondAttribute="bottom" constant="1" id="B6b-lv-TbU"/>
-                                                    <constraint firstItem="otK-4q-hsx" firstAttribute="top" secondItem="tgk-nG-WKv" secondAttribute="top" id="T2A-5y-Etl"/>
-                                                    <constraint firstItem="otK-4q-hsx" firstAttribute="leading" secondItem="tgk-nG-WKv" secondAttribute="leading" constant="12" id="UHW-hm-HdN"/>
-                                                    <constraint firstAttribute="trailing" secondItem="otK-4q-hsx" secondAttribute="trailing" constant="12" id="a8I-xY-81S"/>
-                                                    <constraint firstAttribute="bottom" secondItem="E54-Az-beE" secondAttribute="bottom" constant="4" id="eaY-cc-Sar"/>
-                                                    <constraint firstAttribute="trailing" secondItem="E54-Az-beE" secondAttribute="trailing" constant="12" id="wXE-7P-MCv"/>
+                                                    <constraint firstItem="E54-Az-beE" firstAttribute="top" secondItem="VXc-j2-jin" secondAttribute="top" id="Uut-gy-74S"/>
+                                                    <constraint firstAttribute="bottom" secondItem="E54-Az-beE" secondAttribute="bottom" id="X6U-NJ-aFj"/>
+                                                    <constraint firstAttribute="trailing" secondItem="E54-Az-beE" secondAttribute="trailing" constant="12" id="bsN-pV-hfw"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -5264,6 +5276,7 @@
                         <outlet property="requestButton" destination="7Tm-fi-Nnv" id="nnT-Gy-cQf"/>
                         <outlet property="stackView" destination="xPJ-4E-Ygl" id="SbQ-zg-npH"/>
                         <outlet property="viewHeart" destination="MMg-yB-FIl" id="4TF-Nf-vtL"/>
+                        <outlet property="viewReadMore" destination="VXc-j2-jin" id="Pi1-JE-7ed"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aR2-rM-bGx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7579,7 +7592,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="225.5" height="30"/>
+            <size key="intrinsicContentSize" width="253.5" height="30"/>
         </designable>
     </designables>
     <resources>

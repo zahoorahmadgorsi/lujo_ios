@@ -19,6 +19,8 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var lblDescriptionHeight: NSLayoutConstraint!
     var isLabelAtMaxHeight = false
+    
+    @IBOutlet weak var viewReadMore: UIView!
     @IBOutlet weak var btnReadMore: UIButton!
     var descHeightToShowReadMore:CGFloat = 300.0
     /// Init method that will init and return view controller.
@@ -84,9 +86,9 @@ class EventDetailsViewController: UIViewController {
             let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
             print(currentHeight,descHeightToShowReadMore)
             if (currentHeight > descHeightToShowReadMore){
-                btnReadMore.isHidden = false
+                viewReadMore.isHidden = false
             }else{
-                btnReadMore.isHidden = true
+                viewReadMore.isHidden = true
             }
         }
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
