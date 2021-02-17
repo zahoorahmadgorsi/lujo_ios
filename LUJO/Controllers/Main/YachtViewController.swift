@@ -92,6 +92,15 @@ class YachtViewController: UIViewController {
             self.yachtNameTextField.text = product.name
             selectedYachtLenght = product.lengthM
             self.lenghtLabel.text = product.lengthM
+            
+            //Setting location
+            var locationText = ""
+            if let cityName = product.location?.first?.city?.name {
+                locationText = "\(cityName), "
+            }
+            locationText += product.location?.first?.country.name ?? ""
+            destinationTextField.text = locationText.lowercased()
+ 
         }
     }
 
@@ -143,10 +152,16 @@ class YachtViewController: UIViewController {
         self.view.endEditing(true)
         
         if charterPicker == nil {
-            let dataSource: [[String]] = [["Day charter" ,"Week charter"]]
-            charterPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select yacht charter", dataSource: dataSource, callback: { values in
+            let dataSource: [[String]] = [["Day charter" ,"Multi Days/Week charter"]]
+            charterPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select yacht charter", dataSource: dataSource, callback: { [self] values in
+                //print(values[0],dataSource[0][0])
                 self.selectedYachtCharter = values[0]
                 self.yachtCharterLabel.text = values[0]
+                if(values[0] == dataSource[0][0]){  //hiding to date label if one day charter is selected
+                    self.toDateLabel.isHidden = true
+                }else{
+                    self.toDateLabel.isHidden = false
+                }
             })
         }
         
@@ -190,35 +205,54 @@ class YachtViewController: UIViewController {
             return
         }
         
-        guard let yachtBudget = selectedYachtBudget, !lenghtText.isEmpty else {
-            showInformationPopup(withTitle: "Info", message:"Please choose yacht budget.")
-            return
-        }
+//        guard let yachtBudget = selectedYachtBudget, !lenghtText.isEmpty else {
+//            showInformationPopup(withTitle: "Info", message:"Please choose yacht budget.")
+//            return
+//        }
         
         guard !dateTime.date.isEmpty else {
-            showInformationPopup(withTitle: "Info", message:"Please select start date.")
+            showInformationPopup(withTitle: "Info", message:"Please select embarkation date.")
             return
         }
         
-        guard !returnDateTime.date.isEmpty else {
-            showInformationPopup(withTitle: "Info", message:"Please select return date.")
-            return
+        if let yachtCharter = selectedYachtCharter{
+            if yachtCharter != "Day charter"{
+                guard !returnDateTime.date.isEmpty else{
+                    showInformationPopup(withTitle: "Info", message:"Please select disembarkation date.")
+                    return
+                }
+            }
         }
+        
         
         guard let dateString = dateTime.formatedDateForServer else {
             showInformationPopup(withTitle: "Info", message:"Start date is not in correct format.")
             return
         }
         
-        guard let returnDateString = returnDateTime.formatedDateForServer else {
-            showInformationPopup(withTitle: "Info", message:"Return date is not in correct format.")
-            return
+
+//        guard var returnDateString = returnDateTime.formatedDateForServer else {
+//                showInformationPopup(withTitle: "Info", message:"Return date is not in correct format.")
+//            return
+//        }
+        
+        var returnDateString = ""
+        if let yachtCharter = selectedYachtCharter{
+            if yachtCharter != "Day charter"{
+                guard let returnDateStr = returnDateTime.formatedDateForServer else {
+                    showInformationPopup(withTitle: "Info", message:"Return date is not in correct format.")
+                    return
+                }
+                returnDateString = returnDateStr
+            }
         }
+        
+        // if return date is empty then from date is the return date
+        returnDateString = (returnDateString.count == 0 ? dateString : returnDateString)
         
         let initialMessage = """
         Hi Concierge team,
-        
-        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")with lenght of \(lenghtText)m, budget range \(yachtBudget), to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
+        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")with lenght of \(lenghtText)m, to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
         
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """

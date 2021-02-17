@@ -22,7 +22,7 @@ class EventDetailsViewController: UIViewController {
     
     @IBOutlet weak var viewReadMore: UIView!
     @IBOutlet weak var btnReadMore: UIButton!
-    var descHeightToShowReadMore:CGFloat = 300.0
+    var descHeightToShowReadMore:CGFloat = 70.0
     /// Init method that will init and return view controller.
     class func instantiate(event: Product) -> EventDetailsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! EventDetailsViewController
@@ -82,15 +82,25 @@ class EventDetailsViewController: UIViewController {
             case "yacht":           setupYacht(product)
             default: break
         }
+        
         if let font = descriptionTextView.font{
             let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
             print(currentHeight,descHeightToShowReadMore)
-            if (currentHeight > descHeightToShowReadMore){
-                viewReadMore.isHidden = false
+            if (product.type == "villa" || product.type == "yacht"){
+                if (currentHeight > descHeightToShowReadMore){
+                    viewReadMore.isHidden = false
+                    lblDescriptionHeight.constant = descHeightToShowReadMore
+                }else{
+                    viewReadMore.isHidden = true
+                    lblDescriptionHeight.constant = currentHeight
+                }
             }else{
+                lblDescriptionHeight.constant = currentHeight
                 viewReadMore.isHidden = true
             }
         }
+        
+        
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
         //zahoor start
         //setting tapping event on viewheart
@@ -179,7 +189,7 @@ extension EventDetailsViewController {
             print("Image not found")
         }
         name.text = event.name
-        
+
         //checking favourite image red or white
         if (self.product.isFavourite ?? false){
             self.imgHeart.image = UIImage(named: "heart_red")
@@ -239,6 +249,7 @@ extension EventDetailsViewController {
         }
         
         name.text = experience.name
+
         
         var locationText = ""
         if let cityName = experience.location?.first?.city?.name {
@@ -261,6 +272,7 @@ extension EventDetailsViewController {
         }
         
         name.text = product.name
+
         
         var locationText = ""
         if let cityName = product.location?.first?.city?.name {

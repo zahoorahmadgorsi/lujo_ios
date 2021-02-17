@@ -50,16 +50,16 @@
                                         <rect key="frame" x="0.0" y="20" width="150" height="15"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smC-zP-o00">
-                                                <rect key="frame" x="0.0" y="0.0" width="28.5" height="15"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="34.5" height="15"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="35" id="qGn-RL-Wnq"/>
+                                                    <constraint firstAttribute="width" constant="45" id="qGn-RL-Wnq"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                                 <color key="textColor" name="Action Button"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laX-9c-Qlr">
-                                                <rect key="frame" x="28.5" y="0.0" width="121.5" height="15"/>
+                                                <rect key="frame" x="34.5" y="0.0" width="115.5" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" name="White Text"/>
                                                 <nil key="highlightedColor"/>

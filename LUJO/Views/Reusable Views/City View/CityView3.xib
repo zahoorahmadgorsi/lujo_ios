@@ -170,17 +170,17 @@
                                 </view>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GTQ-ab-yL9">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="GTQ-ab-yL9">
                             <rect key="frame" x="0.0" y="182" width="382" height="174"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="CnR-jz-2J0">
-                                    <rect key="frame" x="0.0" y="0.0" width="187" height="174"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="185" height="174"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RYj-HG-Kg2">
-                                            <rect key="frame" x="0.0" y="0.0" width="187" height="122"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="185" height="122"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="EcO-Pb-1Dv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="187" height="122"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="185" height="122"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="122" id="2uj-q5-ckD"/>
                                                     </constraints>
@@ -200,16 +200,16 @@
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EtA-89-qpn">
-                                            <rect key="frame" x="0.0" y="126" width="187" height="20"/>
+                                            <rect key="frame" x="0.0" y="126" width="185" height="20"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20x-Ah-gTw">
-                                                    <rect key="frame" x="0.0" y="0.0" width="152" height="20"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <color key="textColor" name="White Text"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xcz-Fw-BeW">
-                                                    <rect key="frame" x="152" y="0.0" width="35" height="20"/>
+                                                    <rect key="frame" x="150" y="0.0" width="35" height="20"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="T1g-ix-bx4">
                                                             <rect key="frame" x="17" y="1" width="18" height="18"/>
@@ -232,7 +232,7 @@
                                             </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nEd-5e-irm">
-                                            <rect key="frame" x="0.0" y="150" width="187" height="20"/>
+                                            <rect key="frame" x="0.0" y="150" width="185" height="20"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar_home_white" translatesAutoresizingMaskIntoConstraints="NO" id="vi7-wc-qWf">
                                                     <rect key="frame" x="0.0" y="0.0" width="16" height="20"/>
@@ -241,7 +241,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Dates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="DKT-9x-Rrf">
-                                                    <rect key="frame" x="24" y="0.0" width="163" height="20"/>
+                                                    <rect key="frame" x="24" y="0.0" width="161" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" name="Palette - Placeholder Text"/>
                                                     <nil key="highlightedColor"/>
@@ -252,19 +252,19 @@
                                             </constraints>
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bz6-k2-VvM">
-                                            <rect key="frame" x="0.0" y="174" width="187" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="174" width="185" height="0.0"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </view>
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nBS-e4-VIm">
-                                    <rect key="frame" x="195" y="0.0" width="187" height="174"/>
+                                    <rect key="frame" x="197" y="0.0" width="185" height="174"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4vC-y3-BGa">
-                                            <rect key="frame" x="0.0" y="0.0" width="187" height="122"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="185" height="122"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="c9d-Mq-Sat">
-                                                    <rect key="frame" x="0.0" y="0.0" width="187" height="122"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="185" height="122"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="122" id="Kz2-Pu-U78"/>
                                                     </constraints>
@@ -284,16 +284,16 @@
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aia-qi-mxP">
-                                            <rect key="frame" x="0.0" y="126" width="187" height="20"/>
+                                            <rect key="frame" x="0.0" y="126" width="185" height="20"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wuk-d0-PDt">
-                                                    <rect key="frame" x="0.0" y="0.0" width="152" height="20"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <color key="textColor" name="White Text"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iAI-US-8Io">
-                                                    <rect key="frame" x="152" y="0.0" width="35" height="20"/>
+                                                    <rect key="frame" x="150" y="0.0" width="35" height="20"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="KES-E6-Elj">
                                                             <rect key="frame" x="17" y="1" width="18" height="18"/>
@@ -316,7 +316,7 @@
                                             </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="v08-7p-5d5">
-                                            <rect key="frame" x="0.0" y="150" width="187" height="20"/>
+                                            <rect key="frame" x="0.0" y="150" width="185" height="20"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar_home_white" translatesAutoresizingMaskIntoConstraints="NO" id="hE1-gc-SlC">
                                                     <rect key="frame" x="0.0" y="0.0" width="16" height="20"/>
@@ -325,7 +325,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Dates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="xBm-88-jm7">
-                                                    <rect key="frame" x="24" y="0.0" width="163" height="20"/>
+                                                    <rect key="frame" x="24" y="0.0" width="161" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" name="Palette - Placeholder Text"/>
                                                     <nil key="highlightedColor"/>
@@ -336,7 +336,7 @@
                                             </constraints>
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LPS-s2-qoB">
-                                            <rect key="frame" x="0.0" y="174" width="187" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="174" width="185" height="0.0"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </view>
                                     </subviews>
