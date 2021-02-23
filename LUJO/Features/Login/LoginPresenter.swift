@@ -66,6 +66,8 @@ extension LoginError: LocalizedError {
 }
 
 class LoginPresenter: Presentable, LoginViewResponder {
+
+    
     var view: Viewable {
         return presenterView
     }
@@ -267,15 +269,19 @@ class LoginPresenter: Presentable, LoginViewResponder {
         }
     }
 
-    func requestOTPLogin(prefix: PhoneCountryCode, number: String) {
-        self.presenterView.showNetworkActivity()
-        presenterInteractor.requestLoginVerificationCode(prefix: prefix, number) { [weak self] _, error in
-            self?.presenterView.hideNetworkActivity()
-            guard error == nil else {
-                self?.presenterView.showError(error!)
-                return
+    func requestOTPLogin(prefix: PhoneCountryCode?, number: String?) {
+        if let countryCode = prefix, let phoneNumber = number{
+            self.presenterView.showNetworkActivity()
+            presenterInteractor.requestLoginVerificationCode(prefix: countryCode, phoneNumber) { [weak self] _, error in
+                self?.presenterView.hideNetworkActivity()
+                guard error == nil else {
+                    self?.presenterView.showError(error!)
+                    return
+                }
+                self?.presenterView.showView("DoOPTConfirmation", data: nil)
             }
-            self?.presenterView.showView("DoOPTConfirmation", data: nil)
+        }else{ //if user already have the verification code
+            self.presenterView.showView("DoOPTConfirmation", data: nil)
         }
     }
 

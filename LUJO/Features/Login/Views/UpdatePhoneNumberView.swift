@@ -24,6 +24,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     @IBOutlet var phoneCodeContainer: UIView!
     @IBOutlet var phoneNumberContainer: UIView!
     @IBOutlet var confirmButton: ActionButton!
+
     @IBOutlet var supportTextView: UITextView!
     @IBOutlet var descriptionLabel: UILabel!
 
@@ -110,6 +111,30 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
 
     @IBAction func countryCodeButton_onClick(_ sender: Any) {
         showCountryCodes()
+    }
+    
+    @IBAction func btnAlreadyHaveTheCodeTapped(_ sender: Any) {
+        guard let number = newPhoneNumber.text, !number.isEmpty else {
+            showError(LoginError.errorLogin(description: isChanging ? "You need to set a new number" : "Please, enter your phone number"))
+            return
+        }
+
+        guard number.count > 5 else {
+            let error = LoginError.errorLogin(description: "Phone number must have at least 6 digits.")
+            showError(error)
+            return
+        }
+
+//        if isChanging {
+//            if let prefix = LujoSetup().getCurrentUser()?.prefix, let oldNumber = LujoSetup().getCurrentUser()?.phone {
+//                presenter?.updateUserPhone(oldPrefix: prefix, oldNumber: oldNumber, newPrefix: phonePrefix.phonePrefix, newNumber: number)
+//            } else {
+//                showFeedback("Can't change phone number because old number is not available.")
+//            }
+//        } else
+//        {
+        presenter?.requestOTPLogin(prefix: nil,number: nil)
+//        }
     }
     
     @IBAction func verifyNewNumber(_ sender: Any) {

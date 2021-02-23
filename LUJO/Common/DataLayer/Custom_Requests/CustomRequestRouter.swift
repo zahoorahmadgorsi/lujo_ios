@@ -38,8 +38,10 @@ enum CustomRequestRouter: URLRequestConvertible {
     case tickets(String, Int, String)
     case goods(String, Bool, String)
     case requestYacht(String, String?, String?, String, String, String, Int, String)
+    case requestVilla(String, String, Int,String, String)
     case findHotel(String, String?, String, String, String, Int, Int, Int, String)
     case cuisineCategories(String)
+    
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -68,6 +70,7 @@ enum CustomRequestRouter: URLRequestConvertible {
         case .tickets: fallthrough
         case .goods: fallthrough
         case .requestYacht: fallthrough
+        case .requestVilla: fallthrough
         case .findHotel:
             return .post
         case .cuisineCategories:
@@ -90,6 +93,8 @@ enum CustomRequestRouter: URLRequestConvertible {
             newURLComponents.path.append("/custom-request/goods")
         case .requestYacht:
             newURLComponents.path.append("/custom-request/yacht")
+        case .requestVilla:
+            newURLComponents.path.append("/custom-request/villa")
         case .findHotel:
             newURLComponents.path.append("/custom-request/hotel")
         case let .cuisineCategories(token):
@@ -120,6 +125,8 @@ enum CustomRequestRouter: URLRequestConvertible {
             return getGoodsDataAsJSONData(desc: desc, isGift: isGift, token: token)
         case let .requestYacht(destination, yachtName, yachtType, yachtLenght, dateFrom, dateTo, guestsCount, token):
             return getYachtDataAsJSONData(destination: destination, yachtName: yachtName, yachtType: yachtType, yachtLenght: yachtLenght, dateFrom: dateFrom, dateTo: dateTo, guestsCount: guestsCount, token: token)
+        case let .requestVilla(dateFrom, dateTo, guestsCount, villaName, token):
+            return getVillaDataAsJSONData(dateFrom: dateFrom, dateTo: dateTo, guestsCount: guestsCount, villaName: villaName, token: token)
         case let .findHotel(cityName, hotelName, hotelRadius, checkInDate, checkOutDate, adultsCount, roomsCount, hotelStars, token):
             return getHotelDataAsJSONData(cityName: cityName, hotelName: hotelName, hotelRadius: hotelRadius, checkInDate: checkInDate, checkOutDate: checkOutDate, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: hotelStars, token: token)
         case .cuisineCategories:
@@ -186,6 +193,26 @@ enum CustomRequestRouter: URLRequestConvertible {
         if let yachtType = yachtType, !yachtType.isEmpty {
             body["yacht_type"] = yachtType
         }
+        
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func getVillaDataAsJSONData ( dateFrom: String, dateTo: String, guestsCount: Int,villaName: String, token: String) -> Data? {
+        let body: [String: Any] = [
+            "villa_check_in": dateFrom,
+            "villa_check_out": dateTo,
+            "villa_guests": guestsCount,
+            "villa_rooms": villaName,
+            "token": token
+        ]
+        
+//        if let yachtName = yachtName, !yachtName.isEmpty {
+//            body["yacht_name"] = yachtName
+//        }
+//
+//        if let yachtType = yachtType, !yachtType.isEmpty {
+//            body["yacht_type"] = yachtType
+//        }
         
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

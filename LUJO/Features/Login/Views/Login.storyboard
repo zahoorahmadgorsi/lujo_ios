@@ -42,7 +42,7 @@
             <objects>
                 <viewController storyboardIdentifier="LoginView" id="Z6n-QO-4R2" customClass="LoginView" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RU7-vM-u6L">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_1" translatesAutoresizingMaskIntoConstraints="NO" id="hIE-eN-O29">
@@ -249,7 +249,7 @@
             <objects>
                 <viewController title="Create new account" id="uAN-1y-2j4" customClass="RegisterView" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6DP-vE-aG5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MhS-u3-hpf">
@@ -543,11 +543,11 @@
             <objects>
                 <viewController storyboardIdentifier="ConfirmationView" title="Verify account" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6re-ga-ksl" customClass="ConfirmationView" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nhb-xc-pEt">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ARJ-xl-hmL">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2MI-gt-Ilq">
                                         <rect key="frame" x="67.666666666666686" y="0.0" width="240" height="40"/>
@@ -707,7 +707,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eRe-Ub-SK9">
-                                        <rect key="frame" x="148" y="431.66666666666663" width="79" height="95"/>
+                                        <rect key="frame" x="148" y="431.66666666666669" width="79" height="129.00000000000006"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <state key="normal" title="RESEND CODE">
                                             <color key="titleColor" name="White Text"/>
@@ -736,14 +736,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KeM-bX-eTh">
-                                        <rect key="frame" x="67.666666666666686" y="526.66666666666663" width="240" height="8"/>
+                                        <rect key="frame" x="67.666666666666686" y="560.66666666666663" width="240" height="8"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="8" id="Zyw-55-wnv"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6RW-oZ-GIL">
-                                        <rect key="frame" x="117.66666666666669" y="534.66666666666663" width="140" height="26"/>
+                                        <rect key="frame" x="117.66666666666669" y="568.66666666666663" width="140" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <state key="normal" title="CHANGE PHONE NUMBER">
                                             <color key="titleColor" name="White Text"/>
@@ -753,11 +753,11 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TM6-qj-YyZ">
-                                        <rect key="frame" x="67.666666666666686" y="560.66666666666663" width="240" height="50"/>
+                                        <rect key="frame" x="67.666666666666686" y="594.66666666666663" width="240" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Do you have any issues? support@golujo.com" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5ii-nu-c7O">
-                                        <rect key="frame" x="109.66666666666667" y="610.66666666666663" width="155.66666666666663" height="47.333333333333371"/>
+                                        <rect key="frame" x="109.66666666666667" y="644.66666666666663" width="155.66666666666663" height="47.333333333333371"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" name="Action Button"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -766,7 +766,7 @@
                                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKv-n9-g9n">
-                                        <rect key="frame" x="67.666666666666686" y="658" width="240" height="32"/>
+                                        <rect key="frame" x="67.666666666666686" y="692" width="240" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="mCo-ZS-rVZ"/>
@@ -820,11 +820,11 @@
             <objects>
                 <viewController title="Change phone number" id="VDY-Qc-Ru5" userLabel="Update Phone Number" customClass="UpdatePhoneNumberView" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="txn-kH-mA5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="ZeL-Ys-jKs">
-                                <rect key="frame" x="32" y="48" width="311" height="610"/>
+                                <rect key="frame" x="32" y="48" width="311" height="644"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JSA-Yb-gGe">
                                         <rect key="frame" x="119.66666666666666" y="0.0" width="72" height="50"/>
@@ -970,12 +970,22 @@
                                             <action selector="verifyNewNumber:" destination="VDY-Qc-Ru5" eventType="touchUpInside" id="gRs-f8-gjy"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vT-MH-UUX">
+                                        <rect key="frame" x="84.666666666666686" y="359" width="142" height="26"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <state key="normal" title="ALREADY HAVE THE CODE">
+                                            <color key="titleColor" name="White Text"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnAlreadyHaveTheCodeTapped:" destination="VDY-Qc-Ru5" eventType="touchUpInside" id="uJm-S8-dPn"/>
+                                        </connections>
+                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBq-Qp-CR3">
-                                        <rect key="frame" x="27.666666666666657" y="359" width="255.99999999999997" height="163.66666666666663"/>
+                                        <rect key="frame" x="27.666666666666657" y="425" width="255.99999999999997" height="131.66666666666663"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Do you have any issues? support@golujo.com" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="r3w-kl-eGQ">
-                                        <rect key="frame" x="0.0" y="562.66666666666663" width="311" height="47.333333333333371"/>
+                                        <rect key="frame" x="0.0" y="596.66666666666663" width="311" height="47.333333333333371"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" name="Action Button"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1049,7 +1059,7 @@
             <objects>
                 <viewController id="Q6d-je-KTJ" customClass="WelcomeView" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rzw-9s-WEg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hug-ES-p93" customClass="DarkActionButton" customModule="LUJO" customModuleProvider="target">
@@ -1681,8 +1691,8 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="1SO-ic-Ljo"/>
-        <segue reference="OfP-qz-gUe"/>
+        <segue reference="HS5-hN-OhV"/>
+        <segue reference="W1x-Dd-bIG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Down Row Icon" width="48" height="48"/>

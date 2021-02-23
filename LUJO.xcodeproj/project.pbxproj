@@ -131,6 +131,7 @@
 		918BA9A825BF481A007B4D43 /* CityView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9A725BF481A007B4D43 /* CityView3.swift */; };
 		918BA9AD25BF482C007B4D43 /* CityView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9AC25BF482C007B4D43 /* CityView4.swift */; };
 		91F610CE25BDB216005BCDA2 /* CityView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F610CD25BDB215005BCDA2 /* CityView1.xib */; };
+		91FF68DF25E2519300B1761E /* VillaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FF68DE25E2519300B1761E /* VillaViewController.swift */; };
 		9A0104E52181BC8600783E25 /* LiftSearchResultExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */; };
 		9A091DFD21E891B700B0B5E6 /* UserNotApprovedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */; };
 		9A091E0021EC2CEA00B0B5E6 /* PaymentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */; };
@@ -423,6 +424,7 @@
 		918BA9A725BF481A007B4D43 /* CityView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView3.swift; sourceTree = "<group>"; };
 		918BA9AC25BF482C007B4D43 /* CityView4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView4.swift; sourceTree = "<group>"; };
 		91F610CD25BDB215005BCDA2 /* CityView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView1.xib; sourceTree = "<group>"; };
+		91FF68DE25E2519300B1761E /* VillaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VillaViewController.swift; sourceTree = "<group>"; };
 		9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LiftSearchResultExample.json; sourceTree = "<group>"; };
 		9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotApprovedView.swift; sourceTree = "<group>"; };
 		9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfiguration.swift; sourceTree = "<group>"; };
@@ -763,6 +765,7 @@
 				1D61800C238B04C600F01199 /* TableViewController.swift */,
 				1D618011238D6F6200F01199 /* YachtViewController.swift */,
 				1D618013238EA51A00F01199 /* HotelViewController.swift */,
+				91FF68DE25E2519300B1761E /* VillaViewController.swift */,
 			);
 			name = "Custom Requests";
 			sourceTree = "<group>";
@@ -1764,6 +1767,7 @@
 				9AD6EAC221E49F0B00B695A3 /* Payment Type DataSource.swift in Sources */,
 				9ADC468621590AA600D96C95 /* AviationEntitities.swift in Sources */,
 				88EA9F91255408F800514626 /* WishlistViewController.swift in Sources */,
+				91FF68DF25E2519300B1761E /* VillaViewController.swift in Sources */,
 				1D7819A822FD67740044C70B /* FeatureListView.swift in Sources */,
 				9A091E0C21EC49D900B0B5E6 /* Result.swift in Sources */,
 				9A0DCC7E21F86F7D00CC9111 /* BARouter.swift in Sources */,
@@ -2135,7 +2139,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2196,7 +2200,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2402,7 +2406,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -249,7 +249,12 @@ extension EventDetailsViewController {
         }
         
         name.text = experience.name
-
+        //checking favourite image red or white
+        if (self.product.isFavourite ?? false){
+            self.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            self.imgHeart.image = UIImage(named: "heart_white")
+        }
         
         var locationText = ""
         if let cityName = experience.location?.first?.city?.name {
@@ -272,7 +277,12 @@ extension EventDetailsViewController {
         }
         
         name.text = product.name
-
+        //checking favourite image red or white
+        if (self.product.isFavourite ?? false){
+            self.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            self.imgHeart.image = UIImage(named: "heart_white")
+        }
         
         var locationText = ""
         if let cityName = product.location?.first?.city?.name {
@@ -378,7 +388,12 @@ extension EventDetailsViewController {
         }
         
         name.text = product.name
-        
+        //checking favourite image red or white
+        if (self.product.isFavourite ?? false){
+            self.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            self.imgHeart.image = UIImage(named: "heart_white")
+        }
         var locationText = ""
         if let cityName = product.location?.first?.city?.name {
             locationText = "\(cityName), "
@@ -564,8 +579,12 @@ extension EventDetailsViewController {
 extension EventDetailsViewController {
     
     fileprivate func sendInitialInformation() {
-        let isEqual = (product.type == "yacht")
-        if !isEqual{
+        if (product.type == "yacht"){
+            self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
+        }else if (product.type == "villa"){
+            self.present(VillaViewController.instantiate(product: product), animated: true, completion: nil)
+        }
+        else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
             
             EEAPIManager().sendRequestForSalesForce(itemId: product.id)
@@ -579,9 +598,25 @@ extension EventDetailsViewController {
             """
             
             startChatWithInitialMessage(initialMessage)
-        }else{  //yacht
-            self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
         }
+//        let isEqual = (product.type == "yacht")
+//        if !isEqual{
+//            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+//
+//            EEAPIManager().sendRequestForSalesForce(itemId: product.id)
+//
+//            let initialMessage = """
+//            Hi Concierge team,
+//
+//            I am interested in \(product.name), can you assist me?
+//
+//            \(userFirstName)
+//            """
+//
+//            startChatWithInitialMessage(initialMessage)
+//        }else{  //yacht
+//            self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
+//        }
         
     }
     

@@ -13,7 +13,8 @@ protocol LoginViewResponder: ViewResponder {
                        email: String, phoneNumber: PhoneNumber) throws
     func verifyCode(_ code: String)
     func requestOTP()
-    func requestOTPLogin(prefix: PhoneCountryCode, number: String)
+//    func requestOTPLogin(prefix: PhoneCountryCode, number: String)
+    func requestOTPLogin(prefix: PhoneCountryCode?, number: String?)
     func requestResendCode()
     func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String)
     func forgotPassword(for user: String)
