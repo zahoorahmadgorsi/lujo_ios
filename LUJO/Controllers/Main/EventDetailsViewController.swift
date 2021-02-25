@@ -16,6 +16,8 @@ class EventDetailsViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "EventDetailsViewController" }
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var imgBack: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var lblDescriptionHeight: NSLayoutConstraint!
     var isLabelAtMaxHeight = false
@@ -49,6 +51,18 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet weak var viewHeart: UIView!
     @IBOutlet weak var imgHeart: UIImageView!
     private let naHUD = JGProgressHUD(style: .dark)
+    @IBOutlet weak var viewReadGallery: UIView!
+    
+    @IBOutlet weak var viewYachtLength: UIView!
+    @IBOutlet weak var lblYachtLength: UILabel!
+    
+    @IBOutlet weak var viewYachtPassengers: UIView!
+    @IBOutlet weak var lblYachtPassengers: UILabel!
+    
+    @IBOutlet weak var viewYachtCabins: UIView!
+    @IBOutlet weak var lblYachtCabins: UILabel!
+    
+    var scrollOffsetToShowNavigationBar :CGFloat = 280 //scrollview positiong
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -83,6 +97,7 @@ class EventDetailsViewController: UIViewController {
             default: break
         }
         
+        scrollView.delegate = self
         if let font = descriptionTextView.font{
             let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
             print(currentHeight,descHeightToShowReadMore)
@@ -108,7 +123,10 @@ class EventDetailsViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
         self.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
         self.viewHeart.addGestureRecognizer(tapGestureRecognizer)
-        
+        //Add tap gesture on back button
+        let tgrBack = UITapGestureRecognizer(target: self, action: #selector(tappedOnBack(_:)))
+        self.imgBack.isUserInteractionEnabled = true   //can also be enabled from IB
+        self.imgBack.addGestureRecognizer(tgrBack)
         setRecentlyViewed()
         //zahoor end
     }
@@ -116,11 +134,13 @@ class EventDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activateKeyboardManager()
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -189,7 +209,7 @@ extension EventDetailsViewController {
             print("Image not found")
         }
         name.text = event.name
-
+        self.title = name.text
         //checking favourite image red or white
         if (self.product.isFavourite ?? false){
             self.imgHeart.image = UIImage(named: "heart_red")
@@ -228,6 +248,11 @@ extension EventDetailsViewController {
         
         dateContainerView.isHidden = event.startDate == nil
         dateLocationContainerView.isHidden = event.startDate == nil && locationText.isEmpty
+        //hiding yacht length, passenger and cabins views
+        viewYachtLength.isHidden = true
+        viewYachtPassengers.isHidden = true
+        viewYachtCabins.isHidden = true
+        
         descriptionTextView.attributedText = convertToAttributedString(event.description)
         
         chatButton.isEnabled = !isEventPast
@@ -249,6 +274,7 @@ extension EventDetailsViewController {
         }
         
         name.text = experience.name
+        self.title = name.text
         //checking favourite image red or white
         if (self.product.isFavourite ?? false){
             self.imgHeart.image = UIImage(named: "heart_red")
@@ -262,8 +288,13 @@ extension EventDetailsViewController {
         }
         locationText += experience.location?.first?.country.name ?? ""
         locationLabel.text = locationText.uppercased()
+        locationContainerView.isHidden = locationText.isEmpty
         
         dateContainerView.isHidden = true
+        //hiding yacht length, passenger and cabins views
+        viewYachtLength.isHidden = true
+        viewYachtPassengers.isHidden = true
+        viewYachtCabins.isHidden = true
         
         descriptionTextView.attributedText = convertToAttributedString(experience.description)
         requestButton.setTitle("R E Q U E S T", for: .normal)
@@ -277,6 +308,7 @@ extension EventDetailsViewController {
         }
         
         name.text = product.name
+        self.title = name.text
         //checking favourite image red or white
         if (self.product.isFavourite ?? false){
             self.imgHeart.image = UIImage(named: "heart_red")
@@ -292,6 +324,11 @@ extension EventDetailsViewController {
         locationLabel.text = locationText.uppercased()
         
         dateContainerView.isHidden = true
+        //hiding yacht length, passenger and cabins views
+        viewYachtLength.isHidden = true
+//        viewYachtPassengers.isHidden = true
+//        viewYachtCabins.isHidden = true
+        
         //preparing summary data of collection view
         var itemsList =  [ProductDetail]()
         if let val = product.headline , val.count > 0{
@@ -299,10 +336,15 @@ extension EventDetailsViewController {
         }
         if let val = product.numberOfBedrooms, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Bedrooms",value: val,isHighSeason: nil))
+            lblYachtCabins.text = val
+        }else{
+            viewYachtCabins.isHidden = true
         }
         if let val = product.numberOfGuests, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
-
+            lblYachtPassengers.text = val
+        }else{
+            viewYachtPassengers.isHidden = true
         }
         if let val = product.numberOfBathrooms, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: val,isHighSeason: nil))
@@ -377,6 +419,7 @@ extension EventDetailsViewController {
             setupProductDetailLayout(productDetailView: productDetailView)
         }
         descriptionTextView.attributedText = convertToAttributedString(product.description)
+        
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
     
@@ -388,6 +431,7 @@ extension EventDetailsViewController {
         }
         
         name.text = product.name
+        self.title = name.text
         //checking favourite image red or white
         if (self.product.isFavourite ?? false){
             self.imgHeart.image = UIImage(named: "heart_red")
@@ -407,11 +451,18 @@ extension EventDetailsViewController {
 //        if let val = product.headline , val.count > 0{
 //            itemsList.append(ProductDetail(key: "Headline",value: val))
 //        }
+
         if let val = product.guestsNumber, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
+//            itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
+            lblYachtPassengers.text = val
+        }else{
+            viewYachtPassengers.isHidden = true
         }
         if let val = product.cabinNumber, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Cabins",value: val,isHighSeason: nil))
+//            itemsList.append(ProductDetail(key: "Number Of Cabins",value: val,isHighSeason: nil))
+            lblYachtCabins.text = val
+        }else{
+            viewYachtCabins.isHidden = true
         }
         if let val = product.crewNumber, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Crews",value: val,isHighSeason: nil))
@@ -432,7 +483,10 @@ extension EventDetailsViewController {
             itemsList.append(ProductDetail(key: "Refit Year",value: val,isHighSeason: nil))
         }
         if let val = product.lengthM, val.count > 0{
-            itemsList.append(ProductDetail(key: "Length (Meters)",value: val,isHighSeason: nil))
+//            itemsList.append(ProductDetail(key: "Length (Meters)",value: val,isHighSeason: nil))
+            lblYachtLength.text = val + "(m)"
+        }else{
+            viewYachtLength.isHidden = true
         }
         if let val = product.beamM, val.count > 0{
             itemsList.append(ProductDetail(key: "Beam",value: val,isHighSeason: nil))
@@ -648,6 +702,10 @@ extension EventDetailsViewController {
         naHUD.dismiss()
     }
     
+    @objc func tappedOnBack(_ sender:AnyObject) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @objc func tappedOnHeart(_ sender:AnyObject) {
             
             //setting the favourite
@@ -696,4 +754,32 @@ extension EventDetailsViewController {
     
     
     //Zahoor finished
+}
+
+extension EventDetailsViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        print(scrollView.contentOffset.y)
+        hideUnhideNavigationBar(scrollView)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView) {
+//        print(scrollView.contentOffset.y)
+        hideUnhideNavigationBar(scrollView)
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView){
+        hideUnhideNavigationBar(scrollView)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+        hideUnhideNavigationBar(scrollView)
+    }
+    
+    func hideUnhideNavigationBar(_ scrollView: UIScrollView){
+        let hide = scrollView.contentOffset.y < self.scrollOffsetToShowNavigationBar
+        print(scrollView.contentOffset.y,hide)
+        //hiding navigation bar if scroll off set is more then 280
+        self.navigationController?.setNavigationBarHidden(hide, animated: true)
+    
+    }
 }
