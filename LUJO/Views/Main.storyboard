@@ -4903,7 +4903,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="750"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xPJ-4E-Ygl">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="477.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="453.5"/>
                                         <subviews>
                                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WNi-9q-iiv">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="319.5"/>
@@ -5264,40 +5264,6 @@
                                                     <constraint firstAttribute="trailing" secondItem="VXc-j2-jin" secondAttribute="trailing" id="uAz-cR-Hh2"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lsb-yO-5wb">
-                                                <rect key="frame" x="0.0" y="461.5" width="414" height="16"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ive-Il-0mn">
-                                                        <rect key="frame" x="303" y="0.0" width="95" height="16"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="95" id="UIB-7P-2io"/>
-                                                            <constraint firstAttribute="height" constant="16" id="kkO-Ch-RcH"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                        <state key="normal" title="VIEW GALLERY">
-                                                            <color key="titleColor" name="White Text"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="viewGalleryButton_onClick:" destination="qhN-L6-lRX" eventType="touchUpInside" id="UO7-P8-hIa"/>
-                                                        </connections>
-                                                    </button>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right" translatesAutoresizingMaskIntoConstraints="NO" id="CcH-wl-htX">
-                                                        <rect key="frame" x="394" y="4" width="4" height="8"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="8" id="F4U-XE-lzO"/>
-                                                            <constraint firstAttribute="width" constant="4" id="tdH-Dt-HV6"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="CcH-wl-htX" secondAttribute="trailing" constant="16" id="2AI-rP-hvC"/>
-                                                    <constraint firstItem="CcH-wl-htX" firstAttribute="centerY" secondItem="ive-Il-0mn" secondAttribute="centerY" id="3iu-nx-Aj9"/>
-                                                    <constraint firstAttribute="trailing" secondItem="ive-Il-0mn" secondAttribute="trailing" constant="16" id="4vj-Nn-oWh"/>
-                                                    <constraint firstAttribute="bottom" secondItem="ive-Il-0mn" secondAttribute="bottom" id="UuR-Kx-wkk"/>
-                                                    <constraint firstItem="ive-Il-0mn" firstAttribute="top" secondItem="Lsb-yO-5wb" secondAttribute="top" id="oTg-8h-p3K"/>
-                                                </constraints>
-                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -5398,9 +5364,8 @@
                         <outlet property="name" destination="hX0-ph-tg3" id="jF1-Yv-Lhx"/>
                         <outlet property="requestButton" destination="7Tm-fi-Nnv" id="nnT-Gy-cQf"/>
                         <outlet property="scrollView" destination="PrA-QL-o01" id="exf-6t-Xjm"/>
-                        <outlet property="stackView" destination="xPJ-4E-Ygl" id="SbQ-zg-npH"/>
+                        <outlet property="stackView" destination="xPJ-4E-Ygl" id="quC-rZ-Xxh"/>
                         <outlet property="viewHeart" destination="MMg-yB-FIl" id="4TF-Nf-vtL"/>
-                        <outlet property="viewReadGallery" destination="Lsb-yO-5wb" id="fNo-SP-0t8"/>
                         <outlet property="viewReadMore" destination="VXc-j2-jin" id="0G1-uc-8T2"/>
                         <outlet property="viewYachtCabins" destination="OLQ-mE-3vd" id="SmU-qJ-LiO"/>
                         <outlet property="viewYachtLength" destination="1OR-br-Eca" id="LTE-IW-7Gh"/>

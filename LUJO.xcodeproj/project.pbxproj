@@ -122,6 +122,14 @@
 		88EA9F9425544E8400514626 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F9325544E8400514626 /* WishList.swift */; };
 		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
 		88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F982554552300514626 /* WishListAPIManager.swift */; };
+		9183E82625EBEE6C00656B48 /* GalleryView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E82525EBEE6B00656B48 /* GalleryView1.xib */; };
+		9183E82E25EBEE8800656B48 /* GalleryView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E82D25EBEE8800656B48 /* GalleryView2.xib */; };
+		9183E83625EBEEA300656B48 /* GalleryView3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E83525EBEEA300656B48 /* GalleryView3.xib */; };
+		9183E83E25EBEF0900656B48 /* GalleryView4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E83D25EBEF0900656B48 /* GalleryView4.xib */; };
+		9183E84325EBEF2400656B48 /* GalleryView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9183E84225EBEF2400656B48 /* GalleryView1.swift */; };
+		9183E84825EBEF3C00656B48 /* GalleryView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9183E84725EBEF3C00656B48 /* GalleryView2.swift */; };
+		9183E84D25EBEF4E00656B48 /* GalleryView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9183E84C25EBEF4E00656B48 /* GalleryView3.swift */; };
+		9183E85225EBEF6100656B48 /* GalleryView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9183E85125EBEF6100656B48 /* GalleryView4.swift */; };
 		918BA97F25BDCD49007B4D43 /* CityView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918BA97E25BDCD49007B4D43 /* CityView2.xib */; };
 		918BA98425BDCD79007B4D43 /* CityView3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918BA98325BDCD79007B4D43 /* CityView3.xib */; };
 		918BA98925BDCDA5007B4D43 /* CityView4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918BA98825BDCDA5007B4D43 /* CityView4.xib */; };
@@ -415,6 +423,14 @@
 		88EA9F962554550D00514626 /* WishListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListRouter.swift; sourceTree = "<group>"; };
 		88EA9F982554552300514626 /* WishListAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListAPIManager.swift; sourceTree = "<group>"; };
 		917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tmp.xcconfig; sourceTree = "<group>"; };
+		9183E82525EBEE6B00656B48 /* GalleryView1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GalleryView1.xib; path = "LUJO/Views/Reusable Views/Gallery View/GalleryView1.xib"; sourceTree = SOURCE_ROOT; };
+		9183E82D25EBEE8800656B48 /* GalleryView2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView2.xib; sourceTree = "<group>"; };
+		9183E83525EBEEA300656B48 /* GalleryView3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView3.xib; sourceTree = "<group>"; };
+		9183E83D25EBEF0900656B48 /* GalleryView4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView4.xib; sourceTree = "<group>"; };
+		9183E84225EBEF2400656B48 /* GalleryView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryView1.swift; sourceTree = "<group>"; };
+		9183E84725EBEF3C00656B48 /* GalleryView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryView2.swift; sourceTree = "<group>"; };
+		9183E84C25EBEF4E00656B48 /* GalleryView3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryView3.swift; sourceTree = "<group>"; };
+		9183E85125EBEF6100656B48 /* GalleryView4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryView4.swift; sourceTree = "<group>"; };
 		918BA97E25BDCD49007B4D43 /* CityView2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView2.xib; sourceTree = "<group>"; };
 		918BA98325BDCD79007B4D43 /* CityView3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView3.xib; sourceTree = "<group>"; };
 		918BA98825BDCDA5007B4D43 /* CityView4.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView4.xib; sourceTree = "<group>"; };
@@ -810,6 +826,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				9183E82125EBEC7500656B48 /* Gallery View */,
 				91F610CC25BDB1C9005BCDA2 /* City View */,
 				88E731A6256FC58100BEDD00 /* Product Details */,
 				883A86BF2561767D00E41A27 /* Wish List View */,
@@ -1008,6 +1025,21 @@
 				88EA9F982554552300514626 /* WishListAPIManager.swift */,
 			);
 			path = WishList;
+			sourceTree = "<group>";
+		};
+		9183E82125EBEC7500656B48 /* Gallery View */ = {
+			isa = PBXGroup;
+			children = (
+				9183E82525EBEE6B00656B48 /* GalleryView1.xib */,
+				9183E82D25EBEE8800656B48 /* GalleryView2.xib */,
+				9183E83525EBEEA300656B48 /* GalleryView3.xib */,
+				9183E83D25EBEF0900656B48 /* GalleryView4.xib */,
+				9183E84225EBEF2400656B48 /* GalleryView1.swift */,
+				9183E84725EBEF3C00656B48 /* GalleryView2.swift */,
+				9183E84C25EBEF4E00656B48 /* GalleryView3.swift */,
+				9183E85125EBEF6100656B48 /* GalleryView4.swift */,
+			);
+			path = "Gallery View";
 			sourceTree = "<group>";
 		};
 		91F610CC25BDB1C9005BCDA2 /* City View */ = {
@@ -1600,6 +1632,7 @@
 			files = (
 				9AD1CE0022817F48007A0D63 /* BookingPaymentSummaryView.xib in Resources */,
 				9A990C1A21C94E4A00056E31 /* SF-Pro-Text-Bold.otf in Resources */,
+				9183E82E25EBEE8800656B48 /* GalleryView2.xib in Resources */,
 				9A990C1B21C94E4A00056E31 /* SF-Pro-Text-Regular.otf in Resources */,
 				9A2AEBC12162683A00F92FB3 /* HelveticaNeueLTStd-Bd.otf in Resources */,
 				918BA97F25BDCD49007B4D43 /* CityView2.xib in Resources */,
@@ -1613,6 +1646,7 @@
 				9A0E586B2260E50300F7848A /* BookingSegmentsSummaryView.xib in Resources */,
 				9AA95FDF2189BE6F00156AB6 /* LiftDetailViewController.xib in Resources */,
 				8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */,
+				9183E83E25EBEF0900656B48 /* GalleryView4.xib in Resources */,
 				9A41571421301E6C00D85B56 /* HelveticaNeueLTStd-Md.otf in Resources */,
 				9A9EC8AE2253BA2800098E7D /* AviationLegCell.xib in Resources */,
 				918BA98425BDCD79007B4D43 /* CityView3.xib in Resources */,
@@ -1620,12 +1654,14 @@
 				1DBC9C02236567C200F0F133 /* Assets.xcassets in Resources */,
 				9A0E586D2260E5B800F7848A /* BookingSegmentView.xib in Resources */,
 				9A4CE04120F6F0AC00BB27FC /* HelveticaLTStd-Light.otf in Resources */,
+				9183E83625EBEEA300656B48 /* GalleryView3.xib in Resources */,
 				9A4CE04320F6F0AC00BB27FC /* HelveticaLTStd-Roman.otf in Resources */,
 				9A33941D212665990057CA93 /* HelveticaNeueLTStd-Roman.otf in Resources */,
 				557BB5E3231592F100744188 /* Main.storyboard in Resources */,
 				9A818F5520EE74CC005B6455 /* LaunchScreen.storyboard in Resources */,
 				9AF422652265D534003CE562 /* Booking.storyboard in Resources */,
 				8844D9B32563F712002FF846 /* FavouriteCell.xib in Resources */,
+				9183E82625EBEE6C00656B48 /* GalleryView1.xib in Resources */,
 				918BA98925BDCDA5007B4D43 /* CityView4.xib in Resources */,
 				1DD785B823749B27001A9CF9 /* PayAlertView.xib in Resources */,
 				9A18716921130D4800B81BFD /* Lora-Regular.ttf in Resources */,
@@ -1764,6 +1800,7 @@
 			files = (
 				8894D02825629CD200BF84D8 /* Restaurant.swift in Sources */,
 				9A817B9A224E2FD500EE7BAC /* AviationSearch.swift in Sources */,
+				9183E84825EBEF3C00656B48 /* GalleryView2.swift in Sources */,
 				9AD6EAC221E49F0B00B695A3 /* Payment Type DataSource.swift in Sources */,
 				9ADC468621590AA600D96C95 /* AviationEntitities.swift in Sources */,
 				88EA9F91255408F800514626 /* WishlistViewController.swift in Sources */,
@@ -1883,6 +1920,7 @@
 				9AF1A0D42249072B00E0680B /* AviationSingleLegSearchOptionsView.swift in Sources */,
 				9A89D3E621C595E8002D249F /* LujoTextField.swift in Sources */,
 				9A2AEBC321626A0300F92FB3 /* AirportSearchCell.swift in Sources */,
+				9183E85225EBEF6100656B48 /* GalleryView4.swift in Sources */,
 				1D88012F233E4AB30039DEA6 /* DiningCategorySliderCell.swift in Sources */,
 				557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */,
 				918BA9A825BF481A007B4D43 /* CityView3.swift in Sources */,
@@ -1901,6 +1939,7 @@
 				1643375A4FDC11CBEE93371A /* LoginInteractor.swift in Sources */,
 				5527642723165D4400380BEB /* GalleryViewControllerNEW.swift in Sources */,
 				9A229E8021347574007F1F7A /* ConfirmationView.swift in Sources */,
+				9183E84D25EBEF4E00656B48 /* GalleryView3.swift in Sources */,
 				1D44A6FA2356250F0073C682 /* GlobalSearchViewController.swift in Sources */,
 				5527642C2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift in Sources */,
 				918BA99E25BF47E9007B4D43 /* CityView1.swift in Sources */,
@@ -1933,6 +1972,7 @@
 				3005D47C23202BAC00401243 /* AviationAirportSelectionViewController.swift in Sources */,
 				9A16408321FB1A960041FFCE /* CCRouter.swift in Sources */,
 				3005D47A23202B7D00401243 /* AviationViewController.swift in Sources */,
+				9183E84325EBEF2400656B48 /* GalleryView1.swift in Sources */,
 				557BB5EA231596B100744188 /* RestaurantDetailViewController.swift in Sources */,
 				16433521006C0083D625164C /* LujoSetup.swift in Sources */,
 				9AF561E921833D5800B7BD1A /* UIImageView+Download.swift in Sources */,
@@ -2139,7 +2179,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2200,7 +2240,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2406,7 +2446,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

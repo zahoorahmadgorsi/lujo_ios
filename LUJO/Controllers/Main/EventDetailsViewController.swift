@@ -9,7 +9,9 @@
 import UIKit
 import JGProgressHUD
 
-class EventDetailsViewController: UIViewController {
+class EventDetailsViewController: UIViewController, GalleryViewProtocol {
+    
+    
     
     //MARK:- Init
     
@@ -96,6 +98,8 @@ class EventDetailsViewController: UIViewController {
             case "yacht":           setupYacht(product)
             default: break
         }
+        //setting up gallery
+        setUpGallery(product)
         
         scrollView.delegate = self
         if let font = descriptionTextView.font{
@@ -148,11 +152,15 @@ class EventDetailsViewController: UIViewController {
         sendInitialInformation()
     }
     
-    @IBAction func viewGalleryButton_onClick(_ sender: UIButton) {
-        presentGalleryViewControllerIfNeeded()
+    func didTappedOnImage(itemIndex: Int) {
+        print("didTappedOnImage")
     }
     
-    private func presentGalleryViewControllerIfNeeded() {
+    @IBAction func viewGalleryButton_onClick(_ sender: UIButton) {
+        didTappedOnViewGallery()
+    }
+    
+    func didTappedOnViewGallery() {
         let dataSource = product.getGalleryImagesURL()
         if dataSource.isEmpty {
             showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
@@ -352,6 +360,7 @@ extension EventDetailsViewController {
         
         
         if (itemsList.count > 0){
+            
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -553,27 +562,13 @@ extension EventDetailsViewController {
         
         //preparing amenities (yachtExtras) data of collection view
         itemsList =  [ProductDetail]()
-        var count = (product.yachtExtras?.count ?? 0)
+        let count = (product.yachtExtras?.count ?? 0)
         if count > 0 , let items = product.yachtExtras{
             itemsList =  [ProductDetail]()
             for item in items{
                 itemsList.append(ProductDetail(key: "name",value: item.name,isHighSeason: nil))
             }
         }
-//        //preparing facilites(yachtStatus) data of collection view
-//        count = (product.yachtStatus?.count ?? 0)
-//        if count > 0 , let items = product.yachtStatus{
-//            for item in items{
-//                itemsList.append(ProductDetail(key: "name",value: item.name))
-//            }
-//        }
-//        //preparing facilites (yachtType) data of collection view
-//        count = (product.yachtType?.count ?? 0)
-//        if count > 0 , let items = product.yachtType{
-//            for item in items{
-//                itemsList.append(ProductDetail(key: "name",value: item.name))
-//            }
-//        }
         
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
@@ -591,6 +586,47 @@ extension EventDetailsViewController {
         }
         descriptionTextView.attributedText = convertToAttributedString(product.description)
         requestButton.setTitle("R E Q U E S T", for: .normal)
+    }
+    
+    func setUpGallery(_ product: Product){
+        //Setting up gallery
+        switch product.gallery?.count {
+        case 1:
+            let galleryView = GalleryView1()
+            galleryView.gallery = product.gallery
+            galleryView.delegate = self
+            stackView.addArrangedSubview(galleryView)
+            //applying constraints on productDetailView
+            setupGalleryLayout(galleryView: galleryView)
+        case 2:
+            let galleryView = GalleryView2()
+            galleryView.gallery = product.gallery
+            galleryView.delegate = self
+            stackView.addArrangedSubview(galleryView)
+            //applying constraints on galleryView
+            setupGalleryLayout(galleryView: galleryView)
+        case 3:
+            let galleryView = GalleryView3()
+            galleryView.gallery = product.gallery
+            galleryView.delegate = self
+            stackView.addArrangedSubview(galleryView)
+            //applying constraints on galleryView
+            setupGalleryLayout(galleryView: galleryView)
+        case 4:
+            let galleryView = GalleryView4()
+            galleryView.gallery = product.gallery
+            galleryView.delegate = self
+            stackView.addArrangedSubview(galleryView)
+            //applying constraints on galleryView
+            setupGalleryLayout(galleryView: galleryView)
+        default:
+            let galleryView = GalleryView4()
+            galleryView.gallery = product.gallery
+            galleryView.delegate = self
+            stackView.addArrangedSubview(galleryView)
+            //applying constraints on galleryView
+            setupGalleryLayout(galleryView: galleryView)
+        }
     }
     
     func setupProductDetailLayout(productDetailView:ProductDetailView){
@@ -627,6 +663,39 @@ extension EventDetailsViewController {
         return aString
     }
     
+    func setupGalleryLayout(galleryView:GalleryView1){
+        galleryView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+        galleryView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
+        //top isnt required as in stack view it doesnt matter
+        //wishListView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 100).isActive = true
+        galleryView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        let totalHeight = 206
+        galleryView.heightAnchor.constraint(equalToConstant: CGFloat(totalHeight)).isActive = true
+    }
+    
+    func setupGalleryLayout(galleryView:GalleryView2){
+        galleryView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+        galleryView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
+        galleryView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        let totalHeight = 206
+        galleryView.heightAnchor.constraint(equalToConstant: CGFloat(totalHeight)).isActive = true
+    }
+    
+    func setupGalleryLayout(galleryView:GalleryView3){
+        galleryView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+        galleryView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
+        galleryView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        let totalHeight = 350
+        galleryView.heightAnchor.constraint(equalToConstant: CGFloat(totalHeight)).isActive = true
+    }
+    
+    func setupGalleryLayout(galleryView:GalleryView4){
+        galleryView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+        galleryView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
+        galleryView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        let totalHeight = 494
+        galleryView.heightAnchor.constraint(equalToConstant: CGFloat(totalHeight)).isActive = true
+    }
 }
 
 // Chat functionality
@@ -757,29 +826,18 @@ extension EventDetailsViewController {
 }
 
 extension EventDetailsViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        print(scrollView.contentOffset.y)
-        hideUnhideNavigationBar(scrollView)
-    }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView) {
-//        print(scrollView.contentOffset.y)
-        hideUnhideNavigationBar(scrollView)
-    }
-    
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView){
-        hideUnhideNavigationBar(scrollView)
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    {
+//        print("scrollViewDidScroll")
         hideUnhideNavigationBar(scrollView)
     }
     
     func hideUnhideNavigationBar(_ scrollView: UIScrollView){
         let hide = scrollView.contentOffset.y < self.scrollOffsetToShowNavigationBar
-        print(scrollView.contentOffset.y,hide)
+//        print(scrollView.contentOffset.y,hide)
         //hiding navigation bar if scroll off set is more then 280
         self.navigationController?.setNavigationBarHidden(hide, animated: true)
-    
+
     }
 }
