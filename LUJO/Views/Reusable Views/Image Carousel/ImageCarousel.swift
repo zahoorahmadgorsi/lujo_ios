@@ -7,7 +7,7 @@ protocol ImageCarouselDelegate: class {
 }
 
 class ImageCarousel: UIView {
-    lazy var carouselView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -25,63 +25,63 @@ class ImageCarousel: UIView {
     weak var delegate: ImageCarouselDelegate?
     var shouldRemoveOverlay: Bool = false {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
 
     //Zahoor to be used in dining only
     var restaurantsList: [Restaurant] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
     
     var itemsList: [Product] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
     
     var imageURLList: [String] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
 
     var titleList: [String] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
 
     var categoryList: [String] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
 
     var starList: [String] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
 
     var locationList: [String] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
 
     var tagsList: [String] = [] {
         didSet {
-            carouselView.reloadData()
+            collectionView.reloadData()
         }
     }
 
     var overlay = false
 
     var currentIndex: Int? {
-        return carouselView.indexPathsForVisibleItems.first?.row
+        return collectionView.indexPathsForVisibleItems.first?.row
     }
 
     override init(frame: CGRect) {
@@ -96,16 +96,16 @@ class ImageCarousel: UIView {
 
     private func setupView() {
         backgroundColor = .red
-        addSubview(carouselView)
+        addSubview(collectionView)
         setupLayout()
     }
 
     private func setupLayout() {
         NSLayoutConstraint.activate(
-            [carouselView.topAnchor.constraint(equalTo: topAnchor),
-             carouselView.bottomAnchor.constraint(equalTo: bottomAnchor),
-             carouselView.leadingAnchor.constraint(equalTo: leadingAnchor),
-             carouselView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+            [collectionView.topAnchor.constraint(equalTo: topAnchor),
+             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)]
         )
     }
 
@@ -127,7 +127,7 @@ extension ImageCarousel: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = carouselView.dequeueReusableCell(withReuseIdentifier: ImageCarouselCell.identifier,
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCarouselCell.identifier,
                                                     for: indexPath) as! ImageCarouselCell
         cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
         //Zahoor started 20201027

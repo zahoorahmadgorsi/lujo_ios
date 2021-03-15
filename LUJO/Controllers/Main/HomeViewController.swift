@@ -4,7 +4,8 @@
 //
 //  Created by Iker Kristian on 8/28/19.
 //  Copyright © 2019 Baroque Access. All rights reserved.
-//
+// present/dismis  animation https://medium.com/@tungfam/custom-uiviewcontroller-transitions-in-swift-d1677e5aa0bf#
+// push/pop animation https://hedgehoglab.com/blog/ios-transition-animations
 
 import UIKit
 import JGProgressHUD
@@ -105,9 +106,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
         
     //Zahoor Started 20200822
-    var animationInterval:TimeInterval = 6
-//    var totalAnimationOnScreen:Int = 4
+    static let animationInterval:TimeInterval = 20
     //Zahoor finished
+    // B2 - 5
+    var selectedCell: HomeSliderCell?
+    var selectedFeaturedCell: ImageCarouselCell?
+    var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
+    // B2 - 15
+    var animator: Animator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -396,14 +402,27 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let event: Product!
         
         switch sender.view {
-        case is ImageCarousel:  event = getCurrentEventInFeatured()
-        case specialEventView1: event = homeObjects?.specialEvents[0]
-        case specialEventView2: event = homeObjects?.specialEvents[1]
-        default: return
+            case is ImageCarousel:
+                event = getCurrentEventInFeatured()
+                // B2 - 6
+//                let indexPath = IndexPath(row: featured.currentIndex ?? 0, section: 0)
+//                selectedFeaturedCell = featured.collectionView.cellForItem(at: indexPath) as? ImageCarouselCell
+            case specialEventView1:
+                event = homeObjects?.specialEvents[0]
+            case specialEventView2:
+                event = homeObjects?.specialEvents[1]
+            default: return
         }
         
+//        // B2 - 7
+//        selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
         let viewController = EventDetailsViewController.instantiate(event: event)
-        self.navigationController?.pushViewController(viewController, animated: true)
+//        // B1 - 4
+//        viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
+
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func showNetworkActivity() {
@@ -617,13 +636,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @objc func startAnimation() {
         //Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
-        Timer.scheduledTimer(withTimeInterval: self.animationInterval, repeats: true, block: { _ in
+        Timer.scheduledTimer(withTimeInterval: HomeViewController.animationInterval, repeats: true, block: { _ in
             if self.featured.titleList.count > 0 {
                 if let index = Int(self.currentImageNum.text ?? "1") {
                     if index == self.featured.titleList.count {
-                        self.featured.carouselView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
+                        self.featured.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
                     } else {
-                        self.featured.carouselView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
+                        self.featured.collectionView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
                     }
                 }
             }
@@ -822,10 +841,6 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         
     }
  
-   
-    
-    
-    
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider) {
         let product: Product!
         
@@ -848,9 +863,18 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                 product = locationEventSlider.itemsList[indexPath.row]
             default: return
         }
-        
+        // B2 - 6
+        selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
+        // B2 - 7
+        selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
         let viewController = EventDetailsViewController.instantiate(event: product)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        // B1 - 4
+        viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
+//        self.navigationController?.delegate = self
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
 }
@@ -984,4 +1008,45 @@ extension HomeViewController {
         }
     }
 
+}
+
+// B1 - 1
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+
+    // B1 - 2
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return nil
+        // B2 - 16
+//        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+        guard let firstViewController = source as? HomeViewController,
+            let secondViewController = presented as? EventDetailsViewController,
+            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+            else {
+                return nil
+            }
+
+        animator = Animator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+        return animator
+    }
+
+    // B1 - 3
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        //return nil
+        // B2 - 17
+//        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+        guard let secondViewController = dismissed as? EventDetailsViewController,
+            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+            else { return nil }
+
+        animator = Animator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+        return animator
+    }
+}
+
+extension HomeViewController: UINavigationControllerDelegate{
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    {
+        return nil
+        
+    }
 }

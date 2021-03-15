@@ -17,7 +17,7 @@ protocol DidSelectSliderItemProtocol: class {
 class HomeSlider: UIView {
     var itemWidth:Int = 175
     var itemHeight:Int = 172
-    var giftItemHeight:Int = 148
+//    var giftItemHeight:Int = 148
     var itemMargin:Int = 16
     
     
@@ -82,9 +82,9 @@ class HomeSlider: UIView {
     func startAnimation( ) {
         var carousalTimer: Timer?
         var newOffsetX: CGFloat = 0.0
-        let animationInterval:TimeInterval = 4
+//        let animationInterval:TimeInterval = 20
         
-        carousalTimer = Timer(fire: Date(), interval: animationInterval, repeats: true) { (timer) in
+        carousalTimer = Timer(fire: Date(), interval: HomeViewController.animationInterval, repeats: true) { (timer) in
             let initailPoint = CGPoint(x: newOffsetX,y :0)
             if __CGPointEqualToPoint(initailPoint, self.collectionView.contentOffset) {
                 let itemWidthWithMargin = Int(CollectionSize.itemWidth.rawValue + CollectionSize.itemMargin.rawValue) // 166 , total width of a collectionview item

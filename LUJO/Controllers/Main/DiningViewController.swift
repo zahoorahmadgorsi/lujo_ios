@@ -367,9 +367,9 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             if self.featured.titleList.count > 0 {
                 if let index = Int(self.currentImageNum.text ?? "1") {
                     if index == self.featured.titleList.count {
-                        self.featured.carouselView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
+                        self.featured.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
                     } else {
-                        self.featured.carouselView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
+                        self.featured.collectionView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
                     }
                 }
             }

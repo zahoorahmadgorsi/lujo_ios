@@ -208,14 +208,22 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
 
 extension EventDetailsViewController {
     
-    fileprivate func setupEvents(_ event: Product) {
+    fileprivate func setupEvents(_ product: Product) {
         // imagesList.imageURLList = event.allImages ?? []
-        if let firstImageLink = event.getGalleryImagesURL().first {
+//        if let firstImageLink = event.getGalleryImagesURL().first {
+//            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+//        }else{
+//            print("Image not found")
+//        }
+        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+            mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+        }
+        else if let firstImageLink = product.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }else{
             print("Image not found")
         }
-        name.text = event.name
+        name.text = product.name
         self.title = name.text
         //checking favourite image red or white
         if (self.product.isFavourite ?? false){
@@ -225,46 +233,46 @@ extension EventDetailsViewController {
         }
         
         var locationText = ""
-        if let cityName = event.location?.first?.city?.name {
+        if let cityName = product.location?.first?.city?.name {
             locationText = "\(cityName), "
         }
-        locationText += event.location?.first?.country.name ?? ""
+        locationText += product.location?.first?.country.name ?? ""
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         
         var startDateText = ""
         var startTimeText = ""
         
-        if let startDate = event.startDate {
+        if let startDate = product.startDate {
             startDateText = EventDetailsViewController.convertDateFormate(date: startDate)
             startTimeText = EventDetailsViewController.timeFormatter.string(from: startDate)
         }
         
         var endDateText = ""
-        if let eventEndDate = event.endDate {
+        if let eventEndDate = product.endDate {
             endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
         }
         
-        if let timezone = event.timezone {
+        if let timezone = product.timezone {
             startTimeText = "\(startTimeText) (\(timezone))"
         }
         
-        if event.startDate != nil {
+        if product.startDate != nil {
             dateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
         }
         
-        dateContainerView.isHidden = event.startDate == nil
-        dateLocationContainerView.isHidden = event.startDate == nil && locationText.isEmpty
+        dateContainerView.isHidden = product.startDate == nil
+        dateLocationContainerView.isHidden = product.startDate == nil && locationText.isEmpty
         //hiding yacht length, passenger and cabins views
         viewYachtLength.isHidden = true
         viewYachtPassengers.isHidden = true
         viewYachtCabins.isHidden = true
         
-        descriptionTextView.attributedText = convertToAttributedString(event.description)
+        descriptionTextView.attributedText = convertToAttributedString(product.description)
         
         chatButton.isEnabled = !isEventPast
         requestButton.isEnabled = !isEventPast
-        if event.type == "special-event" {
+        if product.type == "special-event" {
             requestButton.setTitle("R E Q U E S T", for: .normal)
         }
         
@@ -273,14 +281,21 @@ extension EventDetailsViewController {
         }
     }
     
-    fileprivate func setupExperience(_ experience: Product) {
-        if let firstImageLink = experience.getGalleryImagesURL().first {
-            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-        } else if let primaryImageLink = experience.primaryMedia?.mediaUrl{
-            mainImageView.downloadImageFrom(link: primaryImageLink, contentMode: .scaleAspectFill)
+    fileprivate func setupExperience(_ product: Product) {
+//        if let firstImageLink = experience.getGalleryImagesURL().first {
+//            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+//        } else if let primaryImageLink = experience.primaryMedia?.mediaUrl{
+//            mainImageView.downloadImageFrom(link: primaryImageLink, contentMode: .scaleAspectFill)
+//        }
+        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+            mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
-        
-        name.text = experience.name
+        else if let firstImageLink = product.getGalleryImagesURL().first {
+            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+        }else{
+            print("Image not found")
+        }
+        name.text = product.name
         self.title = name.text
         //checking favourite image red or white
         if (self.product.isFavourite ?? false){
@@ -290,10 +305,10 @@ extension EventDetailsViewController {
         }
         
         var locationText = ""
-        if let cityName = experience.location?.first?.city?.name {
+        if let cityName = product.location?.first?.city?.name {
             locationText = "\(cityName), "
         }
-        locationText += experience.location?.first?.country.name ?? ""
+        locationText += product.location?.first?.country.name ?? ""
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         
@@ -303,15 +318,18 @@ extension EventDetailsViewController {
         viewYachtPassengers.isHidden = true
         viewYachtCabins.isHidden = true
         
-        descriptionTextView.attributedText = convertToAttributedString(experience.description)
+        descriptionTextView.attributedText = convertToAttributedString(product.description)
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
     
     fileprivate func setupVilla(_ product: Product) {
-        if let firstImageLink = product.getGalleryImagesURL().first {
+        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+            mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+        }
+        else if let firstImageLink = product.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-        } else if let primaryImageLink = product.primaryMedia?.mediaUrl{
-            mainImageView.downloadImageFrom(link: primaryImageLink, contentMode: .scaleAspectFill)
+        }else{
+            print("Image not found")
         }
         
         name.text = product.name
@@ -432,10 +450,13 @@ extension EventDetailsViewController {
     }
     
     fileprivate func setupYacht(_ product: Product) {
-        if let firstImageLink = product.getGalleryImagesURL().first {
+        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+            mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+        }
+        else if let firstImageLink = product.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-        } else if let primaryImageLink = product.primaryMedia?.mediaUrl{
-            mainImageView.downloadImageFrom(link: primaryImageLink, contentMode: .scaleAspectFill)
+        }else{
+            print("Image not found")
         }
         
         name.text = product.name
@@ -772,7 +793,8 @@ extension EventDetailsViewController {
     }
     
     @objc func tappedOnBack(_ sender:AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc func tappedOnHeart(_ sender:AnyObject) {

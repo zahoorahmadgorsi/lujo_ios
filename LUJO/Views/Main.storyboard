@@ -1549,10 +1549,10 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="1780"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQV-I8-dS9" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3683.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3707.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-94-B9B">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3683.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3707.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mL5-em-HIW">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
@@ -2872,14 +2872,14 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rH6-PR-1o6" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="3281.5" width="414" height="148"/>
+                                                        <rect key="frame" x="0.0" y="3281.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="148" id="W4w-V0-fdT"/>
+                                                            <constraint firstAttribute="height" constant="172" id="W4w-V0-fdT"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Bz-tS-yAL">
-                                                        <rect key="frame" x="0.0" y="3429.5" width="414" height="234"/>
+                                                        <rect key="frame" x="0.0" y="3453.5" width="414" height="234"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZBv-V4-hkh" customClass="HomeSpecialEventSummary" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="32" width="382" height="178"/>
@@ -2898,7 +2898,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eHi-xM-Dno">
-                                                        <rect key="frame" x="0.0" y="3663.5" width="414" height="20"/>
+                                                        <rect key="frame" x="0.0" y="3687.5" width="414" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="iKR-4l-RuN"/>
@@ -2916,7 +2916,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnF-XJ-t3F">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3683.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3707.5"/>
                                         <color key="backgroundColor" white="0.070000000000000007" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
