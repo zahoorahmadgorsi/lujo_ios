@@ -105,8 +105,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
         
     //Zahoor Started 20200822
-    var animationInterval:TimeInterval = 4
-    var totalAnimationOnScreen:Int = 4
+    var animationInterval:TimeInterval = 6
+//    var totalAnimationOnScreen:Int = 4
     //Zahoor finished
     
     override func viewDidLoad() {

@@ -10,9 +10,6 @@ import UIKit
 import JGProgressHUD
 
 class EventDetailsViewController: UIViewController, GalleryViewProtocol {
-    
-    
-    
     //MARK:- Init
     
     /// Class storyboard identifier.
@@ -92,11 +89,13 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
         switch product.type {
             case "event":           fallthrough
             case "special-event":   setupEvents(product)
+            case "gift":            fallthrough
             case "experience":      setupExperience(product)
-            case "villa":           setupVilla(product)
-            case "gift":            setupExperience(product)
             case "yacht":           setupYacht(product)
-            default: break
+            case "villa":           setupVilla(product)
+            default:
+                setupEvents(product)//("It could be restaurant")
+                break
         }
         //setting up gallery
         setUpGallery(product)
@@ -462,13 +461,13 @@ extension EventDetailsViewController {
 //        }
 
         if let val = product.guestsNumber, val.count > 0{
-//            itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
+            itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
             lblYachtPassengers.text = val
         }else{
             viewYachtPassengers.isHidden = true
         }
         if let val = product.cabinNumber, val.count > 0{
-//            itemsList.append(ProductDetail(key: "Number Of Cabins",value: val,isHighSeason: nil))
+            itemsList.append(ProductDetail(key: "Number Of Cabins",value: val,isHighSeason: nil))
             lblYachtCabins.text = val
         }else{
             viewYachtCabins.isHidden = true
@@ -492,7 +491,7 @@ extension EventDetailsViewController {
             itemsList.append(ProductDetail(key: "Refit Year",value: val,isHighSeason: nil))
         }
         if let val = product.lengthM, val.count > 0{
-//            itemsList.append(ProductDetail(key: "Length (Meters)",value: val,isHighSeason: nil))
+            itemsList.append(ProductDetail(key: "Length (Meters)",value: val,isHighSeason: nil))
             lblYachtLength.text = val + "(m)"
         }else{
             viewYachtLength.isHidden = true
@@ -620,12 +619,13 @@ extension EventDetailsViewController {
             //applying constraints on galleryView
             setupGalleryLayout(galleryView: galleryView)
         default:
-            let galleryView = GalleryView4()
-            galleryView.gallery = product.gallery
-            galleryView.delegate = self
-            stackView.addArrangedSubview(galleryView)
-            //applying constraints on galleryView
-            setupGalleryLayout(galleryView: galleryView)
+            print("No need to add any gallery")
+//            let galleryView = GalleryView4()
+//            galleryView.gallery = product.gallery
+//            galleryView.delegate = self
+//            stackView.addArrangedSubview(galleryView)
+//            //applying constraints on galleryView
+//            setupGalleryLayout(galleryView: galleryView)
         }
     }
     

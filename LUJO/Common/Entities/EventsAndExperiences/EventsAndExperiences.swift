@@ -126,6 +126,17 @@ struct Product: Codable {
     let yachtExtras: [Taxonomy]?
     let charterPriceLowSeasonPerDay: String?
     let charterPriceHighSeasonPerDay: String?
+    //Restaurant related
+//    let tripadvisor: String?
+//    let address: String
+//    let phone: String?
+//    let zipCode: String?
+//    let email: String?
+//    let website: String?
+//    let starChief: String?
+//    let restaurantCategory: [Taxonomy]?
+//    let cuisineCategory: [Taxonomy]?
+//    let michelinStar: [Taxonomy]?
     
     enum CodingKeys: String, CodingKey {
         case type

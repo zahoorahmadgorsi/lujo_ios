@@ -13,22 +13,26 @@ struct Restaurant: Codable {
     let id: Int
     let name: String
     let description: String
-    let tripadvisor: String?
+    
+    let tripadvisor: String? 
     let address: String
     let phone: String?
     let zipCode: String?
     let email: String?
     let website: String?
+    let starChief: String?
+    let restaurantCategory: [Taxonomy]?
+    let cuisineCategory: [Taxonomy]?
+    let michelinStar: [Taxonomy]?
+    
     let primaryMedia: Gallery?
     let gallery: [Gallery]?
 
     let latitude: String?
     let longtitude: String?
-    let starChief: String?
+    
 
-    let restaurantCategory: [Taxonomy]?
-    let cuisineCategory: [Taxonomy]?
-    let michelinStar: [Taxonomy]?
+    
     let priceRange: [Taxonomy]?
     let location: [TaxonomyLocation]
     var isFavourite: Bool?

@@ -61,6 +61,7 @@ class EventsViewController: UIViewController {
         switch category! {
             case .event:
                 currentLayout?.setCustomCellHeight(194)
+//                currentLayout?.setCustomCellHeight(400)
             case .experience:
                 currentLayout?.setCustomCellHeight(170)
             case .villa:
@@ -148,7 +149,7 @@ class EventsViewController: UIViewController {
         //sub category will exist e.g. toprated events (event is subcategory) if user is coming from percity view controller by clicking on see all button at top rated
         //if subcategory exists then append it with appending s (to make it plural)
         title = titleString + (subCategoryType.count > 0 ? " " + subCategoryType.capitalizingFirstLetter() + "s" : "")
-        print(title as Any)
+//        print(title as Any)
 //        naHUD.textLabel.text = "Loading " + category.rawValue
     }
     
