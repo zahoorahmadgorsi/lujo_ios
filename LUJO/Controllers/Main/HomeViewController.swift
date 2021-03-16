@@ -4,8 +4,7 @@
 //
 //  Created by Iker Kristian on 8/28/19.
 //  Copyright © 2019 Baroque Access. All rights reserved.
-// present/dismis  animation https://medium.com/@tungfam/custom-uiviewcontroller-transitions-in-swift-d1677e5aa0bf#
-// push/pop animation https://hedgehoglab.com/blog/ios-transition-animations
+
 
 import UIKit
 import JGProgressHUD
@@ -781,22 +780,27 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                 case self.homeRecentSlider:
                     var items = self.homeRecentSlider.itemsList
                     items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    self.homeObjects?.recent = items    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = items   //re-assigning as it will automatically reload the collection
                 case self.homeTopRatedSlider:
                     var items = self.homeTopRatedSlider.itemsList
                     items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    self.homeObjects?.topRated = items    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = items   //re-assigning as it will automatically reload the collection
                 case self.homeGiftsSlider:
                     var items = self.homeGiftsSlider.itemsList
                     items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    self.homeObjects?.gifts = items    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = items   //re-assigning as it will automatically reload the collection
                 case self.homeVillasSlider:
                     var items = self.homeVillasSlider.itemsList
                     items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    self.homeObjects?.villas = items    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = items   //re-assigning as it will automatically reload the collection
                 case self.homeYachtsSlider:
                     var items = self.homeYachtsSlider.itemsList
                     items[index].isFavourite = !(items[index].isFavourite ?? false)
+                    self.homeObjects?.yachts = items    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = items   //re-assigning as it will automatically reload the collection
                 case self.homeEventSlider:
                     var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
@@ -810,10 +814,12 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                         self.locationEventSlider.itemsList = locationEvents //re-assigning as it will automatically reload the collection
                     }
                     homeEvents[index].isFavourite = !(homeEvents[index].isFavourite ?? false)
+                    self.homeObjects?.events = homeEvents    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = homeEvents   //re-assigning as it will automatically reload the collection
                 case self.homeExperienceSlider:
                     var homeExperiences = self.homeExperienceSlider.itemsList //events in locationEventSlider
                     homeExperiences[index].isFavourite = !(homeExperiences[index].isFavourite ?? false)
+                    self.homeObjects?.experiences = homeExperiences    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = homeExperiences   //re-assigning as it will automatically reload the collection
                 case self.locationEventSlider:
                     var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
@@ -827,6 +833,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                         self.homeEventSlider.itemsList = homeEvents //re-assigning as it will automatically reload the collection
                     }
                     locationEvents[index].isFavourite = !(locationEvents[index].isFavourite ?? false)
+                    self.homeObjects?.events = locationEvents    // so that updated value can be loaded next time e.g. event detail
                     sender.itemsList = locationEvents   //re-assigning as it will automatically reload the collection
                     // Store data for later use inside preload reference.
 //                        PreloadDataManager.HomeScreen.scrollViewData = information
@@ -869,11 +876,13 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
         let viewController = EventDetailsViewController.instantiate(event: product)
+        
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
-//        self.navigationController?.delegate = self
+        
+//        self.navigationController?.delegate = self //for push/pop navigation
 //        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -1031,22 +1040,31 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 
     // B1 - 3
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        //return nil
+//        return nil
         // B2 - 17
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         guard let secondViewController = dismissed as? EventDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
-            else { return nil }
+            else {
+                return nil
+            }
 
         animator = Animator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
         return animator
     }
 }
 
-extension HomeViewController: UINavigationControllerDelegate{
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
-    {
-        return nil
-        
-    }
-}
+//extension HomeViewController: UINavigationControllerDelegate{
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
+//    {
+//        switch operation {
+//            case .push:
+//                return animationController(forPresented: toVC , presenting: fromVC, source: fromVC)
+//            case .pop:
+//                return animationController(forDismissed: fromVC)
+//            default:
+//                return nil
+//        }
+//        
+//    }
+//}

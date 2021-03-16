@@ -137,14 +137,16 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activateKeyboardManager()
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.tabBarController?.tabBar.isHidden = true
+        //No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
+//        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.tabBarController?.tabBar.isHidden = false
+        //No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.tabBarController?.tabBar.isHidden = false
     }
     
     @IBAction func requestBooking(_ sender: Any) {
@@ -611,6 +613,7 @@ extension EventDetailsViewController {
     func setUpGallery(_ product: Product){
         //Setting up gallery
         switch product.gallery?.count {
+        case 0: print("No need to add any gallery")
         case 1:
             let galleryView = GalleryView1()
             galleryView.gallery = product.gallery
@@ -632,21 +635,14 @@ extension EventDetailsViewController {
             stackView.addArrangedSubview(galleryView)
             //applying constraints on galleryView
             setupGalleryLayout(galleryView: galleryView)
-        case 4:
+        default:
+            print("4 or more")
             let galleryView = GalleryView4()
             galleryView.gallery = product.gallery
             galleryView.delegate = self
             stackView.addArrangedSubview(galleryView)
             //applying constraints on galleryView
             setupGalleryLayout(galleryView: galleryView)
-        default:
-            print("No need to add any gallery")
-//            let galleryView = GalleryView4()
-//            galleryView.gallery = product.gallery
-//            galleryView.delegate = self
-//            stackView.addArrangedSubview(galleryView)
-//            //applying constraints on galleryView
-//            setupGalleryLayout(galleryView: galleryView)
         }
     }
     
@@ -798,33 +794,32 @@ extension EventDetailsViewController {
     }
     
     @objc func tappedOnHeart(_ sender:AnyObject) {
+        //setting the favourite
+        self.showNetworkActivity()
+        setUnSetFavourites(id: product.id ,isUnSetFavourite: product.isFavourite ?? false) {information, error in
+            self.hideNetworkActivity()
             
-            //setting the favourite
-            self.showNetworkActivity()
-            setUnSetFavourites(id: product.id ,isUnSetFavourite: product.isFavourite ?? false) {information, error in
-                self.hideNetworkActivity()
-                
-                if let error = error {
-                    self.showError(error)
-                    return
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                self.product.isFavourite = !(self.product.isFavourite ?? false)
+                //checking favourite image red or white
+                if (self.product.isFavourite ?? false){
+                    self.imgHeart.image = UIImage(named: "heart_red")
+                }else{
+                    self.imgHeart.image = UIImage(named: "heart_white")
                 }
                 
-                if let informations = information {
-                    self.product.isFavourite = !(self.product.isFavourite ?? false)
-                    //checking favourite image red or white
-                    if (self.product.isFavourite ?? false){
-                        self.imgHeart.image = UIImage(named: "heart_red")
-                    }else{
-                        self.imgHeart.image = UIImage(named: "heart_white")
-                    }
-                    
-                    print("ItemID:\(self.product.id)" + ", ItemType:" + self.product.type  + ", ServerResponse:" + informations)
-                } else {
-                    let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
-                    self.showError(error)
-                }
+                print("ItemID:\(self.product.id)" + ", ItemType:" + self.product.type  + ", ServerResponse:" + informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
+                self.showError(error)
             }
         }
+    }
     
     func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
@@ -847,19 +842,19 @@ extension EventDetailsViewController {
     //Zahoor finished
 }
 
+////No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
 extension EventDetailsViewController: UIScrollViewDelegate {
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView)
     {
-//        print("scrollViewDidScroll")
         hideUnhideNavigationBar(scrollView)
     }
-    
+
     func hideUnhideNavigationBar(_ scrollView: UIScrollView){
         let hide = scrollView.contentOffset.y < self.scrollOffsetToShowNavigationBar
 //        print(scrollView.contentOffset.y,hide)
         //hiding navigation bar if scroll off set is more then 280
-        self.navigationController?.setNavigationBarHidden(hide, animated: true)
+//        self.navigationController?.setNavigationBarHidden(hide, animated: true)
 
     }
 }

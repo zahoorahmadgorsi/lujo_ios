@@ -24,8 +24,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     private var wishListInformations: WishListObjects?
     private let naHUD = JGProgressHUD(style: .dark)
     @IBOutlet var scrollView: UIScrollView!
-    var animationInterval:TimeInterval = 4
-    var totalAnimationOnScreen:Int = 8
+//    var animationInterval:TimeInterval = 4
+//    var totalAnimationOnScreen:Int = 8
     
     /// Refresh control view. Used to display network activity when user pull scroll view down
     /// view to fetch new data.
@@ -95,7 +95,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
     
     func updateContent() {
-         let secondsToDelay:TimeInterval = self.animationInterval / Double(totalAnimationOnScreen) //animation delay between Featured,Events and Experience
+//         let secondsToDelay:TimeInterval = HomeViewController.animationInterval / Double(totalAnimationOnScreen) //animation delay between Featured,Events and Experience
 //        removing all subview first then adding new
         for view in self.stackView.subviews {
             view.removeFromSuperview()
@@ -464,38 +464,51 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .event:
                 if let event = wishListInformations?.events?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.modalPresentationStyle = .fullScreen
+                    present(viewController, animated: true)
                 }
             case .experience:
                 if let event = wishListInformations?.experiences?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.modalPresentationStyle = .fullScreen
+                    present(viewController, animated: true)
                 }
             case .specialEvent:
                 if let event = wishListInformations?.specialEvents?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.modalPresentationStyle = .fullScreen
+                    present(viewController, animated: true)
                 }
             case .restaurant:
                 if let item = wishListInformations?.restaurants?[indexPath.row]{
                     let viewController = RestaurantDetailViewController.instantiate(restaurant: item)
     //                self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.modalPresentationStyle = .fullScreen
                     present(viewController, animated: true, completion: nil)
                 }
             case .villa:
                 if let event = wishListInformations?.villas?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.modalPresentationStyle = .fullScreen
+                    present(viewController, animated: true)
                 }
             case .yacht:
                 if let event = wishListInformations?.yachts?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.modalPresentationStyle = .fullScreen
+                    present(viewController, animated: true)
                 }
             case .gift:
                 if let event = wishListInformations?.gifts?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
-                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.modalPresentationStyle = .fullScreen
+                    present(viewController, animated: true)
                 }
             default:
                 print("default")

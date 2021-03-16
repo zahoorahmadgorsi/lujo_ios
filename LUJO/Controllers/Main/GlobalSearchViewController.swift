@@ -285,7 +285,10 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func eventButton_onClick(_ sender: UIButton) {
         if let event = cityInformation?.event.items[sender.tag] {
-            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: event), animated: true)
+//            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: event), animated: true)
+            let viewController = EventDetailsViewController.instantiate(event: event)
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true)
         }
     }
     
@@ -298,7 +301,10 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func experianceButton_onClick(_ sender: UIButton) {
         if let experience = cityInformation?.experience.items[sender.tag] {
-            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: experience), animated: true)
+//            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: experience), animated: true)
+            let viewController = EventDetailsViewController.instantiate(event: experience)
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true)
         }
     }
     

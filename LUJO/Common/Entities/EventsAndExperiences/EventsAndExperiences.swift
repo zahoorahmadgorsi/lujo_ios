@@ -302,7 +302,7 @@ extension Product {
 struct HomeObjects: Codable {
     let slider: [Product]
     var events: [Product]
-    let experiences: [Product]
+    var experiences: [Product]
     var specialEvents: [Product]
     var recent: [Product]
     var topRated: [Product]

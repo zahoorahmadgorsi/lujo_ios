@@ -306,7 +306,9 @@ extension PerCityViewController: CityViewProtocol {
     
     func didTappedOnProductAt(product: Product) {
         let viewController = EventDetailsViewController.instantiate(event: product)
-        self.navigationController?.pushViewController(viewController, animated: true)
+//        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
     }
 
     func didTappedOnHeartAt(city currentCity: Cities, itemIndex: Int) {
@@ -451,7 +453,9 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
         }
         
         let viewController = EventDetailsViewController.instantiate(event: product)
-        self.navigationController?.pushViewController(viewController, animated: true)
+//        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
     }
     
 }
