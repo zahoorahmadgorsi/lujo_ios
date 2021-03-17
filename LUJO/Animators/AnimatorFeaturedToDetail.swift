@@ -8,9 +8,19 @@
 
 import UIKit
 
+//Simple enum that defines if the screen is dismissed or presented. Will be used to pass to Animator to define which animation to use.
+enum PresentationType {
+    case present
+    case dismiss
+
+    var isPresenting: Bool {
+        return self == .present
+    }
+}
+
 //Animator is a class that will implement the animation. So the instance of this class will be responsible for either
 //presentation or dismissal animation.
-final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
+final class AnimatorFeaturedToDetail: NSObject, UIViewControllerAnimatedTransitioning {
 
     //These are the properties that will be needed for animation
     static let duration: TimeInterval = 0.5
@@ -31,21 +41,20 @@ final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
         self.secondViewController = secondViewController
         self.selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
         
+
         guard let window = firstViewController.view.window ?? secondViewController.view.window,
-              let selectedCell = firstViewController.selectedCell
+              let selectedCell = firstViewController.selectedFeaturedCell
             else {
                 return nil  // now default animation will execute
             }
 
 //        Getting the Frame of the Image View of the Cell relative to the window’s frame. This is a very essential step since       we will need to animate in the Transition Container View, we need to convert the cell from the collection view’s to an      appropriate coordinate system.
-        
         self.cellImageViewRect = selectedCell.primaryImage.convert(selectedCell.primaryImage.bounds, to: window)
         self.cellImgHeartRect = selectedCell.imgHeart.convert(selectedCell.imgHeart.bounds, to: window)
         
     }
 
 //  Required method of UIViewControllerAnimatedTransitioning protocol. We just return the animation duration we want.
-//  Note that we use a stored property because it will be reused later. So that we don’t have different values flying around which prevents hunting the bugs 🐛 :)
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return Self.duration
     }
@@ -66,7 +75,7 @@ final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
 //      selectedCell and window are unwrapped to make sure they aren’t nil. We are assigning the window of the screen that is       currently presented. Meaning if it’s presentation, then it will be a window of FirstVC, if it’s dismissal then it’s the     window of SecondVC.
 //        cellImageSnapshot — snapshot of the image of selected cell
 //        controllerImageSnapshot — snapshot of the image of the 2nd VC.
-        guard let selectedCell = firstViewController.selectedCell,
+        guard let selectedCell = firstViewController.selectedFeaturedCell,
             let window = firstViewController.view.window ?? secondViewController.view.window,
             let cellImageSnapshot = selectedCell.primaryImage.snapshotView(afterScreenUpdates: true),
             let controllerImageSnapshot = secondViewController.mainImageView.snapshotView(afterScreenUpdates: true)
@@ -88,8 +97,8 @@ final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
            backgroundView.addSubview(fadeView)
            fadeView.alpha = 0
        } else {
-        backgroundView = firstViewController.parent?.view.snapshotView(afterScreenUpdates: true) ?? fadeView
-           backgroundView.addSubview(fadeView)
+            backgroundView = firstViewController.parent?.view.snapshotView(afterScreenUpdates: true) ?? fadeView
+            backgroundView.addSubview(fadeView)
        }
 
         
@@ -101,7 +110,7 @@ final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
         // B4 - 35
         [selectedCellImageViewSnapshot, controllerImageSnapshot].forEach {
             $0.frame = isPresenting ? cellImageViewRect : controllerImageViewRect
-            $0.layer.cornerRadius = isPresenting ? Animator.cornerRadius : 0
+            $0.layer.cornerRadius = isPresenting ? AnimatorFeaturedToDetail.cornerRadius : 0
             $0.layer.masksToBounds = true
         }
 
@@ -118,7 +127,7 @@ final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
                 fadeView.alpha = isPresenting ? 1 : 0
                 cellImgHeartSnapshot.frame = isPresenting ? controllerImgHeartRect : self.cellImgHeartRect
                 [controllerImageSnapshot, self.selectedCellImageViewSnapshot].forEach {
-                    $0.layer.cornerRadius = isPresenting ? 0 : Animator.cornerRadius
+                    $0.layer.cornerRadius = isPresenting ? 0 : AnimatorFeaturedToDetail.cornerRadius
                 }
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.6) {
@@ -142,13 +151,3 @@ final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
     }
 }
 
-//Simple enum that defines if the screen is dismissed or presented. Will be used to pass to Animator to define which animation to use.
-enum PresentationType {
-
-    case present
-    case dismiss
-
-    var isPresenting: Bool {
-        return self == .present
-    }
-}

@@ -17,6 +17,15 @@ enum HomeElementType: Int {
     case events, experiences
 }
 
+enum AnimationType {
+    case featured
+    case slider
+    
+    var isFeatured: Bool {
+        return self == .featured
+    }
+}
+
 struct AirportSuggestion {
     var origin: Airport?
     var destination: Airport
@@ -110,9 +119,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     // B2 - 5
     var selectedCell: HomeSliderCell?
     var selectedFeaturedCell: ImageCarouselCell?
+    
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
-    var animator: Animator?
+    var sliderToDetailAnimator: AnimatorSliderToDetail?
+    var featuredToDetailAnimator: AnimatorFeaturedToDetail?
+    
+    private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -404,20 +417,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             case is ImageCarousel:
                 event = getCurrentEventInFeatured()
                 // B2 - 6
-//                let indexPath = IndexPath(row: featured.currentIndex ?? 0, section: 0)
-//                selectedFeaturedCell = featured.collectionView.cellForItem(at: indexPath) as? ImageCarouselCell
+                let indexPath = IndexPath(row: featured.currentIndex ?? 0, section: 0)
+                selectedFeaturedCell = featured.collectionView.cellForItem(at: indexPath) as? ImageCarouselCell
             case specialEventView1:
                 event = homeObjects?.specialEvents[0]
             case specialEventView2:
                 event = homeObjects?.specialEvents[1]
             default: return
         }
-        
+        animationtype = .featured   //execute feature to detail animation
 //        // B2 - 7
-//        selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+        selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
         let viewController = EventDetailsViewController.instantiate(event: event)
 //        // B1 - 4
-//        viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
+        //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
+        viewController.transitioningDelegate = self
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
 
@@ -870,6 +884,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                 product = locationEventSlider.itemsList[indexPath.row]
             default: return
         }
+        animationtype = .slider //call slider to detail animation
         // B2 - 6
         selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
         // B2 - 7
@@ -1033,9 +1048,16 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
             else {
                 return nil
             }
-
-        animator = Animator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-        return animator
+//        print(animationtype)
+        if animationtype == .slider{
+            sliderToDetailAnimator = AnimatorSliderToDetail(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return sliderToDetailAnimator
+        }else if animationtype == .featured{
+            featuredToDetailAnimator = AnimatorFeaturedToDetail(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return featuredToDetailAnimator
+        }else {
+            return nil
+        }
     }
 
     // B1 - 3
@@ -1048,9 +1070,15 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
             else {
                 return nil
             }
-
-        animator = Animator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-        return animator
+        if animationtype == .slider{
+            sliderToDetailAnimator = AnimatorSliderToDetail(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return sliderToDetailAnimator
+        }else if animationtype == .featured{
+            featuredToDetailAnimator = AnimatorFeaturedToDetail(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return featuredToDetailAnimator
+        }else {
+            return nil
+        }
     }
 }
 
