@@ -14,7 +14,7 @@ enum ProductType:String {
 }
 
 enum ProdCollSize:Int{
-    case itemWidth = 175
+    case itemWidth = 170    // donn't increase else UI wont look nice on smaller phone i.e. iphone 11
     case summaryHeight = 40
     case priceHeight = 60
     case amenitiesHeight = 20

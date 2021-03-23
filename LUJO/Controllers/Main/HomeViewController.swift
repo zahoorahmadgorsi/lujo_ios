@@ -122,8 +122,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
-    var sliderToDetailAnimator: AnimatorSliderToDetail?
-    var featuredToDetailAnimator: AnimatorFeaturedToDetail?
+    var sliderToDetailAnimator: SliderToDetailAnimator?
+    var featuredToDetailAnimator: FeaturedToDetailAnimator?
     
     private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
     
@@ -419,15 +419,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 // B2 - 6
                 let indexPath = IndexPath(row: featured.currentIndex ?? 0, section: 0)
                 selectedFeaturedCell = featured.collectionView.cellForItem(at: indexPath) as? ImageCarouselCell
+                animationtype = .featured   //execute feature to detail animation
+                // B2 - 7
+                selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             case specialEventView1:
                 event = homeObjects?.specialEvents[0]
             case specialEventView2:
                 event = homeObjects?.specialEvents[1]
             default: return
         }
-        animationtype = .featured   //execute feature to detail animation
-//        // B2 - 7
-        selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+        
         let viewController = EventDetailsViewController.instantiate(event: event)
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
@@ -924,8 +925,8 @@ extension HomeViewController {
             
             //37.939998626709
             //23.639999389648
-            print(token)
-            print(Float(location.coordinate.latitude),Float(location.coordinate.longitude))
+//            print(token)
+            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
             EEAPIManager().geopoint(token: token, type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
                 self.canSendRequest = true
                 
@@ -1050,10 +1051,10 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
             }
 //        print(animationtype)
         if animationtype == .slider{
-            sliderToDetailAnimator = AnimatorSliderToDetail(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            sliderToDetailAnimator = SliderToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return sliderToDetailAnimator
         }else if animationtype == .featured{
-            featuredToDetailAnimator = AnimatorFeaturedToDetail(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            featuredToDetailAnimator = FeaturedToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredToDetailAnimator
         }else {
             return nil
@@ -1071,10 +1072,10 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
                 return nil
             }
         if animationtype == .slider{
-            sliderToDetailAnimator = AnimatorSliderToDetail(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            sliderToDetailAnimator = SliderToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return sliderToDetailAnimator
         }else if animationtype == .featured{
-            featuredToDetailAnimator = AnimatorFeaturedToDetail(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            featuredToDetailAnimator = FeaturedToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredToDetailAnimator
         }else {
             return nil

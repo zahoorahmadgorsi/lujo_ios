@@ -10,7 +10,7 @@ import UIKit
 
 protocol DiningCityProtocol:class {
     func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView)
-    func didTappedOnRestaurantAt(restaurant: Restaurant)
+    func didTappedOnRestaurantAt(index: Int,restaurant: Restaurant)
     func didTappedOnHeartAt(index: Int, sender: Restaurant)
 }
 
@@ -138,7 +138,7 @@ class DiningCityView: UIView {
     
     @objc func tappedOnRestaurant(_ sender:AnyObject){
         if let restaurant = city?.restaurants[sender.view.tag] {
-            delegate?.didTappedOnRestaurantAt(restaurant: restaurant)
+            delegate?.didTappedOnRestaurantAt(index: sender.view.tag,restaurant: restaurant)
         }
     }
     //Zahoor end

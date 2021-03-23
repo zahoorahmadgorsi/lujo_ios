@@ -8,13 +8,15 @@
 
 import UIKit
 
+
+
 //Animator is a class that will implement the animation. So the instance of this class will be responsible for either
 //presentation or dismissal animation.
-final class AnimatorSliderToDetail: NSObject, UIViewControllerAnimatedTransitioning {
+final class FeaturedToDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     //These are the properties that will be needed for animation
-    static let duration: TimeInterval = 0.5
-    static let cornerRadius: CGFloat = 2.0
+//    static let duration: TimeInterval = 0.5
+//    static let cornerRadius: CGFloat = 2.0
 
     private let type: PresentationType
     private let firstViewController: HomeViewController
@@ -33,7 +35,7 @@ final class AnimatorSliderToDetail: NSObject, UIViewControllerAnimatedTransition
         
 
         guard let window = firstViewController.view.window ?? secondViewController.view.window,
-            let selectedCell = firstViewController.selectedCell
+              let selectedCell = firstViewController.selectedFeaturedCell
             else {
                 return nil  // now default animation will execute
             }
@@ -46,7 +48,7 @@ final class AnimatorSliderToDetail: NSObject, UIViewControllerAnimatedTransition
 
 //  Required method of UIViewControllerAnimatedTransitioning protocol. We just return the animation duration we want.
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return Self.duration
+        return SliderToDetailAnimator.duration
     }
 
 //  A required method of UIViewControllerAnimatedTransitioning the protocol. All the transition logic and animations will be done here.
@@ -65,7 +67,7 @@ final class AnimatorSliderToDetail: NSObject, UIViewControllerAnimatedTransition
 //      selectedCell and window are unwrapped to make sure they aren’t nil. We are assigning the window of the screen that is       currently presented. Meaning if it’s presentation, then it will be a window of FirstVC, if it’s dismissal then it’s the     window of SecondVC.
 //        cellImageSnapshot — snapshot of the image of selected cell
 //        controllerImageSnapshot — snapshot of the image of the 2nd VC.
-        guard let selectedCell = firstViewController.selectedCell,
+        guard let selectedCell = firstViewController.selectedFeaturedCell,
             let window = firstViewController.view.window ?? secondViewController.view.window,
             let cellImageSnapshot = selectedCell.primaryImage.snapshotView(afterScreenUpdates: true),
             let controllerImageSnapshot = secondViewController.mainImageView.snapshotView(afterScreenUpdates: true)
@@ -100,7 +102,7 @@ final class AnimatorSliderToDetail: NSObject, UIViewControllerAnimatedTransition
         // B4 - 35
         [selectedCellImageViewSnapshot, controllerImageSnapshot].forEach {
             $0.frame = isPresenting ? cellImageViewRect : controllerImageViewRect
-            $0.layer.cornerRadius = isPresenting ? AnimatorSliderToDetail.cornerRadius : 0
+            $0.layer.cornerRadius = isPresenting ? SliderToDetailAnimator.cornerRadius : 0
             $0.layer.masksToBounds = true
         }
 
@@ -110,14 +112,14 @@ final class AnimatorSliderToDetail: NSObject, UIViewControllerAnimatedTransition
         closeButtonSnapshot.frame = closeButtonRect
         closeButtonSnapshot.alpha = isPresenting ? 0 : 1
         
-        UIView.animateKeyframes(withDuration: Self.duration, delay: 0, options: .calculationModeCubic, animations: {
+        UIView.animateKeyframes(withDuration: SliderToDetailAnimator.duration, delay: 0, options: .calculationModeCubic, animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
                 self.selectedCellImageViewSnapshot.frame = isPresenting ? controllerImageViewRect : self.cellImageViewRect
                 controllerImageSnapshot.frame = isPresenting ? controllerImageViewRect : self.cellImageViewRect
                 fadeView.alpha = isPresenting ? 1 : 0
                 cellImgHeartSnapshot.frame = isPresenting ? controllerImgHeartRect : self.cellImgHeartRect
                 [controllerImageSnapshot, self.selectedCellImageViewSnapshot].forEach {
-                    $0.layer.cornerRadius = isPresenting ? 0 : AnimatorSliderToDetail.cornerRadius
+                    $0.layer.cornerRadius = isPresenting ? 0 : SliderToDetailAnimator.cornerRadius
                 }
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.6) {
@@ -140,3 +142,4 @@ final class AnimatorSliderToDetail: NSObject, UIViewControllerAnimatedTransition
         })
     }
 }
+

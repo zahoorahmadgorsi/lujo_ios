@@ -71,6 +71,18 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     /// this data without needing to fetch it again from the server. Default is nil.
     private var preloadData: DiningHomeObjects? { return PreloadDataManager.DiningScreen.scrollViewData }
     
+    // B2 - 5
+    var selectedCell: UIImageView?
+    var selectedCellHeart: UIImageView?
+    var selectedFeaturedCell: ImageCarouselCell?
+    var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
+    // B2 - 15
+    var selectedCellHeartSnapshot: UIView?
+    var sliderDiningToDetailAnimator: SliderDiningToDetailAnimator?
+    var featuredDiningToDetailAnimator: FeaturedDiningToDetailAnimator?
+    private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -265,16 +277,34 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         if sender.view is ImageCarousel {
             guard let currentFeatured = featured.currentIndex else { return }
             guard let featuredItem = diningInformations?.slider?[currentFeatured] else { return }
+            // B2 - 6
+            let indexPath = IndexPath(row: featured.currentIndex ?? 0, section: 0)
+            selectedFeaturedCell = featured.collectionView.cellForItem(at: indexPath) as? ImageCarouselCell
+            animationtype = .featured   //execute feature to detail animation
+            // B2 - 7
+            selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             
             presentRestaurantDetailViewController(restaurant: featuredItem)
         } else if sender.view == chiefContainerView {
             guard let restaurant = diningInformations?.starChief?.chiefRestaurant else { return }
+            
+//            // B2 - 6
+//            let indexPath = IndexPath(row: featured.currentIndex ?? 0, section: 0)
+//            selectedFeaturedCell = featured.collectionView.cellForItem(at: indexPath) as? ImageCarouselCell
+//            animationtype = .featured   //execute feature to detail animation
+//            // B2 - 7
+//            selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             presentRestaurantDetailViewController(restaurant: restaurant)
         }
     }
     
     fileprivate func presentRestaurantDetailViewController(restaurant: Restaurant) {
         let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
+//        // B1 - 4
+        //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
+        viewController.transitioningDelegate = self
+        viewController.modalPresentationStyle = .fullScreen
+
         present(viewController, animated: true, completion: nil)
     }
     
@@ -296,7 +326,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             
             //37.939998626709
             //23.639999389648
-            
+            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
             GoLujoAPIManager().geopoint(token: token, type: "restaurant", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
                 self.canSendRequest = true
                 
@@ -363,7 +393,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     }
     
     func startAnimation() {
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
+        Timer.scheduledTimer(withTimeInterval: HomeViewController.animationInterval, repeats: true, block: { _ in
             if self.featured.titleList.count > 0 {
                 if let index = Int(self.currentImageNum.text ?? "1") {
                     if index == self.featured.titleList.count {
@@ -486,7 +516,26 @@ extension DiningViewController {
         }
     }
     
-    func didTappedOnRestaurantAt(restaurant: Restaurant) {
+    func didTappedOnRestaurantAt(index: Int,restaurant: Restaurant) {
+        animationtype = .slider //call slider to detail animation
+        // B2 - 6
+        //Finding UIImageView of restaurant where user has tapped so that we can animate this image
+        //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
+        if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.location.first?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
+            //Finding restaurant which user has just t
+            if let tappedRestaurant = (cityView as? DiningCityView)?.city?.restaurants.enumerated().first(where: {$0.element.id == restaurant.id}) {
+                if (tappedRestaurant.offset == 0){
+                    selectedCell = (cityView as? DiningCityView)?.restaurant1ImageView
+                    selectedCellHeart = (cityView as? DiningCityView)?.imgHeart1
+                }else if (tappedRestaurant.offset == 1){
+                    selectedCell = (cityView as? DiningCityView)?.restaurant2ImageView
+                    selectedCellHeart = (cityView as? DiningCityView)?.imgHeart2
+                }
+            }
+        }
+        // B2 - 7
+        selectedCellImageViewSnapshot = selectedCell?.snapshotView(afterScreenUpdates: false)
+        selectedCellHeartSnapshot = selectedCellHeart?.snapshotView(afterScreenUpdates: false)
         presentRestaurantDetailViewController(restaurant: restaurant)
     }
     
@@ -537,7 +586,7 @@ extension DiningViewController {
                         self.myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: self.locationRestaurants)
                     }
                 }
-                print(" ServerResponse:" + informations)
+//                print(" ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
                 self.showError(error)
@@ -545,4 +594,54 @@ extension DiningViewController {
         }
     }
     
+}
+
+
+// B1 - 1
+extension DiningViewController: UIViewControllerTransitioningDelegate {
+
+    // B1 - 2
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return nil
+        // B2 - 16
+//        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+        guard let firstViewController = source as? DiningViewController,
+            let secondViewController = presented as? RestaurantDetailViewController,
+            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+            else {
+                return nil
+            }
+//        print(animationtype)
+        if animationtype == .slider{
+            sliderDiningToDetailAnimator = SliderDiningToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return sliderDiningToDetailAnimator
+        }else
+        if animationtype == .featured{
+            featuredDiningToDetailAnimator = FeaturedDiningToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return featuredDiningToDetailAnimator
+        }else {
+            return nil
+        }
+    }
+
+    // B1 - 3
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return nil
+        // B2 - 17
+//        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+        guard let secondViewController = dismissed as? RestaurantDetailViewController,
+            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+            else {
+                return nil
+            }
+        if animationtype == .slider{
+            sliderDiningToDetailAnimator = SliderDiningToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return sliderDiningToDetailAnimator
+        }else if animationtype == .featured{
+            featuredDiningToDetailAnimator = FeaturedDiningToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return featuredDiningToDetailAnimator
+        }else {
+            return nil
+        }
+    }
 }

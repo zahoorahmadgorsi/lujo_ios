@@ -26,6 +26,7 @@ class RestaurantDetailViewController: UIViewController {
     
     //MARK:- Globals
     @IBOutlet var gradientView: UIView!
+    
     @IBOutlet var mainImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var starsContainerView: UIView!
@@ -41,6 +42,7 @@ class RestaurantDetailViewController: UIViewController {
     @IBOutlet weak var imgHeart: UIImageView!
     private let naHUD = JGProgressHUD(style: .dark)
     
+    @IBOutlet weak var btnBack: UIButton!
     var restaurant: Restaurant!
     
     override func viewDidLoad() {
