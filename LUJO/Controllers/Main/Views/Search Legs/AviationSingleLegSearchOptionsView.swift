@@ -405,7 +405,7 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
     }
 
     @IBAction func selectDepartureDate(sender: UIGestureRecognizer) {
-        //zahoor start
+  
         //if tripType == .roundTrip, segmentData.returnDate == nil {
         if segmentData.returnDate == nil {
         //zahoor end

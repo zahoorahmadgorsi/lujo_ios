@@ -48,13 +48,12 @@ class RestaurantDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRestaurant(restaurant)
-        //zahoor start
+
         //Add tap gesture on favourite
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
         self.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
         self.viewHeart.addGestureRecognizer(tapGestureRecognizer)
         setRecentlyViewed()
-        //zahoor end
         
     }
     
@@ -187,7 +186,7 @@ class RestaurantDetailViewController: UIViewController {
         return aString
     }
     
-    //Zahoor Started
+
     fileprivate func setRecentlyViewed() {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
@@ -259,5 +258,5 @@ class RestaurantDetailViewController: UIViewController {
             completion(strResponse, error)
         }
     }
-    //Zahoor finished
+
 }

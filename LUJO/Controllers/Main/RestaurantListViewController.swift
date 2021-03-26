@@ -123,7 +123,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         }
 
         cell.name.text = model.name
-        //Zahoor started 20201026
+
         cell.primaryImage.isHidden = false;
         cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
@@ -159,7 +159,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         cell.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
         cell.viewHeart.tag = indexPath.row
         cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
-        //Zahoor end
+
         
         if let city = model.location.first?.city {
             cell.locationContainerView.isHidden = false

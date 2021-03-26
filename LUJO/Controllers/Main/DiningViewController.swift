@@ -78,8 +78,8 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
     var selectedCellHeartSnapshot: UIView?
-    var sliderDiningToDetailAnimator: SliderDiningToDetailAnimator?
-    var featuredDiningToDetailAnimator: FeaturedDiningToDetailAnimator?
+    var sliderDiningToDetailAnimator: DiningSliderAnimator?
+    var featuredDiningToDetailAnimator: DiningFeaturedAnimator?
     private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
     
     
@@ -241,7 +241,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             gradient.frame = CGRect(x: 0, y: 2, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width * 0.75 * 0.35)
             gradientView.layer.addSublayer(gradient)
         }
-        featured.restaurantsList = diningInformations?.slider ?? [] //zahoor
+        featured.restaurantsList = diningInformations?.slider ?? [] 
         categorySlider.itemsList = diningInformations?.cuisines ?? []
         
         updatePopularCities()
@@ -613,11 +613,11 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
             }
 //        print(animationtype)
         if animationtype == .slider{
-            sliderDiningToDetailAnimator = SliderDiningToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            sliderDiningToDetailAnimator = DiningSliderAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return sliderDiningToDetailAnimator
         }else
         if animationtype == .featured{
-            featuredDiningToDetailAnimator = FeaturedDiningToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            featuredDiningToDetailAnimator = DiningFeaturedAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredDiningToDetailAnimator
         }else {
             return nil
@@ -635,10 +635,10 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
                 return nil
             }
         if animationtype == .slider{
-            sliderDiningToDetailAnimator = SliderDiningToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            sliderDiningToDetailAnimator = DiningSliderAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return sliderDiningToDetailAnimator
         }else if animationtype == .featured{
-            featuredDiningToDetailAnimator = FeaturedDiningToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            featuredDiningToDetailAnimator = DiningFeaturedAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredDiningToDetailAnimator
         }else {
             return nil

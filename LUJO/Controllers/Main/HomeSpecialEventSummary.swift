@@ -57,13 +57,12 @@ class HomeSpecialEventSummary: UIView {
             } else {
                 tagContainerView.isHidden = true
             }
-            //Zahoor start
+
             if (event.isFavourite ?? false){
                 imgHeart.image = UIImage(named: "heart_red")
             }else{
                 imgHeart.image = UIImage(named: "heart_white")
             }
-            //Zahoor end
             return
         }
 

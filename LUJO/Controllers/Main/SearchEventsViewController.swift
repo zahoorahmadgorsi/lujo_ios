@@ -138,7 +138,7 @@ extension SearchEventsViewController: UICollectionViewDataSource, UICollectionVi
         }else if let firstImageLink = model.getGalleryImagesURL().first {
             cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }
-        //Zahoor started 20201026
+ 
         cell.primaryImage.isHidden = false;
         cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
@@ -174,7 +174,7 @@ extension SearchEventsViewController: UICollectionViewDataSource, UICollectionVi
         cell.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
         cell.viewHeart.tag = indexPath.row
         cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
-        //Zahoor end
+
         cell.name.text = model.name
         cell.primaryImageHeight.constant = 122
         

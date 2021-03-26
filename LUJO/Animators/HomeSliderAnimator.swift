@@ -8,23 +8,33 @@
 
 import UIKit
 
+//Simple enum that defines if the screen is dismissed or presented. Will be used to pass to Animator to define which animation to use.
+enum PresentationType {
+    case present
+    case dismiss
+
+    var isPresenting: Bool {
+        return self == .present
+    }
+}
+
 //Animator is a class that will implement the animation. So the instance of this class will be responsible for either
 //presentation or dismissal animation.
-final class SliderDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class HomeSliderAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     //These are the properties that will be needed for animation
     static let duration: TimeInterval = 0.5
     static let cornerRadius: CGFloat = 2.0
 
     private let type: PresentationType
-    private let firstViewController: DiningViewController
-    private let secondViewController: RestaurantDetailViewController
+    private let firstViewController: HomeViewController
+    private let secondViewController: EventDetailsViewController
     private var selectedCellImageViewSnapshot: UIView
     private let cellImageViewRect: CGRect
     private let cellImgHeartRect: CGRect
     
 //  Important note: if something “goes wrong”, for example, you can’t prepare all the needed properties (basically the init fails), make sure to return nil. This way the app will use default present/dismiss animation and the user won’t be stuck somewhere in the middle of the transition.
-    init?(type: PresentationType, firstViewController: DiningViewController, secondViewController: RestaurantDetailViewController, selectedCellImageViewSnapshot: UIView) {
+    init?(type: PresentationType, firstViewController: HomeViewController, secondViewController: EventDetailsViewController, selectedCellImageViewSnapshot: UIView) {
 
         self.type = type
         self.firstViewController = firstViewController
@@ -34,16 +44,13 @@ final class SliderDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTran
 
         guard let window = firstViewController.view.window ?? secondViewController.view.window,
             let selectedCell = firstViewController.selectedCell
-            ,let selectedCellHeart = firstViewController.selectedCellHeart
             else {
                 return nil  // now default animation will execute
             }
 
 //        Getting the Frame of the Image View of the Cell relative to the window’s frame. This is a very essential step since       we will need to animate in the Transition Container View, we need to convert the cell from the collection view’s to an      appropriate coordinate system.
-//        self.cellImageViewRect = selectedCell.primaryImage.convert(selectedCell.primaryImage.bounds, to: window)
-//        self.cellImgHeartRect = selectedCell.imgHeart.convert(selectedCell.imgHeart.bounds, to: window)
-        self.cellImageViewRect = selectedCell.convert(selectedCell.bounds, to: window)
-        self.cellImgHeartRect = selectedCellHeart.convert(selectedCellHeart.bounds, to: window)
+        self.cellImageViewRect = selectedCell.primaryImage.convert(selectedCell.primaryImage.bounds, to: window)
+        self.cellImgHeartRect = selectedCell.imgHeart.convert(selectedCell.imgHeart.bounds, to: window)
         
     }
 
@@ -70,10 +77,10 @@ final class SliderDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTran
 //        controllerImageSnapshot — snapshot of the image of the 2nd VC.
         guard let selectedCell = firstViewController.selectedCell,
             let window = firstViewController.view.window ?? secondViewController.view.window,
-            let cellImageSnapshot = selectedCell.snapshotView(afterScreenUpdates: true),
+            let cellImageSnapshot = selectedCell.primaryImage.snapshotView(afterScreenUpdates: true),
             let controllerImageSnapshot = secondViewController.mainImageView.snapshotView(afterScreenUpdates: true)
-            ,let cellImgHeartSnapshot = firstViewController.selectedCellHeart?.snapshotView(afterScreenUpdates: true)
-            ,let closeButtonSnapshot = secondViewController.btnBack.snapshotView(afterScreenUpdates: true)
+            ,let cellImgHeartSnapshot = selectedCell.imgHeart.snapshotView(afterScreenUpdates: true)
+            ,let closeButtonSnapshot = secondViewController.imgBack.snapshotView(afterScreenUpdates: true)
             else {
                 transitionContext.completeTransition(true)
                 return
@@ -99,11 +106,11 @@ final class SliderDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTran
         [backgroundView, selectedCellImageViewSnapshot, controllerImageSnapshot, cellImgHeartSnapshot, closeButtonSnapshot].forEach { containerView.addSubview($0) }
         let controllerImageViewRect = secondViewController.mainImageView.convert(secondViewController.mainImageView.bounds, to: window)
         let controllerImgHeartRect = secondViewController.imgHeart.convert(secondViewController.imgHeart.bounds, to: window)
-        let closeButtonRect = secondViewController.btnBack.convert(secondViewController.btnBack.bounds, to: window)
+        let closeButtonRect = secondViewController.imgBack.convert(secondViewController.imgBack.bounds, to: window)
         // B4 - 35
         [selectedCellImageViewSnapshot, controllerImageSnapshot].forEach {
             $0.frame = isPresenting ? cellImageViewRect : controllerImageViewRect
-            $0.layer.cornerRadius = isPresenting ? SliderToDetailAnimator.cornerRadius : 0
+            $0.layer.cornerRadius = isPresenting ? HomeSliderAnimator.cornerRadius : 0
             $0.layer.masksToBounds = true
         }
 
@@ -120,7 +127,7 @@ final class SliderDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTran
                 fadeView.alpha = isPresenting ? 1 : 0
                 cellImgHeartSnapshot.frame = isPresenting ? controllerImgHeartRect : self.cellImgHeartRect
                 [controllerImageSnapshot, self.selectedCellImageViewSnapshot].forEach {
-                    $0.layer.cornerRadius = isPresenting ? 0 : SliderToDetailAnimator.cornerRadius
+                    $0.layer.cornerRadius = isPresenting ? 0 : HomeSliderAnimator.cornerRadius
                 }
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.6) {

@@ -160,7 +160,8 @@ extension WishListView: UICollectionViewDataSource {
         let model = itemsList[indexPath.row]
         if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
             cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-        }else if let firstImageLink = model.getGalleryImagesURL().first {
+        }//Zahoor started 20201026
+        else if let firstImageLink = model.getGalleryImagesURL().first {
             cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }
         //Zahoor started 20201026

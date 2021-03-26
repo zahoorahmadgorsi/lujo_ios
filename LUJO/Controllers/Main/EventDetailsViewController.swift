@@ -120,7 +120,6 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
         
         
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
-        //zahoor start
         //setting tapping event on viewheart
         //Add tap gesture on favourite
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
@@ -131,7 +130,6 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
         self.imgBack.isUserInteractionEnabled = true   //can also be enabled from IB
         self.imgBack.addGestureRecognizer(tgrBack)
         setRecentlyViewed()
-        //zahoor end
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -774,7 +772,6 @@ extension EventDetailsViewController {
         
     }
     
-    //Zahoor Started
     fileprivate func setRecentlyViewed() {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
@@ -851,9 +848,6 @@ extension EventDetailsViewController {
             completion(strResponse, error)
         }
     }
-    
-    
-    //Zahoor finished
 }
 
 ////No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller

@@ -12,7 +12,7 @@ import UIKit
 
 //Animator is a class that will implement the animation. So the instance of this class will be responsible for either
 //presentation or dismissal animation.
-final class FeaturedDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class DiningFeaturedAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     //These are the properties that will be needed for animation
 //    static let duration: TimeInterval = 0.5
@@ -48,7 +48,7 @@ final class FeaturedDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTr
 
 //  Required method of UIViewControllerAnimatedTransitioning protocol. We just return the animation duration we want.
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return SliderToDetailAnimator.duration
+        return HomeSliderAnimator.duration
     }
 
 //  A required method of UIViewControllerAnimatedTransitioning the protocol. All the transition logic and animations will be done here.
@@ -102,7 +102,7 @@ final class FeaturedDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTr
         // B4 - 35
         [selectedCellImageViewSnapshot, controllerImageSnapshot].forEach {
             $0.frame = isPresenting ? cellImageViewRect : controllerImageViewRect
-            $0.layer.cornerRadius = isPresenting ? SliderToDetailAnimator.cornerRadius : 0
+            $0.layer.cornerRadius = isPresenting ? HomeSliderAnimator.cornerRadius : 0
             $0.layer.masksToBounds = true
         }
 
@@ -112,14 +112,14 @@ final class FeaturedDiningToDetailAnimator: NSObject, UIViewControllerAnimatedTr
         closeButtonSnapshot.frame = closeButtonRect
         closeButtonSnapshot.alpha = isPresenting ? 0 : 1
         
-        UIView.animateKeyframes(withDuration: SliderToDetailAnimator.duration, delay: 0, options: .calculationModeCubic, animations: {
+        UIView.animateKeyframes(withDuration: HomeSliderAnimator.duration, delay: 0, options: .calculationModeCubic, animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
                 self.selectedCellImageViewSnapshot.frame = isPresenting ? controllerImageViewRect : self.cellImageViewRect
                 controllerImageSnapshot.frame = isPresenting ? controllerImageViewRect : self.cellImageViewRect
                 fadeView.alpha = isPresenting ? 1 : 0
                 cellImgHeartSnapshot.frame = isPresenting ? controllerImgHeartRect : self.cellImgHeartRect
                 [controllerImageSnapshot, self.selectedCellImageViewSnapshot].forEach {
-                    $0.layer.cornerRadius = isPresenting ? 0 : SliderToDetailAnimator.cornerRadius
+                    $0.layer.cornerRadius = isPresenting ? 0 : HomeSliderAnimator.cornerRadius
                 }
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.6) {

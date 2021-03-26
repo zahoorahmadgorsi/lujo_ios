@@ -27,6 +27,13 @@ class WishListViewController: UIViewController, WishListViewProtocol{
 //    var animationInterval:TimeInterval = 4
 //    var totalAnimationOnScreen:Int = 8
     
+    // B2 - 5
+    var selectedCell: FavouriteCell?
+    var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
+    // B2 - 15
+    var wishListAnimator: WishListSliderAnimator?
+    var wishListDiningAnimator: WishListDiningAnimator?
+    
     /// Refresh control view. Used to display network activity when user pull scroll view down
     /// view to fetch new data.
     private lazy var refreshControl: UIRefreshControl = {
@@ -40,12 +47,15 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     override func viewDidLoad() {
         super.viewDidLoad()
         //data is loading in viewWillAppear
+        //if data is already loaded then re-load silently
+//        let isAlreadyLoaded:Bool = (wishListInformations == nil) ? false : true
+        getWishListInformation(showActivity: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         //if data is already loaded then re-load silently
-        let isAlreadyLoaded:Bool = (wishListInformations == nil) ? false : true
-        getWishListInformation(showActivity: !isAlreadyLoaded)
+//        let isAlreadyLoaded:Bool = (wishListInformations == nil) ? false : true
+//        getWishListInformation(showActivity: !isAlreadyLoaded)
     }
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
@@ -113,12 +123,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.product?.id
-//                    , name: item.product?.name
-//                    , description: item.product?.description
-//                    , primaryMedia:item.product?.primaryMedia
-//                    , location: item.product?.location
-//                    , isFavourite: item.product?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -155,12 +159,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.product?.id
-//                    , name: item.product?.name
-//                    , description: item.product?.description
-//                    , primaryMedia:item.product?.primaryMedia
-//                    , location: item.product?.location
-//                    , isFavourite: item.product?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -183,7 +181,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         count = (wishListInformations?.specialEvents?.count ?? 0)
         if count > 0 , let items = wishListInformations?.specialEvents{
 //            let wishListView = WishListView()
-            var wishListView: WishListView = {
+            let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
                 return tv
@@ -196,12 +194,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.product?.id
-//                    , name: item.product?.name
-//                    , description: item.product?.description
-//                    , primaryMedia:item.product?.primaryMedia
-//                    , location: item.product?.location
-//                    , isFavourite: item.product?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -233,12 +225,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.restaurant?.id
-//                    , name: item.restaurant?.name
-//                    , description: item.restaurant?.description
-//                    , primaryMedia:item.restaurant?.primaryMedia
-//                    , location: item.restaurant?.location
-//                    , isFavourite: item.restaurant?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -270,12 +256,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.hotel?.id
-//                    , name: item.hotel?.name
-//                    , description: item.hotel?.description
-//                    , primaryMedia:item.hotel?.primaryMedia
-//                    , location: item.hotel?.location
-//                    , isFavourite: item.hotel?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -307,12 +287,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.product?.id
-//                    , name: item.product?.name
-//                    , description: item.product?.description
-//                    , primaryMedia:item.product?.primaryMedia
-//                    , location: item.product?.location
-//                    , isFavourite: item.product?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -344,12 +318,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.product?.id
-//                    , name: item.product?.name
-//                    , description: item.product?.description
-//                    , primaryMedia:item.product?.primaryMedia
-//                    , location: item.product?.location
-//                    , isFavourite: item.product?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -381,12 +349,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{
-//                itemsList.append( Favourite(id: item.product?.id
-//                    , name: item.product?.name
-//                    , description: item.product?.description
-//                    , primaryMedia:item.product?.primaryMedia
-//                    , location: item.product?.location
-//                    , isFavourite: item.product?.isFavourite))
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
@@ -450,7 +412,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         if naHUD.isVisible {
             naHUD.dismiss()
         }
-        
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
@@ -459,55 +420,97 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
     
     func didTappedOnItem(indexPath: IndexPath, itemType:FavouriteType, sender: WishListView) {
-//        print("didTappedOnItem")
+//        print(indexPath)
         switch itemType {
             case .event:
                 if let event = wishListInformations?.events?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
+                    // B2 - 6
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    // B2 - 7
+                    selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
                     present(viewController, animated: true)
                 }
             case .experience:
                 if let event = wishListInformations?.experiences?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
+                    // B2 - 6
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    // B2 - 7
+                    selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
                     present(viewController, animated: true)
                 }
             case .specialEvent:
                 if let event = wishListInformations?.specialEvents?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
+                    // B2 - 6
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    // B2 - 7
+                    selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
                     present(viewController, animated: true)
                 }
             case .restaurant:
                 if let item = wishListInformations?.restaurants?[indexPath.row]{
                     let viewController = RestaurantDetailViewController.instantiate(restaurant: item)
     //                self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
+                    // B2 - 6
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    // B2 - 7
+                    selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
                     present(viewController, animated: true, completion: nil)
                 }
             case .villa:
                 if let event = wishListInformations?.villas?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
+                    // B2 - 6
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    // B2 - 7
+                    selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
                     present(viewController, animated: true)
                 }
             case .yacht:
                 if let event = wishListInformations?.yachts?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
+                    // B2 - 6
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    // B2 - 7
+                    selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
                     present(viewController, animated: true)
                 }
             case .gift:
                 if let event = wishListInformations?.gifts?[indexPath.row]{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
+                    viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
+                    // B2 - 6
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    // B2 - 7
+                    selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+
                     present(viewController, animated: true)
                 }
             default:
@@ -582,8 +585,29 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             if let informations = information {
                 // data re-fetch.
-                self.getWishListInformation(showActivity: false)
-                print("ItemID:\(itemID)" + ", ServerResponse:" + informations)
+//                self.getWishListInformation(showActivity: true)
+                print("ItemID: \(itemID)" + ", ServerResponse: " + informations)
+                //removing item from the list
+                    switch itemType {
+                    case .event:
+                        self.wishListInformations?.events?.remove(at: index)
+                    case .specialEvent:
+                        self.wishListInformations?.specialEvents?.remove(at: index)
+                    case .experience:
+                        self.wishListInformations?.experiences?.remove(at: index)
+                    case .restaurant:
+                        self.wishListInformations?.restaurants?.remove(at: index)
+                    case .hotel:
+                        self.wishListInformations?.hotels?.remove(at: index)
+                    case .villa:
+                        self.wishListInformations?.villas?.remove(at: index)
+                    case .gift:
+                        self.wishListInformations?.gifts?.remove(at: index)
+                    case .yacht:
+                        self.wishListInformations?.yachts?.remove(at: index)
+                }
+                //reloading whole UI
+                self.updateContent()
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
                 self.showError(error)
@@ -609,3 +633,78 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
 }
 
+// B1 - 1
+extension WishListViewController: UIViewControllerTransitioningDelegate {
+
+    // B1 - 2
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return nil
+        // B2 - 16
+//        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+        if (presented is EventDetailsViewController){
+            guard let firstViewController = source as? WishListViewController,
+                let secondViewController = presented as? EventDetailsViewController,
+                let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+                else {
+                    return nil
+                }
+            wishListAnimator = WishListSliderAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return wishListAnimator
+        }
+        else if (presented is RestaurantDetailViewController){
+            guard let firstViewController = source as? WishListViewController,
+                let secondViewController = presented as? RestaurantDetailViewController,
+                let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+                else {
+                    return nil
+                }
+            wishListDiningAnimator = WishListDiningAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return wishListDiningAnimator
+        }else{
+            return nil
+        }
+
+    }
+
+    // B1 - 3
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return nil
+        // B2 - 17
+//        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+        if (dismissed is EventDetailsViewController){
+            guard let secondViewController = dismissed as? EventDetailsViewController,
+                let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+                else {
+                    return nil
+                }
+                wishListAnimator = WishListSliderAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+                return wishListAnimator
+        }
+        else if (dismissed is RestaurantDetailViewController){
+            guard let secondViewController = dismissed as? RestaurantDetailViewController,
+                let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+                else {
+                    return nil
+                }
+            wishListDiningAnimator = WishListDiningAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return wishListDiningAnimator
+        }else{
+            return nil
+        }
+    }
+}
+
+//extension WishlistViewController: UINavigationControllerDelegate{
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
+//    {
+//        switch operation {
+//            case .push:
+//                return animationController(forPresented: toVC , presenting: fromVC, source: fromVC)
+//            case .pop:
+//                return animationController(forDismissed: fromVC)
+//            default:
+//                return nil
+//        }
+//
+//    }
+//}

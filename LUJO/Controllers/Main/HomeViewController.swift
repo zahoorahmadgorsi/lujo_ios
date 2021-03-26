@@ -113,17 +113,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     /// this data without needing to fetch it again from the server. Default is nil.
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
         
-    //Zahoor Started 20200822
     static let animationInterval:TimeInterval = 20
-    //Zahoor finished
     // B2 - 5
     var selectedCell: HomeSliderCell?
     var selectedFeaturedCell: ImageCarouselCell?
     
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
-    var sliderToDetailAnimator: SliderToDetailAnimator?
-    var featuredToDetailAnimator: FeaturedToDetailAnimator?
+    var sliderToDetailAnimator: HomeSliderAnimator?
+    var featuredToDetailAnimator: HomeFeaturedAnimator?
     
     private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
     
@@ -485,18 +483,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         addTapRecognizer(to: specialEventView1)
         addTapRecognizer(to: specialEventView2)
         addTapRecognizer(to: featured)
-        //zahoor start
         //Add tap gestures on heart images
         let tgrOnHeart1 = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
         specialEventView1.imgHeart.addGestureRecognizer(tgrOnHeart1)
         let tgrOnHeart2 = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
         specialEventView2.imgHeart.addGestureRecognizer(tgrOnHeart2)
         
-        //zahoor end
-        
     }
     
-    //Zahoor start
     @objc func tappedOnHeart(_ sender:UITapGestureRecognizer){
         var item: Product?
         var index: Int = 0
@@ -534,12 +528,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             }
         }
     }
-//    @objc func tappedOnHeart2(_ sender:HomeSpecialEventSummary){
-//        if (homeObjects?.specialEvents.count ?? 0 >= 2){
-//            print(homeObjects?.specialEvents[1] as Any)
-//        }
-//    }
-    //zahoor end
     
     fileprivate func updateContent() {
         
@@ -552,7 +540,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             currentImageNum.text = "1"
         }
         
-        featured.itemsList = homeObjects?.slider ?? [] //zahoor
+        featured.itemsList = homeObjects?.slider ?? [] 
         homeRecentSlider.itemsList = homeObjects?.recent ?? []
         homeTopRatedSlider.itemsList = homeObjects?.topRated ?? []
         homeGiftsSlider.itemsList = homeObjects?.gifts ?? []
@@ -665,10 +653,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     /// Mark - Custom request actions
     @IBAction func findTableButton_onClick(_ sender: Any) {
-//        Zahoor started the change
 //        self.present(TableViewController.instantiate(), animated: true, completion: nil)
         self.tabBarController?.selectedIndex = 1
-//        Zahoor Finished the change
     }
     
     @IBAction func getTicketsButton_onClick(_ sender: Any) {
@@ -1051,10 +1037,10 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
             }
 //        print(animationtype)
         if animationtype == .slider{
-            sliderToDetailAnimator = SliderToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            sliderToDetailAnimator = HomeSliderAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return sliderToDetailAnimator
         }else if animationtype == .featured{
-            featuredToDetailAnimator = FeaturedToDetailAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            featuredToDetailAnimator = HomeFeaturedAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredToDetailAnimator
         }else {
             return nil
@@ -1072,10 +1058,10 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
                 return nil
             }
         if animationtype == .slider{
-            sliderToDetailAnimator = SliderToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            sliderToDetailAnimator = HomeSliderAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return sliderToDetailAnimator
         }else if animationtype == .featured{
-            featuredToDetailAnimator = FeaturedToDetailAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            featuredToDetailAnimator = HomeFeaturedAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredToDetailAnimator
         }else {
             return nil
