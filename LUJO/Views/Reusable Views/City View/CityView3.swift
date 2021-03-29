@@ -136,6 +136,9 @@ class CityView3: UIView {
                             product1ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                         }
                     
+                }else if let firstImageLink = product.getGalleryImagesURL().first { //in case neither image nor video available
+                    print(firstImageLink)
+                    product1ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                 }
                 product1NameLabel.text = product.name
 
@@ -210,7 +213,9 @@ class CityView3: UIView {
                             print(firstImageLink)
                             product2ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                         }
-                    
+                }else if let firstImageLink = product.getGalleryImagesURL().first { //in case neither image nor video available
+                    print(firstImageLink)
+                    product2ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                 }
                 product2NameLabel.text = product.name
 
@@ -285,6 +290,9 @@ class CityView3: UIView {
                             product3ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                         }
                     
+                }else if let firstImageLink = product.getGalleryImagesURL().first { //in case neither image nor video available
+                    print(firstImageLink)
+                    product3ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                 }
                 product3NameLabel.text = product.name
 
@@ -343,7 +351,7 @@ class CityView3: UIView {
     
     @objc func tappedOnProduct(_ sender:AnyObject){
         if let product = city?.items?[sender.view.tag] {
-            delegate?.didTappedOnProductAt(product: product)
+            delegate?.didTappedOnProductAt(product: product, itemIndex: sender.view.tag)
         }
     }
 

@@ -433,7 +433,7 @@ class CityView4: UIView {
     
     @objc func tappedOnProduct(_ sender:AnyObject){
         if let product = city?.items?[sender.view.tag] {
-            delegate?.didTappedOnProductAt(product: product)
+            delegate?.didTappedOnProductAt(product: product, itemIndex: sender.view.tag)
         }
     }
 

@@ -522,7 +522,7 @@ extension DiningViewController {
         //Finding UIImageView of restaurant where user has tapped so that we can animate this image
         //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
         if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.location.first?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
-            //Finding restaurant which user has just t
+            //Finding restaurant which user has just tapped
             if let tappedRestaurant = (cityView as? DiningCityView)?.city?.restaurants.enumerated().first(where: {$0.element.id == restaurant.id}) {
                 if (tappedRestaurant.offset == 0){
                     selectedCell = (cityView as? DiningCityView)?.restaurant1ImageView

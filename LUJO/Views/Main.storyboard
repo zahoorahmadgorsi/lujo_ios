@@ -7691,6 +7691,7 @@ New York, NY 10011 USA</string>
                         <outlet property="btnFilter" destination="y4f-bi-POj" id="wB8-J3-8Aj"/>
                         <outlet property="collFilters" destination="T4B-6r-GM5" id="Tmg-BN-7OT"/>
                         <outlet property="homeTopRatedSlider" destination="cy9-SS-CkE" id="ndM-3q-hbo"/>
+                        <outlet property="scrollView" destination="mZz-Cq-GbK" id="M5k-zc-yvB"/>
                         <outlet property="svPerCity" destination="Fch-I8-Oui" id="vmD-8p-gwI"/>
                     </connections>
                 </viewController>
@@ -7701,7 +7702,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

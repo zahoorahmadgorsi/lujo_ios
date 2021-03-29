@@ -126,6 +126,8 @@
 		91522DB4260A1B8A0023BAD8 /* DiningSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */; };
 		91522DBF260CD8300023BAD8 /* WishListSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */; };
 		91522DCA260DBF640023BAD8 /* WishListDiningAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DC9260DBF630023BAD8 /* WishListDiningAnimator.swift */; };
+		91522DD2261251140023BAD8 /* PerCityTopRatedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DD1261251140023BAD8 /* PerCityTopRatedAnimator.swift */; };
+		91522DD7261263530023BAD8 /* PerCityViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DD6261263520023BAD8 /* PerCityViewAnimator.swift */; };
 		9183E82625EBEE6C00656B48 /* GalleryView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E82525EBEE6B00656B48 /* GalleryView1.xib */; };
 		9183E82E25EBEE8800656B48 /* GalleryView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E82D25EBEE8800656B48 /* GalleryView2.xib */; };
 		9183E83625EBEEA300656B48 /* GalleryView3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E83525EBEEA300656B48 /* GalleryView3.xib */; };
@@ -432,6 +434,8 @@
 		91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningSliderAnimator.swift; sourceTree = "<group>"; };
 		91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListSliderAnimator.swift; sourceTree = "<group>"; };
 		91522DC9260DBF630023BAD8 /* WishListDiningAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListDiningAnimator.swift; sourceTree = "<group>"; };
+		91522DD1261251140023BAD8 /* PerCityTopRatedAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerCityTopRatedAnimator.swift; sourceTree = "<group>"; };
+		91522DD6261263520023BAD8 /* PerCityViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerCityViewAnimator.swift; sourceTree = "<group>"; };
 		917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tmp.xcconfig; sourceTree = "<group>"; };
 		9183E82525EBEE6B00656B48 /* GalleryView1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GalleryView1.xib; path = "LUJO/Views/Reusable Views/Gallery View/GalleryView1.xib"; sourceTree = SOURCE_ROOT; };
 		9183E82D25EBEE8800656B48 /* GalleryView2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView2.xib; sourceTree = "<group>"; };
@@ -1058,6 +1062,8 @@
 			isa = PBXGroup;
 			children = (
 				91B4A39025FFB11600169A0C /* HomeSliderAnimator.swift */,
+				91522DD1261251140023BAD8 /* PerCityTopRatedAnimator.swift */,
+				91522DD6261263520023BAD8 /* PerCityViewAnimator.swift */,
 				91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */,
 				91522DC9260DBF630023BAD8 /* WishListDiningAnimator.swift */,
 				91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */,
@@ -1847,6 +1853,7 @@
 				1D618009238AAF0000F01199 /* CustomRequestAPIManager.swift in Sources */,
 				9A5C5CBE22312D0900B8239D /* CardConnectSettings.swift in Sources */,
 				16433E96B29C22A0F8CFD271 /* Router.swift in Sources */,
+				91522DD2261251140023BAD8 /* PerCityTopRatedAnimator.swift in Sources */,
 				9A38EF6C2253D5090097BA0B /* CAGradientLayer.swift in Sources */,
 				9A4ED300212D110200CCD53B /* RegisterView.swift in Sources */,
 				9A091DFD21E891B700B0B5E6 /* UserNotApprovedView.swift in Sources */,
@@ -1965,6 +1972,7 @@
 				553BF858230D4E9F00EF4671 /* CardAlertView.swift in Sources */,
 				1D7819B52301A9DF0044C70B /* DiningRouter.swift in Sources */,
 				3005D48623202CDA00401243 /* AviationResultsFilterViewController.swift in Sources */,
+				91522DD7261263530023BAD8 /* PerCityViewAnimator.swift in Sources */,
 				9A59A5AE215E2FC9004322A1 /* Date+ISO-8061.swift in Sources */,
 				1643375A4FDC11CBEE93371A /* LoginInteractor.swift in Sources */,
 				5527642723165D4400380BEB /* GalleryViewControllerNEW.swift in Sources */,

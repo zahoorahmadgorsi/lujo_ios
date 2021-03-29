@@ -11,7 +11,7 @@ import AVFoundation
 
 protocol CityViewProtocol:class {
     func seeAllProductsForCity(city: Cities)
-    func didTappedOnProductAt(product: Product)
+    func didTappedOnProductAt(product: Product, itemIndex: Int)
     func didTappedOnHeartAt(city: Cities, itemIndex: Int)
 }
 
@@ -170,7 +170,7 @@ class CityView1: UIView {
     
     @objc func tappedOnProduct(_ sender:AnyObject){
         if let product = city?.items?[sender.view.tag] {
-            delegate?.didTappedOnProductAt(product: product)
+            delegate?.didTappedOnProductAt(product: product, itemIndex: sender.view.tag)
         }
     }
 
