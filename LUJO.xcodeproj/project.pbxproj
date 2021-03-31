@@ -128,6 +128,10 @@
 		91522DCA260DBF640023BAD8 /* WishListDiningAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DC9260DBF630023BAD8 /* WishListDiningAnimator.swift */; };
 		91522DD2261251140023BAD8 /* PerCityTopRatedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DD1261251140023BAD8 /* PerCityTopRatedAnimator.swift */; };
 		91522DD7261263530023BAD8 /* PerCityViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DD6261263520023BAD8 /* PerCityViewAnimator.swift */; };
+		9156B75126148F3A00404E1D /* EventsAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9156B75026148F3A00404E1D /* EventsAnimator.swift */; };
+		9156B7562614948900404E1D /* SearchAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9156B7552614948900404E1D /* SearchAnimator.swift */; };
+		9156B75B2614A08700404E1D /* GlobalSearchAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9156B75A2614A08700404E1D /* GlobalSearchAnimator.swift */; };
+		9156B7692614AD9900404E1D /* SpecialEventAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9156B7682614AD9900404E1D /* SpecialEventAnimator.swift */; };
 		9183E82625EBEE6C00656B48 /* GalleryView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E82525EBEE6B00656B48 /* GalleryView1.xib */; };
 		9183E82E25EBEE8800656B48 /* GalleryView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E82D25EBEE8800656B48 /* GalleryView2.xib */; };
 		9183E83625EBEEA300656B48 /* GalleryView3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9183E83525EBEEA300656B48 /* GalleryView3.xib */; };
@@ -436,6 +440,10 @@
 		91522DC9260DBF630023BAD8 /* WishListDiningAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListDiningAnimator.swift; sourceTree = "<group>"; };
 		91522DD1261251140023BAD8 /* PerCityTopRatedAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerCityTopRatedAnimator.swift; sourceTree = "<group>"; };
 		91522DD6261263520023BAD8 /* PerCityViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerCityViewAnimator.swift; sourceTree = "<group>"; };
+		9156B75026148F3A00404E1D /* EventsAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsAnimator.swift; sourceTree = "<group>"; };
+		9156B7552614948900404E1D /* SearchAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAnimator.swift; sourceTree = "<group>"; };
+		9156B75A2614A08700404E1D /* GlobalSearchAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalSearchAnimator.swift; sourceTree = "<group>"; };
+		9156B7682614AD9900404E1D /* SpecialEventAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialEventAnimator.swift; sourceTree = "<group>"; };
 		917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tmp.xcconfig; sourceTree = "<group>"; };
 		9183E82525EBEE6B00656B48 /* GalleryView1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GalleryView1.xib; path = "LUJO/Views/Reusable Views/Gallery View/GalleryView1.xib"; sourceTree = SOURCE_ROOT; };
 		9183E82D25EBEE8800656B48 /* GalleryView2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryView2.xib; sourceTree = "<group>"; };
@@ -1062,6 +1070,10 @@
 			isa = PBXGroup;
 			children = (
 				91B4A39025FFB11600169A0C /* HomeSliderAnimator.swift */,
+				9156B7682614AD9900404E1D /* SpecialEventAnimator.swift */,
+				9156B75026148F3A00404E1D /* EventsAnimator.swift */,
+				9156B7552614948900404E1D /* SearchAnimator.swift */,
+				9156B75A2614A08700404E1D /* GlobalSearchAnimator.swift */,
 				91522DD1261251140023BAD8 /* PerCityTopRatedAnimator.swift */,
 				91522DD6261263520023BAD8 /* PerCityViewAnimator.swift */,
 				91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */,
@@ -1878,6 +1890,7 @@
 				880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */,
 				918BA9AD25BF482C007B4D43 /* CityView4.swift in Sources */,
 				9AC4FE09225CA31F0031E57E /* AppDelegate.swift in Sources */,
+				9156B75B2614A08700404E1D /* GlobalSearchAnimator.swift in Sources */,
 				9A5C5CB7222FD34F00B8239D /* PaymentResult.swift in Sources */,
 				9A8E93E5212BD1AE00059DD8 /* RoutingTable.swift in Sources */,
 				5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */,
@@ -1955,6 +1968,7 @@
 				9A194FE3228DDD0200E3DBD1 /* EEAPIManager.swift in Sources */,
 				1D7819B72301A9EE0044C70B /* DiningAPIManager.swift in Sources */,
 				9AF1A0D42249072B00E0680B /* AviationSingleLegSearchOptionsView.swift in Sources */,
+				9156B75126148F3A00404E1D /* EventsAnimator.swift in Sources */,
 				9A89D3E621C595E8002D249F /* LujoTextField.swift in Sources */,
 				9A2AEBC321626A0300F92FB3 /* AirportSearchCell.swift in Sources */,
 				9183E85225EBEF6100656B48 /* GalleryView4.swift in Sources */,
@@ -1985,6 +1999,7 @@
 				9A67F20A22566AE800E06F1D /* LujoIconLabel.swift in Sources */,
 				9A817B98224D0D2C00EE7BAC /* AviationLuggageSelectionView.swift in Sources */,
 				1D618007238AADBA00F01199 /* CustomRequestRouter.swift in Sources */,
+				9156B7562614948900404E1D /* SearchAnimator.swift in Sources */,
 				88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */,
 				9AD6EABE21E3BBAF00B695A3 /* CreditCardsDataSource.swift in Sources */,
 				880B9B0D255845B10070D7CD /* Gift.swift in Sources */,
@@ -2016,6 +2031,7 @@
 				16433521006C0083D625164C /* LujoSetup.swift in Sources */,
 				9AF561E921833D5800B7BD1A /* UIImageView+Download.swift in Sources */,
 				9A194FF022945A5E00E3DBD1 /* HomeEventCell.swift in Sources */,
+				9156B7692614AD9900404E1D /* SpecialEventAnimator.swift in Sources */,
 				9AF8DC222200C519003D0519 /* UIButton.swift in Sources */,
 				9A5C5CB9222FD99000B8239D /* PaymentSession.swift in Sources */,
 				91522DAF2608B2100023BAD8 /* DiningFeaturedAnimator.swift in Sources */,
@@ -2207,8 +2223,8 @@
 				AVIATION_AUTHORISATION_TOKEN = "NzI0ZWM0YjBkOTRmYjNiN8_glYxP5P2QdQdXximXf9vqVOXcH-fgzn9zaksoJCJS3kNBoG3VvyyUcL4cbhMVQTpaUDiWZXVaph_BSWpAYgWod2ep6Fn125y56wCHMG4lPkDjn57-kDE_Xwfe43a5jw==";
 				AVIATION_PRODUCT_NAME = "baroqueaviation-software";
 				AVIATION_SERVER = sandbox.avinode.com;
-				BACKEND_CONNECTION_SCHEME = https;
-				BACKEND_SERVER = api.golujo.com;
+				BACKEND_CONNECTION_SCHEME = http;
+				BACKEND_SERVER = "api-stage.golujo.com";
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CARDCONNECT_API_PASSWORD = testing123;
 				CARDCONNECT_API_USERNAME = testing;
@@ -2219,7 +2235,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.3;
+				CURRENT_PROJECT_VERSION = 2.4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2280,7 +2296,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.3;
+				CURRENT_PROJECT_VERSION = 2.4;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2486,7 +2502,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.3;
+				CURRENT_PROJECT_VERSION = 2.4;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

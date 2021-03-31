@@ -19,6 +19,7 @@ class HomeSpecialEventSummary: UIView {
     @IBOutlet var locationContainerView: UIView!
     @IBOutlet var dateContainerView: UIView!
 
+    @IBOutlet weak var viewHeart: UIView!
     @IBOutlet weak var imgHeart: UIImageView!
     
     required init?(coder aDecoder: NSCoder) {

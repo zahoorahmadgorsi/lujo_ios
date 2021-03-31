@@ -17,6 +17,7 @@
                 <outlet property="primaryImage" destination="tyN-sF-49J" id="JzA-ZB-VQK"/>
                 <outlet property="tagContainerView" destination="55g-7e-90P" id="IGG-Hc-3Ho"/>
                 <outlet property="tagLabel" destination="gxf-Kz-xtn" id="AVf-gJ-8Zg"/>
+                <outlet property="viewHeart" destination="oR9-nG-mGG" id="uFe-Mk-plJ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -25,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="tyN-sF-49J">
-                    <rect key="frame" x="0.0" y="0.0" width="382" height="144"/>
+                    <rect key="frame" x="0.0" y="0.0" width="382" height="133"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <integer key="value" value="4"/>
@@ -33,21 +34,33 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5yp-Z5-Jbu">
-                    <rect key="frame" x="0.0" y="156" width="382" height="22"/>
+                    <rect key="frame" x="0.0" y="145" width="382" height="33"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NI-uF-qhi">
-                            <rect key="frame" x="0.0" y="0.0" width="360" height="22"/>
+                            <rect key="frame" x="0.0" y="0.0" width="349" height="33"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                             <color key="textColor" name="White Text"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="guB-Q7-hjp">
-                            <rect key="frame" x="360" y="0.0" width="22" height="22"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oR9-nG-mGG">
+                            <rect key="frame" x="349" y="0.0" width="33" height="33"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="guB-Q7-hjp">
+                                    <rect key="frame" x="5.5" y="5.5" width="22" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="22" id="QLx-JQ-rd7"/>
+                                        <constraint firstAttribute="height" constant="22" id="jwp-F3-e9l"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="22" id="DEx-9S-shs"/>
-                                <constraint firstAttribute="width" constant="22" id="JI1-f9-EeM"/>
+                                <constraint firstItem="guB-Q7-hjp" firstAttribute="centerY" secondItem="oR9-nG-mGG" secondAttribute="centerY" id="0zj-8W-xo7"/>
+                                <constraint firstItem="guB-Q7-hjp" firstAttribute="centerX" secondItem="oR9-nG-mGG" secondAttribute="centerX" id="KSB-G8-zre"/>
+                                <constraint firstAttribute="width" constant="33" id="j5g-Od-5X5"/>
+                                <constraint firstAttribute="height" constant="33" id="pwl-wc-emJ"/>
                             </constraints>
-                        </imageView>
+                        </view>
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="55g-7e-90P">

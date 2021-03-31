@@ -20,6 +20,7 @@ enum HomeElementType: Int {
 enum AnimationType {
     case featured
     case slider
+    case specialEvent
     
     var isFeatured: Bool {
         return self == .featured
@@ -117,11 +118,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     // B2 - 5
     var selectedCell: HomeSliderCell?
     var selectedFeaturedCell: ImageCarouselCell?
+    var selectedSpecialEventCell: HomeSpecialEventSummary?
     
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
     var sliderToDetailAnimator: HomeSliderAnimator?
     var featuredToDetailAnimator: HomeFeaturedAnimator?
+    var specialEventAnimator: SpecialEventAnimator?
     
     private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
     
@@ -422,8 +425,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             case specialEventView1:
                 event = homeObjects?.specialEvents[0]
+                // B2 - 6
+                animationtype = .specialEvent   //execute specialEvent to detail animation
+                selectedSpecialEventCell = specialEventView1
+                selectedCellImageViewSnapshot = selectedSpecialEventCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             case specialEventView2:
                 event = homeObjects?.specialEvents[1]
+                // B2 - 6
+                animationtype = .specialEvent   //execute specialEvent to detail animation
+                selectedSpecialEventCell = specialEventView2
+                selectedCellImageViewSnapshot = selectedSpecialEventCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             default: return
         }
         
@@ -485,9 +496,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         addTapRecognizer(to: featured)
         //Add tap gestures on heart images
         let tgrOnHeart1 = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
-        specialEventView1.imgHeart.addGestureRecognizer(tgrOnHeart1)
+        specialEventView1.viewHeart.addGestureRecognizer(tgrOnHeart1)
         let tgrOnHeart2 = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
-        specialEventView2.imgHeart.addGestureRecognizer(tgrOnHeart2)
+        specialEventView2.viewHeart.addGestureRecognizer(tgrOnHeart2)
         
     }
     
@@ -495,10 +506,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         var item: Product?
         var index: Int = 0
         
-        if (sender.view == specialEventView1.imgHeart && homeObjects?.specialEvents.count ?? 0 >= 1){
+        if (sender.view == specialEventView1.viewHeart && homeObjects?.specialEvents.count ?? 0 >= 1){
             item = homeObjects?.specialEvents[0]
             index = 0
-        }else if (sender.view == specialEventView2.imgHeart && homeObjects?.specialEvents.count ?? 0 >= 2){
+        }else if (sender.view == specialEventView2.viewHeart && homeObjects?.specialEvents.count ?? 0 >= 2){
             item = homeObjects?.specialEvents[1]
             index = 1
         }
@@ -1042,6 +1053,9 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
         }else if animationtype == .featured{
             featuredToDetailAnimator = HomeFeaturedAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredToDetailAnimator
+        }else if animationtype == .specialEvent{
+            specialEventAnimator = SpecialEventAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return specialEventAnimator
         }else {
             return nil
         }
@@ -1063,6 +1077,9 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
         }else if animationtype == .featured{
             featuredToDetailAnimator = HomeFeaturedAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredToDetailAnimator
+        }else if animationtype == .specialEvent{
+            specialEventAnimator = SpecialEventAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+            return specialEventAnimator
         }else {
             return nil
         }

@@ -287,6 +287,9 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         if let event = cityInformation?.event.items[sender.tag] {
 //            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: event), animated: true)
             let viewController = EventDetailsViewController.instantiate(event: event)
+    //        // B1 - 4
+            //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
+//            viewController.transitioningDelegate = self
             viewController.modalPresentationStyle = .fullScreen
             present(viewController, animated: true)
         }
@@ -459,3 +462,67 @@ class CityCell: UITableViewCell {
         lineView.backgroundColor = UIColor.rgMid
     }
 }
+
+
+// B1 - 1
+//extension HomeViewController: UIViewControllerTransitioningDelegate {
+//
+//    // B1 - 2
+//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+////        return nil
+//        // B2 - 16
+////        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+//        guard let firstViewController = source as? HomeViewController,
+//            let secondViewController = presented as? EventDetailsViewController,
+//            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+//            else {
+//                return nil
+//            }
+////        print(animationtype)
+//        if animationtype == .slider{
+//            sliderToDetailAnimator = HomeSliderAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+//            return sliderToDetailAnimator
+//        }else if animationtype == .featured{
+//            featuredToDetailAnimator = HomeFeaturedAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+//            return featuredToDetailAnimator
+//        }else {
+//            return nil
+//        }
+//    }
+//
+//    // B1 - 3
+//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+////        return nil
+//        // B2 - 17
+////        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
+//        guard let secondViewController = dismissed as? EventDetailsViewController,
+//            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+//            else {
+//                return nil
+//            }
+//        if animationtype == .slider{
+//            sliderToDetailAnimator = HomeSliderAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+//            return sliderToDetailAnimator
+//        }else if animationtype == .featured{
+//            featuredToDetailAnimator = HomeFeaturedAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+//            return featuredToDetailAnimator
+//        }else {
+//            return nil
+//        }
+//    }
+//}
+
+//extension HomeViewController: UINavigationControllerDelegate{
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
+//    {
+//        switch operation {
+//            case .push:
+//                return animationController(forPresented: toVC , presenting: fromVC, source: fromVC)
+//            case .pop:
+//                return animationController(forDismissed: fromVC)
+//            default:
+//                return nil
+//        }
+//
+//    }
+//}

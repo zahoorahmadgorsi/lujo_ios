@@ -36,7 +36,7 @@ enum EERouter: URLRequestConvertible {
     case villas(String, String?, Int?)
     case goods(String, String?, Int?)
     case yachts(String, String?, Int?)
-    case topRated(token: String, type: String)
+    case topRated(token: String, type: String?)
     case recents(String, String?, String?)
     case perCity(String, String)
     
@@ -167,11 +167,19 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
             case .topRated:
                 newURLComponents.path.append("/top-rated")
+//                //yet to add in API
+//                if let term = term {
+//                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+//                }
             case let .recents(token, limit, type):
                 newURLComponents.path.append("/recent")
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
+//                //yet to add in API
+//                if let term = term {
+//                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+//                }
                 if let limit = limit {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "limit", value: limit))
                 }
@@ -247,10 +255,10 @@ enum EERouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getTopRatedDataAsJSONData(token: String, type: String) -> Data? {
+    fileprivate func getTopRatedDataAsJSONData(token: String, type: String?) -> Data? {
         let body: [String: Any] = [
             "token": token,
-            "type": type
+            "type": type ?? ""  //empty string is default value
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

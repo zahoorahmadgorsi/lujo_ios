@@ -251,7 +251,7 @@ class EEAPIManager {
         }
     }
     
-    func getTopRated(_ token: String, type: String, completion: @escaping ([Product], Error?) -> Void) {
+    func getTopRated(_ token: String, type: String?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.topRated(token: token, type: type)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)

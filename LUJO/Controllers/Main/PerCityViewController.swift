@@ -252,18 +252,6 @@ extension PerCityViewController: CityViewProtocol {
     func didTappedOnProductAt(product: Product, itemIndex: Int) {
         let viewController = EventDetailsViewController.instantiate(event: product)
         animationtype = .featured //tapped on city view
-        
-//        if let cityView = self.svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termId ==  product.location?.first?.city?.termId && $0.tag != 999 }){
-//            print("found")
-//        }
-        
-//        if let cities = homeObjects?.cities {
-//            for (index,city) in cities.enumerated()  {
-//                if let cityView = svPerCity.arrangedSubviews.first(where: { $0.tag == index }) {
-//                    print(index)
-//            }
-//        }
-//        }
             // B2 - 6
             //Finding UIImageView of restaurant where user has tapped so that we can animate this image
             //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
