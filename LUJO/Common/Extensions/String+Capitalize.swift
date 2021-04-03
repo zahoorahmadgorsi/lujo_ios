@@ -106,4 +106,11 @@ extension String {
             }
         }
     }
+    
+    //converting price 6000 to 6,000
+    func withCommas() -> String {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            return numberFormatter.string(from: NSNumber(value:Int(self) ?? 0))!
+        }
 }

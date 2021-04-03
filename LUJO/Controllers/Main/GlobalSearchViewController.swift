@@ -340,16 +340,11 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier, for: indexPath) as! CityCell
-        
         cell.cityNameLabel.text = dataSource[indexPath.row].cityName
-        
         let colorView = UIView()
         colorView.backgroundColor = UIColor.clear
-        
         UITableViewCell.appearance().selectedBackgroundView = colorView
-        
         return cell
         
     }
