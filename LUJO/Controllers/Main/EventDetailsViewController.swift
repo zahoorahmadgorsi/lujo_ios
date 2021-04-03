@@ -61,6 +61,9 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
     @IBOutlet weak var viewYachtCabins: UIView!
     @IBOutlet weak var lblYachtCabins: UILabel!
     
+    @IBOutlet weak var viewBathrooms: UIView!
+    @IBOutlet weak var lblBathrooms: UILabel!
+    
     var scrollOffsetToShowNavigationBar :CGFloat = 280 //scrollview positiong
     
     static let dateFormatter: DateFormatter = {
@@ -267,6 +270,7 @@ extension EventDetailsViewController {
         viewYachtLength.isHidden = true
         viewYachtPassengers.isHidden = true
         viewYachtCabins.isHidden = true
+        viewBathrooms.isHidden = true
         
         descriptionTextView.attributedText = convertToAttributedString(product.description)
         
@@ -317,6 +321,7 @@ extension EventDetailsViewController {
         viewYachtLength.isHidden = true
         viewYachtPassengers.isHidden = true
         viewYachtCabins.isHidden = true
+        viewBathrooms.isHidden = true
         
         descriptionTextView.attributedText = convertToAttributedString(product.description)
         requestButton.setTitle("R E Q U E S T", for: .normal)
@@ -366,6 +371,7 @@ extension EventDetailsViewController {
         }else{
             viewYachtCabins.isHidden = true
         }
+        
         if let val = product.numberOfGuests, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Guests",value: val,isHighSeason: nil))
 //            itemsList.append(ProductDetail(key: "No. Of Guests",value: val,isHighSeason: nil))
@@ -376,6 +382,9 @@ extension EventDetailsViewController {
         if let val = product.numberOfBathrooms, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: val,isHighSeason: nil))
 //            itemsList.append(ProductDetail(key: "No. Of Bathrooms",value: val,isHighSeason: nil))
+            lblBathrooms.text = val
+        }else{
+            viewBathrooms.isHidden = true
         }
         
         
@@ -481,6 +490,8 @@ extension EventDetailsViewController {
         locationLabel.text = locationText.uppercased()
         
         dateContainerView.isHidden = true
+        viewBathrooms.isHidden = true
+        
         //preparing summary data of collection view
         var itemsList =  [ProductDetail]()
 //        if let val = product.headline , val.count > 0{
@@ -501,6 +512,7 @@ extension EventDetailsViewController {
         }else{
             viewYachtCabins.isHidden = true
         }
+        
         if let val = product.crewNumber, val.count > 0{
             itemsList.append(ProductDetail(key: "Number Of Crews",value: val,isHighSeason: nil))
 //            itemsList.append(ProductDetail(key: "No. Of Crews",value: val,isHighSeason: nil))
