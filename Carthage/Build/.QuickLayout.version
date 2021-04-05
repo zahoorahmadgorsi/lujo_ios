@@ -1,11 +1,28 @@
 {
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
   "commitish" : "2.0.2",
   "iOS" : [
     {
-      "hash" : "c441dd64635d774c6614fe321fb7ca5586044341bd16b09d090accd860aa91db",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "224fbc88bfd57ad5dedce6d08c99a7acecd08edbc0fcf05480b7acc11a97bde0",
       "name" : "QuickLayout",
-      "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
+      "container" : "QuickLayout.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "e6f53f600c848fff99a9fd503248cc90f2ed6d11a0236ecbfe1d640434792724",
+      "name" : "QuickLayout",
+      "container" : "QuickLayout.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
     }
   ]
 }

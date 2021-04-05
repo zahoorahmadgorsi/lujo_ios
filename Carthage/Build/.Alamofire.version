@@ -1,11 +1,60 @@
 {
+  "Mac" : [
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "6a14846bf32cb2ef81a5eadadd0309b7432438b15decc13b5b7f16b2ae979f88",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "macos-arm64_x86_64"
+    }
+  ],
+  "watchOS" : [
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "5242f7be1dbda0bbe005373ed7aecea177dc07ce7cabc311ee37844be4805093",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "watchos-arm64_i386_x86_64-simulator"
+    },
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "bd5bded4f82f7e399f2f53c0154e078768c7765eec986edf67c5d720210f81a2",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "watchos-arm64_32_armv7k"
+    }
+  ],
+  "tvOS" : [
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "32d053d2107d55a12d1a6cf1ff85c4e761c3c17dd18be9b611308d5733c09cc8",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "1654f6406c4adb03fdf2d15237a091572f4d0c72a303d9230694a0d6a109ea5f",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "tvos-arm64"
+    }
+  ],
   "commitish" : "4.9.1",
   "iOS" : [
     {
-      "hash" : "9ef368a1def8485483450b3016d81bbd1027f2f0bb6c0a76dfe86d989de49fc9",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "7693024f677ac4757121e96bb3fc0e7ce8a7901b6a450ad5ddd8ad25df9a80bc",
       "name" : "Alamofire",
-      "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
+      "container" : "Alamofire.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "0bf7415c6ad633de53133e9da2ed12d1201baa631799f47a5f78f528b0848724",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "ios-arm64_armv7"
     }
   ]
 }

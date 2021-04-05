@@ -5,6 +5,7 @@ import UIKit
 import UserNotifications
 import Intercom
 import Firebase
+import Mixpanel
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
