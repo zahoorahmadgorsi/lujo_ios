@@ -12,6 +12,7 @@ import Crashlytics
 import CoreLocation
 import Intercom
 import Kingfisher
+import Mixpanel
 
 enum HomeElementType: Int {
     case events, experiences
@@ -271,6 +272,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         }
+        Mixpanel.mainInstance().track(event: "enableLocationButton_onClick")
     }
     
     @IBAction func buyMembershipButton_onClick(_ sender: Any) {
@@ -282,6 +284,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             fullName += "\(lastName)"
         }
         self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .upgradeMembership : .buyMembership, paymentType: .all), animated: true)
+        Mixpanel.mainInstance().track(event: "buyMembershipButton_onClick")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -365,7 +368,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
+        Mixpanel.mainInstance().track(event: "GlobalSearchButtonOnClick")
         self.navigationController?.pushViewController(GlobalSearchViewController.instantiate(), animated: true)
+        
     }
     
     @IBAction func seeAllLocationEventsButton_onClick(_ sender: Any) {
@@ -474,11 +479,30 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     fileprivate func updateUI() {
         if UserDefaults.standard.bool(forKey: "showWelcome") {
-
+            
             tabBarController?.tabBar.isHidden = true
             welcomeLabel.text = "\(PreloadDataManager.UserEntryType.isOldUser ? "Welcome back" : "Welcome"),\n\(LujoSetup().getLujoUser()?.firstName ?? "") \(LujoSetup().getLujoUser()?.lastName ?? "")"
             PreloadDataManager.UserEntryType.isOldUser = true
 
+            //********
+            //MaxPanel
+            //********
+            // Ensure all future events sent from
+            // the library will have the distinct_id -13793
+            if let id = LujoSetup().getLujoUser()?.id{
+                Mixpanel.mainInstance().identify(distinctId: String(id))
+            }else{
+                Mixpanel.mainInstance().identify(distinctId: "-13793")
+            }
+            if let phoneNumber = LujoSetup().getLujoUser()?.phoneNumber.readableNumber{
+                // Sets user 13793's "$email" attribute to "jsmith@example.com"
+                Mixpanel.mainInstance().people.set(properties: [ "$phone":phoneNumber])
+            }
+            //user login, launching the app
+            Mixpanel.mainInstance().track(event: welcomeLabel.text)
+//            Mixpanel.mainInstance().track(event: "Video play",
+//                      properties: ["genre" : "hip-hop", "duration in seconds": 42])
+            
             navigationController?.setNavigationBarHidden(true, animated: false)
             splashView.isHidden = false
         }

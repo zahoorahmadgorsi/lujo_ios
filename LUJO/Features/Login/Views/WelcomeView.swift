@@ -8,6 +8,7 @@
 
 import JGProgressHUD
 import UIKit
+import Mixpanel
 
 class WelcomeView: UIViewController, LoginViewProtocol {
     var presenter: LoginViewResponder?
@@ -37,6 +38,15 @@ class WelcomeView: UIViewController, LoginViewProtocol {
     }
 
     private func updateUI() {
+        
+        // Ensure all future events sent from
+        // the library will have the distinct_id -13793
+        if let id = LujoSetup().getLujoUser()?.id{
+            Mixpanel.mainInstance().identify(distinctId: String(id))
+        }else{
+            Mixpanel.mainInstance().identify(distinctId: "-13793")
+        }
+        
         welcomeLabel.text = "Welcome to LUJO,\n\(LujoSetup().getLujoUser()?.firstName ?? "") \(LujoSetup().getLujoUser()?.lastName ?? "")"
 
         UIView.animate(withDuration: 0.3) {

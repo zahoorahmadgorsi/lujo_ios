@@ -11,6 +11,7 @@ import JGProgressHUD
 import IQKeyboardManagerSwift
 import Crashlytics
 import AVFoundation
+import Mixpanel
 
 class SearchEventsViewController: UIViewController {
     
@@ -264,8 +265,12 @@ extension SearchEventsViewController {
             return
         }
         
+        
+        
         switch category {
             case .event:
+//                Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term])
+                Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getEvents(token, past: past, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
@@ -277,6 +282,8 @@ extension SearchEventsViewController {
                     completion(list, error)
                 }
             case .experience:
+                Mixpanel.mainInstance().track(event: "ExperienceSearched",
+                      properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getExperiences(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
@@ -287,6 +294,8 @@ extension SearchEventsViewController {
                     completion(list, error)
                 }
             case .villa:
+                Mixpanel.mainInstance().track(event: "VillaSearched",
+                      properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getVillas(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
@@ -297,6 +306,8 @@ extension SearchEventsViewController {
                     completion(list, error)
                 }
             case .gift:
+                Mixpanel.mainInstance().track(event: "GiftSearched",
+                      properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getGoods(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
@@ -307,6 +318,8 @@ extension SearchEventsViewController {
                     completion(list, error)
             }
             case .yacht:
+                Mixpanel.mainInstance().track(event: "YachtSearched",
+                      properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getYachts(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
@@ -317,6 +330,8 @@ extension SearchEventsViewController {
                     completion(list, error)
             }
             case .topRated:
+                Mixpanel.mainInstance().track(event: "TopRatedSearched",
+                      properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getTopRated(token, type: nil) { list, error in   //type nil mean bring all types(event, experience) of toprated
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)

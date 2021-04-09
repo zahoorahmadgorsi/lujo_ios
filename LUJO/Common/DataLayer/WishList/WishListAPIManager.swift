@@ -10,14 +10,24 @@ import Alamofire
 import Crashlytics
 import UIKit
 import CoreLocation
+import Mixpanel
+
 
 extension GoLujoAPIManager  {
     
     func setUnSetFavourites(token: String, id: Int, isUnSetFavourite: Bool, completion: @escaping (String?, Error?) -> Void) {
+        if (isUnSetFavourite){
+            Mixpanel.mainInstance().track(event: "UnLiked",
+                  properties: ["productId" : id])
+        }else{
+            Mixpanel.mainInstance().track(event: "Liked",
+                  properties: ["productId" : id])
+        }
         var wishListRouter = WishListRouter.setFavourites(token, id)
         if (isUnSetFavourite){
             wishListRouter = WishListRouter.unSetFavourites(token, id)
         }
+        
         Alamofire.request( wishListRouter )
             .responseJSON { response in
                 guard response.result.error == nil else {

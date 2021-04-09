@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Mixpanel
 
 enum OriginAirport {
     case departureAirport, returnAirport
@@ -336,6 +337,9 @@ extension AviationViewController {
     
     func searchFlights(matching criteria: AviationSearch) {
         waitingAnimation(show: true)
+        
+        Mixpanel.mainInstance().track(event: "AviationSearch",
+                                      properties: ["searchedText" : criteria. originAirport?.city ?? "From"])
         
         AviationAPIManagerNEW.shared.authorisationToken = LujoSetup().getCurrentUser()?.token
         AviationAPIManagerNEW.shared.searchFlights(matching: criteria) { list, filter, error in

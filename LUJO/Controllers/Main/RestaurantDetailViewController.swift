@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import JGProgressHUD
+import Mixpanel
 
 class RestaurantDetailViewController: UIViewController {
     
@@ -193,6 +194,8 @@ class RestaurantDetailViewController: UIViewController {
             return
         }
 //        print(event.id)
+        Mixpanel.mainInstance().track(event: "RecentlyViewed",
+                  properties: ["restaurantId" : restaurant.id])
         RecentlyViewedAPIManager().setRecenltyViewed(token: token, id: restaurant.id){response, error in
             if let error = error{
                 print(error.localizedDescription );

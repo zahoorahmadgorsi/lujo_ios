@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
 
 class EventDetailsViewController: UIViewController, GalleryViewProtocol {
     //MARK:- Init
@@ -791,6 +792,8 @@ extension EventDetailsViewController {
             return
         }
 //        print(event.id)
+        Mixpanel.mainInstance().track(event: "RecentlyViewed",
+                  properties: ["productId" : product.id])
         RecentlyViewedAPIManager().setRecenltyViewed(token: token, id: product.id){response, error in
             if let error = error{
                 print(error.localizedDescription );

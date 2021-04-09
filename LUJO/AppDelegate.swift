@@ -57,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         ChatStyling.appyStyling()
 
+        Mixpanel.initialize(token: "974677a8bc1707f564ce3ac082c3cb62")
+        
         return true
     }
 

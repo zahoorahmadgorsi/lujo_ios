@@ -10,6 +10,7 @@ import UIKit
 import Crashlytics
 import IQKeyboardManagerSwift
 import JGProgressHUD
+import Mixpanel
 
 class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
@@ -413,6 +414,9 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
             showFeedback("User does not exist or is not verified")
             return
         }
+        
+        Mixpanel.mainInstance().track(event: "GlobalSearch",
+              properties: ["searchedText" : text])
         
         EEAPIManager().search(token: token, searchText: text) { (cities, error) in
             if let error = error {

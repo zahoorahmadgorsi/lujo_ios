@@ -12,6 +12,7 @@ import IQKeyboardManagerSwift
 import JGProgressHUD
 import Crashlytics
 import AVFoundation
+import Mixpanel
 
 class RestaurantSearchViewController: UIViewController {
     
@@ -250,6 +251,9 @@ extension RestaurantSearchViewController {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
+        
+        Mixpanel.mainInstance().track(event: "RestaurantSearched",
+              properties: ["searchedText" : term])
         
         GoLujoAPIManager().search(token, term: term, cityId: nil, currentLocation: currentLocation) { restaurants, error in
             guard error == nil else {
