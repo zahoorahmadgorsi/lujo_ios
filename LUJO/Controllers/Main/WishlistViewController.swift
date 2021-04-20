@@ -24,7 +24,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     private var wishListInformations: WishListObjects?
     private let naHUD = JGProgressHUD(style: .dark)
     @IBOutlet var scrollView: UIScrollView!
-//    var animationInterval:TimeInterval = 4
 //    var totalAnimationOnScreen:Int = 8
     
     // B2 - 5
@@ -53,10 +52,27 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //if data is already loaded then re-load silently
-//        let isAlreadyLoaded:Bool = (wishListInformations == nil) ? false : true
-//        getWishListInformation(showActivity: !isAlreadyLoaded)
+        //refetch data IF ANd ONLY IF no data is there else back animation will not work properly
+        if (wishListInformations == nil){
+            getWishListInformation(showActivity: true)
+        }
+        startPauseAnimation(isPausing: false) 
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        startPauseAnimation(isPausing: true)
+    }
+    
+    //when user will navigate away from the current controller, we are stopping all animation
+    @objc func startPauseAnimation( isPausing : Bool) {
+//        for view in self.stackView.subviews {
+//            if view is WishListView{
+//                (view as! WishListView).startPauseAnimation(isPausing: isPausing)
+//            }
+//        }
+    }
+    
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
@@ -78,7 +94,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             if let informations = information {
                 self.update(informations)
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not obtain wish list information")
                 self.showError(error)
             }
         }
@@ -105,8 +121,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
     
     func updateContent() {
-//         let secondsToDelay:TimeInterval = HomeViewController.animationInterval / Double(totalAnimationOnScreen) //animation delay between Featured,Events and Experience
-//        removing all subview first then adding new
         for view in self.stackView.subviews {
             view.removeFromSuperview()
         }
@@ -135,17 +149,12 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
-            //Animation
-//            DispatchQueue.main.asyncAfter(deadline: .now() + (1*secondsToDelay) ) {
-//                self.startAnimation(wishListView: wishListView)
-//            }
         }
         //***********
         // EXPERIENCE
         //***********
         count = (wishListInformations?.experiences?.count ?? 0)
         if count > 0 , let items = wishListInformations?.experiences{
-//            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -170,17 +179,12 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
-            //Animation
-//            DispatchQueue.main.asyncAfter(deadline: .now() + (1*secondsToDelay) ) {
-//                self.startAnimation(wishListView: wishListView)
-//            }
         }
         //**************
         // Special Event
         //**************
         count = (wishListInformations?.specialEvents?.count ?? 0)
         if count > 0 , let items = wishListInformations?.specialEvents{
-//            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -211,7 +215,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //******************
         count = (wishListInformations?.restaurants?.count ?? 0)
         if count > 0 , let items = wishListInformations?.restaurants{
-//            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -242,7 +245,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //******************
         count = (wishListInformations?.hotels?.count ?? 0)
         if count > 0 , let items = wishListInformations?.hotels{
-//            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -273,7 +275,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //******************
         count = (wishListInformations?.villas?.count ?? 0)
         if count > 0 , let items = wishListInformations?.villas{
-//            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -304,7 +305,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //******************
         count = (wishListInformations?.yachts?.count ?? 0)
         if count > 0 , let items = wishListInformations?.yachts{
-//            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -335,7 +335,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //******************
         count = (wishListInformations?.gifts?.count ?? 0)
         if count > 0 , let items = wishListInformations?.gifts{
-//            let wishListView = WishListView()
             let wishListView: WishListView = {
                 let tv = WishListView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -377,6 +376,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2+64 // 64 is height of "see all" control
 //        print(itemHeight)
         wishListView.heightAnchor.constraint(equalToConstant: CGFloat(itemHeight)).isActive = true
+        //Starting the animation
+//        wishListView.startPauseAnimation(isPausing: false)
     }
     
     func getWishListInformation(completion: @escaping (WishListObjects?, Error?) -> Void) {
@@ -427,7 +428,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
-                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
                     selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
                     // B2 - 7
@@ -440,7 +441,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
-                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
                     selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
                     // B2 - 7
@@ -453,7 +454,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
-                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
                     selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
                     // B2 - 7
@@ -466,7 +467,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     let viewController = RestaurantDetailViewController.instantiate(restaurant: item)
     //                self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
-                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
                     selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
                     // B2 - 7
@@ -479,7 +480,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
-                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
                     selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
                     // B2 - 7
@@ -492,7 +493,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
-                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
                     selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
                     // B2 - 7
@@ -505,7 +506,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     let viewController = EventDetailsViewController.instantiate(event: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
-                    viewController.modalPresentationStyle = .fullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
                     selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
                     // B2 - 7
@@ -624,7 +625,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not obtain wish list information")
                 completion(nil, error)
                 return
             }

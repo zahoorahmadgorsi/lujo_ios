@@ -1,28 +1,11 @@
 {
-  "Mac" : [
-
-  ],
-  "watchOS" : [
-
-  ],
-  "tvOS" : [
-
-  ],
   "commitish" : "1.1.5",
   "iOS" : [
     {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "f17a18f749bd743e02bb112ad8cf053799c1c9ccde0b3a6f92cbdf2e7c0175da",
+      "hash" : "eb2dd3a9ea7bc7d6c29e0c23b68043a435a6dd6b8078ed225a29f0d98448db6b",
       "name" : "ActiveLabel",
-      "container" : "ActiveLabel.xcframework",
-      "identifier" : "ios-arm64_i386_x86_64-simulator"
-    },
-    {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "9261e218d7a38153ea6f172072531944e41e90d79cd17b62cfb32c008a78f182",
-      "name" : "ActiveLabel",
-      "container" : "ActiveLabel.xcframework",
-      "identifier" : "ios-arm64_armv7"
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ]
 }

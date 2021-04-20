@@ -1,32 +1,8 @@
 {
-  "Mac" : [
-    {
-      "hash" : "920ae0f7e5dfe4a09a2d860590061976eacc6d8e84acd2d3b8ae052b15fee913",
-      "name" : "Mixpanel",
-      "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
-    }
-  ],
-  "watchOS" : [
-    {
-      "hash" : "db794b2d5f7fd83aefe5007bc65a8a904d8835ed6029e4aec77c3965bfcb44e2",
-      "name" : "Mixpanel",
-      "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
-    }
-  ],
-  "tvOS" : [
-    {
-      "hash" : "c7eeebdb403c0d8a7e781ce75e5a6a2872747c495c57f274d2bfa5b339eaac61",
-      "name" : "Mixpanel",
-      "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
-    }
-  ],
-  "commitish" : "v2.9.1",
+  "commitish" : "v2.9.2",
   "iOS" : [
     {
-      "hash" : "6e2e12d507a6658fc89dea682efaf057c18cc82c0f91b97a01051192f5e1014f",
+      "hash" : "d7541f0c68a9a84c024f261428c1da141e258235070354c5ebf0845eb0920daf",
       "name" : "Mixpanel",
       "linking" : "dynamic",
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"

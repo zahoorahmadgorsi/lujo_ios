@@ -291,7 +291,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     //        // B1 - 4
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
 //            viewController.transitioningDelegate = self
-            viewController.modalPresentationStyle = .fullScreen
+            viewController.modalPresentationStyle = .overFullScreen
             present(viewController, animated: true)
         }
     }
@@ -307,14 +307,14 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         if let experience = cityInformation?.experience.items[sender.tag] {
 //            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: experience), animated: true)
             let viewController = EventDetailsViewController.instantiate(event: experience)
-            viewController.modalPresentationStyle = .fullScreen
+            viewController.modalPresentationStyle = .overFullScreen
             present(viewController, animated: true)
         }
     }
     
     @IBAction func seeAllEventsButton_onClick(_ sender: Any) {
         if let termId = cityInformation?.event.items.first?.location?.first?.city?.termId {
-            self.navigationController?.pushViewController(EventsViewController.instantiate(category: .event, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.event.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.event.num ?? 0, restaurants: [])), animated: true)
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .event, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.event.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.event.num ?? 0, restaurants: [])), animated: true)
         }
     }
     
@@ -326,7 +326,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func seeAllExperiancesButton_onClick(_ sender: Any) {
         if let termId = cityInformation?.experience.items.first?.location?.first?.city?.termId {
-            self.navigationController?.pushViewController(EventsViewController.instantiate(category: .experience, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.experience.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.experience.num ?? 0, restaurants: [])), animated: true)
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .experience, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.experience.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.experience.num ?? 0, restaurants: [])), animated: true)
         }
     }
     
@@ -416,7 +416,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         Mixpanel.mainInstance().track(event: "GlobalSearch",
-              properties: ["searchedText" : text])
+              properties: ["SearchedText" : text])
         
         EEAPIManager().search(token: token, searchText: text) { (cities, error) in
             if let error = error {

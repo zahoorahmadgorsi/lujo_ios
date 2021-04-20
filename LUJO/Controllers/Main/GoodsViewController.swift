@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 import SwiftMessages
+import Mixpanel
 
 class GoodsViewController: UIViewController {
     
@@ -58,6 +59,9 @@ class GoodsViewController: UIViewController {
             showInformationPopup(withTitle: "Info", message:"User does not exist or is not verified.")
             return
         }
+        
+        Mixpanel.mainInstance().track(event: "Gifts Custom Request",
+                                      properties: ["Custom Request Description" : description])
         
         let initialMessage = """
         Hi Concierge team,

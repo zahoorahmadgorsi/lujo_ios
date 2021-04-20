@@ -765,10 +765,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7k-aa-RJd">
-                                <rect key="frame" x="0.0" y="347" width="375" height="465"/>
+                                <rect key="frame" x="0.0" y="368" width="375" height="444"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MjF-bg-ddv">
-                                        <rect key="frame" x="12" y="0.0" width="351" height="315"/>
+                                        <rect key="frame" x="12" y="0.0" width="351" height="294"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBz-T4-h7o">
                                                 <rect key="frame" x="0.0" y="0.0" width="351" height="64"/>
@@ -836,38 +836,38 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6wo-GK-TVj">
-                                                <rect key="frame" x="0.0" y="148" width="351" height="50"/>
+                                                <rect key="frame" x="0.0" y="148" width="351" height="45"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Destination" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W7S-WH-2DR">
-                                                        <rect key="frame" x="12" y="0.0" width="327" height="50"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please Enter Destination" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W7S-WH-2DR">
+                                                        <rect key="frame" x="12" y="0.0" width="327" height="45"/>
                                                         <color key="tintColor" name="White Text"/>
                                                         <color key="textColor" name="White Text"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                                                <color key="value" name="White Text"/>
+                                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.55294117649999996" green="0.54901960780000003" blue="0.54901960780000003" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="W7S-WH-2DR" firstAttribute="top" secondItem="6wo-GK-TVj" secondAttribute="top" id="8RG-tc-2Or"/>
-                                                    <constraint firstAttribute="height" constant="50" id="8fe-Ef-l27"/>
+                                                    <constraint firstAttribute="height" constant="45" id="8fe-Ef-l27"/>
                                                     <constraint firstAttribute="bottom" secondItem="W7S-WH-2DR" secondAttribute="bottom" id="Aex-dS-UXY"/>
                                                     <constraint firstItem="W7S-WH-2DR" firstAttribute="leading" secondItem="6wo-GK-TVj" secondAttribute="leading" constant="12" id="NpV-7w-8vw"/>
                                                     <constraint firstAttribute="trailing" secondItem="W7S-WH-2DR" secondAttribute="trailing" constant="12" id="yEV-ot-ZQZ"/>
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TNE-Nf-Fcv">
-                                                <rect key="frame" x="0.0" y="206" width="351" height="50"/>
+                                                <rect key="frame" x="0.0" y="201" width="351" height="50"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Yacht name (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cRw-Qo-4Au">
                                                         <rect key="frame" x="12" y="0.0" width="327" height="50"/>
                                                         <color key="tintColor" name="White Text"/>
                                                         <color key="textColor" name="White Text"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
@@ -886,7 +886,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="w66-Fr-hOM">
-                                                <rect key="frame" x="0.0" y="206" width="351" height="52"/>
+                                                <rect key="frame" x="0.0" y="201" width="351" height="52"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Nt-S5-vZr">
                                                         <rect key="frame" x="0.0" y="0.0" width="351" height="52"/>
@@ -954,7 +954,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wg6-RV-ZDg">
-                                                <rect key="frame" x="0.0" y="206" width="351" height="52"/>
+                                                <rect key="frame" x="0.0" y="201" width="351" height="52"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budget" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spZ-zE-33U">
                                                         <rect key="frame" x="12" y="8" width="311" height="44"/>
@@ -985,10 +985,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZCi-C6-nbq">
-                                                <rect key="frame" x="0.0" y="214" width="351" height="60"/>
+                                                <rect key="frame" x="0.0" y="209" width="351" height="44"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HqF-YY-Lau">
-                                                        <rect key="frame" x="0.0" y="8" width="351" height="44"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgg-C3-eXq" userLabel="Departure Date" customClass="LujoIconLabel" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="171.66666666666666" height="44"/>
@@ -1017,12 +1017,12 @@
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="HqF-YY-Lau" secondAttribute="trailing" id="T4z-XX-m6O"/>
                                                     <constraint firstItem="HqF-YY-Lau" firstAttribute="leading" secondItem="ZCi-C6-nbq" secondAttribute="leading" id="anw-yn-5KM"/>
-                                                    <constraint firstAttribute="bottom" secondItem="HqF-YY-Lau" secondAttribute="bottom" constant="8" id="lUu-lA-1kN"/>
-                                                    <constraint firstItem="HqF-YY-Lau" firstAttribute="top" secondItem="ZCi-C6-nbq" secondAttribute="top" constant="8" id="wrb-dc-UIo"/>
+                                                    <constraint firstAttribute="bottom" secondItem="HqF-YY-Lau" secondAttribute="bottom" id="lUu-lA-1kN"/>
+                                                    <constraint firstItem="HqF-YY-Lau" firstAttribute="top" secondItem="ZCi-C6-nbq" secondAttribute="top" id="wrb-dc-UIo"/>
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="KTK-GW-DTh">
-                                                <rect key="frame" x="0.0" y="290" width="351" height="25"/>
+                                                <rect key="frame" x="0.0" y="269" width="351" height="25"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Es1-wZ-55S">
                                                         <rect key="frame" x="0.0" y="0.0" width="219" height="25"/>
@@ -1070,7 +1070,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gld-IX-6Ms" userLabel="Bottom Bar">
-                                        <rect key="frame" x="0.0" y="363" width="375" height="68"/>
+                                        <rect key="frame" x="0.0" y="342" width="375" height="68"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OrY-4b-VAf" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
@@ -1097,7 +1097,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsx-pM-CyF">
-                                        <rect key="frame" x="0.0" y="431" width="375" height="34"/>
+                                        <rect key="frame" x="0.0" y="410" width="375" height="34"/>
                                         <color key="backgroundColor" name="Palette - Separator"/>
                                     </view>
                                 </subviews>
@@ -1133,6 +1133,7 @@
                         <outlet property="lenghtButton" destination="hN3-xo-w8s" id="WIj-t2-YmL"/>
                         <outlet property="lenghtLabel" destination="sPX-Cc-f0O" id="wVX-WM-iYH"/>
                         <outlet property="toDateLabel" destination="HZ9-tj-rej" id="Vnq-pA-1P4"/>
+                        <outlet property="viewDestination" destination="6wo-GK-TVj" id="NIf-If-7dB"/>
                         <outlet property="yachtBudgetButton" destination="9O7-hX-JKE" id="D3Y-va-X8U"/>
                         <outlet property="yachtBudgetLabel" destination="spZ-zE-33U" id="QeL-ka-TbX"/>
                         <outlet property="yachtCharterButton" destination="eqx-cI-hGB" id="KiA-Dg-suz"/>

@@ -9,6 +9,8 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
+import Intercom
 
 class VillaViewController: UIViewController {
     
@@ -215,14 +217,33 @@ class VillaViewController: UIViewController {
         }
         
 
-        guard var returnDateString = returnDateTime.formatedDateForServer else {
+        guard let returnDateString = returnDateTime.formatedDateForServer else {
                 showInformationPopup(withTitle: "Info", message:"Return date is not in correct format.")
             return
         }
         
+        Mixpanel.mainInstance().track(event: "Villa Custom Request",
+                                      properties: ["villa Name" : villaName
+                                                   ,"Villa Check In Date" : dateString
+                                                   ,"Villa Check Out Date" : returnDateString])
+        
+
+        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                return
+            }
+            //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+            if let user = LujoSetup().getLujoUser(), user.id > 0 {
+                Intercom.logEvent(withName: "custom_request", metaData:[
+                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+                                    ,"user_id":user.id])
+            }
+        }
         
         let initialMessage = """
-        Hi Concierge team,
+        Hi Concierge team
 
         I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
         

@@ -370,13 +370,13 @@ struct HomeObjects: Codable {
 // it is used in /per-city
 struct Cities: Codable{
     var name: String?
-    var termID: Int?
+    var termId: Int?
     var itemsNum : Int?
     var items:[Product]?
     
     enum CodingKeys: String,CodingKey{
         case name
-        case termID = "term_id"
+        case termId = "term_id"
         case itemsNum = "items_num"
         case items
     }
@@ -386,7 +386,7 @@ struct Cities: Codable{
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
             name = try values.decodeIfPresent(String.self, forKey: .name)
-            termID = try values.decodeIfPresent(Int.self, forKey: .termID)
+            termId = try values.decodeIfPresent(Int.self, forKey: .termId)
             itemsNum = try values.decodeIfPresent(Int.self, forKey: .itemsNum)
             items = try values.decodeIfPresent([Product].self, forKey: .items)
             
@@ -407,4 +407,14 @@ struct PerCityObjects: Codable {
     }
 
     
+}
+
+struct CustomBookingResponse: Codable {
+    let salesforceId: String
+    let message: String
+
+    enum CodingKeys: String, CodingKey {
+        case salesforceId = "salesforce_id"
+        case message
+    }
 }

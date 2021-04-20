@@ -75,12 +75,15 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     var selectedCell: UIImageView?
     var selectedCellHeart: UIImageView?
     var selectedFeaturedCell: ImageCarouselCell?
+    var selectedChef: UIImageView?
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
     var selectedCellHeartSnapshot: UIView?
     var sliderDiningToDetailAnimator: DiningSliderAnimator?
     var featuredDiningToDetailAnimator: DiningFeaturedAnimator?
+//    var diningCheffAnimator: DiningCheffAnimator?B2
     private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
+    var timer = Timer()
     
     
     override func viewDidLoad() {
@@ -102,11 +105,11 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         getDiningInformation(showActivity: true)
         
         locationManager.delegate = self
-        
-        startAnimation()
     }
     
-    
+ 
+
+
     
     @IBAction func noNearbyRestaurantsDismissButton_onClick(_ sender: Any) {
         noNearbyRestaurantsContainerView.removeFromSuperview()
@@ -152,6 +155,12 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         searchBarButton.isEnabled = LujoSetup().getLujoUser()?.membershipPlan != nil
         
         checkLocationAuthorizationStatus()
+        startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        startPauseAnimation(isPausing: true)
     }
     
     func setupNavigationBar() {
@@ -284,27 +293,25 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             // B2 - 7
             selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             
-            presentRestaurantDetailViewController(restaurant: featuredItem)
+            presentRestaurantDetailViewController(restaurant: featuredItem, presentationStyle: .overFullScreen)
         } else if sender.view == chiefContainerView {
-            guard let restaurant = diningInformations?.starChief?.chiefRestaurant else { return }
+            guard let restaurant = diningInformations?.starChief?.chiefRestaurant else { return } 
             
-//            // B2 - 6
-//            let indexPath = IndexPath(row: featured.currentIndex ?? 0, section: 0)
-//            selectedFeaturedCell = featured.collectionView.cellForItem(at: indexPath) as? ImageCarouselCell
-//            animationtype = .featured   //execute feature to detail animation
+            // B2 - 6
+//            selectedCell = (cityView as? DiningCityView)?.restaurant1ImageView
+//            animationtype = .specialEvent   //chef
 //            // B2 - 7
-//            selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
-            presentRestaurantDetailViewController(restaurant: restaurant)
+//            selectedCellImageViewSnapshot = chiefImageView.snapshotView(afterScreenUpdates: false)
+            presentRestaurantDetailViewController(restaurant: restaurant, presentationStyle: .overFullScreen)
         }
     }
     
-    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurant) {
+    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurant , presentationStyle : UIModalPresentationStyle) {
         let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
-        viewController.modalPresentationStyle = .fullScreen
-
+        viewController.modalPresentationStyle = presentationStyle
         present(viewController, animated: true, completion: nil)
     }
     
@@ -392,18 +399,22 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func startAnimation() {
-        Timer.scheduledTimer(withTimeInterval: HomeViewController.animationInterval, repeats: true, block: { _ in
-            if self.featured.titleList.count > 0 {
-                if let index = Int(self.currentImageNum.text ?? "1") {
-                    if index == self.featured.titleList.count {
-                        self.featured.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
-                    } else {
-                        self.featured.collectionView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
-                    }
-                }
-            }
-        })
+    func startPauseAnimation(isPausing : Bool) {
+//        if !isPausing{
+//            timer = Timer.scheduledTimer(withTimeInterval: HomeViewController.animationInterval, repeats: true, block: { _ in
+//                if self.featured.titleList.count > 0 {
+//                    if let index = Int(self.currentImageNum.text ?? "1") {
+//                        if index == self.featured.titleList.count {
+//                            self.featured.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
+//                        } else {
+//                            self.featured.collectionView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
+//                        }
+//                    }
+//                }
+//            })
+//        } else {
+//            timer.invalidate()
+//        }
     }
     
     func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
@@ -536,7 +547,7 @@ extension DiningViewController {
         // B2 - 7
         selectedCellImageViewSnapshot = selectedCell?.snapshotView(afterScreenUpdates: false)
         selectedCellHeartSnapshot = selectedCellHeart?.snapshotView(afterScreenUpdates: false)
-        presentRestaurantDetailViewController(restaurant: restaurant)
+        presentRestaurantDetailViewController(restaurant: restaurant, presentationStyle: .overFullScreen)
     }
     
     
@@ -619,7 +630,12 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
         if animationtype == .featured{
             featuredDiningToDetailAnimator = DiningFeaturedAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredDiningToDetailAnimator
-        }else {
+        }
+//        else if animationtype == .specialEvent{
+//            diningCheffAnimator = DiningCheffAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+//            return diningCheffAnimator
+//        }
+        else {
             return nil
         }
     }
@@ -640,7 +656,12 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
         }else if animationtype == .featured{
             featuredDiningToDetailAnimator = DiningFeaturedAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredDiningToDetailAnimator
-        }else {
+        }
+//        else if animationtype == .specialEvent{
+//            diningCheffAnimator = DiningCheffAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+//            return diningCheffAnimator
+//        }
+        else{
             return nil
         }
     }

@@ -1,37 +1,10 @@
 {
-  "Mac" : [
-
-  ],
-  "watchOS" : [
-
-  ],
-  "tvOS" : [
-    {
-      "hash" : "90495f88db6f65f6cb5946e6ac281e89f7db74237a8f8a214e297edfad918657",
-      "name" : "JGProgressHUD",
-      "container" : "JGProgressHUD.xcframework",
-      "identifier" : "tvos-arm64_x86_64-simulator"
-    },
-    {
-      "hash" : "cbf5ce005a5ae89e4c731ec621f9d050c1182afb9fd345486bd39d0ae84eb5e7",
-      "name" : "JGProgressHUD",
-      "container" : "JGProgressHUD.xcframework",
-      "identifier" : "tvos-arm64"
-    }
-  ],
   "commitish" : "v2.2",
   "iOS" : [
     {
-      "hash" : "17bb68490767f09661bec70ea3d2029e8b9c17857c9f36e852a5cb28f99e9ea0",
       "name" : "JGProgressHUD",
-      "container" : "JGProgressHUD.xcframework",
-      "identifier" : "ios-arm64_i386_x86_64-simulator"
-    },
-    {
-      "hash" : "dc859bac48740add8f9de13f3e0ccc0f864462febcbf125fe373b35fbfc215a3",
-      "name" : "JGProgressHUD",
-      "container" : "JGProgressHUD.xcframework",
-      "identifier" : "ios-arm64_armv7"
+      "hash" : "46c436d66a84b2a0645fa4e6ab35cd2b61e4e374f2128a63aa379f1c575735de",
+      "linking" : "dynamic"
     }
   ]
 }

@@ -46,8 +46,6 @@ class WelcomeView: UIViewController, LoginViewProtocol {
         }else{
             Mixpanel.mainInstance().identify(distinctId: "-13793")
         }
-        
-        welcomeLabel.text = "Welcome to LUJO,\n\(LujoSetup().getLujoUser()?.firstName ?? "") \(LujoSetup().getLujoUser()?.lastName ?? "")"
 
         UIView.animate(withDuration: 0.3) {
             self.wineImageView.alpha = 1

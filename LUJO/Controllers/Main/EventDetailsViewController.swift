@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
+import Intercom
 
 class EventDetailsViewController: UIViewController, GalleryViewProtocol {
     //MARK:- Init
@@ -36,6 +37,7 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
     
     private(set) var product: Product!
     
+    @IBOutlet weak var ViewMainImage: UIView!
     @IBOutlet var mainImageView: UIImageView!
     @IBOutlet var name: UILabel!
     @IBOutlet var dateLocationContainerView: UIView!
@@ -87,6 +89,11 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
         return formatter
     }()
     
+    //dismissin on swiping down
+    var panGestureRecognizer: UIPanGestureRecognizer?
+    var originalPosition: CGPoint?
+    var currentPositionTouched: CGPoint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -133,6 +140,15 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
         let tgrBack = UITapGestureRecognizer(target: self, action: #selector(tappedOnBack(_:)))
         self.imgBack.isUserInteractionEnabled = true   //can also be enabled from IB
         self.imgBack.addGestureRecognizer(tgrBack)
+        //Add tap gesture on ReadMore button
+        
+        let tgrReadMore = UITapGestureRecognizer(target: self, action: #selector(btnSeeMoreTapped(_:)))
+        self.viewReadMore.isUserInteractionEnabled = true   //can also be enabled from IB
+        self.viewReadMore.addGestureRecognizer(tgrReadMore)
+        //Addin swipe down pan gesture
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
+        ViewMainImage.addGestureRecognizer(panGestureRecognizer!)
+        
         setRecentlyViewed()
     }
     
@@ -180,7 +196,7 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
 
                 if let font = descriptionTextView.font{
                     let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
-                    print(currentHeight,descHeightToShowReadMore)
+//                    print(currentHeight,descHeightToShowReadMore)
                     if (currentHeight > descHeightToShowReadMore){
                         lblDescriptionHeight.constant = descHeightToShowReadMore
                     }else{
@@ -406,13 +422,13 @@ extension EventDetailsViewController {
         //preparing price data of collection view
         
         itemsList =  [ProductDetail]()
-        if let val = product.rentPricePerWeekLowSeason, val.count > 0{
-            itemsList.append(ProductDetail(key: "Weekly Rent",value: "$" + val.withCommas() ,isHighSeason: false)) // Low Season
-//            itemsList.append(ProductDetail(key: "Weekly Rent",value:  val,isHighSeason: false)) // Low Season
-        }
         if let val = product.rentPricePerWeekHighSeason, val.count > 0{
             itemsList.append(ProductDetail(key: "Weekly Rent",value: "$" + val.withCommas() ,isHighSeason: true)) //High Season
 //            itemsList.append(ProductDetail(key: "Weekly Rent",value: val,isHighSeason: true)) //High Season
+        }
+        if let val = product.rentPricePerWeekLowSeason, val.count > 0{
+            itemsList.append(ProductDetail(key: "Weekly Rent",value: "$" + val.withCommas() ,isHighSeason: false)) // Low Season
+//            itemsList.append(ProductDetail(key: "Weekly Rent",value:  val,isHighSeason: false)) // Low Season
         }
         if let val = product.salePrice , val.count > 0{
             itemsList.append(ProductDetail(key: "Sale Price",value: "$" + val.withCommas() ,isHighSeason: nil))
@@ -572,22 +588,24 @@ extension EventDetailsViewController {
         }
         //preparing price data of collection view
         itemsList =  [ProductDetail]()
-        
-        if let val = product.charterPriceLowSeasonPerWeek, val.count > 0{
-            itemsList.append(ProductDetail(key: "Weekly Charter",value: "$" + val.withCommas() ,isHighSeason: false)) //low season
-//            itemsList.append(ProductDetail(key: "Weekly Charter",value: val,isHighSeason: false)) //low season
+    
+        if let val = product.charterPriceHighSeasonPerDay, val.count > 0{
+            itemsList.append(ProductDetail(key: "Daily Charter",value: "$" + val.withCommas() ,isHighSeason: true)) // high season
+//            itemsList.append(ProductDetail(key: "Daily Charter",value:  val,isHighSeason: true)) // high season
         }
         if let val = product.charterPriceHighSeasonPerWeek, val.count > 0{
             itemsList.append(ProductDetail(key: "Weekly Charter",value: "$" + val.withCommas() ,isHighSeason: true)) // high season
 //            itemsList.append(ProductDetail(key: "Weekly Charter",value: val,isHighSeason: true)) // high season
         }
+        
         if let val = product.charterPriceLowSeasonPerDay, val.count > 0{
             itemsList.append(ProductDetail(key: "Daily Charter",value: "$" + val.withCommas() ,isHighSeason: false)) // low season
 //            itemsList.append(ProductDetail(key: "Daily Charter",value: val,isHighSeason: false)) // low season
         }
-        if let val = product.charterPriceHighSeasonPerDay, val.count > 0{
-            itemsList.append(ProductDetail(key: "Daily Charter",value: "$" + val.withCommas() ,isHighSeason: true)) // high season
-//            itemsList.append(ProductDetail(key: "Daily Charter",value:  val,isHighSeason: true)) // high season
+        
+        if let val = product.charterPriceLowSeasonPerWeek, val.count > 0{
+            itemsList.append(ProductDetail(key: "Weekly Charter",value: "$" + val.withCommas() ,isHighSeason: false)) //low season
+//            itemsList.append(ProductDetail(key: "Weekly Charter",value: val,isHighSeason: false)) //low season
         }
         if let val = product.salePrice , val.count > 0{
             itemsList.append(ProductDetail(key: "Sale Price",value: "$" + val.withCommas() ,isHighSeason: nil))
@@ -681,7 +699,7 @@ extension EventDetailsViewController {
 //        print(itemHeight)
         let collectionViewHeight = productDetailView.collectionView.collectionViewLayout.collectionViewContentSize.height
         let totalHeight = Int(collectionViewHeight/2) + (ProdCollSize.itemMargin.rawValue*2)+30 // 30 is height of "Title" control
-        print(totalHeight)
+//        print(totalHeight)
         productDetailView.heightAnchor.constraint(equalToConstant: CGFloat(totalHeight)).isActive = true
     }
     
@@ -753,7 +771,24 @@ extension EventDetailsViewController {
         else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
             
-            EEAPIManager().sendRequestForSalesForce(itemId: product.id)
+            EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                    return
+                }
+                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+                if let user = LujoSetup().getLujoUser(), user.id > 0 {
+                    Intercom.logEvent(withName: "custom_request", metaData:[
+                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+                                        ,"user_id":user.id])
+                }
+            }
+            
+            Mixpanel.mainInstance().track(event: "Product Custom Request",
+                                          properties: ["Product Name" : product.name
+                                                       ,"Product Type" : product.type
+                                                       ,"ProductId" : product.id])
             
             let initialMessage = """
             Hi Concierge team,
@@ -765,24 +800,6 @@ extension EventDetailsViewController {
             
             startChatWithInitialMessage(initialMessage)
         }
-//        let isEqual = (product.type == "yacht")
-//        if !isEqual{
-//            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-//
-//            EEAPIManager().sendRequestForSalesForce(itemId: product.id)
-//
-//            let initialMessage = """
-//            Hi Concierge team,
-//
-//            I am interested in \(product.name), can you assist me?
-//
-//            \(userFirstName)
-//            """
-//
-//            startChatWithInitialMessage(initialMessage)
-//        }else{  //yacht
-//            self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
-//        }
         
     }
     
@@ -793,7 +810,8 @@ extension EventDetailsViewController {
         }
 //        print(event.id)
         Mixpanel.mainInstance().track(event: "RecentlyViewed",
-                  properties: ["productId" : product.id])
+                  properties: ["RecentlyViewed ProductId" : product.id
+                                ,"RecentlyViewed ProductType" : product.type])
         RecentlyViewedAPIManager().setRecenltyViewed(token: token, id: product.id){response, error in
             if let error = error{
                 print(error.localizedDescription );
@@ -840,7 +858,7 @@ extension EventDetailsViewController {
                     self.imgHeart.image = UIImage(named: "heart_white")
                 }
                 
-                print("ItemID:\(self.product.id)" + ", ItemType:" + self.product.type  + ", ServerResponse:" + informations)
+//                print("ItemID:\(self.product.id)" + ", ItemType:" + self.product.type  + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
                 self.showError(error)
@@ -864,6 +882,46 @@ extension EventDetailsViewController {
             completion(strResponse, error)
         }
     }
+    
+    @objc func panGestureAction(_ panGesture: UIPanGestureRecognizer) {
+        let minimumVelocityToHide: CGFloat = 1500
+        let minimumScreenRatioToHide: CGFloat = 0.25
+        let animationDuration: TimeInterval = 0.2
+        
+        func slideViewVerticallyTo(_ y: CGFloat) {
+            self.view.frame.origin = CGPoint(x: 0, y: y)
+        }
+        
+        switch panGesture.state {
+            case .began, .changed:
+                // If pan started or is ongoing then slide the view to follow the finger
+                let translation = panGesture.translation(in: view)
+                let y = max(0, translation.y)
+                slideViewVerticallyTo(y)
+            case .ended:
+                // If pan ended, decide it we should close or reset the view based on the final position and the speed of the gesture
+                let translation = panGesture.translation(in: view)
+                let velocity = panGesture.velocity(in: view)
+                let closing = (translation.y > self.view.frame.size.height * minimumScreenRatioToHide) ||
+                              (velocity.y > minimumVelocityToHide)
+
+                if closing {
+                    self.tappedOnBack(panGesture)
+                } else {
+                    // If not closing, reset the view to the top
+                    UIView.animate(withDuration: animationDuration, animations: {
+                        slideViewVerticallyTo(0)
+                    })
+                }
+
+            default:
+                // If gesture state is undefined, reset the view to the top
+                UIView.animate(withDuration: animationDuration, animations: {
+                    slideViewVerticallyTo(0)
+                })
+
+            }
+      }
 }
 
 ////No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
@@ -880,5 +938,19 @@ extension EventDetailsViewController: UIScrollViewDelegate {
         //hiding navigation bar if scroll off set is more then 280
 //        self.navigationController?.setNavigationBarHidden(hide, animated: true)
 
+    }
+}
+
+extension EventDetailsViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func shouldBeRequiredToFail(by otherGestureRecognizer: UIGestureRecognizer) -> Bool{
+        if (otherGestureRecognizer == panGestureRecognizer){
+            return true
+        }else{
+            return false
+        }
     }
 }

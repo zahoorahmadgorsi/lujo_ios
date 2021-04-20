@@ -1,28 +1,11 @@
 {
-  "Mac" : [
-
-  ],
-  "watchOS" : [
-
-  ],
-  "tvOS" : [
-
-  ],
   "commitish" : "3.2.2",
   "iOS" : [
     {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "dbfb84986904da8b610f85add58301b5b798337d652de1c8fee704bce664985c",
+      "hash" : "bce085ca1e4aa802a5a4f549306456f3981cd6879eb632f22ebea36d60ba9624",
       "name" : "M13Checkbox",
-      "container" : "M13Checkbox.xcframework",
-      "identifier" : "ios-arm64_i386_x86_64-simulator"
-    },
-    {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "2bd949220569115a54939a3b0a490b1d4e63d5cb5c5e72528cdcf3d7a8639622",
-      "name" : "M13Checkbox",
-      "container" : "M13Checkbox.xcframework",
-      "identifier" : "ios-arm64_armv7"
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ]
 }

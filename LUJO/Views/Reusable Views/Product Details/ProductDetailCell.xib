@@ -27,39 +27,39 @@
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="15"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dot_icon" translatesAutoresizingMaskIntoConstraints="NO" id="HSd-bR-h2u">
-                                                <rect key="frame" x="0.0" y="0.0" width="4" height="15"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="2" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="4" id="y8b-5h-d6N"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Left" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Sn-ff-x2P">
-                                                <rect key="frame" x="9" y="0.0" width="71.5" height="15"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <rect key="frame" x="7" y="0.0" width="71.5" height="15"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" name="Action Button"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Right" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uH-kh-Xau">
-                                                <rect key="frame" x="85.5" y="0.0" width="64.5" height="15"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <rect key="frame" x="83.5" y="0.0" width="66.5" height="15"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" name="White Text"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="nIG-3o-FIo">
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nIG-3o-FIo">
                                         <rect key="frame" x="0.0" y="20" width="150" height="15"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smC-zP-o00">
-                                                <rect key="frame" x="0.0" y="0.0" width="34.5" height="15"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="35" height="15"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="45" id="qGn-RL-Wnq"/>
+                                                    <constraint firstAttribute="width" constant="35" id="aWY-9V-kZ9"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <color key="textColor" name="Action Button"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laX-9c-Qlr">
-                                                <rect key="frame" x="34.5" y="0.0" width="115.5" height="15"/>
+                                                <rect key="frame" x="35" y="0.0" width="115" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" name="White Text"/>
                                                 <nil key="highlightedColor"/>
@@ -68,7 +68,7 @@
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bottom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8OF-Be-zfx">
                                         <rect key="frame" x="0.0" y="40" width="150" height="15"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>

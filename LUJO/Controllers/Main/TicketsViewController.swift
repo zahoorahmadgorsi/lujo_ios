@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 import SwiftMessages
+import Mixpanel
 
 class TicketsViewController: UIViewController {
     
@@ -68,6 +69,9 @@ class TicketsViewController: UIViewController {
             showInformationPopup(withTitle: "Info", message:"User does not exist or is not verified.")
             return
         }
+        
+        Mixpanel.mainInstance().track(event: "Tickets Custom Request",
+                                      properties: ["Custom Request Description" : description])
         
         showNetworkActivity()
         CustomRequestAPIManager.shared.ticketsReqeust(desc: description, count: ticketsCount, token: token) { error in

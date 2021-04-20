@@ -20,7 +20,7 @@ class PerCityViewController: UIViewController {
     class var identifier: String { return "PerCityViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(category: EventCategory, dataSource: PerCityObjects? = nil, city: DiningCity? = nil) -> PerCityViewController {
+    class func instantiate(category: ProductCategory, dataSource: PerCityObjects? = nil, city: DiningCity? = nil) -> PerCityViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! PerCityViewController
         viewController.category = category
         viewController.dataSource = dataSource
@@ -30,7 +30,7 @@ class PerCityViewController: UIViewController {
     
     //MARK:- Globals
     
-    private(set) var category: EventCategory!
+    private(set) var category: ProductCategory!
     private var city: DiningCity?
     
     @IBOutlet var collectionView: UICollectionView!
@@ -72,28 +72,7 @@ class PerCityViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.backBarButtonItem?.title = ""
-//        currentLayout = collectionView.collectionViewLayout as? LiftLayout
-//        switch category! {
-//            case .event:
-//                currentLayout?.setCustomCellHeight(194)
-//            case .experience:
-//                currentLayout?.setCustomCellHeight(170)
-//            case .villa:
-//                currentLayout?.setCustomCellHeight(170)
-//            case .gift:
-//                currentLayout?.setCustomCellHeight(170)
-//            case .yacht:
-//                currentLayout?.setCustomCellHeight(170)
-//            case .recent:
-//                currentLayout?.setCustomCellHeight(170)
-//            case .topRated:
-//                currentLayout?.setCustomCellHeight(170)
-//        }
-//
-//        collectionView.register(UINib(nibName: HomeSliderCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeSliderCell.identifier)
-        
         homeTopRatedSlider.delegate = self
-        
         updateContentUI()
     }
     
@@ -118,22 +97,14 @@ class PerCityViewController: UIViewController {
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
-        navigationController?.pushViewController(SearchEventsViewController.instantiate(category: category), animated: true)
+        navigationController?.pushViewController(SearchProductsViewController.instantiate(category: category), animated: true)
     }
     
     fileprivate func updateContentUI() {
         if dataSource != nil || city != nil {
             self.navigationItem.rightBarButtonItem = nil
         }
-        
-        var titleString = category.rawValue
-        
-//        if dataSource.count > 0 {
-//            titleString = "\(dataSource[0].location?.first?.city?.name ?? "") \(category == EventCategory.experience ? "experiances" : "events")"
-//        } else if let city = city {
-//            titleString = "\(city.name) \(category == EventCategory.experience ? "experiances" : "events")"
-//        }
-        
+        let titleString = category.rawValue
         title = titleString
 //        naHUD.textLabel.text = "Loading " + category.rawValue
     }
@@ -185,7 +156,7 @@ class PerCityViewController: UIViewController {
             case 0:
                 print("No city to show")
             case 1:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termID == city.termID && $0.tag != 999 }) {
+                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termId == city.termId && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
                 }
                 let cityView = CityView1()
@@ -193,7 +164,7 @@ class PerCityViewController: UIViewController {
                 cityView.delegate = self
                 svPerCity.addArrangedSubview(cityView)
             case 2:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView2)?.city?.termID == city.termID && $0.tag != 999 }) {
+                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView2)?.city?.termId == city.termId && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
                 }
                 let cityView = CityView2()
@@ -201,7 +172,7 @@ class PerCityViewController: UIViewController {
                 cityView.delegate = self
                 svPerCity.addArrangedSubview(cityView)
             case 3:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView3)?.city?.termID == city.termID && $0.tag != 999 }) {
+                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView3)?.city?.termId == city.termId && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
                 }
                 let cityView = CityView3()
@@ -209,7 +180,7 @@ class PerCityViewController: UIViewController {
                 cityView.delegate = self
                 svPerCity.addArrangedSubview(cityView)
             default:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView4)?.city?.termID == city.termID && $0.tag != 999 }) {
+                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView4)?.city?.termId == city.termId && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
                 }
                 let cityView = CityView4()
@@ -223,7 +194,7 @@ class PerCityViewController: UIViewController {
     }
     
     @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
-        let viewController = EventsViewController.instantiate(category: .topRated, subCategory: self.category)
+        let viewController = ProductsViewController.instantiate(category: .topRated, subCategory: self.category)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -246,7 +217,8 @@ extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDel
 
 extension PerCityViewController: CityViewProtocol {
     func seeAllProductsForCity(city: Cities) {
-        print(city.name as Any)
+        let viewController = ProductsViewController.instantiate(category: self.category, city:DiningCity(termId: city.termId ?? -1, name: city.name ?? "" , restaurantsNum: -1, restaurants: []))
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func didTappedOnProductAt(product: Product, itemIndex: Int) {
@@ -261,7 +233,7 @@ extension PerCityViewController: CityViewProtocol {
                 switch city.itemsNum {
                 case 0: print("Ignore")
                 case 1:
-                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termID == city.termID && $0.tag != 999 }) {
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termId == city.termId && $0.tag != 999 }) {
                         if let tappedRestaurant = (cityView as? CityView1)?.city?.items?.enumerated().first(where: {$0.element.id == product.id}) {
 //                            print(city.name as Any ,product.name,tappedRestaurant.offset)
                             if (tappedRestaurant.offset == 0){
@@ -272,7 +244,7 @@ extension PerCityViewController: CityViewProtocol {
                         }
                     }
                 case 2:
-                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView2)?.city?.termID == city.termID && $0.tag != 999 }) {
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView2)?.city?.termId == city.termId && $0.tag != 999 }) {
                         if let tappedRestaurant = (cityView as? CityView2)?.city?.items?.enumerated().first(where: {$0.element.id == product.id}) {
 //                            print(city.name as Any ,product.name,tappedRestaurant.offset)
                             if (tappedRestaurant.offset == 0){
@@ -286,7 +258,7 @@ extension PerCityViewController: CityViewProtocol {
                         }
                     }
                 case 3:
-                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView3)?.city?.termID == city.termID && $0.tag != 999 }) {
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView3)?.city?.termId == city.termId && $0.tag != 999 }) {
                         if let tappedRestaurant = (cityView as? CityView3)?.city?.items?.enumerated().first(where: {$0.element.id == product.id}) {
 //                            print(city.name as Any ,product.name,tappedRestaurant.offset)
                             if (tappedRestaurant.offset == 0){
@@ -303,7 +275,7 @@ extension PerCityViewController: CityViewProtocol {
                         }
                     }
                 default:
-                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView4)?.city?.termID == city.termID && $0.tag != 999 }) {
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView4)?.city?.termId == city.termId && $0.tag != 999 }) {
                         if let tappedRestaurant = (cityView as? CityView4)?.city?.items?.enumerated().first(where: {$0.element.id == product.id}) {
 //                            print(city.name as Any ,product.name,tappedRestaurant.offset)
                             if (tappedRestaurant.offset == 0){
@@ -332,12 +304,12 @@ extension PerCityViewController: CityViewProtocol {
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
-        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalPresentationStyle = .overFullScreen
         present(viewController, animated: true)
     }
 
     func didTappedOnHeartAt(city currentCity: Cities, itemIndex: Int) {
-        if let cityIndex = homeObjects?.cities.firstIndex(where: {$0.termID == currentCity.termID}), let product = homeObjects?.cities[cityIndex].items?[itemIndex]{
+        if let cityIndex = homeObjects?.cities.firstIndex(where: {$0.termId == currentCity.termId}), let product = homeObjects?.cities[cityIndex].items?[itemIndex]{
             //setting the favourite
             self.showNetworkActivity()
             setUnSetFavourites(id: product.id ,isUnSetFavourite: product.isFavourite ?? false) {information, error in
@@ -363,7 +335,7 @@ extension PerCityViewController: CityViewProtocol {
     }
     
     
-    func getInformation(for category: EventCategory) {
+    func getInformation(for category: ProductCategory) {
         showNetworkActivity()
         getList(for: category) { items, error in
             self.hideNetworkActivity()
@@ -375,7 +347,7 @@ extension PerCityViewController: CityViewProtocol {
         }
     }
     
-    func getList(for category: EventCategory, completion: @escaping (PerCityObjects?, Error?) -> Void) {
+    func getList(for category: ProductCategory, completion: @escaping (PerCityObjects?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -484,7 +456,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
         // B2 - 7
         selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
         viewController.transitioningDelegate = self
-        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalPresentationStyle = .overFullScreen
         present(viewController, animated: true)
     }
     

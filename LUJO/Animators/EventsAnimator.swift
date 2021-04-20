@@ -14,14 +14,14 @@ final class EventsAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
 
     private let type: PresentationType
-    private let firstViewController: EventsViewController
+    private let firstViewController: ProductsViewController
     private let secondViewController: EventDetailsViewController
     private var selectedCellImageViewSnapshot: UIView
     private let cellImageViewRect: CGRect
     private let cellImgHeartRect: CGRect
     
 //  Important note: if something “goes wrong”, for example, you can’t prepare all the needed properties (basically the init fails), make sure to return nil. This way the app will use default present/dismiss animation and the user won’t be stuck somewhere in the middle of the transition.
-    init?(type: PresentationType, firstViewController: EventsViewController, secondViewController: EventDetailsViewController, selectedCellImageViewSnapshot: UIView) {
+    init?(type: PresentationType, firstViewController: ProductsViewController, secondViewController: EventDetailsViewController, selectedCellImageViewSnapshot: UIView) {
 
         self.type = type
         self.firstViewController = firstViewController

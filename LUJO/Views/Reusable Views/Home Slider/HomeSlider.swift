@@ -19,7 +19,7 @@ class HomeSlider: UIView {
     var itemHeight:Int = 172
 //    var giftItemHeight:Int = 148
     var itemMargin:Int = 16
-    
+    var timer: Timer?
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -58,11 +58,11 @@ class HomeSlider: UIView {
         addSubview(collectionView)
         setupLayout()
         //to make animation random
-        let randomNumber:TimeInterval = TimeInterval(Int(arc4random_uniform(3)))
-        //It’ll return a random number between 0 and this upper bound, minus 1.
-        DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber ) {
-            self.startAnimation()
-        }
+//        let randomNumber:TimeInterval = TimeInterval(Int(arc4random_uniform(5)))
+//        //It’ll return a random number between 0 and this upper bound, minus 1.
+//        DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber ) {
+//            self.startAnimation()
+//        }
     }
 
     private func setupLayout() {
@@ -78,36 +78,43 @@ class HomeSlider: UIView {
         return true
     }
    
-//This method animates the Event and Experiences slider at the home screen
-    func startAnimation( ) {
-        var carousalTimer: Timer?
-        var newOffsetX: CGFloat = 0.0
-//        let animationInterval:TimeInterval = 20
-        
-        carousalTimer = Timer(fire: Date(), interval: HomeViewController.animationInterval, repeats: true) { (timer) in
-            let initailPoint = CGPoint(x: newOffsetX,y :0)
-            if __CGPointEqualToPoint(initailPoint, self.collectionView.contentOffset) {
-                let itemWidthWithMargin = Int(CollectionSize.itemWidth.rawValue + CollectionSize.itemMargin.rawValue) // 166 , total width of a collectionview item
-                if newOffsetX < self.collectionView.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
-                    newOffsetX += CGFloat(itemWidthWithMargin) //keep increasing the offset to the one colllection view item
-                }
-                //CALCULATING TO WHAT POINT WE SHOULD MOVE THE SLIDER AND WHEN TO RESET IT TO 0
-                let collectionWidth:Int = Int(self.collectionView.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
-                let fullyVisibleItemCount = collectionWidth.quotientAndRemainder(dividingBy: itemWidthWithMargin).quotient// 414/166 = 2, reset the animation till last item is displayed fully, so getting the quotient by dividing frame width by by width of collection item which will give us number of items can be fully displayed at a single moment
-//                print(fullyVisibleItemCount)
-                let offsetShiftTill = itemWidthWithMargin * fullyVisibleItemCount // 166 * 2 , offset till fullyVisibleItemCount items are being displayed
-//                print(self.newOffsetX,offsetShiftTill)
-                if newOffsetX > self.collectionView.contentSize.width - CGFloat(offsetShiftTill) { //846-332
-                        newOffsetX = 0 //reset to 0 if offset has increased enough that items cant be see as equal to fullyVisibleItemCount
-                }
+//This method animates the Event and Experiences slider at the home screen, it also stops animation if user has navigate away from controller
+//    func startAnimation( ) {
+    func startAnimation(isPausing : Bool ) {
+        if !isPausing{
+            let randomNumber:TimeInterval = TimeInterval(Int(arc4random_uniform(UInt32(HomeViewController.animationInterval)))) //making start of animation as random
+            //It’ll return a random number between 0 and this upper bound, minus 1.
+            DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber ) {
+                var newOffsetX: CGFloat = 0.0
 
-                self.collectionView.setContentOffset(CGPoint(x: newOffsetX,y :0), animated: true)
+                self.timer = Timer(fire: Date(), interval: HomeViewController.animationInterval, repeats: true) { (timer) in
+                let initailPoint = CGPoint(x: newOffsetX,y :0)
+                if __CGPointEqualToPoint(initailPoint, self.collectionView.contentOffset) {
+                    let itemWidthWithMargin = Int(CollectionSize.itemWidth.rawValue + CollectionSize.itemMargin.rawValue) // 166 , total width of a collectionview item
+                    if newOffsetX < self.collectionView.contentSize.width {   //total content width of collectionview is more then 800 for 5 items
+                        newOffsetX += CGFloat(itemWidthWithMargin) //keep increasing the offset to the one colllection view item
+                    }
+                    //CALCULATING TO WHAT POINT WE SHOULD MOVE THE SLIDER AND WHEN TO RESET IT TO 0
+                    let collectionWidth:Int = Int(self.collectionView.frame.size.width)  //414, collectionview frame size almost same as mobile screen width
+                    let fullyVisibleItemCount = collectionWidth.quotientAndRemainder(dividingBy: itemWidthWithMargin).quotient// 414/166 = 2, reset the animation till last item is displayed fully, so getting the quotient by dividing frame width by by width of collection item which will give us number of items can be fully displayed at a single moment
+                //                print(fullyVisibleItemCount)
+                    let offsetShiftTill = itemWidthWithMargin * fullyVisibleItemCount // 166 * 2 , offset till fullyVisibleItemCount items are being displayed
+                //                print(self.newOffsetX,offsetShiftTill)
+                    if newOffsetX > self.collectionView.contentSize.width - CGFloat(offsetShiftTill) { //846-332
+                            newOffsetX = 0 //reset to 0 if offset has increased enough that items cant be see as equal to fullyVisibleItemCount
+                    }
 
-            } else {
-                newOffsetX = self.collectionView.contentOffset.x
+                    self.collectionView.setContentOffset(CGPoint(x: newOffsetX,y :0), animated: true)
+
+                } else {
+                    newOffsetX = self.collectionView.contentOffset.x
+                }
+                }
+                RunLoop.current.add(self.timer!, forMode: .common)
             }
+        } else {
+            timer?.invalidate()
         }
-        RunLoop.current.add(carousalTimer!, forMode: .common)
     }
 }
 

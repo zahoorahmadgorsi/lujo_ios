@@ -8,6 +8,7 @@
 
 import UIKit
 import Intercom
+import Mixpanel
 
 class RestaurantRequestReservationViewController: UIViewController {
     
@@ -85,9 +86,24 @@ class RestaurantRequestReservationViewController: UIViewController {
             dateFormatter.dateFormat = "H:mm"
             let timeStr = dateFormatter.string(from: datePicker.date)
             
-            GoLujoAPIManager.shared.sendRequestForSalesForce(itemId: restaurant.id, date: dateStr, time: timeStr, persons: Int(peopleNumber.text!) ?? 1)
+            GoLujoAPIManager.shared.sendRequestForSalesForce(itemId: restaurant.id, date: dateStr, time: timeStr, persons: Int(peopleNumber.text!) ?? 1){ customBookingResponse, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                    return
+                }
+                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+                if let user = LujoSetup().getLujoUser(), user.id > 0 {
+                    Intercom.logEvent(withName: "custom_request", metaData:[
+                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceID"
+                                        ,"user_id":user.id])
+                }
+            }
             
             dateFormatter.dateFormat = "E, MMM d 'at' H:mm a"
+            
+            Mixpanel.mainInstance().track(event: "Table Custom Request",
+                                          properties: ["Restaurant Name" : restaurant.name])
             
             let initialMessage = """
             Hi Concierge team,

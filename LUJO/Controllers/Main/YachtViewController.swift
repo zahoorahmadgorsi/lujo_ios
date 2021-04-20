@@ -8,6 +8,8 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
+import Intercom
 
 class YachtViewController: UIViewController {
     
@@ -40,6 +42,7 @@ class YachtViewController: UIViewController {
     @IBOutlet weak var fromDateLabel: LujoIconLabel!
     @IBOutlet weak var toDateLabel: LujoIconLabel!
    
+    @IBOutlet weak var viewDestination: UIView!
     private var selectedYachtType: String?
     private var selectedYachtLenght: String?
     private var selectedYachtBudget: String?
@@ -99,9 +102,13 @@ class YachtViewController: UIViewController {
                 locationText = "\(cityName), "
             }
             locationText += product.location?.first?.country.name ?? ""
-            destinationTextField.text = locationText.lowercased()
+//            destinationTextField.text = locationText.lowercased()
+            destinationTextField.text = locationText
  
         }
+        viewDestination.layer.masksToBounds = true
+        viewDestination.layer.borderColor = UIColor.lightGray.cgColor //yourColor.CGColor
+        viewDestination.layer.borderWidth = 1.0
     }
 
     //MARK: - User interaction
@@ -205,11 +212,6 @@ class YachtViewController: UIViewController {
             return
         }
         
-//        guard let yachtBudget = selectedYachtBudget, !lenghtText.isEmpty else {
-//            showInformationPopup(withTitle: "Info", message:"Please choose yacht budget.")
-//            return
-//        }
-        
         guard !dateTime.date.isEmpty else {
             showInformationPopup(withTitle: "Info", message:"Please select embarkation date.")
             return
@@ -230,11 +232,11 @@ class YachtViewController: UIViewController {
             return
         }
         
-
-//        guard var returnDateString = returnDateTime.formatedDateForServer else {
-//                showInformationPopup(withTitle: "Info", message:"Return date is not in correct format.")
-//            return
-//        }
+        
+        Mixpanel.mainInstance().track(event: "Yacht Custom Request",
+                                      properties: ["Yacht Charter" : yachtCharter
+                                                   ,"Yacht destination" : destination
+                                                   ,"Yacht Length" : lenghtText])
         
         var returnDateString = ""
         if let yachtCharter = selectedYachtCharter{
@@ -249,6 +251,20 @@ class YachtViewController: UIViewController {
         
         // if return date is empty then from date is the return date
         returnDateString = (returnDateString.count == 0 ? dateString : returnDateString)
+        
+        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                return
+            }
+            //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+            if let user = LujoSetup().getLujoUser(), user.id > 0 {
+                Intercom.logEvent(withName: "custom_request", metaData:[
+                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+                                    ,"user_id":user.id])
+            }
+        }
         
         let initialMessage = """
         Hi Concierge team,

@@ -80,8 +80,8 @@
 		30368DD72339200D00EDF549 /* MainScreenAviationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */; };
 		30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */; };
 		5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527641E23165CFE00380BEB /* HomeViewController.swift */; };
-		5527642123165D1800380BEB /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* EventsViewController.swift */; };
-		5527642323165D2500380BEB /* SearchEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642223165D2500380BEB /* SearchEventsViewController.swift */; };
+		5527642123165D1800380BEB /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* ProductsViewController.swift */; };
+		5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642223165D2500380BEB /* SearchProductsViewController.swift */; };
 		5527642523165D3900380BEB /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642423165D3900380BEB /* EventDetailsViewController.swift */; };
 		5527642723165D4400380BEB /* GalleryViewControllerNEW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */; };
 		5527642A2317F6AD00380BEB /* BookingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552764292317F6AD00380BEB /* BookingsViewController.swift */; };
@@ -394,8 +394,8 @@
 		30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAviationCell.swift; sourceTree = "<group>"; };
 		30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenAviationCell.xib; sourceTree = "<group>"; };
 		5527641E23165CFE00380BEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		5527642023165D1800380BEB /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
-		5527642223165D2500380BEB /* SearchEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEventsViewController.swift; sourceTree = "<group>"; };
+		5527642023165D1800380BEB /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
+		5527642223165D2500380BEB /* SearchProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductsViewController.swift; sourceTree = "<group>"; };
 		5527642423165D3900380BEB /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewControllerNEW.swift; sourceTree = "<group>"; };
 		552764292317F6AD00380BEB /* BookingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingsViewController.swift; sourceTree = "<group>"; };
@@ -727,8 +727,8 @@
 			isa = PBXGroup;
 			children = (
 				1D3A71E3233919840037AE81 /* AviationAPIManager.swift */,
-				1DBC9C032365B7CA00F0F133 /* PaymentAPIManager.swift */,
 				1D618008238AAF0000F01199 /* CustomRequestAPIManager.swift */,
+				1DBC9C032365B7CA00F0F133 /* PaymentAPIManager.swift */,
 			);
 			path = "API Managers";
 			sourceTree = "<group>";
@@ -853,18 +853,18 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
-				9183E82125EBEC7500656B48 /* Gallery View */,
 				91F610CC25BDB1C9005BCDA2 /* City View */,
-				88E731A6256FC58100BEDD00 /* Product Details */,
-				883A86BF2561767D00E41A27 /* Wish List View */,
-				1DFE1AC323476EA50025410D /* Dining City View */,
 				1D88012A233E48420039DEA6 /* Dining Category Slider */,
+				1DFE1AC323476EA50025410D /* Dining City View */,
+				9183E82125EBEC7500656B48 /* Gallery View */,
 				1DEDB9E822F20D0B00903CAC /* Home Slider */,
-				9A74716C2244D8710047F4AE /* Image Carousel */,
-				9AAA101F22773540008CE1D2 /* MyBookingsCell.swift */,
 				9A194FEF22945A5D00E3DBD1 /* HomeEventCell.swift */,
+				9A74716C2244D8710047F4AE /* Image Carousel */,
 				30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */,
 				30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */,
+				9AAA101F22773540008CE1D2 /* MyBookingsCell.swift */,
+				88E731A6256FC58100BEDD00 /* Product Details */,
+				883A86BF2561767D00E41A27 /* Wish List View */,
 			);
 			path = "Reusable Views";
 			sourceTree = "<group>";
@@ -906,8 +906,7 @@
 			isa = PBXGroup;
 			children = (
 				5527641E23165CFE00380BEB /* HomeViewController.swift */,
-				5527642023165D1800380BEB /* EventsViewController.swift */,
-				5527642223165D2500380BEB /* SearchEventsViewController.swift */,
+				5527642223165D2500380BEB /* SearchProductsViewController.swift */,
 				5527642423165D3900380BEB /* EventDetailsViewController.swift */,
 				5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */,
 				9A194FF12294614B00E3DBD1 /* HomeEventsLayout.swift */,
@@ -916,7 +915,6 @@
 				1D81515822DE448900B203D8 /* HomeSpecialEventSummary.xib */,
 				1D81515622DE442E00B203D8 /* HomeSpecialEventSummary.swift */,
 				1D44A6F92356250F0073C682 /* GlobalSearchViewController.swift */,
-				918BA99525BDFAD2007B4D43 /* PerCityViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -952,8 +950,8 @@
 		557BB5DD23158F8900744188 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				557BB5E62315954F00744188 /* Main */,
 				5527644523195CEC00380BEB /* Account */,
+				557BB5E62315954F00744188 /* Main */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -986,14 +984,16 @@
 		557BB5E62315954F00744188 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				88EA9F8D2554069100514626 /* WishList */,
-				557BB5EB231599F500744188 /* MainTabBarController.swift */,
-				5527641D23165BFD00380BEB /* Home */,
-				1DDD3CB42389A6D20041D346 /* Custom Requests */,
-				5527641C23165A8800380BEB /* Dining */,
-				5527642D2317FDCE00380BEB /* Chat */,
 				3005D4782320189400401243 /* Aviation */,
 				552764282317F69200380BEB /* Bookings */,
+				5527642D2317FDCE00380BEB /* Chat */,
+				1DDD3CB42389A6D20041D346 /* Custom Requests */,
+				5527641C23165A8800380BEB /* Dining */,
+				5527641D23165BFD00380BEB /* Home */,
+				557BB5EB231599F500744188 /* MainTabBarController.swift */,
+				918BA99525BDFAD2007B4D43 /* PerCityViewController.swift */,
+				5527642023165D1800380BEB /* ProductsViewController.swift */,
+				88EA9F8D2554069100514626 /* WishList */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1072,18 +1072,18 @@
 		91B4A3AA260264A300169A0C /* Animators */ = {
 			isa = PBXGroup;
 			children = (
-				91B4A39025FFB11600169A0C /* HomeSliderAnimator.swift */,
-				9156B7682614AD9900404E1D /* SpecialEventAnimator.swift */,
+				91522DAE2608B2100023BAD8 /* DiningFeaturedAnimator.swift */,
+				91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */,
 				9156B75026148F3A00404E1D /* EventsAnimator.swift */,
-				9156B7552614948900404E1D /* SearchAnimator.swift */,
 				9156B75A2614A08700404E1D /* GlobalSearchAnimator.swift */,
+				91B4A3B92602AAF800169A0C /* HomeFeaturedAnimator.swift */,
+				91B4A39025FFB11600169A0C /* HomeSliderAnimator.swift */,
 				91522DD1261251140023BAD8 /* PerCityTopRatedAnimator.swift */,
 				91522DD6261263520023BAD8 /* PerCityViewAnimator.swift */,
-				91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */,
+				9156B7552614948900404E1D /* SearchAnimator.swift */,
+				9156B7682614AD9900404E1D /* SpecialEventAnimator.swift */,
 				91522DC9260DBF630023BAD8 /* WishListDiningAnimator.swift */,
-				91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */,
-				91B4A3B92602AAF800169A0C /* HomeFeaturedAnimator.swift */,
-				91522DAE2608B2100023BAD8 /* DiningFeaturedAnimator.swift */,
+				91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */,
 			);
 			path = Animators;
 			sourceTree = "<group>";
@@ -1323,15 +1323,15 @@
 		9A818F3E20EE74CA005B6455 = {
 			isa = PBXGroup;
 			children = (
-				917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */,
-				1D3A71E7233A8E140037AE81 /* Intercom.framework */,
 				1D523A9D23995516009E78D8 /* Firebase.h */,
-				1D523A9E23995545009E78D8 /* module.modulemap */,
+				9AECC13A2111CBD700C00C07 /* Frameworks */,
+				1D3A71E7233A8E140037AE81 /* Intercom.framework */,
 				9A818F4920EE74CA005B6455 /* LUJO */,
 				9A818F5E20EE74CC005B6455 /* LUJOTests */,
 				9A818F6920EE74CC005B6455 /* LUJOUITests */,
+				1D523A9E23995545009E78D8 /* module.modulemap */,
 				9A818F4820EE74CA005B6455 /* Products */,
-				9AECC13A2111CBD700C00C07 /* Frameworks */,
+				917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1491,13 +1491,13 @@
 			isa = PBXGroup;
 			children = (
 				9AF422632265D512003CE562 /* Booking */,
-				9AD6EAB621E35CC200B695A3 /* Payment */,
-				9A4313F521BFBBB5004F0AD4 /* Views */,
-				9A72C3BF213805FF009FE9E2 /* Extensions */,
-				9A762354212BB7EB00328F74 /* Routing */,
 				9AE0B2AB21232F9000E55E6C /* DataLayer */,
-				164334DAF647504829A1A768 /* Entities */,
 				1643386BE00A73BCE327E5D1 /* Defaults */,
+				164334DAF647504829A1A768 /* Entities */,
+				9A72C3BF213805FF009FE9E2 /* Extensions */,
+				9AD6EAB621E35CC200B695A3 /* Payment */,
+				9A762354212BB7EB00328F74 /* Routing */,
+				9A4313F521BFBBB5004F0AD4 /* Views */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1505,15 +1505,15 @@
 		9AE0B2AB21232F9000E55E6C /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
-				88EA9F952554548700514626 /* WishList */,
-				882AD4CE25515E8A00F0FCDE /* Recently Viewed */,
+				9AE0B2B021233D7900E55E6C /* BackendError.swift */,
+				9A0DCC7C21F86F5D00CC9111 /* Baroque Aviation */,
 				1D618005238AAD7900F01199 /* Custom_Requests */,
 				1D7819B32301A9920044C70B /* Dining */,
 				9A194FDF228DDCC200E3DBD1 /* Events_Experiences */,
-				9A0DCC7C21F86F5D00CC9111 /* Baroque Aviation */,
 				9A8F2B48215CD1160085D0C2 /* GoLujo */,
 				9A16408121FB1A720041FFCE /* Payments */,
-				9AE0B2B021233D7900E55E6C /* BackendError.swift */,
+				882AD4CE25515E8A00F0FCDE /* Recently Viewed */,
+				88EA9F952554548700514626 /* WishList */,
 			);
 			path = DataLayer;
 			sourceTree = "<group>";
@@ -1629,7 +1629,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = "Baroque Access";
 				TargetAttributes = {
 					9A818F4620EE74CA005B6455 = {
@@ -1864,7 +1864,7 @@
 				5527642A2317F6AD00380BEB /* BookingsViewController.swift in Sources */,
 				9A9EC8AD2253BA2800098E7D /* AviationLegCell.swift in Sources */,
 				9A16408521FB22CA0041FFCE /* CCAPIManager.swift in Sources */,
-				5527642323165D2500380BEB /* SearchEventsViewController.swift in Sources */,
+				5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */,
 				9AE0B2AD2123304B00E55E6C /* GoLujoAPIManager.swift in Sources */,
 				9A645BA3226492CD009BF14D /* BookingPriceSummaryView.swift in Sources */,
 				5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */,
@@ -1893,7 +1893,7 @@
 				91522DBF260CD8300023BAD8 /* WishListSliderAnimator.swift in Sources */,
 				1DBC9C002363355300F0F133 /* PurchaseViewController.swift in Sources */,
 				9A091E4A21EC7BD800B0B5E6 /* DoubleExtension.swift in Sources */,
-				5527642123165D1800380BEB /* EventsViewController.swift in Sources */,
+				5527642123165D1800380BEB /* ProductsViewController.swift in Sources */,
 				880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */,
 				918BA9AD25BF482C007B4D43 /* CityView4.swift in Sources */,
 				9AC4FE09225CA31F0031E57E /* AppDelegate.swift in Sources */,
@@ -2127,6 +2127,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2153,7 +2154,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2190,6 +2191,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2210,7 +2212,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2242,7 +2244,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.5;
+				CURRENT_PROJECT_VERSION = 2.9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2303,7 +2305,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.5;
+				CURRENT_PROJECT_VERSION = 2.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2457,6 +2459,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2477,7 +2480,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2509,7 +2512,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.5;
+				CURRENT_PROJECT_VERSION = 2.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

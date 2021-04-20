@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
 
 class HotelViewController: UIViewController {
     
@@ -139,6 +140,11 @@ class HotelViewController: UIViewController {
             showInformationPopup(withTitle: "Info", message:"Please select hotel stars.")
             return
         }
+        
+        Mixpanel.mainInstance().track(event: "Hotel Custom Request",
+                                      properties: ["Hotel City" : cityName
+                                                   ,"Hotel Check In Date" : checkInDateString
+                                                   ,"Hotel Check Out Date" : checkOutDateString])
         
         let initialMessage = """
         Hi Concierge team,

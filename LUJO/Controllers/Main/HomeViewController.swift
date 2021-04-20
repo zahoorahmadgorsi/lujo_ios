@@ -71,7 +71,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBOutlet var homeGiftsSlider: HomeSlider!
     @IBOutlet var homeVillasSlider: HomeSlider!
     @IBOutlet var homeYachtsSlider: HomeSlider!
-    
     @IBOutlet var homeEventSlider: HomeSlider!
     @IBOutlet var homeExperienceSlider: HomeSlider!
     
@@ -94,11 +93,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBOutlet weak var currentAviationIndexLabel: UILabel!
     @IBOutlet weak var maxAviationIndexLabel: UILabel!
-    
     private(set) var aviationDataSource: [AirportSuggestion] = []
-    
     var profileButton: UIButton!
-    
     private var canSendRequest: Bool = true
     
     /// Refresh control view. Used to display network activity when user pull scroll view down
@@ -114,8 +110,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     /// Preload data object that can store some data fetched earlier so we can instantly present
     /// this data without needing to fetch it again from the server. Default is nil.
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
-        
-    static let animationInterval:TimeInterval = 20
+    static let animationInterval:TimeInterval = 3
     // B2 - 5
     var selectedCell: HomeSliderCell?
     var selectedFeaturedCell: ImageCarouselCell?
@@ -128,6 +123,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     var specialEventAnimator: SpecialEventAnimator?
     
     private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
+    var timer = Timer()
+//    var isPaused = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,8 +183,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         fetchAviationDataSource()
         
         locationManager.delegate = self
-        
-        startAnimation()    //will start animating at 0 seconds
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -224,7 +219,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         // Check for location permission.
         checkLocationAuthorizationStatus()
+        
+        startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        startPauseAnimation(isPausing: true)
+    }
+    
+
     
     var isLocationEnabled: Bool {
         let status = CLLocationManager.authorizationStatus()
@@ -272,7 +276,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         }
-        Mixpanel.mainInstance().track(event: "enableLocationButton_onClick")
     }
     
     @IBAction func buyMembershipButton_onClick(_ sender: Any) {
@@ -284,7 +287,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             fullName += "\(lastName)"
         }
         self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .upgradeMembership : .buyMembership, paymentType: .all), animated: true)
-        Mixpanel.mainInstance().track(event: "buyMembershipButton_onClick")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -374,12 +376,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func seeAllLocationEventsButton_onClick(_ sender: Any) {
-        let viewController = EventsViewController.instantiate(category: .event, dataSource: locationEvents)
+        let viewController = ProductsViewController.instantiate(category: .event, dataSource: locationEvents)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func seeAllEventsButton_onClick(_ sender: UIButton) {
-        let viewController = EventsViewController.instantiate(category: .event)
+        let viewController = ProductsViewController.instantiate(category: .event)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 //    @IBAction func seeAllRecentButton_onClick(_ sender: UIButton) {
@@ -388,27 +390,27 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 //    }
     
     @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
-        let viewController = EventsViewController.instantiate(category: .topRated)
+        let viewController = ProductsViewController.instantiate(category: .topRated)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func seeAllGiftsButton_onClick(_ sender: UIButton) {
-        let viewController = EventsViewController.instantiate(category: .gift)
+        let viewController = ProductsViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func seeAllVillasButton_onClick(_ sender: UIButton) {
-        let viewController = EventsViewController.instantiate(category: .villa)
+        let viewController = ProductsViewController.instantiate(category: .villa)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func seeAllYachtsButton_onClick(_ sender: UIButton) {
-        let viewController = EventsViewController.instantiate(category: .yacht)
+        let viewController = ProductsViewController.instantiate(category: .yacht)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func seeAllExperiencesButton_onClick(_ sender: UIButton) {
-        let viewController = EventsViewController.instantiate(category: .experience)
+        let viewController = ProductsViewController.instantiate(category: .experience)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -447,7 +449,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
-        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalPresentationStyle = .overFullScreen
         present(viewController, animated: true)
 
 //        self.navigationController?.pushViewController(viewController, animated: true)
@@ -498,10 +500,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 // Sets user 13793's "$email" attribute to "jsmith@example.com"
                 Mixpanel.mainInstance().people.set(properties: [ "$phone":phoneNumber])
             }
-            //user login, launching the app
-            Mixpanel.mainInstance().track(event: welcomeLabel.text)
-//            Mixpanel.mainInstance().track(event: "Video play",
-//                      properties: ["genre" : "hip-hop", "duration in seconds": 42])
+            if let firstname = LujoSetup().getLujoUser()?.firstName , let lastName = LujoSetup().getLujoUser()?.lastName {
+                // Sets user 13793's "$email" attribute to "jsmith@example.com"
+                Mixpanel.mainInstance().people.set(properties: [ "$name": firstname + " " + lastName])
+            }
             
             navigationController?.setNavigationBarHidden(true, animated: false)
             splashView.isHidden = false
@@ -671,19 +673,32 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
     }
     
-    @objc func startAnimation() {
-        //Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
-        Timer.scheduledTimer(withTimeInterval: HomeViewController.animationInterval, repeats: true, block: { _ in
-            if self.featured.titleList.count > 0 {
-                if let index = Int(self.currentImageNum.text ?? "1") {
-                    if index == self.featured.titleList.count {
-                        self.featured.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
-                    } else {
-                        self.featured.collectionView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
-                    }
-                }
-            }
-        })
+    //when user will navigate away from the current controller, we are stopping all animation
+    @objc func startPauseAnimation( isPausing : Bool) {
+//        homeRecentSlider.startAnimation(isPausing: isPausing)
+//        homeTopRatedSlider.startAnimation(isPausing: isPausing)
+//        homeGiftsSlider.startAnimation(isPausing: isPausing)
+//        homeVillasSlider.startAnimation(isPausing: isPausing)
+//        homeYachtsSlider.startAnimation(isPausing: isPausing)
+//        homeEventSlider.startAnimation(isPausing: isPausing)
+//        homeExperienceSlider.startAnimation(isPausing: isPausing)
+//        if !isPausing{
+//            //Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
+//            timer = Timer.scheduledTimer(withTimeInterval: HomeViewController.animationInterval, repeats: true, block: { _ in
+//                if self.featured.titleList.count > 0 {
+//                    if let index = Int(self.currentImageNum.text ?? "1") {
+//                        if index == self.featured.titleList.count {
+//                            self.featured.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
+//                        } else {
+//                            self.featured.collectionView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .left)
+//                        }
+//                    }
+//                }
+//            })
+//
+//        } else {
+//            timer.invalidate()
+//        }
     }
     
     /// Mark - Custom request actions
@@ -700,7 +715,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
 //        self.present(GoodsViewController.instantiate(), animated: true, completion: nil)
-        let viewController = EventsViewController.instantiate(category: .gift)
+        let viewController = ProductsViewController.instantiate(category: .gift)
 //        let viewController = PerCityViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
@@ -845,7 +860,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                     //Event updated in homeEventList , might also be present in locationlist
                     //Get the element and its offset
                     if let item = locationEvents.enumerated().first(where: {$0.element.id == homeEvents[index].id}) {
-                        print("HomeEventIndex:\(index) , : LocationEventIndex:\(item.offset) ")
+//                        print("HomeEventIndex:\(index) , : LocationEventIndex:\(item.offset) ")
                         locationEvents[item.offset].isFavourite = !(locationEvents[item.offset].isFavourite ?? false)  //update location events list as well
                         self.locationEventSlider.itemsList = locationEvents //re-assigning as it will automatically reload the collection
                     }
@@ -864,7 +879,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                     //Event updated in locationlist, might also be present in home event list,
                     //Get the element and its offset
                     if let item = homeEvents.enumerated().first(where: {$0.element.id == locationEvents[index].id}) {
-                        print("LocationEventIndex:\(index) , HomeEventIndex: \(item.offset) ")
+//                        print("LocationEventIndex:\(index) , HomeEventIndex: \(item.offset) ")
                         homeEvents[item.offset].isFavourite = !(homeEvents[item.offset].isFavourite ?? false)    //update home events list as well
                         self.homeEventSlider.itemsList = homeEvents //re-assigning as it will automatically reload the collection
                     }
@@ -916,7 +931,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
-        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalPresentationStyle = .overFullScreen
         present(viewController, animated: true)
         
 //        self.navigationController?.delegate = self //for push/pop navigation

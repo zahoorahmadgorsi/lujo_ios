@@ -337,9 +337,19 @@ extension AviationViewController {
     
     func searchFlights(matching criteria: AviationSearch) {
         waitingAnimation(show: true)
-        
+        let cityFrom = criteria.data[0].startAirport.city
+        let cityTo = criteria.data[0].endAirport.city
+        let departureDateTime = criteria.data[0].dateTime.date + ":" + criteria.data[0].dateTime.time
+        var arrivalDateTime : String = ""
+        if let returnDate = criteria.data[0].returnDate?.date, let returnTime = criteria.data[0].returnDate?.time{
+            arrivalDateTime = returnDate + ":" + returnTime
+        }
+
         Mixpanel.mainInstance().track(event: "AviationSearch",
-                                      properties: ["searchedText" : criteria. originAirport?.city ?? "From"])
+                                      properties: ["FlightFrom" : cityFrom
+                                                   ,"FlightTo" : cityTo
+                                                   ,"FlightDepartureDateTime" : departureDateTime
+                                                   ,"FlightArrivalDateTime" : arrivalDateTime])
         
         AviationAPIManagerNEW.shared.authorisationToken = LujoSetup().getCurrentUser()?.token
         AviationAPIManagerNEW.shared.searchFlights(matching: criteria) { list, filter, error in

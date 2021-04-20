@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
 
 class TableViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -204,6 +205,9 @@ class TableViewController: UIViewController, UIGestureRecognizerDelegate {
             showInformationPopup(withTitle: "Info", message:"Date is not in correct format.")
             return
         }
+        
+        Mixpanel.mainInstance().track(event: "Table Custom Request",
+                                      properties: ["Custom Request Location" : location])
         
         let initialMessage = """
         Hi Concierge team,

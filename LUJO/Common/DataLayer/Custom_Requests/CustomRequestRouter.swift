@@ -202,7 +202,7 @@ enum CustomRequestRouter: URLRequestConvertible {
             "villa_check_in": dateFrom,
             "villa_check_out": dateTo,
             "villa_guests": guestsCount,
-            "villa_rooms": villaName,
+            "villa_name": villaName,   //its villaname
             "token": token
         ]
         

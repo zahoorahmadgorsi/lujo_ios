@@ -253,7 +253,7 @@ extension RestaurantSearchViewController {
         }
         
         Mixpanel.mainInstance().track(event: "RestaurantSearched",
-              properties: ["searchedText" : term])
+              properties: ["SearchedText" : term])
         
         GoLujoAPIManager().search(token, term: term, cityId: nil, currentLocation: currentLocation) { restaurants, error in
             guard error == nil else {

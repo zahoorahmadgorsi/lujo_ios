@@ -157,8 +157,8 @@ extension Cuisine {
 }
 
 struct DiningCity: Codable {
-    let termId: Int
-    let name: String
+    var termId: Int
+    var name: String
     let restaurantsNum: Int
     var restaurants: [Restaurant]
     

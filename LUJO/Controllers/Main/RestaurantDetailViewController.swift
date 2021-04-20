@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import JGProgressHUD
 import Mixpanel
+import Mixpanel
 
 class RestaurantDetailViewController: UIViewController {
     
@@ -27,7 +28,7 @@ class RestaurantDetailViewController: UIViewController {
     
     //MARK:- Globals
     @IBOutlet var gradientView: UIView!
-    
+    @IBOutlet weak var ViewMainImage: UIView!
     @IBOutlet var mainImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var starsContainerView: UIView!
@@ -46,6 +47,11 @@ class RestaurantDetailViewController: UIViewController {
     @IBOutlet weak var btnBack: UIButton!
     var restaurant: Restaurant!
     
+    //dismissin on swiping down
+    var panGestureRecognizer: UIPanGestureRecognizer?
+    var originalPosition: CGPoint?
+    var currentPositionTouched: CGPoint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRestaurant(restaurant)
@@ -54,6 +60,11 @@ class RestaurantDetailViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
         self.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
         self.viewHeart.addGestureRecognizer(tapGestureRecognizer)
+        
+        //Addin swipe down pan gesture
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
+        ViewMainImage.addGestureRecognizer(panGestureRecognizer!)
+        
         setRecentlyViewed()
         
     }
@@ -63,7 +74,7 @@ class RestaurantDetailViewController: UIViewController {
         activateKeyboardManager()
     }
     
-    @IBAction func backButton_onClick(_ sender: Any) {
+    @IBAction func tappedOnBack(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -195,7 +206,7 @@ class RestaurantDetailViewController: UIViewController {
         }
 //        print(event.id)
         Mixpanel.mainInstance().track(event: "RecentlyViewed",
-                  properties: ["restaurantId" : restaurant.id])
+                  properties: ["RecentlyViewed RestaurantId" : restaurant.id])
         RecentlyViewedAPIManager().setRecenltyViewed(token: token, id: restaurant.id){response, error in
             if let error = error{
                 print(error.localizedDescription );
@@ -262,4 +273,44 @@ class RestaurantDetailViewController: UIViewController {
         }
     }
 
+    @objc func panGestureAction(_ panGesture: UIPanGestureRecognizer) {
+        let minimumVelocityToHide: CGFloat = 1500
+        let minimumScreenRatioToHide: CGFloat = 0.33
+        let animationDuration: TimeInterval = 0.2
+        
+        func slideViewVerticallyTo(_ y: CGFloat) {
+            self.view.frame.origin = CGPoint(x: 0, y: y)
+        }
+        
+        switch panGesture.state {
+            case .began, .changed:
+                // If pan started or is ongoing then slide the view to follow the finger
+                let translation = panGesture.translation(in: view)
+                let y = max(0, translation.y)
+                slideViewVerticallyTo(y)
+            case .ended:
+                // If pan ended, decide it we should close or reset the view based on the final position and the speed of the gesture
+                let translation = panGesture.translation(in: view)
+                let velocity = panGesture.velocity(in: view)
+                let closing = (translation.y > self.view.frame.size.height * minimumScreenRatioToHide) ||
+                              (velocity.y > minimumVelocityToHide)
+
+                if closing {
+                    self.tappedOnBack(panGesture)
+                } else {
+                    // If not closing, reset the view to the top
+                    UIView.animate(withDuration: animationDuration, animations: {
+                        slideViewVerticallyTo(0)
+                    })
+                }
+
+            default:
+                // If gesture state is undefined, reset the view to the top
+                UIView.animate(withDuration: animationDuration, animations: {
+                    slideViewVerticallyTo(0)
+                })
+
+            }
+      }
+    
 }

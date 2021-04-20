@@ -29,15 +29,7 @@ extension UIViewController {
     }
     
     func startChatWithInitialMessage(_ message: String? = nil) {
-//        let userAttributes = ICMUserAttributes()
-//        userAttributes.customAttributes = ["sales_force_yacht_request_id": 1234]
-//        Intercom.updateUser(userAttributes)
-        //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-        if let user = LujoSetup().getLujoUser(), user.id > 0 {
-            Intercom.logEvent(withName: "custom_request", metaData:[
-                        "sales_force_yacht_intent_id": 123456
-                        ,"user_id":user.id])
-        }
+
         Intercom.presentMessageComposer(message)
     }
 }
