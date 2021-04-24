@@ -221,11 +221,11 @@ extension GoLujoAPIManager {
                         return
                     }
                     
-                    DispatchQueue.main.async {
+//                    DispatchQueue.main.async {    //commenting to make it synch call as we need this token immediately
                         currentUser.token = result.content.token
                         currentUser.tokenExpiration = result.content.expiration
                         LujoSetup().store(currentUser: currentUser)
-                    }
+//                    }
                     
                     completionHandler(result.content.token, nil)
                     return

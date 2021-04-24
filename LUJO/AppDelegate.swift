@@ -92,7 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func registerForPushNotifications() {
         if let user = LujoSetup().getLujoUser(), user.id > 0 {
+            
+            Mixpanel.mainInstance().identify(distinctId: String(user.id))
+            
             Intercom.registerUser(withUserId: "\(user.id)")
+            
             let userAttributes = ICMUserAttributes()
             userAttributes.name = "\(user.firstName) \(user.lastName)"
             userAttributes.email = user.email

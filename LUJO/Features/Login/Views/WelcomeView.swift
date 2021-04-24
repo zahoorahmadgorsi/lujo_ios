@@ -38,14 +38,6 @@ class WelcomeView: UIViewController, LoginViewProtocol {
     }
 
     private func updateUI() {
-        
-        // Ensure all future events sent from
-        // the library will have the distinct_id -13793
-        if let id = LujoSetup().getLujoUser()?.id{
-            Mixpanel.mainInstance().identify(distinctId: String(id))
-        }else{
-            Mixpanel.mainInstance().identify(distinctId: "-13793")
-        }
 
         UIView.animate(withDuration: 0.3) {
             self.wineImageView.alpha = 1
