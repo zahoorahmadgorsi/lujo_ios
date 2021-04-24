@@ -384,10 +384,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let viewController = ProductsViewController.instantiate(category: .event)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
-//    @IBAction func seeAllRecentButton_onClick(_ sender: UIButton) {
-//        let viewController = EventsViewController.instantiate(category: .recent)
-//        self.navigationController?.pushViewController(viewController, animated: true)
-//    }
+
     
     @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
         let viewController = ProductsViewController.instantiate(category: .topRated)
@@ -708,15 +705,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func getTicketsButton_onClick(_ sender: Any) {
-        //let viewController = EventsViewController.instantiate(category: .event)
         let viewController = PerCityViewController.instantiate(category: .event)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
-//        self.present(GoodsViewController.instantiate(), animated: true, completion: nil)
         let viewController = ProductsViewController.instantiate(category: .gift)
-//        let viewController = PerCityViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

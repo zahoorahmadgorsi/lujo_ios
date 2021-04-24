@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -102,6 +102,8 @@
 		557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */; };
 		557BB5F02315A87200744188 /* RestaurantRequestReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */; };
 		5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583730D230D559100F9536C /* SwiftMessagesManger.swift */; };
+		88029B922633B64E003F1E77 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029B912633B64E003F1E77 /* Mixpanel.framework */; };
+		88029B932633B64F003F1E77 /* Mixpanel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88029B912633B64E003F1E77 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0625582ABC0070D7CD /* Hotel.swift */; };
 		880B9B0925582E350070D7CD /* Yacht.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0825582E350070D7CD /* Yacht.swift */; };
 		880B9B0B255840C10070D7CD /* Villa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0A255840C10070D7CD /* Villa.swift */; };
@@ -148,7 +150,6 @@
 		918BA9A325BF480A007B4D43 /* CityView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9A225BF480A007B4D43 /* CityView2.swift */; };
 		918BA9A825BF481A007B4D43 /* CityView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9A725BF481A007B4D43 /* CityView3.swift */; };
 		918BA9AD25BF482C007B4D43 /* CityView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918BA9AC25BF482C007B4D43 /* CityView4.swift */; };
-		9199FE5F261BD11E001C277F /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9199FE5E261BD11E001C277F /* Mixpanel */; };
 		91B4A39125FFB11600169A0C /* HomeSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B4A39025FFB11600169A0C /* HomeSliderAnimator.swift */; };
 		91B4A3BA2602AAF800169A0C /* HomeFeaturedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B4A3B92602AAF800169A0C /* HomeFeaturedAnimator.swift */; };
 		91F610CE25BDB216005BCDA2 /* CityView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F610CD25BDB215005BCDA2 /* CityView1.xib */; };
@@ -314,6 +315,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		88029B942633B64F003F1E77 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				88029B932633B64F003F1E77 /* Mixpanel.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		164332CBD01DAAB3FC14056B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		164332F8BAB671B1881F0BAB /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -416,6 +431,7 @@
 		557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRequestReservationViewController.swift; sourceTree = "<group>"; };
 		5583730D230D559100F9536C /* SwiftMessagesManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessagesManger.swift; sourceTree = "<group>"; };
+		88029B912633B64E003F1E77 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		880B9B0625582ABC0070D7CD /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
 		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
 		880B9B0A255840C10070D7CD /* Villa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Villa.swift; sourceTree = "<group>"; };
@@ -644,9 +660,9 @@
 				9AECC1442111CBD700C00C07 /* DefaultsKit.framework in Frameworks */,
 				9ACE52BD212D1F3F00BB287A /* M13Checkbox.framework in Frameworks */,
 				9AF569C52175EDBA005B031D /* JTAppleCalendar.framework in Frameworks */,
-				9199FE5F261BD11E001C277F /* Mixpanel in Frameworks */,
 				9AECC1462111CBD700C00C07 /* Alamofire.framework in Frameworks */,
 				9A44CDE72130753100699E1A /* ActiveLabel.framework in Frameworks */,
+				88029B922633B64E003F1E77 /* Mixpanel.framework in Frameworks */,
 				9A72C3C521383CC3009FE9E2 /* QuickLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1521,6 +1537,7 @@
 		9AECC13A2111CBD700C00C07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88029B912633B64E003F1E77 /* Mixpanel.framework */,
 				9199FE5A261BD0FB001C277F /* mixpanel-swift */,
 				1D600675239952D300B9BA2A /* FIRAnalyticsConnector.framework */,
 				1D600671239952D300B9BA2A /* FirebaseAnalytics.framework */,
@@ -1573,6 +1590,7 @@
 				9A818F4520EE74CA005B6455 /* Resources */,
 				9AECC1492111CC0100C00C07 /* Carthage Copy Frameworks */,
 				9ACE52BE212D306F00BB287A /* Fabric */,
+				88029B942633B64F003F1E77 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1580,7 +1598,6 @@
 			);
 			name = LUJO;
 			packageProductDependencies = (
-				9199FE5E261BD11E001C277F /* Mixpanel */,
 			);
 			productName = LUJO;
 			productReference = 9A818F4720EE74CA005B6455 /* LUJO.app */;
@@ -2641,13 +2658,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		9199FE5E261BD11E001C277F /* Mixpanel */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Mixpanel;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9A818F3F20EE74CA005B6455 /* Project object */;
 }
