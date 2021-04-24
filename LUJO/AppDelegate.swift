@@ -6,6 +6,7 @@ import UserNotifications
 import Intercom
 import Firebase
 import Mixpanel
+import OneSignal
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -59,6 +60,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         Mixpanel.initialize(token: "974677a8bc1707f564ce3ac082c3cb62")
         
+        // Remove this method to stop OneSignal Debugging
+        OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
+
+        // OneSignal initialization
+        OneSignal.initWithLaunchOptions(launchOptions)
+        OneSignal.setAppId("eae6e09f-04c0-439f-ac65-6a000e8f77f6")
+
+        // promptForPushNotifications will show the native iOS notification permission prompt.
+        // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+        print("User accepted notifications: \(accepted)")
+        })
+        
         return true
     }
 
@@ -93,6 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func registerForPushNotifications() {
         if let user = LujoSetup().getLujoUser(), user.id > 0 {
             
+            setExternalUserId(externalUserId: user.phoneNumber.readableNumber)  //setting external User id as phone number at oneSignal
+            
             Mixpanel.mainInstance().identify(distinctId: String(user.id))
             
             Intercom.registerUser(withUserId: "\(user.id)")
@@ -114,7 +130,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
     }
+    func setExternalUserId(externalUserId:String){
+        // Setting External User Id with Callback Available in SDK Version 3.x.x
+        OneSignal.setExternalUserId(externalUserId, withSuccess: { results in
+        // The results will contain push and email success statuses
+        print("External user id update complete with results: ", results!.description)
+        // Push can be expected in almost every situation with a success status, but
+        // as a pre-caution its good to verify it exists
+        if let pushResults = results!["push"] {
+        print("Set external user id push status: ", pushResults)
+        }
+        if let emailResults = results!["email"] {
+          print("Set external user id email status: ", emailResults)
+        }
+        })
+    }
 
+
+    
     func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let navController = base as? UINavigationController {
             return getTopViewController(base: navController.visibleViewController)

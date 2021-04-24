@@ -30,8 +30,8 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "application(_:didReceiveRemoteNotification:fetchCompletionHandler:)"
             landmarkType = "7">
             <Locations>
@@ -126,8 +126,8 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,10 +142,10 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "AppDelegate"
-            landmarkType = "3">
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "registerForPushNotifications()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -158,10 +158,10 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "AppDelegate"
-            landmarkType = "3">
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "getTopViewController(base:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -174,10 +174,10 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "AppDelegate"
-            landmarkType = "3">
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "removePushToken(userId:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -190,8 +190,8 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "applicationWillEnterForeground(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -768,7 +768,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "21"
                   endingLineNumber = "21"
-                  offsetFromSymbolStart = "23">
+                  offsetFromSymbolStart = "40">
                </Location>
                <Location
                   uuid = "4926F6FD-1F5F-48E7-9315-43CD9E3796C8 - 871967a2eafc359"
@@ -783,7 +783,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "21"
                   endingLineNumber = "21"
-                  offsetFromSymbolStart = "676">
+                  offsetFromSymbolStart = "552">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -910,10 +910,10 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "registerForOurPushService(deviceToken:)"
-            landmarkType = "7">
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "AppDelegate"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -942,8 +942,8 @@
             filePath = "LUJO/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1072,7 +1072,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "29"
                   endingLineNumber = "29"
-                  offsetFromSymbolStart = "1308">
+                  offsetFromSymbolStart = "1136">
                </Location>
                <Location
                   uuid = "64285C83-F57E-4B7A-853E-00E015034210 - 2db4fc3a77850edc"
@@ -1087,7 +1087,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "30"
                   endingLineNumber = "30"
-                  offsetFromSymbolStart = "130">
+                  offsetFromSymbolStart = "72">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2095,7 +2095,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "24">
                </Location>
                <Location
                   uuid = "2F2F1C62-307D-4A33-A3E6-024809CB78F1 - 2022d32cd5b8da56"
@@ -2110,7 +2110,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "17"
                   endingLineNumber = "17"
-                  offsetFromSymbolStart = "30">
+                  offsetFromSymbolStart = "44">
                </Location>
                <Location
                   uuid = "2F2F1C62-307D-4A33-A3E6-024809CB78F1 - 2f746e08accad62d"
@@ -2125,7 +2125,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "8">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -3451,7 +3451,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
                   endingLineNumber = "94"
-                  offsetFromSymbolStart = "5229">
+                  offsetFromSymbolStart = "3912">
                </Location>
                <Location
                   uuid = "2F21C1FD-6589-4CE2-A02D-3948263E57CE - 7f175f489c8692f0"
@@ -3466,7 +3466,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
                   endingLineNumber = "94"
-                  offsetFromSymbolStart = "6114">
+                  offsetFromSymbolStart = "4924">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -9416,7 +9416,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "225"
                   endingLineNumber = "225"
-                  offsetFromSymbolStart = "783">
+                  offsetFromSymbolStart = "636">
                </Location>
                <Location
                   uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 6b1484ffcc433f01"
@@ -9431,7 +9431,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "225"
                   endingLineNumber = "225"
-                  offsetFromSymbolStart = "1116">
+                  offsetFromSymbolStart = "856">
                </Location>
                <Location
                   uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 6b1484ffcc433f01"
@@ -9446,7 +9446,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "225"
                   endingLineNumber = "225"
-                  offsetFromSymbolStart = "1349">
+                  offsetFromSymbolStart = "1000">
                </Location>
                <Location
                   uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 6b1484ffcc433f01"
@@ -9461,7 +9461,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "225"
                   endingLineNumber = "225"
-                  offsetFromSymbolStart = "1626">
+                  offsetFromSymbolStart = "1172">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -9510,7 +9510,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "438"
                   endingLineNumber = "438"
-                  offsetFromSymbolStart = "1611">
+                  offsetFromSymbolStart = "1380">
                </Location>
                <Location
                   uuid = "F9E3AF6C-4688-43FF-84DA-C0A5380BEC86 - 8e1bf9076a996eb3"
@@ -9525,7 +9525,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "438"
                   endingLineNumber = "438"
-                  offsetFromSymbolStart = "1960">
+                  offsetFromSymbolStart = "1636">
                </Location>
                <Location
                   uuid = "F9E3AF6C-4688-43FF-84DA-C0A5380BEC86 - 8e1bf9076a996eb3"
@@ -9540,7 +9540,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "438"
                   endingLineNumber = "438"
-                  offsetFromSymbolStart = "3468">
+                  offsetFromSymbolStart = "2628">
                </Location>
                <Location
                   uuid = "F9E3AF6C-4688-43FF-84DA-C0A5380BEC86 - 8e1bf9076a996eb3"
@@ -9555,7 +9555,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "438"
                   endingLineNumber = "438"
-                  offsetFromSymbolStart = "3768">
+                  offsetFromSymbolStart = "2836">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -9766,6 +9766,54 @@
             endingLineNumber = "54"
             landmarkName = "application(_:didReceiveRemoteNotification:fetchCompletionHandler:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8B18709-76BB-4D4B-8F3E-C0E65BDB69E0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/AppDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "setExternalUserId(externalUserId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A8B18709-76BB-4D4B-8F3E-C0E65BDB69E0 - cf448557931e7acb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LUJO.AppDelegate.setExternalUserId(externalUserId: Swift.String) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/AppDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "A8B18709-76BB-4D4B-8F3E-C0E65BDB69E0 - 9e3021dd5e96df0a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;&gt;) -&gt; () in LUJO.AppDelegate.setExternalUserId(externalUserId: Swift.String) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/AppDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "96">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

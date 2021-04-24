@@ -157,6 +157,8 @@
 	<string>LUJO App needs to access to your microphone jack connection to use  payment peripherics to process your payment with a Cards.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>LUJO App needs to access to your library to be able to send images to our agents.</string>
+	<key>OneSignal_app_groups_key</key>
+	<string>group.com.Baroqueaccess.Lujo.onesignal</string>
 	<key>TERMS_OF_USE_URL</key>
 	<string>http://golujo.com/tos/</string>
 	<key>UIAppFonts</key>

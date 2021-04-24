@@ -23,7 +23,8 @@ struct PhoneNumber: Equatable, Codable {
     }
 
     var readableNumber: String {
-        return "+\(countryCode) \(number)"
+//        return "+\(countryCode) \(number)"
+        return "\(countryCode)\(number)"
     }
 }
 

@@ -1,11 +1,28 @@
 {
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
   "commitish" : "0.5.9",
   "iOS" : [
     {
-      "hash" : "078d2c79f811516f5e4bdec9be97a3e635562d3993d7d7c6aeabc69ed29673e4",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "75805571adb692a0fd86cc0f39d5336fe43802d2f6a8b6f941ac175ee93176e3",
       "name" : "SwiftEntryKit",
-      "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
+      "container" : "SwiftEntryKit.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "43d99a086f44057bad8b0b17b2aedca3335c84b5cfac7c691ee907d442f48101",
+      "name" : "SwiftEntryKit",
+      "container" : "SwiftEntryKit.xcframework",
+      "identifier" : "ios-arm64_armv7"
     }
   ]
 }
