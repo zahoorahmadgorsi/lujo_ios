@@ -101,11 +101,8 @@
 		557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */; };
 		557BB5F02315A87200744188 /* RestaurantRequestReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */; };
 		5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583730D230D559100F9536C /* SwiftMessagesManger.swift */; };
-		88029B922633B64E003F1E77 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029B912633B64E003F1E77 /* Mixpanel.framework */; };
-		88029B932633B64F003F1E77 /* Mixpanel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88029B912633B64E003F1E77 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88029BA42633BF42003F1E77 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88029BA32633BF42003F1E77 /* NotificationService.swift */; };
 		88029BA82633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 88029BA12633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		88029BD02633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */; };
 		880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0625582ABC0070D7CD /* Hotel.swift */; };
 		880B9B0925582E350070D7CD /* Yacht.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0825582E350070D7CD /* Yacht.swift */; };
 		880B9B0B255840C10070D7CD /* Villa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0A255840C10070D7CD /* Villa.swift */; };
@@ -117,10 +114,14 @@
 		8894D02825629CD200BF84D8 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Restaurant.swift */; };
 		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
 		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
-		88A96A032633D52600B3CB4F /* OneSignal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BB42633C811003F1E77 /* OneSignal.xcframework */; };
 		88A96A1B2633D97300B3CB4F /* OneSignal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BB42633C811003F1E77 /* OneSignal.xcframework */; };
 		88A96A1C2633D97300B3CB4F /* OneSignal.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BB42633C811003F1E77 /* OneSignal.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
+		88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */; };
+		88B90A8F2634362D00DE2089 /* OneSignal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BB42633C811003F1E77 /* OneSignal.xcframework */; };
+		88B90A902634362D00DE2089 /* OneSignal.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BB42633C811003F1E77 /* OneSignal.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88B90A95263436B400DE2089 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029B912633B64E003F1E77 /* Mixpanel.framework */; };
+		88B90A96263436B400DE2089 /* Mixpanel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 88029B912633B64E003F1E77 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88E731A9256FC5B700BEDD00 /* ProductDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */; };
 		88E731AA256FC5B700BEDD00 /* ProductDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */; };
 		88E731AC256FFA7200BEDD00 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */; };
@@ -481,7 +482,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				88029B932633B64F003F1E77 /* Mixpanel.framework in Embed Frameworks */,
+				88B90A96263436B400DE2089 /* Mixpanel.framework in Embed Frameworks */,
+				88B90A902634362D00DE2089 /* OneSignal.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1889,17 +1891,17 @@
 				1D8801312341E6AB0039DEA6 /* Intercom.framework in Frameworks */,
 				9A72C3C3213831ED009FE9E2 /* SwiftEntryKit.framework in Frameworks */,
 				9ACE52C1212D309400BB287A /* Fabric.framework in Frameworks */,
-				88A96A032633D52600B3CB4F /* OneSignal.xcframework in Frameworks */,
+				88B90A8F2634362D00DE2089 /* OneSignal.xcframework in Frameworks */,
 				9A72C3C92138D9A6009FE9E2 /* JGProgressHUD.framework in Frameworks */,
 				9AECC1432111CBD700C00C07 /* ObjectMapper.framework in Frameworks */,
 				9ACE52C2212D309400BB287A /* Crashlytics.framework in Frameworks */,
 				9AECC1442111CBD700C00C07 /* DefaultsKit.framework in Frameworks */,
 				9ACE52BD212D1F3F00BB287A /* M13Checkbox.framework in Frameworks */,
-				88029BD02633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework in Frameworks */,
+				88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */,
 				9AF569C52175EDBA005B031D /* JTAppleCalendar.framework in Frameworks */,
 				9AECC1462111CBD700C00C07 /* Alamofire.framework in Frameworks */,
 				9A44CDE72130753100699E1A /* ActiveLabel.framework in Frameworks */,
-				88029B922633B64E003F1E77 /* Mixpanel.framework in Frameworks */,
+				88B90A95263436B400DE2089 /* Mixpanel.framework in Frameworks */,
 				9A72C3C521383CC3009FE9E2 /* QuickLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
