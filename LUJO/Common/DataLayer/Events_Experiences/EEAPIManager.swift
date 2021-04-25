@@ -181,8 +181,8 @@ class EEAPIManager {
         }
     }
     
-    func getGoods(_ token: String, term: String?, cityId: Int?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.goods(token, term, cityId)).responseJSON { response in
+    func getGoods(_ token: String, term: String?, category_term_id: Int?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.goods(token, term, category_term_id)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

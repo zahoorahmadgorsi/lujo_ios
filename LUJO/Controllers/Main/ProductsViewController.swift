@@ -127,6 +127,8 @@ class ProductsViewController: UIViewController {
                 subCategoryType = "villa"
             case .yacht:
                 subCategoryType = "yacht"
+            case .gift:
+                subCategoryType = "gift"
             default:
                 subCategoryType = ""    //bring all top rated
         }
@@ -134,7 +136,8 @@ class ProductsViewController: UIViewController {
         if dataSource.count > 0 {
             titleString = "\(dataSource[0].location?.first?.city?.name ?? "") \(category == ProductCategory.experience ? "experiances" : "events")"
         } else if let city = city {
-            titleString = "\(city.name) \(category == ProductCategory.experience ? "experiances" : "events")"
+            //titleString = "\(city.name) \(category == ProductCategory.experience ? "experiances" : "events")"
+            titleString = "\(city.name) \(category.rawValue)"    //dubai event
         }
         //sub category will exist e.g. toprated events (event is subcategory) if user is coming from percity view controller by clicking on see all button at top rated
         //if subcategory exists then append it with appending s (to make it plural)
@@ -327,7 +330,7 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .gift:
-                EEAPIManager().getGoods(token, term: term, cityId: cityId) { list, error in
+                EEAPIManager().getGoods(token, term: term, category_term_id: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home gifts information")
@@ -347,8 +350,8 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .topRated:
-                //bring all types and dont filter on term
-                EEAPIManager().getTopRated(token, type: nil, term: nil) { list, error in
+                print(self.subCategoryType) //subcategory is nill if view toprated frome home screen, but it will contain some value if viewing toprate yachts, event etc
+                EEAPIManager().getTopRated(token, type: self.subCategoryType, term: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home top rated items information")

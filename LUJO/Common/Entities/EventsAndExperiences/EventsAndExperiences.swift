@@ -399,11 +399,13 @@ struct Cities: Codable{
 
 struct PerCityObjects: Codable {
     var topRated: [Product]
-    var cities:[Cities]
+    var cities:[Cities]?
+    var categories:[Cities]?
     
     enum CodingKeys: String, CodingKey {
         case topRated = "top-rated"
         case cities
+        case categories
     }
 
     

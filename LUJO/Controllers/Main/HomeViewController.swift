@@ -710,12 +710,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
-        let viewController = ProductsViewController.instantiate(category: .gift)
+//        let viewController = ProductsViewController.instantiate(category: .gift)
+        let viewController = PerCityViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func villaButton_onClick(_ sender: Any) {
-//        let viewController = EventsViewController.instantiate(category: .villa)
         let viewController = PerCityViewController.instantiate(category: .villa)
         self.navigationController?.pushViewController(viewController, animated: true)
     }

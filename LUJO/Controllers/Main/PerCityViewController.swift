@@ -151,7 +151,9 @@ class PerCityViewController: UIViewController {
     }
     
     func updatePopularCities() {
-        for city in homeObjects?.cities ?? [] {
+        // if homeObjects?.citie is nill then check homeObjects?.categories because homeObjects?.categories will have values in case of gift
+        for city in homeObjects?.cities ?? homeObjects?.categories ?? [] {    //if cities are nil then categories will have gifts data
+//        for city in homeObjects?.cities ?? [] {
             switch city.itemsNum {
             case 0:
                 print("No city to show")
@@ -309,7 +311,8 @@ extension PerCityViewController: CityViewProtocol {
     }
 
     func didTappedOnHeartAt(city currentCity: Cities, itemIndex: Int) {
-        if let cityIndex = homeObjects?.cities.firstIndex(where: {$0.termId == currentCity.termId}), let product = homeObjects?.cities[cityIndex].items?[itemIndex]{
+        if let cityIndex = homeObjects?.cities?.firstIndex(where: {$0.termId == currentCity.termId}) ?? homeObjects?.categories?.firstIndex(where: {$0.termId == currentCity.termId})
+           , let product = homeObjects?.cities?[cityIndex].items?[itemIndex] ?? homeObjects?.categories?[cityIndex].items?[itemIndex]{
             //setting the favourite
             self.showNetworkActivity()
             setUnSetFavourites(id: product.id ,isUnSetFavourite: product.isFavourite ?? false) {information, error in
@@ -321,10 +324,15 @@ extension PerCityViewController: CityViewProtocol {
                 }
 
                 if let informations = information {
-                    let isFavourtie = self.homeObjects?.cities[cityIndex].items?[itemIndex].isFavourite ?? false
-                    self.homeObjects?.cities[cityIndex].items?[itemIndex].isFavourite = !(isFavourtie)
+                    switch self.category{
+                    case .gift:
+                        let isFavourtie = self.homeObjects?.categories?[cityIndex].items?[itemIndex].isFavourite ?? false
+                        self.homeObjects?.categories?[cityIndex].items?[itemIndex].isFavourite = !(isFavourtie)
+                    default:
+                        let isFavourtie = self.homeObjects?.cities?[cityIndex].items?[itemIndex].isFavourite ?? false
+                        self.homeObjects?.cities?[cityIndex].items?[itemIndex].isFavourite = !(isFavourtie)
+                    }
                     self.updatePopularCities() //just to reload the grid
-
                     print("ItemID:\(product.id)" + ", ItemType:" + product.type  + ", ServerResponse:" + informations)
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain tap on heart information")

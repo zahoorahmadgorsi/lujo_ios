@@ -306,7 +306,7 @@ extension SearchProductsViewController {
             case .gift:
                 Mixpanel.mainInstance().track(event: "GiftSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getGoods(token, term: term, cityId: nil) { list, error in
+                EEAPIManager().getGoods(token, term: term, category_term_id: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home gifts information")

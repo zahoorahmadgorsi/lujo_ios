@@ -141,7 +141,7 @@ enum EERouter: URLRequestConvertible {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-            case let .goods(token, term, cityId):
+            case let .goods(token, term, category_term_id):
                 newURLComponents.path.append("/gifts")
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
@@ -149,8 +149,8 @@ enum EERouter: URLRequestConvertible {
                 if let term = term {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
                 }
-                if let cityId = cityId {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+                if let categoryTermId = category_term_id {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
             case let .yachts(token, term, cityId):
@@ -200,12 +200,16 @@ enum EERouter: URLRequestConvertible {
                     URLQueryItem(name: "place_id", value: cityId)
                 ]
             case let .perCity(token, type):
-                newURLComponents.path.append("/per-city")
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
-                newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
-
+                
+                if (type.equals(rhs: "gift")){
+                    newURLComponents.path.append("/gifts/per-category")
+                }else{
+                    newURLComponents.path.append("/per-city")
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
+                }
         }
         
         do {
@@ -253,7 +257,7 @@ enum EERouter: URLRequestConvertible {
         var body: [String: Any] = [
             "token": token
         ]
-        if let type = type {
+        if let type = type , !type.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["type"] = type
         }
         if let term = term {
