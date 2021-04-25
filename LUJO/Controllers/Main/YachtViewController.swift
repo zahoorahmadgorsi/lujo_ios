@@ -276,7 +276,7 @@ class YachtViewController: UIViewController {
         startChatWithInitialMessage(initialMessage)
         
         //showNetworkActivity()
-        CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtType: selectedYachtType, yachtLenght: lenghtText, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
+        CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtCharter: yachtCharter, yachtLenght: lenghtText, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
             DispatchQueue.main.async {
                 //self.hideNetworkActivity()
                 if let error = error {

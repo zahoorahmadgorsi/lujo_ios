@@ -15,13 +15,13 @@ final class GlobalSearchAnimator: NSObject, UIViewControllerAnimatedTransitionin
 
     private let type: PresentationType
     private let firstViewController: SearchProductsViewController
-    private let secondViewController: EventDetailsViewController
+    private let secondViewController: ProductDetailsViewController
     private var selectedCellImageViewSnapshot: UIView
     private let cellImageViewRect: CGRect
     private let cellImgHeartRect: CGRect
     
 //  Important note: if something “goes wrong”, for example, you can’t prepare all the needed properties (basically the init fails), make sure to return nil. This way the app will use default present/dismiss animation and the user won’t be stuck somewhere in the middle of the transition.
-    init?(type: PresentationType, firstViewController: SearchProductsViewController, secondViewController: EventDetailsViewController, selectedCellImageViewSnapshot: UIView) {
+    init?(type: PresentationType, firstViewController: SearchProductsViewController, secondViewController: ProductDetailsViewController, selectedCellImageViewSnapshot: UIView) {
 
         self.type = type
         self.firstViewController = firstViewController

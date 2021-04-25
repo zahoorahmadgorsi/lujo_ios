@@ -141,12 +141,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         
         for (index,event) in informations.event.items.enumerated() {
             
-            let startDateText = EventDetailsViewController.convertDateFormate(date: event.startDate!)
-            var startTimeText = EventDetailsViewController.timeFormatter.string(from: event.startDate!)
+            let startDateText = ProductDetailsViewController.convertDateFormate(date: event.startDate!)
+            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: event.startDate!)
             
             var endDateText = ""
             if let eventEndDate = event.endDate {
-                endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
+                endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
             }
             
             if let timezone = event.timezone {
@@ -287,7 +287,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func eventButton_onClick(_ sender: UIButton) {
         if let event = cityInformation?.event.items[sender.tag] {
 //            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: event), animated: true)
-            let viewController = EventDetailsViewController.instantiate(event: event)
+            let viewController = ProductDetailsViewController.instantiate(event: event)
     //        // B1 - 4
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
 //            viewController.transitioningDelegate = self
@@ -306,7 +306,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func experianceButton_onClick(_ sender: UIButton) {
         if let experience = cityInformation?.experience.items[sender.tag] {
 //            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: experience), animated: true)
-            let viewController = EventDetailsViewController.instantiate(event: experience)
+            let viewController = ProductDetailsViewController.instantiate(event: experience)
             viewController.modalPresentationStyle = .overFullScreen
             present(viewController, animated: true)
         }

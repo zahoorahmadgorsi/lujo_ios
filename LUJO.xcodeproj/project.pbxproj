@@ -78,7 +78,7 @@
 		5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527641E23165CFE00380BEB /* HomeViewController.swift */; };
 		5527642123165D1800380BEB /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* ProductsViewController.swift */; };
 		5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642223165D2500380BEB /* SearchProductsViewController.swift */; };
-		5527642523165D3900380BEB /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642423165D3900380BEB /* EventDetailsViewController.swift */; };
+		5527642523165D3900380BEB /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642423165D3900380BEB /* ProductDetailsViewController.swift */; };
 		5527642723165D4400380BEB /* GalleryViewControllerNEW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */; };
 		5527642A2317F6AD00380BEB /* BookingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552764292317F6AD00380BEB /* BookingsViewController.swift */; };
 		5527642C2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642B2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift */; };
@@ -441,7 +441,7 @@
 		5527641E23165CFE00380BEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5527642023165D1800380BEB /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		5527642223165D2500380BEB /* SearchProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductsViewController.swift; sourceTree = "<group>"; };
-		5527642423165D3900380BEB /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
+		5527642423165D3900380BEB /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewControllerNEW.swift; sourceTree = "<group>"; };
 		552764292317F6AD00380BEB /* BookingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingsViewController.swift; sourceTree = "<group>"; };
 		5527642B2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingsPaymentInstructionsViewController.swift; sourceTree = "<group>"; };
@@ -963,8 +963,6 @@
 			isa = PBXGroup;
 			children = (
 				5527641E23165CFE00380BEB /* HomeViewController.swift */,
-				5527642223165D2500380BEB /* SearchProductsViewController.swift */,
-				5527642423165D3900380BEB /* EventDetailsViewController.swift */,
 				5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */,
 				9A194FF12294614B00E3DBD1 /* HomeEventsLayout.swift */,
 				9A194FE722901A5100E3DBD1 /* HomeEventSummary.xib */,
@@ -1049,7 +1047,9 @@
 				5527641D23165BFD00380BEB /* Home */,
 				557BB5EB231599F500744188 /* MainTabBarController.swift */,
 				918BA99525BDFAD2007B4D43 /* PerCityViewController.swift */,
+				5527642423165D3900380BEB /* ProductDetailsViewController.swift */,
 				5527642023165D1800380BEB /* ProductsViewController.swift */,
+				5527642223165D2500380BEB /* SearchProductsViewController.swift */,
 				88EA9F8D2554069100514626 /* WishList */,
 			);
 			path = Main;
@@ -2125,7 +2125,7 @@
 				91B4A3BA2602AAF800169A0C /* HomeFeaturedAnimator.swift in Sources */,
 				9A0E58672260D4CA00F7848A /* BookingSegmentView.swift in Sources */,
 				9A89D3D621C3D874002D249F /* LiftLayout.swift in Sources */,
-				5527642523165D3900380BEB /* EventDetailsViewController.swift in Sources */,
+				5527642523165D3900380BEB /* ProductDetailsViewController.swift in Sources */,
 				9AC4FE0C225F4E550031E57E /* BookingRequestSummaryView.swift in Sources */,
 				1DDD07D222BCF03700C79AAE /* UIDevice.swift in Sources */,
 				9AF1A0D62249073C00E0680B /* AviationMultiLegSearchOptionsView.swift in Sources */,

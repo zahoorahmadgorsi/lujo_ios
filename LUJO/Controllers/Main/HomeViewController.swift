@@ -442,7 +442,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             default: return
         }
         
-        let viewController = EventDetailsViewController.instantiate(event: event)
+        let viewController = ProductDetailsViewController.instantiate(event: event)
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
@@ -921,7 +921,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         // B2 - 7
         selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
-        let viewController = EventDetailsViewController.instantiate(event: product)
+        let viewController = ProductDetailsViewController.instantiate(event: product)
         
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
@@ -1074,7 +1074,7 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
         // B2 - 16
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         guard let firstViewController = source as? HomeViewController,
-            let secondViewController = presented as? EventDetailsViewController,
+            let secondViewController = presented as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil
@@ -1099,7 +1099,7 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 //        return nil
         // B2 - 17
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
-        guard let secondViewController = dismissed as? EventDetailsViewController,
+        guard let secondViewController = dismissed as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil

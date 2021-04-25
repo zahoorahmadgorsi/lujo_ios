@@ -253,7 +253,7 @@ class VillaViewController: UIViewController {
         startChatWithInitialMessage(initialMessage)
         
         //showNetworkActivity()
-        CustomRequestAPIManager.shared.requestVilla( villaName: villaName, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
+        CustomRequestAPIManager.shared.requestVilla( villaName: villaName, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token, villaRooms: -1) { error in
             DispatchQueue.main.async {
                 //self.hideNetworkActivity()
                 if let error = error {

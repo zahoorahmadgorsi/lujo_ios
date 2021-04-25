@@ -36,7 +36,7 @@ enum EERouter: URLRequestConvertible {
     case villas(String, String?, Int?)
     case goods(String, String?, Int?)
     case yachts(String, String?, Int?)
-    case topRated(token: String, type: String?)
+    case topRated(token: String, type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
     case perCity(String, String)
     
@@ -165,27 +165,21 @@ enum EERouter: URLRequestConvertible {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-            case .topRated:
-                newURLComponents.path.append("/top-rated")
-//                //yet to add in API
-//                if let term = term {
-//                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-//                }
             case let .recents(token, limit, type):
                 newURLComponents.path.append("/recent")
+                
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
-//                //yet to add in API
-//                if let term = term {
-//                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-//                }
                 if let limit = limit {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "limit", value: limit))
                 }
                 if let type = type {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
                 }
+            case .topRated:  //its a POST
+                newURLComponents.path.append("/top-rated")
+                
             case .salesforce:
                 newURLComponents.path.append("/request")
 
@@ -238,8 +232,8 @@ enum EERouter: URLRequestConvertible {
                 return nil
             case .yachts:
                 return nil
-            case let .topRated(token,type):
-                return getTopRatedDataAsJSONData(token: token,type: type)
+            case let .topRated(token,type,term):
+                return getTopRatedDataAsJSONData(token: token, type: type, term:term )
             case .recents:
                 return nil
             case let .salesforce(itemId, token):
@@ -255,11 +249,16 @@ enum EERouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getTopRatedDataAsJSONData(token: String, type: String?) -> Data? {
-        let body: [String: Any] = [
-            "token": token,
-            "type": type ?? ""  //empty string is default value
+    fileprivate func getTopRatedDataAsJSONData(token: String, type: String?, term:String? ) -> Data? {
+        var body: [String: Any] = [
+            "token": token
         ]
+        if let type = type {
+            body["type"] = type
+        }
+        if let term = term {
+            body["search"] = term
+        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     

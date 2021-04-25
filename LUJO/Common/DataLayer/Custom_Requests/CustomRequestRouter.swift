@@ -34,8 +34,8 @@ enum CustomRequestRouter: URLRequestConvertible {
         return scheme
     }()
     
-    case requestYacht(String, String?, String?, String, String, String, Int, String)
-    case requestVilla(String, String, Int,String, String)
+    case requestYacht(String, String?, String, String, String, String, Int, String)
+    case requestVilla(String, String, Int,String, String,Int)
     case findHotel(String, String?, String, String, String, Int, Int, Int, String)
     
     
@@ -96,16 +96,16 @@ enum CustomRequestRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-        case let .requestYacht(destination, yachtName, yachtType, yachtLenght, dateFrom, dateTo, guestsCount, token):
-            return getYachtDataAsJSONData(destination: destination, yachtName: yachtName, yachtType: yachtType, yachtLenght: yachtLenght, dateFrom: dateFrom, dateTo: dateTo, guestsCount: guestsCount, token: token)
-        case let .requestVilla(dateFrom, dateTo, guestsCount, villaName, token):
-            return getVillaDataAsJSONData(dateFrom: dateFrom, dateTo: dateTo, guestsCount: guestsCount, villaName: villaName, token: token)
+        case let .requestYacht(destination, yachtName, yachtCharter, yachtLenght, dateFrom, dateTo, guestsCount, token):
+            return getYachtDataAsJSONData(destination: destination, yachtName: yachtName, yachtChareter: yachtCharter, yachtLenght: yachtLenght, dateFrom: dateFrom, dateTo: dateTo, guestsCount: guestsCount, token: token)
+        case let .requestVilla(dateFrom, dateTo, guestsCount, villaName, token,villaRooms):
+            return getVillaDataAsJSONData(dateFrom: dateFrom, dateTo: dateTo, guestsCount: guestsCount, villaName: villaName, token: token,villaRooms:villaRooms)
         case let .findHotel(cityName, hotelName, hotelRadius, checkInDate, checkOutDate, adultsCount, roomsCount, hotelStars, token):
             return getHotelDataAsJSONData(cityName: cityName, hotelName: hotelName, hotelRadius: hotelRadius, checkInDate: checkInDate, checkOutDate: checkOutDate, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: hotelStars, token: token)
         }
     }
     
-    fileprivate func getYachtDataAsJSONData (destination: String, yachtName: String?, yachtType: String?, yachtLenght: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String) -> Data? {
+    fileprivate func getYachtDataAsJSONData (destination: String, yachtName: String?, yachtChareter: String, yachtLenght: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String) -> Data? {
         var body: [String: Any] = [
             "yacht_destination": destination,
             "yacht_length": yachtLenght,
@@ -113,26 +113,24 @@ enum CustomRequestRouter: URLRequestConvertible {
             "yacht_date_to": dateTo,
             "yacht_guests": guestsCount,
             "token": token
+            ,"yacht_charter": yachtChareter
+            ,"yacht_budget" : "-123456"    //EmptyString
         ]
         
         if let yachtName = yachtName, !yachtName.isEmpty {
             body["yacht_name"] = yachtName
         }
-        
-        if let yachtType = yachtType, !yachtType.isEmpty {
-            body["yacht_type"] = yachtType
-        }
-        
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getVillaDataAsJSONData ( dateFrom: String, dateTo: String, guestsCount: Int,villaName: String, token: String) -> Data? {
+    fileprivate func getVillaDataAsJSONData ( dateFrom: String, dateTo: String, guestsCount: Int,villaName: String, token: String, villaRooms: Int) -> Data? {
         let body: [String: Any] = [
             "villa_check_in": dateFrom,
             "villa_check_out": dateTo,
             "villa_guests": guestsCount,
-            "villa_name": villaName,   //its villaname
-            "token": token
+            "villa_name": villaName   //its villaname
+            ,"villa_rooms": villaRooms
+            ,"token": token
         ]
         
         return try? JSONSerialization.data(withJSONObject: body, options: [])

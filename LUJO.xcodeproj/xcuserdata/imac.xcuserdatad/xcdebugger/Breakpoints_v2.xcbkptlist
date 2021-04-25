@@ -2413,7 +2413,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
             endingLineNumber = "25"
-            landmarkName = "EventDetailsViewController"
+            landmarkName = "ProductDetailsViewController"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6921,7 +6921,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "78"
             endingLineNumber = "78"
-            landmarkName = "EventDetailsViewController"
+            landmarkName = "ProductDetailsViewController"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -9148,7 +9148,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "B509956D-6BF9-49D1-A42E-3564A284C8CD - 233ef9e112670d39"
+                  uuid = "B509956D-6BF9-49D1-A42E-3564A284C8CD - 233ef9e112670b29"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -9158,23 +9158,23 @@
                   urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Controllers/Main/VillaViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "240"
-                  endingLineNumber = "240"
-                  offsetFromSymbolStart = "4337">
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "4655">
                </Location>
                <Location
-                  uuid = "B509956D-6BF9-49D1-A42E-3564A284C8CD - 7f2bcda48054804f"
+                  uuid = "B509956D-6BF9-49D1-A42E-3564A284C8CD - 8d6aaad574ac6450"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in LUJO.VillaViewController.requestButton_onClick(Any) -&gt; ()"
+                  symbolName = "closure #2 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in LUJO.VillaViewController.requestButton_onClick(Any) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Controllers/Main/VillaViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "241"
-                  endingLineNumber = "241"
+                  startingLineNumber = "257"
+                  endingLineNumber = "257"
                   offsetFromSymbolStart = "158">
                </Location>
             </Locations>
@@ -9272,7 +9272,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "85"
             endingLineNumber = "85"
-            landmarkName = "requestVilla(villaName:dateFrom:dateTo:guestsCount:token:completion:)"
+            landmarkName = "requestVilla(villaName:dateFrom:dateTo:guestsCount:token:villaRooms:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -9286,9 +9286,9 @@
             filePath = "LUJO/Common/DataLayer/Custom_Requests/CustomRequestRouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "getVillaDataAsJSONData(dateFrom:dateTo:guestsCount:villaName:token:)"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "getVillaDataAsJSONData(dateFrom:dateTo:guestsCount:villaName:token:villaRooms:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -9312,7 +9312,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "57C73E28-920F-4484-93B9-7AD9F1CF8A68"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/API Managers/CustomRequestAPIManager.swift"
@@ -9320,7 +9320,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
             endingLineNumber = "83"
-            landmarkName = "requestVilla(villaName:dateFrom:dateTo:guestsCount:token:completion:)"
+            landmarkName = "requestVilla(villaName:dateFrom:dateTo:guestsCount:token:villaRooms:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -9400,15 +9400,15 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "96"
             endingLineNumber = "96"
-            landmarkName = "requestVilla(villaName:dateFrom:dateTo:guestsCount:token:completion:)"
+            landmarkName = "requestVilla(villaName:dateFrom:dateTo:guestsCount:token:villaRooms:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 6b1484ffcc434c62"
+                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 5e5120940ea3a48d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, villaRooms: Swift.Int, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/API%20Managers/CustomRequestAPIManager.swift"
@@ -9419,11 +9419,11 @@
                   offsetFromSymbolStart = "783">
                </Location>
                <Location
-                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 6b1484ffcc434c62"
+                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 5e5120940ea3a48d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, villaRooms: Swift.Int, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/API%20Managers/CustomRequestAPIManager.swift"
@@ -9434,11 +9434,11 @@
                   offsetFromSymbolStart = "1116">
                </Location>
                <Location
-                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 6b1484ffcc434c62"
+                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 5e5120940ea3a48d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, villaRooms: Swift.Int, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/API%20Managers/CustomRequestAPIManager.swift"
@@ -9449,11 +9449,11 @@
                   offsetFromSymbolStart = "1349">
                </Location>
                <Location
-                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 6b1484ffcc434c62"
+                  uuid = "97C86D56-F128-4A3A-BD67-3A6BE7E3303E - 5e5120940ea3a48d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.CustomRequestAPIManager.requestVilla(villaName: Swift.String, dateFrom: Swift.String, dateTo: Swift.String, guestsCount: Swift.Int, token: Swift.String, villaRooms: Swift.Int, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/API%20Managers/CustomRequestAPIManager.swift"
@@ -9486,7 +9486,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "F9E3AF6C-4688-43FF-84DA-C0A5380BEC86"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
@@ -9820,7 +9820,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0A7BBD79-67CA-4261-896C-6F69C7871056"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/Controllers/Main/YachtViewController.swift"
@@ -9868,7 +9868,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "893A7E89-714B-4E44-A891-E280408C6C44"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/Common/DataLayer/Custom_Requests/CustomRequestRouter.swift"
@@ -9884,7 +9884,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "20128830-DB6D-4A4E-A266-016C2BCB3367"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/Common/DataLayer/Custom_Requests/CustomRequestRouter.swift"
@@ -9932,7 +9932,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "566D1DB7-DB74-419A-A10A-B0AB08D27C48"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/Controllers/Main/YachtViewController.swift"
@@ -9974,6 +9974,500 @@
                   offsetFromSymbolStart = "158">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "485EF344-E41D-42EC-81D2-335637B9098D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Custom_Requests/CustomRequestRouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "getYachtDataAsJSONData(destination:yachtName:yachtChareter:yachtLenght:dateFrom:dateTo:guestsCount:token:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EA99037F-35BB-466D-B598-18697B431E40"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/API Managers/CustomRequestAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "requestYacht(destination:yachtName:yachtCharter:yachtLenght:dateFrom:dateTo:guestsCount:token:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "189A6622-CF3A-4A27-8ADE-6AA1615347F5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Controllers/Main/YachtViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
+            landmarkName = "requestButton_onClick(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8363A344-9FED-4265-85A4-5B65DB24608F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Custom_Requests/CustomRequestRouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "getVillaDataAsJSONData(dateFrom:dateTo:guestsCount:villaName:token:villaRooms:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51E6AC62-B8CF-42CD-B59F-57FC1EE2D46A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Controllers/Main/SearchProductsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "getList(for:past:term:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "51E6AC62-B8CF-42CD-B59F-57FC1EE2D46A - 6768254b6b9656f0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LUJO.SearchProductsViewController.getList(for: LUJO.ProductCategory, past: Swift.Bool, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Controllers/Main/SearchProductsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "4564">
+               </Location>
+               <Location
+                  uuid = "51E6AC62-B8CF-42CD-B59F-57FC1EE2D46A - a7708b72b606bc80"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #6 (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in LUJO.SearchProductsViewController.getList(for: LUJO.ProductCategory, past: Swift.Bool, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Controllers/Main/SearchProductsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "334"
+                  endingLineNumber = "334"
+                  offsetFromSymbolStart = "152">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B0B9EA39-C789-4906-B962-EE3B4E1E46A7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Controllers/Main/ProductsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "getList(for:past:term:cityId:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B0B9EA39-C789-4906-B962-EE3B4E1E46A7 - 92ce62e94043a885"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LUJO.ProductsViewController.getList(for: LUJO.ProductCategory, past: Swift.Bool, term: Swift.Optional&lt;Swift.String&gt;, cityId: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Controllers/Main/ProductsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "351"
+                  endingLineNumber = "351"
+                  offsetFromSymbolStart = "2107">
+               </Location>
+               <Location
+                  uuid = "B0B9EA39-C789-4906-B962-EE3B4E1E46A7 - 8304d0673e98a40a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #6 (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in LUJO.ProductsViewController.getList(for: LUJO.ProductCategory, past: Swift.Bool, term: Swift.Optional&lt;Swift.String&gt;, cityId: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Controllers/Main/ProductsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "352"
+                  endingLineNumber = "352"
+                  offsetFromSymbolStart = "152">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B5415AE-AE46-41CC-8BBA-432966E9AAE0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "getTopRatedDataAsJSONData(token:type:term:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F8D46F82-A6C0-4653-A62E-1539BBBE7542"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "getTopRatedDataAsJSONData(token:type:term:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D5BED98B-E9F9-4E9C-8767-247EEA16313A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "getTopRated(_:type:term:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "62121020-6574-4119-9192-ADB6D5F53C39"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "getTopRated(_:type:term:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "62121020-6574-4119-9192-ADB6D5F53C39 - 87360d7e95006230"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getTopRated(_: Swift.String, type: Swift.Optional&lt;Swift.String&gt;, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "851">
+               </Location>
+               <Location
+                  uuid = "62121020-6574-4119-9192-ADB6D5F53C39 - 87360d7e95006230"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getTopRated(_: Swift.String, type: Swift.Optional&lt;Swift.String&gt;, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "1277">
+               </Location>
+               <Location
+                  uuid = "62121020-6574-4119-9192-ADB6D5F53C39 - 87360d7e95006230"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getTopRated(_: Swift.String, type: Swift.Optional&lt;Swift.String&gt;, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "2545">
+               </Location>
+               <Location
+                  uuid = "62121020-6574-4119-9192-ADB6D5F53C39 - 87360d7e95006230"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getTopRated(_: Swift.String, type: Swift.Optional&lt;Swift.String&gt;, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "2915">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "539D1AAC-C781-4A1E-BCD0-EBAD337E3887"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "getTopRatedDataAsJSONData(token:type:term:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "348710AC-0F80-4ABE-941C-18777371BD96"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "getTopRated(_:type:term:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A574DB97-D153-4F99-8C56-C880090C9ED1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
+            landmarkName = "getTopRated(_:type:term:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A574DB97-D153-4F99-8C56-C880090C9ED1 - cef98080241b0d7e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LUJO.EEAPIManager.getTopRated(_: Swift.String, type: Swift.Optional&lt;Swift.String&gt;, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "255"
+                  endingLineNumber = "255"
+                  offsetFromSymbolStart = "91">
+               </Location>
+               <Location
+                  uuid = "A574DB97-D153-4F99-8C56-C880090C9ED1 - 87360d7e950064cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getTopRated(_: Swift.String, type: Swift.Optional&lt;Swift.String&gt;, term: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LUJO"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "171">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20B6E3BB-3276-4CFF-A9A4-9AABC8F3432C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "getTopRatedDataAsJSONData(token:type:term:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6C66F2C4-C408-47B1-9D5E-FF3F52A661FE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "66F888D5-D194-497E-B9E0-317A9FDEC767"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "getRequestURL()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BA2D2AB9-85B5-476D-85CF-C14015194EE8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "getRequestURL()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51CA4612-E949-4FD2-ABB6-799E8F0CD689"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "getRequestURL()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "91180F96-E33A-44CD-B9B7-F016BBC1A894"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Controllers/Main/ProductsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
+            landmarkName = "getList(for:past:term:cityId:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1355C736-5932-40CC-A911-97240400C271"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Controllers/Main/SearchProductsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "getList(for:past:term:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D2BF0BE7-24E6-40AC-83DB-A58BFBDD6AB7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LUJO/Controllers/Main/SearchProductsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
+            landmarkName = "getList(for:past:term:completion:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

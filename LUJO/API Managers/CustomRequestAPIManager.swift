@@ -16,9 +16,9 @@ class CustomRequestAPIManager {
     
     private init() {}
     
-    func requestYacht(destination: String, yachtName: String?, yachtType: String?, yachtLenght: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String, completion: @escaping (Error?) -> Void) {
+    func requestYacht(destination: String, yachtName: String?, yachtCharter: String, yachtLenght: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String, completion: @escaping (Error?) -> Void) {
         
-        Alamofire.request(CustomRequestRouter.requestYacht(destination, yachtName, yachtType, yachtLenght, dateFrom, dateTo, guestsCount, token))
+        Alamofire.request(CustomRequestRouter.requestYacht(destination, yachtName, yachtCharter, yachtLenght, dateFrom, dateTo, guestsCount, token))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(response.result.error!)
@@ -78,9 +78,9 @@ class CustomRequestAPIManager {
         }
     }
     
-    func requestVilla(villaName: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String, completion: @escaping (Error?) -> Void) {
+    func requestVilla(villaName: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String, villaRooms:Int, completion: @escaping (Error?) -> Void) {
         
-        Alamofire.request(CustomRequestRouter.requestVilla( dateFrom, dateTo, guestsCount,villaName, token))
+        Alamofire.request(CustomRequestRouter.requestVilla( dateFrom, dateTo, guestsCount,villaName, token,villaRooms))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(response.result.error!)

@@ -178,12 +178,12 @@ extension HomeSlider: UICollectionViewDataSource {
         if model.type == "event" {  //showing start - end date in case of event
             cell.dateContainerView.isHidden = false
 
-            let startDateText = EventDetailsViewController.convertDateFormate(date: model.startDate!)
-            var startTimeText = EventDetailsViewController.timeFormatter.string(from: model.startDate!)
+            let startDateText = ProductDetailsViewController.convertDateFormate(date: model.startDate!)
+            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: model.startDate!)
 
             var endDateText = ""
             if let eventEndDate = model.endDate {
-                endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
+                endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
             }
             
             if let timezone = model.timezone {

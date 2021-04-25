@@ -189,12 +189,12 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
         if model.type == "event" {
             cell.dateContainerView.isHidden = false
             
-            let startDateText = EventDetailsViewController.convertDateFormate(date: model.startDate!)
-            var startTimeText = EventDetailsViewController.timeFormatter.string(from: model.startDate!)
+            let startDateText = ProductDetailsViewController.convertDateFormate(date: model.startDate!)
+            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: model.startDate!)
             
             var endDateText = ""
             if let eventEndDate = model.endDate {
-                endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
+                endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
             }
             
             if let timezone = model.timezone {
@@ -218,7 +218,7 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = dataSource[indexPath.row]
-        let viewController = EventDetailsViewController.instantiate(event: event)
+        let viewController = ProductDetailsViewController.instantiate(event: event)
 //        self.navigationController?.pushViewController(viewController, animated: true)
         // B2 - 6
         selectedCell = collectionView.cellForItem(at: indexPath) as? HomeSliderCell
@@ -264,8 +264,6 @@ extension SearchProductsViewController {
             completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        
-        
         
         switch category {
             case .event:
@@ -332,7 +330,7 @@ extension SearchProductsViewController {
             case .topRated:
                 Mixpanel.mainInstance().track(event: "TopRatedSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getTopRated(token, type: nil) { list, error in   //type nil mean bring all types(event, experience) of toprated
+                EEAPIManager().getTopRated(token, type: nil, term: term) { list, error in   //type nil mean bring all types(event, experience) of toprated
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home top rated information")
@@ -411,7 +409,7 @@ extension SearchProductsViewController: UIViewControllerTransitioningDelegate {
         // B2 - 16
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         guard let firstViewController = source as? SearchProductsViewController,
-            let secondViewController = presented as? EventDetailsViewController,
+            let secondViewController = presented as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil
@@ -433,7 +431,7 @@ extension SearchProductsViewController: UIViewControllerTransitioningDelegate {
 //        return nil
         // B2 - 17
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
-        guard let secondViewController = dismissed as? EventDetailsViewController,
+        guard let secondViewController = dismissed as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil

@@ -29,12 +29,12 @@ class HomeEventCell: UICollectionViewCell {
             location.text = locationText.uppercased()
             dateContainerView.isHidden = false
 
-            let startDateText = EventDetailsViewController.convertDateFormate(date: event.startDate!)
-            var startTimeText = EventDetailsViewController.timeFormatter.string(from: event.startDate!)
+            let startDateText = ProductDetailsViewController.convertDateFormate(date: event.startDate!)
+            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: event.startDate!)
 
             var endDateText = ""
             if let eventEndDate = event.endDate {
-                endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
+                endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
             }
             
             if let timezone = event.timezone {

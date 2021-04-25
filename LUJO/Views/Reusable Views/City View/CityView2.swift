@@ -125,12 +125,12 @@ class CityView2: UIView {
                 if product.type == "event" {
                     svProduct1Dates.isHidden = false
                     
-                    let startDateText = EventDetailsViewController.convertDateFormate(date: product.startDate!)
-                    var startTimeText = EventDetailsViewController.timeFormatter.string(from: product.startDate!)
+                    let startDateText = ProductDetailsViewController.convertDateFormate(date: product.startDate!)
+                    var startTimeText = ProductDetailsViewController.timeFormatter.string(from: product.startDate!)
                     
                     var endDateText = ""
                     if let eventEndDate = product.endDate {
-                        endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
+                        endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
                     }
                     
                     if let timezone = product.timezone {
@@ -200,12 +200,12 @@ class CityView2: UIView {
                 if product.type == "event" {
                     svProduct2Dates.isHidden = false
                     
-                    let startDateText = EventDetailsViewController.convertDateFormate(date: product.startDate!)
-                    var startTimeText = EventDetailsViewController.timeFormatter.string(from: product.startDate!)
+                    let startDateText = ProductDetailsViewController.convertDateFormate(date: product.startDate!)
+                    var startTimeText = ProductDetailsViewController.timeFormatter.string(from: product.startDate!)
                     
                     var endDateText = ""
                     if let eventEndDate = product.endDate {
-                        endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
+                        endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
                     }
                     
                     if let timezone = product.timezone {

@@ -222,7 +222,7 @@ extension PerCityViewController: CityViewProtocol {
     }
     
     func didTappedOnProductAt(product: Product, itemIndex: Int) {
-        let viewController = EventDetailsViewController.instantiate(event: product)
+        let viewController = ProductDetailsViewController.instantiate(event: product)
         animationtype = .featured //tapped on city view
             // B2 - 6
             //Finding UIImageView of restaurant where user has tapped so that we can animate this image
@@ -449,7 +449,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
             default: return
         }
         
-        let viewController = EventDetailsViewController.instantiate(event: product)
+        let viewController = ProductDetailsViewController.instantiate(event: product)
 //        self.navigationController?.pushViewController(viewController, animated: true)
         // B2 - 6
         selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
@@ -471,7 +471,7 @@ extension PerCityViewController: UIViewControllerTransitioningDelegate {
         // B2 - 16
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         guard let firstViewController = source as? PerCityViewController,
-            let secondViewController = presented as? EventDetailsViewController,
+            let secondViewController = presented as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil
@@ -493,7 +493,7 @@ extension PerCityViewController: UIViewControllerTransitioningDelegate {
 //        return nil
         // B2 - 17
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
-        guard let secondViewController = dismissed as? EventDetailsViewController,
+        guard let secondViewController = dismissed as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil

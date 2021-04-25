@@ -11,7 +11,7 @@ import JGProgressHUD
 import Mixpanel
 import Intercom
 
-class EventDetailsViewController: UIViewController, GalleryViewProtocol {
+class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     //MARK:- Init
     
     /// Class storyboard identifier.
@@ -27,8 +27,8 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
     @IBOutlet weak var btnReadMore: UIButton!
     var descHeightToShowReadMore:CGFloat = 70.0
     /// Init method that will init and return view controller.
-    class func instantiate(event: Product) -> EventDetailsViewController {
-        let viewController = UIStoryboard.main.instantiate(identifier) as! EventDetailsViewController
+    class func instantiate(event: Product) -> ProductDetailsViewController {
+        let viewController = UIStoryboard.main.instantiate(identifier) as! ProductDetailsViewController
         viewController.product = event
         return viewController
     }
@@ -226,7 +226,7 @@ class EventDetailsViewController: UIViewController, GalleryViewProtocol {
         }
 }
 
-extension EventDetailsViewController {
+extension ProductDetailsViewController {
     
     fileprivate func setupEvents(_ product: Product) {
         // imagesList.imageURLList = event.allImages ?? []
@@ -264,13 +264,13 @@ extension EventDetailsViewController {
         var startTimeText = ""
         
         if let startDate = product.startDate {
-            startDateText = EventDetailsViewController.convertDateFormate(date: startDate)
-            startTimeText = EventDetailsViewController.timeFormatter.string(from: startDate)
+            startDateText = ProductDetailsViewController.convertDateFormate(date: startDate)
+            startTimeText = ProductDetailsViewController.timeFormatter.string(from: startDate)
         }
         
         var endDateText = ""
         if let eventEndDate = product.endDate {
-            endDateText = EventDetailsViewController.convertDateFormate(date: eventEndDate)
+            endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
         }
         
         if let timezone = product.timezone {
@@ -707,8 +707,8 @@ extension EventDetailsViewController {
         let calendar = Calendar.current
         let anchorComponents = calendar.dateComponents([.day, .month, .year], from: date)
         
-        let newDate = EventDetailsViewController.dateFormatter.string(from: date)
-        let dateDay = EventDetailsViewController.numberFormatter.string(from: NSNumber(value: anchorComponents.day!))
+        let newDate = ProductDetailsViewController.dateFormatter.string(from: date)
+        let dateDay = ProductDetailsViewController.numberFormatter.string(from: NSNumber(value: anchorComponents.day!))
         
         return dateDay! + " " + newDate
     }
@@ -760,7 +760,7 @@ extension EventDetailsViewController {
 }
 
 // Chat functionality
-extension EventDetailsViewController {
+extension ProductDetailsViewController {
     
     fileprivate func sendInitialInformation() {
         if (product.type == "yacht"){
@@ -925,7 +925,7 @@ extension EventDetailsViewController {
 }
 
 ////No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
-extension EventDetailsViewController: UIScrollViewDelegate {
+extension ProductDetailsViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView)
     {
@@ -941,7 +941,7 @@ extension EventDetailsViewController: UIScrollViewDelegate {
     }
 }
 
-extension EventDetailsViewController: UIGestureRecognizerDelegate {
+extension ProductDetailsViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
