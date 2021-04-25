@@ -109,7 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             setExternalUserId(externalUserId: user.phoneNumber.readableNumber)  //setting external User id as phone number at oneSignal
             
-            Mixpanel.mainInstance().identify(distinctId: String(user.id))
+            Mixpanel.mainInstance().identify(distinctId: "\(user.id)")
             
             Intercom.registerUser(withUserId: "\(user.id)")
             

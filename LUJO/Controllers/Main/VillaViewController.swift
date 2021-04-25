@@ -237,7 +237,7 @@ class VillaViewController: UIViewController {
             //https://developers.intercom.com/installing-intercom/docs/ios-configuration
             if let user = LujoSetup().getLujoUser(), user.id > 0 {
                 Intercom.logEvent(withName: "custom_request", metaData:[
-                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+                                    "sales_force_villa_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
                                     ,"user_id":user.id])
             }
         }
