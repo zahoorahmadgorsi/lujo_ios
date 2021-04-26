@@ -272,7 +272,7 @@ extension SearchProductsViewController {
                 EEAPIManager().getEvents(token, past: past, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home events information")
+                        let error = BackendError.parsing(reason: "Could not obtain events information")
                         completion([], error)
                         return
                     }
@@ -285,7 +285,7 @@ extension SearchProductsViewController {
                 EEAPIManager().getExperiences(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home experiences information")
+                        let error = BackendError.parsing(reason: "Could not obtain experiences information")
                         completion([], error)
                         return
                     }
@@ -297,7 +297,7 @@ extension SearchProductsViewController {
                 EEAPIManager().getVillas(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home villas information")
+                        let error = BackendError.parsing(reason: "Could not obtain villas information")
                         completion([], error)
                         return
                     }
@@ -309,7 +309,7 @@ extension SearchProductsViewController {
                 EEAPIManager().getGoods(token, term: term, category_term_id: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home gifts information")
+                        let error = BackendError.parsing(reason: "Could not obtain gifts information")
                         completion([], error)
                         return
                     }
@@ -321,7 +321,7 @@ extension SearchProductsViewController {
                 EEAPIManager().getYachts(token, term: term, cityId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home yachts information")
+                        let error = BackendError.parsing(reason: "Could not obtain yachts information")
                         completion([], error)
                         return
                     }
@@ -333,7 +333,7 @@ extension SearchProductsViewController {
                 EEAPIManager().getTopRated(token, type: nil, term: term) { list, error in   //type nil mean bring all types(event, experience) of toprated
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home top rated information")
+                        let error = BackendError.parsing(reason: "Could not obtain top rated information")
                         completion([], error)
                         return
                     }

@@ -142,8 +142,13 @@ enum EERouter: URLRequestConvertible {
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
             case let .goods(token, term, category_term_id):
-                newURLComponents.path.append("/gifts/per-category")
-//                newURLComponents.path.append("/gifts")        //its response format is [Product]
+                if (term?.count ?? 0 > 0){
+                    newURLComponents.path.append("/gifts")        //its response format is [Product]
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
+                }else{  //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
+                    newURLComponents.path.append("/gifts/per-category")
+                }
+            
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
@@ -153,7 +158,6 @@ enum EERouter: URLRequestConvertible {
                 if let categoryTermId = category_term_id {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
                 }
-//                newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
             case let .yachts(token, term, cityId):
                 newURLComponents.path.append("/yachts")
                 newURLComponents.queryItems = [
