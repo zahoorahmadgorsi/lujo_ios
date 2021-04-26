@@ -330,6 +330,7 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .gift:
+                //sending category_term_id in case of gifts in the paraeter cityid
                 EEAPIManager().getGoods(token, term: term, category_term_id: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
