@@ -10,8 +10,8 @@ import UIKit
 
 protocol DiningCityProtocol:class {
     func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView)
-    func didTappedOnRestaurantAt(index: Int,restaurant: Restaurant)
-    func didTappedOnHeartAt(index: Int, sender: Restaurant)
+    func didTappedOnRestaurantAt(index: Int,restaurant: Product)
+    func didTappedOnHeartAt(index: Int, sender: Product)
 }
 
 class DiningCityView: UIView {
@@ -85,8 +85,8 @@ class DiningCityView: UIView {
             if index == 0 {
                 restaurant1ImageView.downloadImageFrom(link: restaurant.primaryMedia?.mediaUrl ?? "", contentMode: .scaleAspectFill)
                 restaurant1NameLabel.text = restaurant.name
-                restaurant1locationContainerView.isHidden = restaurant.location.count == 0
-                restaurant1locationLabel.text = restaurant.location.first?.city?.name.uppercased()
+                restaurant1locationContainerView.isHidden = restaurant.location?.count == 0
+                restaurant1locationLabel.text = restaurant.location?.first?.city?.name.uppercased()
                 restaurant1starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
                 restaurant1starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
                 //Zahoor
@@ -102,8 +102,8 @@ class DiningCityView: UIView {
                 
                 restaurant2ImageView.downloadImageFrom(link: restaurant.primaryMedia?.mediaUrl ?? "", contentMode: .scaleAspectFill)
                 restaurant2NameLabel.text = restaurant.name
-                restaurant2locationContainerView.isHidden = restaurant.location.count == 0
-                restaurant2locationLabel.text = restaurant.location.first?.city?.name.uppercased()
+                restaurant2locationContainerView.isHidden = restaurant.location?.count == 0
+                restaurant2locationLabel.text = restaurant.location?.first?.city?.name.uppercased()
                 restaurant2starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
                 restaurant2starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
                 //Zahoor

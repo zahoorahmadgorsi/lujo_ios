@@ -199,7 +199,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     restaurant1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
                 
-                if let city = restaurant.location.first?.city {
+                if let city = restaurant.location?.first?.city {
                     restaurant1locationContainerView.isHidden = false
                     restaurant1locationLabel.text = city.name.uppercased()
                 } else {
@@ -220,7 +220,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     restaurant2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
                 
-                if let city = restaurant.location.first?.city {
+                if let city = restaurant.location?.first?.city {
                     restaurant2locationContainerView.isHidden = false
                     restaurant2locationLabel.text = city.name.uppercased()
                 } else {
@@ -287,7 +287,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func eventButton_onClick(_ sender: UIButton) {
         if let event = cityInformation?.event.items[sender.tag] {
 //            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: event), animated: true)
-            let viewController = ProductDetailsViewController.instantiate(event: event)
+            let viewController = ProductDetailsViewController.instantiate(product: event)
     //        // B1 - 4
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
 //            viewController.transitioningDelegate = self
@@ -299,14 +299,14 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func restaurantButton_onClick(_ sender: UIButton) {
         if let restaurant = cityInformation?.restaurant.items[sender.tag] {
            
-            self.present(RestaurantDetailViewController.instantiate(restaurant: restaurant), animated: true, completion: nil)
+            self.present(ProductDetailsViewController.instantiate(product: restaurant), animated: true, completion: nil)
         }
     }
     
     @IBAction func experianceButton_onClick(_ sender: UIButton) {
         if let experience = cityInformation?.experience.items[sender.tag] {
 //            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: experience), animated: true)
-            let viewController = ProductDetailsViewController.instantiate(event: experience)
+            let viewController = ProductDetailsViewController.instantiate(product: experience)
             viewController.modalPresentationStyle = .overFullScreen
             present(viewController, animated: true)
         }
@@ -319,8 +319,8 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func seeAllRestaurantsButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.restaurant.items.first?.location.first?.city?.termId {
-            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.restaurant.items.first?.location.first?.city?.name ?? "", restaurantsNum: cityInformation?.restaurant.num ?? 0, restaurants: [])), animated: true)
+        if let termId = cityInformation?.restaurant.items.first?.location?.first?.city?.termId {
+            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.restaurant.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.restaurant.num ?? 0, restaurants: [])), animated: true)
         }
     }
     

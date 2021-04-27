@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -34,7 +33,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="122" id="7ut-og-Zc4"/>
                             <constraint firstItem="9Xh-bO-zuV" firstAttribute="top" secondItem="Myx-PC-Omx" secondAttribute="top" id="AB1-lj-D5D"/>
@@ -44,22 +43,22 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JSo-aN-oVK">
-                        <rect key="frame" x="0.0" y="122" width="150" height="38"/>
+                        <rect key="frame" x="0.0" y="122" width="150" height="37"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1a-n8-RTG">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="38"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="37"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's Fifteen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSP-iY-0EL">
-                                        <rect key="frame" x="0.0" y="0.0" width="132" height="38"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="132" height="37"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oR8-wA-cke">
-                                        <rect key="frame" x="132" y="0.0" width="18" height="38"/>
+                                        <rect key="frame" x="132" y="0.0" width="18" height="37"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_white" translatesAutoresizingMaskIntoConstraints="NO" id="9JD-dK-IJW">
-                                                <rect key="frame" x="0.0" y="10" width="18" height="18"/>
+                                                <rect key="frame" x="0.0" y="9.5" width="18" height="18"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="18" id="G1E-wF-isj"/>
                                                     <constraint firstAttribute="width" constant="18" id="pDV-iI-aOi"/>
@@ -85,7 +84,7 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="X6o-J1-0CM">
-                        <rect key="frame" x="0.0" y="160" width="150" height="37"/>
+                        <rect key="frame" x="0.0" y="159" width="150" height="37"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmr-WU-jp4">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="21"/>
@@ -163,7 +162,7 @@
                 <constraint firstItem="JSo-aN-oVK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6mX-AI-68W"/>
                 <constraint firstItem="X6o-J1-0CM" firstAttribute="top" secondItem="JSo-aN-oVK" secondAttribute="bottom" id="CU3-tH-RaZ"/>
                 <constraint firstItem="JSo-aN-oVK" firstAttribute="top" secondItem="Myx-PC-Omx" secondAttribute="bottom" id="D4R-wu-tUU"/>
-                <constraint firstAttribute="bottom" secondItem="X6o-J1-0CM" secondAttribute="bottom" constant="-1" id="LBM-Ez-LQF"/>
+                <constraint firstAttribute="bottom" secondItem="X6o-J1-0CM" secondAttribute="bottom" id="LBM-Ez-LQF"/>
                 <constraint firstItem="X6o-J1-0CM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XsC-Wz-PAe"/>
                 <constraint firstAttribute="trailing" secondItem="Myx-PC-Omx" secondAttribute="trailing" id="dut-Sz-rQT"/>
                 <constraint firstItem="Myx-PC-Omx" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lyk-o0-k3Y"/>
@@ -196,8 +195,5 @@
         <namedColor name="White Text">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

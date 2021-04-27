@@ -59,7 +59,7 @@ struct CityInfo: Codable {
 
 struct RestaurantCity: Codable {
     let num: Int
-    let items: [Restaurant]
+    let items: [Product]
 }
 
 struct EventExperienceCity: Codable {
@@ -126,17 +126,17 @@ struct Product: Codable {
     let yachtExtras: [Taxonomy]?
     let charterPriceLowSeasonPerDay: String?
     let charterPriceHighSeasonPerDay: String?
-    //Restaurant related
-//    let tripadvisor: String?
-//    let address: String
-//    let phone: String?
-//    let zipCode: String?
-//    let email: String?
-//    let website: String?
-//    let starChief: String?
-//    let restaurantCategory: [Taxonomy]?
-//    let cuisineCategory: [Taxonomy]?
-//    let michelinStar: [Taxonomy]?
+//    Restaurant related
+    let tripadvisor: String?
+    let address: String?
+    let phone: String?
+    let zipCode: String?
+    let email: String?
+    let website: String?
+    let starChief: String?
+    let restaurantCategory: [Taxonomy]?
+    let cuisineCategory: [Taxonomy]?
+    let michelinStar: [Taxonomy]?
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -196,6 +196,17 @@ struct Product: Codable {
         case yachtExtras = "yacht_extras"
         case charterPriceLowSeasonPerDay = "charter_price_low_season_per_day"
         case charterPriceHighSeasonPerDay = "charter_price_high_season_per_day"
+        //    Restaurant related
+        case tripadvisor
+        case address
+        case phone
+        case zipCode = "zip"
+        case email
+        case website
+        case starChief = "star-chef"
+        case restaurantCategory = "restaurant_category"
+        case cuisineCategory = "cuisine_category"
+        case michelinStar = "michelin_star"
     }
 
     func getGalleryImagesURL() -> [String] {
@@ -292,6 +303,17 @@ extension Product {
             yachtExtras = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtExtras)
             charterPriceLowSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerDay)
             charterPriceHighSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerDay)
+            //    Restaurant related
+            tripadvisor = try values.decodeIfPresent(String.self, forKey: .tripadvisor)
+            address = try values.decodeIfPresent(String.self, forKey: .address)
+            phone = try values.decodeIfPresent(String.self, forKey: .phone)
+            zipCode = try values.decodeIfPresent(String.self, forKey: .zipCode)
+            email = try values.decodeIfPresent(String.self, forKey: .email)
+            website = try values.decodeIfPresent(String.self, forKey: .website)
+            starChief = try values.decodeIfPresent(String.self, forKey: .starChief)
+            restaurantCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .restaurantCategory)
+            cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)
+            michelinStar = try values.decodeIfPresent([Taxonomy].self, forKey: .michelinStar)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

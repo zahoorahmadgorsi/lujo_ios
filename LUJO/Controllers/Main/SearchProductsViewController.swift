@@ -218,7 +218,7 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = dataSource[indexPath.row]
-        let viewController = ProductDetailsViewController.instantiate(event: event)
+        let viewController = ProductDetailsViewController.instantiate(product: event)
 //        self.navigationController?.pushViewController(viewController, animated: true)
         // B2 - 6
         selectedCell = collectionView.cellForItem(at: indexPath) as? HomeSliderCell

@@ -442,7 +442,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             default: return
         }
         
-        let viewController = ProductDetailsViewController.instantiate(event: event)
+        let viewController = ProductDetailsViewController.instantiate(product: event)
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
@@ -921,7 +921,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         // B2 - 7
         selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
-        let viewController = ProductDetailsViewController.instantiate(event: product)
+        let viewController = ProductDetailsViewController.instantiate(product: product)
         
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.

@@ -40,7 +40,7 @@ class RestaurantSearchViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     
     private var currentLayout: LiftLayout?
-    private var dataSource: [Restaurant] = []
+    private var dataSource: [Product] = []
     
     @IBOutlet weak var noResultsContainerView: UIStackView!
     @IBOutlet weak var noResultsTitleLabel: UILabel!
@@ -108,8 +108,8 @@ class RestaurantSearchViewController: UIViewController {
         startChatWithInitialMessage("Hi Concierge team, I could not find any restaurants when I typed '\(keyword)'. Can you assist?")
     }
     
-    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurant) {
-        let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
+    fileprivate func presentRestaurantDetailViewController(restaurant: Product) {
+        let viewController = ProductDetailsViewController.instantiate(product: restaurant)
         present(viewController, animated: true, completion: nil)
     }
     
@@ -123,7 +123,7 @@ class RestaurantSearchViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func updateSearch(_ information: [Restaurant]?) {
+    func updateSearch(_ information: [Product]?) {
         dataSource = information ?? []
         currentLayout?.clearCache()
         collectionView.reloadData()
@@ -194,7 +194,7 @@ extension RestaurantSearchViewController: UICollectionViewDataSource, UICollecti
         
         cell.name.text = model.name
         
-        if let city = model.location.first?.city {
+        if let city = model.location?.first?.city {
             cell.locationContainerView.isHidden = false
             cell.location.text = city.name.uppercased()
         } else {
@@ -246,7 +246,7 @@ extension RestaurantSearchViewController {
         }
     }
     
-    func searchRestaurants(term: String, completion: @escaping ([Restaurant]?, Error?) -> Void) {
+    func searchRestaurants(term: String, completion: @escaping ([Product]?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -267,7 +267,7 @@ extension RestaurantSearchViewController {
     }
     
     @objc func didTappedOnHeartAt( _ sender:AnyObject) {
-        var item: Restaurant!
+        var item: Product!
         if let index = sender.view?.tag{
             item = dataSource[index]
             

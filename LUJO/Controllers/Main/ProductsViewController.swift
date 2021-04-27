@@ -264,7 +264,7 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = dataSource[indexPath.row]
-        let viewController = ProductDetailsViewController.instantiate(event: event)
+        let viewController = ProductDetailsViewController.instantiate(product: event)
         // B2 - 6
         selectedCell = collectionView.cellForItem(at: indexPath) as? HomeSliderCell
         // B2 - 7
@@ -303,7 +303,7 @@ extension ProductsViewController {
                 EEAPIManager().getEvents(token, past: past, term: term, cityId: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Home Events information")
+                        let error = BackendError.parsing(reason: "Could not obtain Events information")
                         completion([], error)
                         return
                     }
@@ -313,7 +313,7 @@ extension ProductsViewController {
                 EEAPIManager().getExperiences(token, term: term, cityId: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home experience information")
+                        let error = BackendError.parsing(reason: "Could not obtain experience information")
                         completion([], error)
                         return
                     }
@@ -323,7 +323,7 @@ extension ProductsViewController {
                 EEAPIManager().getVillas(token, term: term, cityId: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home villas information")
+                        let error = BackendError.parsing(reason: "Could not obtain villas information")
                         completion([], error)
                         return
                     }
@@ -334,7 +334,7 @@ extension ProductsViewController {
                 EEAPIManager().getGoods(token, term: term, category_term_id: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home gifts information")
+                        let error = BackendError.parsing(reason: "Could not obtain gifts information")
                         completion([], error)
                         return
                     }
@@ -344,7 +344,7 @@ extension ProductsViewController {
                 EEAPIManager().getYachts(token, term: term, cityId: cityId) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home yachts information")
+                        let error = BackendError.parsing(reason: "Could not obtain yachts information")
                         completion([], error)
                         return
                     }
@@ -355,7 +355,7 @@ extension ProductsViewController {
                 EEAPIManager().getTopRated(token, type: self.subCategoryType, term: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home top rated items information")
+                        let error = BackendError.parsing(reason: "Could not obtain top rated items information")
                         completion([], error)
                         return
                     }

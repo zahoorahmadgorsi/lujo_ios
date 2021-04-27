@@ -224,7 +224,7 @@ extension PerCityViewController: CityViewProtocol {
     }
     
     func didTappedOnProductAt(product: Product, itemIndex: Int) {
-        let viewController = ProductDetailsViewController.instantiate(event: product)
+        let viewController = ProductDetailsViewController.instantiate(product: product)
         animationtype = .featured //tapped on city view
             // B2 - 6
             //Finding UIImageView of restaurant where user has tapped so that we can animate this image
@@ -457,7 +457,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
             default: return
         }
         
-        let viewController = ProductDetailsViewController.instantiate(event: product)
+        let viewController = ProductDetailsViewController.instantiate(product: product)
 //        self.navigationController?.pushViewController(viewController, animated: true)
         // B2 - 6
         selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell

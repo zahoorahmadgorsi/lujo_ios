@@ -19,7 +19,7 @@ class RestaurantListViewController: UIViewController {
     class var identifier: String { return "RestaurantListViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(dataSource: [Restaurant] = [], city: DiningCity? = nil) -> RestaurantListViewController {
+    class func instantiate(dataSource: [Product] = [], city: DiningCity? = nil) -> RestaurantListViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantListViewController
         viewController.dataSource = dataSource
         viewController.city = city
@@ -29,7 +29,7 @@ class RestaurantListViewController: UIViewController {
     //MARK:- Globals
     
     @IBOutlet weak var collectionView: UICollectionView!
-    private var dataSource: [Restaurant]!
+    private var dataSource: [Product]!
     private var city: DiningCity?
     
     private let naHUD = JGProgressHUD(style: .dark)
@@ -63,7 +63,7 @@ class RestaurantListViewController: UIViewController {
     }
     
     fileprivate func updateContentUI() {
-        title = dataSource.count > 0 ? "\(dataSource[0].location.first?.city?.name ?? "") dining spots" : "\(city?.name ?? "") dining spots"
+        title = dataSource.count > 0 ? "\(dataSource[0].location?.first?.city?.name ?? "") dining spots" : "\(city?.name ?? "") dining spots"
     }
     
     func showError(_ error: Error) {
@@ -82,7 +82,7 @@ class RestaurantListViewController: UIViewController {
         naHUD.dismiss()
     }
     
-    func update(listOf objects: [Restaurant]) {
+    func update(listOf objects: [Product]) {
         dataSource = objects
 //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
@@ -161,7 +161,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
 
         
-        if let city = model.location.first?.city {
+        if let city = model.location?.first?.city {
             cell.locationContainerView.isHidden = false
             cell.location.text = city.name.uppercased()
         } else {
@@ -179,12 +179,12 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewController = RestaurantDetailViewController.instantiate(restaurant: dataSource[indexPath.row])
+        let viewController = ProductDetailsViewController.instantiate(product: dataSource[indexPath.row])
         present(viewController, animated: true, completion: nil)
     }
     
     @objc func didTappedOnHeartAt(_ sender:AnyObject) {
-        var item: Restaurant!
+        var item: Product!
         let index:Int = sender.view.tag
         item = dataSource[index]
         

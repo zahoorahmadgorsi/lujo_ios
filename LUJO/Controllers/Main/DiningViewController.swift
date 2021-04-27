@@ -54,7 +54,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     @IBOutlet var starsLabel: UILabel!
     @IBOutlet var chiefNameLabel: UILabel!
     
-    var locationRestaurants: [Restaurant] = []
+    var locationRestaurants: [Product] = []
     private var canSendRequest: Bool = true
     
     /// Refresh control view. Used to display network activity when user pull scroll view down
@@ -214,12 +214,12 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             // -------------------------------------------------------------------------------------
     }
     
-    func updateMyRestaurants(_ restaurants: [Restaurant]) {
+    func updateMyRestaurants(_ restaurants: [Product]) {
 //        print(restaurants)
         locationRestaurants = restaurants
         myLocationCityView.isHidden = restaurants.count == 0
         noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
-        if let termId = restaurants.first?.location.first?.city?.termId, let name = restaurants.first?.location.first?.city?.name {
+        if let termId = restaurants.first?.location?.first?.city?.termId, let name = restaurants.first?.location?.first?.city?.name {
             myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: restaurants)
             myLocationCityView.delegate = self
             updatePopularCities()
@@ -259,10 +259,10 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     func updatePopularCities() {
         for city in diningInformations?.cities ?? [] {
             if let cityView = stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
-                if city.termId == locationRestaurants.first?.location.first?.city?.termId {
+                if city.termId == locationRestaurants.first?.location?.first?.city?.termId {
                     cityView.removeFromSuperview()
                 }
-            } else if !(city.termId == locationRestaurants.first?.location.first?.city?.termId) {
+            } else if !(city.termId == locationRestaurants.first?.location?.first?.city?.termId) {
                 let cityView = DiningCityView()
                 cityView.city = city
                 cityView.delegate = self
@@ -306,8 +306,9 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         }
     }
     
-    fileprivate func presentRestaurantDetailViewController(restaurant: Restaurant , presentationStyle : UIModalPresentationStyle) {
-        let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
+    fileprivate func presentRestaurantDetailViewController(restaurant: Product , presentationStyle : UIModalPresentationStyle) {
+//        let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
+        let viewController = ProductDetailsViewController.instantiate(product: restaurant)
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
@@ -437,7 +438,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
 
 extension DiningViewController: ImageCarouselDelegate {
     func didTappedOnHeartAt(index: Int, sender: ImageCarousel) {
-        var item: Restaurant!
+        var item: Product!
         item = featured.restaurantsList[index]
         
         //setting the favourite
@@ -527,12 +528,12 @@ extension DiningViewController {
         }
     }
     
-    func didTappedOnRestaurantAt(index: Int,restaurant: Restaurant) {
+    func didTappedOnRestaurantAt(index: Int,restaurant: Product) {
         animationtype = .slider //call slider to detail animation
         // B2 - 6
         //Finding UIImageView of restaurant where user has tapped so that we can animate this image
         //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
-        if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.location.first?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
+        if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.location?.first?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
             //Finding restaurant which user has just tapped
             if let tappedRestaurant = (cityView as? DiningCityView)?.city?.restaurants.enumerated().first(where: {$0.element.id == restaurant.id}) {
                 if (tappedRestaurant.offset == 0){
@@ -551,7 +552,7 @@ extension DiningViewController {
     }
     
     
-    func didTappedOnHeartAt(index: Int, sender: Restaurant) {
+    func didTappedOnHeartAt(index: Int, sender: Product) {
 //        print("index:\(index)" + "Restaurant:\(sender.name)")
 //
         //setting the favourite
@@ -578,7 +579,7 @@ extension DiningViewController {
                                 self.diningInformations?.cities[i].restaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
                                 //finding current cityview from the stackview, to remove and then again adding updated by red/white heart
                                 if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
-                                    if let termId = sender.location.first?.city?.termId, let name = sender.location.first?.city?.name {
+                                    if let termId = sender.location?.first?.city?.termId, let name = sender.location?.first?.city?.name {
                                         (cityView as? DiningCityView)?.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: (self.diningInformations?.cities[i].restaurants)! )
                                     }
                                 }
@@ -593,7 +594,7 @@ extension DiningViewController {
                 if let itemRestaurant = self.locationRestaurants.enumerated().first(where: {$0.element.id == sender.id}) {
                     //toggling the isFavourite value
                     self.locationRestaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
-                    if let termId = sender.location.first?.city?.termId, let name = sender.location.first?.city?.name {
+                    if let termId = sender.location?.first?.city?.termId, let name = sender.location?.first?.city?.name {
                         self.myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: self.locationRestaurants)
                     }
                 }
@@ -617,7 +618,7 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
         // B2 - 16
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         guard let firstViewController = source as? DiningViewController,
-            let secondViewController = presented as? RestaurantDetailViewController,
+            let secondViewController = presented as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil
@@ -645,7 +646,7 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
 //        return nil
         // B2 - 17
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
-        guard let secondViewController = dismissed as? RestaurantDetailViewController,
+        guard let secondViewController = dismissed as? ProductDetailsViewController,
             let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
             else {
                 return nil

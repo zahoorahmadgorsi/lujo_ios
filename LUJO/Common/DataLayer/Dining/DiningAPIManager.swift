@@ -48,7 +48,7 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func search(_ token: String, term: String?, cityId: Int?, currentLocation: CLLocation?, completion: @escaping ([Restaurant]?, Error?) -> Void) {
+    func search(_ token: String, term: String?, cityId: Int?, currentLocation: CLLocation?, completion: @escaping ([Product]?, Error?) -> Void) {
         Alamofire.request(DiningRouter.search(token, term, cityId, currentLocation?.coordinate.latitude, currentLocation?.coordinate.longitude))
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -66,7 +66,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Restaurant]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
@@ -84,7 +84,7 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int, completion: @escaping ([Restaurant]?, Error?) -> Void) {
+    func geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int, completion: @escaping ([Product]?, Error?) -> Void) {
         Alamofire.request(EERouter.geopoint(token: token, type: type, latitude: latitude, longitude: longitude, radius: radius))
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -102,7 +102,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Restaurant]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
                                                                  from: response.data!)
                         else {
                             completion(nil, BackendError.parsing(reason: "Unable to parse response"))

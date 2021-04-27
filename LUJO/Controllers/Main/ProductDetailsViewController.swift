@@ -1,5 +1,5 @@
 //
-//  EventDetailsViewController.swift
+//  ProductDetailsViewController.swift
 //  LUJO
 //
 //  Created by Iker Kristian on 8/28/19.
@@ -15,7 +15,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     //MARK:- Init
     
     /// Class storyboard identifier.
-    class var identifier: String { return "EventDetailsViewController" }
+    class var identifier: String { return "ProductDetailsViewController" }
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imgBack: UIImageView!
@@ -27,9 +27,9 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     @IBOutlet weak var btnReadMore: UIButton!
     var descHeightToShowReadMore:CGFloat = 70.0
     /// Init method that will init and return view controller.
-    class func instantiate(event: Product) -> ProductDetailsViewController {
+    class func instantiate(product: Product) -> ProductDetailsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! ProductDetailsViewController
-        viewController.product = event
+        viewController.product = product
         return viewController
     }
     
@@ -43,6 +43,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     @IBOutlet var dateLocationContainerView: UIView!
     @IBOutlet var dateContainerView: UIView!
     @IBOutlet var locationContainerView: UIView!
+    @IBOutlet weak var calendarImage: UIImageView!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var descriptionTextView: UITextView!
@@ -229,12 +230,6 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
 extension ProductDetailsViewController {
     
     fileprivate func setupEvents(_ product: Product) {
-        // imagesList.imageURLList = event.allImages ?? []
-//        if let firstImageLink = event.getGalleryImagesURL().first {
-//            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-//        }else{
-//            print("Image not found")
-//        }
         if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
@@ -252,9 +247,9 @@ extension ProductDetailsViewController {
             self.imgHeart.image = UIImage(named: "heart_white")
         }
         
-        var locationText = ""
+        var locationText = product.address ?? ""  //in case of restaurant , it will have exact address
         if let cityName = product.location?.first?.city?.name {
-            locationText = "\(cityName), "
+            locationText += "\(cityName), "
         }
         locationText += product.location?.first?.country.name ?? ""
         locationLabel.text = locationText.uppercased()
@@ -280,8 +275,20 @@ extension ProductDetailsViewController {
         if product.startDate != nil {
             dateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
         }
+        //replacing date with cuisine
+        if product.type == "restaurant" {
+            var cuisineText = ""
+            for cousine in product.cuisineCategory ?? [] {
+                cuisineText = cuisineText.isEmpty ? "\(cousine.name)" : "\(cuisineText), \(cousine.name)"
+            }
+            dateLabel.text = cuisineText.uppercased()
+            if (dateLabel.text?.count ?? 0 > 0){ //change calendar icon with cuisine icon
+                calendarImage.image = UIImage(named:"Cousine Icon")
+            }
+        }
         
-        dateContainerView.isHidden = product.startDate == nil
+//        dateContainerView.isHidden = product.startDate == nil
+        dateContainerView.isHidden = ((dateLabel.text?.isEmpty) == nil)
         dateLocationContainerView.isHidden = product.startDate == nil && locationText.isEmpty
         //hiding yacht length, passenger and cabins views
         viewYachtLength.isHidden = true
@@ -295,6 +302,8 @@ extension ProductDetailsViewController {
         requestButton.isEnabled = !isEventPast
         if product.type == "special-event" {
             requestButton.setTitle("R E Q U E S T", for: .normal)
+        }else if product.type == "restaurant" {
+            requestButton.setTitle("REQUEST A RESERVATION", for: .normal)
         }
         
         if isEventPast {
@@ -767,6 +776,9 @@ extension ProductDetailsViewController {
             self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
         }else if (product.type == "villa"){
             self.present(VillaViewController.instantiate(product: product), animated: true, completion: nil)
+        }else if(product.type == "restaurant"){
+            let viewController = RestaurantRequestReservationViewController.instantiate(restaurant: product)
+            present(viewController, animated: true, completion: nil)
         }
         else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }

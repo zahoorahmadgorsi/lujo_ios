@@ -142,11 +142,11 @@ enum EERouter: URLRequestConvertible {
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
             case let .goods(token, term, category_term_id):
-                if (term?.count ?? 0 > 0){
+                if (category_term_id ?? 0 > 0){ //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
+                    newURLComponents.path.append("/gifts/per-category")
+                }else{
                     newURLComponents.path.append("/gifts")        //its response format is [Product]
                     newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-                }else{  //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
-                    newURLComponents.path.append("/gifts/per-category")
                 }
             
                 newURLComponents.queryItems = [

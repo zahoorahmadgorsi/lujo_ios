@@ -20,13 +20,13 @@ final class DiningFeaturedAnimator: NSObject, UIViewControllerAnimatedTransition
 
     private let type: PresentationType
     private let firstViewController: DiningViewController
-    private let secondViewController: RestaurantDetailViewController
+    private let secondViewController: ProductDetailsViewController
     private var selectedCellImageViewSnapshot: UIView
     private let cellImageViewRect: CGRect
     private let cellImgHeartRect: CGRect
     
 //  Important note: if something “goes wrong”, for example, you can’t prepare all the needed properties (basically the init fails), make sure to return nil. This way the app will use default present/dismiss animation and the user won’t be stuck somewhere in the middle of the transition.
-    init?(type: PresentationType, firstViewController: DiningViewController, secondViewController: RestaurantDetailViewController, selectedCellImageViewSnapshot: UIView) {
+    init?(type: PresentationType, firstViewController: DiningViewController, secondViewController: ProductDetailsViewController, selectedCellImageViewSnapshot: UIView) {
 
         self.type = type
         self.firstViewController = firstViewController
@@ -72,7 +72,7 @@ final class DiningFeaturedAnimator: NSObject, UIViewControllerAnimatedTransition
             let cellImageSnapshot = selectedCell.primaryImage.snapshotView(afterScreenUpdates: true),
             let controllerImageSnapshot = secondViewController.mainImageView.snapshotView(afterScreenUpdates: true)
             ,let cellImgHeartSnapshot = selectedCell.imgHeart.snapshotView(afterScreenUpdates: true)
-            ,let closeButtonSnapshot = secondViewController.btnBack.snapshotView(afterScreenUpdates: true)
+            ,let closeButtonSnapshot = secondViewController.imgBack.snapshotView(afterScreenUpdates: true)
             else {
                 transitionContext.completeTransition(true)
                 return
@@ -98,7 +98,7 @@ final class DiningFeaturedAnimator: NSObject, UIViewControllerAnimatedTransition
         [backgroundView, selectedCellImageViewSnapshot, controllerImageSnapshot, cellImgHeartSnapshot, closeButtonSnapshot].forEach { containerView.addSubview($0) }
         let controllerImageViewRect = secondViewController.mainImageView.convert(secondViewController.mainImageView.bounds, to: window)
         let controllerImgHeartRect = secondViewController.imgHeart.convert(secondViewController.imgHeart.bounds, to: window)
-        let closeButtonRect = secondViewController.btnBack.convert(secondViewController.btnBack.bounds, to: window)
+        let closeButtonRect = secondViewController.imgBack.convert(secondViewController.imgBack.bounds, to: window)
         // B4 - 35
         [selectedCellImageViewSnapshot, controllerImageSnapshot].forEach {
             $0.frame = isPresenting ? cellImageViewRect : controllerImageViewRect

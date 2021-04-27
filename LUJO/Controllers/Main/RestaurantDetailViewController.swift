@@ -20,9 +20,9 @@ class RestaurantDetailViewController: UIViewController {
     class var identifier: String { return "RestaurantDetailViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(restaurant: Restaurant) -> RestaurantDetailViewController {
-        let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantDetailViewController
-        viewController.restaurant = restaurant
+    class func instantiate(restaurant: Product) -> ProductDetailsViewController {
+        let viewController = UIStoryboard.main.instantiate(identifier) as! ProductDetailsViewController
+//        viewController.restaurant = restaurant
         return viewController
     }
     
@@ -45,7 +45,7 @@ class RestaurantDetailViewController: UIViewController {
     private let naHUD = JGProgressHUD(style: .dark)
     
     @IBOutlet weak var btnBack: UIButton!
-    var restaurant: Restaurant!
+    var restaurant: Product!
     
     //dismissin on swiping down
     var panGestureRecognizer: UIPanGestureRecognizer?
@@ -79,8 +79,9 @@ class RestaurantDetailViewController: UIViewController {
     }
     
     @IBAction func viewGalleryButton_onClick(_ sender: Any) {
-        if !restaurant.getAllImagesURL().isEmpty {
-            let viewController = GalleryViewControllerNEW.instantiate(dataSource: restaurant.getAllImagesURL())
+        //if !restaurant.getAllImagesURL().isEmpty {
+        if !restaurant.getGalleryImagesURL().isEmpty {
+            let viewController = GalleryViewControllerNEW.instantiate(dataSource: restaurant.getGalleryImagesURL())
             present(viewController, animated: true, completion: nil)
         } else {
             showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
@@ -103,7 +104,7 @@ class RestaurantDetailViewController: UIViewController {
         if UIApplication.shared.canOpenURL(URL(string: "comgooglemaps://")!) {
             
             // Open google maps with provided place.
-            let address = restaurant.address.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+            let address = restaurant.address?.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
             UIApplication.shared.open(URL(string: "comgooglemaps://?q=\(address)&center=\(latitudeString),\(longitudeString)&zoom=14")!,
                                       options: [:],
                                       completionHandler: nil)
@@ -111,7 +112,7 @@ class RestaurantDetailViewController: UIViewController {
         } else if UIApplication.shared.canOpenURL(URL(string: "googlechromes://")!) {
             
             // Open google chrome and search google maps with provided place.
-            let address = restaurant.address.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+            let address = restaurant.address?.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
             UIApplication.shared.open(URL(string: "googlechromes://www.google.com/maps?q=\(address)&center=\(latitudeString),\(longitudeString)&zoom=14")!,
                                       options: [:],
                                       completionHandler: nil)
@@ -138,7 +139,7 @@ class RestaurantDetailViewController: UIViewController {
         present(viewController, animated: true, completion: nil)
     }
     
-    fileprivate func setupRestaurant(_ restaurant: Restaurant) {
+    fileprivate func setupRestaurant(_ restaurant: Product) {
         
         iPhoneAspectRatioConstraint.isActive = UIDevice.current.userInterfaceIdiom == .phone
         
@@ -146,7 +147,9 @@ class RestaurantDetailViewController: UIViewController {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         
-        if let firstImageLink = restaurant.getAllImagesURL().first {
+        //if let firstImageLink = restaurant.getAllImagesURL().first {
+        
+        if let firstImageLink = restaurant.getGalleryImagesURL().first {
             firstGalleryImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }
         nameLabel.text = restaurant.name
@@ -165,7 +168,7 @@ class RestaurantDetailViewController: UIViewController {
         chiefName.text = restaurant.starChief?.uppercased()
         
         var locationString = restaurant.address
-        if let locaton = restaurant.location.first {
+        if let locaton = restaurant.location?.first {
             if let city = locaton.city {
                 locationString = "\(locationString), \(city.name)"
             }

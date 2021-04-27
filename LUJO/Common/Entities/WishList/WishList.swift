@@ -37,7 +37,7 @@ struct WishListObjects: Codable {
     var events: [Product]?
     var experiences: [Product]?
     var specialEvents: [Product]?
-    var restaurants: [Restaurant]?
+    var restaurants: [Product]?
     var hotels: [Hotel]?
     var villas: [Product]?
     var gifts: [Product]?
@@ -61,7 +61,7 @@ extension WishListObjects {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-            restaurants = try values.decodeIfPresent([Restaurant].self, forKey: .restaurants)
+            restaurants = try values.decodeIfPresent([Product].self, forKey: .restaurants)
             events = try values.decodeIfPresent([Product].self, forKey: .events)
             specialEvents = try values.decodeIfPresent([Product].self, forKey: .specialEvents)
             experiences = try values.decodeIfPresent([Product].self, forKey: .experiences)
@@ -77,12 +77,12 @@ extension WishListObjects {
 }
 
 struct wishListRestaurants: Codable {
-    let restaurant: Restaurant?
+    let restaurant: Product?
 
     init(from decoder: Decoder) throws {
         do {
             var container = try decoder.unkeyedContainer()  // having no key
-            self.restaurant = try container.decodeIfPresent(Restaurant.self)
+            self.restaurant = try container.decodeIfPresent(Product.self)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

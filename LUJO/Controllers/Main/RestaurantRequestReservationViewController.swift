@@ -18,7 +18,7 @@ class RestaurantRequestReservationViewController: UIViewController {
     class var identifier: String { return "RestaurantRequestReservationViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(restaurant: Restaurant) -> RestaurantRequestReservationViewController {
+    class func instantiate(restaurant: Product) -> RestaurantRequestReservationViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantRequestReservationViewController
         viewController.restaurant = restaurant
         return viewController
@@ -30,7 +30,7 @@ class RestaurantRequestReservationViewController: UIViewController {
     @IBOutlet var datePicker: UIDatePicker!
     @IBOutlet var contentViewBottomConstraint: NSLayoutConstraint!
     
-    private(set) var restaurant: Restaurant!
+    private(set) var restaurant: Product!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +108,7 @@ class RestaurantRequestReservationViewController: UIViewController {
             let initialMessage = """
             Hi Concierge team,
             
-            I would like to book a table for \(peopleNumber.text!) \(Int(peopleNumber.text!) ?? 1 > 1 ? "people" : "person"), at \(restaurant.name), \(restaurant.location.first?.city?.name ?? "No city") on \(dateFormatter.string(from: datePicker.date)).
+            I would like to book a table for \(peopleNumber.text!) \(Int(peopleNumber.text!) ?? 1 > 1 ? "people" : "person"), at \(restaurant.name), \(restaurant.location?.first?.city?.name ?? "No city") on \(dateFormatter.string(from: datePicker.date)).
             
             \(userFirstName)
             """
