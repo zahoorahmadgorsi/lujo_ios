@@ -5091,6 +5091,7 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="KOF-1N-HnX" firstAttribute="leading" secondItem="APR-he-KcB" secondAttribute="leading" id="F5b-er-F0j"/>
                                                                     <constraint firstItem="07b-ds-HRo" firstAttribute="centerY" secondItem="APR-he-KcB" secondAttribute="centerY" id="HZD-Xu-Kv1"/>
                                                                     <constraint firstItem="KOF-1N-HnX" firstAttribute="centerY" secondItem="APR-he-KcB" secondAttribute="centerY" id="NKF-wG-M4m"/>
                                                                     <constraint firstAttribute="trailing" secondItem="07b-ds-HRo" secondAttribute="trailing" constant="6" id="Syg-Q1-xa2"/>
@@ -5121,6 +5122,7 @@
                                                                     <constraint firstAttribute="trailing" secondItem="r5j-4O-N8J" secondAttribute="trailing" constant="6" id="ZCF-1b-zwg"/>
                                                                     <constraint firstItem="Sfp-d3-AJ6" firstAttribute="centerY" secondItem="OLQ-mE-3vd" secondAttribute="centerY" id="ZR2-kA-zJU"/>
                                                                     <constraint firstAttribute="width" constant="50" id="czE-HS-Yaw"/>
+                                                                    <constraint firstItem="Sfp-d3-AJ6" firstAttribute="leading" secondItem="OLQ-mE-3vd" secondAttribute="leading" id="mB6-gF-EJa"/>
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cBg-tJ-qLK">
@@ -5141,6 +5143,7 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="TPn-jW-6xx" firstAttribute="leading" secondItem="cBg-tJ-qLK" secondAttribute="leading" id="32W-hM-dBf"/>
                                                                     <constraint firstItem="VqK-S9-V0t" firstAttribute="leading" secondItem="TPn-jW-6xx" secondAttribute="trailing" constant="7.5" id="Kql-Pr-zaU"/>
                                                                     <constraint firstItem="VqK-S9-V0t" firstAttribute="centerY" secondItem="cBg-tJ-qLK" secondAttribute="centerY" id="ZjL-OC-qhR"/>
                                                                     <constraint firstItem="TPn-jW-6xx" firstAttribute="centerY" secondItem="cBg-tJ-qLK" secondAttribute="centerY" id="h50-ZU-GvM"/>
@@ -5152,14 +5155,14 @@
                                                                 <rect key="frame" x="242" y="0.0" width="97" height="35"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar_home" translatesAutoresizingMaskIntoConstraints="NO" id="Zpo-tP-FgD">
-                                                                        <rect key="frame" x="0.0" y="9.5" width="21" height="16"/>
+                                                                        <rect key="frame" x="0.0" y="9.5" width="16" height="16"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="21" id="loF-yb-3yZ"/>
+                                                                            <constraint firstAttribute="width" constant="16" id="loF-yb-3yZ"/>
                                                                             <constraint firstAttribute="height" constant="16" id="nHy-QQ-aZR"/>
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18th April - 23rd May" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Pr-w0-LV7">
-                                                                        <rect key="frame" x="28" y="10" width="52" height="14.5"/>
+                                                                        <rect key="frame" x="22" y="10" width="75" height="14.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
@@ -5168,11 +5171,11 @@
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstItem="Zpo-tP-FgD" firstAttribute="centerY" secondItem="nAB-sr-GSp" secondAttribute="centerY" id="2U6-kd-3Bl"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="8Pr-w0-LV7" secondAttribute="trailing" id="BCG-V1-5rw"/>
                                                                     <constraint firstItem="Zpo-tP-FgD" firstAttribute="leading" secondItem="nAB-sr-GSp" secondAttribute="leading" id="H98-pG-a1O"/>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="ZsL-ss-Ux8"/>
                                                                     <constraint firstItem="8Pr-w0-LV7" firstAttribute="centerY" secondItem="nAB-sr-GSp" secondAttribute="centerY" id="ltA-hu-eJP"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="8Pr-w0-LV7" secondAttribute="trailing" constant="17" id="n7J-ck-9QM"/>
-                                                                    <constraint firstItem="8Pr-w0-LV7" firstAttribute="leading" secondItem="Zpo-tP-FgD" secondAttribute="trailing" constant="7" id="ni0-pP-15J"/>
+                                                                    <constraint firstItem="8Pr-w0-LV7" firstAttribute="leading" secondItem="Zpo-tP-FgD" secondAttribute="trailing" constant="6" id="ni0-pP-15J"/>
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="my2-PS-m6T">
@@ -7718,7 +7721,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

@@ -131,9 +131,6 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="biu-CZ-GQ0"/>
-                                    </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1Dh-Pn-DjF">
                                     <rect key="frame" x="0.0" y="150" width="183" height="20"/>
@@ -215,9 +212,6 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="JP1-wl-e3p"/>
-                                    </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1hC-65-5jl">
                                     <rect key="frame" x="0.0" y="150" width="183" height="20"/>
