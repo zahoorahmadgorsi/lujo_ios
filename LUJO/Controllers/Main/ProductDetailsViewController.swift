@@ -40,9 +40,8 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     @IBOutlet weak var ViewMainImage: UIView!
     @IBOutlet var mainImageView: UIImageView!
     @IBOutlet var name: UILabel!
-    @IBOutlet var dateLocationContainerView: UIView!
-    @IBOutlet var dateContainerView: UIView!
     @IBOutlet var locationContainerView: UIView!
+    @IBOutlet var dateContainerView: UIView!
     @IBOutlet weak var calendarImage: UIImageView!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
@@ -287,9 +286,8 @@ extension ProductDetailsViewController {
             }
         }
         
-//        dateContainerView.isHidden = product.startDate == nil
         dateContainerView.isHidden = ((dateLabel.text?.isEmpty) == nil)
-        dateLocationContainerView.isHidden = product.startDate == nil && locationText.isEmpty
+        locationContainerView.isHidden = locationText.isEmpty
         //hiding yacht length, passenger and cabins views
         viewYachtLength.isHidden = true
         viewYachtPassengers.isHidden = true
