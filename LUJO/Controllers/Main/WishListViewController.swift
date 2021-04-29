@@ -9,14 +9,14 @@
 import UIKit
 import JGProgressHUD
 
-class WishListViewController1: UIViewController, WishListViewProtocol{
+class WishListViewController: UIViewController, WishListViewProtocol{
     /// Class storyboard identifier.
     class var identifier: String { return "WishListViewController" }
     
     @IBOutlet weak var stackView: UIStackView!
     
     /// Init method that will init and return view controller.
-    class func instantiate() -> WishListViewController1 {
+    class func instantiate() -> WishListViewController {
         return UIStoryboard.main.instantiate(identifier)
     }
     //MARK:- Globals
@@ -635,7 +635,7 @@ class WishListViewController1: UIViewController, WishListViewProtocol{
 }
 
 // B1 - 1
-extension WishListViewController1: UIViewControllerTransitioningDelegate {
+extension WishListViewController: UIViewControllerTransitioningDelegate {
 
     // B1 - 2
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -643,7 +643,7 @@ extension WishListViewController1: UIViewControllerTransitioningDelegate {
         // B2 - 16
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         if (presented is ProductDetailsViewController){
-            guard let firstViewController = source as? WishListViewController1,
+            guard let firstViewController = source as? WishListViewController,
                 let secondViewController = presented as? ProductDetailsViewController,
                 let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
                 else {
@@ -653,7 +653,7 @@ extension WishListViewController1: UIViewControllerTransitioningDelegate {
             return wishListAnimator
         }
         else if (presented is ProductDetailsViewController){
-            guard let firstViewController = source as? WishListViewController1,
+            guard let firstViewController = source as? WishListViewController,
                 let secondViewController = presented as? ProductDetailsViewController,
                 let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
                 else {
