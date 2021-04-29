@@ -9,14 +9,14 @@
 import UIKit
 import JGProgressHUD
 
-class WishListViewController: UIViewController, WishListViewProtocol{
+class WishListViewController1: UIViewController, WishListViewProtocol{
     /// Class storyboard identifier.
     class var identifier: String { return "WishListViewController" }
     
     @IBOutlet weak var stackView: UIStackView!
     
     /// Init method that will init and return view controller.
-    class func instantiate() -> WishListViewController {
+    class func instantiate() -> WishListViewController1 {
         return UIStoryboard.main.instantiate(identifier)
     }
     //MARK:- Globals
@@ -425,7 +425,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         switch itemType {
             case .event:
                 if let event = wishListInformations?.events?[indexPath.row]{
-                    let viewController = ProductDetailsViewController.instantiate(event: event)
+                    let viewController = ProductDetailsViewController.instantiate(product: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -438,7 +438,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 }
             case .experience:
                 if let event = wishListInformations?.experiences?[indexPath.row]{
-                    let viewController = ProductDetailsViewController.instantiate(event: event)
+                    let viewController = ProductDetailsViewController.instantiate(product: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -451,7 +451,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 }
             case .specialEvent:
                 if let event = wishListInformations?.specialEvents?[indexPath.row]{
-                    let viewController = ProductDetailsViewController.instantiate(event: event)
+                    let viewController = ProductDetailsViewController.instantiate(product: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -464,7 +464,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 }
             case .restaurant:
                 if let item = wishListInformations?.restaurants?[indexPath.row]{
-                    let viewController = RestaurantDetailViewController.instantiate(restaurant: item)
+                    let viewController = ProductDetailsViewController.instantiate(product: item)
     //                self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -477,7 +477,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 }
             case .villa:
                 if let event = wishListInformations?.villas?[indexPath.row]{
-                    let viewController = ProductDetailsViewController.instantiate(event: event)
+                    let viewController = ProductDetailsViewController.instantiate(product: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -490,7 +490,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 }
             case .yacht:
                 if let event = wishListInformations?.yachts?[indexPath.row]{
-                    let viewController = ProductDetailsViewController.instantiate(event: event)
+                    let viewController = ProductDetailsViewController.instantiate(product: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -503,7 +503,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 }
             case .gift:
                 if let event = wishListInformations?.gifts?[indexPath.row]{
-                    let viewController = ProductDetailsViewController.instantiate(event: event)
+                    let viewController = ProductDetailsViewController.instantiate(product: event)
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -635,7 +635,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
 }
 
 // B1 - 1
-extension WishListViewController: UIViewControllerTransitioningDelegate {
+extension WishListViewController1: UIViewControllerTransitioningDelegate {
 
     // B1 - 2
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -643,7 +643,7 @@ extension WishListViewController: UIViewControllerTransitioningDelegate {
         // B2 - 16
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         if (presented is ProductDetailsViewController){
-            guard let firstViewController = source as? WishListViewController,
+            guard let firstViewController = source as? WishListViewController1,
                 let secondViewController = presented as? ProductDetailsViewController,
                 let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
                 else {
@@ -652,9 +652,9 @@ extension WishListViewController: UIViewControllerTransitioningDelegate {
             wishListAnimator = WishListSliderAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return wishListAnimator
         }
-        else if (presented is RestaurantDetailViewController){
-            guard let firstViewController = source as? WishListViewController,
-                let secondViewController = presented as? RestaurantDetailViewController,
+        else if (presented is ProductDetailsViewController){
+            guard let firstViewController = source as? WishListViewController1,
+                let secondViewController = presented as? ProductDetailsViewController,
                 let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
                 else {
                     return nil
@@ -681,8 +681,8 @@ extension WishListViewController: UIViewControllerTransitioningDelegate {
                 wishListAnimator = WishListSliderAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
                 return wishListAnimator
         }
-        else if (dismissed is RestaurantDetailViewController){
-            guard let secondViewController = dismissed as? RestaurantDetailViewController,
+        else if (dismissed is ProductDetailsViewController){
+            guard let secondViewController = dismissed as? ProductDetailsViewController,
                 let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
                 else {
                     return nil

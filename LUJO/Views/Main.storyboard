@@ -138,7 +138,7 @@
         <!--Wishlist-->
         <scene sceneID="OKs-3t-Wue">
             <objects>
-                <viewController storyboardIdentifier="WishListViewController" id="gai-EP-fT3" customClass="WishListViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WishListViewController" id="gai-EP-fT3" customClass="WishListViewController1" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qKz-bb-43x">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
