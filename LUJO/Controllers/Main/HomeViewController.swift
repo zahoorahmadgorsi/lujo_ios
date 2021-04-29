@@ -65,6 +65,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBOutlet weak var locationEventContainerView: UIView!
     @IBOutlet weak var locationEventTitleLabel: UILabel!
     @IBOutlet weak var locationEventSlider: HomeSlider!
+    //See all buttons for all products
+    @IBOutlet weak var locationEventViewSeeAll: UIView!
+    @IBOutlet weak var topRatedViewSeeAll: UIView!
+    @IBOutlet weak var giftViewSeeAll: UIView!
+    @IBOutlet weak var villaViewSeeAll: UIView!
+    @IBOutlet weak var eventViewSeeAll: UIView!
+    @IBOutlet weak var yachtViewSeeAll: UIView!
+    @IBOutlet weak var experienceViewSeeAll: UIView!
     
     @IBOutlet var homeRecentSlider: HomeSlider!
     @IBOutlet var homeTopRatedSlider: HomeSlider!
@@ -158,6 +166,35 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
         noNearbyEventsContainerView.isHidden = true
+        
+        //tap gesture on location based event's see all
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(btnLocationEventsSeeAllTapped))
+        locationEventViewSeeAll.isUserInteractionEnabled = true
+        locationEventViewSeeAll.addGestureRecognizer(tapGesture)
+        //tap gesture on toprated's see all
+        let tgTopRated = UITapGestureRecognizer(target: self, action: #selector(btnTopRatedSeeAllTapped))
+        topRatedViewSeeAll.isUserInteractionEnabled = true
+        topRatedViewSeeAll.addGestureRecognizer(tgTopRated)
+        //tap gesture on gift's see all
+        let tgGift = UITapGestureRecognizer(target: self, action: #selector(btnGiftSeeAllTapped))
+        giftViewSeeAll.isUserInteractionEnabled = true
+        giftViewSeeAll.addGestureRecognizer(tgGift)
+        //tap gesture on Villa's see all
+        let tgVilla = UITapGestureRecognizer(target: self, action: #selector(btnVillaSeeAllTapped))
+        villaViewSeeAll.isUserInteractionEnabled = true
+        villaViewSeeAll.addGestureRecognizer(tgVilla)
+        //tap gesture on event's see all
+        let tgEvent = UITapGestureRecognizer(target: self, action: #selector(btnEventSeeAllTapped))
+        eventViewSeeAll.isUserInteractionEnabled = true
+        eventViewSeeAll.addGestureRecognizer(tgEvent)
+        //tap gesture on yacht's see all
+        let tgYacht = UITapGestureRecognizer(target: self, action: #selector(btnYachtSeeAllTapped))
+        yachtViewSeeAll.isUserInteractionEnabled = true
+        yachtViewSeeAll.addGestureRecognizer(tgYacht)
+        //tap gesture on Expereience's see all
+        let tgExperience = UITapGestureRecognizer(target: self, action: #selector(btnExperienceSeeAllTapped))
+        experienceViewSeeAll.isUserInteractionEnabled = true
+        experienceViewSeeAll.addGestureRecognizer(tgExperience)
         
         // -------------------------------------------------------------------------------------
         // Check is there preload data stored for instant use, or we need to fetch data from the
@@ -375,38 +412,37 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
     }
     
-    @IBAction func seeAllLocationEventsButton_onClick(_ sender: Any) {
+    @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .event, dataSource: locationEvents)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func seeAllEventsButton_onClick(_ sender: UIButton) {
-        let viewController = ProductsViewController.instantiate(category: .event)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    
-    @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
+    @objc func btnTopRatedSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .topRated)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func seeAllGiftsButton_onClick(_ sender: UIButton) {
+    @objc func btnGiftSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func seeAllVillasButton_onClick(_ sender: UIButton) {
+    @objc func btnVillaSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .villa)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func seeAllYachtsButton_onClick(_ sender: UIButton) {
+    @objc func btnEventSeeAllTapped(_ sender: Any) {
+        let viewController = ProductsViewController.instantiate(category: .event)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc func btnYachtSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .yacht)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @IBAction func seeAllExperiencesButton_onClick(_ sender: UIButton) {
+    @objc func btnExperienceSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .experience)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
@@ -953,10 +989,10 @@ extension HomeViewController {
                 return
             }
             
-            //37.939998626709
-            //23.639999389648
+            //25.2048   //dubai lat
+            //55.2708   //dubai long
 //            print(token)
-            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
+//            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
             EEAPIManager().geopoint(token: token, type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
                 self.canSendRequest = true
                 

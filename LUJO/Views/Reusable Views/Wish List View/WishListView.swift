@@ -55,6 +55,7 @@ class WishListView: UIView {
     var itemType:FavouriteType = .event //default
     weak var delegate: WishListViewProtocol?
     var timer = Timer()
+    @IBOutlet weak var viewSeeAll: UIView!
     
     var itemsList: [Favourite] = [] {
         didSet {
@@ -81,12 +82,11 @@ class WishListView: UIView {
         self.addSubview(view)
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
-//        //to make animation random
-//        let randomNumber:TimeInterval = TimeInterval(Int(arc4random_uniform(3)))
-//        //It’ll return a random number between 0 and this upper bound, minus 1.
-//        DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber ) {
-//            self.startPauseAnimation()
-//        }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(btnSeeAllTapped))
+        viewSeeAll.isUserInteractionEnabled = true
+        viewSeeAll.addGestureRecognizer(tapGesture)
+    
     }
     
     private func applyConstraints() {
@@ -107,7 +107,7 @@ class WishListView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
 
-    @IBAction func btnSeeAllTapped(_ sender: Any) {
+    @objc func btnSeeAllTapped(_ sender: Any) {
 //        if let itemType = itemType{
             delegate?.didTappedOnSeeAll(itemType: itemType)
 //        }

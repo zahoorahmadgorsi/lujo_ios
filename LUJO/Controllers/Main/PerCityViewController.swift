@@ -29,7 +29,7 @@ class PerCityViewController: UIViewController {
     }
     
     //MARK:- Globals
-    
+    @IBOutlet weak var viewSeeAll: UIView!
     private(set) var category: ProductCategory!
     private var city: DiningCity?
     
@@ -74,6 +74,11 @@ class PerCityViewController: UIViewController {
         navigationItem.backBarButtonItem?.title = ""
         homeTopRatedSlider.delegate = self
         updateContentUI()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(btnSeeAllTapped))
+        viewSeeAll.isUserInteractionEnabled = true
+        viewSeeAll.addGestureRecognizer(tapGesture)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -195,7 +200,8 @@ class PerCityViewController: UIViewController {
         }
     }
     
-    @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
+//    @IBAction func seeAllTopRatedButton_onClick(_ sender: UIButton) {
+    @objc func btnSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .topRated, subCategory: self.category)
         self.navigationController?.pushViewController(viewController, animated: true)
     }

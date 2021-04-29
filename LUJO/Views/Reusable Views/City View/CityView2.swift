@@ -19,7 +19,7 @@ class CityView2: UIView {
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var cityNameLabel: UILabel!
-    @IBOutlet weak var btnSeeAll: UIButton!
+    @IBOutlet weak var viewSeeAll: UIView!
     
     @IBOutlet weak var product1ContainerView: UIStackView!
     @IBOutlet weak var product1ImageContainer: UIView!
@@ -65,6 +65,10 @@ class CityView2: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(btnSeeAllTapped))
+        viewSeeAll.isUserInteractionEnabled = true
+        viewSeeAll.addGestureRecognizer(tapGesture)
+        
         //Adding tap gesture on whole product1 view
         let tgrOnProduct1 = UITapGestureRecognizer(target: self, action: #selector(CityView2.tappedOnProduct(_:)))
         product1ContainerView.addGestureRecognizer(tgrOnProduct1)
@@ -237,7 +241,7 @@ class CityView2: UIView {
         }
     }
     
-    @IBAction func seeAllButton_onClick(_ sender: Any) {
+    @objc func btnSeeAllTapped(_ sender: Any) {
         if let city = city {
             delegate?.seeAllProductsForCity(city: city)
         }

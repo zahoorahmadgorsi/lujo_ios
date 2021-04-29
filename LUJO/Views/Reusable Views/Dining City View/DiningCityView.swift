@@ -19,6 +19,7 @@ class DiningCityView: UIView {
     @IBOutlet var contentView: UIView!
     
     @IBOutlet weak var cityNameLabel: UILabel!
+    @IBOutlet weak var viewSeeAll: UIView!
     
     @IBOutlet weak var restaurant1ContainerView: UIView!
     @IBOutlet weak var restaurant1ImageView: UIImageView!
@@ -64,6 +65,11 @@ class DiningCityView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         //zahoor
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(btnSeeAllTapped))
+        viewSeeAll.isUserInteractionEnabled = true
+        viewSeeAll.addGestureRecognizer(tapGesture)
+        
         //Adding tap gesture on whole restaurant view
         let tgrOnRestaurant1 = UITapGestureRecognizer(target: self, action: #selector(DiningCityView.tappedOnRestaurant(_:)))
         restaurant1ContainerView.addGestureRecognizer(tgrOnRestaurant1)
@@ -117,7 +123,7 @@ class DiningCityView: UIView {
         }
     }
     
-    @IBAction func seeAllButton_onClick(_ sender: Any) {
+    @objc func btnSeeAllTapped(_ sender: Any) {
         if let city = city {
             delegate?.seeAllRestaurantsForCity(city: city, view: self)
         }

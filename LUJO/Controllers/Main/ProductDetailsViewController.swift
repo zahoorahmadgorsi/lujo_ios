@@ -282,7 +282,7 @@ extension ProductDetailsViewController {
             }
             dateLabel.text = cuisineText.uppercased()
             if (dateLabel.text?.count ?? 0 > 0){ //change calendar icon with cuisine icon
-                calendarImage.image = UIImage(named:"Cousine Icon")
+                calendarImage.image = UIImage(named:"Cuisine Icon Orange")
             }
         }
         
