@@ -126,6 +126,7 @@
                 <constraint firstAttribute="trailing" secondItem="c20-60-aHq" secondAttribute="trailing" constant="16" id="WJd-Z2-8PG"/>
                 <constraint firstItem="c20-60-aHq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="WZA-p4-iLA"/>
                 <constraint firstAttribute="trailing" secondItem="C1z-Bo-ylc" secondAttribute="trailing" constant="16" id="ZYU-TU-RYw"/>
+                <constraint firstAttribute="bottom" secondItem="C1z-Bo-ylc" secondAttribute="bottom" id="buk-8l-8XM"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

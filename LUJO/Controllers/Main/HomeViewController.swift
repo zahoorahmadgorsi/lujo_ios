@@ -989,9 +989,7 @@ extension HomeViewController {
                 return
             }
             
-            //25.2048   //dubai lat
-            //55.2708   //dubai long
-//            print(token)
+            //25.2048,55.2708   //dubai lat, long
 //            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
             EEAPIManager().geopoint(token: token, type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
                 self.canSendRequest = true

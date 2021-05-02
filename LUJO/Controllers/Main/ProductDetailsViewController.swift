@@ -115,18 +115,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         if let font = descriptionTextView.font{
             let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
 //            print(currentHeight,descHeightToShowReadMore)
-//            if (product.type == "villa" || product.type == "yacht"){
                 if (currentHeight > descHeightToShowReadMore){
                     viewReadMore.isHidden = false
                     lblDescriptionHeight.constant = descHeightToShowReadMore
                 }else{
-                    viewReadMore.isHidden = true
+                    viewReadMore.isHidden = true  //no need to show readmore button
                     lblDescriptionHeight.constant = currentHeight
                 }
-//            }else{
-//                lblDescriptionHeight.constant = currentHeight
-//                viewReadMore.isHidden = true
-//            }
         }
         
         
@@ -310,11 +305,6 @@ extension ProductDetailsViewController {
     }
     
     fileprivate func setupExperience(_ product: Product) {
-//        if let firstImageLink = experience.getGalleryImagesURL().first {
-//            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-//        } else if let primaryImageLink = experience.primaryMedia?.mediaUrl{
-//            mainImageView.downloadImageFrom(link: primaryImageLink, contentMode: .scaleAspectFill)
-//        }
         if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
@@ -735,7 +725,7 @@ extension ProductDetailsViewController {
         galleryView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
         galleryView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
         //top isnt required as in stack view it doesnt matter
-        //wishListView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 100).isActive = true
+//        galleryView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 0).isActive = true
         galleryView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         let totalHeight = 206
         galleryView.heightAnchor.constraint(equalToConstant: CGFloat(totalHeight)).isActive = true
@@ -897,38 +887,52 @@ extension ProductDetailsViewController {
         let minimumVelocityToHide: CGFloat = 1500
         let minimumScreenRatioToHide: CGFloat = 0.25
         let animationDuration: TimeInterval = 0.2
+        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         
-        func slideViewVerticallyTo(_ y: CGFloat) {
-            self.view.frame.origin = CGPoint(x: 0, y: y)
+        func slideViewTo(_ x: CGFloat ,_ y: CGFloat) {
+//            UIView.animate(withDuration: 0.2, animations: {
+                self.view.frame.origin = CGPoint(x: x, y: y)
+//            self.view.frame.origin = CGPoint(x: 0, y: y)
+//            })
         }
         
         switch panGesture.state {
-            case .began, .changed:
+            //case .began, .changed:
+            case .changed:
                 // If pan started or is ongoing then slide the view to follow the finger
                 let translation = panGesture.translation(in: view)
-                let y = max(0, translation.y)
-                slideViewVerticallyTo(y)
+                let x = max(0, translation.x)
+//                print(statusBarHeight, translation.y)
+//                let y = max(0, translation.y+statusBarHeight)               //very quick jerk in the start
+//                let y = max(statusBarHeight, translation.y)             // frame doesnt move untill >47
+                let y = max(0, translation.y)                           //it works only if ui is full screen
+//                print(y)
+                slideViewTo(x,y)
+
+                
             case .ended:
                 // If pan ended, decide it we should close or reset the view based on the final position and the speed of the gesture
                 let translation = panGesture.translation(in: view)
                 let velocity = panGesture.velocity(in: view)
-                let closing = (translation.y > self.view.frame.size.height * minimumScreenRatioToHide) ||
-                              (velocity.y > minimumVelocityToHide)
+                let closing = (translation.y > self.view.frame.size.height * minimumScreenRatioToHide)  //checking on y position
+                                || (velocity.y > minimumVelocityToHide)  //checking on y velocity
+                                || (translation.x > self.view.frame.size.width * minimumScreenRatioToHide)  //checking on X position
+                                || (velocity.x > minimumVelocityToHide) //checking on X velocity
 
                 if closing {
                     self.tappedOnBack(panGesture)
                 } else {
                     // If not closing, reset the view to the top
                     UIView.animate(withDuration: animationDuration, animations: {
-                        slideViewVerticallyTo(0)
+                        slideViewTo(0,0)
                     })
                 }
-
             default:
+                print(panGesture.state)
                 // If gesture state is undefined, reset the view to the top
-                UIView.animate(withDuration: animationDuration, animations: {
-                    slideViewVerticallyTo(0)
-                })
+//                UIView.animate(withDuration: animationDuration, animations: {
+//                    slideViewTo(0,0)
+//                })
 
             }
       }
