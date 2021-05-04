@@ -298,6 +298,7 @@
 		9AF569C52175EDBA005B031D /* JTAppleCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF569C42175EDBA005B031D /* JTAppleCalendar.framework */; };
 		9AF569C72175F07B005B031D /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF569C62175F07B005B031D /* CalendarCell.swift */; };
 		9AF8DC222200C519003D0519 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8DC212200C519003D0519 /* UIButton.swift */; };
+		A0424EB2C4B3542C1078AA07 /* Pods_LUJO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E862A6F8362BC2A026001E1 /* Pods_LUJO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -417,6 +418,7 @@
 		1DFE1AC423476FCD0025410D /* DiningCityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiningCityView.xib; sourceTree = "<group>"; };
 		1DFE1AC6234772E60025410D /* DiningCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCityView.swift; sourceTree = "<group>"; };
 		1DFE1AC82349FEFD0025410D /* RestaurantListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListViewController.swift; sourceTree = "<group>"; };
+		1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.release.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.release.xcconfig"; sourceTree = "<group>"; };
 		3005D47923202B7D00401243 /* AviationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationViewController.swift; sourceTree = "<group>"; };
 		3005D47B23202BAC00401243 /* AviationAirportSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationAirportSelectionViewController.swift; sourceTree = "<group>"; };
 		3005D47D23202BFB00401243 /* AviationLuggageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationLuggageSelectionViewController.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 		557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRequestReservationViewController.swift; sourceTree = "<group>"; };
 		5583730D230D559100F9536C /* SwiftMessagesManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessagesManger.swift; sourceTree = "<group>"; };
+		6E862A6F8362BC2A026001E1 /* Pods_LUJO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LUJO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88029BA12633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		88029BA32633BF42003F1E77 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		88029BA52633BF42003F1E77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -656,6 +659,8 @@
 		9AF569C42175EDBA005B031D /* JTAppleCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JTAppleCalendar.framework; path = Carthage/Build/iOS/JTAppleCalendar.framework; sourceTree = "<group>"; };
 		9AF569C62175F07B005B031D /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		9AF8DC212200C519003D0519 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.beta.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.beta.xcconfig"; sourceTree = "<group>"; };
+		FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.debug.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -697,6 +702,7 @@
 				9AECC1462111CBD700C00C07 /* Alamofire.framework in Frameworks */,
 				9A44CDE72130753100699E1A /* ActiveLabel.framework in Frameworks */,
 				9A72C3C521383CC3009FE9E2 /* QuickLayout.framework in Frameworks */,
+				A0424EB2C4B3542C1078AA07 /* Pods_LUJO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1389,6 +1395,7 @@
 				1D523A9E23995545009E78D8 /* module.modulemap */,
 				9A818F4820EE74CA005B6455 /* Products */,
 				917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */,
+				AA08F477D8A9D3D052367B11 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1579,10 +1586,11 @@
 		9AECC13A2111CBD700C00C07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88C083FA2635FA4A00204475 /* Mixpanel.xcframework */,
-				88B90AA02634389700DE2089 /* Mixpanel.framework */,
-				88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */,
-				88029BB42633C811003F1E77 /* OneSignal.xcframework */,
+				9A44CDE62130753100699E1A /* ActiveLabel.framework */,
+				9AECC13F2111CBD700C00C07 /* Alamofire.framework */,
+				9ACE52C0212D309400BB287A /* Crashlytics.framework */,
+				9AECC13D2111CBD700C00C07 /* DefaultsKit.framework */,
+				9ACE52BF212D309400BB287A /* Fabric.framework */,
 				1D600675239952D300B9BA2A /* FIRAnalyticsConnector.framework */,
 				1D600671239952D300B9BA2A /* FirebaseAnalytics.framework */,
 				1D600672239952D300B9BA2A /* FirebaseCore.framework */,
@@ -1592,20 +1600,20 @@
 				1D600677239952D400B9BA2A /* GoogleDataTransport.framework */,
 				1D600674239952D300B9BA2A /* GoogleDataTransportCCTSupport.framework */,
 				1D600679239952D400B9BA2A /* GoogleUtilities.framework */,
-				1D600676239952D300B9BA2A /* nanopb.framework */,
-				1D60066F23994B9300B9BA2A /* libc++abi.tbd */,
 				1D83391A22B654A7006DEEC4 /* IQKeyboardManagerSwift.framework */,
-				9AF569C42175EDBA005B031D /* JTAppleCalendar.framework */,
+				88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */,
 				9A72C3C82138D9A6009FE9E2 /* JGProgressHUD.framework */,
+				9AF569C42175EDBA005B031D /* JTAppleCalendar.framework */,
+				1D60066F23994B9300B9BA2A /* libc++abi.tbd */,
+				9ACE52BC212D1F3F00BB287A /* M13Checkbox.framework */,
+				88B90AA02634389700DE2089 /* Mixpanel.framework */,
+				88C083FA2635FA4A00204475 /* Mixpanel.xcframework */,
+				1D600676239952D300B9BA2A /* nanopb.framework */,
+				9AECC13C2111CBD700C00C07 /* ObjectMapper.framework */,
+				88029BB42633C811003F1E77 /* OneSignal.xcframework */,
+				6E862A6F8362BC2A026001E1 /* Pods_LUJO.framework */,
 				9A72C3C421383CC3009FE9E2 /* QuickLayout.framework */,
 				9A72C3C2213831ED009FE9E2 /* SwiftEntryKit.framework */,
-				9A44CDE62130753100699E1A /* ActiveLabel.framework */,
-				9ACE52C0212D309400BB287A /* Crashlytics.framework */,
-				9ACE52BF212D309400BB287A /* Fabric.framework */,
-				9ACE52BC212D1F3F00BB287A /* M13Checkbox.framework */,
-				9AECC13F2111CBD700C00C07 /* Alamofire.framework */,
-				9AECC13D2111CBD700C00C07 /* DefaultsKit.framework */,
-				9AECC13C2111CBD700C00C07 /* ObjectMapper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1618,6 +1626,16 @@
 				9AF4226A2266026F003CE562 /* BookingStep3.swift */,
 			);
 			path = Booking;
+			sourceTree = "<group>";
+		};
+		AA08F477D8A9D3D052367B11 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */,
+				1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */,
+				CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1644,6 +1662,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A818F6F20EE74CC005B6455 /* Build configuration list for PBXNativeTarget "LUJO" */;
 			buildPhases = (
+				6B3EC5D9F41CAAA99B19CC61 /* [CP] Check Pods Manifest.lock */,
 				9A1006B7217D85F6009219EA /* SwiftFormat */,
 				9A2975AC211464960074BC80 /* SwiftLint */,
 				9A818F4320EE74CA005B6455 /* Sources */,
@@ -1654,6 +1673,7 @@
 				88029BAD2633BF42003F1E77 /* Embed App Extensions */,
 				88C083DE2635F1EA00204475 /* ShellScript */,
 				88310E002635FF3900301667 /* Embed Frameworks */,
+				2E461DCF362ECED2DF565CE5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1661,8 +1681,6 @@
 				88029BA72633BF42003F1E77 /* PBXTargetDependency */,
 			);
 			name = LUJO;
-			packageProductDependencies = (
-			);
 			productName = LUJO;
 			productReference = 9A818F4720EE74CA005B6455 /* LUJO.app */;
 			productType = "com.apple.product-type.application";
@@ -1848,6 +1866,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2E461DCF362ECED2DF565CE5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LUJO/Pods-LUJO-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LUJO/Pods-LUJO-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LUJO/Pods-LUJO-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B3EC5D9F41CAAA99B19CC61 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LUJO-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		88C083DE2635F1EA00204475 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2421,6 +2478,7 @@
 		};
 		9A818F7020EE74CC005B6455 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2484,6 +2542,7 @@
 		};
 		9A818F7120EE74CC005B6455 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2693,6 +2752,7 @@
 		};
 		9A9A62D6228484D8005F0DAB /* Beta */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

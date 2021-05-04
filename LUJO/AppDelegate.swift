@@ -7,6 +7,7 @@ import Intercom
 import Firebase
 import Mixpanel
 import OneSignal
+import Delighted
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -76,6 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
 
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        Delighted.initializeSDK()
+      }
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         if
             let tabBarController = window?.rootViewController as? MainTabBarController,
