@@ -12,14 +12,14 @@
   "iOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "0966002ee79b0648fc5debde7a5dc084330f78840cfd95b6e46bc7662db1b84f",
+      "hash" : "19c80a4646b928b49020d55cb59c7de3dea6c8a90a57333babb3e2f7e10e99ac",
       "name" : "SwiftMessages",
       "container" : "SwiftMessages.xcframework",
       "identifier" : "ios-arm64_i386_x86_64-simulator"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "66b7d44f12073054efb75686526dfda53a55fe8633a2019b74a9e53e66349677",
+      "hash" : "19e4fd7e580702f68aad67836766e2ab72edba35223eb7caceaa2cb57f6ca991",
       "name" : "SwiftMessages",
       "container" : "SwiftMessages.xcframework",
       "identifier" : "ios-arm64_armv7"

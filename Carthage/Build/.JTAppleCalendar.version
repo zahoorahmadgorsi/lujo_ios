@@ -8,14 +8,14 @@
   "tvOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "b201a1acb2ecb53829b3eff3bf7d20244a19a53d0d424da58173e8fae1b1700a",
+      "hash" : "72f4583a15c68bfd501ada7e5a4a7ac6846b2e47ff7a269209f3449073a80119",
       "name" : "JTAppleCalendar",
       "container" : "JTAppleCalendar.xcframework",
       "identifier" : "tvos-arm64_x86_64-simulator"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "8e1b466f26d6151890e28b72aa87e49d2f9fc12f59508ac519ebb3cf1b5ae0bd",
+      "hash" : "d1a04e62139678cfd55c66436f17dbf71d9dfb5cc5b0c6b2bb64aff8b3c49bb3",
       "name" : "JTAppleCalendar",
       "container" : "JTAppleCalendar.xcframework",
       "identifier" : "tvos-arm64"
@@ -25,14 +25,14 @@
   "iOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "84abf4155108237eabe9b02eafdf3c6550651a50c0c75b4be056a64c3c7687c2",
+      "hash" : "4a708aecfdf47c379bb3cf94849c2848e42115a1ad5b670627b572efc3fc1ebb",
       "name" : "JTAppleCalendar",
       "container" : "JTAppleCalendar.xcframework",
       "identifier" : "ios-arm64_i386_x86_64-simulator"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "3d2476a6f934ecc62ca22536e31e84bef63c3378809c5a6cc9fc261269301981",
+      "hash" : "dfd47ad414b2263c950242f9311249771ad78422dd803efe3ea1cf4fbb0a2d97",
       "name" : "JTAppleCalendar",
       "container" : "JTAppleCalendar.xcframework",
       "identifier" : "ios-arm64_armv7"

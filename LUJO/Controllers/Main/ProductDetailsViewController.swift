@@ -90,7 +90,8 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     }()
     
     //dismissin on swiping down
-    var panGestureRecognizer: UIPanGestureRecognizer?
+    var pgrMainImage: UIPanGestureRecognizer?
+    var pgrFullView: UIPanGestureRecognizer?
     var originalPosition: CGPoint?
     var currentPositionTouched: CGPoint?
     
@@ -129,11 +130,11 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         //setting tapping event on viewheart
         //Add tap gesture on favourite
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedOnHeart(_:)))
-        self.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+        self.viewHeart.isUserInteractionEnabled = true      //can also be enabled from IB
         self.viewHeart.addGestureRecognizer(tapGestureRecognizer)
         //Add tap gesture on back button
         let tgrBack = UITapGestureRecognizer(target: self, action: #selector(tappedOnBack(_:)))
-        self.imgBack.isUserInteractionEnabled = true   //can also be enabled from IB
+        self.imgBack.isUserInteractionEnabled = true        //can also be enabled from IB
         self.imgBack.addGestureRecognizer(tgrBack)
         //Add tap gesture on ReadMore button
         
@@ -141,9 +142,10 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         self.viewReadMore.isUserInteractionEnabled = true   //can also be enabled from IB
         self.viewReadMore.addGestureRecognizer(tgrReadMore)
         //Addin swipe down pan gesture
-        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
-        ViewMainImage.addGestureRecognizer(panGestureRecognizer!)
-        
+        pgrMainImage = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
+        pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
+        ViewMainImage.addGestureRecognizer(pgrMainImage!)   //applying pan gesture on main image
+        self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
         setRecentlyViewed()
     }
     
@@ -887,13 +889,11 @@ extension ProductDetailsViewController {
         let minimumVelocityToHide: CGFloat = 1500
         let minimumScreenRatioToHide: CGFloat = 0.25
         let animationDuration: TimeInterval = 0.2
-        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+//        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         
         func slideViewTo(_ x: CGFloat ,_ y: CGFloat) {
-//            UIView.animate(withDuration: 0.2, animations: {
                 self.view.frame.origin = CGPoint(x: x, y: y)
-//            self.view.frame.origin = CGPoint(x: 0, y: y)
-//            })
+
         }
         
         switch panGesture.state {
@@ -901,15 +901,16 @@ extension ProductDetailsViewController {
             case .changed:
                 // If pan started or is ongoing then slide the view to follow the finger
                 let translation = panGesture.translation(in: view)
-                let x = max(0, translation.x)
-//                print(statusBarHeight, translation.y)
-//                let y = max(0, translation.y+statusBarHeight)               //very quick jerk in the start
-//                let y = max(statusBarHeight, translation.y)             // frame doesnt move untill >47
-                let y = max(0, translation.y)                           //it works only if ui is full screen
+//                let x = max(0, translation.x)
+//                let y = max(0, translation.y)                           //it works but with status bar
 //                print(y)
-                slideViewTo(x,y)
-
+                if (panGesture.view == self.view ){
+                    slideViewTo(translation.x,0)    //only swipe horizontal if its on main view
+                }else{
+                    slideViewTo(translation.x,translation.y)    //swipe both horizontally and vertically if on main image
+                }
                 
+                self.view.layer.cornerRadius = 12
             case .ended:
                 // If pan ended, decide it we should close or reset the view based on the final position and the speed of the gesture
                 let translation = panGesture.translation(in: view)
@@ -927,13 +928,9 @@ extension ProductDetailsViewController {
                         slideViewTo(0,0)
                     })
                 }
+                self.view.layer.cornerRadius = 0
             default:
                 print(panGesture.state)
-                // If gesture state is undefined, reset the view to the top
-//                UIView.animate(withDuration: animationDuration, animations: {
-//                    slideViewTo(0,0)
-//                })
-
             }
       }
 }
@@ -961,7 +958,7 @@ extension ProductDetailsViewController: UIGestureRecognizerDelegate {
     }
     
     func shouldBeRequiredToFail(by otherGestureRecognizer: UIGestureRecognizer) -> Bool{
-        if (otherGestureRecognizer == panGestureRecognizer){
+        if (otherGestureRecognizer == pgrMainImage){
             return true
         }else{
             return false

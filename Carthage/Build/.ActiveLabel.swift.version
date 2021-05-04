@@ -12,17 +12,17 @@
   "iOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "a609b7ba9a7b0254223c62a64173d6511036c4c3cc307ecbf0c89981c46076d0",
-      "name" : "ActiveLabel",
-      "container" : "ActiveLabel.xcframework",
-      "identifier" : "ios-arm64_i386_x86_64-simulator"
-    },
-    {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "a5e006e448f935ecbd8009630993e8983298e824cca610b3e9df7a2d0e5c6936",
+      "hash" : "04653bfd6fcdf85030e85c367d9d4ef963c6246ff7c9630a509b81b8643a3c63",
       "name" : "ActiveLabel",
       "container" : "ActiveLabel.xcframework",
       "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "9e0f78a47cf6e0582fb030f918a9d6914b812e8967fa7fccaeb28451d77a9e55",
+      "name" : "ActiveLabel",
+      "container" : "ActiveLabel.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
     }
   ]
 }

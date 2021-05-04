@@ -12,14 +12,14 @@
   "iOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "bd88a4f5d7990079d5708c23503a4ccd340d504908fddf05e909105488b68928",
+      "hash" : "32e533c5cc663dd566509dc7bd2cea69eb945f713054f343667abd59ce421099",
       "name" : "M13Checkbox",
       "container" : "M13Checkbox.xcframework",
       "identifier" : "ios-arm64_i386_x86_64-simulator"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "ac1c261997b6726fefca722d22fe8cb8aca53872a701fb5c8348ed2d11984aa3",
+      "hash" : "ed7fa6984e946a13c590e345fffd187bcb0449df13c5043a1762027276c2d946",
       "name" : "M13Checkbox",
       "container" : "M13Checkbox.xcframework",
       "identifier" : "ios-arm64_armv7"

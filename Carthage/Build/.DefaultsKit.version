@@ -2,7 +2,7 @@
   "Mac" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "191b6e56dd2a429f2922c253a5183f1d5f1b607553ae66383577d70b89017dec",
+      "hash" : "c3e6fb8e618c400da7b3b38810aa1e756ecae3e8460b1c65b5b7eec3c924f98b",
       "name" : "DefaultsKit",
       "container" : "DefaultsKit.xcframework",
       "identifier" : "macos-arm64_x86_64"
@@ -14,14 +14,14 @@
   "tvOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "b9351cb1039534b87a4192dfd83f8d0c6b053d96e09658c228dd8616cf5004d5",
+      "hash" : "3ffeb0b7790f68406f656d46ef605c803c4944e4a2e7f0a196e7937f66ec4c8b",
       "name" : "DefaultsKit",
       "container" : "DefaultsKit.xcframework",
       "identifier" : "tvos-arm64"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "a96c4dbe5348555ccf86c3d9469940ef9e0e8709da54f53dfa52cb76b2d5da6e",
+      "hash" : "34114e10751d30eb08b7db842ae68f0cd02de0d8f341b217c1d14c6830d3099d",
       "name" : "DefaultsKit",
       "container" : "DefaultsKit.xcframework",
       "identifier" : "tvos-arm64_x86_64-simulator"
@@ -31,14 +31,14 @@
   "iOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "8468628c488c52483f2ae1226ae7fd122092aad09ca6f66958db4829a2de9e75",
+      "hash" : "4bae38975b23426605bdadef4953224a4c08d7aa2d76edbe430d65ba0151c7c7",
       "name" : "DefaultsKit",
       "container" : "DefaultsKit.xcframework",
       "identifier" : "ios-arm64_armv7"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "d1fa3e4c81515ec21bd491b42b2bb3a2bba49080b562c927932373c4c2b56f60",
+      "hash" : "a660516a33f65f504f7ec31175a9da0431aea746875299f0c4cda6c0d6bf248b",
       "name" : "DefaultsKit",
       "container" : "DefaultsKit.xcframework",
       "identifier" : "ios-arm64_i386_x86_64-simulator"
