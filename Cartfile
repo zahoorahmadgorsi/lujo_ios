@@ -12,4 +12,4 @@ github "SwiftKickMobile/SwiftMessages" == 7.0.0
 github "intercom/intercom-ios" == 5.4.1
 github "mixpanel/mixpanel-swift"
 github "OneSignal/OneSignal-iOS-SDK"
-github "delighted/delighted-ios"
+

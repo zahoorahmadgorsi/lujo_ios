@@ -48,27 +48,23 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="460"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iES-Mi-r8j">
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iES-Mi-r8j">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="9f2-Xf-yT9">
-                            <rect key="frame" x="16" y="0.0" width="398" height="48"/>
+                            <rect key="frame" x="16" y="0.0" width="382" height="48"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The quick brown fox jumps right over the lazy dog." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2m-0M-zmr">
-                                    <rect key="frame" x="0.0" y="0.0" width="146" height="48"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="City Name Lahore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2m-0M-zmr">
+                                    <rect key="frame" x="0.0" y="0.0" width="157" height="48"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <color key="textColor" name="White Text"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="gwg-U6-U4N">
-                                    <rect key="frame" x="162" y="0.0" width="150" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="150" id="2se-K4-xlK"/>
-                                    </constraints>
+                                    <rect key="frame" x="173" y="0.0" width="123" height="48"/>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vYJ-S4-dQn">
-                                    <rect key="frame" x="328" y="0.0" width="70" height="48"/>
+                                    <rect key="frame" x="312" y="0.0" width="70" height="48"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEE ALL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0p-LU-7Ip">
                                             <rect key="frame" x="0.0" y="17.5" width="48" height="13.5"/>
@@ -104,7 +100,7 @@
                         <constraint firstItem="9f2-Xf-yT9" firstAttribute="top" secondItem="iES-Mi-r8j" secondAttribute="top" id="HAy-YS-Yty"/>
                         <constraint firstItem="9f2-Xf-yT9" firstAttribute="leading" secondItem="iES-Mi-r8j" secondAttribute="leading" constant="16" id="NzQ-zl-mqm"/>
                         <constraint firstAttribute="bottom" secondItem="9f2-Xf-yT9" secondAttribute="bottom" id="WEC-BP-8Ag"/>
-                        <constraint firstAttribute="trailing" secondItem="9f2-Xf-yT9" secondAttribute="trailing" id="bOr-Xr-30S"/>
+                        <constraint firstAttribute="trailing" secondItem="9f2-Xf-yT9" secondAttribute="trailing" constant="16" id="bOr-Xr-30S"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -381,9 +377,13 @@
             <viewLayoutGuide key="safeArea" id="qPg-Ai-nON"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="pg5-48-4nX" firstAttribute="top" secondItem="iES-Mi-r8j" secondAttribute="bottom" constant="16" id="3Sx-YS-c3R"/>
+                <constraint firstItem="iES-Mi-r8j" firstAttribute="trailing" secondItem="qPg-Ai-nON" secondAttribute="trailing" id="Bup-Yb-vst"/>
                 <constraint firstAttribute="bottom" secondItem="pg5-48-4nX" secondAttribute="bottom" id="C3n-B6-dK5"/>
+                <constraint firstItem="iES-Mi-r8j" firstAttribute="leading" secondItem="qPg-Ai-nON" secondAttribute="leading" id="Djh-Jq-hId"/>
                 <constraint firstAttribute="trailing" secondItem="pg5-48-4nX" secondAttribute="trailing" constant="16" id="OBX-QL-yoV"/>
                 <constraint firstItem="pg5-48-4nX" firstAttribute="leading" secondItem="qPg-Ai-nON" secondAttribute="leading" constant="16" id="mhx-Uj-VMC"/>
+                <constraint firstItem="iES-Mi-r8j" firstAttribute="top" secondItem="5d4-Ud-xLk" secondAttribute="top" id="oMf-pA-gYY"/>
                 <constraint firstItem="pg5-48-4nX" firstAttribute="top" secondItem="iES-Mi-r8j" secondAttribute="bottom" constant="16" id="zql-yb-yRi"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

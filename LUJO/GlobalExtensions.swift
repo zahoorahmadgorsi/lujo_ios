@@ -11,13 +11,11 @@ import UIKit
 extension UIStoryboard {
     
     /// Returns main storyboard of this project.
-    static let login         = UIStoryboard(name: "Login",   bundle: nil)
     static let main          = UIStoryboard(name: "Main",    bundle: nil)
-    static let utility       = UIStoryboard(name: "Utility", bundle: nil)
-    static let account       = UIStoryboard(name: "Account", bundle: nil)
     static let accountNEW    = UIStoryboard(name: "AccountNEW", bundle: nil)
     static let payment       = UIStoryboard(name: "Payment", bundle: nil)
     static let customRequest = UIStoryboard(name: "CustomRequests", bundle: nil)
+    static let preferences = UIStoryboard(name: "Preferences", bundle: nil)
     
     /// Instantiate view controller from storyboard.
     func instantiate<T: UIViewController>(_ identifier: String) -> T {

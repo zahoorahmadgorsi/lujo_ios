@@ -29,27 +29,23 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="254"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XgR-lZ-eiC">
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgR-lZ-eiC">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WfD-nq-FVv">
-                            <rect key="frame" x="16" y="0.0" width="398" height="48"/>
+                            <rect key="frame" x="16" y="0.0" width="382" height="48"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The quick brown fox jumps right over the lazy dog." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZm-uC-QPn">
-                                    <rect key="frame" x="0.0" y="0.0" width="146" height="48"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="City Name Lahore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZm-uC-QPn">
+                                    <rect key="frame" x="0.0" y="0.0" width="157" height="48"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <color key="textColor" name="White Text"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="fBo-QP-No1">
-                                    <rect key="frame" x="162" y="0.0" width="150" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="150" id="puR-7g-U2u"/>
-                                    </constraints>
+                                    <rect key="frame" x="173" y="0.0" width="123" height="48"/>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tEa-R6-Got">
-                                    <rect key="frame" x="328" y="0.0" width="70" height="48"/>
+                                    <rect key="frame" x="312" y="0.0" width="70" height="48"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEE ALL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTQ-od-y4W">
                                             <rect key="frame" x="0.0" y="17.5" width="48" height="13.5"/>
@@ -84,7 +80,7 @@
                         <constraint firstAttribute="bottom" secondItem="WfD-nq-FVv" secondAttribute="bottom" id="Fen-B5-o7B"/>
                         <constraint firstItem="WfD-nq-FVv" firstAttribute="top" secondItem="XgR-lZ-eiC" secondAttribute="top" id="LLR-xx-dmg"/>
                         <constraint firstItem="WfD-nq-FVv" firstAttribute="leading" secondItem="XgR-lZ-eiC" secondAttribute="leading" constant="16" id="i6T-kS-AXA"/>
-                        <constraint firstAttribute="trailing" secondItem="WfD-nq-FVv" secondAttribute="trailing" id="ndi-pS-JIR"/>
+                        <constraint firstAttribute="trailing" secondItem="WfD-nq-FVv" secondAttribute="trailing" constant="16" id="ndi-pS-JIR"/>
                         <constraint firstAttribute="height" constant="48" id="yUa-qh-5vV"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
@@ -180,10 +176,14 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="XgR-lZ-eiC" secondAttribute="trailing" id="8Pz-Oz-KbR"/>
                 <constraint firstItem="C1z-Bo-ylc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="DEx-iz-AEs"/>
                 <constraint firstItem="C1z-Bo-ylc" firstAttribute="top" secondItem="XgR-lZ-eiC" secondAttribute="bottom" constant="16" id="Vpy-ri-BFU"/>
                 <constraint firstAttribute="trailing" secondItem="C1z-Bo-ylc" secondAttribute="trailing" constant="16" id="ZYU-TU-RYw"/>
+                <constraint firstItem="C1z-Bo-ylc" firstAttribute="top" secondItem="XgR-lZ-eiC" secondAttribute="bottom" constant="16" id="dmn-X0-K2I"/>
+                <constraint firstItem="XgR-lZ-eiC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fcy-58-9a7"/>
                 <constraint firstAttribute="bottom" secondItem="C1z-Bo-ylc" secondAttribute="bottom" id="oh0-jq-edB"/>
+                <constraint firstItem="XgR-lZ-eiC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qTR-jk-UJ8"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -23,6 +23,13 @@ extension UIView {
         layer.addSublayer(border)
     }
 
+    public func addViewBorder(borderColor:CGColor,borderWith:CGFloat,borderCornerRadius:CGFloat){
+            self.layer.borderWidth = borderWith
+            self.layer.borderColor = borderColor
+            self.layer.cornerRadius = borderCornerRadius
+
+        }
+    
     func currentFirstResponder() -> UIResponder? {
         if isFirstResponder {
             return self

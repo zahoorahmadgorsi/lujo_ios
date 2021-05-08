@@ -2398,17 +2398,14 @@
                                                                             <constraint firstAttribute="width" constant="20" id="dBh-kh-lV4"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Rated" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHu-Nr-2X0">
-                                                                        <rect key="frame" x="36" y="0.0" width="94" height="64"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Top Rated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHu-Nr-2X0">
+                                                                        <rect key="frame" x="36" y="0.0" width="88.5" height="64"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="b1a-V2-wJZ">
-                                                                        <rect key="frame" x="146" y="0.0" width="150" height="64"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="150" id="c2H-gj-WpM"/>
-                                                                        </constraints>
+                                                                        <rect key="frame" x="140.5" y="0.0" width="155.5" height="64"/>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ARf-Pe-ntM">
                                                                         <rect key="frame" x="312" y="0.0" width="70" height="64"/>
@@ -2474,17 +2471,14 @@
                                                                             <constraint firstAttribute="width" constant="20" id="s3I-8E-JAK"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gifts" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJN-Pg-Aqv">
-                                                                        <rect key="frame" x="36" y="0.0" width="94" height="64"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Gifts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJN-Pg-Aqv">
+                                                                        <rect key="frame" x="36" y="0.0" width="41.5" height="64"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="h9E-ja-TeM">
-                                                                        <rect key="frame" x="146" y="0.0" width="150" height="64"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="150" id="R9W-rg-7zc"/>
-                                                                        </constraints>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="h9E-ja-TeM">
+                                                                        <rect key="frame" x="93.5" y="0.0" width="202.5" height="64"/>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrN-eh-DV5">
                                                                         <rect key="frame" x="312" y="0.0" width="70" height="64"/>
@@ -2550,17 +2544,14 @@
                                                                             <constraint firstAttribute="width" constant="20" id="ajz-YR-hej"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Villas" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Aw-4A-mdK">
-                                                                        <rect key="frame" x="36" y="0.0" width="94" height="64"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Villas" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Aw-4A-mdK">
+                                                                        <rect key="frame" x="36" y="0.0" width="46" height="64"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="hRj-p2-fwy">
-                                                                        <rect key="frame" x="146" y="0.0" width="150" height="64"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="150" id="JHl-f0-on6"/>
-                                                                        </constraints>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="hRj-p2-fwy">
+                                                                        <rect key="frame" x="98" y="0.0" width="198" height="64"/>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LAS-Gg-HPI">
                                                                         <rect key="frame" x="312" y="0.0" width="70" height="64"/>
@@ -2626,17 +2617,14 @@
                                                                             <constraint firstAttribute="width" constant="20" id="a98-ny-uHc"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzz-m0-Osa">
-                                                                        <rect key="frame" x="36" y="0.0" width="94" height="64"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzz-m0-Osa">
+                                                                        <rect key="frame" x="36" y="0.0" width="59" height="64"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="slh-wz-ZaK">
-                                                                        <rect key="frame" x="146" y="0.0" width="150" height="64"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="150" id="758-xO-cOs"/>
-                                                                        </constraints>
+                                                                        <rect key="frame" x="111" y="0.0" width="185" height="64"/>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qC-Ie-73w">
                                                                         <rect key="frame" x="312" y="0.0" width="70" height="64"/>
@@ -2721,17 +2709,14 @@
                                                                             <constraint firstAttribute="width" constant="20" id="mAK-yt-liN"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yachts" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0II-G8-rR8">
-                                                                        <rect key="frame" x="36" y="0.0" width="94" height="64"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Yachts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0II-G8-rR8">
+                                                                        <rect key="frame" x="36" y="0.0" width="59" height="64"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="cht-WH-nfT">
-                                                                        <rect key="frame" x="146" y="0.0" width="150" height="64"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="150" id="9mk-Dn-yVH"/>
-                                                                        </constraints>
+                                                                        <rect key="frame" x="111" y="0.0" width="185" height="64"/>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fwQ-7l-Kkd">
                                                                         <rect key="frame" x="312" y="0.0" width="70" height="64"/>
@@ -2932,17 +2917,14 @@
                                                                             <constraint firstAttribute="width" constant="20" id="V6Z-Cy-xN1"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Experiences" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9zN-a0-aXw">
-                                                                        <rect key="frame" x="36" y="0.0" width="109" height="64"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Experiences" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9zN-a0-aXw">
+                                                                        <rect key="frame" x="36" y="0.0" width="107" height="64"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="6rY-5j-KAW">
-                                                                        <rect key="frame" x="161" y="0.0" width="135" height="64"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="135" id="n9k-FR-O6y"/>
-                                                                        </constraints>
+                                                                        <rect key="frame" x="159" y="0.0" width="137" height="64"/>
                                                                     </imageView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="64a-aH-bvB">
                                                                         <rect key="frame" x="312" y="0.0" width="70" height="64"/>
@@ -5431,7 +5413,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="gX9-Jp-UeG" secondAttribute="trailing" id="4aG-of-dsT"/>
                                     <constraint firstItem="gX9-Jp-UeG" firstAttribute="leading" secondItem="PrA-QL-o01" secondAttribute="leading" id="SW1-NZ-ybl"/>
-                                    <constraint firstAttribute="bottom" secondItem="gX9-Jp-UeG" secondAttribute="bottom" id="nY5-SZ-qBk"/>
+                                    <constraint firstAttribute="bottom" secondItem="gX9-Jp-UeG" secondAttribute="bottom" constant="16" id="nY5-SZ-qBk"/>
                                     <constraint firstItem="gX9-Jp-UeG" firstAttribute="top" secondItem="PrA-QL-o01" secondAttribute="top" id="yQO-rp-b82"/>
                                 </constraints>
                             </scrollView>
@@ -7754,17 +7736,14 @@ New York, NY 10011 USA</string>
                                                                     <constraint firstAttribute="width" constant="20" id="VRy-Ka-qwo"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Rated" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5D-ws-Gs7">
-                                                                <rect key="frame" x="36" y="0.0" width="94" height="48"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Top Rated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5D-ws-Gs7">
+                                                                <rect key="frame" x="36" y="0.0" width="88.5" height="48"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" name="White Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="cro-us-mIi">
-                                                                <rect key="frame" x="146" y="0.0" width="150" height="48"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="150" id="SWg-pe-GzO"/>
-                                                                </constraints>
+                                                                <rect key="frame" x="140.5" y="0.0" width="155.5" height="48"/>
                                                             </imageView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uqt-xa-LII">
                                                                 <rect key="frame" x="312" y="0.0" width="70" height="48"/>

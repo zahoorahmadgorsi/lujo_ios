@@ -34,6 +34,7 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var pictureUpdateLabel: UILabel!
     @IBOutlet weak var lblMyBookings: UILabel!
+    @IBOutlet weak var lblMyPreferences: UILabel!
     @IBOutlet weak var lujoCreditsLabel: UILabel!
     
     @IBOutlet weak var updateProfileLabel: UILabel!
@@ -53,6 +54,9 @@ class AccountViewController: UIViewController {
         let lblMyBookingsTapResponder = UITapGestureRecognizer(target: self, action: #selector(lblMyBookingsTapped))
         lblMyBookings.addGestureRecognizer(lblMyBookingsTapResponder)
         
+        let lblMyPreferencesTapResponder = UITapGestureRecognizer(target: self, action: #selector(lblMyPreferencesTapped))
+        lblMyPreferences.addGestureRecognizer(lblMyPreferencesTapResponder)
+        
         let userProfileTapResponder = UITapGestureRecognizer(target: self, action: #selector(presentUserProfileViewController))
         updateProfileLabel.addGestureRecognizer(userProfileTapResponder)
 
@@ -67,7 +71,8 @@ class AccountViewController: UIViewController {
             )
 
             let eligibilityOverrides = EligibilityOverrides(
-                testMode: true
+                //testMode: true
+                testMode: false
                 ,initialDelay: 86400
             )
             
@@ -167,6 +172,12 @@ class AccountViewController: UIViewController {
     @objc func lblMyBookingsTapped() {
 //        print("lblMyBookingsTapped")
         let viewController = BookingsViewController.instantiate()
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc func lblMyPreferencesTapped() {
+        print("lblMyPreferencesTapped")
+        let viewController = MyPreferencesViewController.instantiate()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
