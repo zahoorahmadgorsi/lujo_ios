@@ -4,10 +4,25 @@ import Foundation
 struct Taxonomy: Codable {
     let termId: Int
     let name: String
+    var isSelected: Bool?    //used in my preferences
 
     enum CodingKeys: String, CodingKey {
         case termId = "term_id"
         case name
+        case isSelected
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            
+            name = try values.decode(String.self, forKey: .name)
+            termId = try values.decode(Int.self, forKey: .termId)
+            isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
     }
 }
 

@@ -71,7 +71,7 @@ class AccountViewController: UIViewController {
             )
 
             let eligibilityOverrides = EligibilityOverrides(
-                //testMode: true
+//                testMode: true
                 testMode: false
                 ,initialDelay: 86400
             )

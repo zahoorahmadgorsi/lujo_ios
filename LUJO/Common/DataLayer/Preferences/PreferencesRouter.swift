@@ -33,10 +33,13 @@ enum PreferencesRouter: URLRequestConvertible {
         }
         return scheme
     }()
-
+    
     case getGiftHabits(String)
     case getGiftCategories(String)
     case getGiftPreferences(String)
+    case setGiftHabits(String,String)
+    case setGiftCategories(String,String)
+    case setGiftPreferences(String,String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -61,11 +64,12 @@ enum PreferencesRouter: URLRequestConvertible {
 
     func getHTTPMethod() -> HTTPMethod {
         switch self {
-            case .getGiftHabits:
-                return .post
-            case .getGiftCategories:
-                return .post
-            case .getGiftPreferences:
+            case .getGiftHabits:        fallthrough
+            case .getGiftCategories:    fallthrough
+            case .getGiftPreferences:   fallthrough
+            case .setGiftHabits:        fallthrough
+            case .setGiftCategories:    fallthrough
+            case .setGiftPreferences:
                 return .post
         }
     }
@@ -75,14 +79,14 @@ enum PreferencesRouter: URLRequestConvertible {
         newURLComponents.scheme = EERouter.scheme
         newURLComponents.host = EERouter.baseURLString
         newURLComponents.path = EERouter.apiVersion
-
+        
         switch self {
-            case .getGiftHabits:
-                newURLComponents.path.append("/reference/gift-habits")
-            case .getGiftCategories:
-                newURLComponents.path.append("/reference/gift-categories")
-            case .getGiftPreferences:
-                newURLComponents.path.append("/reference/gift-preferences")
+            case .getGiftHabits:        newURLComponents.path.append("/reference/gift-habits")
+            case .getGiftCategories:    newURLComponents.path.append("/reference/gift-categories")
+            case .getGiftPreferences:   newURLComponents.path.append("/reference/gift-preferences")
+            case .setGiftHabits:        fallthrough
+            case .setGiftCategories:    fallthrough
+            case .setGiftPreferences:   newURLComponents.path.append("/preferences/gift")
         }
         
         do {
@@ -101,12 +105,15 @@ enum PreferencesRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-            case let .getGiftHabits(token):
-                return getGiftTaxonomiesAsJSONData(token: token)
-            case let .getGiftCategories(token):
-                return getGiftTaxonomiesAsJSONData(token: token)
+            case let .getGiftHabits(token):     fallthrough
+            case let .getGiftCategories(token): fallthrough
             case let .getGiftPreferences(token):
                 return getGiftTaxonomiesAsJSONData(token: token)
+            case let .setGiftHabits(token,commSepeartedString):
+                return setGiftHabbitsAsJSONData(token: token, commSepeartedString:commSepeartedString)
+            case let .setGiftCategories(token, commSepeartedString):
+                return setGiftCategoriesAsJSONData(token: token , commSepeartedString:commSepeartedString)
+            case let .setGiftPreferences(token, commSepeartedString):return setGiftPreferencesAsJSONData(token: token , commSepeartedString:commSepeartedString)
         }
     }
     
@@ -116,6 +123,29 @@ enum PreferencesRouter: URLRequestConvertible {
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
+    
+    fileprivate func setGiftHabbitsAsJSONData(token: String, commSepeartedString: String) -> Data? {
+        let body: [String: Any] = [
+            "token": token
+            ,"gift_habit_id" : commSepeartedString
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
      
+    fileprivate func setGiftCategoriesAsJSONData(token: String, commSepeartedString: String) -> Data? {
+        let body: [String: Any] = [
+            "token": token
+            ,"gift_category_id" : commSepeartedString
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func setGiftPreferencesAsJSONData(token: String, commSepeartedString: String) -> Data? {
+        let body: [String: Any] = [
+            "token": token
+            ,"gift_preferences_id" : commSepeartedString
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
 }
 

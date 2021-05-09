@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="275" height="40"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preference label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYO-cq-YsY">
-                                <rect key="frame" x="0.0" y="11.5" width="275" height="17"/>
+                                <rect key="frame" x="2" y="11.5" width="271" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" name="Palette - R-G Mid"/>
                                 <nil key="highlightedColor"/>
@@ -30,8 +30,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="XYO-cq-YsY" firstAttribute="centerY" secondItem="6Jd-0M-Szf" secondAttribute="centerY" id="Oy4-78-VE8"/>
-                            <constraint firstItem="XYO-cq-YsY" firstAttribute="leading" secondItem="6Jd-0M-Szf" secondAttribute="leading" id="s94-gM-O7D"/>
-                            <constraint firstAttribute="trailing" secondItem="XYO-cq-YsY" secondAttribute="trailing" id="xoP-Bd-aMF"/>
+                            <constraint firstItem="XYO-cq-YsY" firstAttribute="leading" secondItem="6Jd-0M-Szf" secondAttribute="leading" constant="2" id="s94-gM-O7D"/>
+                            <constraint firstAttribute="trailing" secondItem="XYO-cq-YsY" secondAttribute="trailing" constant="2" id="xoP-Bd-aMF"/>
                         </constraints>
                     </view>
                 </subviews>

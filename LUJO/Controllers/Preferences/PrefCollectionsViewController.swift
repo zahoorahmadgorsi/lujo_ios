@@ -12,7 +12,7 @@ import JGProgressHUD
 enum PrefCollSize:Int{
 //    case itemWidth = 275
     case itemHeight = 40
-    case itemHorizontalMargin = 0
+    case itemHorizontalMargin = 16
     case itemVerticalMargin = 24
 }
 
@@ -84,7 +84,7 @@ class PrefCollectionsViewController: UIViewController {
 //    private(set) var user: LujoUser!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip", style: .plain, target: self, action: #selector(skipTapped))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip for now", style: .plain, target: self, action: #selector(skipTapped))
         self.contentView.addViewBorder( borderColor: UIColor.white.cgColor, borderWith: 1.0,borderCornerRadius: 12.0)
         
         self.collContainerView.addSubview(collectionView)
@@ -114,7 +114,7 @@ class PrefCollectionsViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationItem.title = "My Preferences"
+        navigationItem.title = "Preferences"
         activateKeyboardManager()
 
         self.tabBarController?.tabBar.isHidden = true
@@ -127,26 +127,93 @@ class PrefCollectionsViewController: UIViewController {
     
     //when user will click on the back button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
+        var selectedArray = [Int]()
+        for item in itemsList{
+            if (item.isSelected ?? false){
+                selectedArray.append(item.termId)   //taking all selected termdID into array
+            }
+        }
+        if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
+            let commaSeperatedString = selectedArray.map{String($0)}.joined(separator: ",")
+            setPreferences(commaSeperatedString: commaSeperatedString)
+        }
+    }
+    
+    func setPreferences(commaSeperatedString:String) {
+        self.showNetworkActivity()
+        setPreferencesInformation(commaSeperatedString: commaSeperatedString) {information, error in
+            self.hideNetworkActivity()
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            if let informations = information {
+                switch self.prefType {
+                    case .gifts:
+                        switch self.prefInformationType {
+                            case .giftHabbits:
+                                let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftCategories)
+                                self.navigationController?.pushViewController(viewController, animated: true)
+                            case .giftCategories:
+                                let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftPreferences)
+                                self.navigationController?.pushViewController(viewController, animated: true)
+                            default:
+                                self.skipTapped()
+                        }
+                    default:
+                        print("Others")
+                }
+            } else {
+                let error = BackendError.parsing(reason: "Could not set the Preferences")
+                self.showError(error)
+            }
+        }
+    }
+    
+    func setPreferencesInformation(commaSeperatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
         switch prefType {
             case .gifts:
                 switch prefInformationType {
                     case .giftHabbits:
-                        let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftCategories)
-                        self.navigationController?.pushViewController(viewController, animated: true)
+                        GoLujoAPIManager().setGiftHabbits(token: token,commSepeartedString: commaSeperatedString) { contentString, error in
+                            guard error == nil else {
+                                Crashlytics.sharedInstance().recordError(error!)
+                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                                completion(nil, error)
+                                return
+                            }
+                            completion(contentString, error)
+                        }
                     case .giftCategories:
-                        let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftPreferences)
-                        self.navigationController?.pushViewController(viewController, animated: true)
+                        GoLujoAPIManager().setGiftCategories(token: token,commSepeartedString: commaSeperatedString) { contentString, error in
+                            guard error == nil else {
+                                Crashlytics.sharedInstance().recordError(error!)
+                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                                completion(nil, error)
+                                return
+                            }
+                            completion(contentString, error)
+                        }
                     default:
-                        skipTapped()
-//                        if let viewController = navigationController?.viewControllers.first(where: {$0 is MyPreferencesViewController}) {
-//                              navigationController?.popToViewController(viewController, animated: false)
-//                        }
+                        print("giftPreferences")
+                        GoLujoAPIManager().setGiftPreferences(token: token,commSepeartedString: commaSeperatedString) { contentString, error in
+                            guard error == nil else {
+                                Crashlytics.sharedInstance().recordError(error!)
+                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                                completion(nil, error)
+                                return
+                            }
+                            completion(contentString, error)
+                        }
                 }
             default:
                 print("Others")
         }
-        
-        
     }
     
     //@objc func skipTapped(sender: UIBarButtonItem){
@@ -168,15 +235,12 @@ class PrefCollectionsViewController: UIViewController {
     
     func getPreferences() {
         self.showNetworkActivity()
-
         getPreferencesInformation() {information, error in
             self.hideNetworkActivity()
-            
             if let error = error {
                 self.showError(error)
                 return
             }
-            
             if let informations = information {
                 self.itemsList = informations
             } else {
@@ -230,9 +294,9 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("Others")
         }
-        
-
     }
+    
+    
     
     func showNetworkActivity() {
             naHUD.show(in: view)
@@ -259,11 +323,16 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PrefCollViewCell.identifier, for: indexPath) as! PrefCollViewCell
-        
         let model = itemsList[indexPath.row]
-        
         cell.lblTitle.text = model.name
         
+        if (model.isSelected ?? false){
+            cell.backgroundColor = UIColor.rgMid
+            cell.lblTitle.textColor = UIColor.white
+        }else{
+            cell.backgroundColor = UIColor.clear
+            cell.lblTitle.textColor = UIColor.rgMid
+        }
 
         return cell
         // swiftlint:enable force_cast
@@ -277,7 +346,9 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
 extension PrefCollectionsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("didSelectItemAt")
+        print(itemsList[indexPath.row].isSelected as Any)
+        itemsList[indexPath.row].isSelected = !(itemsList[indexPath.row].isSelected ?? false)
+        self.collectionView.reloadItems(at: [indexPath])
     }
     
 }
@@ -287,28 +358,24 @@ extension PrefCollectionsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-//        return CGSize(width: PrefCollSize.itemWidth.rawValue, height: PrefCollSize.itemHeight.rawValue)
-        let itemWidth = Int(self.collContainerView.frame.size.width) - (PrefCollSize.itemHorizontalMargin.rawValue * 2)
-        return CGSize(width: itemWidth, height: PrefCollSize.itemHeight.rawValue)
+        switch prefInformationType {
+        case .giftHabbits:
+            //width is same as collection container's view i.e. full width
+            let itemWidth = Int(self.collContainerView.frame.size.width)
+            return CGSize(width: itemWidth, height: PrefCollSize.itemHeight.rawValue)
+        default:
+            //width is half as collection container's view minus margin
+            let itemWidth = Int(self.collContainerView.frame.size.width / 2)  - (PrefCollSize.itemHorizontalMargin.rawValue)
+            return CGSize(width: itemWidth, height: PrefCollSize.itemHeight.rawValue)
+        }
+        
+        
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: CGFloat(PrefCollSize.itemHorizontalMargin.rawValue), bottom: 0, right: CGFloat(PrefCollSize.itemHorizontalMargin.rawValue)) // .zero
-//        let CellWidth = PrefCollSize.itemWidth.rawValue
-//        let CellCount = itemsList.count
-//        let CellSpacing = PrefCollSize.itemMargin.rawValue
-//        let collectionViewWidth = self.collContainerView.frame.size.width
-//
-//        let totalCellWidth = CellWidth * CellCount
-//        let totalSpacingWidth = CellSpacing * (CellCount - 1)
-//
-//        let leftInset = (collectionViewWidth - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-//        let rightInset = leftInset
-//
-//        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     func collectionView(_ collectionView: UICollectionView,

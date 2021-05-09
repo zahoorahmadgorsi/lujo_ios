@@ -28,7 +28,7 @@ class PrefCollViewCell: UICollectionViewCell {
     private func reset() {
         imgContainerView.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWith: 1.0,borderCornerRadius: 2.0)
         lblTitle.text = ""
-
     }
+    
 
 }
