@@ -104,6 +104,9 @@ class MyPreferencesViewController: UIViewController {
         case 0:
             let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
             self.navigationController?.pushViewController(viewController, animated: true)
+        case 1:
+            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
+            self.navigationController?.pushViewController(viewController, animated: true)
         default:
             print("Others")
         }

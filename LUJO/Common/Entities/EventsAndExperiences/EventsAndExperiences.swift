@@ -24,6 +24,13 @@ struct Taxonomy: Codable {
             throw error
         }
     }
+    
+    //This init is going to be used in preference for hardocoded values
+    init(termId:Int , name: String, isSelected: Bool){
+        self.termId = termId
+        self.name = name
+        self.isSelected = isSelected
+    }
 }
 
 struct TaxonomyLocation: Codable {
