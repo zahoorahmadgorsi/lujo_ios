@@ -41,7 +41,7 @@ class AviationAirportSelectionViewController: UIViewController, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = airportType == .departureAirport ? "Departure airport" : "Arrival airport"
+        titleLabel.text = airportType == .departureAirport ? "Departure airport" : "Destination airport"
         
         searchText.becomeFirstResponder()
         searchText.addTarget(self,

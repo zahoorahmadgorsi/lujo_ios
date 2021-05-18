@@ -8,12 +8,12 @@
 
 import UIKit
 
-class MyPreferencesViewController: UIViewController {
+class PreferencesHomeViewController: UIViewController {
     
     //MARK: - 🎲 - Init
     
     /// Class storyboard identifier.
-    class var identifier: String { return "MyPreferencesViewController" }
+    class var identifier: String { return "PreferencesHomeViewController" }
     
     @IBOutlet weak var viewGifts: UIView!
     @IBOutlet weak var viewAnimation: UIView!
@@ -23,8 +23,8 @@ class MyPreferencesViewController: UIViewController {
     @IBOutlet weak var viewYachts: UIView!
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
-    class func instantiate() -> MyPreferencesViewController {
-        let viewController = UIStoryboard.preferences.instantiate(identifier) as! MyPreferencesViewController
+    class func instantiate() -> PreferencesHomeViewController {
+        let viewController = UIStoryboard.preferences.instantiate(identifier) as! PreferencesHomeViewController
 //        viewController.user = user
         return viewController
     }
@@ -105,7 +105,8 @@ class MyPreferencesViewController: UIViewController {
             let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
             self.navigationController?.pushViewController(viewController, animated: true)
         case 1:
-            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
+//            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
+            let viewController = PreferredDestinationaViewController.instantiate()
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             print("Others")

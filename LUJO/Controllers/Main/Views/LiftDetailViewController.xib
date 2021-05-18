@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -51,7 +51,7 @@
                                                         <constraint firstAttribute="height" constant="240" id="vLS-Ga-pHB"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pg4-qT-YNy">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pg4-qT-YNy">
                                                     <rect key="frame" x="64" y="0.0" width="311" height="240"/>
                                                     <connections>
                                                         <action selector="galleryButton_onClick:" destination="-1" eventType="touchUpInside" id="Ofy-2V-3S1"/>
@@ -77,7 +77,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51c-IS-lfx">
                                             <rect key="frame" x="0.0" y="248" width="375" height="40"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCr-Du-NN7">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCr-Du-NN7">
                                                     <rect key="frame" x="264" y="8" width="95" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="95" id="KVw-9v-T7k"/>
@@ -124,7 +124,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y70-KT-qW2">
                                                             <rect key="frame" x="0.0" y="0.0" width="113.5" height="44"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOB-wH-JJp">
+                                                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOB-wH-JJp">
                                                                     <rect key="frame" x="0.0" y="0.0" width="113.5" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -169,7 +169,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etO-TI-Uvu">
                                                             <rect key="frame" x="114.5" y="0.0" width="114" height="44"/>
                                                             <subviews>
-                                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72O-Ke-XKr">
+                                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72O-Ke-XKr">
                                                                     <rect key="frame" x="0.0" y="0.0" width="114" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -214,7 +214,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofD-dK-goQ">
                                                             <rect key="frame" x="229.5" y="0.0" width="113.5" height="44"/>
                                                             <subviews>
-                                                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ad-WU-X8i">
+                                                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ad-WU-X8i">
                                                                     <rect key="frame" x="0.0" y="0.0" width="113.5" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -312,7 +312,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwF-VD-EPC" userLabel="Bottom Bar">
                     <rect key="frame" x="0.0" y="599" width="375" height="68"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEy-6D-fvL" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEy-6D-fvL" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                             <rect key="frame" x="17" y="12" width="280" height="44"/>
                             <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                             <constraints>
@@ -359,6 +359,7 @@
                     <color key="backgroundColor" name="Palette - Separator"/>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="Navigation Bar"/>
             <constraints>
                 <constraint firstItem="p0A-2l-vzF" firstAttribute="top" secondItem="jwF-VD-EPC" secondAttribute="bottom" id="3WY-1t-W78"/>
@@ -377,7 +378,6 @@
                 <constraint firstItem="p0A-2l-vzF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="y6U-0l-inI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jwF-VD-EPC" secondAttribute="bottom" id="yKs-dv-TqN"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="-791.20000000000005" y="225.33733133433284"/>
         </view>
         <view contentMode="scaleToFill" id="O9F-54-Ufe" userLabel="Overview" customClass="LiftOverviewSubVIew" customModule="LUJO" customModuleProvider="target">
@@ -613,7 +613,7 @@
                             <rect key="frame" x="0.0" y="319.5" width="359" height="24"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0y-Q8-S6c">
-                                    <rect key="frame" x="16" y="0.0" width="41.5" height="24"/>
+                                    <rect key="frame" x="16" y="0.0" width="42" height="24"/>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                     <color key="textColor" name="Palette - Paragraph White"/>
                                     <nil key="highlightedColor"/>
@@ -648,6 +648,7 @@
                     </subviews>
                 </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="mYD-GJ-Y0w"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="L7g-cb-ok9" firstAttribute="trailing" secondItem="mYD-GJ-Y0w" secondAttribute="trailing" id="Ck2-3D-nb4"/>
@@ -658,7 +659,6 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="mYD-GJ-Y0w"/>
             <connections>
                 <outlet property="aircraftName" destination="65G-Sm-skR" id="33a-TK-QEe"/>
                 <outlet property="memberPrice" destination="yMG-CJ-dmf" id="dtJ-Mp-4Mj"/>
@@ -782,6 +782,7 @@
                     </subviews>
                 </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="sZd-iT-JXB"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="sZd-iT-JXB" firstAttribute="trailing" secondItem="oNL-8J-1zB" secondAttribute="trailing" constant="16" id="33L-qJ-1ZT"/>
@@ -790,7 +791,6 @@
                 <constraint firstItem="oNL-8J-1zB" firstAttribute="leading" secondItem="sZd-iT-JXB" secondAttribute="leading" constant="16" id="y8o-gf-OqC"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="sZd-iT-JXB"/>
             <connections>
                 <outlet property="arrivalDate" destination="MBS-dX-Xny" id="w3A-vu-Kzd"/>
                 <outlet property="arrivalTime" destination="AY1-dG-42t" id="avy-p3-4Ae"/>
@@ -939,6 +939,7 @@
                     </subviews>
                 </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="3Bj-Ch-Wo2"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="2Z0-rv-2qM" firstAttribute="top" secondItem="dcY-EQ-b5B" secondAttribute="top" constant="16" id="8gs-rS-vkQ"/>
@@ -949,7 +950,6 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="3Bj-Ch-Wo2"/>
             <connections>
                 <outlet property="aircraftName" destination="w9s-NS-NJb" id="dpE-WA-yHt"/>
                 <outlet property="amenities" destination="IOR-7G-SKc" id="YzX-cm-UkL"/>
@@ -961,7 +961,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Back Button Top" width="11.5" height="21"/>
+        <image name="Back Button Top" width="32" height="32"/>
         <image name="Chat Button" width="20" height="20"/>
         <image name="Sample Jet Image" width="183" height="122"/>
         <image name="Seats Icon" width="12" height="12"/>
@@ -988,7 +988,7 @@
             <color red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Palette - R-G Mid">
-            <color red="0.95686274509803926" green="0.63921568627450975" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.90196078431372551" green="0.52549019607843139" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Palette - Separator">
             <color red="0.24705882352941178" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

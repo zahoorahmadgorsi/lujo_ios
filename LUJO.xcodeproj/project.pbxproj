@@ -113,7 +113,7 @@
 		88310E2A2636069400301667 /* OneSignal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BB42633C811003F1E77 /* OneSignal.xcframework */; };
 		8844D9B22563F712002FF846 /* FavouriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8844D9B02563F712002FF846 /* FavouriteCell.swift */; };
 		8844D9B32563F712002FF846 /* FavouriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8844D9B12563F712002FF846 /* FavouriteCell.xib */; };
-		888A303E264402CC008754AD /* MyPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A303D264402CC008754AD /* MyPreferencesViewController.swift */; };
+		888A303E264402CC008754AD /* PreferencesHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A303D264402CC008754AD /* PreferencesHomeViewController.swift */; };
 		888A30432644039D008754AD /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888A30422644039D008754AD /* Preferences.storyboard */; };
 		888A305D26458ADB008754AD /* PrefCollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */; };
 		888A306426460C9D008754AD /* PrefCollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A306226460C9D008754AD /* PrefCollViewCell.swift */; };
@@ -126,7 +126,10 @@
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
 		88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */; };
 		88C083C92635CCB400204475 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C083C82635CCB400204475 /* WishListViewController.swift */; };
-		88CEBCEE2652FCA700360CB6 /* CharterFrequencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBCED2652FCA700360CB6 /* CharterFrequencyViewController.swift */; };
+		88CEBCEE2652FCA700360CB6 /* TwoSliderPrefViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBCED2652FCA700360CB6 /* TwoSliderPrefViewController.swift */; };
+		88CEBCFC265457EC00360CB6 /* PreferredDestinationaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */; };
+		88CEBD0726546D1A00360CB6 /* AirportCollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */; };
+		88CEBD0C26546D2D00360CB6 /* AirportCollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBD0B26546D2D00360CB6 /* AirportCollViewCell.swift */; };
 		88E731A9256FC5B700BEDD00 /* ProductDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */; };
 		88E731AA256FC5B700BEDD00 /* ProductDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */; };
 		88E731AC256FFA7200BEDD00 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */; };
@@ -474,7 +477,7 @@
 		882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedRouter.swift; sourceTree = "<group>"; };
 		8844D9B02563F712002FF846 /* FavouriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCell.swift; sourceTree = "<group>"; };
 		8844D9B12563F712002FF846 /* FavouriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouriteCell.xib; sourceTree = "<group>"; };
-		888A303D264402CC008754AD /* MyPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPreferencesViewController.swift; sourceTree = "<group>"; };
+		888A303D264402CC008754AD /* PreferencesHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesHomeViewController.swift; sourceTree = "<group>"; };
 		888A30422644039D008754AD /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefCollectionsViewController.swift; sourceTree = "<group>"; };
 		888A306226460C9D008754AD /* PrefCollViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefCollViewCell.swift; sourceTree = "<group>"; };
@@ -487,7 +490,10 @@
 		88B90AA02634389700DE2089 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		88C083C82635CCB400204475 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
 		88C083FA2635FA4A00204475 /* Mixpanel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Mixpanel.xcframework; path = Carthage/Build/Mixpanel.xcframework; sourceTree = "<group>"; };
-		88CEBCED2652FCA700360CB6 /* CharterFrequencyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharterFrequencyViewController.swift; sourceTree = "<group>"; };
+		88CEBCED2652FCA700360CB6 /* TwoSliderPrefViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoSliderPrefViewController.swift; sourceTree = "<group>"; };
+		88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredDestinationaViewController.swift; sourceTree = "<group>"; };
+		88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AirportCollViewCell.xib; sourceTree = "<group>"; };
+		88CEBD0B26546D2D00360CB6 /* AirportCollViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportCollViewCell.swift; sourceTree = "<group>"; };
 		88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCell.swift; sourceTree = "<group>"; };
 		88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailCell.xib; sourceTree = "<group>"; };
 		88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
@@ -1102,9 +1108,10 @@
 		888A30392644027E008754AD /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				888A303D264402CC008754AD /* MyPreferencesViewController.swift */,
+				888A303D264402CC008754AD /* PreferencesHomeViewController.swift */,
 				888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */,
-				88CEBCED2652FCA700360CB6 /* CharterFrequencyViewController.swift */,
+				88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */,
+				88CEBCED2652FCA700360CB6 /* TwoSliderPrefViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1112,6 +1119,8 @@
 		888A306126460BA2008754AD /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				88CEBD0B26546D2D00360CB6 /* AirportCollViewCell.swift */,
+				88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */,
 				888A306226460C9D008754AD /* PrefCollViewCell.swift */,
 				888A306326460C9D008754AD /* PrefCollViewCell.xib */,
 			);
@@ -1889,6 +1898,7 @@
 				888A306526460C9D008754AD /* PrefCollViewCell.xib in Resources */,
 				9A4CE04220F6F0AC00BB27FC /* HelveticaLTStd-Bold.otf in Resources */,
 				1D880130233E4AB30039DEA6 /* DiningCategorySliderCell.xib in Resources */,
+				88CEBD0726546D1A00360CB6 /* AirportCollViewCell.xib in Resources */,
 				1DBC9BFD235F6BCA00F0F133 /* BookingDetailCell.xib in Resources */,
 				9A645BA1226492BB009BF14D /* BookingPriceSummaryView.xib in Resources */,
 				5527644723195CF800380BEB /* AccountNEW.storyboard in Resources */,
@@ -2080,7 +2090,7 @@
 				9183E84825EBEF3C00656B48 /* GalleryView2.swift in Sources */,
 				9AD6EAC221E49F0B00B695A3 /* Payment Type DataSource.swift in Sources */,
 				9ADC468621590AA600D96C95 /* AviationEntitities.swift in Sources */,
-				88CEBCEE2652FCA700360CB6 /* CharterFrequencyViewController.swift in Sources */,
+				88CEBCEE2652FCA700360CB6 /* TwoSliderPrefViewController.swift in Sources */,
 				91FF68DF25E2519300B1761E /* VillaViewController.swift in Sources */,
 				1D7819A822FD67740044C70B /* FeatureListView.swift in Sources */,
 				9A091E0C21EC49D900B0B5E6 /* Result.swift in Sources */,
@@ -2125,6 +2135,7 @@
 				5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */,
 				9ABCF5BF2163DC3100D062C9 /* Airport.swift in Sources */,
 				3005D47E23202BFC00401243 /* AviationLuggageSelectionViewController.swift in Sources */,
+				88CEBD0C26546D2D00360CB6 /* AirportCollViewCell.swift in Sources */,
 				1DFE1AC7234772E60025410D /* DiningCityView.swift in Sources */,
 				9ADB1D1E21EE041F00FAB2E9 /* AddCreditCardView.swift in Sources */,
 				9AA95FDE2189BE6F00156AB6 /* LiftDetailViewController.swift in Sources */,
@@ -2251,6 +2262,7 @@
 				3005D48423202CC700401243 /* AviationResultsViewController.swift in Sources */,
 				888A30712646196F008754AD /* PreferencesRouter.swift in Sources */,
 				164330344F7315887695337E /* User.swift in Sources */,
+				88CEBCFC265457EC00360CB6 /* PreferredDestinationaViewController.swift in Sources */,
 				1D618014238EA51A00F01199 /* HotelViewController.swift in Sources */,
 				9A4CB3942161C4D900856930 /* JSONDecoder+DataResponse.swift in Sources */,
 				1DEDB9EA22F20D4000903CAC /* HomeSlider.swift in Sources */,
@@ -2267,7 +2279,7 @@
 				9156B7692614AD9900404E1D /* SpecialEventAnimator.swift in Sources */,
 				9AF8DC222200C519003D0519 /* UIButton.swift in Sources */,
 				9A5C5CB9222FD99000B8239D /* PaymentSession.swift in Sources */,
-				888A303E264402CC008754AD /* MyPreferencesViewController.swift in Sources */,
+				888A303E264402CC008754AD /* PreferencesHomeViewController.swift in Sources */,
 				91522DAF2608B2100023BAD8 /* DiningFeaturedAnimator.swift in Sources */,
 				9A194FE6228DE69A00E3DBD1 /* EventsAndExperiences.swift in Sources */,
 				9A38EF6E2253D6820097BA0B /* ActionButton.swift in Sources */,

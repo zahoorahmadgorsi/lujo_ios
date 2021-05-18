@@ -219,7 +219,7 @@ class PrefCollectionsViewController: UIViewController {
                 let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationOtherInterests)
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .aviationOtherInterests:
-                let viewController = CharterFrequencyViewController.instantiate()
+                let viewController = TwoSliderPrefViewController.instantiate()
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 self.skipTapped()
@@ -348,7 +348,7 @@ class PrefCollectionsViewController: UIViewController {
     
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
-        if let viewController = navigationController?.viewControllers.first(where: {$0 is MyPreferencesViewController}) {
+        if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
               navigationController?.popToViewController(viewController, animated: true)
         }
         

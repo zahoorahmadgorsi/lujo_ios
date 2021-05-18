@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="gTV-IL-0wX" customClass="PrefCollViewCell" customModule="LUJO" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="gTV-IL-0wX" customClass="AirportCollViewCell" customModule="LUJO" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="275" height="40"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -20,8 +20,17 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Jd-0M-Szf">
                         <rect key="frame" x="0.0" y="0.0" width="275" height="40"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preference label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYO-cq-YsY">
-                                <rect key="frame" x="2" y="11.5" width="271" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Airport name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYO-cq-YsY">
+                                <rect key="frame" x="2" y="11.5" width="247" height="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <color key="textColor" name="Palette - R-G Mid"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ukj-yp-gKR">
+                                <rect key="frame" x="257" y="11.5" width="10" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="pjM-e0-52l"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" name="Palette - R-G Mid"/>
                                 <nil key="highlightedColor"/>
@@ -29,9 +38,11 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Ukj-yp-gKR" firstAttribute="leading" secondItem="XYO-cq-YsY" secondAttribute="trailing" constant="8" id="InF-af-oDK"/>
                             <constraint firstItem="XYO-cq-YsY" firstAttribute="centerY" secondItem="6Jd-0M-Szf" secondAttribute="centerY" id="Oy4-78-VE8"/>
+                            <constraint firstItem="Ukj-yp-gKR" firstAttribute="centerY" secondItem="6Jd-0M-Szf" secondAttribute="centerY" id="ohH-Ul-78d"/>
                             <constraint firstItem="XYO-cq-YsY" firstAttribute="leading" secondItem="6Jd-0M-Szf" secondAttribute="leading" constant="2" id="s94-gM-O7D"/>
-                            <constraint firstAttribute="trailing" secondItem="XYO-cq-YsY" secondAttribute="trailing" constant="2" id="xoP-Bd-aMF"/>
+                            <constraint firstAttribute="trailing" secondItem="Ukj-yp-gKR" secondAttribute="trailing" constant="8" id="xqG-lp-dWz"/>
                         </constraints>
                     </view>
                 </subviews>

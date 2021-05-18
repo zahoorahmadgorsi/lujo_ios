@@ -177,7 +177,7 @@ class AccountViewController: UIViewController {
     
     @objc func lblMyPreferencesTapped() {
         print("lblMyPreferencesTapped")
-        let viewController = MyPreferencesViewController.instantiate()
+        let viewController = PreferencesHomeViewController.instantiate()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

@@ -9,12 +9,12 @@
 import UIKit
 import JGProgressHUD
 
-class CharterFrequencyViewController: UIViewController {
+class TwoSliderPrefViewController: UIViewController {
     
     //MARK: - 🎲 - Init
     
     /// Class storyboard identifier.
-    class var identifier: String { return "CharterFrequencyViewController" }
+    class var identifier: String { return "TwoSliderPrefViewController" }
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var imgPreference: UIImageView!
@@ -32,8 +32,8 @@ class CharterFrequencyViewController: UIViewController {
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
-    class func instantiate() -> CharterFrequencyViewController {
-        let viewController = UIStoryboard.preferences.instantiate(identifier) as! CharterFrequencyViewController
+    class func instantiate() -> TwoSliderPrefViewController {
+        let viewController = UIStoryboard.preferences.instantiate(identifier) as! TwoSliderPrefViewController
         return viewController
     }
 
@@ -62,7 +62,7 @@ class CharterFrequencyViewController: UIViewController {
     
     //when user will click on the back button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
-        skipTapped()
+        navigateToNextVC()
     }
     
     func setPreferences(commaSeperatedString:String) {
@@ -83,7 +83,7 @@ class CharterFrequencyViewController: UIViewController {
     }
     
     func navigateToNextVC(){
-        let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftPreferences)
+        let viewController = PreferredDestinationaViewController.instantiate()
         self.navigationController?.pushViewController(viewController, animated: true)
         
     }
@@ -108,7 +108,7 @@ class CharterFrequencyViewController: UIViewController {
     
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
-        if let viewController = navigationController?.viewControllers.first(where: {$0 is MyPreferencesViewController}) {
+        if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
               navigationController?.popToViewController(viewController, animated: true)
         }
         
