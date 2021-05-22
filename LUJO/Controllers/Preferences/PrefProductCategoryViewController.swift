@@ -9,12 +9,12 @@
 import UIKit
 import JGProgressHUD
 
-class PrefCollectionsViewController: UIViewController {
+class PrefProductCategoryViewController: UIViewController {
     
     //MARK: - 🎲 - Init
     
     /// Class storyboard identifier.
-    class var identifier: String { return "PrefCollectionsViewController" }
+    class var identifier: String { return "PrefProductCategoryViewController" }
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var imgPreference: UIImageView!
@@ -51,8 +51,8 @@ class PrefCollectionsViewController: UIViewController {
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
-    class func instantiate(prefType: PrefType, prefInformationType : PrefInformationType) -> PrefCollectionsViewController {
-        let viewController = UIStoryboard.preferences.instantiate(identifier) as! PrefCollectionsViewController
+    class func instantiate(prefType: PrefType, prefInformationType : PrefInformationType) -> PrefProductCategoryViewController {
+        let viewController = UIStoryboard.preferences.instantiate(identifier) as! PrefProductCategoryViewController
         viewController.prefType = prefType
         viewController.prefInformationType = prefInformationType
         return viewController
@@ -71,45 +71,16 @@ class PrefCollectionsViewController: UIViewController {
         applyConstraints()
         
         switch prefType {
-            case .gifts:
-                imgPreference.image = UIImage(named: "Purchase Goods Icon")
-                lblPrefLabel.text = "Gifts"
-                switch prefInformationType {
-                case .giftHabbits:
-                    lblPrefQuestion.text = "Tell us about your gift giving habits:"
-                    txtPleaseSpecify.text = self.userPreferences?.gift.gift_habit_id_other
-                case .giftCategories:
-                    lblPrefQuestion.text = "Preferred gift items:"
-                    txtPleaseSpecify.text = self.userPreferences?.gift.gift_category_id_other
-                case .giftPreferences:
-                    lblPrefQuestion.text = "Item Preferences:"
-                    txtPleaseSpecify.text = self.userPreferences?.gift.gift_preferences_id_other
-                    btnNextStep.setTitle("D O N E", for: .normal)
-                default:
-                    print("Others")
-                }
             case .aviation:
                 imgPreference.image = UIImage(named: "aviation_icon")
                 lblPrefLabel.text = "Aviation"
                 switch prefInformationType {
-                case .aviationHaveCharteredBefore:
-                    lblPrefQuestion.text = "Have you chartered before?:"
+                case .aviationAircraftCategory:
+                    lblPrefQuestion.text = "Preferred aircraft category?"
                     txtPleaseSpecify.isHidden = true
-                case .aviationInterestedIn:
-                    lblPrefQuestion.text = "Interested in?"
-                    txtPleaseSpecify.isHidden = true
-                case .aviationPreferredCharter:
-                    lblPrefQuestion.text = "Preferred charter?"
-                    txtPleaseSpecify.isHidden = true
-                case .aviationPreferredCuisine:
-                    lblPrefQuestion.text = "Preferred cuisine?"
-                    txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_cuisine_id_other
-                case .aviationPreferredBevereges:
-                    lblPrefQuestion.text = "Preferred Beverages?"
-                    txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_beverage_id_other
-                    btnNextStep.setTitle("D O N E", for: .normal)
-                default:
-                    print("Others")
+//                        btnNextStep.setTitle("D O N E", for: .normal)
+                    default:
+                        print("Others")
                 }
             default:
                 print("Others")
@@ -155,83 +126,9 @@ class PrefCollectionsViewController: UIViewController {
         }
         
         switch prefType {
-            case .gifts:
+            case .aviation:
                 switch prefInformationType {
-                case .giftHabbits:
-                    GoLujoAPIManager().getGiftHabbits(token) { taxonomies, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        completion(taxonomies, error)
-                    }
-                case .giftCategories:
-                    GoLujoAPIManager().getGiftCategories(token) { taxonomies, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        completion(taxonomies, error)
-                    }
-                case .giftPreferences:
-                    GoLujoAPIManager().getGiftPreferences(token) { taxonomies, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        completion(taxonomies, error)
-                    }
-                default:
-                    print("This statement must not execute")
-                }
- 
-                case .aviation:
-                    switch prefInformationType {
-                    case .aviationHaveCharteredBefore:
-                        let taxonomyObj1 = Taxonomy(termId:-1 , name: "Yes")
-                        let taxonomyObj2 = Taxonomy(termId:-1 , name: "No")
-                        var taxonomies = [Taxonomy]()
-                        taxonomies.append(taxonomyObj1)
-                        taxonomies.append(taxonomyObj2)
-                        completion(taxonomies, nil)
-                    case .aviationInterestedIn:
-                        let taxonomyObj1 = Taxonomy(termId:-1 , name: "Charter")
-                        let taxonomyObj2 = Taxonomy(termId:-1 , name: "Purchase")
-                        var taxonomies = [Taxonomy]()
-                        taxonomies.append(taxonomyObj1)
-                        taxonomies.append(taxonomyObj2)
-                        completion(taxonomies, nil)
-                    case .aviationPreferredCharter:
-                        let taxonomyObj1 = Taxonomy(termId:-1 , name: "Short Range")
-                        let taxonomyObj2 = Taxonomy(termId:-1 , name: "Long Range")
-                        var taxonomies = [Taxonomy]()
-                        taxonomies.append(taxonomyObj1)
-                        taxonomies.append(taxonomyObj2)
-                        completion(taxonomies, nil)
-                    case .aviationPreferredCuisine:
-                        GoLujoAPIManager().home(token) { restaurants, error in
-                            guard error == nil else {
-                                Crashlytics.sharedInstance().recordError(error!)
-                                let error = BackendError.parsing(reason: "Could not obtain Dining information")
-                                completion(nil, error)
-                                return
-                            }
-                            var taxonomies = [Taxonomy]()
-                            if let cuisines = restaurants?.cuisines{
-                                for item in cuisines{
-                                    let taxonomyObj1 = Taxonomy(termId: item.termId , name: item.name)
-                                    taxonomies.append(taxonomyObj1)
-                                }
-                            }
-                            completion(taxonomies, error)
-                        }
-                    case .aviationPreferredBevereges:
+                    case .aviationAircraftCategory:
                         GoLujoAPIManager().getAviationBeverages(token) { taxonomies, error in
                             guard error == nil else {
                                 Crashlytics.sharedInstance().recordError(error!)
@@ -252,10 +149,10 @@ class PrefCollectionsViewController: UIViewController {
                             }
                             completion(taxonomies, error)
                         }
-                    }
-                default:
-                    print("Others")
-            }
+                }
+            default:
+                print("Others")
+        }
     }
     
     //when user will click on the next button at the bottom
@@ -263,65 +160,12 @@ class PrefCollectionsViewController: UIViewController {
         var selectedArray = [String]()
         
         switch self.prefType {
-            case .gifts:
-                switch self.prefInformationType {
-                case .giftHabbits:
-                    if let ids = userPreferences?.gift.gift_habit_id{
-                        for id in ids {
-                            selectedArray.append(id)
-                        }
-                    }
-                    // in case of successful API call, we are storing this value into user defaults
-                    userPreferences?.gift.gift_habit_id_other = self.txtPleaseSpecify.text
-                case .giftCategories:
-                    if let ids = userPreferences?.gift.gift_category_id{
-                        for id in ids {
-                            selectedArray.append(id)
-                        }
-                    }
-                    // in case of successful API call, we are storing this value into user defaults
-                    userPreferences?.gift.gift_category_id_other = self.txtPleaseSpecify.text
-                case .giftPreferences:
-                    if let ids = userPreferences?.gift.gift_preferences_id{
-                        for id in ids {
-                            selectedArray.append(id)
-                        }
-                    }
-                    // in case of successful API call, we are storing this value into user defaults
-                    userPreferences?.gift.gift_preferences_id_other = self.txtPleaseSpecify.text
-                default:
-                    print("gifts default")
-                }
         case .aviation:
             switch self.prefInformationType {
-            case .aviationHaveCharteredBefore:
+            case .aviationAircraftCategory:
                 if let str = userPreferences?.aviation.aviation_chartered_before{
                     selectedArray.append(str)
                 }
-            case .aviationInterestedIn:
-                if let str = userPreferences?.aviation.aviation_interested_in{
-                    selectedArray.append(str)
-                }
-            case .aviationPreferredCharter:
-                if let str = userPreferences?.aviation.aviation_preferred_charter_range{
-                    selectedArray.append(str)
-                }
-            case .aviationPreferredCuisine:
-                if let ids = userPreferences?.aviation.aviation_preferred_cuisine_id{
-                    for id in ids {
-                        selectedArray.append(id)
-                    }
-                }
-                // in case of successful API call, we are storing this value into user defaults
-                userPreferences?.aviation.aviation_preferred_cuisine_id_other = self.txtPleaseSpecify.text
-            case .aviationPreferredBevereges:
-                if let ids = userPreferences?.aviation.aviation_preferred_beverage_id{
-                    for id in ids {
-                        selectedArray.append(id)
-                    }
-                }
-                // in case of successful API call, we are storing this value into user defaults
-                userPreferences?.aviation.aviation_preferred_beverage_id_other = self.txtPleaseSpecify.text
             default:
                 print("aviation default")
             }
@@ -367,40 +211,6 @@ class PrefCollectionsViewController: UIViewController {
         }
         
         switch prefType {
-            case .gifts:
-                switch prefInformationType {
-                    case .giftHabbits:
-                        GoLujoAPIManager().setGiftHabbits(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
-                            guard error == nil else {
-                                Crashlytics.sharedInstance().recordError(error!)
-                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                                completion(nil, error)
-                                return
-                            }
-                            completion(contentString, error)
-                        }
-                    case .giftCategories:
-                        GoLujoAPIManager().setGiftCategories(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
-                            guard error == nil else {
-                                Crashlytics.sharedInstance().recordError(error!)
-                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                                completion(nil, error)
-                                return
-                            }
-                            completion(contentString, error)
-                        }
-                    default:
-                        print("giftPreferences")
-                        GoLujoAPIManager().setGiftPreferences(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
-                            guard error == nil else {
-                                Crashlytics.sharedInstance().recordError(error!)
-                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                                completion(nil, error)
-                                return
-                            }
-                            completion(contentString, error)
-                        }
-                }
         case .aviation:
             switch prefInformationType {
                 case .aviationHaveCharteredBefore:
@@ -475,33 +285,13 @@ class PrefCollectionsViewController: UIViewController {
     
     func navigateToNextVC(){
         switch self.prefType {
-            case .gifts:
-                switch self.prefInformationType {
-                    case .giftHabbits:
-                        let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftCategories)
-                        self.navigationController?.pushViewController(viewController, animated: true)
-                    case .giftCategories:
-                        let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftPreferences)
-                        self.navigationController?.pushViewController(viewController, animated: true)
-                    default:
-                        self.skipTapped()
-                }
         case .aviation:
             switch self.prefInformationType {
-            case .aviationHaveCharteredBefore:
-                let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationInterestedIn)
-                self.navigationController?.pushViewController(viewController, animated: true)
-            case .aviationInterestedIn:
-                let viewController = TwoSliderPrefViewController.instantiate(prefType: .aviation, prefInformationType: .aviationCharterFrequency)
-                self.navigationController?.pushViewController(viewController, animated: true)
-            case .aviationPreferredCharter:
-                let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredCuisine)
-                self.navigationController?.pushViewController(viewController, animated: true)
-            case .aviationPreferredCuisine:
-                let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredBevereges)
+            case .aviationAircraftCategory:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredCharter)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
-                self.skipTapped()   //skip even for aviationPreferredBevereges
+                self.skipTapped()
             }
             default:
                 print("Others")
@@ -542,7 +332,7 @@ class PrefCollectionsViewController: UIViewController {
     }
 }
 
-extension PrefCollectionsViewController: UICollectionViewDataSource {
+extension PrefProductCategoryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemsList.count
@@ -656,7 +446,7 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
     }
 }
 
-extension PrefCollectionsViewController: UICollectionViewDelegate {
+extension PrefProductCategoryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let termId = String(itemsList[indexPath.row].termId)
         switch self.prefType {
@@ -742,7 +532,7 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
     
 }
 
-extension PrefCollectionsViewController: UICollectionViewDelegateFlowLayout {
+extension PrefProductCategoryViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

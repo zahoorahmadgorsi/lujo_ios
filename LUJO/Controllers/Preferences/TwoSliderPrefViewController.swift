@@ -28,12 +28,16 @@ class TwoSliderPrefViewController: UIViewController {
     
 
     private let naHUD = JGProgressHUD(style: .dark)
-
+    var prefType: PrefType!
+    var prefInformationType : PrefInformationType!
+    var userPreferences: Preferences?
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
-    class func instantiate() -> TwoSliderPrefViewController {
+    class func instantiate(prefType: PrefType, prefInformationType : PrefInformationType) -> TwoSliderPrefViewController {
         let viewController = UIStoryboard.preferences.instantiate(identifier) as! TwoSliderPrefViewController
+        viewController.prefType = prefType
+        viewController.prefInformationType = prefInformationType
         return viewController
     }
 
@@ -44,14 +48,34 @@ class TwoSliderPrefViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip for now", style: .plain, target: self, action: #selector(skipTapped))
         self.contentView.addViewBorder( borderColor: UIColor.white.cgColor, borderWith: 1.0,borderCornerRadius: 12.0)
+        self.userPreferences = LujoSetup().getUserPreferences()  //get user preferences from the userdefaults
         
+        switch prefType {
+            case .aviation:
+                imgPreference.image = UIImage(named: "aviation_icon")
+                lblPrefLabel.text = "Aviation"
+                switch prefInformationType {
+                case .aviationCharterFrequency:
+                    lblPrefQuestion.text = "How many times per year do you charter a jet?"
+                    let corporateValue = userPreferences?.aviation.aviation_times_charter_corporate_jet ?? 1
+                    let leisureValue = userPreferences?.aviation.aviation_times_charter_leisure_jet ?? 1
+                    self.sliderCorporate.value = Float(corporateValue)
+                    self.sliderLeisure.value = Float(leisureValue)
+                    self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
+                    self.lblLeisureValue.text = String(leisureValue) + " time" +  ( leisureValue > 1 ? "s" : "")
+//                        btnNextStep.setTitle("D O N E", for: .normal)
+                    default:
+                        print("Others")
+                }
+            default:
+                print("Others")
+        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "Preferences"
         activateKeyboardManager()
-
         self.tabBarController?.tabBar.isHidden = true
     }
     
@@ -62,18 +86,22 @@ class TwoSliderPrefViewController: UIViewController {
     
     //when user will click on the back button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
-        navigateToNextVC()
-    }
-    
-    func setPreferences(commaSeperatedString:String) {
+        let corporateFrequency = Int(self.sliderCorporate.value)
+        let leisureFrequency = Int(self.sliderLeisure.value)
+        
         self.showNetworkActivity()
-        setPreferencesInformation(commaSeperatedString: commaSeperatedString) {information, error in
+        setPreferencesInformation(corporateFrequency: corporateFrequency , leisureFrequency:leisureFrequency)  {information, error in
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error)
                 return
             }
             if let informations = information {
+                if var userPreferences = self.userPreferences{
+                    userPreferences.aviation.aviation_times_charter_corporate_jet = corporateFrequency
+                    userPreferences.aviation.aviation_times_charter_leisure_jet = leisureFrequency
+                    LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                }
                 self.navigateToNextVC()
             } else {
                 let error = BackendError.parsing(reason: "Could not set the Preferences")
@@ -82,18 +110,12 @@ class TwoSliderPrefViewController: UIViewController {
         }
     }
     
-    func navigateToNextVC(){
-        let viewController = PreferredDestinationaViewController.instantiate()
-        self.navigationController?.pushViewController(viewController, animated: true)
-        
-    }
-    
-    func setPreferencesInformation(commaSeperatedString:String, completion: @escaping (String?, Error?) -> Void) {
+    func setPreferencesInformation( corporateFrequency: Int , leisureFrequency: Int, completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        GoLujoAPIManager().setGiftHabbits(token: token,commSepeartedString: commaSeperatedString) { contentString, error in
+        GoLujoAPIManager().setAviationCharterFrequency(token: token,corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
                 let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -102,8 +124,11 @@ class TwoSliderPrefViewController: UIViewController {
             }
             completion(contentString, error)
         }
-        
-        
+    }
+    
+    func navigateToNextVC(){
+        let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     //@objc func skipTapped(sender: UIBarButtonItem){
@@ -133,7 +158,7 @@ class TwoSliderPrefViewController: UIViewController {
         let currentValue = Int(sliderCorporate.value)
 //        print("corporateSliderValueChanged to \(currentValue)")
         DispatchQueue.main.async {
-            self.lblCorporateVaue.text = "\(currentValue) times"
+            self.lblCorporateVaue.text = "\(currentValue) " + ( currentValue > 1 ? "times" : "time")
         }
     }
     
@@ -141,7 +166,7 @@ class TwoSliderPrefViewController: UIViewController {
         let currentValue = Int(sliderLeisure.value)
 //        print("LeisureSliderValueChanged to \(currentValue)")
         DispatchQueue.main.async {
-            self.lblLeisureValue.text = "\(currentValue) times"
+            self.lblLeisureValue.text = "\(currentValue) " + ( currentValue > 1 ? "times" : "time")
         }
     }
     

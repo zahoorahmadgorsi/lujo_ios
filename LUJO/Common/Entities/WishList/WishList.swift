@@ -53,8 +53,6 @@ struct WishListObjects: Codable {
         case gifts = "gift"
         case yachts = "yacht"
     }
-
-    
 }
 
 extension WishListObjects {

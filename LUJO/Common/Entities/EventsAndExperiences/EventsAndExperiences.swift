@@ -4,12 +4,10 @@ import Foundation
 struct Taxonomy: Codable {
     let termId: Int
     let name: String
-    var isSelected: Bool?    //used in my preferences
 
     enum CodingKeys: String, CodingKey {
         case termId = "term_id"
         case name
-        case isSelected
     }
     
     init(from decoder: Decoder) throws {
@@ -18,7 +16,6 @@ struct Taxonomy: Codable {
             
             name = try values.decode(String.self, forKey: .name)
             termId = try values.decode(Int.self, forKey: .termId)
-            isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -26,10 +23,9 @@ struct Taxonomy: Codable {
     }
     
     //This init is going to be used in preference for hardocoded values
-    init(termId:Int , name: String, isSelected: Bool){
+    init(termId:Int , name: String){
         self.termId = termId
         self.name = name
-        self.isSelected = isSelected
     }
 }
 

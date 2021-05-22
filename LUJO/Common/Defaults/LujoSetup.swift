@@ -9,6 +9,7 @@ extension DefaultsKey {
     static let memberMargin = Key<Double>("memberMargin")
     static let nonMemberMargin = Key<Double>("nonMemberMargin")
     static let countryCodes = Key<[PhoneCountryCode]>("countryCodes")
+    static let userPreferences = Key<Preferences>("userPreferences")
 }
 
 extension Notification.Name {
@@ -205,5 +206,13 @@ class LujoSetup: LoginDataStorable, AppDefaults {
 
     func getCode(for prefix: String) -> PhoneCountryCode? {
         return getCountryCodes()?.filter({ $0.phonePrefix == prefix }).first
+    }
+    
+    func store( userPreferences: Preferences) {
+        defaults.set(userPreferences, for: .userPreferences)
+    }
+    
+    func getUserPreferences() -> Preferences? {
+        return defaults.get(for: .userPreferences)
     }
 }

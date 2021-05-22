@@ -9,10 +9,7 @@
 import UIKit
 import JGProgressHUD
 
-class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate, AirportSearchViewDelegate  {
-    
-    
-    
+class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate, DestinationSearchViewDelegate,AirportSearchViewDelegate  {
     //MARK: - 🎲 - Init
     
     /// Class storyboard identifier.
@@ -48,12 +45,15 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         }
     }
     private let naHUD = JGProgressHUD(style: .dark)
+    var prefType: PrefType!
+    var prefInformationType : PrefInformationType!
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
-    class func instantiate() -> PreferredDestinationaViewController {
+    class func instantiate(prefType: PrefType, prefInformationType : PrefInformationType) -> PreferredDestinationaViewController {
         let viewController = UIStoryboard.preferences.instantiate(identifier) as! PreferredDestinationaViewController
-
+        viewController.prefType = prefType
+        viewController.prefInformationType = prefInformationType
         return viewController
     }
 
@@ -67,6 +67,25 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         txtPreferredDestination.delegate = self //to make it uneditable
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
+        
+        switch prefType {
+            case .aviation:
+                imgPreference.image = UIImage(named: "aviation_icon")
+                lblPrefLabel.text = "Aviation"
+                switch prefInformationType {
+                case .aviationPreferredDestination:
+                    lblPrefQuestion.text = "What are your top preferred destinations?"
+                    txtPreferredDestination.text = "Preferred City, State or Country"
+                case .aviationPreferredAirport:
+                    lblPrefQuestion.text = "Which airport do you want to fly more often?"
+                    txtPreferredDestination.text = "Preferred Destination Airport"
+//                        btnNextStep.setTitle("D O N E", for: .normal)
+                    default:
+                        print("Others")
+                }
+            default:
+                print("Others")
+        }
         
     }
     
@@ -85,7 +104,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     
     //when user will click on the back button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
-        skipTapped()
+        navigateToNextVC()
 //        var selectedArray = [Int]()
 //        for item in itemsList{
 //            if (item.isSelected ?? false){
@@ -93,16 +112,16 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
 //            }
 //        }
 //        if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
-//            let commaSeperatedString = selectedArray.map{String($0)}.joined(separator: ",")
-//            setPreferences(commaSeperatedString: commaSeperatedString)
+//            let commaSeparatedString = selectedArray.map{String($0)}.joined(separator: ",")
+//            setPreferences(commaSeparatedString: commaSeparatedString)
 //        }else{
 //            navigateToNextVC()  //skipping this step
 //        }
     }
     
-    func setPreferences(commaSeperatedString:String) {
+    func setPreferences(commaSeparatedString:String) {
         self.showNetworkActivity()
-        setPreferencesInformation(commaSeperatedString: commaSeperatedString) {information, error in
+        setPreferencesInformation(commaSeparatedString: commaSeparatedString) {information, error in
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error)
@@ -118,10 +137,24 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     }
     
     func navigateToNextVC(){
-        self.skipTapped()
+        switch self.prefType {
+        case .aviation:
+            switch self.prefInformationType {
+            case .aviationPreferredDestination:
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredAirport)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .aviationPreferredAirport:
+                let viewController = PrefProductCategoryViewController.instantiate(prefType: .aviation, prefInformationType: .aviationAircraftCategory)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            default:
+                self.skipTapped()
+            }
+            default:
+                print("Others")
+        }
     }
     
-    func setPreferencesInformation(commaSeperatedString:String, completion: @escaping (String?, Error?) -> Void) {
+    func setPreferencesInformation(commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -174,22 +207,44 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     //making preffered destination field uneditable
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == txtPreferredDestination {
-            let viewController = AviationAirportSelectionViewController.instantiate(destination: .returnAirport)
-            viewController.delegate = self
-            present(viewController, animated: true, completion: nil)
-            return false
+
+            switch self.prefType {
+            case .aviation:
+                switch self.prefInformationType {
+                case .aviationPreferredDestination:
+                    let viewController = DestinationSelectionViewController.instantiate()
+                    viewController.delegate = self
+                    present(viewController, animated: true, completion: nil)
+                    return false
+                case .aviationPreferredAirport:
+                    let viewController = AviationAirportSelectionViewController.instantiate(destination: .returnAirport)
+                    viewController.delegate = self
+                    present(viewController, animated: true, completion: nil)
+                    return false
+                default:
+                    self.skipTapped()
+                }
+                default:
+                    print("Others")
+            }
         }
         return true
     }
     
     //WHen user has selected some destination airpot
     func select(_ airport: Airport, forOrigin: OriginAirport) {
-        print("Preferred Destination:\(airport.id)")
-        //let taxonomyObj1 = Taxonomy(termId:airport.id , name: airport.name, isSelected: true)
-        let taxonomyObj1 = Taxonomy(termId:-1 , name: airport.name, isSelected: false)
+        let taxonomyObj1 = Taxonomy(termId:-1 , name: airport.name)
         itemsList.append(taxonomyObj1)
         self.collectionView.reloadData()
     }
+    
+    //WHen user has selected some destination airpot
+    func select(_ destination: Taxonomy) {
+//        print("Preferred Destination:\(destination.termId)")
+        itemsList.append(destination)
+        self.collectionView.reloadData()
+    }
+    
     func showNetworkActivity() {
         naHUD.show(in: view)
     }
