@@ -117,6 +117,8 @@
 		88814DC8265995480082AA2C /* PrefProductCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */; };
 		88814DD02659B31A0082AA2C /* DestinationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DCF2659B31A0082AA2C /* DestinationSelectionViewController.swift */; };
 		88814DD82659B5360082AA2C /* DestinationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DD72659B5360082AA2C /* DestinationSearchCell.swift */; };
+		88814DEE265AA9890082AA2C /* ProdCategoryCollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88814DED265AA9890082AA2C /* ProdCategoryCollViewCell.xib */; };
+		88814DF3265AA9950082AA2C /* ProdCategoryCollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DF2265AA9950082AA2C /* ProdCategoryCollViewCell.swift */; };
 		888A303E264402CC008754AD /* PreferencesHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A303D264402CC008754AD /* PreferencesHomeViewController.swift */; };
 		888A30432644039D008754AD /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888A30422644039D008754AD /* Preferences.storyboard */; };
 		888A305D26458ADB008754AD /* PrefCollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */; };
@@ -485,6 +487,8 @@
 		88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefProductCategoryViewController.swift; sourceTree = "<group>"; };
 		88814DCF2659B31A0082AA2C /* DestinationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationSelectionViewController.swift; sourceTree = "<group>"; };
 		88814DD72659B5360082AA2C /* DestinationSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DestinationSearchCell.swift; path = LUJO/Controllers/Preferences/DestinationSearchCell.swift; sourceTree = SOURCE_ROOT; };
+		88814DED265AA9890082AA2C /* ProdCategoryCollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProdCategoryCollViewCell.xib; sourceTree = "<group>"; };
+		88814DF2265AA9950082AA2C /* ProdCategoryCollViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProdCategoryCollViewCell.swift; sourceTree = "<group>"; };
 		888A303D264402CC008754AD /* PreferencesHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesHomeViewController.swift; sourceTree = "<group>"; };
 		888A30422644039D008754AD /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefCollectionsViewController.swift; sourceTree = "<group>"; };
@@ -1143,6 +1147,8 @@
 				88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */,
 				888A306226460C9D008754AD /* PrefCollViewCell.swift */,
 				888A306326460C9D008754AD /* PrefCollViewCell.xib */,
+				88814DF2265AA9950082AA2C /* ProdCategoryCollViewCell.swift */,
+				88814DED265AA9890082AA2C /* ProdCategoryCollViewCell.xib */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1905,6 +1911,7 @@
 				9A18716921130D4800B81BFD /* Lora-Regular.ttf in Resources */,
 				88E731AE256FFAAF00BEDD00 /* ProductDetailView.xib in Resources */,
 				9AF1A0D22248EFD500E0680B /* AviationSearchOptions.xib in Resources */,
+				88814DEE265AA9890082AA2C /* ProdCategoryCollViewCell.xib in Resources */,
 				88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */,
 				1DFE1AC523476FCD0025410D /* DiningCityView.xib in Resources */,
 				9AD6EAB821E3621400B695A3 /* Payment.storyboard in Resources */,
@@ -2249,6 +2256,7 @@
 				88E731A9256FC5B700BEDD00 /* ProductDetailCell.swift in Sources */,
 				9A6583C5221C4EC900EB8EEA /* CountryCodeCell.swift in Sources */,
 				553BF858230D4E9F00EF4671 /* CardAlertView.swift in Sources */,
+				88814DF3265AA9950082AA2C /* ProdCategoryCollViewCell.swift in Sources */,
 				1D7819B52301A9DF0044C70B /* DiningRouter.swift in Sources */,
 				3005D48623202CDA00401243 /* AviationResultsFilterViewController.swift in Sources */,
 				91522DD7261263530023BAD8 /* PerCityViewAnimator.swift in Sources */,
@@ -2376,7 +2384,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2402,7 +2410,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2427,7 +2435,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2591,7 +2599,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2655,7 +2663,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2865,7 +2873,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 1.8;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

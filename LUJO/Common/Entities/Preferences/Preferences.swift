@@ -41,7 +41,7 @@ struct Preferences: Codable {
     }
 }
 
-struct GiftPreferences  : Codable {
+struct GiftPreferences : Codable {
     var gift_habit_id : [String]?
     var gift_habit_id_other : String?
     var gift_category_id : [String]?
@@ -74,6 +74,22 @@ struct GiftPreferences  : Codable {
     }
 }
 
+//List of data which we are cachig in userdefaults
+struct PrefMasterData : Codable {
+    var giftHabits : [Taxonomy]?
+    var giftCategories : [Taxonomy]?
+    var giftPreferences : [Taxonomy]?
+    var aviationCuisines : [Taxonomy]?
+    var aviationBeverages : [Taxonomy]?
+    var aviationCategories : [BaroqueAviationCategory]?
+    
+    init(giftHabits:[Taxonomy]? = [] ,giftCategories : [Taxonomy]? = [], giftPreferences : [Taxonomy]? = []){
+        self.giftHabits = giftHabits
+        self.giftCategories = giftCategories
+        self.giftPreferences = giftPreferences
+    }
+}
+
 
 struct AviationPreferences  : Codable {
     var aviation_chartered_before : String?
@@ -87,6 +103,7 @@ struct AviationPreferences  : Codable {
     var aviation_preferred_cuisine_id_other  : String?
     var aviation_preferred_beverage_id : [String]?
     var aviation_preferred_beverage_id_other  : String?
+    var aviation_aircraft_category_id : [String]?
 
     enum CodingKeys: String, CodingKey {
         case aviation_chartered_before = "aviation_chartered_before"
@@ -100,6 +117,7 @@ struct AviationPreferences  : Codable {
         case aviation_preferred_cuisine_id_other = "aviation_preferred_cuisine_id_other"
         case aviation_preferred_beverage_id = "aviation_preferred_beverage_id"
         case aviation_preferred_beverage_id_other = "aviation_preferred_beverage_id_other"
+        case aviation_aircraft_category_id = "aviation_aircraft_category_id"
     }
     
     init(from decoder: Decoder) throws {
@@ -116,6 +134,7 @@ struct AviationPreferences  : Codable {
             aviation_preferred_cuisine_id_other = try values.decodeIfPresent(String.self, forKey: .aviation_preferred_cuisine_id_other)
             aviation_preferred_beverage_id = try values.decodeIfPresent([String].self, forKey: .aviation_preferred_beverage_id)
             aviation_preferred_beverage_id_other = try values.decodeIfPresent(String.self, forKey: .aviation_preferred_beverage_id_other)
+            aviation_aircraft_category_id = try values.decodeIfPresent([String].self, forKey: .aviation_aircraft_category_id)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

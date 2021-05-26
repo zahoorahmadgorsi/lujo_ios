@@ -901,14 +901,19 @@ extension ProductDetailsViewController {
             case .changed:
                 // If pan started or is ongoing then slide the view to follow the finger
                 let translation = panGesture.translation(in: view)
-//                let x = max(0, translation.x)
-//                let y = max(0, translation.y)                           //it works but with status bar
-//                print(y)
-                if (panGesture.view == self.view ){
-                    slideViewTo(translation.x,0)    //only swipe horizontal if its on main view
+                let x = max(0, translation.x)
+                let y = max(0, translation.y)                           //it works but with status bar
+                print(x,y)
+                if (translation.x > 0){ //to disable swiping from right to left
+                    if (panGesture.view == self.view ){
+                        slideViewTo(translation.x,0)    //only swipe horizontal if its on main view
+                    }else{
+                        slideViewTo(translation.x,translation.y)    //swipe both horizontally and vertically if on main image
+                    }
                 }else{
-                    slideViewTo(translation.x,translation.y)    //swipe both horizontally and vertically if on main image
+                    print ("swiping from right to left")
                 }
+                
                 
                 self.view.layer.cornerRadius = 12
             case .ended:

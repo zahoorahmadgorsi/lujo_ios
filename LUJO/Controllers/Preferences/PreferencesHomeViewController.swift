@@ -10,10 +10,12 @@ import UIKit
 import JGProgressHUD
 
 enum PrefCollSize:Int{
-    case aviationItemWidth = 250
+//    case aviationItemWidth = 250
     case itemHeight = 40
-    case itemHorizontalMargin = 16
-    case itemVerticalMargin = 24
+    case itemCategoryHeight = 50
+//    case itemHorizontalMargin = 16
+    case itemMargin = 24    //both horizontal and vertical
+    case itemCategoryVerticalMargin = 8
 }
 
 enum PrefType:String{
@@ -91,7 +93,7 @@ class PreferencesHomeViewController: UIViewController {
         let tgr6 = UITapGestureRecognizer(target: self, action: #selector(tappedOnView))
         viewYachts.isUserInteractionEnabled = true
         viewYachts.addGestureRecognizer(tgr6)
-        getPreferences()    //fetching all preferences from the server
+        getAllUserPreferences()    //fetching all preferences from the server
     }
     
     
@@ -107,9 +109,9 @@ class PreferencesHomeViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    func getPreferences() {
+    func getAllUserPreferences() {
         self.showNetworkActivity()
-        getAllPreferences() {information, error in
+        getAllUserPreferences() {information, error in
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error)
@@ -124,7 +126,7 @@ class PreferencesHomeViewController: UIViewController {
         }
     }
     
-    func getAllPreferences(completion: @escaping (Preferences?, Error?) -> Void) {
+    func getAllUserPreferences(completion: @escaping (Preferences?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -188,8 +190,9 @@ class PreferencesHomeViewController: UIViewController {
             let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
             self.navigationController?.pushViewController(viewController, animated: true)
         case 1:
-//            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
-            let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
+            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
+//            let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
+//            let viewController = PrefProductCategoryViewController.instantiate(prefType: .aviation, prefInformationType: .aviationAircraftCategory)
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             print("Others")

@@ -31,6 +31,10 @@ class TwoSliderPrefViewController: UIViewController {
     var prefType: PrefType!
     var prefInformationType : PrefInformationType!
     var userPreferences: Preferences?
+    var preferencesMasterData: PrefMasterData!
+    
+    //to check if any selection has been changed or not, so that we can change the bottom button text to next from skip
+    var previouslySelectedItems:[Int] = []
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
@@ -46,9 +50,10 @@ class TwoSliderPrefViewController: UIViewController {
 //    private(set) var user: LujoUser!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip for now", style: .plain, target: self, action: #selector(skipTapped))
-        self.contentView.addViewBorder( borderColor: UIColor.white.cgColor, borderWith: 1.0,borderCornerRadius: 12.0)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip all", style: .plain, target: self, action: #selector(skipTapped))
+//        self.contentView.addViewBorder( borderColor: UIColor.white.cgColor, borderWith: 1.0,borderCornerRadius: 12.0)
         self.userPreferences = LujoSetup().getUserPreferences()  //get user preferences from the userdefaults
+        self.preferencesMasterData = LujoSetup().getPreferencesMasterData() ?? PrefMasterData() //initialize if not found in the userdefaults
         
         switch prefType {
             case .aviation:
@@ -63,7 +68,9 @@ class TwoSliderPrefViewController: UIViewController {
                     self.sliderLeisure.value = Float(leisureValue)
                     self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
                     self.lblLeisureValue.text = String(leisureValue) + " time" +  ( leisureValue > 1 ? "s" : "")
-//                        btnNextStep.setTitle("D O N E", for: .normal)
+                    previouslySelectedItems.append(corporateValue)
+                    previouslySelectedItems.append(leisureValue)
+                    
                     default:
                         print("Others")
                 }
@@ -86,28 +93,33 @@ class TwoSliderPrefViewController: UIViewController {
     
     //when user will click on the back button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
-        let corporateFrequency = Int(self.sliderCorporate.value)
-        let leisureFrequency = Int(self.sliderLeisure.value)
-        
-        self.showNetworkActivity()
-        setPreferencesInformation(corporateFrequency: corporateFrequency , leisureFrequency:leisureFrequency)  {information, error in
-            self.hideNetworkActivity()
-            if let error = error {
-                self.showError(error)
-                return
-            }
-            if let informations = information {
-                if var userPreferences = self.userPreferences{
-                    userPreferences.aviation.aviation_times_charter_corporate_jet = corporateFrequency
-                    userPreferences.aviation.aviation_times_charter_leisure_jet = leisureFrequency
-                    LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+        if (isSelectionChanged()){
+            let corporateFrequency = Int(self.sliderCorporate.value)
+            let leisureFrequency = Int(self.sliderLeisure.value)
+            
+            self.showNetworkActivity()
+            setPreferencesInformation(corporateFrequency: corporateFrequency , leisureFrequency:leisureFrequency)  {information, error in
+                self.hideNetworkActivity()
+                if let error = error {
+                    self.showError(error)
+                    return
                 }
-                self.navigateToNextVC()
-            } else {
-                let error = BackendError.parsing(reason: "Could not set the Preferences")
-                self.showError(error)
+                if let informations = information {
+                    if var userPreferences = self.userPreferences{
+                        userPreferences.aviation.aviation_times_charter_corporate_jet = corporateFrequency
+                        userPreferences.aviation.aviation_times_charter_leisure_jet = leisureFrequency
+                        LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                    }
+                    self.navigateToNextVC()
+                } else {
+                    let error = BackendError.parsing(reason: "Could not set the Preferences")
+                    self.showError(error)
+                }
             }
+        }else{
+            navigateToNextVC()
         }
+        
     }
     
     func setPreferencesInformation( corporateFrequency: Int , leisureFrequency: Int, completion: @escaping (String?, Error?) -> Void) {
@@ -129,6 +141,29 @@ class TwoSliderPrefViewController: UIViewController {
     func navigateToNextVC(){
         let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    //this method checks the value which were at the time of loading of this screen and current seletion. if loading time value has been changed then button text get changed
+    @objc func isSelectionChanged() -> Bool{
+        switch self.prefType {
+        case .aviation:
+            switch self.prefInformationType {
+            case .aviationCharterFrequency:
+                if (self.userPreferences?.aviation.aviation_times_charter_corporate_jet == self.previouslySelectedItems[0]
+                    && self.userPreferences?.aviation.aviation_times_charter_leisure_jet == self.previouslySelectedItems[1]){
+                    btnNextStep.setTitle("S K I P", for: .normal)
+                    return false
+                }else{
+                    btnNextStep.setTitle("S A V E", for: .normal)
+                    return true
+                }
+            default:
+                print("This will not call")
+            }
+            default:
+                print("Others")
+        }
+        return true
     }
     
     //@objc func skipTapped(sender: UIBarButtonItem){
@@ -160,6 +195,8 @@ class TwoSliderPrefViewController: UIViewController {
         DispatchQueue.main.async {
             self.lblCorporateVaue.text = "\(currentValue) " + ( currentValue > 1 ? "times" : "time")
         }
+        self.userPreferences?.aviation.aviation_times_charter_corporate_jet = currentValue
+        isSelectionChanged()
     }
     
     @IBAction func LeisureSliderValueChanged(_ sender: Any) {
@@ -168,6 +205,8 @@ class TwoSliderPrefViewController: UIViewController {
         DispatchQueue.main.async {
             self.lblLeisureValue.text = "\(currentValue) " + ( currentValue > 1 ? "times" : "time")
         }
+        self.userPreferences?.aviation.aviation_times_charter_leisure_jet = currentValue
+        isSelectionChanged()
     }
     
 }
