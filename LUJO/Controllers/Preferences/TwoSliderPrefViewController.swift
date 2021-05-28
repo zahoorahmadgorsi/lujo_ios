@@ -74,8 +74,28 @@ class TwoSliderPrefViewController: UIViewController {
                     default:
                         print("Others")
                 }
+            case .yachts:
+                imgPreference.image = UIImage(named: "Charter Yacht Icon")
+                lblPrefLabel.text = "Yacht"
+                switch prefInformationType {
+                case .aviationCharterFrequency:
+                    lblPrefQuestion.text = "How many times per year do you charter a yacht?"
+                    lblCorporateVaue.text = "Weekly Charter"
+                    lblLeisureValue.text = "Day Charter"
+                    let corporateValue = userPreferences?.aviation.aviation_times_charter_corporate_jet ?? 1
+                    let leisureValue = userPreferences?.aviation.aviation_times_charter_leisure_jet ?? 1
+                    self.sliderCorporate.value = Float(corporateValue)
+                    self.sliderLeisure.value = Float(leisureValue)
+                    self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
+                    self.lblLeisureValue.text = String(leisureValue) + " time" +  ( leisureValue > 1 ? "s" : "")
+                    previouslySelectedItems.append(corporateValue)
+                    previouslySelectedItems.append(leisureValue)
+                    
+                    default:
+                        print("Others")
+                }
             default:
-                print("Others")
+                print("default of main switch")
         }
     }
     
@@ -127,20 +147,64 @@ class TwoSliderPrefViewController: UIViewController {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        GoLujoAPIManager().setAviationCharterFrequency(token: token,corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                completion(nil, error)
-                return
+        switch self.prefType {
+        case .aviation:
+            switch self.prefInformationType {
+            case .aviationCharterFrequency:
+                GoLujoAPIManager().setAviationCharterFrequency(token: token,corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            default:
+                print("This will not call")
             }
-            completion(contentString, error)
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtCharterFrequency:
+                GoLujoAPIManager().setYachtCharterFrequency(token: token,corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            default:
+                print("This will not call")
+            }
+        default:
+            print("Main default")
         }
+
     }
     
     func navigateToNextVC(){
-        let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        switch self.prefType {
+        case .aviation:
+            switch self.prefInformationType {
+            case .aviationCharterFrequency:
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            default:
+                print("This will not call")
+            }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtCharterFrequency:
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredRegions)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            default:
+                print("This will not call")
+            }
+        default:
+            print("Main default")
+        }
     }
     
     //this method checks the value which were at the time of loading of this screen and current seletion. if loading time value has been changed then button text get changed
@@ -160,8 +224,22 @@ class TwoSliderPrefViewController: UIViewController {
             default:
                 print("This will not call")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtCharterFrequency:
+                if (self.userPreferences?.yacht.yacht_times_charter_corporate_jet == self.previouslySelectedItems[0]
+                    && self.userPreferences?.yacht.yacht_times_charter_leisure_jet == self.previouslySelectedItems[1]){
+                    btnNextStep.setTitle("S K I P", for: .normal)
+                    return false
+                }else{
+                    btnNextStep.setTitle("S A V E", for: .normal)
+                    return true
+                }
             default:
-                print("Others")
+                print("This will not call")
+            }
+        default:
+            print("Main default")
         }
         return true
     }
@@ -171,7 +249,6 @@ class TwoSliderPrefViewController: UIViewController {
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
               navigationController?.popToViewController(viewController, animated: true)
         }
-        
     }
     
     func showNetworkActivity() {
@@ -195,7 +272,25 @@ class TwoSliderPrefViewController: UIViewController {
         DispatchQueue.main.async {
             self.lblCorporateVaue.text = "\(currentValue) " + ( currentValue > 1 ? "times" : "time")
         }
-        self.userPreferences?.aviation.aviation_times_charter_corporate_jet = currentValue
+        switch self.prefType {
+        case .aviation:
+            switch self.prefInformationType {
+            case .aviationCharterFrequency:
+                self.userPreferences?.aviation.aviation_times_charter_corporate_jet = currentValue
+            default:
+                print("This will not call")
+            }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtCharterFrequency:
+                self.userPreferences?.yacht.yacht_times_charter_corporate_jet = currentValue
+            default:
+                print("This will not call")
+            }
+        default:
+            print("Main default")
+        }
+        
         isSelectionChanged()
     }
     
@@ -205,7 +300,25 @@ class TwoSliderPrefViewController: UIViewController {
         DispatchQueue.main.async {
             self.lblLeisureValue.text = "\(currentValue) " + ( currentValue > 1 ? "times" : "time")
         }
-        self.userPreferences?.aviation.aviation_times_charter_leisure_jet = currentValue
+        switch self.prefType {
+        case .aviation:
+            switch self.prefInformationType {
+            case .aviationCharterFrequency:
+                self.userPreferences?.aviation.aviation_times_charter_leisure_jet = currentValue
+            default:
+                print("This will not call")
+            }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtCharterFrequency:
+                self.userPreferences?.yacht.yacht_times_charter_leisure_jet = currentValue
+            default:
+                print("This will not call")
+            }
+        default:
+            print("Main default")
+        }
+        
         isSelectionChanged()
     }
     

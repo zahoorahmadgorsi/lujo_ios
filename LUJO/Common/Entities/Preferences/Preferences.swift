@@ -13,7 +13,7 @@ struct Preferences: Codable {
 //    var restaurant: RestaurantPreferences
 //    var event: EventPreferences
 //    var travel: TravelPreferences
-//    var yacht: YachtPreferences
+    var yacht: YachtPreferences
     
     
     enum CodingKeys: String, CodingKey {
@@ -22,7 +22,7 @@ struct Preferences: Codable {
 //        case restaurant
 //        case event
 //        case travel
-//        case yacht
+        case yacht
     }
     
     init(from decoder: Decoder) throws {
@@ -33,7 +33,7 @@ struct Preferences: Codable {
 //            restaurant = try values.decode(RestaurantPreferences.self, forKey: .restaurant)
 //            event = try values.decode(EventPreferences.self, forKey: .event)
 //            travel = try values.decode(TravelPreferences.self, forKey: .travel)
-//            yacht = try values.decode(YachtPreferences.self, forKey: .yacht)
+            yacht = try values.decode(YachtPreferences.self, forKey: .yacht)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -79,9 +79,11 @@ struct PrefMasterData : Codable {
     var giftHabits : [Taxonomy]?
     var giftCategories : [Taxonomy]?
     var giftPreferences : [Taxonomy]?
-    var aviationCuisines : [Taxonomy]?
+    var cuisines : [Taxonomy]?
     var aviationBeverages : [Taxonomy]?
     var aviationCategories : [BaroqueAviationCategory]?
+    var otherInterests : [Taxonomy]?
+    var yachtLengths : [BaroqueAviationCategory]?
     
     init(giftHabits:[Taxonomy]? = [] ,giftCategories : [Taxonomy]? = [], giftPreferences : [Taxonomy]? = []){
         self.giftHabits = giftHabits
@@ -140,9 +142,55 @@ struct AviationPreferences  : Codable {
             throw error
         }
     }
-
 }
 
+struct YachtPreferences : Codable {
+    var yacht_chartered_before : String?
+    var yacht_interested_in  : String?
+    var yacht_times_charter_corporate_jet : Int?
+    var yacht_times_charter_leisure_jet : Int?
+    var yacht_preferred_destinations : [String]?
+    var yacht_length : [String]?
+    var yacht_type : String?
+    var yacht_style : String?
+    var yacht_preferred_cuisine_id : [String]?
+    var yacht_preferred_cuisine_id_other : String?
+    var yacht_interests_id : [String]?
+    
+    enum CodingKeys: String, CodingKey {
+        case yacht_chartered_before = "yacht_chartered_before"
+        case yacht_interested_in = "yacht_interested_in"
+        case yacht_times_charter_corporate_jet = "yacht_times_charter_corporate_jet"
+        case yacht_times_charter_leisure_jet = "yacht_times_charter_leisure_jet"
+        case yacht_preferred_destinations = "yacht_preferred_destinations"
+        case yacht_length = "yacht_length"
+        case yacht_type = "yacht_type"
+        case yacht_style = "yacht_style"
+        case yacht_preferred_cuisine_id = "yacht_preferred_cuisine_id"
+        case yacht_preferred_cuisine_id_other = "yacht_preferred_cuisine_id_other"
+        case yacht_interests_id = "yacht_interests_id"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            yacht_chartered_before = try values.decodeIfPresent(String.self, forKey: .yacht_chartered_before)
+            yacht_interested_in = try values.decodeIfPresent(String.self, forKey: .yacht_interested_in)
+            yacht_times_charter_corporate_jet = try values.decodeIfPresent(Int.self, forKey: .yacht_times_charter_corporate_jet)
+            yacht_times_charter_leisure_jet = try values.decodeIfPresent(Int.self, forKey: .yacht_times_charter_leisure_jet)
+            yacht_preferred_destinations = try values.decodeIfPresent([String].self, forKey: .yacht_preferred_destinations)
+            yacht_length = try values.decodeIfPresent([String].self, forKey: .yacht_length)
+            yacht_type = try values.decodeIfPresent(String.self, forKey: .yacht_type)
+            yacht_style = try values.decodeIfPresent(String.self, forKey: .yacht_style)
+            yacht_preferred_cuisine_id = try values.decodeIfPresent([String].self, forKey: .yacht_preferred_cuisine_id)
+            yacht_preferred_cuisine_id_other = try values.decodeIfPresent(String.self, forKey: .yacht_preferred_cuisine_id_other)
+            yacht_interests_id = try values.decodeIfPresent([String].self, forKey: .yacht_interests_id)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
+    }
+}
 //struct RestaurantPreferences : Codable {
 //    let restaurant_preferred_cuisine_id : [String]?
 //    let restaurant_preferred_cuisine_id_other : [String]?
@@ -223,15 +271,5 @@ struct AviationPreferences  : Codable {
 //
 //}
 //
-//struct YachtPreferences    : Codable {
-//    yacht_chartered_before
-//    yacht_interested_in
-//    yacht_times_charter_corporate_jet
-//    yacht_times_charter_leisure_jet
-//    yacht_preferred_destinations
-//    yacht_length
-//    yacht_type
-//    yacht_style
-//    yacht_preferred_cuisine_id
-//    yacht_preferred_cuisine_id_other
-//}
+
+

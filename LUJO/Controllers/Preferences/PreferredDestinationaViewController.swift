@@ -104,8 +104,28 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     default:
                         print("Others")
                 }
+        case .yachts:
+            imgPreference.image = UIImage(named: "Charter Yacht Icon")
+            lblPrefLabel.text = "Yacht"
+            switch prefInformationType {
+            case .yachtPreferredRegions:
+                lblPrefQuestion.text = "What are your preferred charter regions?"
+                txtPreferredDestination.text = "Regions i.e. mediterranean"
+                if let destinations = self.userPreferences?.yacht.yacht_preferred_destinations{
+                    var taxonomies = [Taxonomy]()
+                    for item in  destinations {
+                        let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                        taxonomies.append(taxonomy)
+                    }
+                    previouslySelectedItems = taxonomies
+                    self.itemsList = taxonomies
+                }
+//                        btnNextStep.setTitle("D O N E", for: .normal)
+                default:
+                    print("Others")
+            }
             default:
-                print("Others")
+                print("default of outer switch")
         }
         
     }
@@ -166,8 +186,17 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                             default:
                                 print("Not yet required")
                         }
-                        default:
-                            print("Others")
+                    case .yachts:
+                        switch self.prefInformationType {
+                            case .yachtPreferredRegions:
+                                let arr = commaSeparatedString.components(separatedBy: ",")
+                                userPreferences.yacht.yacht_preferred_destinations = arr
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            default:
+                                print("Not yet required")
+                        }
+                    default:
+                        print("outer case default")
                     }
                 }
                 self.navigateToNextVC()
@@ -186,18 +215,8 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         switch prefType {
         case .aviation:
             switch prefInformationType {
-                case .aviationPreferredDestination:
-                    GoLujoAPIManager().setAviationPreferredDestinations(token: token,commSepeartedString: commaSeparatedString) { contentString, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        completion(contentString, error)
-                    }
-            case .aviationPreferredAirport:
-                GoLujoAPIManager().setAviationPreferredAirports(token: token,commSepeartedString: commaSeparatedString) { contentString, error in
+            case .aviationPreferredDestination:
+                GoLujoAPIManager().setAviationPreferredDestinations(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -206,12 +225,38 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     }
                     completion(contentString, error)
                 }
-                default:
+            case .aviationPreferredAirport:
+            GoLujoAPIManager().setAviationPreferredAirports(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                    completion(nil, error)
+                    return
+                }
+                completion(contentString, error)
+            }
+            default:
+                print("Not yet required")
+                completion("Success", nil)
+            }
+        case .yachts:
+            switch prefInformationType {
+            case .yachtPreferredRegions:
+                GoLujoAPIManager().setYachtPreferredRegions(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            default:
                     print("Not yet required")
                     completion("Success", nil)
             }
-            default:
-                print("Others")
+        default:
+            print("outer switch")
         }
     }
     
@@ -226,10 +271,18 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 let viewController = PrefProductCategoryViewController.instantiate(prefType: .aviation, prefInformationType: .aviationAircraftCategory)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
-                self.skipTapped()
+                print("Never going to get call")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtPreferredRegions:
+                let viewController = PrefProductCategoryViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredLength)
+                self.navigationController?.pushViewController(viewController, animated: true)
             default:
-                print("Others")
+                print("Never going to get call")
+            }
+        default:
+            print("outer switch")
         }
     }
     
@@ -256,8 +309,17 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             default:
                 print("This will not call")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtPreferredRegions:
+                let current = self.itemsList.map{$0.name}
+                let previous = self.previouslySelectedItems.map{$0.name}
+                return !compare(current: current , previous: previous)
             default:
-                print("Others")
+                print("This will not call")
+            }
+        default:
+            print("outer switch")
         }
         return true
     }
@@ -282,7 +344,6 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     //making preffered destination field uneditable
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == txtPreferredDestination {
-
             switch self.prefType {
             case .aviation:
                 switch self.prefInformationType {
@@ -297,10 +358,20 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     present(viewController, animated: true, completion: nil)
                     return false
                 default:
-                    self.skipTapped()
+                    print("Never going to be get called")
                 }
+            case .yachts:
+                switch self.prefInformationType {
+                case .yachtPreferredRegions:
+                    let viewController = DestinationSelectionViewController.instantiate()   //pass regions
+                    viewController.delegate = self
+                    present(viewController, animated: true, completion: nil)
+                    return false
                 default:
-                    print("Others")
+                    print("Never going to be get called")
+                }
+            default:
+                print("outer switch")
             }
         }
         return true

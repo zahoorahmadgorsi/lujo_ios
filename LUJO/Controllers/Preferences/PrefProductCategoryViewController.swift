@@ -75,20 +75,32 @@ class PrefProductCategoryViewController: UIViewController {
         applyConstraints()
         
         switch prefType {
-            case .aviation:
-                imgPreference.image = UIImage(named: "aviation_icon")
-                lblPrefLabel.text = "Aviation"
-                switch prefInformationType {
-                case .aviationAircraftCategory:
-                    lblPrefQuestion.text = "Preferred aircraft category?"
-                    if let array = self.userPreferences?.aviation.aviation_aircraft_category_id{
-                        previouslySelectedItems = array
-                    }
-                    default:
-                        print("Others")
+        case .aviation:
+            imgPreference.image = UIImage(named: "aviation_icon")
+            lblPrefLabel.text = "Aviation"
+            switch prefInformationType {
+            case .aviationAircraftCategory:
+                lblPrefQuestion.text = "Preferred aircraft category?"
+                if let array = self.userPreferences?.aviation.aviation_aircraft_category_id{
+                    previouslySelectedItems = array
                 }
-            default:
-                print("Others")
+                default:
+                    print("Others")
+            }
+        case .yachts:
+            imgPreference.image = UIImage(named: "Charter Yacht Icon")
+            lblPrefLabel.text = "Yacht"
+            switch prefInformationType {
+            case .yachtPreferredLength:
+                lblPrefQuestion.text = "Preferred length of yacht:"
+                if let array = self.userPreferences?.yacht.yacht_length{
+                    previouslySelectedItems = array
+                }
+                default:
+                    print("Others")
+            }
+        default:
+            print("Others")
         }
         getPrefCategoryMasterData()
         
@@ -110,17 +122,26 @@ class PrefProductCategoryViewController: UIViewController {
     func getPrefCategoryMasterData() {
         //checking if the master data for preferences is cahced or not
         switch prefType {
-            case .aviation:
-                switch prefInformationType {
-                case .aviationAircraftCategory:
-                    if let cachedItems = preferencesMasterData.aviationCategories , cachedItems.count > 0{  //if data is already cached or not
-                        addSelectiveJets(jets: cachedItems)
-                    }
-                default:
-                    print("aviationOtherInterests")
+        case .aviation:
+            switch prefInformationType {
+            case .aviationAircraftCategory:
+                if let cachedItems = preferencesMasterData.aviationCategories , cachedItems.count > 0{  //if data is already cached or not
+                    addSelectiveJets(jets: cachedItems)
                 }
             default:
-                print("Others")
+                print("aviationOtherInterests")
+            }
+        case .yachts:
+            switch prefInformationType {
+            case .yachtPreferredLength:
+                if let cachedItems = preferencesMasterData.yachtLengths , cachedItems.count > 0{  //if data is already cached or not
+                    addSelectiveJets(jets: cachedItems)
+                }
+            default:
+                print("yachtOtherInterests")
+            }
+        default:
+            print("main switch")
         }
         if (self.itemsList.count == 0){
             self.showNetworkActivity()
@@ -143,26 +164,56 @@ class PrefProductCategoryViewController: UIViewController {
     //Server is sending 11 jets while we are going to display only 6 with local stored image
     func addSelectiveJets(jets: [BaroqueAviationCategory]){
         self.itemsList.removeAll()
-        //adding items in a order of small to high
-        if let found = jets.first(where: {$0.name == "Light jet"}) {    //4     "Light jet"
-            self.itemsList.append(found)
+        switch prefType {
+        case .aviation:
+            switch prefInformationType {
+            case .aviationAircraftCategory:
+                //adding items in a order of small to high
+                if let found = jets.first(where: {$0.name == "Light jet"}) {    //4     "Light jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "Super light jet"}) {  //6 "Super light jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "Midsize jet"}) {  //11    "Midsize jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "Super midsize jet"}) {    //7 "Super midsize jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "Heavy jet"}) {    //10    "Heavy jet"
+                    self.itemsList.append(found)
+                }
+                if var found = jets.first(where: {$0.name == "Ultra long range"}) { //1 "Ultra long range"
+                    found.name = "Bizliners"
+                    self.itemsList.append(found)
+                }
+            default:
+                print("aviationOtherInterests")
+            }
+        case .yachts:
+            switch prefInformationType {
+            case .yachtPreferredLength:
+                //adding items in a order of small to high
+                if let found = jets.first(where: {$0.name == "0-20 meters"}) {    //4     "Light jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "21-40 meters"}) {  //6 "Super light jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "41-60 meters"}) {  //11    "Midsize jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "60+ meters"}) {    //7 "Super midsize jet"
+                    self.itemsList.append(found)
+                }
+            default:
+                print("yachtOtherInterests")
+            }
+        default:
+            print("main switch")
         }
-        if let found = jets.first(where: {$0.name == "Super light jet"}) {  //6 "Super light jet"
-            self.itemsList.append(found)
-        }
-        if let found = jets.first(where: {$0.name == "Midsize jet"}) {  //11    "Midsize jet"
-            self.itemsList.append(found)
-        }
-        if let found = jets.first(where: {$0.name == "Super midsize jet"}) {    //7 "Super midsize jet"
-            self.itemsList.append(found)
-        }
-        if let found = jets.first(where: {$0.name == "Heavy jet"}) {    //10    "Heavy jet"
-            self.itemsList.append(found)
-        }
-        if var found = jets.first(where: {$0.name == "Ultra long range"}) { //1 "Ultra long range"
-            found.name = "Bizliners"
-            self.itemsList.append(found)
-        }
+        
     }
     
     func getPrefCategoryMasterData(completion: @escaping ([BaroqueAviationCategory]?, Error?) -> Void) {
@@ -173,27 +224,56 @@ class PrefProductCategoryViewController: UIViewController {
         
         switch prefType {
             case .aviation:
-                switch prefInformationType {
-                    case .aviationAircraftCategory:
-                    GoLujoAPIManager().getAviationCategories(token) { taxonomies, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        //caching master data into userdefaults
-                        if taxonomies?.count ?? 0 > 0{
-                            self.preferencesMasterData.aviationCategories = taxonomies
-                            LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-                        }
-                        completion(taxonomies, error)
+            switch prefInformationType {
+                case .aviationAircraftCategory:
+                GoLujoAPIManager().getAviationCategories(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
                     }
-                    default:
-                    print("aviationOtherInterests")
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.aviationCategories = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
                 }
+                default:
+                print("aviationOtherInterests")
+            }
+        case .yachts:
+        switch prefInformationType {
+            case .yachtPreferredLength:
+//            GoLujoAPIManager().getyachtCategories(token) { taxonomies, error in
+//                guard error == nil else {
+//                    Crashlytics.sharedInstance().recordError(error!)
+//                    let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+//                    completion(nil, error)
+//                    return
+//                }
+//                //caching master data into userdefaults
+//                if taxonomies?.count ?? 0 > 0{
+//                    self.preferencesMasterData.yachtCategories = taxonomies
+//                    LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+//                }
+//                completion(taxonomies, error)
+//            }
+                let taxonomyObj1 = Taxonomy(termId:-1 , name: "0-20 meters")
+                let taxonomyObj2 = Taxonomy(termId:-1 , name: "21-40 meters")
+                let taxonomyObj3 = Taxonomy(termId:-1 , name: "41-60 meters")
+                let taxonomyObj4 = Taxonomy(termId:-1 , name: "60+ meters")
+                var taxonomies = [Taxonomy]()
+                taxonomies.append(taxonomyObj1)
+                taxonomies.append(taxonomyObj2)
+                taxonomies.append(taxonomyObj3)
+                taxonomies.append(taxonomyObj4)
             default:
-                print("Others")
+            print("yachtOtherInterests")
+        }
+        default:
+            print("outer switch")
         }
     }
     
@@ -214,8 +294,19 @@ class PrefProductCategoryViewController: UIViewController {
                 default:
                     print("aviation default")
                 }
+            case .yachts:
+                switch self.prefInformationType {
+                case .yachtPreferredLength:
+                    if let ids = userPreferences?.yacht.yacht_length{
+                        for id in ids {
+                            selectedArray.append(id)
+                        }
+                    }
                 default:
-                    print("Others")
+                    print("yacht default")
+                }
+            default:
+                print("outer switch")
             }
             
             if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
@@ -251,8 +342,17 @@ class PrefProductCategoryViewController: UIViewController {
                             default:
                                 print("Not yet required")
                         }
-                        default:
-                            print("Others")
+                    case .yachts:
+                        switch self.prefInformationType {
+                            case .yachtPreferredLength:
+                                let arr = commaSeparatedString.components(separatedBy: ",")
+                                userPreferences.yacht.yacht_length = arr
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            default:
+                                print("Not yet required")
+                        }
+                    default:
+                        print("outer switch's default")
                     }
                 }
                 self.navigateToNextVC()
@@ -274,7 +374,7 @@ class PrefProductCategoryViewController: UIViewController {
         case .aviation:
             switch prefInformationType {
                 case .aviationAircraftCategory:
-                    GoLujoAPIManager().setAviationAircraftCategory(token: token,commSepeartedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationAircraftCategory(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -288,8 +388,25 @@ class PrefProductCategoryViewController: UIViewController {
                     print("Not yet required")
                     completion("Success", nil)
             }
-            default:
-                print("Others")
+        case .yachts:
+            switch prefInformationType {
+                case .yachtPreferredLength:
+                    GoLujoAPIManager().setYachtLength(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+
+                default:
+                    print("Not yet required")
+                    completion("Success", nil)
+            }
+        default:
+            print("out switch")
         }
     }
     
@@ -303,8 +420,16 @@ class PrefProductCategoryViewController: UIViewController {
             default:
                 self.skipTapped()
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtPreferredLength:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtType)
+                self.navigationController?.pushViewController(viewController, animated: true)
             default:
-                print("Others")
+                self.skipTapped()
+            }
+        default:
+            print("outer switch")
         }
     }
     
@@ -330,8 +455,17 @@ class PrefProductCategoryViewController: UIViewController {
             default:
                 print("This will not call")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtPreferredLength:
+                let current = self.userPreferences?.yacht.yacht_length ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
             default:
-                print("Others")
+                print("This will not call")
+            }
+        default:
+            print("default of outer switch")
         }
         return true
     }
@@ -397,6 +531,18 @@ extension PrefProductCategoryViewController: UICollectionViewDataSource {
             default:
                 print("aviation default")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtPreferredLength:
+                if let ids = userPreferences?.yacht.yacht_length{
+                    if (ids.contains(String(model.id))){
+                        cell.lblTitle.textColor = UIColor.rgMid
+                        cell.imgProduct.image = UIImage(named: model.name + " selected")
+                    }
+                }
+            default:
+                print("yacht default")
+            }
         default:
             print("Others")
         }
@@ -428,6 +574,26 @@ extension PrefProductCategoryViewController: UICollectionViewDelegate {
                 self.collectionView.reloadItems(at: [indexPath])
             default:
                 print("aviation default")
+            }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtPreferredLength:
+                if var ids = userPreferences?.yacht.yacht_length{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.yacht.yacht_length = ids
+                    }else{
+                        userPreferences?.yacht.yacht_length?.append(termId)
+                    }
+                }else{
+                    userPreferences?.yacht.yacht_length = []    //initializing first
+                    userPreferences?.yacht.yacht_length?.append(termId)
+                }
+                isSelectionChanged()
+                self.collectionView.reloadItems(at: [indexPath])
+            default:
+                print("yacht default")
             }
         default:
             print("Others")

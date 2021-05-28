@@ -40,6 +40,15 @@ enum PrefInformationType:String{
     case aviationPreferredCharter
     case aviationPreferredCuisine
     case aviationPreferredBevereges
+    case yachtHaveCharteredBefore
+    case yachtInterestedIn
+    case yachtCharterFrequency
+    case yachtPreferredRegions
+    case yachtPreferredLength
+    case yachtType
+    case yachtStyle
+    case yachtPreferredCuisines
+    case yachtOtherInterests
 }
 
 class PreferencesHomeViewController: UIViewController {
@@ -191,6 +200,9 @@ class PreferencesHomeViewController: UIViewController {
             self.navigationController?.pushViewController(viewController, animated: true)
         case 1:
             let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case 5:
+            let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
 //            let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
 //            let viewController = PrefProductCategoryViewController.instantiate(prefType: .aviation, prefInformationType: .aviationAircraftCategory)
             self.navigationController?.pushViewController(viewController, animated: true)

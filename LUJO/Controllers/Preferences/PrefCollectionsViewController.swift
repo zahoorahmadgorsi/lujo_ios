@@ -135,6 +135,45 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("Others")
                 }
+            case .yachts:
+                imgPreference.image = UIImage(named: "Charter Yacht Icon")
+                lblPrefLabel.text = "Yacht"
+                switch prefInformationType {
+                case .yachtHaveCharteredBefore:
+                    lblPrefQuestion.text = "Have you chartered a yacht before?:"
+                    txtPleaseSpecify.isHidden = true
+                    if let value = self.userPreferences?.yacht.yacht_chartered_before{
+                        previouslySelectedItems.append(value)
+                    }
+                case .yachtInterestedIn:
+                    lblPrefQuestion.text = "Interested in?"
+                    txtPleaseSpecify.isHidden = true
+                    if let value = self.userPreferences?.yacht.yacht_interested_in{
+                        previouslySelectedItems.append(value)
+                    }
+                case .yachtType:
+                    lblPrefQuestion.text = "Preferred type of cruising/sailing:"
+                    txtPleaseSpecify.isHidden = true
+                    if let value = self.userPreferences?.yacht.yacht_type{
+                        previouslySelectedItems.append(value)
+                    }
+                case .yachtStyle:
+                    lblPrefQuestion.text = "Preferred style of yacht:"
+                    txtPleaseSpecify.isHidden = true
+                    if let value = self.userPreferences?.yacht.yacht_style{
+                        previouslySelectedItems.append(value)
+                    }
+                case .yachtPreferredCuisines:
+                    lblPrefQuestion.text = "Preferred cuisine?"
+                    txtPleaseSpecify.text = self.userPreferences?.yacht.yacht_preferred_cuisine_id_other
+                    previouslySelectedItems = self.userPreferences?.yacht.yacht_preferred_cuisine_id ?? []
+                case .yachtOtherInterests:
+                    lblPrefQuestion.text = "For better experience tell us about your other interests?"
+                    previouslySelectedItems = self.userPreferences?.yacht.yacht_interests_id ?? []
+                    btnNextStep.setTitle("D O N E", for: .normal)
+                default:
+                    print("Others")
+                }
             default:
                 print("Others")
         }
@@ -162,7 +201,6 @@ class PrefCollectionsViewController: UIViewController {
                     if let cachedItems = preferencesMasterData.giftHabits , cachedItems.count > 0{  //if data is already cached or not
                         self.itemsList = cachedItems
                     }
-                    
                 case .giftCategories:
                     if let cachedItems = preferencesMasterData.giftCategories , cachedItems.count > 0{  //if data is already cached or not
                         self.itemsList = cachedItems
@@ -174,41 +212,87 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("This statement must not execute")
                 }
-                
-                case .aviation:
-                    switch prefInformationType {
-                    case .aviationHaveCharteredBefore:
-                        let taxonomyObj1 = Taxonomy(termId:-1 , name: "Yes")
-                        let taxonomyObj2 = Taxonomy(termId:-1 , name: "No")
-                        var taxonomies = [Taxonomy]()
-                        taxonomies.append(taxonomyObj1)
-                        taxonomies.append(taxonomyObj2)
-                        self.itemsList = taxonomies
-                    case .aviationInterestedIn:
-                        let taxonomyObj1 = Taxonomy(termId:-1 , name: "Charter")
-                        let taxonomyObj2 = Taxonomy(termId:-1 , name: "Purchase")
-                        var taxonomies = [Taxonomy]()
-                        taxonomies.append(taxonomyObj1)
-                        taxonomies.append(taxonomyObj2)
-                        self.itemsList = taxonomies
-                    case .aviationPreferredCharter:
-                        let taxonomyObj1 = Taxonomy(termId:-1 , name: "Short Range")
-                        let taxonomyObj2 = Taxonomy(termId:-1 , name: "Long Range")
-                        var taxonomies = [Taxonomy]()
-                        taxonomies.append(taxonomyObj1)
-                        taxonomies.append(taxonomyObj2)
-                        self.itemsList = taxonomies
-                    case .aviationPreferredCuisine:
-                        if let cachedItems = preferencesMasterData.aviationCuisines , cachedItems.count > 0{  //if data is already cached or not
-                            self.itemsList = cachedItems
-                        }
-                    case .aviationPreferredBevereges:
-                        if let cachedItems = preferencesMasterData.aviationBeverages , cachedItems.count > 0{  //if data is already cached or not
-                            self.itemsList = cachedItems
-                        }
-                    default:
-                        print("Hard codes values for this case. No master data exist.")
+            case .aviation:
+                switch prefInformationType {
+                case .aviationHaveCharteredBefore:
+                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Yes")
+                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "No")
+                    var taxonomies = [Taxonomy]()
+                    taxonomies.append(taxonomyObj1)
+                    taxonomies.append(taxonomyObj2)
+                    self.itemsList = taxonomies
+                case .aviationInterestedIn:
+                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Charter")
+                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Purchase")
+                    var taxonomies = [Taxonomy]()
+                    taxonomies.append(taxonomyObj1)
+                    taxonomies.append(taxonomyObj2)
+                    self.itemsList = taxonomies
+                case .aviationPreferredCharter:
+                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Short Range")
+                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Long Range")
+                    var taxonomies = [Taxonomy]()
+                    taxonomies.append(taxonomyObj1)
+                    taxonomies.append(taxonomyObj2)
+                    self.itemsList = taxonomies
+                case .aviationPreferredCuisine:
+                    if let cachedItems = preferencesMasterData.cuisines , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
                     }
+                case .aviationPreferredBevereges:
+                    if let cachedItems = preferencesMasterData.aviationBeverages , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                default:
+                    print("Hard codes values for this case. No master data exist.")
+                }
+            case .yachts:
+                switch prefInformationType {
+                case .yachtHaveCharteredBefore:
+                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Yes")
+                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "No")
+                    var taxonomies = [Taxonomy]()
+                    taxonomies.append(taxonomyObj1)
+                    taxonomies.append(taxonomyObj2)
+                    self.itemsList = taxonomies
+                case .yachtInterestedIn:
+                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Charter")
+                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Purchase")
+                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    var taxonomies = [Taxonomy]()
+                    taxonomies.append(taxonomyObj1)
+                    taxonomies.append(taxonomyObj2)
+                    taxonomies.append(taxonomyObj3)
+                    self.itemsList = taxonomies
+                case .yachtType:
+                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Motor")
+                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Sail")
+                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    var taxonomies = [Taxonomy]()
+                    taxonomies.append(taxonomyObj1)
+                    taxonomies.append(taxonomyObj2)
+                    taxonomies.append(taxonomyObj3)
+                    self.itemsList = taxonomies
+                case .yachtStyle:
+                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Modern")
+                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Classic")
+                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    var taxonomies = [Taxonomy]()
+                    taxonomies.append(taxonomyObj1)
+                    taxonomies.append(taxonomyObj2)
+                    taxonomies.append(taxonomyObj3)
+                    self.itemsList = taxonomies
+                case .yachtPreferredCuisines:
+                    if let cachedItems = preferencesMasterData.cuisines , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .yachtOtherInterests:
+                    if let cachedItems = preferencesMasterData.otherInterests , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                default:
+                    print("Hard codes values for this case. No master data exist.")
+                }
                 default:
                     print("Others")
             }
@@ -240,93 +324,129 @@ class PrefCollectionsViewController: UIViewController {
         }
 
         switch prefType {
-            case .gifts:
-                switch prefInformationType {
-                case .giftHabbits:
-                    GoLujoAPIManager().getGiftHabbits(token) { taxonomies, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        //caching master data into userdefaults
-                        if taxonomies?.count ?? 0 > 0{
-                            self.preferencesMasterData.giftHabits = taxonomies
-                            LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-                        }
-                        completion(taxonomies, error)
+        case .gifts:
+            switch prefInformationType {
+            case .giftHabbits:
+                GoLujoAPIManager().getGiftHabbits(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
                     }
-                case .giftCategories:
-                    GoLujoAPIManager().getGiftCategories(token) { taxonomies, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        //caching master data into userdefaults
-                        if taxonomies?.count ?? 0 > 0{
-                            self.preferencesMasterData.giftCategories = taxonomies
-                            LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-                        }
-                        completion(taxonomies, error)
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.giftHabits = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                     }
-                case .giftPreferences:
-                    GoLujoAPIManager().getGiftPreferences(token) { taxonomies, error in
-                        guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
-                            return
-                        }
-                        //caching master data into userdefaults
-                        if taxonomies?.count ?? 0 > 0{
-                            self.preferencesMasterData.giftPreferences = taxonomies
-                            LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-                        }
-                        completion(taxonomies, error)
-                    }
-                default:
-                    print("This statement must not execute")
+                    completion(taxonomies, error)
                 }
-
-                case .aviation:
-                    switch prefInformationType {
-                    case .aviationPreferredCuisine:
-                        GoLujoAPIManager().getAviationCuisine(token) { taxonomies, error in
-                            guard error == nil else {
-                                Crashlytics.sharedInstance().recordError(error!)
-                                let error = BackendError.parsing(reason: "Could not obtain Dining information")
-                                completion(nil, error)
-                                return
-                            }
-                            //caching master data into userdefaults
-                            if taxonomies?.count ?? 0 > 0{
-                                self.preferencesMasterData.aviationCuisines = taxonomies
-                                LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-                            }
-                            completion(taxonomies, error)
-                        }
-                    case .aviationPreferredBevereges:
-                        GoLujoAPIManager().getAviationBeverages(token) { taxonomies, error in
-                            guard error == nil else {
-                                Crashlytics.sharedInstance().recordError(error!)
-                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                                completion(nil, error)
-                                return
-                            }
-                            //caching master data into userdefaults
-                            if taxonomies?.count ?? 0 > 0{
-                                self.preferencesMasterData.aviationBeverages = taxonomies
-                                LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-                            }
-                            completion(taxonomies, error)
-                        }
-                    default:
-                        print("Hard coded values, no master data exist.")
-                        completion([], nil)
+            case .giftCategories:
+                GoLujoAPIManager().getGiftCategories(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
                     }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.giftCategories = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            case .giftPreferences:
+                GoLujoAPIManager().getGiftPreferences(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.giftPreferences = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            default:
+                print("This statement must not execute")
+            }
+
+        case .aviation:
+            switch prefInformationType {
+            case .aviationPreferredCuisine:
+                GoLujoAPIManager().getCuisines(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.cuisines = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            case .aviationPreferredBevereges:
+                GoLujoAPIManager().getAviationBeverages(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.aviationBeverages = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            default:
+                print("Hard coded values, no master data exist.")
+                completion([], nil)
+            }
+        case .yachts:
+            switch prefInformationType {
+            case .yachtPreferredCuisines:
+                GoLujoAPIManager().getCuisines(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.cuisines = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            case .yachtOtherInterests:
+                GoLujoAPIManager().getOtherInterests(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.otherInterests = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            default:
+                print("Hard coded values, no master data exist.")
+                completion([], nil)
+            }
                 default:
                     print("Others")
             }
@@ -400,8 +520,45 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("aviation default")
                 }
+            case .yachts:
+                switch self.prefInformationType {
+                case .yachtHaveCharteredBefore:
+                    if let str = userPreferences?.yacht.yacht_chartered_before {
+                        selectedArray.append(str)
+                    }
+                case .yachtInterestedIn:
+                    if let str = userPreferences?.yacht.yacht_interested_in{
+                        selectedArray.append(str)
+                    }
+                case .yachtType:
+                    if let str = userPreferences?.yacht.yacht_type{
+                        selectedArray.append(str)
+                    }
+                case .yachtStyle:
+                    if let str = userPreferences?.yacht.yacht_style{
+                        selectedArray.append(str)
+                    }
+                case .yachtPreferredCuisines:
+                    if let ids = userPreferences?.yacht.yacht_preferred_cuisine_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                case .yachtOtherInterests:
+                    if let ids = userPreferences?.yacht.yacht_interests_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
                 default:
-                    print("Others")
+                    print("yacht default")
+                }
+            default:
+                print("Default of main switch")
             }
             if (selectedArray.count > 0 || txtPleaseSpecify.text?.count ?? 0 > 0) {   //something is there, so convert array to comma sepeated string
                 let commaSeparatedString = selectedArray.map{String($0)}.joined(separator: ",")
@@ -484,8 +641,44 @@ class PrefCollectionsViewController: UIViewController {
                         default:
                             print("aviation default")
                         }
+                    case .yachts:
+                        switch self.prefInformationType {
+                        case .yachtHaveCharteredBefore:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.yacht.yacht_chartered_before = arr[0]
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            }
+                        case .yachtInterestedIn:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.yacht.yacht_interested_in = arr[0]
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            }
+                        case .yachtType:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.yacht.yacht_type = arr[0]
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            }
+                        case .yachtStyle:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.yacht.yacht_style = arr[0]
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            }
+                        case .yachtPreferredCuisines:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.yacht.yacht_preferred_cuisine_id = arr
+                            }
+                            userPreferences.yacht.yacht_preferred_cuisine_id_other = self.txtPleaseSpecify.text
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .yachtOtherInterests:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.yacht.yacht_interests_id = arr
+                            }
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         default:
-                            print("Others")
+                            print("yacht default")
+                        }
+                    default:
+                        print("Default of main switch")
                     }
                 }
                 self.navigateToNextVC()
@@ -507,7 +700,7 @@ class PrefCollectionsViewController: UIViewController {
             case .gifts:
                 switch prefInformationType {
                 case .giftHabbits:
-                    GoLujoAPIManager().setGiftHabbits(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setGiftHabbits(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -517,7 +710,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .giftCategories:
-                    GoLujoAPIManager().setGiftCategories(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setGiftCategories(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -527,7 +720,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .giftPreferences:
-                    GoLujoAPIManager().setGiftPreferences(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setGiftPreferences(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -543,7 +736,7 @@ class PrefCollectionsViewController: UIViewController {
         case .aviation:
             switch prefInformationType {
                 case .aviationHaveCharteredBefore:
-                    GoLujoAPIManager().setAviationHaveCharteredBefore(token: token,commSepeartedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -553,7 +746,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationInterestedIn:
-                    GoLujoAPIManager().setAviationWantToPurchase(token: token,commSepeartedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -563,7 +756,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationPreferredCharter:
-                    GoLujoAPIManager().setAviationPreferredCharter(token: token,commSepeartedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredCharter(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -573,7 +766,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationPreferredCuisine:
-                    GoLujoAPIManager().setAviationPreferredCuisine(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -584,7 +777,7 @@ class PrefCollectionsViewController: UIViewController {
                     }
 
                 case .aviationPreferredBevereges:
-                    GoLujoAPIManager().setAviationPreferredBeverages(token: token,commSepeartedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredBeverages(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -597,8 +790,75 @@ class PrefCollectionsViewController: UIViewController {
                     print("Not yet required")
                     completion("Success", nil)
             }
-            default:
-                print("Others")
+        case .yachts:
+            switch prefInformationType {
+                case .yachtHaveCharteredBefore:
+                    GoLujoAPIManager().setYachtHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                case .yachtInterestedIn:
+                    GoLujoAPIManager().setYachtInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                case .yachtType:
+                    GoLujoAPIManager().setYachtType(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                case .yachtStyle:
+                    GoLujoAPIManager().setYachtStyle(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                case .yachtPreferredCuisines:
+                    GoLujoAPIManager().setPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+
+                case .yachtOtherInterests:
+                    GoLujoAPIManager().setOtherInterests(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                default:
+                    print("Not yet required")
+                    completion("Success", nil)
+            }
+        default:
+            print("Main switch default ")
         }
     }
     
@@ -632,8 +892,30 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 self.skipTapped()   //skip even for aviationPreferredBevereges
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtHaveCharteredBefore:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtInterestedIn)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .yachtInterestedIn:
+                let viewController = TwoSliderPrefViewController.instantiate(prefType: .yachts, prefInformationType: .yachtCharterFrequency)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .yachtType:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtStyle)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .yachtStyle:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtStyle)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .yachtPreferredCuisines:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtOtherInterests)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .yachtOtherInterests:
+                self.skipTapped()
+            default:
+                self.skipTapped()   //skip even for yachtPreferredBevereges
+            }
         default:
-            print("Others")
+            print("default of main switch")
         }
     }
     
@@ -697,8 +979,50 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("This will not call")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtHaveCharteredBefore:
+                let current = self.userPreferences?.yacht.yacht_chartered_before ?? ""
+                var previous = ""
+                if (self.previouslySelectedItems.count > 0 && !self.previouslySelectedItems[0].isEmpty){
+                    previous = self.previouslySelectedItems[0]
+                }
+                return !compare(current: current , previous: previous)
+            case .yachtInterestedIn:
+                let current = self.userPreferences?.yacht.yacht_interested_in ?? ""
+                var previous = ""
+                if (self.previouslySelectedItems.count > 0 && !self.previouslySelectedItems[0].isEmpty){
+                    previous = self.previouslySelectedItems[0]
+                }
+                return !compare(current: current , previous: previous)
+            case .yachtType:
+                let current = self.userPreferences?.yacht.yacht_type ?? ""
+                var previous = ""
+                if (self.previouslySelectedItems.count > 0 && !self.previouslySelectedItems[0].isEmpty){
+                    previous = self.previouslySelectedItems[0]
+                }
+                return !compare(current: current , previous: previous)
+            case .yachtStyle:
+                let current = self.userPreferences?.yacht.yacht_style ?? ""
+                var previous = ""
+                if (self.previouslySelectedItems.count > 0 && !self.previouslySelectedItems[0].isEmpty){
+                    previous = self.previouslySelectedItems[0]
+                }
+                return !compare(current: current , previous: previous)
+            case .yachtPreferredCuisines:
+                let current = self.userPreferences?.yacht.yacht_preferred_cuisine_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.yacht.yacht_preferred_cuisine_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+            case .yachtOtherInterests:
+                let current = self.userPreferences?.yacht.yacht_interests_id ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
             default:
-                print("Others")
+                print("This will not call")
+            }
+        default:
+            print("default claus of main switch")
         }
         return true
     }
@@ -860,8 +1184,73 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             default:
                 print("aviation default")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtHaveCharteredBefore:
+                if let str = userPreferences?.yacht.yacht_chartered_before{
+                    if(str.contains(model.name.lowercased()) ){
+                        cell.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .yachtInterestedIn:
+                if let str = userPreferences?.yacht.yacht_interested_in{
+                    if(str.contains(model.name.lowercased()) ){
+                        cell.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .yachtType:
+                if let str = userPreferences?.yacht.yacht_type{
+                    if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
+                        cell.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .yachtStyle:
+                if let str = userPreferences?.yacht.yacht_style{
+                    if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
+                        cell.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .yachtPreferredCuisines:
+                if let ids = userPreferences?.yacht.yacht_preferred_cuisine_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .yachtOtherInterests:
+                if let ids = userPreferences?.yacht.yacht_interests_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            default:
+                print("yacht default")
+            }
         default:
-            print("Others")
+            print("default statement of main switch")
         }
 
         return cell
@@ -977,12 +1366,85 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
             default:
                 print("aviation default")
             }
+        case .yachts:
+            switch self.prefInformationType {
+            case .yachtHaveCharteredBefore:
+                if (indexPath.row == 0){
+                    userPreferences?.yacht.yacht_chartered_before = "yes"
+                }else{
+                    userPreferences?.yacht.yacht_chartered_before = "no"
+                }
+                self.collectionView.reloadData()    //reload every thing in case of single selection i.e. yes or no
+                isSelectionChanged()
+                return  // else reloadData() and isSelectionChanged() would be called again
+            case .yachtInterestedIn:
+                if (indexPath.row == 0){
+                    userPreferences?.yacht.yacht_interested_in = "charter"
+                }else if (indexPath.row == 1){
+                    userPreferences?.yacht.yacht_interested_in = "purchase"
+                }else {
+                    userPreferences?.yacht.yacht_interested_in = "both"
+                }
+                self.collectionView.reloadData()    //reload every thing in case of single selection i.e. yes or no
+                isSelectionChanged()
+                return  // else reloadData() and isSelectionChanged() would be called again
+            case .yachtType:
+                if (indexPath.row == 0){
+                    userPreferences?.yacht.yacht_type = "motor"
+                }else if (indexPath.row == 1){
+                    userPreferences?.yacht.yacht_type = "sail"
+                }else{
+                    userPreferences?.yacht.yacht_type = "both"
+                }
+                self.collectionView.reloadData()    //reload every thing in case of single selection i.e. yes or no
+                isSelectionChanged()
+                return  // else reloadData() and isSelectionChanged() would be called again
+            case .yachtStyle:
+                if (indexPath.row == 0){
+                    userPreferences?.yacht.yacht_style = "modern"
+                }else if (indexPath.row == 1){
+                    userPreferences?.yacht.yacht_style = "classic"
+                }else{
+                    userPreferences?.yacht.yacht_style = "both"
+                }
+                self.collectionView.reloadData()    //reload every thing in case of single selection i.e. yes or no
+                isSelectionChanged()
+                return  // else reloadData() and isSelectionChanged() would be called again
+            case .yachtPreferredCuisines:
+                if var ids = userPreferences?.yacht.yacht_preferred_cuisine_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.yacht.yacht_preferred_cuisine_id = ids
+                    }else{
+                        userPreferences?.yacht.yacht_preferred_cuisine_id?.append(termId)
+                    }
+                    self.collectionView.reloadItems(at: [indexPath])    //only refresh current selection
+                }else{
+                    userPreferences?.yacht.yacht_preferred_cuisine_id = []    //initializing first
+                    userPreferences?.yacht.yacht_preferred_cuisine_id?.append(termId)
+                }
+            case .yachtOtherInterests:
+                if var ids = userPreferences?.yacht.yacht_interests_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.yacht.yacht_interests_id = ids
+                    }else{
+                        userPreferences?.yacht.yacht_interests_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.yacht.yacht_interests_id = []    //initializing first
+                    userPreferences?.yacht.yacht_interests_id?.append(termId)
+                }
+            default:
+                print("yacht default")
+            }
         default:
-            print("Others")
+            print("default statement of main switch")
         }
         self.collectionView.reloadItems(at: [indexPath])    //only refresh current selection
         isSelectionChanged()
-        
     }
 }
 
@@ -997,7 +1459,12 @@ extension PrefCollectionsViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: width, height: PrefCollSize.itemHeight.rawValue)
         case .aviationHaveCharteredBefore:  fallthrough
         case .aviationInterestedIn:       fallthrough
-        case .aviationPreferredCharter:
+        case .aviationPreferredCharter: fallthrough
+            
+        case .yachtHaveCharteredBefore:  fallthrough
+        case .yachtInterestedIn:       fallthrough
+        case .yachtType:       fallthrough
+        case .yachtStyle:       
             //width is same as collection container's view i.e. full width
             return CGSize(width: Int(Double(width) * 0.7) , height: PrefCollSize.itemHeight.rawValue)    //70% of the width of collectionveiew
         default:
@@ -1014,7 +1481,12 @@ extension PrefCollectionsViewController: UICollectionViewDelegateFlowLayout {
         switch prefInformationType {
         case .aviationHaveCharteredBefore:  fallthrough
         case .aviationInterestedIn:       fallthrough
-        case .aviationPreferredCharter:
+        case .aviationPreferredCharter: fallthrough
+            
+        case .yachtHaveCharteredBefore:  fallthrough
+        case .yachtInterestedIn:       fallthrough
+        case .yachtType:       fallthrough
+        case .yachtStyle:
             // since these are fixed limited values so doubling the margin with the question title
             return UIEdgeInsets(top: CGFloat(PrefCollSize.itemMargin.rawValue * 2), left: 0, bottom: 0, right: 0)
         default:
@@ -1035,7 +1507,11 @@ extension PrefCollectionsViewController: UICollectionViewDelegateFlowLayout {
         switch prefInformationType {
         case .aviationHaveCharteredBefore:  fallthrough
         case .aviationInterestedIn:       fallthrough
-        case .aviationPreferredCharter:
+        case .aviationPreferredCharter: fallthrough
+        case .yachtHaveCharteredBefore:  fallthrough
+        case .yachtInterestedIn:       fallthrough
+        case .yachtType:       fallthrough
+        case .yachtStyle:
             // since these are fixed limited values so doubling the margin between the cells
             return CGFloat(PrefCollSize.itemMargin.rawValue * 2)    //vertical margin between cells
         default:

@@ -158,8 +158,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setGiftHabbits( token: String,commSepeartedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setGiftHabits(token, commSepeartedString , typedPreference))
+    func setGiftHabbits( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setGiftHabits(token, commaSeparatedString , typedPreference))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -194,44 +194,8 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func setGiftCategories(token: String,commSepeartedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setGiftCategories(token,commSepeartedString, typedPreference))
-            .responseJSON { response in
-                guard response.result.error == nil else {
-                    completion(nil, response.result.error!)
-                    return
-                }
-
-                // Special case where status code is not received, should never happen
-                guard let statusCode = response.response?.statusCode else {
-                    completion(nil, BackendError.unhandledStatus)
-                    return
-                }
-
-                switch statusCode {
-                case 1 ... 199: // Transfer protoco-level information: Unexpected
-                    completion(nil, self.handleError(response, statusCode))
-                case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
-                                                                 from: response.data!)
-                    else {
-                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
-                        return
-                    }
-                    completion(result.content, nil)
-                    return
-                case 300 ... 399: // Redirection: Unexpected
-                    completion(nil, self.handleError(response, statusCode))
-                case 400 ... 499: // Client Error
-                    completion(nil, self.handleError(response, statusCode))
-                default: // 500 or bigger, Server Error
-                    completion(nil, self.handleError(response, statusCode))
-                }
-            }
-    }
-    
-    func setGiftPreferences(token: String, commSepeartedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setGiftPreferences(token,commSepeartedString, typedPreference))
+    func setGiftCategories(token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setGiftCategories(token,commaSeparatedString, typedPreference))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -266,44 +230,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationHaveCharteredBefore( token: String,commSepeartedString:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationHaveCharteredBefore(token, commSepeartedString))
-            .responseJSON { response in
-                guard response.result.error == nil else {
-                    completion(nil, response.result.error!)
-                    return
-                }
-
-                // Special case where status code is not received, should never happen
-                guard let statusCode = response.response?.statusCode else {
-                    completion(nil, BackendError.unhandledStatus)
-                    return
-                }
-
-                switch statusCode {
-                case 1 ... 199: // Transfer protoco-level information: Unexpected
-                    completion(nil, self.handleError(response, statusCode))
-                case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
-                                                                 from: response.data!)
-                    else {
-                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
-                        return
-                    }
-                    completion(result.content, nil)
-                    return
-                case 300 ... 399: // Redirection: Unexpected
-                    completion(nil, self.handleError(response, statusCode))
-                case 400 ... 499: // Client Error
-                    completion(nil, self.handleError(response, statusCode))
-                default: // 500 or bigger, Server Error
-                    completion(nil, self.handleError(response, statusCode))
-                }
-            }
-    }
-
-    func setAviationWantToPurchase(token: String,commSepeartedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setAviationWantToPurchase(token,commSepeartedString))
+    func setGiftPreferences(token: String, commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setGiftPreferences(token,commaSeparatedString, typedPreference))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -338,8 +266,44 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationPreferredDestinations( token: String,commSepeartedString:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationPreferredDestinations(token, commSepeartedString))
+    func setAviationHaveCharteredBefore( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setAviationHaveCharteredBefore(token, commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+
+    func setAviationInterestedIn(token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setAviationInterestedIn(token,commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -374,8 +338,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationPreferredAirports( token: String,commSepeartedString:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationPreferredAirports(token, commSepeartedString))
+    func setAviationPreferredDestinations( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setAviationPreferredDestinations(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -410,8 +374,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationAircraftCategory( token: String,commSepeartedString:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationAircraftCategory(token, commSepeartedString))
+    func setYachtPreferredRegions( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setYachtPreferredRegions(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -446,8 +410,116 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getAviationCuisine(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.getAviationCuisine(token))
+    func setAviationPreferredAirports( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setAviationPreferredAirports(token, commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func setAviationAircraftCategory( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setAviationAircraftCategory(token, commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func setYachtLength( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setYachtLength(token, commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func getCuisines(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.getCuisines(token))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -518,6 +590,42 @@ extension GoLujoAPIManager  {
             }
     }
     
+    func getOtherInterests(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.getOtherInterests(token))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Taxonomy]>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
     func setAviationCharterFrequency(token: String, corporateFrequency:Int, leisureFrequency:Int, completion: @escaping (String?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.setAviationCharterFrequency(token,corporateFrequency, leisureFrequency))
             .responseJSON { response in
@@ -554,8 +662,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationPreferredCharter(token: String, commSepeartedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setAviationPreferredCharter(token,commSepeartedString))
+    func setYachtCharterFrequency(token: String, corporateFrequency:Int, leisureFrequency:Int, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtCharterFrequency(token,corporateFrequency, leisureFrequency))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -590,8 +698,44 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationPreferredCuisine( token: String,commSepeartedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationPreferredCuisine(token, commSepeartedString, typedPreference))
+    func setAviationPreferredCharter(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setAviationPreferredCharter(token,commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func setPreferredCuisines( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setPreferredCuisines(token, commaSeparatedString, typedPreference))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -626,8 +770,8 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func setAviationPreferredBeverages( token: String,commSepeartedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationPreferredBevereges(token, commSepeartedString, typedPreference))
+    func setAviationPreferredBeverages( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setAviationPreferredBevereges(token, commaSeparatedString, typedPreference))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -734,6 +878,185 @@ extension GoLujoAPIManager  {
             }
     }
     
+    func setYachtHaveCharteredBefore(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtHaveCharteredBefore(token,commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+
+    func setYachtInterestedIn(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtInterestedIn(token,commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func setYachtType(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtType(token,commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func setYachtStyle(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtStyle(token,commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func setOtherInterests(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setOtherInterests(token,commaSeparatedString))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
     fileprivate func handleError(_ response: DataResponse<Any>,
                                  _ statusCode: Int) -> Error {
         var serverError: String!
