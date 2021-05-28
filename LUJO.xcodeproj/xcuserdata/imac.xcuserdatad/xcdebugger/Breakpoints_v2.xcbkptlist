@@ -1901,8 +1901,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "395"
-            endingLineNumber = "395"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
             landmarkName = "HomeObjects"
             landmarkType = "14">
          </BreakpointContent>
@@ -1917,8 +1917,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -1933,8 +1933,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -1949,8 +1949,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "424"
-            endingLineNumber = "424"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "getFeaturedImages()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2013,8 +2013,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "393"
-            endingLineNumber = "393"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
             landmarkName = "Product"
             landmarkType = "21">
          </BreakpointContent>
@@ -2029,8 +2029,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "433"
-            endingLineNumber = "433"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
             landmarkName = "getFeaturedTypes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3353,8 +3353,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -3817,8 +3817,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6871,8 +6871,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
             landmarkName = "CodingKeys"
             landmarkType = "13">
             <Locations>
@@ -7062,8 +7062,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10208,8 +10208,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10430,8 +10430,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>

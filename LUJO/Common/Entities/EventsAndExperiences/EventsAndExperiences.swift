@@ -84,7 +84,11 @@ struct BaroqueAviationCategory: Codable {
         }
     }
     
-
+    //This init is going to be used in preference for hardocoded values
+    init(id:Int , name: String){
+        self.id = id
+        self.name = name
+    }
 }
 
 struct Gallery: Codable {

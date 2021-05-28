@@ -195,16 +195,16 @@ class PrefProductCategoryViewController: UIViewController {
             switch prefInformationType {
             case .yachtPreferredLength:
                 //adding items in a order of small to high
-                if let found = jets.first(where: {$0.name == "0-20 meters"}) {    //4     "Light jet"
+                if let found = jets.first(where: {$0.name == "0-20 meters"}) {
                     self.itemsList.append(found)
                 }
-                if let found = jets.first(where: {$0.name == "21-40 meters"}) {  //6 "Super light jet"
+                if let found = jets.first(where: {$0.name == "21-40 meters"}) {
                     self.itemsList.append(found)
                 }
-                if let found = jets.first(where: {$0.name == "41-60 meters"}) {  //11    "Midsize jet"
+                if let found = jets.first(where: {$0.name == "41-60 meters"}) {
                     self.itemsList.append(found)
                 }
-                if let found = jets.first(where: {$0.name == "60+ meters"}) {    //7 "Super midsize jet"
+                if let found = jets.first(where: {$0.name == "60+ meters"}) {
                     self.itemsList.append(found)
                 }
             default:
@@ -246,29 +246,16 @@ class PrefProductCategoryViewController: UIViewController {
         case .yachts:
         switch prefInformationType {
             case .yachtPreferredLength:
-//            GoLujoAPIManager().getyachtCategories(token) { taxonomies, error in
-//                guard error == nil else {
-//                    Crashlytics.sharedInstance().recordError(error!)
-//                    let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-//                    completion(nil, error)
-//                    return
-//                }
-//                //caching master data into userdefaults
-//                if taxonomies?.count ?? 0 > 0{
-//                    self.preferencesMasterData.yachtCategories = taxonomies
-//                    LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-//                }
-//                completion(taxonomies, error)
-//            }
-                let taxonomyObj1 = Taxonomy(termId:-1 , name: "0-20 meters")
-                let taxonomyObj2 = Taxonomy(termId:-1 , name: "21-40 meters")
-                let taxonomyObj3 = Taxonomy(termId:-1 , name: "41-60 meters")
-                let taxonomyObj4 = Taxonomy(termId:-1 , name: "60+ meters")
-                var taxonomies = [Taxonomy]()
-                taxonomies.append(taxonomyObj1)
-                taxonomies.append(taxonomyObj2)
-                taxonomies.append(taxonomyObj3)
-                taxonomies.append(taxonomyObj4)
+                let obj1 = BaroqueAviationCategory(id:-1 , name: "0-20 meters")
+                let obj2 = BaroqueAviationCategory(id:-1 , name: "21-40 meters")
+                let obj3 = BaroqueAviationCategory(id:-1 , name: "41-60 meters")
+                let obj4 = BaroqueAviationCategory(id:-1 , name: "60+ meters")
+                var array = [BaroqueAviationCategory]()
+                array.append(obj1)
+                array.append(obj2)
+                array.append(obj3)
+                array.append(obj4)
+                completion(array, nil)
             default:
             print("yachtOtherInterests")
         }
@@ -535,7 +522,7 @@ extension PrefProductCategoryViewController: UICollectionViewDataSource {
             switch self.prefInformationType {
             case .yachtPreferredLength:
                 if let ids = userPreferences?.yacht.yacht_length{
-                    if (ids.contains(String(model.id))){
+                    if (ids.contains(String(model.name))){
                         cell.lblTitle.textColor = UIColor.rgMid
                         cell.imgProduct.image = UIImage(named: model.name + " selected")
                     }
@@ -554,6 +541,8 @@ extension PrefProductCategoryViewController: UICollectionViewDataSource {
 extension PrefProductCategoryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let termId = String(itemsList[indexPath.row].id)
+        let name = String(itemsList[indexPath.row].name)
+        
         switch self.prefType {
         case .aviation:
             switch self.prefInformationType {
@@ -579,16 +568,16 @@ extension PrefProductCategoryViewController: UICollectionViewDelegate {
             switch self.prefInformationType {
             case .yachtPreferredLength:
                 if var ids = userPreferences?.yacht.yacht_length{
-                    if ids.contains(termId){
+                    if ids.contains(name){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
+                        ids.removeAll{ value in return value == name}
                         userPreferences?.yacht.yacht_length = ids
                     }else{
-                        userPreferences?.yacht.yacht_length?.append(termId)
+                        userPreferences?.yacht.yacht_length?.append(name)
                     }
                 }else{
                     userPreferences?.yacht.yacht_length = []    //initializing first
-                    userPreferences?.yacht.yacht_length?.append(termId)
+                    userPreferences?.yacht.yacht_length?.append(name)
                 }
                 isSelectionChanged()
                 self.collectionView.reloadItems(at: [indexPath])
@@ -598,7 +587,6 @@ extension PrefProductCategoryViewController: UICollectionViewDelegate {
         default:
             print("Others")
         }
-        
     }
     
 }

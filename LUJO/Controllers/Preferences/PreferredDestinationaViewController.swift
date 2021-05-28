@@ -49,7 +49,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     var prefInformationType : PrefInformationType!
     //to check if any selection has been changed or not, so that we can change the bottom button text to next from skip
     var previouslySelectedItems:[Taxonomy] = []
-    
+
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
     class func instantiate(prefType: PrefType, prefInformationType : PrefInformationType) -> PreferredDestinationaViewController {

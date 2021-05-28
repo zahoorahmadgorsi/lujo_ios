@@ -35,6 +35,7 @@ class TwoSliderPrefViewController: UIViewController {
     
     //to check if any selection has been changed or not, so that we can change the bottom button text to next from skip
     var previouslySelectedItems:[Int] = []
+    var sliderDefaultVal = 1
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
@@ -62,14 +63,14 @@ class TwoSliderPrefViewController: UIViewController {
                 switch prefInformationType {
                 case .aviationCharterFrequency:
                     lblPrefQuestion.text = "How many times per year do you charter a jet?"
-                    let corporateValue = userPreferences?.aviation.aviation_times_charter_corporate_jet ?? 1
-                    let leisureValue = userPreferences?.aviation.aviation_times_charter_leisure_jet ?? 1
+                    let corporateValue = userPreferences?.aviation.aviation_times_charter_corporate_jet ?? sliderDefaultVal
+                    let leisureValue = userPreferences?.aviation.aviation_times_charter_leisure_jet ?? sliderDefaultVal
                     self.sliderCorporate.value = Float(corporateValue)
                     self.sliderLeisure.value = Float(leisureValue)
                     self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
                     self.lblLeisureValue.text = String(leisureValue) + " time" +  ( leisureValue > 1 ? "s" : "")
-                    previouslySelectedItems.append(corporateValue)
-                    previouslySelectedItems.append(leisureValue)
+                    self.previouslySelectedItems.append(corporateValue)
+                    self.previouslySelectedItems.append(leisureValue)
                     
                     default:
                         print("Others")
@@ -78,18 +79,18 @@ class TwoSliderPrefViewController: UIViewController {
                 imgPreference.image = UIImage(named: "Charter Yacht Icon")
                 lblPrefLabel.text = "Yacht"
                 switch prefInformationType {
-                case .aviationCharterFrequency:
+                case .yachtCharterFrequency:
                     lblPrefQuestion.text = "How many times per year do you charter a yacht?"
                     lblCorporateVaue.text = "Weekly Charter"
                     lblLeisureValue.text = "Day Charter"
-                    let corporateValue = userPreferences?.aviation.aviation_times_charter_corporate_jet ?? 1
-                    let leisureValue = userPreferences?.aviation.aviation_times_charter_leisure_jet ?? 1
+                    let corporateValue = userPreferences?.yacht.yacht_times_charter_corporate_jet ?? 1
+                    let leisureValue = userPreferences?.yacht.yacht_times_charter_leisure_jet ?? 1
                     self.sliderCorporate.value = Float(corporateValue)
                     self.sliderLeisure.value = Float(leisureValue)
                     self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
                     self.lblLeisureValue.text = String(leisureValue) + " time" +  ( leisureValue > 1 ? "s" : "")
-                    previouslySelectedItems.append(corporateValue)
-                    previouslySelectedItems.append(leisureValue)
+                    self.previouslySelectedItems.append(corporateValue)
+                    self.previouslySelectedItems.append(leisureValue)
                     
                     default:
                         print("Others")
@@ -139,7 +140,6 @@ class TwoSliderPrefViewController: UIViewController {
         }else{
             navigateToNextVC()
         }
-        
     }
     
     func setPreferencesInformation( corporateFrequency: Int , leisureFrequency: Int, completion: @escaping (String?, Error?) -> Void) {
@@ -213,28 +213,30 @@ class TwoSliderPrefViewController: UIViewController {
         case .aviation:
             switch self.prefInformationType {
             case .aviationCharterFrequency:
-                if (self.userPreferences?.aviation.aviation_times_charter_corporate_jet == self.previouslySelectedItems[0]
-                    && self.userPreferences?.aviation.aviation_times_charter_leisure_jet == self.previouslySelectedItems[1]){
-                    btnNextStep.setTitle("S K I P", for: .normal)
-                    return false
-                }else{
-                    btnNextStep.setTitle("S A V E", for: .normal)
-                    return true
-                }
+//                if (self.userPreferences?.aviation.aviation_times_charter_corporate_jet == self.previouslySelectedItems[0]
+//                    && self.userPreferences?.aviation.aviation_times_charter_leisure_jet == self.previouslySelectedItems[1]){
+//                    btnNextStep.setTitle("S K I P", for: .normal)
+//                    return false
+//                }else{
+//                    btnNextStep.setTitle("S A V E", for: .normal)
+//                    return true
+//                }
+                var current :[Int] = []
+                current.append(self.userPreferences?.aviation.aviation_times_charter_corporate_jet ?? sliderDefaultVal)  //default value is set to 1
+                current.append(self.userPreferences?.aviation.aviation_times_charter_leisure_jet ?? sliderDefaultVal)
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
             default:
                 print("This will not call")
             }
         case .yachts:
             switch self.prefInformationType {
             case .yachtCharterFrequency:
-                if (self.userPreferences?.yacht.yacht_times_charter_corporate_jet == self.previouslySelectedItems[0]
-                    && self.userPreferences?.yacht.yacht_times_charter_leisure_jet == self.previouslySelectedItems[1]){
-                    btnNextStep.setTitle("S K I P", for: .normal)
-                    return false
-                }else{
-                    btnNextStep.setTitle("S A V E", for: .normal)
-                    return true
-                }
+                var current :[Int] = []
+                current.append(self.userPreferences?.yacht.yacht_times_charter_corporate_jet ?? sliderDefaultVal)  //default value is set to 1
+                current.append(self.userPreferences?.yacht.yacht_times_charter_leisure_jet ?? sliderDefaultVal)
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
             default:
                 print("This will not call")
             }
@@ -244,6 +246,15 @@ class TwoSliderPrefViewController: UIViewController {
         return true
     }
     
+    func compare(current:[Int] , previous:[Int] ) -> Bool{
+        if (Set(previous ) == Set(current)){
+            btnNextStep.setTitle("S K I P", for: .normal)
+            return true
+        }else{
+            btnNextStep.setTitle("S A V E", for: .normal)
+            return false
+        }
+    }
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {

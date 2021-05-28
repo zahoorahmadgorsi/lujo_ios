@@ -766,7 +766,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationPreferredCuisine:
-                    GoLujoAPIManager().setPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -833,7 +833,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtPreferredCuisines:
-                    GoLujoAPIManager().setPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setYachtPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -904,7 +904,7 @@ class PrefCollectionsViewController: UIViewController {
                 let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtStyle)
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .yachtStyle:
-                let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtStyle)
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredCuisines)
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .yachtPreferredCuisines:
                 let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtOtherInterests)
