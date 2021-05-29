@@ -62,7 +62,7 @@ enum PreferencesRouter: URLRequestConvertible {
     case setYachtType(String,String)
     case setYachtStyle(String,String)
     case setYachtPreferredCuisines(String,String,String)
-    case setOtherInterests(String,String)
+    case setYachtOtherInterests(String,String)
     case setYachtCharterFrequency(String,Int,Int)
     case setYachtPreferredRegions(String,String)
     case setYachtLength(String,String)
@@ -116,7 +116,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setYachtType: fallthrough
         case .setYachtStyle: fallthrough
         case .setYachtPreferredCuisines:  fallthrough
-        case .setOtherInterests: fallthrough
+        case .setYachtOtherInterests: fallthrough
         case .setYachtCharterFrequency: fallthrough
         case .setYachtPreferredRegions: fallthrough
         case .setYachtLength: fallthrough
@@ -171,7 +171,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setYachtCharterFrequency: fallthrough
         case .setYachtPreferredRegions: fallthrough
         case .setYachtLength: fallthrough
-        case .setOtherInterests:
+        case .setYachtOtherInterests:
             newURLComponents.path.append("/preferences/yacht")
             
         case .searchDestination:
@@ -241,8 +241,8 @@ enum PreferencesRouter: URLRequestConvertible {
             return setYachtStyleAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let .setYachtPreferredCuisines(token, commaSeparatedString, typedPreference):
             return setYachtPreferredCuisineAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .setOtherInterests(token, commaSeparatedString):
-            return setOtherInterestsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let .setYachtOtherInterests(token, commaSeparatedString ):
+            return setYachtOtherInterestsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let .setYachtCharterFrequency(token, corporateFrequency, leisureFrequency):
             return setYachtCharterFrequencyAsJSONData(token: token , corporateFrequency:corporateFrequency, leisureFrequency: leisureFrequency)
         case let .setYachtPreferredRegions(token, commaSeparatedString):
@@ -259,37 +259,32 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setGiftHabbitsAsJSONData(token: String, commaSeparatedString: String?, typedPreference:String) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setGiftHabbitsAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+        let body: [String: Any] = [
             "token": token
             ,"gift_habit_id_other" : typedPreference
+            ,"gift_habit_id" : commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["gift_habit_id"] = commaSeparatedString
-        }
 
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
      
-    fileprivate func setGiftCategoriesAsJSONData(token: String, commaSeparatedString: String?, typedPreference:String) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setGiftCategoriesAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+        let body: [String: Any] = [
             "token": token
             ,"gift_category_id_other": typedPreference
+            ,"gift_category_id" : commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["gift_category_id"] = commaSeparatedString
-        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setGiftPreferencesAsJSONData(token: String, commaSeparatedString: String?, typedPreference:String) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setGiftPreferencesAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+        let body: [String: Any] = [
             "token": token
             ,"gift_preferences_id_other": typedPreference
+            ,"gift_preferences_id": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["gift_preferences_id"] = commaSeparatedString
-        }
+
 
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -310,33 +305,28 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredDestinationsAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setAviationPreferredDestinationsAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"aviation_preferred_destinations":commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["aviation_preferred_destinations"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredAirportsAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setAviationPreferredAirportsAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"aviation_preferred_airports": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["aviation_preferred_airports"] = commaSeparatedString
-        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationAircraftCategoryAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setAviationAircraftCategoryAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"aviation_aircraft_category_id": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["aviation_aircraft_category_id"] = commaSeparatedString
-        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
@@ -357,25 +347,22 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredCuisineAsJSONData(token: String, commaSeparatedString: String? , typedPreference:String) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setAviationPreferredCuisineAsJSONData(token: String, commaSeparatedString: String , typedPreference:String) -> Data? {
+        let body: [String: Any] = [
             "token": token
             ,"aviation_preferred_cuisine_id_other": typedPreference
+            ,"aviation_preferred_cuisine_id": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["aviation_preferred_cuisine_id"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredBeveragesAsJSONData(token: String, commaSeparatedString: String?, typedPreference:String) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setAviationPreferredBeveragesAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+        let body: [String: Any] = [
             "token": token
             ,"aviation_preferred_beverage_id_other": typedPreference
+            ,"aviation_preferred_beverage_id" : commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["aviation_preferred_beverage_id"] = commaSeparatedString
-        }
 
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -388,64 +375,57 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtHaveCharteredBeforeAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtHaveCharteredBeforeAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"yacht_chartered_before": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_chartered_before"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtInterestedInAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtInterestedInAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"yacht_interested_in" : commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_interested_in"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtTypeAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtTypeAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"yacht_type": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_type"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtStyleAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtStyleAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"yacht_style" : commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_style"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtPreferredCuisineAsJSONData(token: String, commaSeparatedString: String? , typedPreference:String) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtPreferredCuisineAsJSONData(token: String, commaSeparatedString: String , typedPreference:String) -> Data? {
+        let body: [String: Any] = [
             "token": token
             ,"yacht_preferred_cuisine_id_other": typedPreference
+            ,"yacht_preferred_cuisine_id": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_preferred_cuisine_id"] = commaSeparatedString
-        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setOtherInterestsAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtOtherInterestsAsJSONData(token: String, commaSeparatedString: String ) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"yacht_interests_id": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_interests_id"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
@@ -458,23 +438,21 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtPreferredRegionsAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtPreferredRegionsAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"yacht_preferred_destinations": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_preferred_destinations"] = commaSeparatedString
-        }
+ 
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtLengthAsJSONData(token: String, commaSeparatedString: String?) -> Data? {
-        var body: [String: Any] = [
+    fileprivate func setYachtLengthAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+        let body: [String: Any] = [
             "token": token
+            ,"yacht_length": commaSeparatedString
         ]
-        if let commaSeparatedString = commaSeparatedString, !commaSeparatedString.isEmpty {
-            body["yacht_length"] = commaSeparatedString
-        }
+
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 }

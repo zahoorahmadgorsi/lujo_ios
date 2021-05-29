@@ -51,6 +51,20 @@ enum PrefInformationType:String{
     case yachtOtherInterests
 }
 
+enum PreferenceError: Error {
+    case onlyAlphaNumeric(reason: String)
+}
+extension PreferenceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .onlyAlphaNumeric(reason):
+            return NSLocalizedString(reason, comment: "")
+        }
+    }
+}
+
+
+
 class PreferencesHomeViewController: UIViewController {
     
     //MARK: - 🎲 - Init

@@ -1058,8 +1058,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setOtherInterests(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setOtherInterests(token,commaSeparatedString))
+    func setYachtOtherInterests(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtOtherInterests(token,commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

@@ -72,6 +72,7 @@ class PrefCollectionsViewController: UIViewController {
         self.userPreferences = LujoSetup().getUserPreferences()  //get user preferences from the userdefaults
         self.preferencesMasterData = LujoSetup().getPreferencesMasterData() ?? PrefMasterData() //initialize if not found in the userdefaults
         
+        
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
         
@@ -169,6 +170,7 @@ class PrefCollectionsViewController: UIViewController {
                     previouslySelectedItems = self.userPreferences?.yacht.yacht_preferred_cuisine_id ?? []
                 case .yachtOtherInterests:
                     lblPrefQuestion.text = "For better experience tell us about your other interests?"
+                    txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.yacht.yacht_interests_id ?? []
                     btnNextStep.setTitle("D O N E", for: .normal)
                 default:
@@ -455,6 +457,15 @@ class PrefCollectionsViewController: UIViewController {
     //when user will click on the next button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
         if (isSelectionChanged()){
+            let valueSpecified:Int? = Int(txtPleaseSpecify.text ?? "") // firstText is UITextField
+//            print(valueSpecified as Any)
+            if (valueSpecified != nil) { //!= nill mean value has been typecasted hence its a numeric value
+                // number is not allowed but alphanumeric
+                let error = PreferenceError.onlyAlphaNumeric(reason: "Please specify a valid value")
+                self.showError(error)
+                return
+            }
+            
             var selectedArray = [String]()
             
             switch self.prefType {
@@ -844,7 +855,7 @@ class PrefCollectionsViewController: UIViewController {
                     }
 
                 case .yachtOtherInterests:
-                    GoLujoAPIManager().setOtherInterests(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtOtherInterests(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -1017,6 +1028,7 @@ class PrefCollectionsViewController: UIViewController {
             case .yachtOtherInterests:
                 let current = self.userPreferences?.yacht.yacht_interests_id ?? []
                 let previous = self.previouslySelectedItems
+                
                 return !compare(current: current , previous: previous)
             default:
                 print("This will not call")
