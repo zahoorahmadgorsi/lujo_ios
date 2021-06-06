@@ -52,6 +52,7 @@ class PrefCollectionsViewController: UIViewController {
     var prefInformationType : PrefInformationType!
     var userPreferences: Preferences?
     var preferencesMasterData: PrefMasterData!
+    var cellWidth : Int = 165
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
@@ -107,7 +108,7 @@ class PrefCollectionsViewController: UIViewController {
                 lblPrefLabel.text = "Aviation"
                 switch prefInformationType {
                 case .aviationHaveCharteredBefore:
-                    lblPrefQuestion.text = "Have you chartered before?:"
+                    lblPrefQuestion.text = "Have you chartered before?"
                     txtPleaseSpecify.isHidden = true
                     if let value = self.userPreferences?.aviation.aviation_chartered_before{
                         previouslySelectedItems.append(value)
@@ -141,7 +142,7 @@ class PrefCollectionsViewController: UIViewController {
                 lblPrefLabel.text = "Yacht"
                 switch prefInformationType {
                 case .yachtHaveCharteredBefore:
-                    lblPrefQuestion.text = "Have you chartered a yacht before?:"
+                    lblPrefQuestion.text = "Have you chartered a yacht before?"
                     txtPleaseSpecify.isHidden = true
                     if let value = self.userPreferences?.yacht.yacht_chartered_before{
                         previouslySelectedItems.append(value)
@@ -175,6 +176,56 @@ class PrefCollectionsViewController: UIViewController {
                     btnNextStep.setTitle("D O N E", for: .normal)
                 default:
                     print("Others")
+                }
+            case .dining:
+                imgPreference.image = UIImage(named: "Book Table Icon")
+                lblPrefLabel.text = "Find a table"
+                switch prefInformationType {
+                case .diningCuisines:
+                    lblPrefQuestion.text = "What is your preferred cuisine type?"
+                    txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id_other
+                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id ?? []
+                case .diningAllergies:
+                    lblPrefQuestion.text = "Allergies"
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_allergy_id ?? []
+                case .diningPreferences:
+                    lblPrefQuestion.text = "Your dining preferences:"
+                    txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_dinning_id_other
+                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_dinning_id ?? []
+                case .diningTimings:
+                    lblPrefQuestion.text = "Preferred time of dining:"
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_timing_id ?? []
+                case .diningBeverages:
+                    lblPrefQuestion.text = "Preferred Beverages while dining:"
+                    txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_beverage_id_other
+                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_beverage_id ?? []
+                case .diningSeatings:
+                    lblPrefQuestion.text = "Preferred Seating:"
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_seating_id ?? []
+                    btnNextStep.setTitle("D O N E", for: .normal)
+                
+                default:
+                    print("default of dining")
+                }
+            case .events:
+                imgPreference.image = UIImage(named: "event_preference_icon")
+                lblPrefLabel.text = "Events"
+                switch prefInformationType {
+                case .eventCategory:
+                    lblPrefQuestion.text = "Type of Event:"
+                    txtPleaseSpecify.text = self.userPreferences?.event.event_category_id_other
+                    previouslySelectedItems = self.userPreferences?.event.event_category_id ?? []
+                case .eventLocation:
+                    lblPrefQuestion.text = "Location"
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.event.event_location_id ?? []
+                    btnNextStep.setTitle("D O N E", for: .normal)
+                
+                default:
+                    print("default of events")
                 }
             default:
                 print("Others")
@@ -242,7 +293,7 @@ class PrefCollectionsViewController: UIViewController {
                         self.itemsList = cachedItems
                     }
                 case .aviationPreferredBevereges:
-                    if let cachedItems = preferencesMasterData.aviationBeverages , cachedItems.count > 0{  //if data is already cached or not
+                    if let cachedItems = preferencesMasterData.beverages , cachedItems.count > 0{  //if data is already cached or not
                         self.itemsList = cachedItems
                     }
                 default:
@@ -295,8 +346,50 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("Hard codes values for this case. No master data exist.")
                 }
+            case .dining:
+                switch prefInformationType {
+                case .diningCuisines:
+                    if let cachedItems = preferencesMasterData.cuisines , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .diningAllergies:
+                    if let cachedItems = preferencesMasterData.diningAllergies , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .diningPreferences:
+                    if let cachedItems = preferencesMasterData.diningPreferences , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .diningTimings:
+                    if let cachedItems = preferencesMasterData.diningTimings , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .diningBeverages:
+                    if let cachedItems = preferencesMasterData.beverages , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .diningSeatings:
+                    if let cachedItems = preferencesMasterData.diningSeatings , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
                 default:
-                    print("Others")
+                    print("default of dining")
+                }
+            case .events:
+                switch prefInformationType {
+                case .eventCategory:
+                    if let cachedItems = preferencesMasterData.eventCategory , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .eventLocation:
+                    if let cachedItems = preferencesMasterData.eventLocation , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                default:
+                    print("default of event")
+                }
+            default:
+                print("Others")
             }
         if (self.itemsList.count == 0){
             self.showNetworkActivity()  //if no data is cached then fetch openly else silently
@@ -383,7 +476,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getCuisines(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain aviation information")
                         completion(nil, error)
                         return
                     }
@@ -404,7 +497,7 @@ class PrefCollectionsViewController: UIViewController {
                     }
                     //caching master data into userdefaults
                     if taxonomies?.count ?? 0 > 0{
-                        self.preferencesMasterData.aviationBeverages = taxonomies
+                        self.preferencesMasterData.beverages = taxonomies
                         LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                     }
                     completion(taxonomies, error)
@@ -419,7 +512,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getCuisines(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain yacht information")
                         completion(nil, error)
                         return
                     }
@@ -449,9 +542,140 @@ class PrefCollectionsViewController: UIViewController {
                 print("Hard coded values, no master data exist.")
                 completion([], nil)
             }
-                default:
-                    print("Others")
-            }
+        case .dining:
+           switch prefInformationType {
+           case .diningCuisines:
+                GoLujoAPIManager().getDiningCuisines(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.cuisines = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+           case .diningAllergies:
+                GoLujoAPIManager().getDiningAllergies(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.diningAllergies = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+           case .diningPreferences:
+                GoLujoAPIManager().getDiningPreferences(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.diningPreferences = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+           case .diningTimings:
+                GoLujoAPIManager().getDiningTimings(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.diningTimings = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+           case .diningBeverages:
+                GoLujoAPIManager().getDiningBeverages(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.beverages = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+           case .diningSeatings:
+                GoLujoAPIManager().getDiningSeatings(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.diningSeatings = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+           default:
+               print("default of dining")
+           }
+        case .events:
+            switch prefInformationType {
+            case .eventCategory:
+                GoLujoAPIManager().getEventCategory(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.eventCategory = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            case .eventLocation:
+                GoLujoAPIManager().getEventLocation(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.eventLocation = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+
+            default:
+                print("default of event")
+        }
+        default:
+            print("Others")
+        }
     }
     
     //when user will click on the next button at the bottom
@@ -568,6 +792,86 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("yacht default")
                 }
+            case .dining:
+               switch prefInformationType {
+               case .diningCuisines:
+                    if let ids = userPreferences?.restaurant.restaurant_preferred_cuisine_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+               case .diningAllergies:
+                    if let ids = userPreferences?.restaurant.restaurant_allergy_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                   
+               case .diningPreferences:
+                    if let ids = userPreferences?.restaurant.restaurant_dinning_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                   
+               case .diningTimings:
+                    if let ids = userPreferences?.restaurant.restaurant_timing_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                   
+               case .diningBeverages:
+                    if let ids = userPreferences?.restaurant.restaurant_beverage_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                   
+               case .diningSeatings:
+                    if let ids = userPreferences?.restaurant.restaurant_seating_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+               
+               default:
+                   print("default of dining")
+               }
+            case .events:
+                switch prefInformationType {
+                case .eventCategory:
+                    if let ids = userPreferences?.event.event_category_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                case .eventLocation:
+                    if let ids = userPreferences?.event.event_location_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+
+                default:
+                    print("default of event")
+            }
             default:
                 print("Default of main switch")
             }
@@ -688,6 +992,63 @@ class PrefCollectionsViewController: UIViewController {
                         default:
                             print("yacht default")
                         }
+                    case .dining:
+                        switch self.prefInformationType {
+                        case .diningCuisines:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.restaurant.restaurant_preferred_cuisine_id = arr
+                            }
+                            userPreferences.restaurant.restaurant_preferred_cuisine_id_other = self.txtPleaseSpecify.text
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .diningAllergies:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.restaurant.restaurant_allergy_id = arr
+                            }
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .diningPreferences:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.restaurant.restaurant_dinning_id = arr
+                            }
+                            userPreferences.restaurant.restaurant_dinning_id_other = self.txtPleaseSpecify.text
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .diningTimings:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.restaurant.restaurant_timing_id = arr
+                            }
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .diningBeverages:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.restaurant.restaurant_beverage_id = arr
+                            }
+                            userPreferences.restaurant.restaurant_beverage_id_other = self.txtPleaseSpecify.text
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            break
+                        case .diningSeatings:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.restaurant.restaurant_seating_id = arr
+                            }
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        
+                        default:
+                            print("default of dining")
+                        }
+                    case .events:
+                        switch self.prefInformationType {
+                        case .eventCategory:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.event.event_category_id = arr
+                            }
+                            userPreferences.event.event_category_id_other = self.txtPleaseSpecify.text
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .eventLocation:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.event.event_location_id = arr
+                            }
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+
+                        default:
+                            print("default of event")
+                    }
                     default:
                         print("Default of main switch")
                     }
@@ -714,7 +1075,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftHabbits(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -724,7 +1085,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftCategories(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -734,7 +1095,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftPreferences(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -750,7 +1111,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -760,7 +1121,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -770,7 +1131,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredCharter(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -780,7 +1141,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -791,7 +1152,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredBeverages(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -807,7 +1168,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -817,7 +1178,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -827,7 +1188,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtType(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -837,7 +1198,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtStyle(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -847,7 +1208,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -858,7 +1219,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtOtherInterests(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
                             completion(nil, error)
                             return
                         }
@@ -868,6 +1229,98 @@ class PrefCollectionsViewController: UIViewController {
                     print("Not yet required")
                     completion("Success", nil)
             }
+        case .dining:
+            switch prefInformationType {
+            case .diningCuisines:
+                GoLujoAPIManager().setDiningCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .diningAllergies:
+                GoLujoAPIManager().setDiningAllergies(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .diningPreferences:
+                GoLujoAPIManager().setDiningPreferences(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .diningTimings:
+                GoLujoAPIManager().setDiningTimings(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .diningBeverages:
+                GoLujoAPIManager().setDiningBeverages(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .diningSeatings:
+                GoLujoAPIManager().setDiningSeatings(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            
+            default:
+                print("default of dining")
+            }
+        case .events:
+            switch prefInformationType {
+            case .eventCategory:
+                GoLujoAPIManager().setEventCategory(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .eventLocation:
+                GoLujoAPIManager().setEventLocation(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+
+            default:
+                print("default of event")
+        }
         default:
             print("Main switch default ")
         }
@@ -925,6 +1378,39 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 self.skipTapped()   //skip even for yachtPreferredBevereges
             }
+        case .dining:
+           switch prefInformationType {
+           case .diningCuisines:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningAllergies)
+                self.navigationController?.pushViewController(viewController, animated: true)
+           case .diningAllergies:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningPreferences)
+                self.navigationController?.pushViewController(viewController, animated: true)
+           case .diningPreferences:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningTimings)
+                self.navigationController?.pushViewController(viewController, animated: true)
+           case .diningTimings:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningBeverages)
+                self.navigationController?.pushViewController(viewController, animated: true)
+           case .diningBeverages:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningSeatings)
+                self.navigationController?.pushViewController(viewController, animated: true)
+           case .diningSeatings:
+                self.skipTapped()
+           default:
+               print("default of dining")
+           }
+        case .events:
+            switch prefInformationType {
+            case .eventCategory:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventLocation)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .eventLocation:
+                self.skipTapped()
+
+            default:
+                print("default of event")
+        }
         default:
             print("default of main switch")
         }
@@ -1028,11 +1514,57 @@ class PrefCollectionsViewController: UIViewController {
             case .yachtOtherInterests:
                 let current = self.userPreferences?.yacht.yacht_interests_id ?? []
                 let previous = self.previouslySelectedItems
-                
                 return !compare(current: current , previous: previous)
             default:
                 print("This will not call")
             }
+        case .dining:
+           switch prefInformationType {
+           case .diningCuisines:
+                let current = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+           case .diningAllergies:
+                let current = self.userPreferences?.restaurant.restaurant_allergy_id ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+           case .diningPreferences:
+                let current = self.userPreferences?.restaurant.restaurant_dinning_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.restaurant.restaurant_dinning_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+           case .diningTimings:
+                let current = self.userPreferences?.restaurant.restaurant_timing_id ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+           case .diningBeverages:
+                let current = self.userPreferences?.restaurant.restaurant_beverage_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.restaurant.restaurant_beverage_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+           case .diningSeatings:
+                let current = self.userPreferences?.restaurant.restaurant_seating_id ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+           default:
+               print("default of dining")
+           }
+        case .events:
+            switch prefInformationType {
+            case .eventCategory:
+                let current = self.userPreferences?.event.event_category_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.event.event_category_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+            case .eventLocation:
+                let current = self.userPreferences?.event.event_location_id ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+
+            default:
+                print("default of event")
+        }
         default:
             print("default claus of main switch")
         }
@@ -1111,30 +1643,30 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
                 case .giftHabbits:
                     if let ids = userPreferences?.gift.gift_habit_id{
                         if (ids.contains(String(model.termId))){
-                            cell.backgroundColor = UIColor.rgMid
+                            cell.imgContainerView.backgroundColor = UIColor.rgMid
                             cell.lblTitle.textColor = UIColor.white
                         }else{
-                            cell.backgroundColor = UIColor.clear
+                            cell.imgContainerView.backgroundColor = UIColor.clear
                             cell.lblTitle.textColor = UIColor.rgMid
                         }
                     }
                 case .giftCategories:
                     if let ids = userPreferences?.gift.gift_category_id{
                         if (ids.contains(String(model.termId))){
-                            cell.backgroundColor = UIColor.rgMid
+                            cell.imgContainerView.backgroundColor = UIColor.rgMid
                             cell.lblTitle.textColor = UIColor.white
                         }else{
-                            cell.backgroundColor = UIColor.clear
+                            cell.imgContainerView.backgroundColor = UIColor.clear
                             cell.lblTitle.textColor = UIColor.rgMid
                         }
                     }
                 case .giftPreferences:
                     if let ids = userPreferences?.gift.gift_preferences_id{
                         if (ids.contains(String(model.termId))){
-                            cell.backgroundColor = UIColor.rgMid
+                            cell.imgContainerView.backgroundColor = UIColor.rgMid
                             cell.lblTitle.textColor = UIColor.white
                         }else{
-                            cell.backgroundColor = UIColor.clear
+                            cell.imgContainerView.backgroundColor = UIColor.clear
                             cell.lblTitle.textColor = UIColor.rgMid
                         }
                     }
@@ -1146,50 +1678,50 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .aviationHaveCharteredBefore:
                 if let str = userPreferences?.aviation.aviation_chartered_before{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationInterestedIn:
                 if let str = userPreferences?.aviation.aviation_interested_in{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationPreferredCharter:
                 if let str = userPreferences?.aviation.aviation_preferred_charter_range{
                     if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationPreferredCuisine:
                 if let ids = userPreferences?.aviation.aviation_preferred_cuisine_id{
                     if (ids.contains(String(model.termId))){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationPreferredBevereges:
                 if let ids = userPreferences?.aviation.aviation_preferred_beverage_id{
                     if (ids.contains(String(model.termId))){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
@@ -1201,66 +1733,159 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .yachtHaveCharteredBefore:
                 if let str = userPreferences?.yacht.yacht_chartered_before{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtInterestedIn:
                 if let str = userPreferences?.yacht.yacht_interested_in{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtType:
                 if let str = userPreferences?.yacht.yacht_type{
                     if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtStyle:
                 if let str = userPreferences?.yacht.yacht_style{
                     if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtPreferredCuisines:
                 if let ids = userPreferences?.yacht.yacht_preferred_cuisine_id{
                     if (ids.contains(String(model.termId))){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtOtherInterests:
                 if let ids = userPreferences?.yacht.yacht_interests_id{
                     if (ids.contains(String(model.termId))){
-                        cell.backgroundColor = UIColor.rgMid
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.backgroundColor = UIColor.clear
+                        cell.imgContainerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             default:
                 print("yacht default")
             }
+        case .dining:
+            
+            switch prefInformationType {
+            case .diningCuisines:
+                if let ids = userPreferences?.restaurant.restaurant_preferred_cuisine_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .diningAllergies:
+                if let ids = userPreferences?.restaurant.restaurant_allergy_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .diningPreferences:
+                if let ids = userPreferences?.restaurant.restaurant_dinning_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .diningTimings:
+                if let ids = userPreferences?.restaurant.restaurant_timing_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .diningBeverages:
+                if let ids = userPreferences?.restaurant.restaurant_beverage_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .diningSeatings:
+                if let ids = userPreferences?.restaurant.restaurant_seating_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            
+            default:
+                print("default of dining")
+            }
+        case .events:
+            switch prefInformationType {
+            case .eventCategory:
+                if let ids = userPreferences?.event.event_category_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .eventLocation:
+                if let ids = userPreferences?.event.event_location_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+
+            default:
+                print("default of event")
+        }
         default:
             print("default statement of main switch")
         }
@@ -1452,6 +2077,122 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
             default:
                 print("yacht default")
             }
+        case .dining:
+            switch prefInformationType {
+            case .diningCuisines:
+                if var ids = userPreferences?.restaurant.restaurant_preferred_cuisine_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.restaurant.restaurant_preferred_cuisine_id = ids
+                    }else{
+                        userPreferences?.restaurant.restaurant_preferred_cuisine_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.restaurant.restaurant_preferred_cuisine_id = []    //initializing first
+                    userPreferences?.restaurant.restaurant_preferred_cuisine_id?.append(termId)
+                }
+            case .diningAllergies:
+                if var ids = userPreferences?.restaurant.restaurant_allergy_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.restaurant.restaurant_allergy_id = ids
+                    }else{
+                        userPreferences?.restaurant.restaurant_allergy_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.restaurant.restaurant_allergy_id = []    //initializing first
+                    userPreferences?.restaurant.restaurant_allergy_id?.append(termId)
+                }
+            case .diningPreferences:
+                if var ids = userPreferences?.restaurant.restaurant_dinning_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.restaurant.restaurant_dinning_id = ids
+                    }else{
+                        userPreferences?.restaurant.restaurant_dinning_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.restaurant.restaurant_dinning_id = []    //initializing first
+                    userPreferences?.restaurant.restaurant_dinning_id?.append(termId)
+                }
+            case .diningTimings:
+                if var ids = userPreferences?.restaurant.restaurant_timing_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.restaurant.restaurant_timing_id = ids
+                    }else{
+                        userPreferences?.restaurant.restaurant_timing_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.restaurant.restaurant_timing_id = []    //initializing first
+                    userPreferences?.restaurant.restaurant_timing_id?.append(termId)
+                }
+            case .diningBeverages:
+                if var ids = userPreferences?.restaurant.restaurant_beverage_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.restaurant.restaurant_beverage_id = ids
+                    }else{
+                        userPreferences?.restaurant.restaurant_beverage_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.restaurant.restaurant_beverage_id = []    //initializing first
+                    userPreferences?.restaurant.restaurant_beverage_id?.append(termId)
+                }
+            case .diningSeatings:
+                if var ids = userPreferences?.restaurant.restaurant_seating_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.restaurant.restaurant_seating_id = ids
+                    }else{
+                        userPreferences?.restaurant.restaurant_seating_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.restaurant.restaurant_seating_id = []    //initializing first
+                    userPreferences?.restaurant.restaurant_seating_id?.append(termId)
+                }
+            
+            default:
+                print("default of dining")
+            }
+        case .events:
+            switch prefInformationType {
+            case .eventCategory:
+                if var ids = userPreferences?.event.event_category_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.event.event_category_id = ids
+                    }else{
+                        userPreferences?.event.event_category_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.event.event_category_id = []    //initializing first
+                    userPreferences?.event.event_category_id?.append(termId)
+                }
+            case .eventLocation:
+                if var ids = userPreferences?.event.event_location_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.event.event_location_id = ids
+                    }else{
+                        userPreferences?.event.event_location_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.event.event_location_id = []    //initializing first
+                    userPreferences?.event.event_location_id?.append(termId)
+                }
+
+            default:
+                print("default of event")
+        }
         default:
             print("default statement of main switch")
         }
@@ -1462,13 +2203,14 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
 
 extension PrefCollectionsViewController: UICollectionViewDelegateFlowLayout {
     
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = Int(collectionView.bounds.size.width)
         switch prefInformationType {
         case .giftHabbits:
-            return CGSize(width: width, height: PrefCollSize.itemHeight.rawValue)
+            return CGSize(width: Int(width), height: PrefCollSize.itemHeight.rawValue)
         case .aviationHaveCharteredBefore:  fallthrough
         case .aviationInterestedIn:       fallthrough
         case .aviationPreferredCharter: fallthrough
@@ -1478,34 +2220,50 @@ extension PrefCollectionsViewController: UICollectionViewDelegateFlowLayout {
         case .yachtType:       fallthrough
         case .yachtStyle:       
             //width is same as collection container's view i.e. full width
-            return CGSize(width: Int(Double(width) * 0.7) , height: PrefCollSize.itemHeight.rawValue)    //70% of the width of collectionveiew
+            cellWidth = Int(Float(width)  * 0.7)
+            return CGSize(width: cellWidth , height: PrefCollSize.itemHeight.rawValue)    //70% of the width of collectionveiew
         default:
             //width is half as collection container's view minus margin
-            let itemWidth = Int(width / 2)  - PrefCollSize.itemMargin.rawValue / 2    //to keep horizontal and vertical margin same
-//            print(width , itemWidth)
-            return CGSize(width: itemWidth, height: PrefCollSize.itemHeight.rawValue)
+            cellWidth = width / 2  - PrefCollSize.itemMargin.rawValue / 2    //to keep horizontal and vertical margin same
+            return CGSize(width: cellWidth, height: PrefCollSize.itemHeight.rawValue)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        //Where elements_count is the count of all your items in that
+        //Collection view...
+        let cellCount = CGFloat(self.itemsList.count)
+        var topMargin:CGFloat = 0.0
+        
         switch prefInformationType {
         case .aviationHaveCharteredBefore:  fallthrough
         case .aviationInterestedIn:       fallthrough
         case .aviationPreferredCharter: fallthrough
-            
+
         case .yachtHaveCharteredBefore:  fallthrough
         case .yachtInterestedIn:       fallthrough
         case .yachtType:       fallthrough
         case .yachtStyle:
             // since these are fixed limited values so doubling the margin with the question title
-            return UIEdgeInsets(top: CGFloat(PrefCollSize.itemMargin.rawValue * 2), left: 0, bottom: 0, right: 0)
+            topMargin = CGFloat(PrefCollSize.itemMargin.rawValue * 2)
         default:
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            if self.itemsList.count == 1{
+                topMargin = CGFloat(PrefCollSize.itemMargin.rawValue * 2)
+            }else{
+                topMargin = 0
+            }
+        }
+        if cellCount ==  1 {
+            let padding = (collectionView.frame.size.width - CGFloat(cellWidth)) / 2.0
+            return UIEdgeInsets(top: topMargin, left: padding, bottom: 0, right: padding)
+        }else{
+            return UIEdgeInsets(top: topMargin, left: 0, bottom: 0, right: 0)
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

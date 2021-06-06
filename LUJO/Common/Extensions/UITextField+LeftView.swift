@@ -28,6 +28,12 @@ class DesignableUITextField: UITextField {
             updateView()
         }
     }
+    
+    @IBInspectable var placeholderColor: UIColor? {
+        didSet {
+            updateView()
+        }
+    }
 
     func updateView() {
         if let image = leftImage {
@@ -48,9 +54,16 @@ class DesignableUITextField: UITextField {
             layer.borderWidth = 1
             layer.borderColor = color.cgColor
         }
-
         // Placeholder text color
         attributedPlaceholder = NSAttributedString(string: placeholder != nil ? placeholder! : "",
                                                    attributes: [NSAttributedString.Key.foregroundColor: color])
+        
+        if let color = placeholderColor {
+            // Placeholder text color
+            attributedPlaceholder = NSAttributedString(string: placeholder != nil ? placeholder! : "",
+                                                       attributes: [NSAttributedString.Key.foregroundColor: color])
+        }
+        
+        
     }
 }

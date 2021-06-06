@@ -47,6 +47,7 @@ class AviationAirportSelectionViewController: UIViewController, UITableViewDeleg
         searchText.addTarget(self,
                              action: #selector(AviationAirportSelectionViewController.textFieldDidChange(_:)),
                              for: .editingChanged)
+        searchText.placeHolderColor = .placeholderText
         airportsTableView.dataSource = self
         airportsTableView.delegate = self
         

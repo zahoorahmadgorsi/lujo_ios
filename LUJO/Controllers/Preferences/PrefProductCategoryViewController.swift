@@ -169,16 +169,16 @@ class PrefProductCategoryViewController: UIViewController {
             switch prefInformationType {
             case .aviationAircraftCategory:
                 //adding items in a order of small to high
-                if let found = jets.first(where: {$0.name == "Light jet"}) {    //4     "Light jet"
-                    self.itemsList.append(found)
-                }
                 if let found = jets.first(where: {$0.name == "Super light jet"}) {  //6 "Super light jet"
                     self.itemsList.append(found)
                 }
-                if let found = jets.first(where: {$0.name == "Midsize jet"}) {  //11    "Midsize jet"
+                if let found = jets.first(where: {$0.name == "Light jet"}) {    //4     "Light jet"
                     self.itemsList.append(found)
                 }
                 if let found = jets.first(where: {$0.name == "Super midsize jet"}) {    //7 "Super midsize jet"
+                    self.itemsList.append(found)
+                }
+                if let found = jets.first(where: {$0.name == "Midsize jet"}) {  //11    "Midsize jet"
                     self.itemsList.append(found)
                 }
                 if let found = jets.first(where: {$0.name == "Heavy jet"}) {    //10    "Heavy jet"
@@ -295,14 +295,14 @@ class PrefProductCategoryViewController: UIViewController {
             default:
                 print("outer switch")
             }
-            
-            if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
+            //if selected array is zero then its mean all previous selection has been un selected
+//            if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
                 let commaSeparatedString = selectedArray.map{String($0)}.joined(separator: ",")
                 setPreferences(commaSeparatedString: commaSeparatedString)
-            }else{
-    //            showCardAlertWith(title: "My Preferences", body: "Please select one option at least.")
-                navigateToNextVC()  //skipping this step
-            }
+//            }else{
+//    //            showCardAlertWith(title: "My Preferences", body: "Please select one option at least.")
+//                navigateToNextVC()  //skipping this step
+//            }
         }else{
             navigateToNextVC()
         }

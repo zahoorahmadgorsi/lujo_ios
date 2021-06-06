@@ -20,7 +20,8 @@ class CountryCodeSelectionView: UIViewController, UITableViewDataSource, UITable
         searchText.addTarget(self,
                              action: #selector(searchFieldDidChange(_:)),
                              for: .editingChanged)
-
+        searchText.placeHolderColor = .placeholderText
+        
         countriesTableView.dataSource = self
         countriesTableView.delegate = self
 

@@ -70,6 +70,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
         self.userPreferences = LujoSetup().getUserPreferences()  //get user preferences from the userdefaults
+        txtPreferredDestination.placeHolderColor = .placeholderText
         
         switch prefType {
             case .aviation:
@@ -78,7 +79,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 switch prefInformationType {
                 case .aviationPreferredDestination:
                     lblPrefQuestion.text = "What are your top preferred destinations?"
-                    txtPreferredDestination.text = "Destination City, State or Country"
+                    txtPreferredDestination.text = "Any"
                     if let destinations = self.userPreferences?.aviation.aviation_preferred_destinations{
                         var taxonomies = [Taxonomy]()
                         for item in  destinations {
@@ -90,7 +91,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     }
                 case .aviationPreferredAirport:
                     lblPrefQuestion.text = "Which airport do you want to fly more often?"
-                    txtPreferredDestination.text = "Destination Airport"
+                    txtPreferredDestination.text = "Any"
                     if let airports = self.userPreferences?.aviation.aviation_preferred_airports{
                         var taxonomies = [Taxonomy]()
                         for item in  airports {
@@ -104,26 +105,46 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     default:
                         print("Others")
                 }
-        case .yachts:
-            imgPreference.image = UIImage(named: "Charter Yacht Icon")
-            lblPrefLabel.text = "Yacht"
-            switch prefInformationType {
-            case .yachtPreferredRegions:
-                lblPrefQuestion.text = "What are your preferred charter regions?"
-                txtPreferredDestination.text = "Regions i.e. mediterranean"
-                if let destinations = self.userPreferences?.yacht.yacht_preferred_destinations{
-                    var taxonomies = [Taxonomy]()
-                    for item in  destinations {
-                        let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
-                        taxonomies.append(taxonomy)
+            case .yachts:
+                imgPreference.image = UIImage(named: "Charter Yacht Icon")
+                lblPrefLabel.text = "Yacht"
+                switch prefInformationType {
+                case .yachtPreferredRegions:
+                    lblPrefQuestion.text = "What are your preferred charter regions?"
+                    txtPreferredDestination.text = "Any"
+                    if let destinations = self.userPreferences?.yacht.yacht_preferred_destinations{
+                        var taxonomies = [Taxonomy]()
+                        for item in  destinations {
+                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            taxonomies.append(taxonomy)
+                        }
+                        previouslySelectedItems = taxonomies
+                        self.itemsList = taxonomies
                     }
-                    previouslySelectedItems = taxonomies
-                    self.itemsList = taxonomies
+    //                        btnNextStep.setTitle("D O N E", for: .normal)
+                    default:
+                        print("Others")
                 }
-//                        btnNextStep.setTitle("D O N E", for: .normal)
-                default:
-                    print("Others")
-            }
+            case .travel:
+                imgPreference.image = UIImage(named: "Find Hotel Icon")
+                lblPrefLabel.text = "Travel"
+                switch prefInformationType {
+                case .travelDestinations:
+                    lblPrefQuestion.text = "What are your top preferred destinations?"
+                    txtPreferredDestination.text = "Any"
+                    if let destinations = self.userPreferences?.travel.travel_preferred_destinations{
+                        var taxonomies = [Taxonomy]()
+                        for item in  destinations {
+                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            taxonomies.append(taxonomy)
+                        }
+                        previouslySelectedItems = taxonomies
+                        self.itemsList = taxonomies
+                    }
+    //                        btnNextStep.setTitle("D O N E", for: .normal)
+                    default:
+                        print("Others")
+                }
             default:
                 print("default of outer switch")
         }
@@ -195,6 +216,15 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                             default:
                                 print("Not yet required")
                         }
+                    case .travel:
+                        switch self.prefInformationType {
+                            case .travelDestinations:
+                                let arr = commaSeparatedString.components(separatedBy: ",")
+                                userPreferences.travel.travel_preferred_destinations = arr
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            default:
+                                print("Not yet required")
+                        }
                     default:
                         print("outer case default")
                     }
@@ -255,6 +285,22 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     print("Not yet required")
                     completion("Success", nil)
             }
+        case .travel:
+            switch prefInformationType {
+            case .travelDestinations:
+                GoLujoAPIManager().setTravelDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            default:
+                    print("Not yet required")
+                    completion("Success", nil)
+            }
         default:
             print("outer switch")
         }
@@ -276,6 +322,14 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         case .yachts:
             switch self.prefInformationType {
             case .yachtPreferredRegions:
+                let viewController = PrefProductCategoryViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredLength)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            default:
+                print("Never going to get call")
+            }
+        case .travel:
+            switch self.prefInformationType {
+            case .travelDestinations:
                 let viewController = PrefProductCategoryViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredLength)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
@@ -318,6 +372,15 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             default:
                 print("This will not call")
             }
+        case .travel:
+            switch self.prefInformationType {
+            case .travelDestinations:
+                let current = self.itemsList.map{$0.name}
+                let previous = self.previouslySelectedItems.map{$0.name}
+                return !compare(current: current , previous: previous)
+            default:
+                print("This will not call")
+            }
         default:
             print("outer switch")
         }
@@ -348,7 +411,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             case .aviation:
                 switch self.prefInformationType {
                 case .aviationPreferredDestination:
-                    let viewController = DestinationSelectionViewController.instantiate()
+                    let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .aviationPreferredDestination)
                     viewController.delegate = self
                     present(viewController, animated: true, completion: nil)
                     return false
@@ -363,7 +426,17 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             case .yachts:
                 switch self.prefInformationType {
                 case .yachtPreferredRegions:
-                    let viewController = DestinationSelectionViewController.instantiate()   //pass regions
+                    let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .yachtPreferredRegions)   //pass regions
+                    viewController.delegate = self
+                    present(viewController, animated: true, completion: nil)
+                    return false
+                default:
+                    print("Never going to be get called")
+                }
+            case .travel:
+                switch self.prefInformationType {
+                case .travelDestinations:
+                    let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .travelDestinations)   //pass regions
                     viewController.delegate = self
                     present(viewController, animated: true, completion: nil)
                     return false

@@ -20,8 +20,9 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
     class var identifier: String { return "DestinationSelectionViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate() -> DestinationSelectionViewController {
+    class func instantiate(prefInformationType : PrefInformationType) -> DestinationSelectionViewController {
         let viewController = UIStoryboard.preferences.instantiate(identifier) as! DestinationSelectionViewController
+        viewController.prefInformationType = prefInformationType
         return viewController
     }
     
@@ -32,18 +33,28 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
     @IBOutlet var searchText: DesignableUITextField!
     @IBOutlet var tblDestinations: UITableView!
     @IBOutlet var bottomHeightConstraint: NSLayoutConstraint!
-    
     private var destinations = [Taxonomy]()
+    var prefInformationType : PrefInformationType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        titleLabel.text = "Destinations"
+
+        switch(self.prefInformationType){
+        case .aviationPreferredDestination: fallthrough
+        case .travelDestinations:
+            titleLabel.text = "Search Destinations"
+        case .yachtPreferredRegions:
+            titleLabel.text = "Search Regions"
+        default:
+            print("Never going to get executed")
+        }
         
         searchText.becomeFirstResponder()
         searchText.addTarget(self,
-                             action: #selector(DestinationSelectionViewController.textFieldDidChange(_:)),
+                             action: #selector(textFieldDidChange(_:)),
                              for: .editingChanged)
+        searchText.placeHolderColor = .placeholderText
+        
         tblDestinations.dataSource = self
         tblDestinations.delegate = self
         
@@ -130,15 +141,30 @@ extension DestinationSelectionViewController {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             return
         }
-        
-        GoLujoAPIManager().searchDestination(token: token, strToSearch: pattern) { taxonomies, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                return
+        switch(self.prefInformationType){
+        case .aviationPreferredDestination: fallthrough
+        case .travelDestinations:
+            GoLujoAPIManager().searchDestination(token: token, strToSearch: pattern) { taxonomies, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain preferred destinations")
+                    self.showErrorPopup(withTitle: "Error", error: error)
+                    return
+                }
+                self.showDestinationsList(taxonomies ?? [])
             }
-            self.showDestinationsList(taxonomies ?? [])
+        case .yachtPreferredRegions:
+            GoLujoAPIManager().searchRegions(token: token, strToSearch: pattern) { taxonomies, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain preferred regions")
+                    self.showErrorPopup(withTitle: "Error", error: error)
+                    return
+                }
+                self.showDestinationsList(taxonomies ?? [])
+            }
+        default:
+            print("Never going to get executed")
         }
-        
     }
 }

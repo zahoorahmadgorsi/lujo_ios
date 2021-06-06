@@ -20,6 +20,9 @@ class TwoSliderPrefViewController: UIViewController {
     @IBOutlet weak var imgPreference: UIImageView!
     @IBOutlet weak var lblPrefLabel: UILabel!
     @IBOutlet weak var lblPrefQuestion: UILabel!
+    @IBOutlet weak var lblCorporate: UILabel!
+    @IBOutlet weak var lblLeisure: UILabel!
+    
     @IBOutlet weak var lblCorporateVaue: UILabel!
     @IBOutlet weak var sliderCorporate: UISlider!
     @IBOutlet weak var lblLeisureValue: UILabel!
@@ -72,8 +75,8 @@ class TwoSliderPrefViewController: UIViewController {
                     self.previouslySelectedItems.append(corporateValue)
                     self.previouslySelectedItems.append(leisureValue)
                     
-                    default:
-                        print("Others")
+                default:
+                    print("Others")
                 }
             case .yachts:
                 imgPreference.image = UIImage(named: "Charter Yacht Icon")
@@ -81,8 +84,8 @@ class TwoSliderPrefViewController: UIViewController {
                 switch prefInformationType {
                 case .yachtCharterFrequency:
                     lblPrefQuestion.text = "How many times per year do you charter a yacht?"
-                    lblCorporateVaue.text = "Weekly Charter"
-                    lblLeisureValue.text = "Day Charter"
+                    lblCorporate.text = "Weekly Charter"
+                    lblLeisure.text = "Day Charter"
                     let corporateValue = userPreferences?.yacht.yacht_times_charter_corporate_jet ?? 1
                     let leisureValue = userPreferences?.yacht.yacht_times_charter_leisure_jet ?? 1
                     self.sliderCorporate.value = Float(corporateValue)
@@ -92,8 +95,28 @@ class TwoSliderPrefViewController: UIViewController {
                     self.previouslySelectedItems.append(corporateValue)
                     self.previouslySelectedItems.append(leisureValue)
                     
-                    default:
-                        print("Others")
+                default:
+                    print("default of prefInformationType")
+                }
+            case .travel:
+                imgPreference.image = UIImage(named: "Find Hotel Icon")
+                lblPrefLabel.text = "Travel"
+                switch prefInformationType {
+                case .travelFrequency:
+                    lblPrefQuestion.text = "Approximately how many times do you travel in a year?"
+                    lblCorporate.text = "Business"
+                    lblLeisure.text = "Leisure"
+                    let corporateValue = userPreferences?.travel.travel_times_business ?? 1
+                    let leisureValue = userPreferences?.travel.travel_times_leisure ?? 1
+                    self.sliderCorporate.value = Float(corporateValue)
+                    self.sliderLeisure.value = Float(leisureValue)
+                    self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
+                    self.lblLeisureValue.text = String(leisureValue) + " time" +  ( leisureValue > 1 ? "s" : "")
+                    self.previouslySelectedItems.append(corporateValue)
+                    self.previouslySelectedItems.append(leisureValue)
+                    
+                default:
+                    print("default of prefInformationType")
                 }
             default:
                 print("default of main switch")
@@ -178,10 +201,24 @@ class TwoSliderPrefViewController: UIViewController {
             default:
                 print("This will not call")
             }
+        case .travel:
+            switch self.prefInformationType {
+            case .travelFrequency:
+                GoLujoAPIManager().setTravelFrequency(token: token, corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            default:
+                print("This will not call")
+            }
         default:
             print("Main default")
         }
-
     }
     
     func navigateToNextVC(){
@@ -198,6 +235,14 @@ class TwoSliderPrefViewController: UIViewController {
             switch self.prefInformationType {
             case .yachtCharterFrequency:
                 let viewController = PreferredDestinationaViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredRegions)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            default:
+                print("This will not call")
+            }
+        case .travel:
+            switch self.prefInformationType {
+            case .travelFrequency:
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .travel, prefInformationType: .travelDestinations)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("This will not call")
@@ -235,6 +280,17 @@ class TwoSliderPrefViewController: UIViewController {
                 var current :[Int] = []
                 current.append(self.userPreferences?.yacht.yacht_times_charter_corporate_jet ?? sliderDefaultVal)  //default value is set to 1
                 current.append(self.userPreferences?.yacht.yacht_times_charter_leisure_jet ?? sliderDefaultVal)
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+            default:
+                print("This will not call")
+            }
+        case .travel:
+            switch self.prefInformationType {
+            case .travelFrequency:
+                var current :[Int] = []
+                current.append(self.userPreferences?.travel.travel_times_business ?? sliderDefaultVal)  //default value is set to 1
+                current.append(self.userPreferences?.travel.travel_times_leisure ?? sliderDefaultVal)
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
             default:
@@ -298,6 +354,13 @@ class TwoSliderPrefViewController: UIViewController {
             default:
                 print("This will not call")
             }
+        case .travel:
+            switch self.prefInformationType {
+            case .travelFrequency:
+                self.userPreferences?.travel.travel_times_business = currentValue
+            default:
+                print("This will not call")
+            }
         default:
             print("Main default")
         }
@@ -323,6 +386,13 @@ class TwoSliderPrefViewController: UIViewController {
             switch self.prefInformationType {
             case .yachtCharterFrequency:
                 self.userPreferences?.yacht.yacht_times_charter_leisure_jet = currentValue
+            default:
+                print("This will not call")
+            }
+        case .travel:
+            switch self.prefInformationType {
+            case .travelFrequency:
+                self.userPreferences?.travel.travel_times_leisure = currentValue
             default:
                 print("This will not call")
             }

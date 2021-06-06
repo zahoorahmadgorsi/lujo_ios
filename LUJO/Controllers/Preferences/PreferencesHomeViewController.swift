@@ -25,6 +25,7 @@ enum PrefType:String{
     case travel
     case villas
     case yachts
+    case events
 }
 
 enum PrefInformationType:String{
@@ -49,6 +50,29 @@ enum PrefInformationType:String{
     case yachtStyle
     case yachtPreferredCuisines
     case yachtOtherInterests
+    case diningAllergies
+    case diningPreferences
+    case diningTimings
+    case diningSeatings
+    case diningBeverages
+    case diningCuisines
+    case eventCategory
+    case eventLocation
+    
+    case travelFrequency
+    case travelDestinations
+    case travelHotelRating
+    case travelDestinationType
+    case travelHotelGroups
+    case travelAmenities
+    case travelActivities
+    case travelAirlines
+    case travelAirplaneSeat
+    case travelCabinClass
+    case travelMeals
+    case travelMedicalMeals
+    case travelHotelStyles
+    case travelAllergies
 }
 
 enum PreferenceError: Error {
@@ -73,11 +97,12 @@ class PreferencesHomeViewController: UIViewController {
     class var identifier: String { return "PreferencesHomeViewController" }
     
     @IBOutlet weak var viewGifts: UIView!
-    @IBOutlet weak var viewAnimation: UIView!
+    @IBOutlet weak var viewAviation: UIView!
     @IBOutlet weak var viewDining: UIView!
     @IBOutlet weak var viewTravel: UIView!
     @IBOutlet weak var viewVillas: UIView!
     @IBOutlet weak var viewYachts: UIView!
+    @IBOutlet weak var viewEvents: UIView!
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
     class func instantiate() -> PreferencesHomeViewController {
@@ -98,8 +123,8 @@ class PreferencesHomeViewController: UIViewController {
         viewGifts.addGestureRecognizer(tgr1)
         //Tapped event on full aviation view
         let tgr2 = UITapGestureRecognizer(target: self, action: #selector(tappedOnView))
-        viewAnimation.isUserInteractionEnabled = true
-        viewAnimation.addGestureRecognizer(tgr2)
+        viewAviation.isUserInteractionEnabled = true
+        viewAviation.addGestureRecognizer(tgr2)
         //Tapped event on full viewDining view
         let tgr3 = UITapGestureRecognizer(target: self, action: #selector(tappedOnView))
         viewDining.isUserInteractionEnabled = true
@@ -116,6 +141,10 @@ class PreferencesHomeViewController: UIViewController {
         let tgr6 = UITapGestureRecognizer(target: self, action: #selector(tappedOnView))
         viewYachts.isUserInteractionEnabled = true
         viewYachts.addGestureRecognizer(tgr6)
+        //Tapped event on full viewEvents view
+        let tgr7 = UITapGestureRecognizer(target: self, action: #selector(tappedOnView))
+        viewEvents.isUserInteractionEnabled = true
+        viewEvents.addGestureRecognizer(tgr7)
         getAllUserPreferences()    //fetching all preferences from the server
     }
     
@@ -215,8 +244,17 @@ class PreferencesHomeViewController: UIViewController {
         case 1:
             let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
             self.navigationController?.pushViewController(viewController, animated: true)
+        case 2:
+            let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case 3:
+            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
+            self.navigationController?.pushViewController(viewController, animated: true)
         case 5:
             let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case 6:
+            let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
 //            let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
 //            let viewController = PrefProductCategoryViewController.instantiate(prefType: .aviation, prefInformationType: .aviationAircraftCategory)
             self.navigationController?.pushViewController(viewController, animated: true)
