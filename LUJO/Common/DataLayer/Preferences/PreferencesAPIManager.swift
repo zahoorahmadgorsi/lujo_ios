@@ -1778,8 +1778,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setTravelHotelRating(token: String, corporateFrequency:Int, leisureFrequency:Int, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setTravelHotelRating(token,corporateFrequency, leisureFrequency))
+    func setTravelHotelRating(token: String, businessStarRating:Int, leisureStarRating:Int, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setTravelHotelRating(token,businessStarRating, leisureStarRating))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

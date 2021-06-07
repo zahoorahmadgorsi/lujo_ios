@@ -56,12 +56,23 @@ class BookingDetailCell: UITableViewCell {
     }
     
     private func getImageForType() -> UIImage? {
+        print(bookingInfo?.bookingType)
         if bookingInfo?.bookingType == "event" {
             return UIImage(named: "Event Icon White")
         } else if bookingInfo?.bookingType == "experience" {
             return UIImage(named: "Experience Icon White")
         } else if bookingInfo?.bookingType == "restaurant" {
             return UIImage(named: "Dining Icon White")
+        }else if bookingInfo?.bookingType == "gift" {
+            return UIImage(named: "Goods Icon")
+        } else if bookingInfo?.bookingType == "aviation" {
+            return UIImage(named: "aviation_sel")
+        } else if bookingInfo?.bookingType == "hotel" {
+            return UIImage(named: "Hotel Icon")
+        }else if bookingInfo?.bookingType == "villa" {
+            return UIImage(named: "villa icon")
+        }else if bookingInfo?.bookingType == "yacht" {
+            return UIImage(named: "Yacht Icon")
         }
         
         return nil

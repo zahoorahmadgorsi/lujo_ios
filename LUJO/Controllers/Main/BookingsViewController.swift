@@ -230,7 +230,7 @@ extension BookingsViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension BookingsViewController: MyBookingCellDelegate {
     
-    func showPaymentInstructions(cell: MyBookingsCell) {
+    func `showPaymentInstructions`(cell: MyBookingsCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             let booking = bookingRequests[indexPath.row]
             pushPaymentInstructionsViewController(booking: booking, showAdditionalInfo: false)

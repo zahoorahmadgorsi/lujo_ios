@@ -762,6 +762,7 @@ extension ProductDetailsViewController {
 extension ProductDetailsViewController {
     
     fileprivate func sendInitialInformation() {
+        print(product.type)
         if (product.type == "yacht"){
             self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
         }else if (product.type == "villa"){

@@ -119,6 +119,10 @@
 		88814DD82659B5360082AA2C /* DestinationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DD72659B5360082AA2C /* DestinationSearchCell.swift */; };
 		88814DEE265AA9890082AA2C /* ProdCategoryCollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88814DED265AA9890082AA2C /* ProdCategoryCollViewCell.xib */; };
 		88814DF3265AA9950082AA2C /* ProdCategoryCollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DF2265AA9950082AA2C /* ProdCategoryCollViewCell.swift */; };
+		8881B1DB266ECA7D00CF049D /* StarRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8881B1DA266ECA7D00CF049D /* StarRatingViewController.swift */; };
+		8881B1E0266ED25E00CF049D /* ActiveLabel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1DF266ED25E00CF049D /* ActiveLabel.xcframework */; };
+		8881B1EE266ED5E500CF049D /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; };
+		8881B1EF266ED5E500CF049D /* Cosmos.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		888A303E264402CC008754AD /* PreferencesHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A303D264402CC008754AD /* PreferencesHomeViewController.swift */; };
 		888A30432644039D008754AD /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888A30422644039D008754AD /* Preferences.storyboard */; };
 		888A305D26458ADB008754AD /* PrefCollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */; };
@@ -211,7 +215,6 @@
 		9A40F6282185FC520038D0C4 /* AviationEmptyResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A40F6272185FC520038D0C4 /* AviationEmptyResult.xib */; };
 		9A40F62A218600FE0038D0C4 /* AviationEmptyResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A40F629218600FE0038D0C4 /* AviationEmptyResultsView.swift */; };
 		9A41571421301E6C00D85B56 /* HelveticaNeueLTStd-Md.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9A4ED2FE212D0DC900CCD53B /* HelveticaNeueLTStd-Md.otf */; };
-		9A44CDE72130753100699E1A /* ActiveLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44CDE62130753100699E1A /* ActiveLabel.framework */; };
 		9A4CB3942161C4D900856930 /* JSONDecoder+DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4CB3932161C4D800856930 /* JSONDecoder+DataResponse.swift */; };
 		9A4CE04120F6F0AC00BB27FC /* HelveticaLTStd-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9A4CE03E20F6F0AB00BB27FC /* HelveticaLTStd-Light.otf */; };
 		9A4CE04220F6F0AC00BB27FC /* HelveticaLTStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9A4CE03F20F6F0AB00BB27FC /* HelveticaLTStd-Bold.otf */; };
@@ -362,6 +365,7 @@
 			files = (
 				88310E242636043E00301667 /* OneSignal.xcframework in Embed Frameworks */,
 				88310DFF2635FF3900301667 /* Mixpanel.xcframework in Embed Frameworks */,
+				8881B1EF266ED5E500CF049D /* Cosmos.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,6 +493,9 @@
 		88814DD72659B5360082AA2C /* DestinationSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DestinationSearchCell.swift; path = LUJO/Controllers/Preferences/DestinationSearchCell.swift; sourceTree = SOURCE_ROOT; };
 		88814DED265AA9890082AA2C /* ProdCategoryCollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProdCategoryCollViewCell.xib; sourceTree = "<group>"; };
 		88814DF2265AA9950082AA2C /* ProdCategoryCollViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProdCategoryCollViewCell.swift; sourceTree = "<group>"; };
+		8881B1D1266EC93F00CF049D /* Cosmos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cosmos.framework; path = Carthage/Build/iOS/Cosmos.framework; sourceTree = "<group>"; };
+		8881B1DA266ECA7D00CF049D /* StarRatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingViewController.swift; sourceTree = "<group>"; };
+		8881B1DF266ED25E00CF049D /* ActiveLabel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ActiveLabel.xcframework; path = Carthage/Build/ActiveLabel.xcframework; sourceTree = "<group>"; };
 		888A303D264402CC008754AD /* PreferencesHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesHomeViewController.swift; sourceTree = "<group>"; };
 		888A30422644039D008754AD /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefCollectionsViewController.swift; sourceTree = "<group>"; };
@@ -716,6 +723,7 @@
 				1D60067E239952D400B9BA2A /* GoogleDataTransportCCTSupport.framework in Frameworks */,
 				1D60067F239952D400B9BA2A /* FIRAnalyticsConnector.framework in Frameworks */,
 				1D600680239952D400B9BA2A /* nanopb.framework in Frameworks */,
+				8881B1E0266ED25E00CF049D /* ActiveLabel.xcframework in Frameworks */,
 				1D600681239952D400B9BA2A /* GoogleDataTransport.framework in Frameworks */,
 				1D600682239952D400B9BA2A /* FirebaseInstanceID.framework in Frameworks */,
 				1D600683239952D400B9BA2A /* GoogleUtilities.framework in Frameworks */,
@@ -729,12 +737,12 @@
 				9AECC1432111CBD700C00C07 /* ObjectMapper.framework in Frameworks */,
 				9ACE52C2212D309400BB287A /* Crashlytics.framework in Frameworks */,
 				88310DFE2635FF3900301667 /* Mixpanel.xcframework in Frameworks */,
+				8881B1EE266ED5E500CF049D /* Cosmos.framework in Frameworks */,
 				9AECC1442111CBD700C00C07 /* DefaultsKit.framework in Frameworks */,
 				9ACE52BD212D1F3F00BB287A /* M13Checkbox.framework in Frameworks */,
 				88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */,
 				9AF569C52175EDBA005B031D /* JTAppleCalendar.framework in Frameworks */,
 				9AECC1462111CBD700C00C07 /* Alamofire.framework in Frameworks */,
-				9A44CDE72130753100699E1A /* ActiveLabel.framework in Frameworks */,
 				9A72C3C521383CC3009FE9E2 /* QuickLayout.framework in Frameworks */,
 				A0424EB2C4B3542C1078AA07 /* Pods_LUJO.framework in Frameworks */,
 			);
@@ -1060,13 +1068,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		557BB5E023158FA700744188 /* ------------- OLD ARHITECTURE ------------- */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "------------- OLD ARHITECTURE -------------";
-			sourceTree = "<group>";
-		};
 		557BB5E62315954F00744188 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,6 +1136,7 @@
 				88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */,
 				88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */,
 				88CEBCED2652FCA700360CB6 /* TwoSliderPrefViewController.swift */,
+				8881B1DA266ECA7D00CF049D /* StarRatingViewController.swift */,
 				88814DCF2659B31A0082AA2C /* DestinationSelectionViewController.swift */,
 			);
 			path = Preferences;
@@ -1495,7 +1497,6 @@
 		9A818F4920EE74CA005B6455 /* LUJO */ = {
 			isa = PBXGroup;
 			children = (
-				557BB5E023158FA700744188 /* ------------- OLD ARHITECTURE ------------- */,
 				1D61800E238C3BB100F01199 /* 3rd Party */,
 				91B4A3AA260264A300169A0C /* Animators */,
 				1D3A71E2233919560037AE81 /* API Managers */,
@@ -1669,6 +1670,8 @@
 		9AECC13A2111CBD700C00C07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8881B1DF266ED25E00CF049D /* ActiveLabel.xcframework */,
+				8881B1D1266EC93F00CF049D /* Cosmos.framework */,
 				9A44CDE62130753100699E1A /* ActiveLabel.framework */,
 				9AECC13F2111CBD700C00C07 /* Alamofire.framework */,
 				9ACE52C0212D309400BB287A /* Crashlytics.framework */,
@@ -2249,6 +2252,7 @@
 				918BA9A825BF481A007B4D43 /* CityView3.swift in Sources */,
 				9A8E93E9212BDC1700059DD8 /* LoginPresenter.swift in Sources */,
 				1DBC9C062365B97B00F0F133 /* PaymentRouter.swift in Sources */,
+				8881B1DB266ECA7D00CF049D /* StarRatingViewController.swift in Sources */,
 				882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */,
 				9A89D3D221C0D148002D249F /* String+Capitalize.swift in Sources */,
 				3005D48223202CB100401243 /* MultiLegDetailViewControllerNEW.swift in Sources */,

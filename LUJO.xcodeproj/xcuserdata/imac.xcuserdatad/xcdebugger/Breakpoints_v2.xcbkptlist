@@ -9342,7 +9342,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "F2543317-0237-49FC-B649-C2B9B0660437"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/Common/DataLayer/Baroque Aviation/BARouter.swift"
@@ -11449,8 +11449,8 @@
             filePath = "LUJO/Controllers/Main/ProductDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "769"
-            endingLineNumber = "769"
+            startingLineNumber = "770"
+            endingLineNumber = "770"
             landmarkName = "sendInitialInformation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -11945,8 +11945,8 @@
             filePath = "LUJO/Controllers/Main/ProductDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "933"
-            endingLineNumber = "933"
+            startingLineNumber = "934"
+            endingLineNumber = "934"
             landmarkName = "panGestureAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11961,8 +11961,8 @@
             filePath = "LUJO/Controllers/Main/ProductDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "938"
-            endingLineNumber = "938"
+            startingLineNumber = "939"
+            endingLineNumber = "939"
             landmarkName = "panGestureAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11993,8 +11993,8 @@
             filePath = "LUJO/Controllers/Main/ProductDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "916"
-            endingLineNumber = "916"
+            startingLineNumber = "917"
+            endingLineNumber = "917"
             landmarkName = "panGestureAction(_:)"
             landmarkType = "7">
          </BreakpointContent>

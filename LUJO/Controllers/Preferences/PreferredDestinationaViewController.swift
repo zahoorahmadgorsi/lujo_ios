@@ -330,7 +330,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         case .travel:
             switch self.prefInformationType {
             case .travelDestinations:
-                let viewController = PrefProductCategoryViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredLength)
+                let viewController = StarRatingViewController.instantiate(prefType: .travel, prefInformationType: .travelHotelRating)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("Never going to get call")
