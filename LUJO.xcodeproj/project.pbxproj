@@ -121,8 +121,9 @@
 		88814DF3265AA9950082AA2C /* ProdCategoryCollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DF2265AA9950082AA2C /* ProdCategoryCollViewCell.swift */; };
 		8881B1DB266ECA7D00CF049D /* StarRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8881B1DA266ECA7D00CF049D /* StarRatingViewController.swift */; };
 		8881B1E0266ED25E00CF049D /* ActiveLabel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1DF266ED25E00CF049D /* ActiveLabel.xcframework */; };
-		8881B1EE266ED5E500CF049D /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; };
-		8881B1EF266ED5E500CF049D /* Cosmos.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8887210E266F7FE100854099 /* PrefImagesCollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8887210D266F7FE100854099 /* PrefImagesCollViewController.swift */; };
+		88872113266F805100854099 /* PrefImageCollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88872112266F805100854099 /* PrefImageCollViewCell.xib */; };
+		88872118266F806100854099 /* PrefImageCollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88872117266F806100854099 /* PrefImageCollViewCell.swift */; };
 		888A303E264402CC008754AD /* PreferencesHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A303D264402CC008754AD /* PreferencesHomeViewController.swift */; };
 		888A30432644039D008754AD /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888A30422644039D008754AD /* Preferences.storyboard */; };
 		888A305D26458ADB008754AD /* PrefCollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */; };
@@ -133,6 +134,7 @@
 		8894D02825629CD200BF84D8 /* Product1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Product1.swift */; };
 		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
 		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
+		88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; };
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
 		88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */; };
 		88C083C92635CCB400204475 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C083C82635CCB400204475 /* WishListViewController.swift */; };
@@ -365,7 +367,6 @@
 			files = (
 				88310E242636043E00301667 /* OneSignal.xcframework in Embed Frameworks */,
 				88310DFF2635FF3900301667 /* Mixpanel.xcframework in Embed Frameworks */,
-				8881B1EF266ED5E500CF049D /* Cosmos.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +497,9 @@
 		8881B1D1266EC93F00CF049D /* Cosmos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cosmos.framework; path = Carthage/Build/iOS/Cosmos.framework; sourceTree = "<group>"; };
 		8881B1DA266ECA7D00CF049D /* StarRatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingViewController.swift; sourceTree = "<group>"; };
 		8881B1DF266ED25E00CF049D /* ActiveLabel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ActiveLabel.xcframework; path = Carthage/Build/ActiveLabel.xcframework; sourceTree = "<group>"; };
+		8887210D266F7FE100854099 /* PrefImagesCollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefImagesCollViewController.swift; sourceTree = "<group>"; };
+		88872112266F805100854099 /* PrefImageCollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrefImageCollViewCell.xib; sourceTree = "<group>"; };
+		88872117266F806100854099 /* PrefImageCollViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefImageCollViewCell.swift; sourceTree = "<group>"; };
 		888A303D264402CC008754AD /* PreferencesHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesHomeViewController.swift; sourceTree = "<group>"; };
 		888A30422644039D008754AD /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefCollectionsViewController.swift; sourceTree = "<group>"; };
@@ -737,7 +741,7 @@
 				9AECC1432111CBD700C00C07 /* ObjectMapper.framework in Frameworks */,
 				9ACE52C2212D309400BB287A /* Crashlytics.framework in Frameworks */,
 				88310DFE2635FF3900301667 /* Mixpanel.xcframework in Frameworks */,
-				8881B1EE266ED5E500CF049D /* Cosmos.framework in Frameworks */,
+				88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */,
 				9AECC1442111CBD700C00C07 /* DefaultsKit.framework in Frameworks */,
 				9ACE52BD212D1F3F00BB287A /* M13Checkbox.framework in Frameworks */,
 				88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */,
@@ -1133,6 +1137,7 @@
 				88814DD72659B5360082AA2C /* DestinationSearchCell.swift */,
 				888A303D264402CC008754AD /* PreferencesHomeViewController.swift */,
 				888A305C26458ADB008754AD /* PrefCollectionsViewController.swift */,
+				8887210D266F7FE100854099 /* PrefImagesCollViewController.swift */,
 				88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */,
 				88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */,
 				88CEBCED2652FCA700360CB6 /* TwoSliderPrefViewController.swift */,
@@ -1149,6 +1154,8 @@
 				88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */,
 				888A306226460C9D008754AD /* PrefCollViewCell.swift */,
 				888A306326460C9D008754AD /* PrefCollViewCell.xib */,
+				88872117266F806100854099 /* PrefImageCollViewCell.swift */,
+				88872112266F805100854099 /* PrefImageCollViewCell.xib */,
 				88814DF2265AA9950082AA2C /* ProdCategoryCollViewCell.swift */,
 				88814DED265AA9890082AA2C /* ProdCategoryCollViewCell.xib */,
 			);
@@ -1757,9 +1764,9 @@
 				9AECC1492111CC0100C00C07 /* Carthage Copy Frameworks */,
 				9ACE52BE212D306F00BB287A /* Fabric */,
 				88029BAD2633BF42003F1E77 /* Embed App Extensions */,
-				88C083DE2635F1EA00204475 /* ShellScript */,
 				88310E002635FF3900301667 /* Embed Frameworks */,
 				2E461DCF362ECED2DF565CE5 /* [CP] Embed Pods Frameworks */,
+				88B30C3A266FE7600090B3B5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1893,6 +1900,7 @@
 				9A0E586B2260E50300F7848A /* BookingSegmentsSummaryView.xib in Resources */,
 				9AA95FDF2189BE6F00156AB6 /* LiftDetailViewController.xib in Resources */,
 				8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */,
+				88872113266F805100854099 /* PrefImageCollViewCell.xib in Resources */,
 				9183E83E25EBEF0900656B48 /* GalleryView4.xib in Resources */,
 				9A41571421301E6C00D85B56 /* HelveticaNeueLTStd-Md.otf in Resources */,
 				9A9EC8AE2253BA2800098E7D /* AviationLegCell.xib in Resources */,
@@ -1995,7 +2003,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		88C083DE2635F1EA00204475 /* ShellScript */ = {
+		88B30C3A266FE7600090B3B5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2003,6 +2011,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Cosmos.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -2010,8 +2019,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 		9A1006B7217D85F6009219EA /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2323,6 +2331,8 @@
 				888A307926461984008754AD /* PreferencesAPIManager.swift in Sources */,
 				880B9B0B255840C10070D7CD /* Villa.swift in Sources */,
 				1D88012C233E49630039DEA6 /* DiningCategorySlider.swift in Sources */,
+				88872118266F806100854099 /* PrefImageCollViewCell.swift in Sources */,
+				8887210E266F7FE100854099 /* PrefImagesCollViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2388,7 +2398,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.11;
+				CURRENT_PROJECT_VERSION = 1.12;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2414,7 +2424,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.11;
+				CURRENT_PROJECT_VERSION = 1.12;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2439,7 +2449,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.11;
+				CURRENT_PROJECT_VERSION = 1.12;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2603,7 +2613,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.11;
+				CURRENT_PROJECT_VERSION = 1.12;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2667,7 +2677,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.11;
+				CURRENT_PROJECT_VERSION = 1.12;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2877,7 +2887,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.11;
+				CURRENT_PROJECT_VERSION = 1.12;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

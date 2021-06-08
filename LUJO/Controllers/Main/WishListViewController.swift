@@ -223,7 +223,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             wishListView.delegate = self
             wishListView.itemType = .restaurant
-            wishListView.imgTitle.image = UIImage(named: "Dining Icon White")
+            wishListView.imgTitle.image = UIImage(named: "dining grey icon")
             wishListView.lblTitle.text = "Dining"
             //preparing data of collection view
             var itemsList = [Favourite]()
@@ -253,7 +253,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             wishListView.delegate = self
             wishListView.itemType = .hotel
-            wishListView.imgTitle.image = UIImage(named: "Hotel Icon")
+            wishListView.imgTitle.image = UIImage(named: "travel grey icon")
             wishListView.lblTitle.text = "Hotel"
             //preparing data of collection view
             var itemsList = [Favourite]()
@@ -283,7 +283,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             wishListView.delegate = self
             wishListView.itemType = .villa
-            wishListView.imgTitle.image = UIImage(named: "villa icon")
+            wishListView.imgTitle.image = UIImage(named: "villa grey icon")
             wishListView.lblTitle.text = "Villa"
             //preparing data of collection view
             var itemsList = [Favourite]()
@@ -313,7 +313,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             wishListView.delegate = self
             wishListView.itemType = .yacht
-            wishListView.imgTitle.image = UIImage(named: "Yacht Icon")
+            wishListView.imgTitle.image = UIImage(named: "yacht grey icon")
             wishListView.lblTitle.text = "Yacht"
             //preparing data of collection view
             var itemsList = [Favourite]()
@@ -343,7 +343,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             wishListView.delegate = self
             wishListView.itemType = .gift
-            wishListView.imgTitle.image = UIImage(named: "Goods Icon")
+            wishListView.imgTitle.image = UIImage(named: "gift grey icon")
             wishListView.lblTitle.text = "Gifts"
             //preparing data of collection view
             var itemsList = [Favourite]()

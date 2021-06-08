@@ -176,7 +176,7 @@ class StarRatingViewController: UIViewController {
         case .travel:
             switch self.prefInformationType {
             case .travelHotelRating:
-                let viewController = PreferredDestinationaViewController.instantiate(prefType: .travel, prefInformationType: .travelDestinations)
+                let viewController = PrefImagesCollViewController.instantiate(prefType: .travel, prefInformationType: .travelDestinationType)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("This will not call")

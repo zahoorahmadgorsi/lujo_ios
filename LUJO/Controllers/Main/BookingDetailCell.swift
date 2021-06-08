@@ -62,17 +62,17 @@ class BookingDetailCell: UITableViewCell {
         } else if bookingInfo?.bookingType == "experience" {
             return UIImage(named: "Experience Icon White")
         } else if bookingInfo?.bookingType == "restaurant" {
-            return UIImage(named: "Dining Icon White")
+            return UIImage(named: "dining grey icon")
         }else if bookingInfo?.bookingType == "gift" {
-            return UIImage(named: "Goods Icon")
+            return UIImage(named: "gift grey icon")
         } else if bookingInfo?.bookingType == "aviation" {
             return UIImage(named: "aviation_sel")
         } else if bookingInfo?.bookingType == "hotel" {
-            return UIImage(named: "Hotel Icon")
+            return UIImage(named: "travel grey icon")
         }else if bookingInfo?.bookingType == "villa" {
-            return UIImage(named: "villa icon")
+            return UIImage(named: "villa grey icon")
         }else if bookingInfo?.bookingType == "yacht" {
-            return UIImage(named: "Yacht Icon")
+            return UIImage(named: "yacht grey icon")
         }
         
         return nil

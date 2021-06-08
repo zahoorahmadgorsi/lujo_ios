@@ -2465,7 +2465,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bIJ-xb-irr">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Goods Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Fa8-Gu-F03">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gift grey icon" translatesAutoresizingMaskIntoConstraints="NO" id="Fa8-Gu-F03">
                                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="64"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="20" id="s3I-8E-JAK"/>
@@ -2538,7 +2538,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hke-le-KPw">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="villa icon" translatesAutoresizingMaskIntoConstraints="NO" id="bqn-M8-gPl">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="villa grey icon" translatesAutoresizingMaskIntoConstraints="NO" id="bqn-M8-gPl">
                                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="64"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="20" id="ajz-YR-hej"/>
@@ -2611,7 +2611,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ZQE-NX-QXv">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Event Icon" translatesAutoresizingMaskIntoConstraints="NO" id="mOA-aj-ge1">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Event Icon White" translatesAutoresizingMaskIntoConstraints="NO" id="mOA-aj-ge1">
                                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="64"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="20" id="a98-ny-uHc"/>
@@ -2703,7 +2703,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fWl-HU-Ofn">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Yacht Icon" translatesAutoresizingMaskIntoConstraints="NO" id="1NA-SG-azt">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yacht grey icon" translatesAutoresizingMaskIntoConstraints="NO" id="1NA-SG-azt">
                                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="64"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="20" id="mAK-yt-liN"/>
@@ -3310,7 +3310,7 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vtq-KH-4hl">
                                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
                                                                         <subviews>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Event Icon" translatesAutoresizingMaskIntoConstraints="NO" id="M0J-DS-7K9">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Event Icon White" translatesAutoresizingMaskIntoConstraints="NO" id="M0J-DS-7K9">
                                                                                 <rect key="frame" x="0.0" y="22" width="20" height="20"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="20" id="RcI-U5-3aW"/>
@@ -3731,7 +3731,7 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Boi-BT-1og">
                                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
                                                                         <subviews>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dining Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Lt8-Bf-20u">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dining grey icon" translatesAutoresizingMaskIntoConstraints="NO" id="Lt8-Bf-20u">
                                                                                 <rect key="frame" x="0.0" y="22" width="20" height="20"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="20" id="YgJ-Yx-btr"/>
@@ -7855,14 +7855,12 @@ New York, NY 10011 USA</string>
         <image name="Close Icon" width="20" height="20"/>
         <image name="Cousine Icon" width="21" height="21"/>
         <image name="Delete Icon" width="24" height="24"/>
-        <image name="Dining Icon" width="20" height="20"/>
-        <image name="Event Icon" width="20" height="20"/>
+        <image name="Event Icon White" width="20" height="20"/>
         <image name="Experience Icon" width="20" height="20"/>
         <image name="Filter Icon" width="20.5" height="20.5"/>
         <image name="Filter Icon White" width="19" height="17"/>
         <image name="Find Hotel Icon" width="44" height="44"/>
         <image name="Get Tickets Icon" width="44" height="44"/>
-        <image name="Goods Icon" width="20" height="20"/>
         <image name="Location White" width="12" height="16"/>
         <image name="Luggage Icon Mini" width="12" height="12"/>
         <image name="Lujo Logo" width="72" height="72"/>
@@ -7876,7 +7874,6 @@ New York, NY 10011 USA</string>
         <image name="Seats Icon" width="12" height="12"/>
         <image name="See All Icon" width="16" height="16"/>
         <image name="Separate Line" width="191" height="1"/>
-        <image name="Yacht Icon" width="20" height="20"/>
         <image name="arrow_right" width="4" height="8"/>
         <image name="aviation_selected" width="20" height="20"/>
         <image name="bathroom_icon" width="15.5" height="13.5"/>
@@ -7885,8 +7882,10 @@ New York, NY 10011 USA</string>
         <image name="calendar_home" width="12" height="16"/>
         <image name="calendar_home_white" width="12" height="16"/>
         <image name="chat_selected" width="30" height="30"/>
+        <image name="dining grey icon" width="20" height="20.5"/>
         <image name="dining_selected" width="20" height="20"/>
         <image name="discover_selected" width="20" height="20"/>
+        <image name="gift grey icon" width="20" height="20"/>
         <image name="gradient" width="414" height="321"/>
         <image name="heart_white" width="22" height="19.5"/>
         <image name="horizontal_line" width="211" height="18"/>
@@ -7896,7 +7895,8 @@ New York, NY 10011 USA</string>
         <image name="top_rated" width="16.5" height="13.5"/>
         <image name="vertical_line" width="1" height="46"/>
         <image name="villa cta" width="36" height="36"/>
-        <image name="villa icon" width="7.5" height="8.5"/>
+        <image name="villa grey icon" width="22" height="24.5"/>
+        <image name="yacht grey icon" width="20" height="20"/>
         <image name="yacht_cabins" width="21" height="13"/>
         <image name="yacht_length" width="15.5" height="12.5"/>
         <image name="yacht_passengers" width="19.5" height="12.5"/>
