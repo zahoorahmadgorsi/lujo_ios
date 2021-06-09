@@ -54,6 +54,7 @@ class PrefImagesCollViewController: UIViewController {
     var preferencesMasterData: PrefMasterData!
     var cellWidth : Int = 84
     var cellHeight : Int = 114
+    var cornerRadius : CGFloat = 12.0
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
@@ -89,9 +90,21 @@ class PrefImagesCollViewController: UIViewController {
                 switch prefInformationType {
                 case .travelDestinationType:
                     lblPrefQuestion.text = "Destination type preferences:"
-//                    txtPleaseSpecify.text = self.userPreferences?.travel.event_category_id_other
                     txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.travel.travel_destination_type ?? []
+                case .travelHotelGroups:
+                    lblPrefQuestion.text = "Are there hotels or hotel groups do you prefer?"
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.travel.travel_hotel_group ?? []
+                case .travelActivities:
+                    lblPrefQuestion.text = "Which activities do you enjoy when traveling somewhere?"
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.travel.travel_activity_id ?? []
+                case .travelAirlines:
+                    lblPrefQuestion.text = "Are there any airlines you prefer?"
+//                    txtPleaseSpecify.text = self.userPreferences?.travel.event_category_id_other
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.travel.travel_airline_id ?? []
                 default:
                     print("default of travel")
                 }
@@ -119,9 +132,6 @@ class PrefImagesCollViewController: UIViewController {
         case .travel:
             switch prefInformationType {
             case .travelDestinationType:
-//                if let cachedItems = preferencesMasterData.travelDestinationTypes , cachedItems.count > 0{  //if data is already cached or not
-//                    self.itemsList = cachedItems
-//                }
                 let taxonomyObj1 = Taxonomy(termId:-1 , name: "Adventure")
                 let taxonomyObj2 = Taxonomy(termId:-1 , name: "Ski")
                 let taxonomyObj3 = Taxonomy(termId:-1 , name: "Beach")
@@ -135,6 +145,47 @@ class PrefImagesCollViewController: UIViewController {
                 taxonomies.append(taxonomyObj4)
                 taxonomies.append(taxonomyObj5)
                 taxonomies.append(taxonomyObj6)
+                self.itemsList = taxonomies
+            case .travelHotelGroups:
+                if let cachedItems = preferencesMasterData.travelHotelGroups , cachedItems.count > 0{  //if data is already cached or not
+                    self.itemsList = cachedItems
+                }
+            case .travelActivities:
+                if let cachedItems = preferencesMasterData.travelActivities , cachedItems.count > 0{  //if data is already cached or not
+                    self.itemsList = cachedItems
+                }
+            case .travelAirlines:
+                let taxonomyObj1 = Taxonomy(termId:-1 , name: "American")
+                let taxonomyObj2 = Taxonomy(termId:-1 , name: "British")
+                let taxonomyObj3 = Taxonomy(termId:-1 , name: "Delta")
+                let taxonomyObj4 = Taxonomy(termId:-1 , name: "Emirated")
+                let taxonomyObj5 = Taxonomy(termId:-1 , name: "KLM")
+                let taxonomyObj6 = Taxonomy(termId:-1 , name: "Lufthansa")
+                let taxonomyObj7 = Taxonomy(termId:-1 , name: "Qantas")
+                let taxonomyObj8 = Taxonomy(termId:-1 , name: "Air France")
+                let taxonomyObj9 = Taxonomy(termId:-1 , name: "United")
+                let taxonomyObj10 = Taxonomy(termId:-1 , name: "Japans Airlines")
+                let taxonomyObj11 = Taxonomy(termId:-1 , name: "South African")
+                let taxonomyObj12 = Taxonomy(termId:-1 , name: "Singapore Airlines")
+                let taxonomyObj13 = Taxonomy(termId:-1 , name: "Air India")
+                let taxonomyObj14 = Taxonomy(termId:-1 , name: "Saudia")
+                let taxonomyObj15 = Taxonomy(termId:-1 , name: "Qatar")
+                var taxonomies = [Taxonomy]()
+                taxonomies.append(taxonomyObj1)
+                taxonomies.append(taxonomyObj2)
+                taxonomies.append(taxonomyObj3)
+                taxonomies.append(taxonomyObj4)
+                taxonomies.append(taxonomyObj5)
+                taxonomies.append(taxonomyObj6)
+                taxonomies.append(taxonomyObj7)
+                taxonomies.append(taxonomyObj8)
+                taxonomies.append(taxonomyObj9)
+                taxonomies.append(taxonomyObj10)
+                taxonomies.append(taxonomyObj11)
+                taxonomies.append(taxonomyObj12)
+                taxonomies.append(taxonomyObj13)
+                taxonomies.append(taxonomyObj14)
+                taxonomies.append(taxonomyObj15)
                 self.itemsList = taxonomies
             default:
                 print("default of travel")
@@ -176,20 +227,41 @@ class PrefImagesCollViewController: UIViewController {
             case .travelDestinationType:
                 print("Not required for hard coded data")
                 completion(self.itemsList, nil)
-//                GoLujoAPIManager().getTravelDestinationType(token) { taxonomies, error in
-//                    guard error == nil else {
-//                        Crashlytics.sharedInstance().recordError(error!)
-//                        let error = BackendError.parsing(reason: "Could not obtain travel information")
-//                        completion(nil, error)
-//                        return
-//                    }
-//                    //caching master data into userdefaults
-//                    if taxonomies?.count ?? 0 > 0{
-//                        self.preferencesMasterData.travelDestinationTypes = taxonomies
-//                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
-//                    }
-//                    completion(taxonomies, error)
-//                }
+            case .travelHotelGroups:
+                GoLujoAPIManager().getTravelHotelGroups(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain travel information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if let items = taxonomies ,  items.count > 0{
+//                        self.addSelectiveItem(items:items)
+                        self.preferencesMasterData.travelHotelGroups = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            case .travelActivities:
+                GoLujoAPIManager().getTravelActivities(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain travel information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if let items = taxonomies ,  items.count > 0{
+//                        self.addSelectiveItem(items:items)
+                        self.preferencesMasterData.travelActivities = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            case .travelAirlines:
+                print("Not required for hard coded data")
+                completion(self.itemsList, nil)
             default:
                 print("default of travel")
             }
@@ -217,6 +289,30 @@ class PrefImagesCollViewController: UIViewController {
                 switch prefInformationType {
                 case .travelDestinationType:
                     if let ids = userPreferences?.travel.travel_destination_type{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                case .travelHotelGroups:
+                    if let ids = userPreferences?.travel.travel_hotel_group{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                case .travelActivities:
+                    if let ids = userPreferences?.travel.travel_activity_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                case .travelAirlines:
+                    if let ids = userPreferences?.travel.travel_airline_id{
                         for id in ids {
                             if id.count > 0{ //to avoid empty string
                                 selectedArray.append(id)
@@ -259,7 +355,22 @@ class PrefImagesCollViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.travel.travel_destination_type = arr
                             }
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .travelHotelGroups:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.travel.travel_hotel_group = arr
+                            }
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .travelActivities:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.travel.travel_activity_id = arr
+                            }
 //                            userPreferences.travel.event_category_id_other = self.txtPleaseSpecify.text
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .travelAirlines:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.travel.travel_airline_id = arr
+                            }
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         default:
                             print("default of travel")
@@ -296,16 +407,36 @@ class PrefImagesCollViewController: UIViewController {
                     }
                     completion(contentString, error)
                 }
-                
-//                GoLujoAPIManager().setEventLocation(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
-//                    guard error == nil else {
-//                        Crashlytics.sharedInstance().recordError(error!)
-//                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
-//                        completion(nil, error)
-//                        return
-//                    }
-//                    completion(contentString, error)
-//                }
+            case .travelHotelGroups:
+                GoLujoAPIManager().setTravelHotelGroups(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .travelActivities:
+                GoLujoAPIManager().setTravelActivities(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            case .travelAirlines:
+                GoLujoAPIManager().setTravelAirlines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
             default:
                 print("default of travel")
             }
@@ -320,6 +451,15 @@ class PrefImagesCollViewController: UIViewController {
             switch prefInformationType {
             case .travelDestinationType:
                 let viewController = PrefImagesCollViewController.instantiate(prefType: .travel, prefInformationType: .travelHotelGroups)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .travelHotelGroups:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .travel, prefInformationType: .travelAmenities)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .travelActivities:
+                let viewController = PrefImagesCollViewController.instantiate(prefType: .travel, prefInformationType: .travelAirlines)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .travelAirlines:
+                let viewController = PrefImagesCollViewController.instantiate(prefType: .travel, prefInformationType: .travelAirplaneSeat)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("default of travel")
@@ -338,11 +478,20 @@ class PrefImagesCollViewController: UIViewController {
                 let current = self.userPreferences?.travel.travel_destination_type ?? []
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
-                
-//                let current = self.userPreferences?.event.event_category_id ?? []
-//                let previous = self.previouslySelectedItems
-//                let previouslyTypedStr = self.userPreferences?.event.event_category_id_other ?? ""
+            case .travelHotelGroups:
+                let current = self.userPreferences?.travel.travel_hotel_group ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+            case .travelActivities:
+                let current = self.userPreferences?.travel.travel_activity_id ?? []
+                let previous = self.previouslySelectedItems
+//                let previouslyTypedStr = self.userPreferences?.travel.event_category_id_other ?? ""
 //                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
+            case .travelAirlines:
+                let current = self.userPreferences?.travel.travel_airline_id ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
             default:
                 print("default of travel")
         }
@@ -426,12 +575,41 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
                 cell.imgView.image = UIImage(named: model.name + " travel")
                 if let ids = userPreferences?.travel.travel_destination_type{
                     if (ids.contains(model.name)){
-                        cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWith: 1.0, borderCornerRadius: 12.0)
+                        cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
                     }else{
-                        cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWith: 1.0, borderCornerRadius: 12.0)
+                        cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
                     }
                 }
-
+            case .travelHotelGroups:
+                cell.lblTitle.text = ""
+                cell.imgView.backgroundColor = UIColor.white
+                cell.imgView.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                cell.imgView.image = UIImage(named: model.name + " travel")
+                if let ids = userPreferences?.travel.travel_hotel_group{
+                    if (ids.contains(String(model.termId))){
+                        cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }else{
+                        cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }
+                }
+            case .travelActivities:
+                cell.imgView.image = UIImage(named: model.name + " travel")
+                if let ids = userPreferences?.travel.travel_activity_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }else{
+                        cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }
+                }
+            case .travelAirlines:
+                cell.imgView.image = UIImage(named: model.name + " travel")
+                if let ids = userPreferences?.travel.travel_airline_id{
+                    if (ids.contains(model.name)){
+                        cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }else{
+                        cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }
+                }
             default:
                 print("default of travel")
          }
@@ -464,6 +642,45 @@ extension PrefImagesCollViewController: UICollectionViewDelegate {
             }else{
                 userPreferences?.travel.travel_destination_type = []    //initializing first
                 userPreferences?.travel.travel_destination_type?.append(name)
+            }
+        case .travelHotelGroups:
+            if var ids = userPreferences?.travel.travel_hotel_group{
+                if ids.contains(termId){
+                    //remove all occurances in case there is duplication i.e. dirty data
+                    ids.removeAll{ value in return value == termId}
+                    userPreferences?.travel.travel_hotel_group = ids
+                }else{
+                    userPreferences?.travel.travel_hotel_group?.append(termId)
+                }
+            }else{
+                userPreferences?.travel.travel_hotel_group = []    //initializing first
+                userPreferences?.travel.travel_hotel_group?.append(termId)
+            }
+        case .travelActivities:
+            if var ids = userPreferences?.travel.travel_activity_id{
+                if ids.contains(termId){
+                    //remove all occurances in case there is duplication i.e. dirty data
+                    ids.removeAll{ value in return value == termId}
+                    userPreferences?.travel.travel_activity_id = ids
+                }else{
+                    userPreferences?.travel.travel_activity_id?.append(termId)
+                }
+            }else{
+                userPreferences?.travel.travel_activity_id = []    //initializing first
+                userPreferences?.travel.travel_activity_id?.append(termId)
+            }
+        case .travelAirlines:
+            if var ids = userPreferences?.travel.travel_airline_id{
+                if ids.contains(name){
+                    //remove all occurances in case there is duplication i.e. dirty data
+                    ids.removeAll{ value in return value == name}
+                    userPreferences?.travel.travel_airline_id = ids
+                }else{
+                    userPreferences?.travel.travel_airline_id?.append(name)
+                }
+            }else{
+                userPreferences?.travel.travel_airline_id = []    //initializing first
+                userPreferences?.travel.travel_airline_id?.append(name)
             }
         default:
             print("default of travel")

@@ -82,153 +82,164 @@ class PrefCollectionsViewController: UIViewController {
                              for: .editingChanged)
         
         switch prefType {
-            case .gifts:
-                imgPreference.image = UIImage(named: "Purchase Goods Icon")
-                lblPrefLabel.text = "Gifts"
-                switch prefInformationType {
-                case .giftHabbits:
-                    lblPrefQuestion.text = "Tell us about your gift giving habits:"
-                    txtPleaseSpecify.text = self.userPreferences?.gift.gift_habit_id_other
-                    previouslySelectedItems = self.userPreferences?.gift.gift_habit_id ?? []
-                case .giftCategories:
-                    lblPrefQuestion.text = "Preferred gift items:"
-                    txtPleaseSpecify.text = self.userPreferences?.gift.gift_category_id_other
-                    previouslySelectedItems = self.userPreferences?.gift.gift_category_id ?? []
-                case .giftPreferences:
-                    lblPrefQuestion.text = "Item Preferences:"
-                    txtPleaseSpecify.text = self.userPreferences?.gift.gift_preferences_id_other
-                    //removing the duplicates
-                    previouslySelectedItems = Array(Set(self.userPreferences?.gift.gift_preferences_id ?? [])) //Order might change
-                    btnNextStep.setTitle("D O N E", for: .normal)
-                default:
-                    print("Others")
-                }
-            case .aviation:
-                imgPreference.image = UIImage(named: "aviation_icon")
-                lblPrefLabel.text = "Aviation"
-                switch prefInformationType {
-                case .aviationHaveCharteredBefore:
-                    lblPrefQuestion.text = "Have you chartered before?"
-                    txtPleaseSpecify.isHidden = true
-                    if let value = self.userPreferences?.aviation.aviation_chartered_before{
-                        previouslySelectedItems.append(value)
-                    }
-                case .aviationInterestedIn:
-                    lblPrefQuestion.text = "Interested in?"
-                    txtPleaseSpecify.isHidden = true
-                    if let value = self.userPreferences?.aviation.aviation_interested_in{
-                        previouslySelectedItems.append(value)
-                    }
-                case .aviationPreferredCharter:
-                    lblPrefQuestion.text = "Preferred charter?"
-                    txtPleaseSpecify.isHidden = true
-                    if let value = self.userPreferences?.aviation.aviation_preferred_charter_range{
-                        previouslySelectedItems.append(value)
-                    }
-                case .aviationPreferredCuisine:
-                    lblPrefQuestion.text = "Preferred cuisine?"
-                    txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_cuisine_id_other
-                    previouslySelectedItems = self.userPreferences?.aviation.aviation_preferred_cuisine_id ?? []
-                case .aviationPreferredBevereges:
-                    lblPrefQuestion.text = "Preferred Beverages?"
-                    txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_beverage_id_other
-                    previouslySelectedItems = self.userPreferences?.aviation.aviation_preferred_beverage_id ?? []
-                    btnNextStep.setTitle("D O N E", for: .normal)
-                default:
-                    print("Others")
-                }
-            case .yachts:
-                imgPreference.image = UIImage(named: "Charter Yacht Icon")
-                lblPrefLabel.text = "Yacht"
-                switch prefInformationType {
-                case .yachtHaveCharteredBefore:
-                    lblPrefQuestion.text = "Have you chartered a yacht before?"
-                    txtPleaseSpecify.isHidden = true
-                    if let value = self.userPreferences?.yacht.yacht_chartered_before{
-                        previouslySelectedItems.append(value)
-                    }
-                case .yachtInterestedIn:
-                    lblPrefQuestion.text = "Interested in?"
-                    txtPleaseSpecify.isHidden = true
-                    if let value = self.userPreferences?.yacht.yacht_interested_in{
-                        previouslySelectedItems.append(value)
-                    }
-                case .yachtType:
-                    lblPrefQuestion.text = "Preferred type of cruising/sailing:"
-                    txtPleaseSpecify.isHidden = true
-                    if let value = self.userPreferences?.yacht.yacht_type{
-                        previouslySelectedItems.append(value)
-                    }
-                case .yachtStyle:
-                    lblPrefQuestion.text = "Preferred style of yacht:"
-                    txtPleaseSpecify.isHidden = true
-                    if let value = self.userPreferences?.yacht.yacht_style{
-                        previouslySelectedItems.append(value)
-                    }
-                case .yachtPreferredCuisines:
-                    lblPrefQuestion.text = "Preferred cuisine?"
-                    txtPleaseSpecify.text = self.userPreferences?.yacht.yacht_preferred_cuisine_id_other
-                    previouslySelectedItems = self.userPreferences?.yacht.yacht_preferred_cuisine_id ?? []
-                case .yachtOtherInterests:
-                    lblPrefQuestion.text = "For better experience tell us about your other interests?"
-                    txtPleaseSpecify.isHidden = true
-                    previouslySelectedItems = self.userPreferences?.yacht.yacht_interests_id ?? []
-                    btnNextStep.setTitle("D O N E", for: .normal)
-                default:
-                    print("Others")
-                }
-            case .dining:
-                imgPreference.image = UIImage(named: "Book Table Icon")
-                lblPrefLabel.text = "Find a table"
-                switch prefInformationType {
-                case .diningCuisines:
-                    lblPrefQuestion.text = "What is your preferred cuisine type?"
-                    txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id_other
-                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id ?? []
-                case .diningAllergies:
-                    lblPrefQuestion.text = "Allergies"
-                    txtPleaseSpecify.isHidden = true
-                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_allergy_id ?? []
-                case .diningPreferences:
-                    lblPrefQuestion.text = "Your dining preferences:"
-                    txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_dinning_id_other
-                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_dinning_id ?? []
-                case .diningTimings:
-                    lblPrefQuestion.text = "Preferred time of dining:"
-                    txtPleaseSpecify.isHidden = true
-                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_timing_id ?? []
-                case .diningBeverages:
-                    lblPrefQuestion.text = "Preferred Beverages while dining:"
-                    txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_beverage_id_other
-                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_beverage_id ?? []
-                case .diningSeatings:
-                    lblPrefQuestion.text = "Preferred Seating:"
-                    txtPleaseSpecify.isHidden = true
-                    previouslySelectedItems = self.userPreferences?.restaurant.restaurant_seating_id ?? []
-                    btnNextStep.setTitle("D O N E", for: .normal)
-                
-                default:
-                    print("default of dining")
-                }
-            case .events:
-                imgPreference.image = UIImage(named: "event_preference_icon")
-                lblPrefLabel.text = "Events"
-                switch prefInformationType {
-                case .eventCategory:
-                    lblPrefQuestion.text = "Type of Event:"
-                    txtPleaseSpecify.text = self.userPreferences?.event.event_category_id_other
-                    previouslySelectedItems = self.userPreferences?.event.event_category_id ?? []
-                case .eventLocation:
-                    lblPrefQuestion.text = "Location"
-                    txtPleaseSpecify.isHidden = true
-                    previouslySelectedItems = self.userPreferences?.event.event_location_id ?? []
-                    btnNextStep.setTitle("D O N E", for: .normal)
-                
-                default:
-                    print("default of events")
-                }
+        case .gifts:
+            imgPreference.image = UIImage(named: "Purchase Goods Icon")
+            lblPrefLabel.text = "Gifts"
+            switch prefInformationType {
+            case .giftHabbits:
+                lblPrefQuestion.text = "Tell us about your gift giving habits:"
+                txtPleaseSpecify.text = self.userPreferences?.gift.gift_habit_id_other
+                previouslySelectedItems = self.userPreferences?.gift.gift_habit_id ?? []
+            case .giftCategories:
+                lblPrefQuestion.text = "Preferred gift items:"
+                txtPleaseSpecify.text = self.userPreferences?.gift.gift_category_id_other
+                previouslySelectedItems = self.userPreferences?.gift.gift_category_id ?? []
+            case .giftPreferences:
+                lblPrefQuestion.text = "Item Preferences:"
+                txtPleaseSpecify.text = self.userPreferences?.gift.gift_preferences_id_other
+                //removing the duplicates
+                previouslySelectedItems = Array(Set(self.userPreferences?.gift.gift_preferences_id ?? [])) //Order might change
+                btnNextStep.setTitle("D O N E", for: .normal)
             default:
                 print("Others")
+            }
+        case .aviation:
+            imgPreference.image = UIImage(named: "aviation_icon")
+            lblPrefLabel.text = "Aviation"
+            switch prefInformationType {
+            case .aviationHaveCharteredBefore:
+                lblPrefQuestion.text = "Have you chartered before?"
+                txtPleaseSpecify.isHidden = true
+                if let value = self.userPreferences?.aviation.aviation_chartered_before{
+                    previouslySelectedItems.append(value)
+                }
+            case .aviationInterestedIn:
+                lblPrefQuestion.text = "Interested in?"
+                txtPleaseSpecify.isHidden = true
+                if let value = self.userPreferences?.aviation.aviation_interested_in{
+                    previouslySelectedItems.append(value)
+                }
+            case .aviationPreferredCharter:
+                lblPrefQuestion.text = "Preferred charter?"
+                txtPleaseSpecify.isHidden = true
+                if let value = self.userPreferences?.aviation.aviation_preferred_charter_range{
+                    previouslySelectedItems.append(value)
+                }
+            case .aviationPreferredCuisine:
+                lblPrefQuestion.text = "Preferred cuisine?"
+                txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_cuisine_id_other
+                previouslySelectedItems = self.userPreferences?.aviation.aviation_preferred_cuisine_id ?? []
+            case .aviationPreferredBevereges:
+                lblPrefQuestion.text = "Preferred Beverages?"
+                txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_beverage_id_other
+                previouslySelectedItems = self.userPreferences?.aviation.aviation_preferred_beverage_id ?? []
+                btnNextStep.setTitle("D O N E", for: .normal)
+            default:
+                print("Others")
+            }
+        case .yachts:
+            imgPreference.image = UIImage(named: "Charter Yacht Icon")
+            lblPrefLabel.text = "Yacht"
+            switch prefInformationType {
+            case .yachtHaveCharteredBefore:
+                lblPrefQuestion.text = "Have you chartered a yacht before?"
+                txtPleaseSpecify.isHidden = true
+                if let value = self.userPreferences?.yacht.yacht_chartered_before{
+                    previouslySelectedItems.append(value)
+                }
+            case .yachtInterestedIn:
+                lblPrefQuestion.text = "Interested in?"
+                txtPleaseSpecify.isHidden = true
+                if let value = self.userPreferences?.yacht.yacht_interested_in{
+                    previouslySelectedItems.append(value)
+                }
+            case .yachtType:
+                lblPrefQuestion.text = "Preferred type of cruising/sailing:"
+                txtPleaseSpecify.isHidden = true
+                if let value = self.userPreferences?.yacht.yacht_type{
+                    previouslySelectedItems.append(value)
+                }
+            case .yachtStyle:
+                lblPrefQuestion.text = "Preferred style of yacht:"
+                txtPleaseSpecify.isHidden = true
+                if let value = self.userPreferences?.yacht.yacht_style{
+                    previouslySelectedItems.append(value)
+                }
+            case .yachtPreferredCuisines:
+                lblPrefQuestion.text = "Preferred cuisine?"
+                txtPleaseSpecify.text = self.userPreferences?.yacht.yacht_preferred_cuisine_id_other
+                previouslySelectedItems = self.userPreferences?.yacht.yacht_preferred_cuisine_id ?? []
+            case .yachtOtherInterests:
+                lblPrefQuestion.text = "For better experience tell us about your other interests?"
+                txtPleaseSpecify.isHidden = true
+                previouslySelectedItems = self.userPreferences?.yacht.yacht_interests_id ?? []
+                btnNextStep.setTitle("D O N E", for: .normal)
+            default:
+                print("Others")
+            }
+        case .dining:
+            imgPreference.image = UIImage(named: "Book Table Icon")
+            lblPrefLabel.text = "Find a table"
+            switch prefInformationType {
+            case .diningCuisines:
+                lblPrefQuestion.text = "What is your preferred cuisine type?"
+                txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id_other
+                previouslySelectedItems = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id ?? []
+            case .diningAllergies:
+                lblPrefQuestion.text = "Allergies"
+                txtPleaseSpecify.isHidden = true
+                previouslySelectedItems = self.userPreferences?.restaurant.restaurant_allergy_id ?? []
+            case .diningPreferences:
+                lblPrefQuestion.text = "Your dining preferences:"
+                txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_dinning_id_other
+                previouslySelectedItems = self.userPreferences?.restaurant.restaurant_dinning_id ?? []
+            case .diningTimings:
+                lblPrefQuestion.text = "Preferred time of dining:"
+                txtPleaseSpecify.isHidden = true
+                previouslySelectedItems = self.userPreferences?.restaurant.restaurant_timing_id ?? []
+            case .diningBeverages:
+                lblPrefQuestion.text = "Preferred Beverages while dining:"
+                txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_beverage_id_other
+                previouslySelectedItems = self.userPreferences?.restaurant.restaurant_beverage_id ?? []
+            case .diningSeatings:
+                lblPrefQuestion.text = "Preferred Seating:"
+                txtPleaseSpecify.isHidden = true
+                previouslySelectedItems = self.userPreferences?.restaurant.restaurant_seating_id ?? []
+                btnNextStep.setTitle("D O N E", for: .normal)
+            
+            default:
+                print("default of dining")
+            }
+        case .events:
+            imgPreference.image = UIImage(named: "event_preference_icon")
+            lblPrefLabel.text = "Events"
+            switch prefInformationType {
+            case .eventCategory:
+                lblPrefQuestion.text = "Type of Event:"
+                txtPleaseSpecify.text = self.userPreferences?.event.event_category_id_other
+                previouslySelectedItems = self.userPreferences?.event.event_category_id ?? []
+            case .eventLocation:
+                lblPrefQuestion.text = "Location"
+                txtPleaseSpecify.isHidden = true
+                previouslySelectedItems = self.userPreferences?.event.event_location_id ?? []
+                btnNextStep.setTitle("D O N E", for: .normal)
+            
+            default:
+                print("default of events")
+            }
+        case .travel:
+            imgPreference.image = UIImage(named: "Find Hotel Icon")
+            lblPrefLabel.text = "Travel"
+            switch prefInformationType {
+            case .travelAmenities:
+                lblPrefQuestion.text = "Preferred Amenities"
+                txtPleaseSpecify.text = self.userPreferences?.travel.travel_amenity_id_other
+                previouslySelectedItems = self.userPreferences?.travel.travel_amenity_id ?? []
+            default:
+                print("default of travel")
+            }
+        default:
+            print("Others")
         }
         getPrefMasterData()
     }
@@ -388,6 +399,15 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("default of event")
                 }
+            case .travel:
+                switch prefInformationType {
+                case .travelAmenities:
+                    if let cachedItems = preferencesMasterData.travelAmenities , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                default:
+                    print("default of travel")
+             }
             default:
                 print("Others")
             }
@@ -643,7 +663,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getEventCategory(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain event category information")
                         completion(nil, error)
                         return
                     }
@@ -658,7 +678,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getEventLocation(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain event location information")
                         completion(nil, error)
                         return
                     }
@@ -669,10 +689,29 @@ class PrefCollectionsViewController: UIViewController {
                     }
                     completion(taxonomies, error)
                 }
-
             default:
                 print("default of event")
         }
+        case .travel:
+            switch prefInformationType {
+            case .travelAmenities:
+                GoLujoAPIManager().getTravelAmenities(token) { taxonomies, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain amenities information")
+                        completion(nil, error)
+                        return
+                    }
+                    //caching master data into userdefaults
+                    if taxonomies?.count ?? 0 > 0{
+                        self.preferencesMasterData.travelAmenities = taxonomies
+                        LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                    }
+                    completion(taxonomies, error)
+                }
+            default:
+                print("default of travel")
+         }
         default:
             print("Others")
         }
@@ -872,6 +911,19 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("default of event")
             }
+            case .travel:
+                switch prefInformationType {
+                case .travelAmenities:
+                    if let ids = userPreferences?.travel.travel_amenity_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                default:
+                    print("default of travel")
+             }
             default:
                 print("Default of main switch")
             }
@@ -1049,6 +1101,17 @@ class PrefCollectionsViewController: UIViewController {
                         default:
                             print("default of event")
                     }
+                    case .travel:
+                        switch self.prefInformationType {
+                        case .travelAmenities:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.travel.travel_amenity_id = arr
+                            }
+                            userPreferences.travel.travel_amenity_id_other = self.txtPleaseSpecify.text
+                            LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        default:
+                            print("default of travel")
+                     }
                     default:
                         print("Default of main switch")
                     }
@@ -1321,6 +1384,21 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("default of event")
         }
+        case .travel:
+            switch prefInformationType {
+            case .travelAmenities:
+                GoLujoAPIManager().setTravelAmenities(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
+            default:
+                print("default of travel")
+         }
         default:
             print("Main switch default ")
         }
@@ -1411,6 +1489,14 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("default of event")
         }
+        case .travel:
+            switch prefInformationType {
+            case .travelAmenities:
+                let viewController = PrefImagesCollViewController.instantiate(prefType: .travel, prefInformationType: .travelActivities)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            default:
+                print("default of travel")
+         }
         default:
             print("default of main switch")
         }
@@ -1565,6 +1651,16 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("default of event")
         }
+        case .travel:
+            switch prefInformationType {
+            case .travelAmenities:
+                let current = self.userPreferences?.travel.travel_amenity_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.travel.travel_amenity_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+            default:
+                print("default of travel")
+         }
         default:
             print("default claus of main switch")
         }
@@ -1886,6 +1982,21 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             default:
                 print("default of event")
         }
+        case .travel:
+            switch prefInformationType {
+            case .travelAmenities:
+                if let ids = userPreferences?.travel.travel_amenity_id{
+                    if (ids.contains(String(model.termId))){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            default:
+                print("default of travel")
+         }
         default:
             print("default statement of main switch")
         }
@@ -2193,6 +2304,24 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
             default:
                 print("default of event")
         }
+        case .travel:
+            switch prefInformationType {
+            case .travelAmenities:
+                if var ids = userPreferences?.travel.travel_amenity_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.travel.travel_amenity_id = ids
+                    }else{
+                        userPreferences?.travel.travel_amenity_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.travel.travel_amenity_id = []    //initializing first
+                    userPreferences?.travel.travel_amenity_id?.append(termId)
+                }
+            default:
+                print("default of travel")
+         }
         default:
             print("default statement of main switch")
         }

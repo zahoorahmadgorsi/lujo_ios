@@ -26,7 +26,7 @@ class AirportCollViewCell: UICollectionViewCell {
     }
 
     private func reset() {
-        imgContainerView.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWith: 1.0, borderCornerRadius: 6.0)
+        imgContainerView.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: 6.0)
         lblTitle.text = ""
     }
     

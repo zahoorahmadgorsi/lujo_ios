@@ -90,7 +90,9 @@ struct PrefMasterData : Codable {
     var diningSeatings : [Taxonomy]?
     var eventCategory : [Taxonomy]?
     var eventLocation : [Taxonomy]?
-    var travelDestinationTypes : [Taxonomy]?
+    var travelHotelGroups : [Taxonomy]?
+    var travelAmenities : [Taxonomy]?
+    var travelActivities : [Taxonomy]?
     
     init(giftHabits:[Taxonomy]? = [] ,giftCategories : [Taxonomy]? = [], giftPreferences : [Taxonomy]? = []){
         self.giftHabits = giftHabits

@@ -86,6 +86,10 @@ enum PreferencesRouter: URLRequestConvertible {
     case setEventCategory(String,String,String)
     case setEventLocation(String,String)
     
+    case getTravelHotelGroups(String)
+    case getTravelMedicalMeals(String)
+    case getTravelActivities(String)
+    case getTravelAmenities(String)
     case setTravelFrequency(String,Int,Int)
     case setTravelDestinations(String,String)
     case setTravelHotelRating(String,Int,Int)
@@ -175,6 +179,10 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setEventCategory: fallthrough
         case .setEventLocation: fallthrough
             
+        case .getTravelHotelGroups: fallthrough
+        case .getTravelMedicalMeals: fallthrough
+        case .getTravelActivities: fallthrough
+        case .getTravelAmenities: fallthrough
         case .setTravelFrequency: fallthrough
         case .setTravelDestinations: fallthrough
         case .setTravelHotelRating: fallthrough
@@ -260,6 +268,10 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setEventCategory: fallthrough
         case .setEventLocation: newURLComponents.path.append("/preferences/event")
             
+        case .getTravelHotelGroups: newURLComponents.path.append("/reference/hotel-groups")
+        case .getTravelMedicalMeals: newURLComponents.path.append("/reference/medical-dietary-meal")
+        case .getTravelActivities: newURLComponents.path.append("/reference/hotel-activities")
+        case .getTravelAmenities: newURLComponents.path.append("/reference/hotel-amenities")
         case .setTravelFrequency: fallthrough
         case .setTravelDestinations: fallthrough
         case .setTravelHotelRating: fallthrough
@@ -309,7 +321,11 @@ enum PreferencesRouter: URLRequestConvertible {
         case let .getDiningBeverages(token):    fallthrough
         case let .getDiningSeatings(token): fallthrough
         case let .getEventCategory(token): fallthrough
-        case let .getEventLocation(token):
+        case let .getEventLocation(token): fallthrough
+        case let .getTravelHotelGroups(token): fallthrough
+        case let .getTravelMedicalMeals(token): fallthrough
+        case let .getTravelActivities(token): fallthrough
+        case let .getTravelAmenities(token):
             return getTaxonomiesAsJSONData(token: token)
             
         case let .setGiftHabits(token,commaSeparatedString, typedPreference):
@@ -379,6 +395,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case let .setEventLocation(token, commaSeparatedString):
             return setEventLocationAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         
+
         case let  .setTravelFrequency(token, businessFrequency, leisureFrequency):
             return setTravelFrequencyAsJSONData(token: token , businessFrequency:businessFrequency, leisureFrequency:leisureFrequency)
         case let  .setTravelDestinations(token, commaSeparatedString):

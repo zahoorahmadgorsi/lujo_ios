@@ -43,12 +43,12 @@
                                             <constraint firstItem="WBz-6W-fEo" firstAttribute="top" secondItem="B7T-Js-3hF" secondAttribute="top" constant="4" id="Xre-fm-N9b"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advennture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYO-cq-YsY">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Family Friendly" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYO-cq-YsY">
                                         <rect key="frame" x="0.0" y="84" width="84" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="xaD-WI-PGi"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>

@@ -23,8 +23,8 @@ extension UIView {
         layer.addSublayer(border)
     }
 
-    public func addViewBorder(borderColor:CGColor,borderWith:CGFloat,borderCornerRadius:CGFloat){
-            self.layer.borderWidth = borderWith
+    public func addViewBorder(borderColor:CGColor,borderWidth:CGFloat, borderCornerRadius:CGFloat){
+            self.layer.borderWidth = borderWidth
             self.layer.borderColor = borderColor
             self.layer.cornerRadius = borderCornerRadius
 
