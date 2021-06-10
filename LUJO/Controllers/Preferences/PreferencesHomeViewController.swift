@@ -17,6 +17,12 @@ enum PrefCollSize:Int{
     case itemMargin = 24    //both horizontal and vertical
     case itemCategoryVerticalMargin = 8
 }
+enum CabinClass:String{
+    case First
+    case Second
+    case Business
+    case Economy
+}
 
 enum PrefType:String{
     case gifts

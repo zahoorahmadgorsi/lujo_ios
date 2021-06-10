@@ -93,6 +93,8 @@ struct PrefMasterData : Codable {
     var travelHotelGroups : [Taxonomy]?
     var travelAmenities : [Taxonomy]?
     var travelActivities : [Taxonomy]?
+    var travelMedicalMeals : [Taxonomy]?
+    var travelAllergies : [Taxonomy]?
     
     init(giftHabits:[Taxonomy]? = [] ,giftCategories : [Taxonomy]? = [], giftPreferences : [Taxonomy]? = []){
         self.giftHabits = giftHabits
@@ -283,14 +285,14 @@ struct TravelPreferences : Codable {
     var travel_amenity_id_other : String?
     var travel_activity_id : [String]?
     var travel_airline_id: [String]?
-    var travel_airplane_seat : String?
+    var travel_airplane_seat : [String]?
 //    travel_airplane_seat_other
-    var travel_airplane_business_cabin_class : String?
-    var travel_airplane_leisure_cabin_class : String?
+    var travel_airplane_business_cabin_class : [String]?
+    var travel_airplane_leisure_cabin_class : [String]?
     var travel_airplane_meals : [String]?
     var travel_medical_dietary_meal : [String]?
     var travel_medical_dietary_meal_other: String?
-    var travel_hotel_types : [String]?
+    var travel_hotel_styles : [String]?
     var travel_allergy_id : [String]?
     var travel_allergy_id_other : String?
 
@@ -313,7 +315,7 @@ struct TravelPreferences : Codable {
         case travel_airplane_meals = "travel_airplane_meals"
         case travel_medical_dietary_meal = "travel_media_dietary_meal"
         case travel_medical_dietary_meal_other = "travel_media_dietary_meal_other"
-        case travel_hotel_types = "travel_hotel_types"
+        case travel_hotel_styles = "travel_hotel_types"
         case travel_allergy_id = "travel_allergy_id"
         case travel_allergy_id_other = "travel_allergy_id_other"
     }
@@ -332,14 +334,14 @@ struct TravelPreferences : Codable {
             travel_amenity_id_other = try values.decodeIfPresent(String.self, forKey: .travel_amenity_id_other)
             travel_activity_id = try values.decodeIfPresent([String].self, forKey: .travel_activity_id)
             travel_airline_id = try values.decodeIfPresent([String].self, forKey: .travel_airline_id)
-            travel_airplane_seat = try values.decodeIfPresent(String.self, forKey: .travel_airplane_seat)
+            travel_airplane_seat = try values.decodeIfPresent([String].self, forKey: .travel_airplane_seat)
         //    travel_airplane_seat_other = try values.decodeIfPresent([String].self, forKey: .travel_airplane_seat_other)
-            travel_airplane_business_cabin_class = try values.decodeIfPresent(String.self, forKey: .travel_airplane_business_cabin_class)
-            travel_airplane_leisure_cabin_class = try values.decodeIfPresent(String.self, forKey: .travel_airplane_leisure_cabin_class)
+            travel_airplane_business_cabin_class = try values.decodeIfPresent([String].self, forKey: .travel_airplane_business_cabin_class)
+            travel_airplane_leisure_cabin_class = try values.decodeIfPresent([String].self, forKey: .travel_airplane_leisure_cabin_class)
             travel_airplane_meals = try values.decodeIfPresent([String].self, forKey: .travel_airplane_meals)
             travel_medical_dietary_meal = try values.decodeIfPresent([String].self, forKey: .travel_medical_dietary_meal)
             travel_medical_dietary_meal_other = try values.decodeIfPresent(String.self, forKey: .travel_medical_dietary_meal_other)
-            travel_hotel_types = try values.decodeIfPresent([String].self, forKey: .travel_hotel_types)
+            travel_hotel_styles = try values.decodeIfPresent([String].self, forKey: .travel_hotel_styles)
             travel_allergy_id = try values.decodeIfPresent([String].self, forKey: .travel_allergy_id)
             travel_allergy_id_other = try values.decodeIfPresent(String.self, forKey: .travel_allergy_id_other)
         } catch {

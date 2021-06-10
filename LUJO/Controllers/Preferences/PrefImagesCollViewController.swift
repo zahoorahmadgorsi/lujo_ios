@@ -74,8 +74,7 @@ class PrefImagesCollViewController: UIViewController {
 //        self.contentView.addViewBorder( borderColor: UIColor.white.cgColor, borderWith: 1.0,borderCornerRadius: 12.0)
         self.userPreferences = LujoSetup().getUserPreferences()  //get user preferences from the userdefaults
         self.preferencesMasterData = LujoSetup().getPreferencesMasterData() ?? PrefMasterData() //initialize if not found in the userdefaults
-        
-        
+
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
         
@@ -102,9 +101,13 @@ class PrefImagesCollViewController: UIViewController {
                     previouslySelectedItems = self.userPreferences?.travel.travel_activity_id ?? []
                 case .travelAirlines:
                     lblPrefQuestion.text = "Are there any airlines you prefer?"
-//                    txtPleaseSpecify.text = self.userPreferences?.travel.event_category_id_other
                     txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.travel.travel_airline_id ?? []
+                case .travelHotelStyles:
+                    lblPrefQuestion.text = "What style of hotels do you like?"
+//                    txtPleaseSpecify.text = self.userPreferences?.travel.event_category_id_other
+                    txtPleaseSpecify.isHidden = true
+                    previouslySelectedItems = self.userPreferences?.travel.travel_hotel_styles ?? []
                 default:
                     print("default of travel")
                 }
@@ -158,13 +161,13 @@ class PrefImagesCollViewController: UIViewController {
                 let taxonomyObj1 = Taxonomy(termId:-1 , name: "American")
                 let taxonomyObj2 = Taxonomy(termId:-1 , name: "British")
                 let taxonomyObj3 = Taxonomy(termId:-1 , name: "Delta")
-                let taxonomyObj4 = Taxonomy(termId:-1 , name: "Emirated")
+                let taxonomyObj4 = Taxonomy(termId:-1 , name: "Emirates")
                 let taxonomyObj5 = Taxonomy(termId:-1 , name: "KLM")
                 let taxonomyObj6 = Taxonomy(termId:-1 , name: "Lufthansa")
                 let taxonomyObj7 = Taxonomy(termId:-1 , name: "Qantas")
                 let taxonomyObj8 = Taxonomy(termId:-1 , name: "Air France")
                 let taxonomyObj9 = Taxonomy(termId:-1 , name: "United")
-                let taxonomyObj10 = Taxonomy(termId:-1 , name: "Japans Airlines")
+                let taxonomyObj10 = Taxonomy(termId:-1 , name: "Japan Airlines")
                 let taxonomyObj11 = Taxonomy(termId:-1 , name: "South African")
                 let taxonomyObj12 = Taxonomy(termId:-1 , name: "Singapore Airlines")
                 let taxonomyObj13 = Taxonomy(termId:-1 , name: "Air India")
@@ -186,6 +189,17 @@ class PrefImagesCollViewController: UIViewController {
                 taxonomies.append(taxonomyObj13)
                 taxonomies.append(taxonomyObj14)
                 taxonomies.append(taxonomyObj15)
+                self.itemsList = taxonomies
+            case .travelHotelStyles:
+                let taxonomyObj1 = Taxonomy(termId:-1 , name: "Chain(Brand)")
+                let taxonomyObj2 = Taxonomy(termId:-1 , name: "Modern")
+                let taxonomyObj3 = Taxonomy(termId:-1 , name: "Boutique")
+                let taxonomyObj4 = Taxonomy(termId:-1 , name: "Traditional")
+                var taxonomies = [Taxonomy]()
+                taxonomies.append(taxonomyObj1)
+                taxonomies.append(taxonomyObj2)
+                taxonomies.append(taxonomyObj3)
+                taxonomies.append(taxonomyObj4)
                 self.itemsList = taxonomies
             default:
                 print("default of travel")
@@ -262,6 +276,9 @@ class PrefImagesCollViewController: UIViewController {
             case .travelAirlines:
                 print("Not required for hard coded data")
                 completion(self.itemsList, nil)
+            case .travelHotelStyles:
+                print("Not required for hard coded data")
+                completion(self.itemsList, nil)
             default:
                 print("default of travel")
             }
@@ -313,6 +330,14 @@ class PrefImagesCollViewController: UIViewController {
                     }
                 case .travelAirlines:
                     if let ids = userPreferences?.travel.travel_airline_id{
+                        for id in ids {
+                            if id.count > 0{ //to avoid empty string
+                                selectedArray.append(id)
+                            }
+                        }
+                    }
+                case .travelHotelStyles:
+                    if let ids = userPreferences?.travel.travel_hotel_styles{
                         for id in ids {
                             if id.count > 0{ //to avoid empty string
                                 selectedArray.append(id)
@@ -372,6 +397,11 @@ class PrefImagesCollViewController: UIViewController {
                                 userPreferences.travel.travel_airline_id = arr
                             }
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                        case .travelHotelStyles:
+                            if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                userPreferences.travel.travel_hotel_styles = arr
+                            }
+                            LujoSetup().store(userPreferences: userPreferences)
                         default:
                             print("default of travel")
                      }
@@ -437,6 +467,16 @@ class PrefImagesCollViewController: UIViewController {
                     }
                     completion(contentString, error)
                 }
+            case .travelHotelStyles:
+                GoLujoAPIManager().setTravelHotelStyles(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
             default:
                 print("default of travel")
             }
@@ -459,7 +499,10 @@ class PrefImagesCollViewController: UIViewController {
                 let viewController = PrefImagesCollViewController.instantiate(prefType: .travel, prefInformationType: .travelAirlines)
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .travelAirlines:
-                let viewController = PrefImagesCollViewController.instantiate(prefType: .travel, prefInformationType: .travelAirplaneSeat)
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .travel, prefInformationType: .travelAirplaneSeat)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .travelHotelStyles:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .travel, prefInformationType: .travelAllergies)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("default of travel")
@@ -490,6 +533,10 @@ class PrefImagesCollViewController: UIViewController {
                 return !compare(current: current , previous: previous)
             case .travelAirlines:
                 let current = self.userPreferences?.travel.travel_airline_id ?? []
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+            case .travelHotelStyles:
+                let current = self.userPreferences?.travel.travel_hotel_styles ?? []
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
             default:
@@ -602,8 +649,17 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
                     }
                 }
             case .travelAirlines:
-                cell.imgView.image = UIImage(named: model.name + " travel")
+                cell.imgView.image = UIImage(named: model.name + " airline")
                 if let ids = userPreferences?.travel.travel_airline_id{
+                    if (ids.contains(model.name)){
+                        cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }else{
+                        cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
+                    }
+                }
+            case .travelHotelStyles:
+                cell.imgView.image = UIImage(named: model.name + " travel")
+                if let ids = userPreferences?.travel.travel_hotel_styles{
                     if (ids.contains(model.name)){
                         cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
                     }else{
@@ -682,6 +738,19 @@ extension PrefImagesCollViewController: UICollectionViewDelegate {
                 userPreferences?.travel.travel_airline_id = []    //initializing first
                 userPreferences?.travel.travel_airline_id?.append(name)
             }
+        case .travelHotelStyles:
+            if var ids = userPreferences?.travel.travel_hotel_styles{
+                if ids.contains(name){
+                    //remove all occurances in case there is duplication i.e. dirty data
+                    ids.removeAll{ value in return value == name}
+                    userPreferences?.travel.travel_hotel_styles = ids
+                }else{
+                    userPreferences?.travel.travel_hotel_styles?.append(name)
+                }
+            }else{
+                userPreferences?.travel.travel_hotel_styles = []    //initializing first
+                userPreferences?.travel.travel_hotel_styles?.append(name)
+            }
         default:
             print("default of travel")
         }
@@ -699,14 +768,26 @@ extension PrefImagesCollViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: cellWidth, height: cellHeight)
-    
+        let width = Int(collectionView.bounds.size.width)
+        switch prefInformationType {
+        case .travelHotelStyles:
+            cellWidth = width / 3  - PrefCollSize.itemMargin.rawValue / 3    //to keep horizontal and vertical margin same
+            return CGSize(width: cellWidth, height: cellWidth + 30)
+        default:
+            cellWidth = width / 4  - PrefCollSize.itemMargin.rawValue / 4    //to keep horizontal and vertical margin same
+            return CGSize(width: cellWidth, height: cellWidth + 30)
+        }   
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: CGFloat(PrefCollSize.itemMargin.rawValue), left: CGFloat(PrefCollSize.itemMargin.rawValue), bottom: 0, right: CGFloat(PrefCollSize.itemMargin.rawValue))
+        switch prefInformationType {
+        case .travelHotelStyles:
+            return UIEdgeInsets(top: CGFloat(PrefCollSize.itemMargin.rawValue) , left: CGFloat(PrefCollSize.itemMargin.rawValue) * 1.5, bottom: 0, right: CGFloat(PrefCollSize.itemMargin.rawValue) * 1.5)
+        default:
+            return UIEdgeInsets(top: CGFloat(PrefCollSize.itemMargin.rawValue), left: CGFloat(PrefCollSize.itemMargin.rawValue), bottom: 0, right: CGFloat(PrefCollSize.itemMargin.rawValue))
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -719,7 +800,13 @@ extension PrefImagesCollViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return CGFloat(PrefCollSize.itemMargin.rawValue)    //vertical margin between cells
+        switch prefInformationType {
+        case .travelHotelGroups:
+            return CGFloat(PrefCollSize.itemMargin.rawValue) / 2    //vertical margin between cells
+        default:
+            return CGFloat(PrefCollSize.itemMargin.rawValue)    //vertical margin between cells
+        }
+        
         
     }
 }

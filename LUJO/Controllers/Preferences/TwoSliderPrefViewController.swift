@@ -23,6 +23,11 @@ class TwoSliderPrefViewController: UIViewController {
     @IBOutlet weak var lblCorporate: UILabel!
     @IBOutlet weak var lblLeisure: UILabel!
     
+    @IBOutlet weak var lblCorporateMin: UILabel!
+    @IBOutlet weak var lblCorporateMax: UILabel!
+    @IBOutlet weak var lblLeisureMin: UILabel!
+    @IBOutlet weak var lblLeisureMax: UILabel!
+    
     @IBOutlet weak var lblCorporateVaue: UILabel!
     @IBOutlet weak var sliderCorporate: UISlider!
     @IBOutlet weak var lblLeisureValue: UILabel!
@@ -86,8 +91,8 @@ class TwoSliderPrefViewController: UIViewController {
                     lblPrefQuestion.text = "How many times per year do you charter a yacht?"
                     lblCorporate.text = "Weekly Charter"
                     lblLeisure.text = "Day Charter"
-                    let corporateValue = userPreferences?.yacht.yacht_times_charter_corporate_jet ?? 1
-                    let leisureValue = userPreferences?.yacht.yacht_times_charter_leisure_jet ?? 1
+                    let corporateValue = userPreferences?.yacht.yacht_times_charter_corporate_jet ?? sliderDefaultVal
+                    let leisureValue = userPreferences?.yacht.yacht_times_charter_leisure_jet ?? sliderDefaultVal
                     self.sliderCorporate.value = Float(corporateValue)
                     self.sliderLeisure.value = Float(leisureValue)
                     self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
@@ -106,15 +111,34 @@ class TwoSliderPrefViewController: UIViewController {
                     lblPrefQuestion.text = "Approximately how many times do you travel in a year?"
                     lblCorporate.text = "Business"
                     lblLeisure.text = "Leisure"
-                    let corporateValue = userPreferences?.travel.travel_times_business ?? 1
-                    let leisureValue = userPreferences?.travel.travel_times_leisure ?? 1
+                    let corporateValue = userPreferences?.travel.travel_times_business ?? sliderDefaultVal
+                    let leisureValue = userPreferences?.travel.travel_times_leisure ?? sliderDefaultVal
                     self.sliderCorporate.value = Float(corporateValue)
                     self.sliderLeisure.value = Float(leisureValue)
                     self.lblCorporateVaue.text = String(corporateValue) + " time" + ( corporateValue > 1 ? "s" : "")
                     self.lblLeisureValue.text = String(leisureValue) + " time" +  ( leisureValue > 1 ? "s" : "")
                     self.previouslySelectedItems.append(corporateValue)
                     self.previouslySelectedItems.append(leisureValue)
-                    
+                case .travelCabinClass:
+                    lblPrefQuestion.text = "Which cabin class do you prefer?"
+                    lblCorporate.text = "Business"
+                    lblLeisure.text = "Leisure"
+                    lblCorporateMin.text = CabinClass.Economy.rawValue
+                    lblCorporateMax.text = CabinClass.Business.rawValue
+                    lblLeisureMin.text = CabinClass.Economy.rawValue
+                    lblLeisureMax.text = CabinClass.Business.rawValue
+                    self.sliderCorporate.minimumValue = 0
+                    self.sliderCorporate.maximumValue = 3
+                    self.sliderLeisure.minimumValue = 0
+                    self.sliderLeisure.maximumValue = 3
+                    let corporateValue = userPreferences?.travel.travel_airplane_business_cabin_class?[0] ?? intToCabinClass(int: sliderDefaultVal)
+                    let leisureValue = userPreferences?.travel.travel_airplane_leisure_cabin_class?[0] ?? intToCabinClass(int: sliderDefaultVal)
+                    self.sliderCorporate.value = Float(cabinClassToInt(cabinClass: corporateValue))
+                    self.sliderLeisure.value = Float(cabinClassToInt(cabinClass: leisureValue))
+                    self.lblCorporateVaue.text = corporateValue
+                    self.lblLeisureValue.text = leisureValue
+                    self.previouslySelectedItems.append(Int(cabinClassToInt(cabinClass: corporateValue)))
+                    self.previouslySelectedItems.append(Int(cabinClassToInt(cabinClass: leisureValue)))
                 default:
                     print("default of prefInformationType")
                 }
@@ -122,7 +146,34 @@ class TwoSliderPrefViewController: UIViewController {
                 print("default of main switch")
         }
     }
+
+    func cabinClassToInt(cabinClass: String)-> Int{
+        if cabinClass.equals(rhs: CabinClass.Economy.rawValue){
+            return 0
+        }else if cabinClass.equals(rhs: CabinClass.Second.rawValue){
+            return 1
+        }else if cabinClass.equals(rhs: CabinClass.First.rawValue){
+            return 2
+        }else if cabinClass.equals(rhs: CabinClass.Business.rawValue){
+            return 3
+        }else{
+            return 1
+        }
+    }
     
+    func intToCabinClass(int: Int)-> String{
+        if int == 0 {
+            return CabinClass.Economy.rawValue
+        }else if int == 1 {
+            return CabinClass.Second.rawValue
+        }else if int == 2{
+            return CabinClass.First.rawValue
+        }else if int == 3{
+            return CabinClass.Business.rawValue
+        }else{
+            return CabinClass.Economy.rawValue
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "Preferences"
@@ -213,6 +264,16 @@ class TwoSliderPrefViewController: UIViewController {
                     }
                     completion(contentString, error)
                 }
+            case .travelCabinClass:
+                GoLujoAPIManager().setTravelCabinClass(token: token, cabinClass: intToCabinClass(int: corporateFrequency), leisureClass: intToCabinClass(int: leisureFrequency)) { (contentString, error) in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        let error = BackendError.parsing(reason: "Could not obtain the preferences information")
+                        completion(nil, error)
+                        return
+                    }
+                    completion(contentString, error)
+                }
             default:
                 print("This will not call")
             }
@@ -243,6 +304,9 @@ class TwoSliderPrefViewController: UIViewController {
             switch self.prefInformationType {
             case .travelFrequency:
                 let viewController = PreferredDestinationaViewController.instantiate(prefType: .travel, prefInformationType: .travelDestinations)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .travelCabinClass:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .travel, prefInformationType: .travelMeals)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("This will not call")
@@ -291,6 +355,15 @@ class TwoSliderPrefViewController: UIViewController {
                 var current :[Int] = []
                 current.append(self.userPreferences?.travel.travel_times_business ?? sliderDefaultVal)  //default value is set to 1
                 current.append(self.userPreferences?.travel.travel_times_leisure ?? sliderDefaultVal)
+                let previous = self.previouslySelectedItems
+                return !compare(current: current , previous: previous)
+            case .travelCabinClass:
+                var current :[Int] = []
+                let businessClass = cabinClassToInt(cabinClass: self.userPreferences?.travel.travel_airplane_business_cabin_class?[0] ?? "")
+                let leisureClass = cabinClassToInt(cabinClass: self.userPreferences?.travel.travel_airplane_leisure_cabin_class?[0] ?? "")
+                
+                current.append(businessClass)  //default value is set to firstclass
+                current.append(leisureClass)
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
             default:
@@ -358,6 +431,13 @@ class TwoSliderPrefViewController: UIViewController {
             switch self.prefInformationType {
             case .travelFrequency:
                 self.userPreferences?.travel.travel_times_business = currentValue
+            case .travelCabinClass:
+                let strCurrentVal = intToCabinClass( int: currentValue)
+                DispatchQueue.main.async {
+                    self.lblCorporateVaue.text = strCurrentVal
+                }
+                self.userPreferences?.travel.travel_airplane_business_cabin_class = []
+                self.userPreferences?.travel.travel_airplane_business_cabin_class?.append(strCurrentVal)
             default:
                 print("This will not call")
             }
@@ -393,6 +473,13 @@ class TwoSliderPrefViewController: UIViewController {
             switch self.prefInformationType {
             case .travelFrequency:
                 self.userPreferences?.travel.travel_times_leisure = currentValue
+            case .travelCabinClass:
+                let strCurrentVal = intToCabinClass( int: currentValue)
+                DispatchQueue.main.async {
+                    self.lblLeisureValue.text = strCurrentVal
+                }
+                self.userPreferences?.travel.travel_airplane_leisure_cabin_class = []
+                self.userPreferences?.travel.travel_airplane_leisure_cabin_class?.append(strCurrentVal)
             default:
                 print("This will not call")
             }
