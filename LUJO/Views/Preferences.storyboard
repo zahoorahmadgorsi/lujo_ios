@@ -1502,23 +1502,23 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What’s the star rating of hotels usually stay in?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bf9-Bc-kTG">
-                                        <rect key="frame" x="16" y="199.5" width="350" height="41"/>
+                                        <rect key="frame" x="0.0" y="199.5" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uaf-g4-QtH">
-                                        <rect key="frame" x="0.0" y="240.5" width="382" height="64"/>
+                                        <rect key="frame" x="0.0" y="220" width="382" height="64"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSZ-Z1-bsY">
-                                        <rect key="frame" x="0.0" y="304.5" width="382" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="284" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TnP-BM-Kig" customClass="CosmosView" customModule="Cosmos">
-                                        <rect key="frame" x="0.0" y="349" width="382" height="48"/>
+                                        <rect key="frame" x="0.0" y="328.5" width="382" height="48"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="8yr-c0-HkX"/>
@@ -1548,13 +1548,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leisure" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDC-JE-GBU">
-                                        <rect key="frame" x="0.0" y="429" width="382" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="408.5" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6d-H3-dAy" customClass="CosmosView" customModule="Cosmos">
-                                        <rect key="frame" x="0.0" y="473.5" width="382" height="48"/>
+                                        <rect key="frame" x="0.0" y="453" width="382" height="48"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="JhD-Ge-35H"/>
@@ -1599,7 +1599,7 @@
                                     <constraint firstItem="TnP-BM-Kig" firstAttribute="top" secondItem="RSZ-Z1-bsY" secondAttribute="bottom" constant="24" id="azK-O4-YEw"/>
                                     <constraint firstAttribute="trailing" secondItem="H6d-H3-dAy" secondAttribute="trailing" id="bU5-SM-9oy"/>
                                     <constraint firstItem="bf9-Bc-kTG" firstAttribute="top" secondItem="z1U-Ne-Pku" secondAttribute="bottom" id="em6-Gg-vda"/>
-                                    <constraint firstAttribute="trailing" secondItem="bf9-Bc-kTG" secondAttribute="trailing" constant="16" id="fTL-j3-MK1"/>
+                                    <constraint firstAttribute="trailing" secondItem="bf9-Bc-kTG" secondAttribute="trailing" id="fTL-j3-MK1"/>
                                     <constraint firstAttribute="trailing" secondItem="gDC-JE-GBU" secondAttribute="trailing" id="fY4-cs-Pfj"/>
                                     <constraint firstItem="z1U-Ne-Pku" firstAttribute="leading" secondItem="jU1-AT-ho0" secondAttribute="leading" id="hK7-YH-SEZ"/>
                                     <constraint firstItem="ExD-km-PmW" firstAttribute="centerX" secondItem="jU1-AT-ho0" secondAttribute="centerX" id="i9q-eC-aGg"/>
@@ -1612,7 +1612,7 @@
                                     <constraint firstItem="TnP-BM-Kig" firstAttribute="leading" secondItem="jU1-AT-ho0" secondAttribute="leading" id="wKF-jL-m5s"/>
                                     <constraint firstAttribute="trailing" secondItem="uaf-g4-QtH" secondAttribute="trailing" id="wZ0-MJ-v2Z"/>
                                     <constraint firstItem="66U-Zc-570" firstAttribute="leading" secondItem="jU1-AT-ho0" secondAttribute="leading" id="xbf-z7-LIn"/>
-                                    <constraint firstItem="bf9-Bc-kTG" firstAttribute="leading" secondItem="jU1-AT-ho0" secondAttribute="leading" constant="16" id="xyD-DZ-dXB"/>
+                                    <constraint firstItem="bf9-Bc-kTG" firstAttribute="leading" secondItem="jU1-AT-ho0" secondAttribute="leading" id="xyD-DZ-dXB"/>
                                     <constraint firstItem="H6d-H3-dAy" firstAttribute="leading" secondItem="jU1-AT-ho0" secondAttribute="leading" id="zL5-V3-6n4"/>
                                     <constraint firstItem="66U-Zc-570" firstAttribute="top" secondItem="jU1-AT-ho0" secondAttribute="top" id="zmN-uL-KaY"/>
                                 </constraints>
@@ -1687,10 +1687,10 @@
             </objects>
             <point key="canvasLocation" x="251" y="734"/>
         </scene>
-        <!--PreferenceCollection-->
+        <!--Preference Images Collection-->
         <scene sceneID="iNS-pS-mRT">
             <objects>
-                <viewController storyboardIdentifier="PrefImagesCollViewController" title="Account" useStoryboardIdentifierAsRestorationIdentifier="YES" id="V9G-pL-hob" userLabel="PreferenceCollection" customClass="PrefImagesCollViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PrefImagesCollViewController" title="Account" useStoryboardIdentifierAsRestorationIdentifier="YES" id="V9G-pL-hob" userLabel="Preference Images Collection" customClass="PrefImagesCollViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dA9-Ed-aat">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1710,7 +1710,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJs-wh-cGM">
-                                        <rect key="frame" x="16" y="118" width="350" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="118" width="382" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
@@ -1720,7 +1720,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwJ-86-HXh">
-                                        <rect key="frame" x="16" y="180" width="350" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="180" width="382" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
@@ -1753,24 +1753,24 @@
                                     <constraint firstAttribute="trailing" secondItem="lh2-ax-XQg" secondAttribute="trailing" id="2eD-FI-rvX"/>
                                     <constraint firstItem="c7U-3J-ymc" firstAttribute="top" secondItem="NHw-6k-m6m" secondAttribute="bottom" id="4cJ-Ac-zJp"/>
                                     <constraint firstItem="MwJ-86-HXh" firstAttribute="top" secondItem="cvz-5F-Cjo" secondAttribute="bottom" id="Ad9-rQ-EY6"/>
-                                    <constraint firstItem="ZJs-wh-cGM" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" constant="16" id="Ajm-Hv-o1V"/>
+                                    <constraint firstItem="ZJs-wh-cGM" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" id="Ajm-Hv-o1V"/>
                                     <constraint firstItem="ZJs-wh-cGM" firstAttribute="top" secondItem="c7U-3J-ymc" secondAttribute="bottom" constant="16" id="DYt-EZ-X0P"/>
                                     <constraint firstAttribute="trailing" secondItem="mrs-fP-QxB" secondAttribute="trailing" constant="8" id="EeX-ay-t8I"/>
                                     <constraint firstAttribute="trailing" secondItem="cvz-5F-Cjo" secondAttribute="trailing" id="F12-ET-vpY"/>
                                     <constraint firstItem="mrs-fP-QxB" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" constant="8" id="GqS-km-RX0"/>
                                     <constraint firstItem="NHw-6k-m6m" firstAttribute="top" secondItem="Iko-FM-efe" secondAttribute="top" id="HBB-nZ-OCN"/>
-                                    <constraint firstItem="MwJ-86-HXh" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" constant="16" id="HPb-QY-zix"/>
+                                    <constraint firstItem="MwJ-86-HXh" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" id="HPb-QY-zix"/>
                                     <constraint firstItem="mrs-fP-QxB" firstAttribute="top" secondItem="MwJ-86-HXh" secondAttribute="bottom" constant="16" id="HfL-Dh-HKp"/>
                                     <constraint firstItem="cvz-5F-Cjo" firstAttribute="top" secondItem="ZJs-wh-cGM" secondAttribute="bottom" id="KwC-RW-XMz"/>
                                     <constraint firstItem="lh2-ax-XQg" firstAttribute="top" secondItem="mrs-fP-QxB" secondAttribute="bottom" id="LhQ-Qh-DGu"/>
-                                    <constraint firstAttribute="trailing" secondItem="ZJs-wh-cGM" secondAttribute="trailing" constant="16" id="LlH-OF-gj0"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZJs-wh-cGM" secondAttribute="trailing" id="LlH-OF-gj0"/>
                                     <constraint firstItem="lh2-ax-XQg" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" id="S0d-EX-lAB"/>
                                     <constraint firstAttribute="trailing" secondItem="NHw-6k-m6m" secondAttribute="trailing" id="XXk-Pa-sNt"/>
                                     <constraint firstItem="cvz-5F-Cjo" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" id="fWG-0q-sP5"/>
                                     <constraint firstItem="c7U-3J-ymc" firstAttribute="centerX" secondItem="Iko-FM-efe" secondAttribute="centerX" id="il1-6k-a8W"/>
                                     <constraint firstItem="NHw-6k-m6m" firstAttribute="leading" secondItem="Iko-FM-efe" secondAttribute="leading" id="mRI-GB-pEG"/>
                                     <constraint firstAttribute="bottom" secondItem="lh2-ax-XQg" secondAttribute="bottom" id="yZY-Ph-oSv"/>
-                                    <constraint firstAttribute="trailing" secondItem="MwJ-86-HXh" secondAttribute="trailing" constant="16" id="zFi-5N-555"/>
+                                    <constraint firstAttribute="trailing" secondItem="MwJ-86-HXh" secondAttribute="trailing" id="zFi-5N-555"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qhs-ex-quX" userLabel="Bottom Bar">

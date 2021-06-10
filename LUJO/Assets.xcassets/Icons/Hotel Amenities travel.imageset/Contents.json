@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Adventure.png",
+      "filename" : "Accor.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Adventure@2x.png",
+      "filename" : "Accor@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Adventure@3x.png",
+      "filename" : "Accor@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
