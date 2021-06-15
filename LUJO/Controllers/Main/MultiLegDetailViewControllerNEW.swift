@@ -154,6 +154,10 @@ extension MultiLegDetailViewControllerNEW: AviationSearchCriteriaDelegate {
         viewController.delegate = self
         present(viewController, animated: true, completion: nil)
     }
+    
+    func showError(error: Error) {
+        showErrorPopup(withTitle: "Aviation Error", error: error)
+    }
 }
 
 extension MultiLegDetailViewControllerNEW: LuggageSelectionViewDelegate {

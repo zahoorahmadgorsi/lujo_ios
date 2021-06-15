@@ -400,4 +400,8 @@ extension AviationViewController {
             }
         }
     }
+    
+    func showError(error: Error) {
+        showErrorPopup(withTitle: "Aviation Error", error: error)
+    }
 }

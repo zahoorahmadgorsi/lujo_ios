@@ -4,7 +4,11 @@ struct SearchTime: Codable {
     var date: String
     var time: String
 
-    var isEmpty: Bool { return (date.isEmpty || time.isEmpty) }
+    var isEmpty: Bool {
+        //return (date.isEmpty || time.isEmpty) //removing validation check on time
+        return date.isEmpty
+        
+    }
 
     var toDate: Date? {
         let formatter = DateFormatter()

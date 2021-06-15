@@ -99,7 +99,7 @@ class PrefCollectionsViewController: UIViewController {
                 txtPleaseSpecify.text = self.userPreferences?.gift.gift_preferences_id_other
                 //removing the duplicates
                 previouslySelectedItems = Array(Set(self.userPreferences?.gift.gift_preferences_id ?? [])) //Order might change
-                btnNextStep.setTitle("D O N E", for: .normal)
+                btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
                 print("Others")
             }
@@ -133,7 +133,7 @@ class PrefCollectionsViewController: UIViewController {
                 lblPrefQuestion.text = "Preferred Beverages?"
                 txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_beverage_id_other
                 previouslySelectedItems = self.userPreferences?.aviation.aviation_preferred_beverage_id ?? []
-                btnNextStep.setTitle("D O N E", for: .normal)
+                btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
                 print("Others")
             }
@@ -173,7 +173,7 @@ class PrefCollectionsViewController: UIViewController {
                 lblPrefQuestion.text = "For better experience tell us about your other interests?"
                 txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.yacht.yacht_interests_id ?? []
-                btnNextStep.setTitle("D O N E", for: .normal)
+                btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
                 print("Others")
             }
@@ -205,7 +205,7 @@ class PrefCollectionsViewController: UIViewController {
                 lblPrefQuestion.text = "Preferred Seating:"
                 txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.restaurant.restaurant_seating_id ?? []
-                btnNextStep.setTitle("D O N E", for: .normal)
+                btnNextStep.setTitle("F I N I S H", for: .normal)
             
             default:
                 print("default of dining")
@@ -222,7 +222,7 @@ class PrefCollectionsViewController: UIViewController {
                 lblPrefQuestion.text = "Location"
                 txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.event.event_location_id ?? []
-                btnNextStep.setTitle("D O N E", for: .normal)
+                btnNextStep.setTitle("F I N I S H", for: .normal)
             
             default:
                 print("default of events")
@@ -251,7 +251,7 @@ class PrefCollectionsViewController: UIViewController {
                 lblPrefQuestion.text = "Allergies"
                 txtPleaseSpecify.text = self.userPreferences?.travel.travel_allergy_id_other
                 previouslySelectedItems = self.userPreferences?.travel.travel_allergy_id ?? []
-                btnNextStep.setTitle("D O N E", for: .normal)
+                btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
                 print("default of travel")
             }
@@ -781,7 +781,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningAllergies(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain airline medical meals information")
+                        let error = BackendError.parsing(reason: "Could not obtain airline allergies information")
                         completion(nil, error)
                         return
                     }
@@ -1874,7 +1874,8 @@ class PrefCollectionsViewController: UIViewController {
     
     func compare(current:String , previous:String) -> Bool{
         if previous == current{
-            btnNextStep.setTitle("S K I P", for: .normal)
+//            btnNextStep.setTitle("S K I P", for: .normal)
+            btnNextStep.setTitle("S A V E", for: .normal)
             return true
         }else{
             btnNextStep.setTitle("S A V E", for: .normal)
@@ -1885,7 +1886,8 @@ class PrefCollectionsViewController: UIViewController {
     func compare(current:[String] , previous:[String] , previousTypedStr:String? = nil) -> Bool{
         let currentTypedStr = self.txtPleaseSpecify.text
         if (Set(previous ) == Set(current) && (previousTypedStr ?? currentTypedStr == self.txtPleaseSpecify.text)){
-            btnNextStep.setTitle("S K I P", for: .normal)
+//            btnNextStep.setTitle("S K I P", for: .normal)
+            btnNextStep.setTitle("S A V E", for: .normal)
             return true
         }else{
             btnNextStep.setTitle("S A V E", for: .normal)

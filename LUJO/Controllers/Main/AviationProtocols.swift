@@ -8,6 +8,7 @@ protocol AviationSearchCriteriaDelegate: class {
     func search(using criteria: AviationSearch)
     func showSearchFeedback(_ message: String)
     func showMultiLegDetailVC(selectedIndex: Int?, segments: [AviationSegment], addMore: Bool)
+    func showError(error:Error)
 }
 
 protocol SearchCriteriaDelegate: class {

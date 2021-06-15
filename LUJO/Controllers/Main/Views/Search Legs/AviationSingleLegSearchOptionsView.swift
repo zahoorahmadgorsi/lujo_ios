@@ -90,16 +90,17 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         originTimePicker.translatesAutoresizingMaskIntoConstraints = false
         originTimePicker.datePickerMode = .time
         originTimePicker.backgroundColor = UIColor.inputFieldText
+        
         originTimePicker.addTarget(self, action: #selector(originTimeChanged(picker:)), for: .valueChanged)
         // swiftlint:disable line_length
         originTimePicker.date = segmentData.departureDateTime.time.isEmpty ? Date() : timeFormatter.date(from: segmentData.departureDateTime.time) ?? Date()
         // swiftlint:enable line_length
         pickerView.addSubview(originTimePicker)
-
             NSLayoutConstraint.activate(
                 [originTimePicker.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
                  originTimePicker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
-                 originTimePicker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor)]
+                 originTimePicker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor)
+                 ]
             )
         
         // Toolbar
@@ -116,13 +117,12 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         pickerView.addSubview(toolbar)
-
-        NSLayoutConstraint.activate(
-            [toolbar.bottomAnchor.constraint(equalTo: originTimePicker.topAnchor),
-             toolbar.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
-             toolbar.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
-             toolbar.heightAnchor.constraint(equalToConstant: 50)]
-        )
+            NSLayoutConstraint.activate(
+                [toolbar.bottomAnchor.constraint(equalTo: originTimePicker.topAnchor),
+                 toolbar.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
+                 toolbar.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
+                 toolbar.heightAnchor.constraint(equalToConstant: 50)]
+            )
 
         return pickerView
     }()
@@ -346,22 +346,37 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
     @IBAction func smokingUpdate(_ sender: UISwitch) {}
 
+    
     @IBAction func performSearch(_ sender: Any) {
-        guard let originAirport = segmentData.startAirport,
-            let destinationAirport = segmentData.endAirport,
-            !segmentData.departureDateTime.isEmpty else {
-            // TODO: Present error on missing information
+        guard let originAirport = segmentData.startAirport else {
+            let error = AviationError.general(description: "Please provide a valid departure airport.")
+            aviationSearchCriteriaDelegate?.showError(error: error)
+            return
+        }
+        
+        guard
+            let destinationAirport = segmentData.endAirport else {
+            let error = AviationError.general(description: "Please provide a valid arrival airport.")
+            aviationSearchCriteriaDelegate?.showError(error: error)
+            return
+        }
+        
+        guard !segmentData.departureDateTime.isEmpty else {
+            let error = AviationError.general(description: "Please provide a valid departure date.")
+            aviationSearchCriteriaDelegate?.showError(error: error)
             return
         }
 
         var returnDateTime: SearchTime?
 
         if tripType == .roundTrip {
-            guard segmentData.returnDate != nil else {
-                // TODO: Present error for return information
+            guard
+                let returnDate = segmentData.returnDate , !returnDate.isEmpty else {
+                let error = AviationError.general(description: "Please provide a valid return date.")
+                aviationSearchCriteriaDelegate?.showError(error: error)
                 return
             }
-            returnDateTime = segmentData.returnDate
+            returnDateTime = returnDate
         }
 
         let passengersInfo = AviationPassengers(adults: segmentData.passengers,

@@ -550,7 +550,8 @@ class PrefImagesCollViewController: UIViewController {
     
     func compare(current:String , previous:String) -> Bool{
         if previous == current{
-            btnNextStep.setTitle("S K I P", for: .normal)
+//            btnNextStep.setTitle("S K I P", for: .normal)
+            btnNextStep.setTitle("S A V E", for: .normal)
             return true
         }else{
             btnNextStep.setTitle("S A V E", for: .normal)
@@ -561,7 +562,8 @@ class PrefImagesCollViewController: UIViewController {
     func compare(current:[String] , previous:[String] , previousTypedStr:String? = nil) -> Bool{
         let currentTypedStr = self.txtPleaseSpecify.text
         if (Set(previous ) == Set(current) && (previousTypedStr ?? currentTypedStr == self.txtPleaseSpecify.text)){
-            btnNextStep.setTitle("S K I P", for: .normal)
+//            btnNextStep.setTitle("S K I P", for: .normal)
+            btnNextStep.setTitle("S A V E", for: .normal)
             return true
         }else{
             btnNextStep.setTitle("S A V E", for: .normal)
@@ -628,7 +630,7 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
                     }
                 }
             case .travelHotelGroups:
-                cell.lblTitle.text = ""
+//                cell.lblTitle.text = ""
                 cell.imgView.backgroundColor = UIColor.white
                 cell.imgView.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
                 cell.imgView.image = UIImage(named: model.name + " travel")
