@@ -141,10 +141,12 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         let tgrReadMore = UITapGestureRecognizer(target: self, action: #selector(btnSeeMoreTapped(_:)))
         self.viewReadMore.isUserInteractionEnabled = true   //can also be enabled from IB
         self.viewReadMore.addGestureRecognizer(tgrReadMore)
+        
         //Addin swipe down pan gesture
         pgrMainImage = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
-        pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         ViewMainImage.addGestureRecognizer(pgrMainImage!)   //applying pan gesture on main image
+        
+        pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
         setRecentlyViewed()
     }

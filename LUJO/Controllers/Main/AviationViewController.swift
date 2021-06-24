@@ -78,6 +78,13 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
         setupSubviews()
         
         showSearchOptions(for: .oneWay)
+        
+        //Loading the preferences related to dining only very first time
+        if !UserDefaults.standard.bool(forKey: "isAviationPreferencesAlreadyShown")  {
+            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
+            self.navigationController?.pushViewController(viewController, animated: true)
+            UserDefaults.standard.set(true, forKey: "isAviationPreferencesAlreadyShown")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -190,6 +197,7 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
                 fatalError("Nib file not found at Aviation Options")
             }
             //Zahoor change started
+        
             //No need to reInitialized self.searchCriteriaDelegate in case of return trip
             if (self.searchCriteriaDelegate == nil ) ||
                 ((searchCriteriaDelegate as? AviationMultiLegSearchOptionsView) != nil) {

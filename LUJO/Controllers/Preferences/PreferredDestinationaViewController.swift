@@ -391,9 +391,21 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
-              navigationController?.popToViewController(viewController, animated: true)
+            //if user came from my preferences
+            navigationController?.popToViewController(viewController, animated: true)
+        }else if let viewController = navigationController?.viewControllers.first(where: {$0 is PerCityViewController}) {
+            //if user came from per city view controler
+            navigationController?.popToViewController(viewController, animated: true)
+        }else if let viewController = navigationController?.viewControllers.first(where: {$0 is ProductsViewController}) {
+            //if user came from Products view controler
+            navigationController?.popToViewController(viewController, animated: true)
+        }else if let viewController = navigationController?.viewControllers.first(where: {$0 is AviationViewController}) {
+            //if user came from Aviation view controler
+            navigationController?.popToViewController(viewController, animated: true)
+        }else{
+            //if user came from home screen
+            self.navigationController?.popToRootViewController(animated: true)
         }
-        
     }
     
     private func applyConstraints() {

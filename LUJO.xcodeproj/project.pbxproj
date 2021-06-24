@@ -1504,20 +1504,20 @@
 		9A818F4920EE74CA005B6455 /* LUJO */ = {
 			isa = PBXGroup;
 			children = (
+				1D6006852399535900B9BA2A /* LUJO-Bridging-Header.h */,
+				9AC4FE08225CA31F0031E57E /* AppDelegate.swift */,
+				557BB5E42315930400744188 /* GlobalExtensions.swift */,
+				553A8EE12303EBD90051006E /* PreloadDataManager.swift */,
+				16433607BB187DF78A4C197E /* Protocols.swift */,
+				164332F8BAB671B1881F0BAB /* Router.swift */,
 				1D61800E238C3BB100F01199 /* 3rd Party */,
 				91B4A3AA260264A300169A0C /* Animators */,
 				1D3A71E2233919560037AE81 /* API Managers */,
-				9AC4FE08225CA31F0031E57E /* AppDelegate.swift */,
 				9AE0B2AA21232F7F00E55E6C /* Common */,
 				557BB5DD23158F8900744188 /* Controllers */,
 				9ADE2DE8211316D900D7293C /* Features */,
-				557BB5E42315930400744188 /* GlobalExtensions.swift */,
-				1D6006852399535900B9BA2A /* LUJO-Bridging-Header.h */,
 				557BB5DF23158F9B00744188 /* Models */,
-				553A8EE12303EBD90051006E /* PreloadDataManager.swift */,
-				16433607BB187DF78A4C197E /* Protocols.swift */,
 				3052319E23408B8A00D24596 /* Resources */,
-				164332F8BAB671B1881F0BAB /* Router.swift */,
 				30985BBA233E6E1D0090D4CB /* Supporting Files */,
 				557BB5DE23158F9000744188 /* Views */,
 			);
@@ -2399,7 +2399,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.15;
+				CURRENT_PROJECT_VERSION = 1.16;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2425,7 +2425,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.15;
+				CURRENT_PROJECT_VERSION = 1.16;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2450,7 +2450,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.15;
+				CURRENT_PROJECT_VERSION = 1.16;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2614,7 +2614,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.15;
+				CURRENT_PROJECT_VERSION = 1.16;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2678,7 +2678,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.15;
+				CURRENT_PROJECT_VERSION = 1.16;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2888,7 +2888,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.15;
+				CURRENT_PROJECT_VERSION = 1.16;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -105,11 +105,14 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         getDiningInformation(showActivity: true)
         
         locationManager.delegate = self
+        
+        //Loading the preferences related to dining only very first time
+        if !UserDefaults.standard.bool(forKey: "isDiningPreferencesAlreadyShown")  {
+            let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
+            self.navigationController?.pushViewController(viewController, animated: true)
+            UserDefaults.standard.set(true, forKey: "isDiningPreferencesAlreadyShown")
+        }
     }
-    
- 
-
-
     
     @IBAction func noNearbyRestaurantsDismissButton_onClick(_ sender: Any) {
         noNearbyRestaurantsContainerView.removeFromSuperview()

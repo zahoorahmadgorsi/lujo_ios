@@ -104,7 +104,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private(set) var aviationDataSource: [AirportSuggestion] = []
     var profileButton: UIButton!
     private var canSendRequest: Bool = true
-    
     /// Refresh control view. Used to display network activity when user pull scroll view down
     /// view to fetch new data.
     private lazy var refreshControl: UIRefreshControl = {
@@ -114,7 +113,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         self.scrollView.refreshControl = refreshControl
         return refreshControl
     }()
-    
     /// Preload data object that can store some data fetched earlier so we can instantly present
     /// this data without needing to fetch it again from the server. Default is nil.
     private var preloadData: HomeObjects? { return PreloadDataManager.HomeScreen.scrollViewData }
@@ -133,6 +131,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private var animationtype: AnimationType = .slider  //by default slider to detail animation would be called
     var timer = Timer()
 //    var isPaused = true
+    var pgrFullView: UIPanGestureRecognizer?    //to handle swipe left and right
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -220,6 +219,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         fetchAviationDataSource()
         
         locationManager.delegate = self
+        
+        //handling swipe left and right gestures
+        pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
+        self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
+        //register this method into notification centre as when preferences are loaded from preferencesHomeViewController on this method would be called
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(getAllUserPreferences),
+                                               name: Notification.Name(rawValue: "getAllUserPreferences"),
+                                               object: nil)
+        getAllUserPreferences() //fetching all user preferenes from the server
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -265,7 +274,41 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         startPauseAnimation(isPausing: true)
     }
     
-
+    //this method will fetch all user preferences from the server
+    @objc func getAllUserPreferences() {
+        self.showNetworkActivity()
+        fetchAllUserPreferences() {information, error in
+            self.hideNetworkActivity()
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            if let userPreferences = information {
+                LujoSetup().store(userPreferences: userPreferences)
+            } else {
+                let error = BackendError.parsing(reason: "Could not fetch the user preferences")
+                self.showError(error)
+            }
+        }
+    }
+    
+    func fetchAllUserPreferences(completion: @escaping (Preferences?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        GoLujoAPIManager().getAllPreferences(token) { Preferences, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not fetch user preferences")
+                completion(nil, error)
+                return
+            }
+            completion(Preferences, error)
+        }
+        
+        
+    }
     
     var isLocationEnabled: Bool {
         let status = CLLocationManager.authorizationStatus()
@@ -296,7 +339,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         profileImageView.layer.masksToBounds = true
         profileImageView.isUserInteractionEnabled = true
         profileImageView.clipsToBounds = true
-        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.userProfileBarButton_onClick(_:))))
+        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(fetchAndPresentUserAccount)))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
         self.navigationItem.leftBarButtonItem?.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
         self.navigationItem.leftBarButtonItem?.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
@@ -445,10 +488,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @objc func btnExperienceSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .experience)
         self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @IBAction func userProfileBarButton_onClick(_ sender: UIBarButtonItem) {
-        fetchAndPresentUserAccount()
     }
     
     @objc func showEventDetail(_ sender: UITapGestureRecognizer) {
@@ -764,7 +803,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func findAHotelButton_onClick(_ sender: Any) {
-        self.present(HotelViewController.instantiate(), animated: true, completion: nil)
+        //Loading the preferences related to dining only very first time
+        if !UserDefaults.standard.bool(forKey: "isTravelPreferencesAlreadyShown")  {
+            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
+            self.navigationController?.pushViewController(viewController, animated: true)
+            UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
+        }else{
+            self.present(HotelViewController.instantiate(), animated: true, completion: nil)
+        }
     }
     
     func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
@@ -784,6 +830,53 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
     }
     
+    @objc func panGestureAction(_ panGesture: UIPanGestureRecognizer) {
+        let minimumVelocityToHide: CGFloat = 1500
+        let minimumScreenRatioToHide: CGFloat = 0.25
+        let animationDuration: TimeInterval = 0.2
+        
+        func slideViewTo(_ x: CGFloat ,_ y: CGFloat) {
+                self.view.frame.origin = CGPoint(x: x, y: y)
+        }
+        
+        switch panGesture.state {
+            //case .began, .changed:
+            case .changed:
+                // If pan started or is ongoing then slide the view to follow the finger
+                let translation = panGesture.translation(in: view)
+                if (panGesture.view == self.view ){
+                    slideViewTo(translation.x,0)    //only swipe horizontal if its on main view
+                }
+            case .ended:
+                // If pan ended, decide it we should close or reset the view based on the final position and the speed of the gesture
+                let translation = panGesture.translation(in: view)
+                let velocity = panGesture.velocity(in: view)
+                let closing = (abs(translation.x) > self.view.frame.size.width * minimumScreenRatioToHide)  //checking on X position
+                                || (velocity.x > minimumVelocityToHide) //checking on X velocity
+                if closing {
+                    if (translation.x > 0){ //swiped from left to right
+                        UIView.animate(withDuration: animationDuration, animations: {
+                            slideViewTo(0,0)
+                        },completion: {_ in
+                            self.fetchAndPresentUserAccount()  //open the profile screen
+                        })
+                        
+                    }else{  //swiped from right to left
+                        UIView.animate(withDuration: animationDuration, animations: {
+                            slideViewTo(0,0)
+                        },completion: {_ in
+                            NotificationCenter.default.post(name: Notification.Name(rawValue: "openChatWindow"), object: nil)
+                        })
+                    }
+                }else{
+                    UIView.animate(withDuration: animationDuration, animations: {
+                        slideViewTo(0,0)
+                    })
+                }
+            default:
+                print(panGesture.state)
+            }
+      }
 }
 
 extension HomeViewController: ImageCarouselDelegate {
@@ -1048,7 +1141,7 @@ extension HomeViewController {
         }
     }
     
-    func fetchAndPresentUserAccount() {
+    @objc func fetchAndPresentUserAccount() {
         showNetworkActivity()
         self.navigationItem.leftBarButtonItem?.isEnabled = false
         getUserProfile { user, error in

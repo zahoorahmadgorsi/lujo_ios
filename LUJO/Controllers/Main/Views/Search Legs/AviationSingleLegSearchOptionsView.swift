@@ -71,26 +71,35 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
     private var newReturnTime: Date?
 
     var legNumber: Int?
-
+    let originTimePicker = UIDatePicker(frame: .zero)
+    let destinTimePicker = UIDatePicker(frame: .zero)
+    
     private lazy var originTimePickerView: UIView = {
         let pickerView = UIView(frame: .zero)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         pickerView.backgroundColor = UIColor(named: "Black Backgorund")?.withAlphaComponent(0.75)
         pickerView.isHidden = true
-
+            
         addSubview(pickerView)
+
+        //constrainings for outer uiView
         NSLayoutConstraint.activate(
-            [pickerView.topAnchor.constraint(equalTo: topAnchor),
+            [
+                pickerView.topAnchor.constraint(equalTo: topAnchor),
              pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
              pickerView.leadingAnchor.constraint(equalTo: leadingAnchor),
              pickerView.trailingAnchor.constraint(equalTo: trailingAnchor)]
         )
 
-        let originTimePicker = UIDatePicker(frame: .zero)
+//        let originTimePicker = UIDatePicker(frame: .zero)
         originTimePicker.translatesAutoresizingMaskIntoConstraints = false
         originTimePicker.datePickerMode = .time
-        originTimePicker.backgroundColor = UIColor.inputFieldText
-        
+//        originTimePicker.backgroundColor = UIColor.inputFieldText
+        if #available(iOS 14.0, *) {
+            originTimePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         originTimePicker.addTarget(self, action: #selector(originTimeChanged(picker:)), for: .valueChanged)
         // swiftlint:disable line_length
         originTimePicker.date = segmentData.departureDateTime.time.isEmpty ? Date() : timeFormatter.date(from: segmentData.departureDateTime.time) ?? Date()
@@ -123,66 +132,74 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
                  toolbar.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
                  toolbar.heightAnchor.constraint(equalToConstant: 50)]
             )
-
+        
         return pickerView
     }()
 
 
-        private lazy var destinationTimePickerView: UIView = {
-            let pickerView = UIView(frame: .zero)
-            pickerView.translatesAutoresizingMaskIntoConstraints = false
-            pickerView.backgroundColor = UIColor(named: "Black Backgorund")?.withAlphaComponent(0.75)
-            pickerView.isHidden = true
+    private lazy var destinationTimePickerView: UIView = {
+        let pickerView = UIView(frame: .zero)
+        pickerView.translatesAutoresizingMaskIntoConstraints = false
+        pickerView.backgroundColor = UIColor(named: "Black Backgorund")?.withAlphaComponent(0.75)
+        pickerView.isHidden = true
 
-            addSubview(pickerView)
-            NSLayoutConstraint.activate(
-                [pickerView.topAnchor.constraint(equalTo: topAnchor),
-                 pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                 pickerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                 pickerView.trailingAnchor.constraint(equalTo: trailingAnchor)]
-            )
+        addSubview(pickerView)
+        NSLayoutConstraint.activate(
+            [pickerView.topAnchor.constraint(equalTo: topAnchor),
+             pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+             pickerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+             pickerView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+        )
 
-                let destinTimePicker = UIDatePicker(frame: .zero)
-                destinTimePicker.translatesAutoresizingMaskIntoConstraints = false
-                destinTimePicker.datePickerMode = .time
-                destinTimePicker.backgroundColor = UIColor.inputFieldText
-                destinTimePicker.addTarget(self, action: #selector(returnTimeChanged(picker:)), for: .valueChanged)
-                if let returnTime = segmentData.returnDate?.time {
-                    destinTimePicker.date = timeFormatter.date(from: returnTime) ?? Date()
-                } else { destinTimePicker.date = Date() }
+            
+            destinTimePicker.translatesAutoresizingMaskIntoConstraints = false
+            destinTimePicker.datePickerMode = .time
+//        destinTimePicker.backgroundColor = UIColor.inputFieldText
+            if #available(iOS 14.0, *) {
+                destinTimePicker.preferredDatePickerStyle = .wheels
+            } else {
+                // Fallback on earlier versions
+            }
+            destinTimePicker.addTarget(self, action: #selector(returnTimeChanged(picker:)), for: .valueChanged)
+            if let returnTime = segmentData.returnDate?.time {
+                destinTimePicker.date = timeFormatter.date(from: returnTime) ?? Date()
+            } else {
+                destinTimePicker.date = Date()
+                
+            }
 
-                pickerView.addSubview(destinTimePicker)
-
-                NSLayoutConstraint.activate(
-                    [destinTimePicker.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
-                     destinTimePicker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
-                     destinTimePicker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor)]
-                )
-
-            // Toolbar
-            let toolbar = UIToolbar()
-            toolbar.barStyle = .black
-            toolbar.tintColor = .rgMid
-            toolbar.sizeToFit()
-
-            // swiftlint:disable line_length
-            let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(destinationDoneDatePicker))
-            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-            let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(destinationCancelDatePicker))
-
-            toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-            toolbar.translatesAutoresizingMaskIntoConstraints = false
-            pickerView.addSubview(toolbar)
+            pickerView.addSubview(destinTimePicker)
 
             NSLayoutConstraint.activate(
-                [toolbar.bottomAnchor.constraint(equalTo: destinTimePicker.topAnchor),
-                 toolbar.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
-                 toolbar.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
-                 toolbar.heightAnchor.constraint(equalToConstant: 50)]
+                [destinTimePicker.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor),
+                 destinTimePicker.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
+                 destinTimePicker.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor)]
             )
 
-            return pickerView
-        }()
+        // Toolbar
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .black
+        toolbar.tintColor = .rgMid
+        toolbar.sizeToFit()
+
+        // swiftlint:disable line_length
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(destinationDoneDatePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(destinationCancelDatePicker))
+
+        toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        pickerView.addSubview(toolbar)
+
+        NSLayoutConstraint.activate(
+            [toolbar.bottomAnchor.constraint(equalTo: destinTimePicker.topAnchor),
+             toolbar.leadingAnchor.constraint(equalTo: pickerView.leadingAnchor),
+             toolbar.trailingAnchor.constraint(equalTo: pickerView.trailingAnchor),
+             toolbar.heightAnchor.constraint(equalToConstant: 50)]
+        )
+
+        return pickerView
+    }()
 
     
     fileprivate func addGestureRecognizers() {
@@ -297,7 +314,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addGestureRecognizers()
-
+        
         setupVars()
     }
 
@@ -447,6 +464,8 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
 //        }
 
         originTimePickerView.isHidden = false
+        originTimePicker.setValue(UIColor.whiteText, forKey: "textColor")
+        originTimePicker.backgroundColor = UIColor(named: "Black Backgorund")    //so that there should be noting in the background
     }
 
     
@@ -460,6 +479,8 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
         }
 
         destinationTimePickerView.isHidden = false
+        destinTimePicker.setValue(UIColor.whiteText, forKey: "textColor")
+        destinTimePicker.backgroundColor = UIColor(named: "Black Backgorund")   //so that there should be noting in the background
     }
     
     @IBAction func doneOriginDatePicker() {

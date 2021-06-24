@@ -67,6 +67,8 @@ class HotelViewController: UIViewController {
         roomsCount = 1
         
         addGestureRecognizers()
+        
+
     }
 
     //MARK: - User interaction

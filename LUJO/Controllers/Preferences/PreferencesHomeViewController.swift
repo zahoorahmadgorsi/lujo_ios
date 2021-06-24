@@ -151,7 +151,51 @@ class PreferencesHomeViewController: UIViewController {
         let tgr7 = UITapGestureRecognizer(target: self, action: #selector(tappedOnView))
         viewEvents.isUserInteractionEnabled = true
         viewEvents.addGestureRecognizer(tgr7)
-        getAllUserPreferences()    //fetching all preferences from the server
+        
+        let opacity = 0.3
+        let user = LujoSetup().getLujoUser()
+        if (user?.membershipPlan?.plan == "All" ){ //free
+            print("All preferences are visible to those who has full membership")
+        }else if (user?.membershipPlan?.plan == "Dining" ){ //dining
+            //hide all except aviation
+            viewGifts.isUserInteractionEnabled = false
+            viewGifts.alpha = CGFloat(opacity)
+            
+            viewTravel.isUserInteractionEnabled = false
+            viewTravel.alpha = CGFloat(opacity)
+            
+            viewVillas.isUserInteractionEnabled = false
+            viewVillas.alpha = CGFloat(opacity)
+            
+            viewYachts.isUserInteractionEnabled = false
+            viewYachts.alpha = CGFloat(opacity)
+            
+            viewEvents.isUserInteractionEnabled = false
+            viewEvents.alpha = CGFloat(opacity)
+        }else{//all user?.membershipPlan = nil
+            //hide all except aviation
+            viewGifts.isUserInteractionEnabled = false
+//            viewGifts.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            viewGifts.alpha = CGFloat(opacity)
+            
+            viewDining.isUserInteractionEnabled = false
+            viewDining.alpha = CGFloat(opacity)
+            
+            viewTravel.isUserInteractionEnabled = false
+            viewTravel.alpha = CGFloat(opacity)
+            
+            viewVillas.isUserInteractionEnabled = false
+            viewVillas.alpha = CGFloat(opacity)
+            
+            viewYachts.isUserInteractionEnabled = false
+            viewYachts.alpha = CGFloat(opacity)
+            
+            viewEvents.isUserInteractionEnabled = false
+            viewEvents.alpha = CGFloat(opacity)
+        }
+        //getAllUserPreferences is in homeviewcontroller
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "getAllUserPreferences"), object: nil)
+        //getAllUserPreferences()    //fetching all preferences from the server
     }
     
     
@@ -159,63 +203,28 @@ class PreferencesHomeViewController: UIViewController {
         navigationItem.title = "My Preferences"
         activateKeyboardManager()
         
-        self.tabBarController?.tabBar.isHidden = true
+//        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationItem.title = ""
-        self.tabBarController?.tabBar.isHidden = false
+//        self.tabBarController?.tabBar.isHidden = false
     }
     
-    func getAllUserPreferences() {
-        self.showNetworkActivity()
-        getAllUserPreferences() {information, error in
-            self.hideNetworkActivity()
-            if let error = error {
-                self.showError(error)
-                return
-            }
-            if let userPreferences = information {
-                LujoSetup().store(userPreferences: userPreferences)
-            } else {
-                let error = BackendError.parsing(reason: "Could not obtain Preferences information")
-                self.showError(error)
-            }
-        }
-    }
-    
-    func getAllUserPreferences(completion: @escaping (Preferences?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
-        GoLujoAPIManager().getAllPreferences(token) { Preferences, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                completion(nil, error)
-                return
-            }
-            completion(Preferences, error)
-        }
-        
-        
-    }
-    
-    func showNetworkActivity() {
-        naHUD.show(in: view)
-    }
-    
-    func hideNetworkActivity() {
-        // Safe guard that will call dismiss only if HUD is shown on screen.
-        if naHUD.isVisible {
-            naHUD.dismiss()
-        }
-    }
-    
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Preferences Error", error: error)
-    }
+//    func showNetworkActivity() {
+//        naHUD.show(in: view)
+//    }
+//
+//    func hideNetworkActivity() {
+//        // Safe guard that will call dismiss only if HUD is shown on screen.
+//        if naHUD.isVisible {
+//            naHUD.dismiss()
+//        }
+//    }
+//
+//    func showError(_ error: Error) {
+//        showErrorPopup(withTitle: "Preferences Error", error: error)
+//    }
     
     //when user will click on the back button at the bottom
     @IBAction func btnBackTapped(_ sender: Any) {
@@ -261,8 +270,6 @@ class PreferencesHomeViewController: UIViewController {
             self.navigationController?.pushViewController(viewController, animated: true)
         case 6:
             let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
-//            let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
-//            let viewController = PrefProductCategoryViewController.instantiate(prefType: .aviation, prefInformationType: .aviationAircraftCategory)
             self.navigationController?.pushViewController(viewController, animated: true)
         default:
             print("Others")

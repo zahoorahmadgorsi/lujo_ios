@@ -212,10 +212,10 @@ class PrefCollectionsViewController: UIViewController {
             }
         case .events:
             imgPreference.image = UIImage(named: "event_preference_icon")
-            lblPrefLabel.text = "Events"
+            lblPrefLabel.text = "Events & Experiences"
             switch prefInformationType {
             case .eventCategory:
-                lblPrefQuestion.text = "Type of Event:"
+                lblPrefQuestion.text = "Type of Event/Experience:"
                 txtPleaseSpecify.text = self.userPreferences?.event.event_category_id_other
                 previouslySelectedItems = self.userPreferences?.event.event_category_id ?? []
             case .eventLocation:
@@ -1637,7 +1637,7 @@ class PrefCollectionsViewController: UIViewController {
            switch prefInformationType {
            case .diningCuisines:
                 let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningAllergies)
-                self.navigationController?.pushViewController(viewController, animated: true)
+                    self.navigationController?.pushViewController(viewController, animated: true)
            case .diningAllergies:
                 let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningPreferences)
                 self.navigationController?.pushViewController(viewController, animated: true)
@@ -1895,12 +1895,23 @@ class PrefCollectionsViewController: UIViewController {
         }
     }
     
-    //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
-              navigationController?.popToViewController(viewController, animated: true)
+            //if user came from my preferences
+            navigationController?.popToViewController(viewController, animated: true)
+        }else if let viewController = navigationController?.viewControllers.first(where: {$0 is PerCityViewController}) {
+            //if user came from per city view controler
+            navigationController?.popToViewController(viewController, animated: true)
+        }else if let viewController = navigationController?.viewControllers.first(where: {$0 is ProductsViewController}) {
+            //if user came from Products view controler
+            navigationController?.popToViewController(viewController, animated: true)
+        }else if let viewController = navigationController?.viewControllers.first(where: {$0 is AviationViewController}) {
+            //if user came from Aviation view controler
+            navigationController?.popToViewController(viewController, animated: true)
+        }else{
+            //if user came from home screen
+            self.navigationController?.popToRootViewController(animated: true)
         }
-        
     }
     
     private func applyConstraints() {
@@ -1909,7 +1920,6 @@ class PrefCollectionsViewController: UIViewController {
         collectionView.topAnchor.constraint(equalTo: self.collContainerView.topAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: self.collContainerView.bottomAnchor).isActive = true
 //        self.collContainerView.heightAnchor.constraint(equalTo: collectionView.heightAnchor).isActive = true
-        
     }
 
     func showNetworkActivity() {

@@ -56,6 +56,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
                                                selector: #selector(chatLog_onNewEvent),
                                                name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(openChatWindow),
+                                               name: Notification.Name(rawValue: "openChatWindow"),
+                                               object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,15 +81,18 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController is ChatViewController {
-            if LujoSetup().getLujoUser()?.membershipPlan != nil {
-                Intercom.presentMessenger()
-            } else {
-                showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
-            }
+            openChatWindow()
             return false
         }
         return true
     }
     
+    @objc func openChatWindow(){
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            Intercom.presentMessenger()
+        } else {
+            showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
+        }
+    }
     //MARK:- Utilities
 }

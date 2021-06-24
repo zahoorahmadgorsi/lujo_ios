@@ -281,6 +281,10 @@ extension AccountViewController {
             // Present login view controller using VIPER.
             appDelegate.windowRouter.navigate(from: "/", data: [:])
         }
+        //deleting every thing from user defaults
+        let appDomain = Bundle.main.bundleIdentifier!
+        //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
+        UserDefaults.standard.removePersistentDomain(forName: appDomain)
     }
     
     func logoutUser(completion: @escaping (Error?) -> Void) {
