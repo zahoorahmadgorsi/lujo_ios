@@ -4,12 +4,16 @@ struct SearchTime: Codable {
     var date: String
     var time: String
 
-    var isEmpty: Bool {
+    var isDateEmpty: Bool {
         //return (date.isEmpty || time.isEmpty) //removing validation check on time
         return date.isEmpty
-        
     }
 
+    var isTimeEmpty: Bool {
+        //return (date.isEmpty || time.isEmpty) //removing validation check on time
+        return time.isEmpty
+    }
+    
     var toDate: Date? {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "us_US")
@@ -20,7 +24,7 @@ struct SearchTime: Codable {
             return formatter.date(from: date)
         } else {
             formatter.dateFormat = "MM/dd/yyyy HH:mm"
-//            print(formatter.date(from: "\(date) \(time)") as Any)
+            print(formatter.date(from: "\(date) \(time)") as Any)
             return formatter.date(from: "\(date) \(time)")
         }
         

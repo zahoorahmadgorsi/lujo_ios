@@ -1,10 +1,8 @@
-//
 //  MyPreferencesViewController.swift
 //  LUJO
 //
 //  Created by iMac on 06/05/2021.
 //  Copyright © 2021 Baroque Access. All rights reserved.
-//
 
 import UIKit
 import JGProgressHUD
@@ -141,6 +139,25 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                         previouslySelectedItems = taxonomies
                         self.itemsList = taxonomies
                     }
+                    default:
+                        print("Others")
+                }
+            case .villas:
+                imgPreference.image = UIImage(named: "villa cta")
+                lblPrefLabel.text = "Villa"
+                switch prefInformationType {
+                case .villaDestinations:
+                    lblPrefQuestion.text = "What are your top preferred destinations?"
+                    txtPreferredDestination.text = "Any"
+                    if let destinations = self.userPreferences?.villa.villa_preferred_destinations_id{
+                        var taxonomies = [Taxonomy]()
+                        for item in  destinations {
+                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            taxonomies.append(taxonomy)
+                        }
+                        previouslySelectedItems = taxonomies
+                        self.itemsList = taxonomies
+                    }
     //                        btnNextStep.setTitle("D O N E", for: .normal)
                     default:
                         print("Others")
@@ -148,7 +165,6 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             default:
                 print("default of outer switch")
         }
-        
     }
     
     
@@ -221,6 +237,15 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                             case .travelDestinations:
                                 let arr = commaSeparatedString.components(separatedBy: ",")
                                 userPreferences.travel.travel_preferred_destinations = arr
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            default:
+                                print("Not yet required")
+                        }
+                    case .villas:
+                        switch self.prefInformationType {
+                            case .villaDestinations:
+                                let arr = commaSeparatedString.components(separatedBy: ",")
+                                userPreferences.villa.villa_preferred_destinations_id = arr
                                 LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                             default:
                                 print("Not yet required")
@@ -301,6 +326,22 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     print("Not yet required")
                     completion("Success", nil)
             }
+        case .villas:
+            switch self.prefInformationType {
+                case .villaDestinations:
+                    GoLujoAPIManager().setVillaDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                default:
+                    print("Not yet required")
+                    completion("Success", nil)
+            }
         default:
             print("outer switch")
         }
@@ -334,6 +375,14 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("Never going to get call")
+            }
+        case .villas:
+            switch self.prefInformationType {
+                case .villaDestinations:
+                    let viewController = PrefCollectionsViewController.instantiate(prefType: .villas, prefInformationType: .villaAmenities)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                default:
+                    print("Not yet required")
             }
         default:
             print("outer switch")
@@ -381,6 +430,15 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 return !compare(current: current , previous: previous)
             default:
                 print("This will not call")
+            }
+        case .villas:
+            switch self.prefInformationType {
+                case .villaDestinations:
+                    let current = self.itemsList.map{$0.name}
+                    let previous = self.previouslySelectedItems.map{$0.name}
+                    return !compare(current: current , previous: previous)
+                default:
+                    print("Not yet required")
             }
         default:
             print("outer switch")
@@ -455,6 +513,16 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     return false
                 default:
                     print("Never going to be get called")
+                }
+            case .villas:
+                switch self.prefInformationType {
+                    case .villaDestinations:
+                        let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .villaDestinations)   //pass regions
+                        viewController.delegate = self
+                        present(viewController, animated: true, completion: nil)
+                        return false
+                    default:
+                        print("Not yet required")
                 }
             default:
                 print("outer switch")

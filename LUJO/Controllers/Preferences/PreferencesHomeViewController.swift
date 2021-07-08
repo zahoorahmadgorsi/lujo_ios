@@ -79,6 +79,10 @@ enum PrefInformationType:String{
     case travelMedicalMeals
     case travelHotelStyles
     case travelAllergies
+    
+    case villaDestinations
+    case villaAmenities
+    case villaAccomodation
 }
 
 enum PreferenceError: Error {
@@ -198,33 +202,16 @@ class PreferencesHomeViewController: UIViewController {
         //getAllUserPreferences()    //fetching all preferences from the server
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "My Preferences"
         activateKeyboardManager()
-        
-//        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationItem.title = ""
-//        self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
-    
-//    func showNetworkActivity() {
-//        naHUD.show(in: view)
-//    }
-//
-//    func hideNetworkActivity() {
-//        // Safe guard that will call dismiss only if HUD is shown on screen.
-//        if naHUD.isVisible {
-//            naHUD.dismiss()
-//        }
-//    }
-//
-//    func showError(_ error: Error) {
-//        showErrorPopup(withTitle: "Preferences Error", error: error)
-//    }
     
     //when user will click on the back button at the bottom
     @IBAction func btnBackTapped(_ sender: Any) {
@@ -265,6 +252,9 @@ class PreferencesHomeViewController: UIViewController {
         case 3:
             let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
             self.navigationController?.pushViewController(viewController, animated: true)
+        case 4:
+            let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
+            self.navigationController?.pushViewController(viewController, animated: true)
         case 5:
             let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
             self.navigationController?.pushViewController(viewController, animated: true)
@@ -274,7 +264,5 @@ class PreferencesHomeViewController: UIViewController {
         default:
             print("Others")
         }
-        
-        
     }
 }

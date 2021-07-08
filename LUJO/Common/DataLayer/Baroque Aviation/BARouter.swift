@@ -77,11 +77,12 @@ extension BARouter {
         addQueryItems(to: &newURLComponents)
 
         do {
+            print(try newURLComponents.asURL())
             return try newURLComponents.asURL()
         } catch {
             Crashlytics.sharedInstance().recordError(error)
         }
-
+//        print("https://\(BARouter.baseURLString)")a
         return URL(string: "https://\(BARouter.baseURLString)")!
     }
 
@@ -125,7 +126,11 @@ extension BARouter {
             searchCriteria["token"] = token
 
             do {
-                return try JSONSerialization.data(withJSONObject: searchCriteria, options: [])
+                let data = try JSONSerialization.data(withJSONObject: searchCriteria, options: [])
+//                let dataString = String(data: data, encoding: .utf8)!
+//                print(dataString)
+                return data
+//                return try JSONSerialization.data(withJSONObject: searchCriteria, options: [])
             } catch {
                 fatalError(error.localizedDescription)
             }

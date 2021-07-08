@@ -278,7 +278,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @objc func getAllUserPreferences() {
         self.showNetworkActivity()
         fetchAllUserPreferences() {information, error in
-            self.hideNetworkActivity()
+//            self.hideNetworkActivity()
+            if self.naHUD.isVisible {
+                self.naHUD.dismiss()
+            }
             if let error = error {
                 self.showError(error)
                 return

@@ -219,11 +219,12 @@ enum EERouter: URLRequestConvertible {
         
         do {
             let callURL = try newURLComponents.asURL()
+//            print (callURL)
             return callURL
         } catch {
             Crashlytics.sharedInstance().recordError(error)
         }
-
+//        print("https://\(EERouter.baseURLString)")
         return URL(string: "https://\(EERouter.baseURLString)")!
     }
 

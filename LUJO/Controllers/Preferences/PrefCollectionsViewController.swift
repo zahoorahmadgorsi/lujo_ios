@@ -72,8 +72,7 @@ class PrefCollectionsViewController: UIViewController {
 //        self.contentView.addViewBorder( borderColor: UIColor.white.cgColor, borderWith: 1.0,borderCornerRadius: 12.0)
         self.userPreferences = LujoSetup().getUserPreferences()  //get user preferences from the userdefaults
         self.preferencesMasterData = LujoSetup().getPreferencesMasterData() ?? PrefMasterData() //initialize if not found in the userdefaults
-        
-        
+    
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
         
@@ -254,6 +253,22 @@ class PrefCollectionsViewController: UIViewController {
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
                 print("default of travel")
+            }
+        case .villas:
+            imgPreference.image = UIImage(named: "villa cta")
+            lblPrefLabel.text = "Villa"
+            switch prefInformationType {
+            case .villaAmenities:
+                lblPrefQuestion.text = "Preferred Amenities"
+                txtPleaseSpecify.text = self.userPreferences?.villa.villa_preferred_amenities_id_other
+                previouslySelectedItems = self.userPreferences?.villa.villa_preferred_amenities_id ?? []
+            case .villaAccomodation:
+                lblPrefQuestion.text = "Choice of Accomodation"
+                txtPleaseSpecify.text = self.userPreferences?.villa.villa_preferred_accommodations_id_other
+                previouslySelectedItems = self.userPreferences?.villa.villa_preferred_accommodations_id ?? []
+                btnNextStep.setTitle("F I N I S H", for: .normal)
+            default:
+                print("default of villa")
             }
         default:
             print("Others")
@@ -443,6 +458,19 @@ class PrefCollectionsViewController: UIViewController {
                     }
                 default:
                     print("default of travel")
+             }
+            case .villas:
+                switch prefInformationType {
+                case .villaAmenities:
+                    if let cachedItems = preferencesMasterData.villaAmenities , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                case .villaAccomodation:
+                    if let cachedItems = preferencesMasterData.villaAccomodation , cachedItems.count > 0{  //if data is already cached or not
+                        self.itemsList = cachedItems
+                    }
+                default:
+                    print("default of villa")
              }
             default:
                 print("Others")
@@ -795,6 +823,41 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("default of travel")
          }
+        case .villas:
+            switch self.prefInformationType {
+                case .villaAmenities:
+                    GoLujoAPIManager().getVillaAmenities(token) { taxonomies, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain villa amenities information")
+                            completion(nil, error)
+                            return
+                        }
+                        //caching master data into userdefaults
+                        if taxonomies?.count ?? 0 > 0{
+                            self.preferencesMasterData.villaAmenities = taxonomies
+                            LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                        }
+                        completion(taxonomies, error)
+                    }
+                case .villaAccomodation:
+                    GoLujoAPIManager().getVillaAccomodation(token) { taxonomies, error in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not obtain villa accomodation information")
+                            completion(nil, error)
+                            return
+                        }
+                        //caching master data into userdefaults
+                        if taxonomies?.count ?? 0 > 0{
+                            self.preferencesMasterData.villaAccomodation = taxonomies
+                            LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
+                        }
+                        completion(taxonomies, error)
+                    }
+                default:
+                    print("Not yet required")
+            }
         default:
             print("Others")
         }
@@ -1039,6 +1102,27 @@ class PrefCollectionsViewController: UIViewController {
                 default:
                     print("default of travel")
              }
+            case .villas:
+                switch self.prefInformationType {
+                    case .villaAmenities:
+                        if let ids = userPreferences?.villa.villa_preferred_amenities_id{
+                            for id in ids {
+                                if id.count > 0{ //to avoid empty string
+                                    selectedArray.append(id)
+                                }
+                            }
+                        }
+                    case .villaAccomodation:
+                        if let ids = userPreferences?.villa.villa_preferred_accommodations_id{
+                            for id in ids {
+                                if id.count > 0{ //to avoid empty string
+                                    selectedArray.append(id)
+                                }
+                            }
+                        }
+                    default:
+                        print("Not yet required")
+                }
             default:
                 print("Default of main switch")
             }
@@ -1249,6 +1333,23 @@ class PrefCollectionsViewController: UIViewController {
                         default:
                             print("default of travel")
                      }
+                    case .villas:
+                        switch self.prefInformationType {
+                            case .villaAmenities:
+                                if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                    userPreferences.villa.villa_preferred_amenities_id = arr
+                                }
+                                userPreferences.villa.villa_preferred_amenities_id_other = self.txtPleaseSpecify.text
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            case .villaAccomodation:
+                                if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                                    userPreferences.villa.villa_preferred_accommodations_id = arr
+                                }
+                                userPreferences.villa.villa_preferred_accommodations_id_other = self.txtPleaseSpecify.text
+                                LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            default:
+                                print("Not yet required")
+                        }
                     default:
                         print("Default of main switch")
                     }
@@ -1576,6 +1677,31 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("default of travel")
          }
+        case .villas:
+            switch self.prefInformationType {
+                case .villaAmenities:
+                    GoLujoAPIManager().setVillaAmenities(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                case .villaAccomodation:
+                    GoLujoAPIManager().setVillaAccomodation(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
+                        guard error == nil else {
+                            Crashlytics.sharedInstance().recordError(error!)
+                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            completion(nil, error)
+                            return
+                        }
+                        completion(contentString, error)
+                    }
+                default:
+                    print("Not yet required")
+            }
         default:
             print("Main switch default ")
         }
@@ -1685,6 +1811,16 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("default of travel")
          }
+        case .villas:
+            switch self.prefInformationType {
+            case .villaAmenities:
+                let viewController = PrefCollectionsViewController.instantiate(prefType: .villas, prefInformationType: .villaAccomodation)
+                self.navigationController?.pushViewController(viewController, animated: true)
+            case .villaAccomodation:
+                self.skipTapped()
+            default:
+                print("Not yet required")
+            }
         default:
             print("default of main switch")
         }
@@ -1866,6 +2002,21 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("default of travel")
          }
+        case .villas:
+            switch self.prefInformationType {
+            case .villaAmenities:
+                let current = self.userPreferences?.villa.villa_preferred_amenities_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.villa.villa_preferred_amenities_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+            case .villaAccomodation:
+                let current = self.userPreferences?.villa.villa_preferred_accommodations_id ?? []
+                let previous = self.previouslySelectedItems
+                let previouslyTypedStr = self.userPreferences?.villa.villa_preferred_accommodations_id_other ?? ""
+                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+            default:
+                print("Not yet required")
+            }
         default:
             print("default claus of main switch")
         }
@@ -2254,6 +2405,31 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             default:
                 print("default of travel")
          }
+        case .villas:
+            switch self.prefInformationType {
+            case .villaAmenities:
+                if let str = userPreferences?.villa.villa_preferred_amenities_id{
+                    if(str.contains(String(model.termId)) ){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            case .villaAccomodation:
+                if let str = userPreferences?.villa.villa_preferred_accommodations_id{
+                    if(str.contains(String(model.termId)) ){
+                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.lblTitle.textColor = UIColor.white
+                    }else{
+                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.lblTitle.textColor = UIColor.rgMid
+                    }
+                }
+            default:
+                print("Not yet required")
+            }
         default:
             print("default statement of main switch")
         }
@@ -2628,6 +2804,37 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
             default:
                 print("default of travel")
          }
+        case .villas:
+            switch self.prefInformationType {
+            case .villaAmenities:
+                if var ids = userPreferences?.villa.villa_preferred_amenities_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.villa.villa_preferred_amenities_id = ids
+                    }else{
+                        userPreferences?.villa.villa_preferred_amenities_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.villa.villa_preferred_amenities_id = []    //initializing first
+                    userPreferences?.villa.villa_preferred_amenities_id?.append(termId)
+                }
+            case .villaAccomodation:
+                if var ids = userPreferences?.villa.villa_preferred_accommodations_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.villa.villa_preferred_accommodations_id = ids
+                    }else{
+                        userPreferences?.villa.villa_preferred_accommodations_id?.append(termId)
+                    }
+                }else{
+                    userPreferences?.villa.villa_preferred_accommodations_id = []    //initializing first
+                    userPreferences?.villa.villa_preferred_accommodations_id?.append(termId)
+                }
+            default:
+                print("Not yet required")
+            }
         default:
             print("default statement of main switch")
         }

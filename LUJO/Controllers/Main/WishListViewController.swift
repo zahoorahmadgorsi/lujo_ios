@@ -9,6 +9,18 @@
 import UIKit
 import JGProgressHUD
 
+enum WishListError: Error {
+    case noDataFound(reason: String)
+}
+extension WishListError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .noDataFound(reason):
+            return NSLocalizedString(reason, comment: "")
+        }
+    }
+}
+
 class WishListViewController: UIViewController, WishListViewProtocol{
     /// Class storyboard identifier.
     class var identifier: String { return "WishListViewController" }
@@ -53,7 +65,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     
     override func viewWillAppear(_ animated: Bool) {
         //refetch data IF ANd ONLY IF no data is there else back animation will not work properly
-        if (wishListInformations == nil){
+        if ((wishListInformations?.isEmpty()) != nil){
             getWishListInformation(showActivity: true)
         }
         startPauseAnimation(isPausing: false)
@@ -92,7 +104,13 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }
             
             if let informations = information {
-                self.update(informations)
+                if (informations.isEmpty()){
+                    let error = WishListError.noDataFound(reason: "You haven't added anything into your wishlist yet? Please add your favourites by tapping on heart icon, shown with each item.")
+                    self.showError(error,isInformation: true)
+                }else{
+                    self.update(informations)
+                }
+                
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain wish list information")
                 self.showError(error)
@@ -397,9 +415,16 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         }
     }
     
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "WishList Error", error: error)
+    func showError(_ error: Error , isInformation:Bool = false) {
+        if (isInformation){
+            showErrorPopup(withTitle: "Information", error: error)
+        }else{
+            showErrorPopup(withTitle: "WishList Error", error: error)
+        }
+        
     }
+    
+    
     
     func showNetworkActivity() {
         // Safe guard to that won't display both loaders at same time.

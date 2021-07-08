@@ -298,7 +298,6 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func restaurantButton_onClick(_ sender: UIButton) {
         if let restaurant = cityInformation?.restaurant.items[sender.tag] {
-           
             self.present(ProductDetailsViewController.instantiate(product: restaurant), animated: true, completion: nil)
         }
     }

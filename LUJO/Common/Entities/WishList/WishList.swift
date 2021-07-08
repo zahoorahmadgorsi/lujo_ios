@@ -53,6 +53,14 @@ struct WishListObjects: Codable {
         case gifts = "gift"
         case yachts = "yacht"
     }
+    
+    func isEmpty()-> Bool{
+        if (events?.count == 0 && experiences?.count == 0 && specialEvents?.count == 0 && restaurants?.count == 0 && hotels?.count == 0 && villas?.count == 0 && gifts?.count == 0 && yachts?.count == 0){
+            return true
+        }else{
+            return false
+        }
+    }
 }
 
 extension WishListObjects {

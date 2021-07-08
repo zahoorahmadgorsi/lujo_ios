@@ -143,7 +143,8 @@ extension DestinationSelectionViewController {
         }
         switch(self.prefInformationType){
         case .aviationPreferredDestination: fallthrough
-        case .travelDestinations:
+        case .travelDestinations: fallthrough
+        case .villaDestinations:
             GoLujoAPIManager().searchDestination(token: token, strToSearch: pattern) { taxonomies, error in
                 guard error == nil else {
                     Crashlytics.sharedInstance().recordError(error!)

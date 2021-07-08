@@ -378,18 +378,29 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
             return
         }
         
-        guard !segmentData.departureDateTime.isEmpty else {
+        guard !segmentData.departureDateTime.isDateEmpty else {
             let error = AviationError.general(description: "Please provide a valid departure date.")
             aviationSearchCriteriaDelegate?.showError(error: error)
             return
         }
 
+        guard !segmentData.departureDateTime.isTimeEmpty else {
+            let error = AviationError.general(description: "Valid departure time is required.")
+            aviationSearchCriteriaDelegate?.showError(error: error)
+            return
+        }
+        
         var returnDateTime: SearchTime?
 
         if tripType == .roundTrip {
             guard
-                let returnDate = segmentData.returnDate , !returnDate.isEmpty else {
+                let returnDate = segmentData.returnDate , !returnDate.isDateEmpty else {
                 let error = AviationError.general(description: "Please provide a valid return date.")
+                aviationSearchCriteriaDelegate?.showError(error: error)
+                return
+            }
+            guard !returnDate.isTimeEmpty else {
+                let error = AviationError.general(description: "Valid return time is required.")
                 aviationSearchCriteriaDelegate?.showError(error: error)
                 return
             }

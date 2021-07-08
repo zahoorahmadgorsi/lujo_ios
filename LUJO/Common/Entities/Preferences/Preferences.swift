@@ -14,7 +14,7 @@ struct Preferences: Codable {
     var event: EventPreferences
     var travel: TravelPreferences
     var yacht: YachtPreferences
-    
+    var villa: VillaPreferences
     
     enum CodingKeys: String, CodingKey {
         case gift
@@ -23,6 +23,7 @@ struct Preferences: Codable {
         case event
         case travel
         case yacht
+        case villa
     }
     
     init(from decoder: Decoder) throws {
@@ -34,6 +35,7 @@ struct Preferences: Codable {
             event = try values.decode(EventPreferences.self, forKey: .event)
             travel = try values.decode(TravelPreferences.self, forKey: .travel)
             yacht = try values.decode(YachtPreferences.self, forKey: .yacht)
+            villa = try values.decode(VillaPreferences.self, forKey: .villa)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -95,6 +97,8 @@ struct PrefMasterData : Codable {
     var travelActivities : [Taxonomy]?
     var travelMedicalMeals : [Taxonomy]?
     var travelAllergies : [Taxonomy]?
+    var villaAmenities : [Taxonomy]?
+    var villaAccomodation : [Taxonomy]?
     
     init(giftHabits:[Taxonomy]? = [] ,giftCategories : [Taxonomy]? = [], giftPreferences : [Taxonomy]? = []){
         self.giftHabits = giftHabits
@@ -351,3 +355,32 @@ struct TravelPreferences : Codable {
     }
 }
 
+struct VillaPreferences : Codable {
+    var villa_preferred_destinations_id : [String]?
+    var villa_preferred_amenities_id : [String]?
+    var villa_preferred_amenities_id_other : String?
+    var villa_preferred_accommodations_id : [String]?
+    var villa_preferred_accommodations_id_other : String?
+
+    enum CodingKeys: String, CodingKey {
+        case villa_preferred_destinations_id = "villa_preferred_destinations_id"
+        case villa_preferred_amenities_id = "villa_preferred_amenities_id"
+        case villa_preferred_amenities_id_other = "villa_preferred_amenities_id_other"
+        case villa_preferred_accommodations_id = "villa_preferred_accommodations_id"
+        case villa_preferred_accommodations_id_other = "villa_preferred_accommodations_id_other"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            villa_preferred_destinations_id = try values.decodeIfPresent([String].self, forKey: .villa_preferred_destinations_id)
+            villa_preferred_amenities_id = try values.decodeIfPresent([String].self, forKey: .villa_preferred_amenities_id)
+            villa_preferred_amenities_id_other = try values.decodeIfPresent(String.self, forKey: .villa_preferred_amenities_id_other)
+            villa_preferred_accommodations_id = try values.decodeIfPresent([String].self, forKey: .villa_preferred_accommodations_id)
+            villa_preferred_accommodations_id_other = try values.decodeIfPresent(String.self, forKey: .villa_preferred_accommodations_id_other)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
+    }
+}
