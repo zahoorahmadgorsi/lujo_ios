@@ -7,4 +7,7 @@ target 'LUJO' do
 
   # Pods for LUJO
   pod "Delighted", "~> 1.0.3"
+  # Swift 5.0
+  pod 'MessageKit', '~> 3.3.0'
+
 end
