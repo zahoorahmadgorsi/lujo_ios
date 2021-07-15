@@ -56,11 +56,11 @@
                                         <rect key="frame" x="8" y="236" width="366" height="474"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="oRk-Oi-WYk">
-                                                <rect key="frame" x="0.0" y="0.0" width="366" height="416"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="366" height="474"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="If other, please specify." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vXW-QZ-Y5I" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="440" width="366" height="34"/>
+                                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="If other, please specify." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vXW-QZ-Y5I" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="DXc-Eu-bWe"/>
                                                 </constraints>
