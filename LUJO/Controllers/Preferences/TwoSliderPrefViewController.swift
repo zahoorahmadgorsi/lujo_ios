@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
 
 class TwoSliderPrefViewController: UIViewController {
     
@@ -387,6 +388,8 @@ class TwoSliderPrefViewController: UIViewController {
     }
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
+        Mixpanel.mainInstance().track(event: "preferences_skip_all_clicked",
+                                      properties: ["SkippingAllFrom" : prefInformationType.rawValue])
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
             //if user came from my preferences
             navigationController?.popToViewController(viewController, animated: true)

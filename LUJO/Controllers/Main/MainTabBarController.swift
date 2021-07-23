@@ -80,10 +80,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController is ChatViewController {
-            openChatWindow()
-            return false
-        }
+//        if viewController is ChatViewController {
+//            openChatWindow()
+//            return false
+//        }
         return true
     }
     

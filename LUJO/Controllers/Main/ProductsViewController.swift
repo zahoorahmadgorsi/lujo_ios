@@ -95,13 +95,13 @@ class ProductsViewController: UIViewController {
                     self.navigationController?.pushViewController(viewController, animated: true)
                     UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
                 }
-//            case .villa:
-//                //Loading the preferences related to dining only very first time
-//                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
-//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
-//                    self.navigationController?.pushViewController(viewController, animated: true)
-//                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
-//                }
+            case .villa:
+                //Loading the preferences related to dining only very first time
+                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
+                    let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
+                }
             case .yacht:
                 //Loading the preferences related to dining only very first time
                 if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {

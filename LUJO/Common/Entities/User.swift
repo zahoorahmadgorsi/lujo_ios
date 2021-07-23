@@ -144,7 +144,7 @@ struct PhoneCountryCode: Codable {
     let phonePrefix: String
     let nationality: String
     let country: String
-    let flag: String
+    let flag: String?
 
     enum CodingKeys: String, CodingKey {
         case id

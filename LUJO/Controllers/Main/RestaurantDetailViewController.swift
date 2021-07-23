@@ -92,7 +92,7 @@ class RestaurantDetailViewController: UIViewController {
         
         guard
             let latitudeString = restaurant.latitude,
-            let longitudeString = restaurant.longtitude,
+            let longitudeString = restaurant.longitude,
             let latitude = Double(latitudeString),
             let longitude = Double(longitudeString)
             else {

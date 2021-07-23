@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
 
 class PrefImagesCollViewController: UIViewController {
     
@@ -352,12 +353,17 @@ class PrefImagesCollViewController: UIViewController {
             }
             if (selectedArray.count > 0 || txtPleaseSpecify.text?.count ?? 0 > 0) {   //something is there, so convert array to comma sepeated string
                 let commaSeparatedString = selectedArray.map{String($0)}.joined(separator: ",")
+                Mixpanel.mainInstance().track(event: "preferences_submitted",
+                                              properties: ["Submitting" : prefInformationType.rawValue
+                                                           ,"Values" : commaSeparatedString])
                 setPreferences(commaSeparatedString: commaSeparatedString)
             }
             else{
                 print("This line must not execute")
             }
         }else{
+            Mixpanel.mainInstance().track(event: "preferences_skip_clicked",
+                                          properties: ["SkippingFrom" : prefInformationType.rawValue])
             navigateToNextVC()
         }
     }
@@ -573,6 +579,8 @@ class PrefImagesCollViewController: UIViewController {
     
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
+        Mixpanel.mainInstance().track(event: "preferences_skip_all_clicked",
+                                      properties: ["SkippingAllFrom" : prefInformationType.rawValue])
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
             //if user came from my preferences
             navigationController?.popToViewController(viewController, animated: true)

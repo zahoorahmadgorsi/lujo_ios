@@ -142,8 +142,32 @@ struct EventExperienceCity: Codable {
     let items: [Product]
 }
 
+//enum QuantumValue: Decodable {
+//
+//    case int(Int), string(String)
+//
+//    init(from decoder: Decoder) throws {
+//        if let int = try? decoder.singleValueContainer().decode(Int.self) {
+//            self = .int(int)
+//            return
+//        }
+//
+//        if let string = try? decoder.singleValueContainer().decode(String.self) {
+//            self = .string(string)
+//            return
+//        }
+//
+//        throw QuantumError.missingValue
+//    }
+//
+//    enum QuantumError:Error {
+//        case missingValue
+//    }
+//}
+
 //it could be an event, experience, gift, villa or yacht
 struct Product: Codable {
+//struct Product: Decodable {
     let type: String
     let id: Int
     let name: String
@@ -173,8 +197,8 @@ struct Product: Codable {
     let rentPricePerWeekLowSeason: String?
     let rentPricePerWeekHighSeason: String?
     let salePrice: String?
-    let latitude: String?
-    let longtitude: String?
+    var latitude: String?
+    let longitude: String?
     let villaAmenities: [Taxonomy]?
     let villaFacilities: [Taxonomy]?
     let villaStyle: [Taxonomy]?
@@ -244,7 +268,7 @@ struct Product: Codable {
         case rentPricePerWeekHighSeason = "rent_price_per_week_high_season"
         case salePrice = "sale_price"
         case latitude
-        case longtitude
+        case longitude = "longtitude"
         case villaAmenities = "villa_amenities"
         case villaFacilities = "villa_facilities"
         case villaStyle = "villa_style"
@@ -289,13 +313,17 @@ struct Product: Codable {
     }
 }
 
+
+
 extension Product {
+
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             type = try values.decode(String.self, forKey: .type)
             id = try values.decode(Int.self, forKey: .id)
+            
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
             let priceStr = try values.decodeIfPresent(String.self, forKey: .price)
@@ -350,8 +378,23 @@ extension Product {
             rentPricePerWeekLowSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekLowSeason)
             rentPricePerWeekHighSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekHighSeason)
             salePrice = try values.decodeIfPresent(String.self, forKey: .salePrice)
-            latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
-            longtitude = try values.decodeIfPresent(String.self, forKey: .longtitude)
+            // First check for a string
+            do {
+                latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
+            } catch {
+                // then second time assuming that its going to be a double
+                let lati:Double = try values.decodeIfPresent(Double.self, forKey: .latitude) ?? 0.0
+                latitude = String(format: "%f", lati)
+                print("id:\(id)","latitude:\(lati)"  )
+            }
+            do {
+                longitude = try values.decodeIfPresent(String.self, forKey: .longitude)
+            } catch {
+                let longi:Double = try values.decodeIfPresent(Double.self, forKey: .longitude) ?? 0.0
+                longitude = String(format: "%f", longi)
+                print("id:\(id)", "longitude:\(longi)"  )
+            }
+            
             villaAmenities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaAmenities)
             villaFacilities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaFacilities)
             villaStyle = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStyle)
