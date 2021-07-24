@@ -33,11 +33,12 @@ extension ChatList {
 }
 
 struct ChatHeader: Codable {
-    let customerId: Int
+    let customerId: Int?
     let authorName: String
     let conversationId: String
     let title: String
     let createdAt: String
+    let meta:Meta?
     
     enum CodingKeys: String, CodingKey {
         case customerId = "customer_id"
@@ -45,6 +46,7 @@ struct ChatHeader: Codable {
         case conversationId = "conversation_id"
         case title
         case createdAt = "created_at"
+        case meta
     }
 }
 
@@ -52,14 +54,43 @@ extension ChatHeader {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-            customerId = try values.decode(Int.self, forKey: .customerId)
+            customerId = try values.decodeIfPresent(Int.self, forKey: .customerId)
             authorName = try values.decode(String.self, forKey: .authorName)
             conversationId = try values.decode(String.self, forKey: .conversationId)
             title = try values.decode(String.self, forKey: .title)
             createdAt = try values.decode(String.self, forKey: .createdAt)
+            meta = try values.decodeIfPresent(Meta.self, forKey: .meta)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
         }
     }
 }
+
+struct Meta: Codable {
+    let id: Int
+    let sfid: String
+    let avatar: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case sfid
+        case avatar
+
+    }
+}
+
+extension Meta {
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            id = try values.decode(Int.self, forKey: .id)
+            sfid = try values.decode(String.self, forKey: .sfid)
+            avatar = try values.decode(String.self, forKey: .avatar)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
+    }
+}
+

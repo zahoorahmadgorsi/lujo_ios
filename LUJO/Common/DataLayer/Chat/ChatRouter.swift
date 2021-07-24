@@ -39,6 +39,7 @@ enum ChatRouter: URLRequestConvertible {
 //    case setFavourites(String,Int)
 //    case unSetFavourites(String,Int)
     case getChats(String)
+    case sendMessage(String,String,String,String,String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -67,6 +68,7 @@ enum ChatRouter: URLRequestConvertible {
 //            return .get
 //        case .setFavourites: fallthrough
 //        case .unSetFavourites:  fallthrough
+        case .sendMessage: fallthrough
         case .getChats:
             return .post
         }
@@ -79,17 +81,10 @@ enum ChatRouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
 
         switch self {
-//            case let .getFavourites(token):
-//                newURLComponents.path.append("/favorites")
-//                newURLComponents.queryItems = [
-//                    URLQueryItem(name: "token", value: token)
-//                ]
-//            case .setFavourites:
-//                newURLComponents.path.append("/favorites/set")
-//            case .unSetFavourites:
-//                newURLComponents.path.append("/favorites/unset")
         case .getChats:
             newURLComponents.path.append("/twilio/conversation-list")
+        case .sendMessage:
+            newURLComponents.path.append("/twilio/send-message")
         }
         
         do {
@@ -113,18 +108,12 @@ enum ChatRouter: URLRequestConvertible {
 //            case let .setFavourites(token, id): fallthrough
 //            case let .unSetFavourites(token, id):
 //                return getFavouritesAsJSONData(token: token , id : id)
+        case let .sendMessage(token,message,conversation_id,title,sales_force_id):
+            return getSendMessageAsJSONData(token: token, message: message, conversation_id: conversation_id, title: title, sales_force_id: sales_force_id)
         case let .getChats(token):
             return getChatsAsJSONData(token: token)
         }
     }
-    
-//    fileprivate func getFavouritesAsJSONData(token: String , id : Int) -> Data? {
-//        let body: [String: Any] = [
-//            "id": id,
-//            "token": token
-//        ]
-//        return try? JSONSerialization.data(withJSONObject: body, options: [])
-//    }
     
     fileprivate func getChatsAsJSONData(token: String) -> Data? {
         let body: [String: Any] = [
@@ -133,4 +122,14 @@ enum ChatRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
      
+    fileprivate func getSendMessageAsJSONData(token: String,message: String,conversation_id: String,title: String,sales_force_id: String) -> Data? {
+        let body: [String: Any] = [
+            "token": token
+            ,"message": message
+            ,"conversation_id": conversation_id
+            ,"title": title
+            ,"sales_force_id": sales_force_id
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
 }

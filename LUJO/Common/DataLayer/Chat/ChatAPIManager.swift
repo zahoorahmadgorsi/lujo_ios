@@ -54,41 +54,45 @@ extension GoLujoAPIManager  {
         }
     }
     
-//    func getFavourites(_ token: String, completion: @escaping (WishListObjects?, Error?) -> Void) {
-//        Alamofire.request(WishListRouter.getFavourites(token))
-//            .responseJSON { response in
-//                guard response.result.error == nil else {
-//                    completion(nil, response.result.error!)
-//                    return
-//                }
-//
-//                // Special case where status code is not received, should never happen
-//                guard let statusCode = response.response?.statusCode else {
-//                    completion(nil, BackendError.unhandledStatus)
-//                    return
-//                }
-//
-//                switch statusCode {
-//                case 1 ... 199: // Transfer protoco-level information: Unexpected
-//                    completion(nil, self.handleError(response, statusCode))
-//                case 200 ... 299: // Success
-//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<WishListObjects>.self,
-//                                                                 from: response.data!)
-//                    else {
-//                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
-//                        return
+    func sendMessage(token: String, message: String,conversationId: String,title: String,sales_force_id:String, completion: @escaping (String?, Error?) -> Void) {
+        let chatRouter = ChatRouter.sendMessage(token,message,conversationId,title,sales_force_id)
+        
+        Alamofire.request( chatRouter )
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+                
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+                
+                switch statusCode {
+                case 1 ... 199: // Transfer protocol-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<ChatList>.self, from: response.data!)
+//                        else {
+//                            completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+//                            return
 //                    }
 //                    completion(result.content, nil)
-//                    return
-//                case 300 ... 399: // Redirection: Unexpected
-//                    completion(nil, self.handleError(response, statusCode))
-//                case 400 ... 499: // Client Error
-//                    completion(nil, self.handleError(response, statusCode))
-//                default: // 500 or bigger, Server Error
-//                    completion(nil, self.handleError(response, statusCode))
-//                }
-//            }
-//    }
+                    completion("Success", nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+        }
+    }
+    
+
 
     
     fileprivate func handleError(_ response: DataResponse<Any>,

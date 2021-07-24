@@ -116,6 +116,8 @@
 		886145D226AB70A30023E92E /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145D126AB70A30023E92E /* Chat.swift */; };
 		886145D826AB74960023E92E /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145D726AB74960023E92E /* ChatRouter.swift */; };
 		886145E026AB74AE0023E92E /* ChatAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145DF26AB74AE0023E92E /* ChatAPIManager.swift */; };
+		886145F526AC02090023E92E /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145F426AC02090023E92E /* ChatCell.swift */; };
+		886145FD26AC04610023E92E /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145FC26AC04610023E92E /* UITableView.swift */; };
 		887E9FF126A05B9300E8633D /* ChatViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887E9FF026A05B9300E8633D /* ChatViewController1.swift */; };
 		88814DBA2656A20C0082AA2C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DB92656A20C0082AA2C /* Preferences.swift */; };
 		88814DC8265995480082AA2C /* PrefProductCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */; };
@@ -495,6 +497,8 @@
 		886145D126AB70A30023E92E /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		886145D726AB74960023E92E /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		886145DF26AB74AE0023E92E /* ChatAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPIManager.swift; sourceTree = "<group>"; };
+		886145F426AC02090023E92E /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatCell.swift; path = "LUJO/Views/Reusable Views/Chat/ChatCell.swift"; sourceTree = SOURCE_ROOT; };
+		886145FC26AC04610023E92E /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		887E9FF026A05B9300E8633D /* ChatViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController1.swift; sourceTree = "<group>"; };
 		88814DB92656A20C0082AA2C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefProductCategoryViewController.swift; sourceTree = "<group>"; };
@@ -787,6 +791,7 @@
 		164334DAF647504829A1A768 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				886145D126AB70A30023E92E /* Chat.swift */,
 				9ABCF5C12163E55500D062C9 /* EntityProtocols.swift */,
 				880B9B0C255845B10070D7CD /* Gift.swift */,
 				880B9B0625582ABC0070D7CD /* Hotel.swift */,
@@ -799,7 +804,6 @@
 				9A194FE4228DE66D00E3DBD1 /* EventsAndExperiences */,
 				88814DB82656A1D80082AA2C /* Preferences */,
 				88EA9F9225544E6E00514626 /* WishList */,
-				886145D126AB70A30023E92E /* Chat.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -961,6 +965,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				886145F326AC01DE0023E92E /* Chat */,
 				9A194FEF22945A5D00E3DBD1 /* HomeEventCell.swift */,
 				30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */,
 				9AAA101F22773540008CE1D2 /* MyBookingsCell.swift */,
@@ -1138,6 +1143,14 @@
 			children = (
 				886145D726AB74960023E92E /* ChatRouter.swift */,
 				886145DF26AB74AE0023E92E /* ChatAPIManager.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		886145F326AC01DE0023E92E /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				886145F426AC02090023E92E /* ChatCell.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1460,6 +1473,7 @@
 			isa = PBXGroup;
 			children = (
 				9A72C3C021380617009FE9E2 /* UIViewController.swift */,
+				886145FC26AC04610023E92E /* UITableView.swift */,
 				9A53A69B2151F78F00AAE322 /* UIView.swift */,
 				9A59A5AD215E2FC9004322A1 /* Date+ISO-8061.swift */,
 				9A4CB3932161C4D800856930 /* JSONDecoder+DataResponse.swift */,
@@ -2216,9 +2230,11 @@
 				888A305D26458ADB008754AD /* PrefCollectionsViewController.swift in Sources */,
 				882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */,
 				164333AF71D8F174F6F5CC65 /* Protocols.swift in Sources */,
+				886145F526AC02090023E92E /* ChatCell.swift in Sources */,
 				9A2C2C4622788B0100CE2591 /* UIStackView+removeAll.swift in Sources */,
 				553A8EE22303EBD90051006E /* PreloadDataManager.swift in Sources */,
 				91B4A39125FFB11600169A0C /* HomeSliderAnimator.swift in Sources */,
+				886145FD26AC04610023E92E /* UITableView.swift in Sources */,
 				886145D826AB74960023E92E /* ChatRouter.swift in Sources */,
 				9A5C5CBB222FDD8000B8239D /* PaymentSessionToken.swift in Sources */,
 				1D7819A622FCB8F30044C70B /* WelcomeView.swift in Sources */,
