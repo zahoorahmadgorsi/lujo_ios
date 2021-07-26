@@ -94,3 +94,59 @@ extension Meta {
     }
 }
 
+struct Message: Codable {
+    let body: String
+    let author: String
+    let createdAt: CreatedAt
+    let meta:Meta?
+    
+    enum CodingKeys: String, CodingKey {
+        case body
+        case author
+        case createdAt = "created_at"
+        case meta
+    }
+}
+
+extension Message {
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            body = try values.decode(String.self, forKey: .body)
+            author = try values.decode(String.self, forKey: .author)
+            createdAt = try values.decode(CreatedAt.self, forKey: .createdAt)
+            meta = try values.decodeIfPresent(Meta.self, forKey: .meta)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
+    }
+}
+
+struct CreatedAt: Codable {
+    let date: String
+    let timezoneType: String
+    let timezone: String
+
+    
+    enum CodingKeys: String, CodingKey {
+        case date
+        case timezoneType = "timezone_type"
+        case timezone
+    }
+}
+
+extension CreatedAt {
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            date = try values.decode(String.self, forKey: .date)
+            timezoneType = try values.decode(String.self, forKey: .timezoneType)
+            timezone = try values.decode(String.self, forKey: .timezone)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
+    }
+}
+

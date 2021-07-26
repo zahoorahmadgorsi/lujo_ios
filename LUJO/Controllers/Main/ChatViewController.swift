@@ -1,227 +1,372 @@
-//
-//  ChatViewController.swift
-//  LUJO
-//
-//  Created by Iker Kristian on 8/29/19.
-//  Copyright © 2019 Baroque Access. All rights reserved.
-//
+/*
+MIT License
+
+Copyright (c) 2017-2020 MessageKit
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 
 import UIKit
-import JGProgressHUD
+import MessageKit
+import InputBarAccessoryView
 
-class ChatViewController: UIViewController {
-    //MARK:- Init
-    
-    /// Class storyboard identifier.
-    class var identifier: String { return "ChatViewController" }
-    private let naHUD = JGProgressHUD(style: .dark)
-    var items = [ChatHeader]()
-    @IBOutlet weak var tblView: UITableView!
-    
-    /// Init method that will init and return view controller.
-    class func instantiate() -> ChatViewController {
-        return UIStoryboard.main.instantiate(identifier)
-    }
-    
+/// A base class for the example controllers
+class ChatViewController: MessagesViewController, MessagesDataSource {
 
+    // MARK: - Public properties
+
+    /// The `BasicAudioController` control the AVAudioPlayer state (play, pause, stop) and update audio cell UI accordingly.
+//    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
+
+    lazy var messageList: [ChatMessage] = []
     
-    //MARK:- View life cycle
-    
+    private(set) lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        return control
+    }()
+
+    // MARK: - Private properties
+
+    private let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }()
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tblView.dataSource = self;
-        self.tblView.delegate = self;
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .done, target: self, action: #selector(addTapped))
+        configureMessageCollectionView()
+        configureMessageInputBar()
+        loadFirstMessages()
+        title = "LUJO"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        getChatsList(showActivity: true)
-    }
-    
-    func getChatsList(showActivity: Bool) {
-        if showActivity {
-            self.showNetworkActivity()
-        }
-        getChats() {information, error in
-            self.hideNetworkActivity()
-            
-            if let error = error {
-                self.showError(error)
-                return
-            }
-            
-            if let informations = information {
-                self.update(informations)
-            } else {
-                let error = BackendError.parsing(reason: "Could not obtain chat list")
-                self.showError(error)
-            }
-        }
-    }
-    
-    func update(_ information: ChatList?) {
-        guard information != nil else {
-            return
-        }
-        
-        if let chats = information?.items{
-            self.items = chats
-            self.tblView.reloadData()
-        }
-    }
-    
-    func getChats(completion: @escaping (ChatList?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
-        
-        GoLujoAPIManager().getChats(token: token) { items, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain the chat list")
-                completion(nil, error)
-                return
-            }
-            completion(items, error)
-        }
-    }
-    
-//    func sendMessage(showActivity: Bool) {
-//        if showActivity {
-//            self.showNetworkActivity()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //start receiving the messages
+//        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
+//            .onNewMessage { [weak self] message in
+//                self?.insertMessage(message)
 //        }
-//        sendMessage() {information, error in
-//            self.hideNetworkActivity()
-//
-//            if let error = error {
-//                self.showError(error)
-//                return
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        MockSocket.shared.disconnect()
+//        audioController.stopAnyOngoingPlaying()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    func loadFirstMessages() {
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            let count = UserDefaults.standard.mockMessagesCount()
+//            SampleData.shared.getMessages(count: count) { messages in
+//                DispatchQueue.main.async {
+//                    self.messageList = messages
+//                    self.messagesCollectionView.reloadData()
+//                    self.messagesCollectionView.scrollToLastItem()
+//                }
 //            }
-//
-//            if let informations = information {
-//                self.update(informations)
-//            } else {
-//                let error = BackendError.parsing(reason: "Could not obtain chat list")
-//                self.showError(error)
+//        }
+    }
+    
+    @objc func loadMoreMessages() {
+//        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+//            SampleData.shared.getMessages(count: 20) { messages in
+//                DispatchQueue.main.async {
+//                    self.messageList.insert(contentsOf: messages, at: 0)
+//                    self.messagesCollectionView.reloadDataAndKeepOffset()
+//                    self.refreshControl.endRefreshing()
+//                }
 //            }
+//        }
+    }
+    
+    func configureMessageCollectionView() {
+        
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messageCellDelegate = self
+        
+        scrollsToLastItemOnKeyboardBeginsEditing = true // default false
+        maintainPositionOnKeyboardFrameChanged = true // default false
+
+        showMessageTimestampOnSwipeLeft = true // default false
+        
+        messagesCollectionView.refreshControl = refreshControl
+    }
+    
+    func configureMessageInputBar() {
+        messageInputBar.delegate = self
+        messageInputBar.inputTextView.tintColor = .rgMid
+        messageInputBar.sendButton.setTitleColor(.rgMid, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.rgMid.withAlphaComponent(0.3),
+            for: .highlighted
+        )
+    }
+    
+    // MARK: - Helpers
+    
+    func insertMessage(_ message: ChatMessage) {
+        messageList.append(message)
+        // Reload last section to update header/footer labels and insert a new one
+        messagesCollectionView.performBatchUpdates({
+            messagesCollectionView.insertSections([messageList.count - 1])
+            if messageList.count >= 2 {
+                messagesCollectionView.reloadSections([messageList.count - 2])
+            }
+        }, completion: { [weak self] _ in
+            if self?.isLastSectionVisible() == true {
+                self?.messagesCollectionView.scrollToLastItem(animated: true)
+            }
+        })
+    }
+    
+    func isLastSectionVisible() -> Bool {
+        
+        guard !messageList.isEmpty else { return false }
+        
+        let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
+        
+        return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
+    }
+
+    // MARK: - MessagesDataSource
+
+    func currentSender() -> SenderType {
+        if let currentUser = LujoSetup().getLujoUser(){
+            let currentSender:ChatUser = ChatUser(senderId: String(currentUser.id), displayName: currentUser.firstName + " " + currentUser.lastName)
+            return currentSender
+        }else{
+            let system = ChatUser(senderId: "000000", displayName: "LUJO")
+            return system
+        }
+    }
+
+//    func currentSender() -> ChatUser {
+//        if let currentUser = LujoSetup().getLujoUser(){
+//            let currentSender:ChatUser = ChatUser(senderId: String(currentUser.id), displayName: currentUser.firstName + " " + currentUser.lastName)
+//            return currentSender
 //        }
 //    }
-
     
-    func sendMessage(message:String,conversation_id:String,title:String,sales_force_id:String, completion: @escaping (String?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
+    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
+        return messageList.count
+    }
+
+    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
+        return messageList[indexPath.section]
+    }
+
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if indexPath.section % 3 == 0 {
+            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         }
-        
-        GoLujoAPIManager().sendMessage( token: token,message: message,conversationId: conversation_id,title: title,sales_force_id: sales_force_id) { response, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not send the message")
-                completion(nil, error)
-                return
-            }
-            completion(response, error)
-        }
+        return nil
+    }
+
+    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(string: "Read", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+    }
+
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let name = message.sender.displayName
+        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+    }
+
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let dateString = formatter.string(from: message.sentDate)
+        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
     
-    func showError(_ error: Error , isInformation:Bool = false) {
-        if (isInformation){
-            showErrorPopup(withTitle: "Information", error: error)
-        }else{
-            showErrorPopup(withTitle: "Chat Error", error: error)
-        }
-        
-    }
-    
-    func showNetworkActivity() {
-        // Safe guard to that won't display both loaders at same time.
-//        if !refreshControl.isRefreshing {
-            naHUD.show(in: view)
-//        }
-    }
-    
-    func hideNetworkActivity() {
-        // Safe guard that will call dismiss only if HUD is shown on screen.
-        if naHUD.isVisible {
-            naHUD.dismiss()
-        }
-    }
-    @objc func addTapped(){
-        newMessage(title: "New Converation", subTitle: "Please start a new conversation", placeHolder1: "Enter the conversation title", placeHolder2: "Enter the message", cancelTitle: "Cancel", saveTitle: "Send")
-        
-    }
-    
-    func newMessage(title:String, subTitle:String, placeHolder1:String, placeHolder2:String, cancelTitle:String, saveTitle:String, conversationId:String = "", text:String = ""){
-        // create the actual alert controller view that will be the pop-up
-        let alertController = UIAlertController(title: title, message: subTitle, preferredStyle: .alert)
-        alertController.addTextField { (textField) in
-            // configure the properties of the text field
-            textField.placeholder = placeHolder1
-            textField.text = text
-        }
-        alertController.addTextField { (textField) in
-
-            textField.placeholder = placeHolder2
-        }
-        // add the buttons/actions to the view controller
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel, handler: nil)
-        let saveAction = UIAlertAction(title: saveTitle, style: .default) { _ in
-            // this code runs when the user hits the "save" button
-            if let inputName = alertController.textFields![0].text,let conversationTitle = alertController.textFields![1].text{
-                self.showNetworkActivity()
-                self.sendMessage(message: inputName, conversation_id: conversationId,title: conversationTitle,sales_force_id: "", completion: {information, error in
-                    self.hideNetworkActivity()
-
-                    if let error = error {
-                        self.showError(error)
-                        return
-                    }
-                    self.getChatsList(showActivity: true)
-                })
-            }
-
-        }
-
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
-
-        present(alertController, animated: true, completion: nil)
+    func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
+        return nil
     }
 }
 
-extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
+// MARK: - MessageCellDelegate
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.items.count == 0 {
-            self.tblView.setEmptyMessage("No data is available")
-        }else{
-            self.tblView.setEmptyMessage("")
-        }
-        return items.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
-        let model = items[indexPath.row]
-        cell.tag = indexPath.row
-        cell.lblAuthorName.text = model.authorName
-        cell.lblTitle.text = model.title
-        cell.lblCreatedAt.text = model.createdAt
-        if let avatarLink = model.meta?.avatar {
-            cell.imgAvatar.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
-        }
-        
-        self.tblView.separatorStyle = .singleLine
-        self.tblView.separatorColor = .systemOrange
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        return cell
+extension ChatViewController: MessageCellDelegate {
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
+        print("Avatar tapped")
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.items[indexPath.item]
-        newMessage(title: "Existing Converation", subTitle: "Please send a message to this conversation", placeHolder1: model.title, placeHolder2: "Enter the message", cancelTitle: "Cancel", saveTitle: "Send", conversationId: model.conversationId,text: model.title)
+    func didTapMessage(in cell: MessageCollectionViewCell) {
+        print("Message tapped")
+    }
+    
+    func didTapImage(in cell: MessageCollectionViewCell) {
+        print("Image tapped")
+    }
+    
+    func didTapCellTopLabel(in cell: MessageCollectionViewCell) {
+        print("Top cell label tapped")
+    }
+    
+    func didTapCellBottomLabel(in cell: MessageCollectionViewCell) {
+        print("Bottom cell label tapped")
+    }
+    
+    func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {
+        print("Top message label tapped")
+    }
+    
+    func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
+        print("Bottom label tapped")
+    }
+
+//    func didTapPlayButton(in cell: AudioMessageCell) {
+//        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+//            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
+//                print("Failed to identify message when audio cell receive tap gesture")
+//                return
+//        }
+//        guard audioController.state != .stopped else {
+//            // There is no audio sound playing - prepare to start playing for given audio message
+//            audioController.playSound(for: message, in: cell)
+//            return
+//        }
+//        if audioController.playingMessage?.messageId == message.messageId {
+//            // tap occur in the current cell that is playing audio sound
+//            if audioController.state == .playing {
+//                audioController.pauseSound(for: message, in: cell)
+//            } else {
+//                audioController.resumeSound()
+//            }
+//        } else {
+//            // tap occur in a difference cell that the one is currently playing sound. First stop currently playing and start the sound for given message
+//            audioController.stopAnyOngoingPlaying()
+//            audioController.playSound(for: message, in: cell)
+//        }
+//    }
+
+    func didStartAudio(in cell: AudioMessageCell) {
+        print("Did start playing audio sound")
+    }
+
+    func didPauseAudio(in cell: AudioMessageCell) {
+        print("Did pause audio sound")
+    }
+
+    func didStopAudio(in cell: AudioMessageCell) {
+        print("Did stop audio sound")
+    }
+
+    func didTapAccessoryView(in cell: MessageCollectionViewCell) {
+        print("Accessory view tapped")
+    }
+
+}
+
+// MARK: - MessageLabelDelegate
+
+extension ChatViewController: MessageLabelDelegate {
+    func didSelectAddress(_ addressComponents: [String: String]) {
+        print("Address Selected: \(addressComponents)")
+    }
+    
+    func didSelectDate(_ date: Date) {
+        print("Date Selected: \(date)")
+    }
+    
+    func didSelectPhoneNumber(_ phoneNumber: String) {
+        print("Phone Number Selected: \(phoneNumber)")
+    }
+    
+    func didSelectURL(_ url: URL) {
+        print("URL Selected: \(url)")
+    }
+    
+    func didSelectTransitInformation(_ transitInformation: [String: String]) {
+        print("TransitInformation Selected: \(transitInformation)")
+    }
+
+    func didSelectHashtag(_ hashtag: String) {
+        print("Hashtag selected: \(hashtag)")
+    }
+
+    func didSelectMention(_ mention: String) {
+        print("Mention selected: \(mention)")
+    }
+
+    func didSelectCustom(_ pattern: String, match: String?) {
+        print("Custom data detector patter selected: \(pattern)")
+    }
+}
+
+// MARK: - MessageInputBarDelegate
+
+extension ChatViewController: InputBarAccessoryViewDelegate {
+
+    @objc
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        processInputBar(messageInputBar)
+    }
+
+    func processInputBar(_ inputBar: InputBarAccessoryView) {
+        // Here we can parse for which substrings were autocompleted
+        let attributedText = inputBar.inputTextView.attributedText!
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
+
+            let substring = attributedText.attributedSubstring(from: range)
+            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
+            print("Autocompleted: `", substring, "` with context: ", context ?? [])
+        }
+
+        let components = inputBar.inputTextView.components
+        inputBar.inputTextView.text = String()
+        inputBar.invalidatePlugins()
+        // Send button activity animation
+        inputBar.sendButton.startAnimating()
+        inputBar.inputTextView.placeholder = "Sending..."
+        // Resign first responder for iPad split view
+        inputBar.inputTextView.resignFirstResponder()
+        DispatchQueue.global(qos: .default).async {
+            // fake send request task
+            sleep(1)
+            DispatchQueue.main.async { [weak self] in
+                inputBar.sendButton.stopAnimating()
+                inputBar.inputTextView.placeholder = "Aa"
+                self?.insertMessages(components)
+                self?.messagesCollectionView.scrollToLastItem(animated: true)
+            }
+        }
+    }
+
+    private func insertMessages(_ data: [Any]) {
+        for component in data {
+            if let str = component as? String, let user:ChatUser = self.currentSender() as? ChatUser  {
+                let message = ChatMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
+                insertMessage(message)
+            }
+//            else if let img = component as? UIImage {
+//                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
+//                insertMessage(message)
+//            }
+        }
     }
 }

@@ -7826,7 +7826,7 @@ New York, NY 10011 USA</string>
         <!--Chat-->
         <scene sceneID="Cj1-e8-2nK">
             <objects>
-                <viewController storyboardIdentifier="ChatViewController" id="1e5-Wh-BUZ" customClass="ChatViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatListViewController" id="1e5-Wh-BUZ" customClass="ChatListViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8pS-ag-Oca">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -7925,7 +7925,7 @@ New York, NY 10011 USA</string>
         <!--Chat-->
         <scene sceneID="FYm-qr-pkJ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ae1-FI-ISC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ChatListNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ae1-FI-ISC" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Chat" image="chat_selected" id="qtM-pI-j65"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MGR-eN-Dv6">
