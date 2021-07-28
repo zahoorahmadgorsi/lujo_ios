@@ -101,23 +101,6 @@ class ChatListViewController: UIViewController {
         }
     }
     
-    func sendMessage(messageText:String, conversation_id:String, conversationTitle:String, sales_force_id:String, completion: @escaping (String?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
-        
-        GoLujoAPIManager().sendMessage( token: token,message: messageText,conversationId: conversation_id,title: conversationTitle,sales_force_id: sales_force_id) { response, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not send the message")
-                completion(nil, error)
-                return
-            }
-            completion(response, error)
-        }
-    }
-    
     func showError(_ error: Error , isInformation:Bool = false) {
         if (isInformation){
             showErrorPopup(withTitle: "Information", error: error)
@@ -142,45 +125,9 @@ class ChatListViewController: UIViewController {
     }
     
     @objc func addTapped(){
-        newMessage(title: "New Converation", subTitle: "Please start a new conversation", placeHolder1: "Please enter the conversation title", placeHolder2: "Enter the message")
-        
-    }
-    
-    func newMessage(title:String, subTitle:String, placeHolder1:String, placeHolder2:String, conversationId:String = "", text:String = ""){
-        // create the actual alert controller view that will be the pop-up
-        let alertController = UIAlertController(title: title, message: subTitle, preferredStyle: .alert)
-        alertController.addTextField { (textField) in
-            // configure the properties of the text field
-            textField.placeholder = placeHolder1
-            textField.text = text
-        }
-        alertController.addTextField { (textField) in
-            textField.placeholder = placeHolder2
-        }
-        
-        // add the buttons/actions to the view controller
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let saveAction = UIAlertAction(title: "Send", style: .default) { _ in
-            // this code runs when the user hits the "save" button
-            if let conversationTitle = alertController.textFields![0].text,let messageText = alertController.textFields![1].text{
-                self.showNetworkActivity()
-                self.sendMessage(messageText: messageText, conversation_id: conversationId, conversationTitle: conversationTitle, sales_force_id: "", completion: {information, error in
-                    self.hideNetworkActivity()
-
-                    if let error = error {
-                        self.showError(error)
-                        return
-                    }
-                    self.getChatsList(showActivity: true)
-                })
-            }
-
-        }
-
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
-
-        present(alertController, animated: true, completion: nil)
+        let newViewController = BasicChatViewController()
+        newViewController.conversationId = ""
+        self.navigationController?.pushViewController(newViewController, animated: true)
     }
 }
 

@@ -91,7 +91,7 @@ extension GoLujoAPIManager  {
         }
     }
     
-    func sendMessage(token: String, message: String,conversationId: String,title: String,sales_force_id:String, completion: @escaping (String?, Error?) -> Void) {
+    func sendMessage(token: String, message: String,conversationId: String,title: String,sales_force_id:String, completion: @escaping (SendMessageResponse?, Error?) -> Void) {
         let chatRouter = ChatRouter.sendMessage(token,message,conversationId,title,sales_force_id)
         
         Alamofire.request( chatRouter )
@@ -111,13 +111,12 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protocol-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<ChatList>.self, from: response.data!)
-//                        else {
-//                            completion(nil, BackendError.parsing(reason: "Unable to parse response"))
-//                            return
-//                    }
-//                    completion(result.content, nil)
-                    completion("Success", nil)
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<SendMessageResponse>.self, from: response.data!)
+                        else {
+                            completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                            return
+                    }
+                    completion(result.content, nil)
                     return
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))

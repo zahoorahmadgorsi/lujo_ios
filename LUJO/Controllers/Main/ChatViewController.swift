@@ -62,7 +62,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         configureMessageCollectionView()
         configureMessageInputBar()
-        getConversationDetails(showActivity: true)
+        if (conversationId.count > 0){  //user isnt coming to start a new conversation
+            getConversationDetails(showActivity: true)
+        }
         title = "LUJO"
     }
     
@@ -129,7 +131,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //                print (dateFromServer)
 //                print (dtDate.asDateAndTime())
 //                print (strDate)
-                let chatMessage:ChatMessage = ChatMessage(text: item.body, user: chatUser, messageId: "0000", date: dtDate)
+                let chatMessage:ChatMessage = ChatMessage(text: item.body, user: chatUser, messageId: UUID().uuidString, date: dtDate)
                 self.messageList.append(chatMessage)
             }
             self.messagesCollectionView.reloadData()
@@ -421,15 +423,40 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         inputBar.inputTextView.placeholder = "Sending..."
         // Resign first responder for iPad split view
         inputBar.inputTextView.resignFirstResponder()
-        DispatchQueue.global(qos: .default).async {
-            // fake send request task
-            sleep(1)
-            DispatchQueue.main.async { [weak self] in
-                inputBar.sendButton.stopAnimating()
-                inputBar.inputTextView.placeholder = "Aa"
-                self?.insertMessages(components)
-                self?.messagesCollectionView.scrollToLastItem(animated: true)
+        
+        for component in components {
+            if let str = component as? String  {
+                self.sendMessage(messageText: str, conversation_id: conversationId, conversationTitle: "", sales_force_id: "", completion: {information, error in
+                    if let error = error {
+                        self.showError(error)
+                        return
+                    }
+                    inputBar.sendButton.stopAnimating()
+                    inputBar.inputTextView.placeholder = "Aa"
+                    if let user:ChatUser = self.currentSender() as? ChatUser  {
+                        let message = ChatMessage(text: str, user: user, messageId: information?.messageId ?? UUID().uuidString, date: Date())
+                        self.insertMessage(message)
+                        self.messagesCollectionView.scrollToLastItem(animated: true)
+                    }
+                })
             }
+        }
+    }
+
+    func sendMessage(messageText:String, conversation_id:String, conversationTitle:String, sales_force_id:String, completion: @escaping (SendMessageResponse?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().sendMessage( token: token,message: messageText,conversationId: conversation_id,title: conversationTitle,sales_force_id: sales_force_id) { response, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not send the message")
+                completion(nil, error)
+                return
+            }
+            completion(response, error)
         }
     }
 

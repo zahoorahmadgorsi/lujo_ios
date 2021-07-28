@@ -158,20 +158,6 @@ struct CreatedAt: Codable {
         case timezoneType = "timezone_type"
         case timezone
     }
-    
-    let serverDateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
-        result.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
-        return result
-    }()
-    
-    let localDateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateStyle = .medium
-        result.timeStyle = .medium
-        return result
-    }()
 }
 
 extension CreatedAt {
@@ -181,6 +167,30 @@ extension CreatedAt {
             date = try values.decode(String.self, forKey: .date)
             timezoneType = try values.decode(Int.self, forKey: .timezoneType)
             timezone = try values.decode(String.self, forKey: .timezone)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
+    }
+}
+
+struct SendMessageResponse: Codable {
+    let conversationId: String
+    let messageId: String
+
+    
+    enum CodingKeys: String, CodingKey {
+        case conversationId = "conversation_id"
+        case messageId = "message_id"
+    }
+}
+
+extension SendMessageResponse {
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            conversationId = try values.decode(String.self, forKey: .conversationId)
+            messageId = try values.decode(String.self, forKey: .messageId)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
