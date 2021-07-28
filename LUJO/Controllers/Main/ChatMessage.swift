@@ -9,14 +9,12 @@
 import MessageKit
 
 struct ChatMessage: MessageType {
-
     var messageId: String
     var sender: SenderType {
         return user
     }
     var sentDate: Date
     var kind: MessageKind
-    
     var user: ChatUser
 
     private init(kind: MessageKind, user: ChatUser, messageId: String, date: Date) {

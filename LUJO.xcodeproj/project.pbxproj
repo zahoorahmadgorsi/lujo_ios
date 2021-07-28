@@ -138,6 +138,7 @@
 		888B00EA26AF42AB004FA1B5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00E926AF42AB004FA1B5 /* ChatViewController.swift */; };
 		888B00EF26AF51EE004FA1B5 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00EE26AF51EE004FA1B5 /* ChatUser.swift */; };
 		888B00F426AF54D7004FA1B5 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F326AF54D7004FA1B5 /* ChatMessage.swift */; };
+		888B00F926B012C0004FA1B5 /* BasicChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */; };
 		8894D02825629CD200BF84D8 /* Product1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Product1.swift */; };
 		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
 		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
@@ -523,6 +524,7 @@
 		888B00E926AF42AB004FA1B5 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		888B00EE26AF51EE004FA1B5 /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatUser.swift; path = LUJO/Controllers/Main/ChatUser.swift; sourceTree = SOURCE_ROOT; };
 		888B00F326AF54D7004FA1B5 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessage.swift; path = LUJO/Controllers/Main/ChatMessage.swift; sourceTree = SOURCE_ROOT; };
+		888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicChatViewController.swift; sourceTree = "<group>"; };
 		8894D02F2562E61300BF84D8 /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
 		8894D0312562E63C00BF84D8 /* WishListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WishListView.xib; sourceTree = "<group>"; };
 		88B57274256AC32000FF9E4C /* DiningViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiningViewCell.xib; sourceTree = "<group>"; };
@@ -1048,6 +1050,7 @@
 			children = (
 				5527642F2317FE8200380BEB /* ChatListViewController.swift */,
 				888B00E926AF42AB004FA1B5 /* ChatViewController.swift */,
+				888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2220,6 +2223,7 @@
 				9AA95FDE2189BE6F00156AB6 /* LiftDetailViewController.swift in Sources */,
 				918BA99625BDFAD2007B4D43 /* PerCityViewController.swift in Sources */,
 				9ADB535A222D4BC5004CD759 /* PaymentMethod.swift in Sources */,
+				888B00F926B012C0004FA1B5 /* BasicChatViewController.swift in Sources */,
 				9AA8571A2162317E00DFC4A5 /* UITextField+LeftView.swift in Sources */,
 				9AD1CE02228182B2007A0D63 /* BookingPaymentSummaryView.swift in Sources */,
 				1D70B11922B95F35007051FA /* ImageCarouselCell.swift in Sources */,
@@ -2447,7 +2451,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2473,7 +2477,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2498,7 +2502,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2662,7 +2666,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2726,7 +2730,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2936,7 +2940,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

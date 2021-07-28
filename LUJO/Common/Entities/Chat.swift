@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ChatList: Codable {
+struct ConversationList: Codable {
     let message: String?
     var items: [ChatHeader]?
     
@@ -18,7 +18,7 @@ struct ChatList: Codable {
     }
 }
 
-extension ChatList {
+extension ConversationList {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -68,9 +68,9 @@ extension ChatHeader {
 }
 
 struct Meta: Codable {
-    let id: Int
-    let sfid: String
-    let avatar: String
+    let id: Int?
+    let sfid: String?
+    let avatar: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -84,9 +84,33 @@ extension Meta {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-            id = try values.decode(Int.self, forKey: .id)
-            sfid = try values.decode(String.self, forKey: .sfid)
-            avatar = try values.decode(String.self, forKey: .avatar)
+            id = try values.decodeIfPresent(Int.self, forKey: .id)
+            sfid = try values.decodeIfPresent(String.self, forKey: .sfid)
+            avatar = try values.decodeIfPresent(String.self, forKey: .avatar)
+        } catch {
+            Crashlytics.sharedInstance().recordError(error)
+            throw error
+        }
+    }
+}
+
+struct ConversationDetails: Codable {
+    let message: String?
+    var items: [Message]?
+    
+    enum CodingKeys: String, CodingKey {
+        case message
+        case items
+    }
+}
+
+extension ConversationDetails {
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            message = try values.decodeIfPresent(String.self, forKey: .message)
+            items = try values.decodeIfPresent([Message].self, forKey: .items)
+            
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error
@@ -125,7 +149,7 @@ extension Message {
 
 struct CreatedAt: Codable {
     let date: String
-    let timezoneType: String
+    let timezoneType: Int
     let timezone: String
 
     
@@ -134,6 +158,20 @@ struct CreatedAt: Codable {
         case timezoneType = "timezone_type"
         case timezone
     }
+    
+    let serverDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        result.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
+        return result
+    }()
+    
+    let localDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .medium
+        result.timeStyle = .medium
+        return result
+    }()
 }
 
 extension CreatedAt {
@@ -141,7 +179,7 @@ extension CreatedAt {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             date = try values.decode(String.self, forKey: .date)
-            timezoneType = try values.decode(String.self, forKey: .timezoneType)
+            timezoneType = try values.decode(Int.self, forKey: .timezoneType)
             timezone = try values.decode(String.self, forKey: .timezone)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
@@ -150,3 +188,18 @@ extension CreatedAt {
     }
 }
 
+struct myDate{
+    static var  serverDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        result.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
+        return result
+    }()
+    
+    static var  localDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .medium
+        result.timeStyle = .medium
+        return result
+    }()
+}

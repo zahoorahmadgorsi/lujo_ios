@@ -17,6 +17,19 @@ class ChatListViewController: UIViewController {
     private let naHUD = JGProgressHUD(style: .dark)
     var items = [ChatHeader]()
     @IBOutlet weak var tblView: UITableView!
+    let serverDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        result.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
+        return result
+    }()
+    
+    let localDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .medium
+        result.timeStyle = .medium
+        return result
+    }()
     
     /// Init method that will init and return view controller.
     class func instantiate() -> ChatListViewController {
@@ -31,12 +44,12 @@ class ChatListViewController: UIViewController {
         super.viewDidLoad()
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .done, target: self, action: #selector(addTapped))
+        getChatsList(showActivity: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getChatsList(showActivity: true)
+        getChatsList(showActivity: false)
     }
     
     func getChatsList(showActivity: Bool) {
@@ -60,7 +73,7 @@ class ChatListViewController: UIViewController {
         }
     }
     
-    func update(_ information: ChatList?) {
+    func update(_ information: ConversationList?) {
         guard information != nil else {
             return
         }
@@ -71,7 +84,7 @@ class ChatListViewController: UIViewController {
         }
     }
     
-    func getChats(completion: @escaping (ChatList?, Error?) -> Void) {
+    func getChats(completion: @escaping (ConversationList?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -127,6 +140,7 @@ class ChatListViewController: UIViewController {
             naHUD.dismiss()
         }
     }
+    
     @objc func addTapped(){
         newMessage(title: "New Converation", subTitle: "Please start a new conversation", placeHolder1: "Please enter the conversation title", placeHolder2: "Enter the message")
         
@@ -187,6 +201,16 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         cell.tag = indexPath.row
         cell.lblAuthorName.text = model.authorName
         cell.lblTitle.text = model.title
+        
+//        let dateFromServer = model.createdAt
+//        let dtDate = myDate.serverDateFormatter.date(from: dateFromServer)!
+//        let strDate = myDate.localDateFormatter.string(from: dtDate)
+//
+//        print (dateFromServer)
+//        print (dtDate.asDateAndTime())
+//        print (strDate)
+        
+//        cell.lblCreatedAt.text = model.createdAt
         cell.lblCreatedAt.text = model.createdAt
         if let avatarLink = model.meta?.avatar {
             cell.imgAvatar.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
@@ -200,6 +224,11 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.items[indexPath.item]
-        newMessage(title: "Existing Converation", subTitle: "Please send a message to this conversation", placeHolder1: model.title, placeHolder2: "Enter the message", conversationId: model.conversationId,text: model.title)
+        let newViewController = BasicChatViewController()
+        newViewController.conversationId = model.conversationId
+        self.navigationController?.pushViewController(newViewController, animated: true)
+        
+//        let model = self.items[indexPath.item]
+//        newMessage(title: "Existing Converation", subTitle: "Please send a message to this conversation", placeHolder1: model.title, placeHolder2: "Enter the message", conversationId: model.conversationId,text: model.title)
     }
 }

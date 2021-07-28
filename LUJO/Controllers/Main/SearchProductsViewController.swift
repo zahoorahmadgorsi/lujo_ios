@@ -275,7 +275,6 @@ extension SearchProductsViewController {
         
         switch category {
             case .event:
-//                Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term])
                 Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getEvents(token, past: past, term: term, cityId: nil) { list, error in
                     guard error == nil else {

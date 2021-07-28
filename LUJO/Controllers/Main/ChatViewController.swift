@@ -25,6 +25,7 @@ SOFTWARE.
 import UIKit
 import MessageKit
 import InputBarAccessoryView
+import JGProgressHUD
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -35,6 +36,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
     lazy var messageList: [ChatMessage] = []
+    var conversationId:String = ""
+    private let naHUD = JGProgressHUD(style: .dark)
+    
+
     
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -57,17 +62,12 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         configureMessageCollectionView()
         configureMessageInputBar()
-        loadFirstMessages()
+        getConversationDetails(showActivity: true)
         title = "LUJO"
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //start receiving the messages
-//        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
-//            .onNewMessage { [weak self] message in
-//                self?.insertMessage(message)
-//        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -76,21 +76,73 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //        audioController.stopAnyOngoingPlaying()
     }
 
+    func getConversationDetails(showActivity: Bool) {
+        if showActivity {
+            self.showNetworkActivity()
+        }
+        getConversationDetails() {information, error in
+            self.hideNetworkActivity()
+            
+            if let error = error {
+                self.showError(error)
+                return
+            }
+            
+            if let informations = information {
+                self.update(informations)
+            } else {
+                let error = BackendError.parsing(reason: "Could not obtain chat list")
+                self.showError(error)
+            }
+        }
+    }
+    
+    func getConversationDetails(completion: @escaping (ConversationDetails?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        GoLujoAPIManager().getConversationDetails(token: token,conversationID: conversationId) { items, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain the chat list")
+                completion(nil, error)
+                return
+            }
+            completion(items, error)
+        }
+    }
+    
+    func update(_ information: ConversationDetails?) {
+        guard information != nil else {
+            return
+        }
+        
+        if let messages = information?.items{
+            for item in messages{
+                let displayPicture =  item.meta?.avatar ?? "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
+                let chatUser:ChatUser = ChatUser(senderId:String(item.meta?.id ?? 0000) , displayName:item.author, avatar: displayPicture)
+                let dateFromServer = item.createdAt.date
+                let dtDate = myDate.serverDateFormatter.date(from: dateFromServer)!
+//                let strDate = myDate.localDateFormatter.string(from: dtDate)
+//                print (dateFromServer)
+//                print (dtDate.asDateAndTime())
+//                print (strDate)
+                let chatMessage:ChatMessage = ChatMessage(text: item.body, user: chatUser, messageId: "0000", date: dtDate)
+                self.messageList.append(chatMessage)
+            }
+            self.messagesCollectionView.reloadData()
+            self.messagesCollectionView.scrollToLastItem()
+        }
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     func loadFirstMessages() {
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            let count = UserDefaults.standard.mockMessagesCount()
-//            SampleData.shared.getMessages(count: count) { messages in
-//                DispatchQueue.main.async {
-//                    self.messageList = messages
-//                    self.messagesCollectionView.reloadData()
-//                    self.messagesCollectionView.scrollToLastItem()
-//                }
-//            }
-//        }
+        getConversationDetails(showActivity: true)
     }
     
     @objc func loadMoreMessages() {
@@ -158,7 +210,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     func currentSender() -> SenderType {
         if let currentUser = LujoSetup().getLujoUser(){
-            let currentSender:ChatUser = ChatUser(senderId: String(currentUser.id), displayName: currentUser.firstName + " " + currentUser.lastName)
+            
+            let currentSender:ChatUser = ChatUser(senderId: String(currentUser.id), displayName: currentUser.firstName + " " + currentUser.lastName,avatar: currentUser.avatar)
             return currentSender
         }else{
             let system = ChatUser(senderId: "000000", displayName: "LUJO")
@@ -204,6 +257,29 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
         return nil
+    }
+    
+    func showError(_ error: Error , isInformation:Bool = false) {
+        if (isInformation){
+            showErrorPopup(withTitle: "Information", error: error)
+        }else{
+            showErrorPopup(withTitle: "Chat Error", error: error)
+        }
+        
+    }
+    
+    func showNetworkActivity() {
+        // Safe guard to that won't display both loaders at same time.
+//        if !refreshControl.isRefreshing {
+            naHUD.show(in: view)
+//        }
+    }
+    
+    func hideNetworkActivity() {
+        // Safe guard that will call dismiss only if HUD is shown on screen.
+        if naHUD.isVisible {
+            naHUD.dismiss()
+        }
     }
 }
 
