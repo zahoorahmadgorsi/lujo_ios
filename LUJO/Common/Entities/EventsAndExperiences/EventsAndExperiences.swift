@@ -179,7 +179,7 @@ struct Product: Codable {
     let endDate: Date?
     let timezone: String?
     let primaryMedia: Gallery?
-    let gallery: [Gallery]?
+    var gallery: [Gallery]?
     let eventCategory: [Taxonomy]?
     let experienceCategory: [Taxonomy]?
     let tags: [Taxonomy]?

@@ -27,7 +27,7 @@ extension UIImageView {
                 self.contentMode = contentMode
                 
             case .failure(let error):
-                print("🛑 Kingfisher - Failed to fetched image from \(link) ❗️ \(error.localizedDescription)")
+                print("🛑 Kingfisher - Failed to fetch image from \(link) ❗️ \(error.localizedDescription)")
             }
         })
     }

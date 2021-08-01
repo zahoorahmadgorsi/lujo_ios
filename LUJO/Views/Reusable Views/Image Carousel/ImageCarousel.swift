@@ -48,6 +48,20 @@ class ImageCarousel: UIView {
         }
     }
 
+    var scrollToItem: Int = 0 {
+        didSet {
+            if (scrollToItem > 0){
+                self.collectionView.reloadData()
+                self.collectionView.layoutIfNeeded()
+                let indexPath = IndexPath(item: scrollToItem, section: 0)
+                self.collectionView.isPagingEnabled = false //because there is a bug in ios14 xcode 12
+//                self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+                self.collectionView.isPagingEnabled = true
+            }
+        }
+    }
+    
     var titleList: [String] = [] {
         didSet {
             collectionView.reloadData()
@@ -130,7 +144,6 @@ extension ImageCarousel: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCarouselCell.identifier,
                                                     for: indexPath) as! ImageCarouselCell
         cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
-        //Zahoor started 20201027
         //*****
         //Home*
         //*****
@@ -203,8 +216,6 @@ extension ImageCarousel: UICollectionViewDataSource {
                 cell.imgHeart.image = UIImage(named: "heart_white")
             }
         }
-        
-        
         //Add tap gesture on favourite
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageCarousel.tappedOnHeart(_:)))
         cell.imgHeart.isUserInteractionEnabled = true   //can also be enabled from IB
@@ -262,7 +273,8 @@ extension ImageCarousel: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        delegate?.didMoveTo(position: indexPath.row)
+        print(indexPath.row)
+        delegate?.didMoveTo(position: indexPath.row)    //because of a bug in ios14 xcode12.. its not working properly
     }
 }
 

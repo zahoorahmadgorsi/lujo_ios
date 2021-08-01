@@ -36,4 +36,25 @@ public extension Date {
             "time": String(format: "%02d", components.hour!) + ":" + String(format: "%02d", components.minute!),
         ]
     }
+    
+    func dateToDayWeekYear() -> String{
+        let formatter = DateFormatter()
+        switch true {
+        case Calendar.current.isDateInToday(self) || Calendar.current.isDateInYesterday(self):
+            formatter.doesRelativeDateFormatting = true
+            formatter.dateStyle = .short
+            formatter.timeStyle = .none
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .weekOfYear):
+            formatter.dateFormat = "EEEE"
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year):
+            formatter.dateFormat = "E, d MMM"
+        default:
+            formatter.dateFormat = "MMM d, yyyy"
+        }
+        print(formatter.string(from: self))
+        return formatter.string(from: self)
+    }
+    
+    
+    
 }

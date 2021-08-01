@@ -64,6 +64,20 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         configureMessageInputBar()
         if (conversationId.count > 0){  //user isnt coming to start a new conversation
             getConversationDetails(showActivity: true)
+        }else{
+            if let user:ChatUser = self.systemUser() as? ChatUser  {
+                let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
+                let chatUser:ChatUser = ChatUser(senderId: "0000" , displayName:"LUJO", avatar: displayPicture)
+                let chatMessage:ChatMessage = ChatMessage(text: "How may we assist you today?", user: chatUser, messageId: UUID().uuidString, date: Date())
+                self.messageList.append(chatMessage)
+                self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToLastItem(animated: true)
+            }
+//                self.insertMessage(message)
+//                self.messagesCollectionView.numberOfItems(inSection: 0) //<-- This code is no used, but it will let UICollectionView synchronize number of items, so it will not crash in following code.
+//                self.messagesCollectionView.reloadData()
+////                self.messagesCollectionView.scrollToLastItem(animated: true)
+//            }
         }
         title = "LUJO"
     }
@@ -135,7 +149,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 self.messageList.append(chatMessage)
             }
             self.messagesCollectionView.reloadData()
-            self.messagesCollectionView.scrollToLastItem()
+            self.messagesCollectionView.scrollToLastItem(animated: true)
         }
     }
     
@@ -200,11 +214,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
     
     func isLastSectionVisible() -> Bool {
-        
         guard !messageList.isEmpty else { return false }
-        
         let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
-        
         return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
     }
 
@@ -212,21 +223,17 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     func currentSender() -> SenderType {
         if let currentUser = LujoSetup().getLujoUser(){
-            
             let currentSender:ChatUser = ChatUser(senderId: String(currentUser.id), displayName: currentUser.firstName + " " + currentUser.lastName,avatar: currentUser.avatar)
             return currentSender
         }else{
-            let system = ChatUser(senderId: "000000", displayName: "LUJO")
-            return system
+            return systemUser()
         }
     }
-
-//    func currentSender() -> ChatUser {
-//        if let currentUser = LujoSetup().getLujoUser(){
-//            let currentSender:ChatUser = ChatUser(senderId: String(currentUser.id), displayName: currentUser.firstName + " " + currentUser.lastName)
-//            return currentSender
-//        }
-//    }
+    
+    func systemUser() -> SenderType {
+        let system = ChatUser(senderId: "000000", displayName: "LUJO")
+        return system
+    }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messageList.count
@@ -237,10 +244,18 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        if indexPath.section % 3 == 0 {
-            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        }
+//        if indexPath.section % 3 == 0 {
+//            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+//        }
+//        if let date = message.sentDate{
+            if indexPath.section % 3 == 0 {
+                return NSAttributedString(string: message.sentDate.dateToDayWeekYear(), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+            }
+//        }
         return nil
+        
+        
+        
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -253,8 +268,15 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
 
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let dateString = formatter.string(from: message.sentDate)
-        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+//        let dateString = formatter.string(from: message.sentDate)
+//        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        if let time24hours = message.sentDate.asDateAndTime()["time"]{
+            return NSAttributedString(string: time24hours.time24To12() , attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        }else{
+            return nil
+        }
+//        let dateString = formatter.string(from: message.sentDate)
+//        return NSAttributedString(string: message.sentDate.asDateAndTime()["time"].time24To12 , attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
     
     func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {

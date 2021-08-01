@@ -110,7 +110,7 @@
                                             <constraint firstAttribute="height" constant="44" id="fUT-bO-wSI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title="S A V E">
+                                        <state key="normal" title="N E X T">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -954,7 +954,7 @@
                                             <constraint firstAttribute="height" constant="44" id="iNa-Rl-DCk"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title="S A V E">
+                                        <state key="normal" title="N E X T">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -1112,7 +1112,7 @@
                                             <constraint firstAttribute="height" constant="44" id="HP4-km-nhj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title="S A V E">
+                                        <state key="normal" title="N E X T">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -1245,7 +1245,7 @@
                                             <constraint firstAttribute="height" constant="44" id="zzi-Yb-dMN"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title="S A V E">
+                                        <state key="normal" title="N E X T">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -1627,7 +1627,7 @@
                                             <constraint firstAttribute="height" constant="44" id="Cin-t8-03i"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title="S A V E">
+                                        <state key="normal" title="N E X T">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -1783,7 +1783,7 @@
                                             <constraint firstAttribute="height" constant="44" id="ZuI-uy-8GS"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title="S A V E">
+                                        <state key="normal" title="N E X T">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>

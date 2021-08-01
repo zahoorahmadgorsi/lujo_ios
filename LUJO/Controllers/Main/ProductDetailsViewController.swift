@@ -12,6 +12,7 @@ import Mixpanel
 import Intercom
 
 class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
+    
     //MARK:- Init
     
     /// Class storyboard identifier.
@@ -103,7 +104,9 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             case "special-event":   setupEvents(product)
             case "gift":            fallthrough
             case "experience":      setupExperience(product)
-            case "yacht":           setupYacht(product)
+            case "yacht":
+                setupYacht(product)
+                getYachtGallery(product: product)
             case "villa":           setupVilla(product)
             default:
                 setupEvents(product)//("It could be restaurant")
@@ -166,51 +169,77 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
 //        self.tabBarController?.tabBar.isHidden = false
     }
     
+    func getYachtGallery(product: Product){
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            LoginError.errorLogin(description: "User does not exist or is not verified")
+            return
+        }
+        
+        EEAPIManager().getYachtGallery(token, postId: product.id) { gallery, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                _ = BackendError.parsing(reason: "Could not get yacht's gallery")
+                return
+            }
+            if (gallery.count > 0){
+                self.product.gallery = gallery
+                self.setUpGallery(self.product)
+            }
+        }
+    }
     @IBAction func requestBooking(_ sender: Any) {
         sendInitialInformation()
     }
     
     func didTappedOnImage(itemIndex: Int) {
         print("didTappedOnImage")
+//        didTappedOnViewGallery(scrollToThisItem: itemIndex)
+        let dataSource = product.getGalleryImagesURL()
+        if dataSource.count > 0 {
+            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource , scrollToItem: itemIndex)
+            self.present(viewController, animated: true, completion: nil)
+        } else {
+            print("There are no images in the gallery, sorry!")
+        }
     }
     
     @IBAction func viewGalleryButton_onClick(_ sender: UIButton) {
         didTappedOnViewGallery()
     }
-    
+
     func didTappedOnViewGallery() {
         let dataSource = product.getGalleryImagesURL()
         if dataSource.isEmpty {
-            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
+            print("There are no images in the gallery, sorry!")
+//            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
         } else {
-            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource)
+            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource )
             self.present(viewController, animated: true, completion: nil)
         }
     }
     
     @IBAction func btnSeeMoreTapped(_ sender: Any) {
         if isLabelAtMaxHeight {
-                btnReadMore.setTitle("Read more", for: .normal)
-                isLabelAtMaxHeight = false
+            btnReadMore.setTitle("Read more", for: .normal)
+            isLabelAtMaxHeight = false
 
-                if let font = descriptionTextView.font{
-                    let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+            if let font = descriptionTextView.font{
+                let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
 //                    print(currentHeight,descHeightToShowReadMore)
-                    if (currentHeight > descHeightToShowReadMore){
-                        lblDescriptionHeight.constant = descHeightToShowReadMore
-                    }else{
-                        lblDescriptionHeight.constant = currentHeight
-                    }
-                }
-
-            }
-            else {
-                btnReadMore.setTitle("Read less", for: .normal)
-                isLabelAtMaxHeight = true
-                if let font = descriptionTextView.font{
-                    lblDescriptionHeight.constant = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+                if (currentHeight > descHeightToShowReadMore){
+                    lblDescriptionHeight.constant = descHeightToShowReadMore
+                }else{
+                    lblDescriptionHeight.constant = currentHeight
                 }
             }
+        }
+        else {
+            btnReadMore.setTitle("Read less", for: .normal)
+            isLabelAtMaxHeight = true
+            if let font = descriptionTextView.font{
+                lblDescriptionHeight.constant = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+            }
+        }
     }
     
     func getTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {

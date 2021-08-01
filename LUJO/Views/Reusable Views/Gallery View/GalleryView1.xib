@@ -11,9 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GalleryView1" customModule="LUJO" customModuleProvider="target">
             <connections>
+                <outlet property="ImgView1" destination="84g-G9-pRX" id="Jru-eK-ATu"/>
+                <outlet property="ImgView1Container" destination="uGf-lq-j6b" id="L3N-ne-Cjx"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="KLc-hn-ys2"/>
-                <outlet property="product1ImageContainer" destination="uGf-lq-j6b" id="L3N-ne-Cjx"/>
-                <outlet property="product1ImageView" destination="84g-G9-pRX" id="Jru-eK-ATu"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

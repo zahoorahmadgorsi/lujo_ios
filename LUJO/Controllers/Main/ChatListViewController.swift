@@ -31,6 +31,12 @@ class ChatListViewController: UIViewController {
         return result
     }()
     
+    private(set) lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(refreshConversations), for: .valueChanged)
+        return control
+    }()
+    
     /// Init method that will init and return view controller.
     class func instantiate() -> ChatListViewController {
         return UIStoryboard.main.instantiate(identifier)
@@ -44,11 +50,17 @@ class ChatListViewController: UIViewController {
         super.viewDidLoad()
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
+        self.tblView.refreshControl = refreshControl
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .done, target: self, action: #selector(addTapped))
         getChatsList(showActivity: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        getChatsList(showActivity: false)
+    }
+    
+    @objc func refreshConversations() {
+        self.refreshControl.beginRefreshing()
         getChatsList(showActivity: false)
     }
     
@@ -58,6 +70,7 @@ class ChatListViewController: UIViewController {
         }
         getChats() {information, error in
             self.hideNetworkActivity()
+            self.refreshControl.endRefreshing() //if refersh control is spinning
             
             if let error = error {
                 self.showError(error)
@@ -79,7 +92,7 @@ class ChatListViewController: UIViewController {
         }
         
         if let chats = information?.items{
-            self.items = chats
+            self.items = chats.reversed()
             self.tblView.reloadData()
         }
     }
@@ -112,9 +125,9 @@ class ChatListViewController: UIViewController {
     
     func showNetworkActivity() {
         // Safe guard to that won't display both loaders at same time.
-//        if !refreshControl.isRefreshing {
+        if !refreshControl.isRefreshing {
             naHUD.show(in: view)
-//        }
+        }
     }
     
     func hideNetworkActivity() {

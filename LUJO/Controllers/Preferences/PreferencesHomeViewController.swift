@@ -19,7 +19,6 @@ enum PrefCollSize:Int{
 }
 enum CabinClass:String{
     case First
-    case Second
     case Business
     case Economy
 }

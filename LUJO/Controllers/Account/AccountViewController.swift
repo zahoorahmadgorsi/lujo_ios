@@ -184,7 +184,7 @@ class AccountViewController: UIViewController {
     @IBAction func inviteFriendsButton_onClick(_ sender: Any) {
         let activityViewController = UIActivityViewController(
             activityItems: ["""
-            I would like to invite you to join the unprecedented world of Lujo. Download Lujo for iPhone https://apps.apple.com/us/app/lujo/id1233843327 and become a member to enjoy the finest that the world has to offer. A special price for a yearly membership awaits you with a unique code \(user.referralCode).
+            It's my pleasure to invite you to join Lujo our new ultimate lifestyle management platform filled with curated content that brings the world's best experiences to your fingertips. Download Lujo for iPhone https://apps.apple.com/us/app/lujo/id1233843327 and become a member to enjoy the finest that the world has to offer. Mmbership awaits you with a unique code \(user.referralCode).
             """],
             applicationActivities: nil
         )

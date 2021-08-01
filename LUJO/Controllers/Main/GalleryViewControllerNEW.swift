@@ -14,17 +14,19 @@ class GalleryViewControllerNEW: UIViewController {
     
     /// Class storyboard identifier.
     class var identifier: String { return "GalleryViewControllerNEW" }
+    var scrollToItem:Int = 0
     
     /// Init method that will init and return view controller.
-    class func instantiate(dataSource: [String]) -> GalleryViewControllerNEW {
+    class func instantiate(dataSource: [String], scrollToItem:Int = 0) -> GalleryViewControllerNEW {
         let viewController = UIStoryboard.main.instantiate(identifier) as! GalleryViewControllerNEW
         viewController.dataSource = dataSource
+        viewController.scrollToItem = scrollToItem
         return viewController
     }
     
     //MARK:- Globals
     
-    @IBOutlet var imageSlider: ImageCarousel!
+    @IBOutlet var imageCarousel: ImageCarousel!
     @IBOutlet var currentImageNum: UILabel!
     @IBOutlet var allImagesNum: UILabel!
     
@@ -32,10 +34,10 @@ class GalleryViewControllerNEW: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageSlider.imageURLList = dataSource
-        imageSlider.shouldRemoveOverlay = true
-        
-        imageSlider.delegate = self
+        imageCarousel.shouldRemoveOverlay = true
+        imageCarousel.delegate = self
+        imageCarousel.imageURLList = dataSource
+        imageCarousel.scrollToItem = scrollToItem   //after this index counting isn't working properly due to a bug in ios14
         allImagesNum.text = "\(dataSource.count)"
     }
     

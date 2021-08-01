@@ -223,7 +223,8 @@ class LiftDetailViewController: UIViewController {
             let viewController = GalleryViewControllerNEW.instantiate(dataSource: lift!.aircraft.images)
             present(viewController, animated: true, completion: nil)
         } else {
-            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
+            print("There are no images in the gallery, sorry!")
+//            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
         }
     }
 
@@ -251,7 +252,6 @@ class LiftDetailViewController: UIViewController {
 //    @objc func chatConnected(sender: AnyObject) {
 //        guard ZDCChat.instance()?.api.connectionStatus == .connected else { return }
 //        guard initalMessageSent == false else { return }
-//
 //        sendInitialInformation()
 //    }
 

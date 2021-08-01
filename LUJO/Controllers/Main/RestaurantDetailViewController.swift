@@ -84,7 +84,8 @@ class RestaurantDetailViewController: UIViewController {
             let viewController = GalleryViewControllerNEW.instantiate(dataSource: restaurant.getGalleryImagesURL())
             present(viewController, animated: true, completion: nil)
         } else {
-            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
+            print("There are no images in the gallery, sorry!")
+//            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
         }
     }
     

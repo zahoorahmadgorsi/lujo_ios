@@ -399,10 +399,10 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     func compare(current:[String] , previous:[String] ) -> Bool{
         if (Set(previous ) == Set(current)){
 //            btnNextStep.setTitle("S K I P", for: .normal)
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return true
         }else{
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return false
         }
     }

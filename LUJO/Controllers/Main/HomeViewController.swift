@@ -644,7 +644,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     fileprivate func updateContent() {
         
         if let featuredImages = homeObjects?.getFeaturedImages() {
-            featured.imageURLList = featuredImages    
+            featured.imageURLList = featuredImages
             featured.titleList = homeObjects!.getFeaturedNames()
             featured.categoryList = homeObjects!.getFeaturedTypes()
             featured.tagsList = homeObjects!.getFeaturedTags()

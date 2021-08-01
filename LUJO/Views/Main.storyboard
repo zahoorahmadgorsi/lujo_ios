@@ -5642,7 +5642,7 @@
                     <connections>
                         <outlet property="allImagesNum" destination="iBl-Gs-a0O" id="Acf-yV-GVK"/>
                         <outlet property="currentImageNum" destination="yR4-Am-jb1" id="ahj-Rz-GGI"/>
-                        <outlet property="imageSlider" destination="fTL-Iz-bFM" id="oxS-yL-GCS"/>
+                        <outlet property="imageCarousel" destination="fTL-Iz-bFM" id="oxS-yL-GCS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SQN-Wa-D1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7944,7 +7944,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="225.5" height="30"/>
+            <size key="intrinsicContentSize" width="253.5" height="30"/>
         </designable>
     </designables>
     <resources>
