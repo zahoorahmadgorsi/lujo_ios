@@ -139,6 +139,7 @@
 		888B00EF26AF51EE004FA1B5 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00EE26AF51EE004FA1B5 /* ChatUser.swift */; };
 		888B00F426AF54D7004FA1B5 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F326AF54D7004FA1B5 /* ChatMessage.swift */; };
 		888B00F926B012C0004FA1B5 /* BasicChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */; };
+		888B010A26B89C3E004FA1B5 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B010926B89C3E004FA1B5 /* Collection.swift */; };
 		8894D02825629CD200BF84D8 /* Product1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Product1.swift */; };
 		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
 		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
@@ -525,6 +526,7 @@
 		888B00EE26AF51EE004FA1B5 /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatUser.swift; path = LUJO/Controllers/Main/ChatUser.swift; sourceTree = SOURCE_ROOT; };
 		888B00F326AF54D7004FA1B5 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessage.swift; path = LUJO/Controllers/Main/ChatMessage.swift; sourceTree = SOURCE_ROOT; };
 		888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicChatViewController.swift; sourceTree = "<group>"; };
+		888B010926B89C3E004FA1B5 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		8894D02F2562E61300BF84D8 /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
 		8894D0312562E63C00BF84D8 /* WishListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WishListView.xib; sourceTree = "<group>"; };
 		88B57274256AC32000FF9E4C /* DiningViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiningViewCell.xib; sourceTree = "<group>"; };
@@ -1492,6 +1494,7 @@
 				1D70B11B22BA2724007051FA /* UILabel.swift */,
 				1DDD07D122BCF03700C79AAE /* UIDevice.swift */,
 				5583730D230D559100F9536C /* SwiftMessagesManger.swift */,
+				888B010926B89C3E004FA1B5 /* Collection.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2185,6 +2188,7 @@
 				9AE0B2AD2123304B00E55E6C /* GoLujoAPIManager.swift in Sources */,
 				9A645BA3226492CD009BF14D /* BookingPriceSummaryView.swift in Sources */,
 				5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */,
+				888B010A26B89C3E004FA1B5 /* Collection.swift in Sources */,
 				880B9B0925582E350070D7CD /* Yacht.swift in Sources */,
 				1D618009238AAF0000F01199 /* CustomRequestAPIManager.swift in Sources */,
 				9A5C5CBE22312D0900B8239D /* CardConnectSettings.swift in Sources */,

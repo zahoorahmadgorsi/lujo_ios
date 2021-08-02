@@ -243,19 +243,16 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         return messageList[indexPath.section]
     }
 
+    //this function groups all messages under one date i.e. cellTopLabel will only be displayed once for each date
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-//        if indexPath.section % 3 == 0 {
-//            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-//        }
-//        if let date = message.sentDate{
-            if indexPath.section % 3 == 0 {
-                return NSAttributedString(string: message.sentDate.dateToDayWeekYear(), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        if let firstItem = messageList[safe:indexPath.section - 1] , let secondItem = messageList[safe:indexPath.section]{
+//            print(firstItem.sentDate.stripTime(),secondItem.sentDate.stripTime())
+            if (firstItem.sentDate.stripTime() == secondItem.sentDate.stripTime()){
+//                print("Dates are same")
+                return nil  //no need to display message date as
             }
-//        }
-        return nil
-        
-        
-        
+        }
+        return NSAttributedString(string: message.sentDate.dateToDayWeekYear(), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -268,15 +265,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
 
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-//        let dateString = formatter.string(from: message.sentDate)
-//        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
         if let time24hours = message.sentDate.asDateAndTime()["time"]{
             return NSAttributedString(string: time24hours.time24To12() , attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
         }else{
             return nil
         }
-//        let dateString = formatter.string(from: message.sentDate)
-//        return NSAttributedString(string: message.sentDate.asDateAndTime()["time"].time24To12 , attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
     
     func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
