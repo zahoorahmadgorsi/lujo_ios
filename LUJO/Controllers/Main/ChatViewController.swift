@@ -62,21 +62,17 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         configureMessageCollectionView()
         configureMessageInputBar()
+        view.backgroundColor = .black   //making the background color to be black
         if (conversationId.count > 0){  //user isnt coming to start a new conversation
             getConversationDetails(showActivity: true)
         }else{
-            if let user:ChatUser = self.systemUser() as? ChatUser  {
+//            if let user:ChatUser = self.systemUser() as? ChatUser  {
                 let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
                 let chatUser:ChatUser = ChatUser(senderId: "0000" , displayName:"LUJO", avatar: displayPicture)
                 let chatMessage:ChatMessage = ChatMessage(text: "How may we assist you today?", user: chatUser, messageId: UUID().uuidString, date: Date())
                 self.messageList.append(chatMessage)
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToLastItem(animated: true)
-            }
-//                self.insertMessage(message)
-//                self.messagesCollectionView.numberOfItems(inSection: 0) //<-- This code is no used, but it will let UICollectionView synchronize number of items, so it will not crash in following code.
-//                self.messagesCollectionView.reloadData()
-////                self.messagesCollectionView.scrollToLastItem(animated: true)
 //            }
         }
         title = "LUJO"
@@ -88,8 +84,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-//        MockSocket.shared.disconnect()
-//        audioController.stopAnyOngoingPlaying()
     }
 
     func getConversationDetails(showActivity: Bool) {
@@ -141,10 +135,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 let chatUser:ChatUser = ChatUser(senderId:String(item.meta?.id ?? 0000) , displayName:item.author, avatar: displayPicture)
                 let dateFromServer = item.createdAt.date
                 let dtDate = myDate.serverDateFormatter.date(from: dateFromServer)!
-//                let strDate = myDate.localDateFormatter.string(from: dtDate)
-//                print (dateFromServer)
-//                print (dtDate.asDateAndTime())
-//                print (strDate)
                 let chatMessage:ChatMessage = ChatMessage(text: item.body, user: chatUser, messageId: UUID().uuidString, date: dtDate)
                 self.messageList.append(chatMessage)
             }
@@ -241,8 +231,23 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messageList[indexPath.section]
+        //adding time inside the text bubble
+//        let item:MessageType = messageList[indexPath.section]
+//        guard let time24hours = item.sentDate.asDateAndTime()["time"] else {
+//            return messageList[indexPath.section]
+//        }
+//
+//        let chatMessage:ChatMessage = ChatMessage(text: getTheMessageText(messageKind: item.kind) + "\n" + time24hours.time24To12(), user: item.sender as! ChatUser, messageId: item.messageId, date: item.sentDate)
+//        return chatMessage
     }
 
+    func getTheMessageText(messageKind: MessageKind) -> String {
+        if case .text(let value) = messageKind {
+            return value
+        }
+        return ""
+    }
+    
     //this function groups all messages under one date i.e. cellTopLabel will only be displayed once for each date
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if let firstItem = messageList[safe:indexPath.section - 1] , let secondItem = messageList[safe:indexPath.section]{

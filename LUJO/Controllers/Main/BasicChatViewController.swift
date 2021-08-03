@@ -68,9 +68,9 @@ extension BasicChatViewController: MessagesDisplayDelegate {
     }
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        
-        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        return .bubbleTail(tail, .curved)
+//        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+//        return .bubbleTail(tail, .curved)
+        return .bubble
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
@@ -127,20 +127,31 @@ extension BasicChatViewController: MessagesDisplayDelegate {
 
 extension BasicChatViewController: MessagesLayoutDelegate {
     
+    // date time i.e. today, yesterday wednesday
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 18   // date time i.e. today, yesterday wednesday
+//        return 18
+        if let firstItem = messageList[safe:indexPath.section - 1] , let secondItem = messageList[safe:indexPath.section]{
+            if (firstItem.sentDate.stripTime() == secondItem.sentDate.stripTime()){ //if Dates are same
+                return 0  //no need to allot height to display message date
+            }
+        }
+        return 30
     }
     
+    // read
     func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        //return 17   // read
+        //return 17
         return 0
     }
     
+    //display name
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 20 //display name
+        //return 20
+        return 0
     }
     
+    //time 
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 16   //time 
+        return 16
     }
 }
