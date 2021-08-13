@@ -74,11 +74,39 @@ extension BasicChatViewController: MessagesDisplayDelegate {
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        
         let chatUser = message.sender as? ChatUser
         if let avatarLink = chatUser?.avatar {
             avatarView.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
         }
+        
+        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+            // set the vertical position of the Avatar for incoming messages so that the bottom of the Avatar
+            // aligns with the bottom of the Message
+            layout.setMessageIncomingAvatarPosition(.init(vertical: .messageBottom))
+
+            // set the vertical position of the Avatar for outgoing messages so that the bottom of the Avatar
+            // aligns with the `cellBottom`
+            layout.setMessageOutgoingAvatarPosition(.init(vertical: .messageBottom))
+        }
+
+
+
+//        avatarView.isHidden = true    //You can set the AvatarView to hidden
+//        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+//          layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+//          layout.textMessageSizeCalculator.incomingAvatarSize = .zero
+//        }
+//        If you would like to remove the space the AvatarView occupies from all CellSizeCalculator
+//        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+//          layout.setMessageIncomingAvatarSize(.zero)
+//          layout.setMessageOutgoingAvatarSize(.zero)
+//        }
+
+        
     }
+
+
 
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         if case MessageKind.photo(let media) = message.kind, let imageURL = media.url {

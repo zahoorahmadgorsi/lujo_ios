@@ -41,8 +41,9 @@ class ChatListViewController: UIViewController {
     class func instantiate() -> ChatListViewController {
         return UIStoryboard.main.instantiate(identifier)
     }
-    
-
+    // Convenience class to manage interactions with Twilio Chat
+    var chatManager = ChatManager()
+    var identity = "USER_IDENTITY"
     
     //MARK:- View life cycle
     
@@ -57,6 +58,36 @@ class ChatListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         getChatsList(showActivity: false)
+    }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        login()
+//    }
+//
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        chatManager.shutdown()
+//    }
+    
+    func login() {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            LoginError.errorLogin(description: "User does not exist or is not verified")
+            return
+        }
+//        LujoSetup().getLujoUser()
+        chatManager.login(self.identity) { (success) in
+            DispatchQueue.main.async {
+                if success {
+                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
+//                    self.navigationItem.prompt = "Logged in as zahoor"
+                } else {
+                    self.navigationItem.prompt = "Unable to login"
+                    let error = BackendError.parsing(reason: "Unable to login - check the token URL")
+                    self.showError(error)
+                }
+            }
+        }
     }
     
     @objc func refreshConversations() {

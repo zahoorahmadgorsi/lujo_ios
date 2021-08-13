@@ -26,6 +26,7 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import JGProgressHUD
+import TwilioChatClient
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -55,6 +56,13 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         return formatter
     }()
 
+    // Important - this identity would be assigned by your app, for
+    // instance after a user logs in
+    var identity = "USER_IDENTITY"
+
+    // Convenience class to manage interactions with Twilio Chat
+    var chatManager = ChatManager()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -76,35 +84,62 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //            }
         }
         title = "LUJO"
+        
+        chatManager.delegate = self
+        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+            identity = user.email //+ " " + user.lastName
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        login()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        chatManager.shutdown()
     }
 
-    func getConversationDetails(showActivity: Bool) {
-        if showActivity {
-            self.showNetworkActivity()
-        }
-        getConversationDetails() {information, error in
+    // MARK: Login
+
+    func login() {
+        self.showNetworkActivity()
+        chatManager.login(self.identity) { (success) in
             self.hideNetworkActivity()
-            
-            if let error = error {
-                self.showError(error)
-                return
-            }
-            
-            if let informations = information {
-                self.update(informations)
-            } else {
-                let error = BackendError.parsing(reason: "Could not obtain chat list")
-                self.showError(error)
+            DispatchQueue.main.async {
+                if success {
+//                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
+                    print("Logged in as \"\(self.identity)\"")
+                } else {
+//                    self.navigationItem.prompt = "Unable to login"
+                    print("Unable to login")
+                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
+                    self.showError(error)
+                }
             }
         }
+    }
+    
+    func getConversationDetails(showActivity: Bool) {
+//        if showActivity {
+//            self.showNetworkActivity()
+//        }
+//        getConversationDetails() {information, error in
+//            self.hideNetworkActivity()
+//
+//            if let error = error {
+//                self.showError(error)
+//                return
+//            }
+//
+//            if let informations = information {
+//                self.update(informations)
+//            } else {
+//                let error = BackendError.parsing(reason: "Could not obtain chat list")
+//                self.showError(error)
+//            }
+//        }
     }
     
     func getConversationDetails(completion: @escaping (ConversationDetails?, Error?) -> Void) {
@@ -446,39 +481,54 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         
         for component in components {
             if let str = component as? String  {
-                self.sendMessage(messageText: str, conversation_id: conversationId, conversationTitle: "", sales_force_id: "", completion: {information, error in
-                    if let error = error {
+                chatManager.sendMessage(str, completion: { (result, _) in
+                    if result.isSuccessful() {
+                        inputBar.sendButton.stopAnimating()
+                        inputBar.inputTextView.placeholder = "Aa"
+//                        if let user:ChatUser = self.currentSender() as? ChatUser  {
+//                            let message = ChatMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
+//                            self.insertMessage(message)
+//                            self.messagesCollectionView.scrollToLastItem(animated: true)
+//                        }
+                    } else {
+//                        self.displayErrorMessage("Unable to send message")
+                        let error = BackendError.parsing(reason: "Unable to send message")
                         self.showError(error)
-                        return
-                    }
-                    inputBar.sendButton.stopAnimating()
-                    inputBar.inputTextView.placeholder = "Aa"
-                    if let user:ChatUser = self.currentSender() as? ChatUser  {
-                        let message = ChatMessage(text: str, user: user, messageId: information?.messageId ?? UUID().uuidString, date: Date())
-                        self.insertMessage(message)
-                        self.messagesCollectionView.scrollToLastItem(animated: true)
                     }
                 })
+//                self.sendMessage(messageText: str, conversation_id: conversationId, conversationTitle: "", sales_force_id: "", completion: {information, error in
+//                    if let error = error {
+//                        self.showError(error)
+//                        return
+//                    }
+//                    inputBar.sendButton.stopAnimating()
+//                    inputBar.inputTextView.placeholder = "Aa"
+//                    if let user:ChatUser = self.currentSender() as? ChatUser  {
+//                        let message = ChatMessage(text: str, user: user, messageId: information?.messageId ?? UUID().uuidString, date: Date())
+//                        self.insertMessage(message)
+//                        self.messagesCollectionView.scrollToLastItem(animated: true)
+//                    }
+//                })
             }
         }
     }
 
-    func sendMessage(messageText:String, conversation_id:String, conversationTitle:String, sales_force_id:String, completion: @escaping (SendMessageResponse?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
-        
-        GoLujoAPIManager().sendMessage( token: token,message: messageText,conversationId: conversation_id,title: conversationTitle,sales_force_id: sales_force_id) { response, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not send the message")
-                completion(nil, error)
-                return
-            }
-            completion(response, error)
-        }
-    }
+//    func sendMessage(messageText:String, conversation_id:String, conversationTitle:String, sales_force_id:String, completion: @escaping (SendMessageResponse?, Error?) -> Void) {
+//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+//            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+//            return
+//        }
+//
+//        GoLujoAPIManager().sendMessage( token: token,message: messageText,conversationId: conversation_id,title: conversationTitle,sales_force_id: sales_force_id) { response, error in
+//            guard error == nil else {
+//                Crashlytics.sharedInstance().recordError(error!)
+//                let error = BackendError.parsing(reason: "Could not send the message")
+//                completion(nil, error)
+//                return
+//            }
+//            completion(response, error)
+//        }
+//    }
 
     private func insertMessages(_ data: [Any]) {
         for component in data {
@@ -490,6 +540,25 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 //                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
 //                insertMessage(message)
 //            }
+        }
+    }
+}
+
+// MARK: QuickstartChatManagerDelegate
+extension ChatViewController: ChatManagerDelegate {
+    func reloadMessages() {
+//        if (messageList.count == 1 ){
+//            self.messagesCollectionView.reloadData()    // <-- This line will make UICollection crash if it has 0 items
+//        }
+        
+    }
+
+    // Scroll to bottom of table view for messages
+    func receivedNewMessage(message: TCHMessage) {
+        if let user:ChatUser = self.currentSender() as? ChatUser  {
+            let message = ChatMessage(text: message.body ?? "", user: user, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
+            self.insertMessage(message)
+            self.messagesCollectionView.scrollToLastItem(animated: true)
         }
     }
 }

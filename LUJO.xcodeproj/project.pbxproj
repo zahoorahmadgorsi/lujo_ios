@@ -148,6 +148,8 @@
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
 		88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */; };
 		88C083C92635CCB400204475 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C083C82635CCB400204475 /* WishListViewController.swift */; };
+		88C5EEE126C5D43A00052CE5 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EEE026C5D43A00052CE5 /* ChatManager.swift */; };
+		88C5EEE726C5D61E00052CE5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EEE626C5D61E00052CE5 /* Utils.swift */; };
 		88CEBCEE2652FCA700360CB6 /* TwoSliderPrefViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBCED2652FCA700360CB6 /* TwoSliderPrefViewController.swift */; };
 		88CEBCFC265457EC00360CB6 /* PreferredDestinationaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */; };
 		88CEBD0726546D1A00360CB6 /* AirportCollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */; };
@@ -533,6 +535,8 @@
 		88B90AA02634389700DE2089 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		88C083C82635CCB400204475 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
 		88C083FA2635FA4A00204475 /* Mixpanel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Mixpanel.xcframework; path = Carthage/Build/Mixpanel.xcframework; sourceTree = "<group>"; };
+		88C5EEE026C5D43A00052CE5 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		88C5EEE626C5D61E00052CE5 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		88CEBCED2652FCA700360CB6 /* TwoSliderPrefViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoSliderPrefViewController.swift; sourceTree = "<group>"; };
 		88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredDestinationaViewController.swift; sourceTree = "<group>"; };
 		88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AirportCollViewCell.xib; sourceTree = "<group>"; };
@@ -1050,6 +1054,7 @@
 		5527642D2317FDCE00380BEB /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				88C5EEE026C5D43A00052CE5 /* ChatManager.swift */,
 				5527642F2317FE8200380BEB /* ChatListViewController.swift */,
 				888B00E926AF42AB004FA1B5 /* ChatViewController.swift */,
 				888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */,
@@ -1212,6 +1217,14 @@
 				888A307826461984008754AD /* PreferencesAPIManager.swift */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		88C5EEE526C5D60A00052CE5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				88C5EEE626C5D61E00052CE5 /* Utils.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		88E731A6256FC58100BEDD00 /* Product Details */ = {
@@ -1690,6 +1703,7 @@
 		9AE0B2AA21232F7F00E55E6C /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				88C5EEE526C5D60A00052CE5 /* Utilities */,
 				9AF422632265D512003CE562 /* Booking */,
 				9AE0B2AB21232F9000E55E6C /* DataLayer */,
 				1643386BE00A73BCE327E5D1 /* Defaults */,
@@ -2182,6 +2196,7 @@
 				9A0DCC7E21F86F7D00CC9111 /* BARouter.swift in Sources */,
 				9A194FE1228DDCF200E3DBD1 /* EERouter.swift in Sources */,
 				5527642A2317F6AD00380BEB /* BookingsViewController.swift in Sources */,
+				88C5EEE726C5D61E00052CE5 /* Utils.swift in Sources */,
 				9A9EC8AD2253BA2800098E7D /* AviationLegCell.swift in Sources */,
 				9A16408521FB22CA0041FFCE /* CCAPIManager.swift in Sources */,
 				5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */,
@@ -2364,6 +2379,7 @@
 				888A30712646196F008754AD /* PreferencesRouter.swift in Sources */,
 				164330344F7315887695337E /* User.swift in Sources */,
 				88CEBCFC265457EC00360CB6 /* PreferredDestinationaViewController.swift in Sources */,
+				88C5EEE126C5D43A00052CE5 /* ChatManager.swift in Sources */,
 				1D618014238EA51A00F01199 /* HotelViewController.swift in Sources */,
 				9A4CB3942161C4D900856930 /* JSONDecoder+DataResponse.swift in Sources */,
 				1DEDB9EA22F20D4000903CAC /* HomeSlider.swift in Sources */,

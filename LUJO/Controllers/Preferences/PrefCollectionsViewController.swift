@@ -321,16 +321,20 @@ class PrefCollectionsViewController: UIViewController {
                 case .aviationInterestedIn:
                     let taxonomyObj1 = Taxonomy(termId:-1 , name: "Charter")
                     let taxonomyObj2 = Taxonomy(termId:-1 , name: "Purchase")
+                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
+                    taxonomies.append(taxonomyObj3)
                     self.itemsList = taxonomies
                 case .aviationPreferredCharter:
                     let taxonomyObj1 = Taxonomy(termId:-1 , name: "Short Range")
                     let taxonomyObj2 = Taxonomy(termId:-1 , name: "Long Range")
+                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
+                    taxonomies.append(taxonomyObj3)
                     self.itemsList = taxonomies
                 case .aviationPreferredCuisine:
                     if let cachedItems = preferencesMasterData.cuisines , cachedItems.count > 0{  //if data is already cached or not
@@ -2511,8 +2515,10 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
             case .aviationInterestedIn:
                 if (indexPath.row == 0){
                     userPreferences?.aviation.aviation_interested_in = "charter"
-                }else{
+                }else if (indexPath.row == 1){
                     userPreferences?.aviation.aviation_interested_in = "purchase"
+                }else {
+                    userPreferences?.aviation.aviation_interested_in = "both"
                 }
                 self.collectionView.reloadData()    //reload every thing in case of single selection i.e. yes or no
                 isSelectionChanged()
@@ -2520,8 +2526,10 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
             case .aviationPreferredCharter:
                 if (indexPath.row == 0){
                     userPreferences?.aviation.aviation_preferred_charter_range = "short"
-                }else{
+                }else if (indexPath.row == 1){
                     userPreferences?.aviation.aviation_preferred_charter_range = "long"
+                }else {
+                    userPreferences?.aviation.aviation_preferred_charter_range = "both"
                 }
                 self.collectionView.reloadData()    //reload every thing in case of single selection i.e. yes or no
                 isSelectionChanged()
