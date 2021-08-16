@@ -37,10 +37,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
     lazy var messageList: [ChatMessage] = []
-    var conversationId:String = ""
+    var channel = TCHChannel()
     private let naHUD = JGProgressHUD(style: .dark)
-    
-
     
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -71,7 +69,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         configureMessageCollectionView()
         configureMessageInputBar()
         view.backgroundColor = .black   //making the background color to be black
-        if (conversationId.count > 0){  //user isnt coming to start a new conversation
+        if (channel != nil){  //user isnt coming to start a new conversation
             getConversationDetails(showActivity: true)
         }else{
 //            if let user:ChatUser = self.systemUser() as? ChatUser  {
@@ -91,35 +89,35 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        login()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        chatManager.shutdown()
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        login()
+//    }
+//    
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        chatManager.shutdown()
+//    }
 
     // MARK: Login
 
-    func login() {
-        self.showNetworkActivity()
-        chatManager.login(self.identity) { (success) in
-            self.hideNetworkActivity()
-            DispatchQueue.main.async {
-                if success {
-//                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
-                    print("Logged in as \"\(self.identity)\"")
-                } else {
-//                    self.navigationItem.prompt = "Unable to login"
-                    print("Unable to login")
-                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
-                    self.showError(error)
-                }
-            }
-        }
-    }
+//    func login() {
+//        self.showNetworkActivity()
+//        chatManager.login(self.identity) { (success) in
+//            self.hideNetworkActivity()
+//            DispatchQueue.main.async {
+//                if success {
+////                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
+//                    print("Logged in as \"\(self.identity)\"")
+//                } else {
+////                    self.navigationItem.prompt = "Unable to login"
+//                    print("Unable to login")
+//                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
+//                    self.showError(error)
+//                }
+//            }
+//        }
+//    }
     
     func getConversationDetails(showActivity: Bool) {
 //        if showActivity {
@@ -148,15 +146,15 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
             return
         }
         
-        GoLujoAPIManager().getConversationDetails(token: token,conversationID: conversationId) { items, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain the chat list")
-                completion(nil, error)
-                return
-            }
-            completion(items, error)
-        }
+//        GoLujoAPIManager().getConversationDetails(token: token,conversationID: conversationId) { items, error in
+//            guard error == nil else {
+//                Crashlytics.sharedInstance().recordError(error!)
+//                let error = BackendError.parsing(reason: "Could not obtain the chat list")
+//                completion(nil, error)
+//                return
+//            }
+//            completion(items, error)
+//        }
     }
     
     func update(_ information: ConversationDetails?) {

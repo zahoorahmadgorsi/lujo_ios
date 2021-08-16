@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import TwilioChatClient
 
 class ChatListViewController: UIViewController {
     //MARK:- Init
@@ -15,7 +16,8 @@ class ChatListViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "ChatListViewController" }
     private let naHUD = JGProgressHUD(style: .dark)
-    var items = [ChatHeader]()
+    //var items = [ChatHeader]()
+    var channels = [TCHChannelDescriptor]()
     @IBOutlet weak var tblView: UITableView!
     let serverDateFormatter: DateFormatter = {
         let result = DateFormatter()
@@ -60,30 +62,34 @@ class ChatListViewController: UIViewController {
         getChatsList(showActivity: false)
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        login()
-//    }
-//
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        chatManager.shutdown()
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        login()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        chatManager.shutdown()
+    }
     
     func login() {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             LoginError.errorLogin(description: "User does not exist or is not verified")
             return
         }
-//        LujoSetup().getLujoUser()
+        self.showNetworkActivity()
         chatManager.login(self.identity) { (success) in
+            self.hideNetworkActivity()
             DispatchQueue.main.async {
                 if success {
-                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
-//                    self.navigationItem.prompt = "Logged in as zahoor"
+//                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
+                    print("Logged in as \"\(self.identity)\"")
+                    //after logging in getting the list of subscribed channels
+                    self.getChatsList(showActivity: true)
                 } else {
-                    self.navigationItem.prompt = "Unable to login"
-                    let error = BackendError.parsing(reason: "Unable to login - check the token URL")
+//                    self.navigationItem.prompt = "Unable to login"
+                    print("Unable to login")
+                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
                     self.showError(error)
                 }
             }
@@ -99,49 +105,12 @@ class ChatListViewController: UIViewController {
         if showActivity {
             self.showNetworkActivity()
         }
-        getChats() {information, error in
-            self.hideNetworkActivity()
-            self.refreshControl.endRefreshing() //if refersh control is spinning
-            
-            if let error = error {
-                self.showError(error)
-                return
+        self.chatManager.getUserChannels() {channels in
+            for channel in channels {
+                print("Channel: \(channel.friendlyName)")
             }
-            
-            if let informations = information {
-                self.update(informations)
-            } else {
-                let error = BackendError.parsing(reason: "Could not obtain chat list")
-                self.showError(error)
-            }
-        }
-    }
-    
-    func update(_ information: ConversationList?) {
-        guard information != nil else {
-            return
-        }
-        
-        if let chats = information?.items{
-            self.items = chats.reversed()
+            self.channels = channels
             self.tblView.reloadData()
-        }
-    }
-    
-    func getChats(completion: @escaping (ConversationList?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
-        
-        GoLujoAPIManager().getChats(token: token) { items, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain the chat list")
-                completion(nil, error)
-                return
-            }
-            completion(items, error)
         }
     }
     
@@ -170,7 +139,6 @@ class ChatListViewController: UIViewController {
     
     @objc func addTapped(){
         let newViewController = BasicChatViewController()
-        newViewController.conversationId = ""
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
 }
@@ -178,34 +146,31 @@ class ChatListViewController: UIViewController {
 extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.items.count == 0 {
+        if self.channels.count == 0 {
             self.tblView.setEmptyMessage("No data is available")
         }else{
             self.tblView.setEmptyMessage("")
         }
-        return items.count
+        return channels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
-        let model = items[indexPath.row]
+        let model = channels[indexPath.row]
         cell.tag = indexPath.row
-        cell.lblAuthorName.text = model.authorName
-        cell.lblTitle.text = model.title
+        cell.lblAuthorName.text = model.createdBy
+        cell.lblTitle.text = model.friendlyName
         
-//        let dateFromServer = model.createdAt
-//        let dtDate = myDate.serverDateFormatter.date(from: dateFromServer)!
-//        let strDate = myDate.localDateFormatter.string(from: dtDate)
-//
-//        print (dateFromServer)
-//        print (dtDate.asDateAndTime())
-//        print (strDate)
-        
-//        cell.lblCreatedAt.text = model.createdAt
-        cell.lblCreatedAt.text = model.createdAt
-        if let avatarLink = model.meta?.avatar {
-            cell.imgAvatar.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
+        if let dateFromServer = model.dateCreated{
+            let strDate = myDate.localDateFormatter.string(from: dateFromServer)
+//            print (dateFromServer)
+//            print (strDate)
+            cell.lblCreatedAt.text = strDate
         }
+
+//        if let avatarLink = model.meta?.avatar {
+//            cell.imgAvatar.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
+//        }
         
         self.tblView.separatorStyle = .singleLine
         self.tblView.separatorColor = .systemOrange
@@ -214,12 +179,17 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.items[indexPath.item]
+        //let model = self.items[indexPath.item]
+        let channelDescriptor = self.channels[indexPath.item]
         let newViewController = BasicChatViewController()
-        newViewController.conversationId = model.conversationId
-        self.navigationController?.pushViewController(newViewController, animated: true)
-        
-//        let model = self.items[indexPath.item]
-//        newMessage(title: "Existing Converation", subTitle: "Please send a message to this conversation", placeHolder1: model.title, placeHolder2: "Enter the message", conversationId: model.conversationId,text: model.title)
+        channelDescriptor.channel(completion:{ (result, channel) in
+          if result.isSuccessful(){
+            print("Channel Status: \(String(describing: channel?.status))")
+            if  let channel = channel{
+                newViewController.channel = channel
+            }
+            self.navigationController?.pushViewController(newViewController, animated: true)
+          }
+        })
     }
 }

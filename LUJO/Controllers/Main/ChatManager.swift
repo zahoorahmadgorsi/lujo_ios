@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 import TwilioChatClient
 
 protocol ChatManagerDelegate: AnyObject {
@@ -33,37 +32,37 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     private var identity: String?
     
 
-    func chatClient(_ client: TwilioChatClient, synchronizationStatusUpdated status: TCHClientSynchronizationStatus) {
-        guard status == .completed else {
-            return
-        }
-        checkChannelCreation { (_, channel) in
-            if let channel = channel {
-                self.joinChannel(channel)
-            } else {
-                self.createChannel { (success, channel) in
-                    if success, let channel = channel {
-                        self.joinChannel(channel)
-                    }else{  //joining already existed channel
-                        guard let channelsList = client.channelsList() else {
-                            return
-                        }
-                        channelsList.channel(withSidOrUniqueName:self.uniqueChannelName, completion: { channelResult, channel in
-                            if let channel = channel {
-                                channel.join(completion: { channelResult in
-                                    if channelResult.isSuccessful() {
-                                        print("Channel joined.")
-                                    } else {
-                                        print("Channel NOT joined.")
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }
-            }
-        }
-    }
+//    func chatClient(_ client: TwilioChatClient, synchronizationStatusUpdated status: TCHClientSynchronizationStatus) {
+//        guard status == .completed else {
+//            return
+//        }
+//        checkChannelCreation { (_, channel) in
+//            if let channel = channel {
+//                self.joinChannel(channel)
+//            } else {
+//                self.createChannel { (success, channel) in
+//                    if success, let channel = channel {
+//                        self.joinChannel(channel)
+//                    }else{  //joining already existed channel
+//                        guard let channelsList = client.channelsList() else {
+//                            return
+//                        }
+//                        channelsList.channel(withSidOrUniqueName:self.uniqueChannelName, completion: { channelResult, channel in
+//                            if let channel = channel {
+//                                channel.join(completion: { channelResult in
+//                                    if channelResult.isSuccessful() {
+//                                        print("Channel joined.")
+//                                    } else {
+//                                        print("Channel NOT joined.")
+//                                    }
+//                                })
+//                            }
+//                        })
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     // Called whenever a channel we've joined receives a new message
     func chatClient(_ client: TwilioChatClient, channel: TCHChannel,
@@ -184,6 +183,21 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                 print("Result of channel join: \(result.resultText ?? "No Result")")
             })
         }
+    }
+    
+    //func getSubscribeChannels(_ completion: @escaping( [TCHChannel]?) -> Void){
+    func getUserChannels(_ completion: @escaping([TCHChannelDescriptor]) -> Void){
+//        if let channels = client?.channelsList()?.subscribedChannels(){
+//            completion(channels)
+//        }
+        client?.channelsList()?.userChannelDescriptors(completion: { (result, paginator) in
+          if (result.isSuccessful()) {
+            if let channels = paginator?.items() {
+                completion(channels)
+            }
+          }
+        })
+
     }
 }
 
