@@ -76,8 +76,8 @@ class EEAPIManager {
             }
     }
 
-    func getEvents(_ token: String, past: Bool, term: String?, cityId: Int?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.events(token, past, term, cityId)).responseJSON { response in
+    func getEvents(_ token: String, past: Bool, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.events(token, past, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -111,43 +111,9 @@ class EEAPIManager {
         }
     }
 
-    func getExperiences(_ token: String, term: String?, cityId: Int?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.experiences(token, term, cityId)).responseJSON { response in
-            guard response.result.error == nil else {
-                completion([], response.result.error!)
-                return
-            }
 
-            // Special case where status code is not received, should never happen
-            guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
-                return
-            }
-
-            switch statusCode {
-            case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
-            case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
-                                                             from: response.data!)
-                else {
-                    completion([], BackendError.parsing(reason: "Unable to parse response"))
-                    return
-                }
-                completion(result.content, nil)
-                return
-            case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
-            case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
-            default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
-            }
-        }
-    }
-    
-    func getVillas(_ token: String, term: String?, cityId: Int?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.villas(token, term, cityId)).responseJSON { response in
+    func getExperiences(_ token: String, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.experiences(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -181,8 +147,43 @@ class EEAPIManager {
         }
     }
     
-    func getGoods(_ token: String, term: String?, category_term_id: Int?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.goods(token, term, category_term_id)).responseJSON { response in
+    func getVillas(_ token: String, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.villas(token, term, cityId, productId)).responseJSON { response in
+            guard response.result.error == nil else {
+                completion([], response.result.error!)
+                return
+            }
+
+            // Special case where status code is not received, should never happen
+            guard let statusCode = response.response?.statusCode else {
+                completion([], BackendError.unhandledStatus)
+                return
+            }
+
+            switch statusCode {
+            case 1 ... 199: // Transfer protoco-level information: Unexpected
+                completion([], self.handleError(response, statusCode))
+            case 200 ... 299: // Success
+                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
+                                                             from: response.data!)
+                else {
+                    completion([], BackendError.parsing(reason: "Unable to parse response"))
+                    return
+                }
+                completion(result.content, nil)
+                return
+            case 300 ... 399: // Redirection: Unexpected
+                completion([], self.handleError(response, statusCode))
+            case 400 ... 499: // Client Error
+                completion([], self.handleError(response, statusCode))
+            default: // 500 or bigger, Server Error
+                completion([], self.handleError(response, statusCode))
+            }
+        }
+    }
+    
+    func getGoods(_ token: String, term: String?, category_term_id: Int?, productId: Int? , completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.goods(token, term, category_term_id, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -225,8 +226,8 @@ class EEAPIManager {
         }
     }
     
-    func getYachts(_ token: String, term: String?, cityId: Int?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.yachts(token, term, cityId)).responseJSON { response in
+    func getYachts(_ token: String, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.yachts(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

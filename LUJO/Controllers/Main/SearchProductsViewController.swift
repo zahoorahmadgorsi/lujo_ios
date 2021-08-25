@@ -276,7 +276,7 @@ extension SearchProductsViewController {
         switch category {
             case .event:
                 Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getEvents(token, past: past, term: term, cityId: nil) { list, error in
+                EEAPIManager().getEvents(token, past: past, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain events information")
@@ -289,7 +289,7 @@ extension SearchProductsViewController {
             case .experience:
                 Mixpanel.mainInstance().track(event: "ExperienceSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getExperiences(token, term: term, cityId: nil) { list, error in
+                EEAPIManager().getExperiences(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain experiences information")
@@ -301,7 +301,7 @@ extension SearchProductsViewController {
             case .villa:
                 Mixpanel.mainInstance().track(event: "VillaSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getVillas(token, term: term, cityId: nil) { list, error in
+                EEAPIManager().getVillas(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")
@@ -313,7 +313,7 @@ extension SearchProductsViewController {
             case .gift:
                 Mixpanel.mainInstance().track(event: "GiftSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getGoods(token, term: term, category_term_id: nil) { list, error in
+                EEAPIManager().getGoods(token, term: term, category_term_id: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
@@ -325,7 +325,7 @@ extension SearchProductsViewController {
             case .yacht:
                 Mixpanel.mainInstance().track(event: "YachtSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getYachts(token, term: term, cityId: nil) { list, error in
+                EEAPIManager().getYachts(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
@@ -347,7 +347,7 @@ extension SearchProductsViewController {
                     completion(list, error)
             }
             case .recent:   //it will never be called
-                EEAPIManager().getYachts(token, term: term, cityId: nil) { list, error in
+                EEAPIManager().getYachts(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")

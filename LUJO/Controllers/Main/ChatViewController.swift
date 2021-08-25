@@ -68,7 +68,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         configureMessageCollectionView()
         configureMessageInputBar()
-        view.backgroundColor = .black   //making the background color to be black
+        
         if (channel != nil){  //user isnt coming to start a new conversation
             getConversationDetails(showActivity: true)
         }else{
@@ -89,35 +89,35 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         }
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        login()
-//    }
-//    
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        chatManager.shutdown()
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        login()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        chatManager.shutdown()
+    }
 
     // MARK: Login
 
-//    func login() {
-//        self.showNetworkActivity()
-//        chatManager.login(self.identity) { (success) in
-//            self.hideNetworkActivity()
-//            DispatchQueue.main.async {
-//                if success {
-////                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
-//                    print("Logged in as \"\(self.identity)\"")
-//                } else {
-////                    self.navigationItem.prompt = "Unable to login"
-//                    print("Unable to login")
-//                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
-//                    self.showError(error)
-//                }
-//            }
-//        }
-//    }
+    func login() {
+        self.showNetworkActivity()
+        chatManager.login(self.identity) { (success) in
+            self.hideNetworkActivity()
+            DispatchQueue.main.async {
+                if success {
+//                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
+                    print("Logged in as \"\(self.identity)\"")
+                } else {
+//                    self.navigationItem.prompt = "Unable to login"
+                    print("Unable to login")
+                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
+                    self.showError(error)
+                }
+            }
+        }
+    }
     
     func getConversationDetails(showActivity: Bool) {
 //        if showActivity {

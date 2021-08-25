@@ -98,37 +98,8 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        switch product.type {
-            case "event":           fallthrough
-            case "special-event":   setupEvents(product)
-            case "gift":            fallthrough
-            case "experience":      setupExperience(product)
-            case "yacht":
-                setupYacht(product)
-                getYachtGallery(product: product)
-            case "villa":           setupVilla(product)
-            default:
-                setupEvents(product)//("It could be restaurant")
-                break
-        }
-        //setting up gallery
-        setUpGallery(product)
         
         scrollView.delegate = self
-        if let font = descriptionTextView.font{
-            let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
-//            print(currentHeight,descHeightToShowReadMore)
-                if (currentHeight > descHeightToShowReadMore){
-                    viewReadMore.isHidden = false
-                    lblDescriptionHeight.constant = descHeightToShowReadMore
-                }else{
-                    viewReadMore.isHidden = true  //no need to show readmore button
-                    lblDescriptionHeight.constant = currentHeight
-                }
-        }
-        
-        
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
         //setting tapping event on viewheart
         //Add tap gesture on favourite
@@ -151,23 +122,135 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         
         pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
-        setRecentlyViewed()
+        
+        if (product.name.count == 0 ){  //detail is going to open due to some push notification
+            self.showNetworkActivity()
+            getProductDetails() {information, error in
+                self.hideNetworkActivity()
+
+                if let error = error {
+                    self.showError(error)
+                    return
+                }
+
+                if let informations = information {
+                    if (informations == nil ){
+                        let error = WishListError.noDataFound(reason: "Could not obtain product details")
+                        self.showError(error)
+                    }else{
+                        self.product = information
+                        self.setUpUi()
+                    }
+                } else {
+                    let error = BackendError.parsing(reason: "Could not obtain product details")
+                    self.showError(error)
+                }
+            }
+        }else{
+            setUpUi()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activateKeyboardManager()
-        //No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        self.tabBarController?.tabBar.isHidden = false
     }
+    
+    func getProductDetails(completion: @escaping (Product?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        if (product.type == "event"){
+            EEAPIManager().getEvents(token, past: false, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "experience"){
+            EEAPIManager().getExperiences(token, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "villa"){
+            EEAPIManager().getVillas(token, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "gift"){
+            EEAPIManager().getGoods(token, term: nil, category_term_id: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "yacht"){
+            EEAPIManager().getYachts(token, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }
+    }
+    
+    func setUpUi(){
+        switch product.type {
+            case "event":           fallthrough
+            case "special-event":   setupEvents(product)
+            case "gift":            fallthrough
+            case "experience":      setupExperience(product)
+            case "yacht":
+                setupYacht(product)
+                getYachtGallery(product: product)
+            case "villa":           setupVilla(product)
+            default:
+                setupEvents(product)//("It could be restaurant")
+                break
+        }
+        //Setting up ReadMore
+        if let font = descriptionTextView.font{
+            let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+            print(currentHeight,descHeightToShowReadMore)
+            if (currentHeight > descHeightToShowReadMore){
+                viewReadMore.isHidden = false
+                lblDescriptionHeight.constant = descHeightToShowReadMore
+            }else{
+                viewReadMore.isHidden = true  //no need to show readmore button
+                lblDescriptionHeight.constant = currentHeight
+            }
+        }
+        
+        //setting up gallery
+        setUpGallery(product)
+        setRecentlyViewed()
+    }
+    
     
     func getYachtGallery(product: Product){
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
@@ -187,6 +270,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             }
         }
     }
+    
     @IBAction func requestBooking(_ sender: Any) {
         sendInitialInformation()
     }
@@ -744,7 +828,8 @@ extension ProductDetailsViewController {
     }
     
     private func convertToAttributedString(_ text: String) -> NSAttributedString {
-        let range = NSRange(location: 0, length: text.count)
+//        let range = NSRange(location: 0, length: text.count)
+        let range = NSRange(location: 0, length: text.unicodeScalars.count) //unicodeScalars will count \n and \r as well.
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
         let aString = NSMutableAttributedString(string: text)
@@ -899,7 +984,7 @@ extension ProductDetailsViewController {
             }
         }
     }
-    
+        
     func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))

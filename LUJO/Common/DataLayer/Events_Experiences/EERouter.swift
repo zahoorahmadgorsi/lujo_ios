@@ -27,15 +27,15 @@ enum EERouter: URLRequestConvertible {
     }()
 
     case home(String)
-    case events(String, Bool, String?, Int?)
-    case experiences(String, String?, Int?)
+    case events(String, Bool, String?, Int?, Int?)
+    case experiences(String, String?, Int?, Int?)
     case salesforce(Int, String)
     case geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
-    case villas(String, String?, Int?)
-    case goods(String, String?, Int?)
-    case yachts(String, String?, Int?)
+    case villas(String, String?, Int?, Int?)
+    case goods(String, String?, Int?, Int?)
+    case yachts(String, String?, Int?, Int?)
     case getYachtGallery(String, Int)
     case topRated(token: String, type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
@@ -107,7 +107,7 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
-            case let .events(token, past, term, cityId):
+            case let .events(token, past, term, cityId, productId):
                 newURLComponents.path.append("/events")
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
@@ -121,7 +121,10 @@ enum EERouter: URLRequestConvertible {
                 if let cityId = cityId {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
                 }
-            case let .experiences(token, term, cityId):
+                if let id = productId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
+                }
+            case let .experiences(token, term, cityId, productId):
                 newURLComponents.path.append("/experiences")
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
@@ -132,7 +135,10 @@ enum EERouter: URLRequestConvertible {
                 if let cityId = cityId {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
                 }
-            case let .villas(token, term, cityId):
+                if let id = productId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
+                }
+            case let .villas(token, term, cityId, productId):
                 newURLComponents.path.append("/villas")
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
@@ -143,8 +149,11 @@ enum EERouter: URLRequestConvertible {
                 if let cityId = cityId {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
                 }
+                if let id = productId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
+                }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-            case let .goods(token, term, category_term_id):
+            case let .goods(token, term, category_term_id, productId):
                 if (category_term_id ?? 0 > 0){ //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
                     newURLComponents.path.append("/gifts/per-category")
                 }else{
@@ -161,7 +170,10 @@ enum EERouter: URLRequestConvertible {
                 if let categoryTermId = category_term_id {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
                 }
-            case let .yachts(token, term, cityId):
+                if let id = productId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
+                }
+            case let .yachts(token, term, cityId, productId):
                 newURLComponents.path.append("/yachts")
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
@@ -171,6 +183,9 @@ enum EERouter: URLRequestConvertible {
                 }
                 if let cityId = cityId {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
+                }
+                if let id = productId {
+                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
                 

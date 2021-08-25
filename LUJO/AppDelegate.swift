@@ -77,9 +77,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
 
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface. applicationDidBecomeActive will never be called if app is in foreground and you have received a push notification
     func applicationDidBecomeActive(_ application: UIApplication) {
         Delighted.initializeSDK()
-      }
+        // handle any deeplink
+        Deeplinker.checkDeepLink()
+    }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         if
@@ -96,11 +99,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     // Silent push notifications.
+    // when app is running in the background or closed, and there is tap on push notification then this method is called
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        //if app is already in foreground then just check the deep link
+        switch UIApplication.shared.applicationState {
+        case .background, .inactive:    // background
+            print("app is in background")
+            break
+        case .active:   // foreground
+            Deeplinker.checkDeepLink()
+            print("app is in foreground")
+            break
+        default:
+            break
+        }
+        Deeplinker.handleRemoteNotification(userInfo)
     }
-
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken tokenData: Data) {
         let tokenParts = tokenData.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()

@@ -429,8 +429,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         // -------------------------------------------------------------------------------------
         // Refresh control and data caching.
         
-        // Stop refresh control animation and allow scroll to sieze back refresh control space by
-        // scrolling up.
+        // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
         refreshControl.endRefreshing()
         
         // Store data for later use inside preload reference.
@@ -519,15 +518,17 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 selectedCellImageViewSnapshot = selectedSpecialEventCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             default: return
         }
-        
-        let viewController = ProductDetailsViewController.instantiate(product: event)
-//        // B1 - 4
-        //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
-        viewController.transitioningDelegate = self
-        viewController.modalPresentationStyle = .overFullScreen
-        present(viewController, animated: true)
+        if let event = event{
+            let viewController = ProductDetailsViewController.instantiate(product: event)
+    //        // B1 - 4
+            //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
+            viewController.transitioningDelegate = self
+            viewController.modalPresentationStyle = .overFullScreen
+            present(viewController, animated: true)
 
-//        self.navigationController?.pushViewController(viewController, animated: true)
+    //        self.navigationController?.pushViewController(viewController, animated: true)
+        }
+
     }
     
     func showNetworkActivity() {

@@ -168,74 +168,74 @@ struct EventExperienceCity: Codable {
 //it could be an event, experience, gift, villa or yacht
 struct Product: Codable {
 //struct Product: Decodable {
-    let type: String
-    let id: Int
-    let name: String
-    let description: String
-    let price: Double?
-    let link: String?
-    let isFeatured: Bool?
-    let startDate: Date?
-    let endDate: Date?
-    let timezone: String?
-    let primaryMedia: Gallery?
+    var type: String
+    var id: Int
+    var name: String
+    var description: String
+    var price: Double?
+    var link: String?
+    var isFeatured: Bool?
+    var startDate: Date?
+    var endDate: Date?
+    var timezone: String?
+    var primaryMedia: Gallery?
     var gallery: [Gallery]?
-    let eventCategory: [Taxonomy]?
-    let experienceCategory: [Taxonomy]?
-    let tags: [Taxonomy]?
-    let eventVenue: [Taxonomy]?
-    let priceRange: [Taxonomy]?
-    let location: [TaxonomyLocation]?
+    var eventCategory: [Taxonomy]?
+    var experienceCategory: [Taxonomy]?
+    var tags: [Taxonomy]?
+    var eventVenue: [Taxonomy]?
+    var priceRange: [Taxonomy]?
+    var location: [TaxonomyLocation]?
     var isFavourite: Bool?
     //Gifts related
-    let giftCategory: [Taxonomy]?
+    var giftCategory: [Taxonomy]?
     //Villas related
-    let headline: String?
-    let numberOfBedrooms: String?
-    let numberOfBathrooms: String?
-    let numberOfGuests: String?
-    let rentPricePerWeekLowSeason: String?
-    let rentPricePerWeekHighSeason: String?
-    let salePrice: String?
+    var headline: String?
+    var numberOfBedrooms: String?
+    var numberOfBathrooms: String?
+    var numberOfGuests: String?
+    var rentPricePerWeekLowSeason: String?
+    var rentPricePerWeekHighSeason: String?
+    var salePrice: String?
     var latitude: String?
-    let longitude: String?
-    let villaAmenities: [Taxonomy]?
-    let villaFacilities: [Taxonomy]?
-    let villaStyle: [Taxonomy]?
-    let villaStatus: [Taxonomy]?
+    var longitude: String?
+    var villaAmenities: [Taxonomy]?
+    var villaFacilities: [Taxonomy]?
+    var villaStyle: [Taxonomy]?
+    var villaStatus: [Taxonomy]?
     //Yachts related
-    let guestsNumber: String?
-    let cabinNumber: String?
-    let crewNumber: String?
-    let builderName: String?
-    let interiorDesigner: String?
-    let exteriorDesigner: String?
-    let buildYear: String?
-    let refitYear: String?
-    let lengthM: String?
-    let beamM: String?
-    let draftM: String?
-    let grossTonnage: String?
-    let cruisingSpeedKnot: String?
-    let topSpeedKnot: String?
-    let charterPriceLowSeasonPerWeek: String?
-    let charterPriceHighSeasonPerWeek: String?
-    let yachtType: [Taxonomy]?
-    let yachtStatus: [Taxonomy]?
-    let yachtExtras: [Taxonomy]?
-    let charterPriceLowSeasonPerDay: String?
-    let charterPriceHighSeasonPerDay: String?
+    var guestsNumber: String?
+    var cabinNumber: String?
+    var crewNumber: String?
+    var builderName: String?
+    var interiorDesigner: String?
+    var exteriorDesigner: String?
+    var buildYear: String?
+    var refitYear: String?
+    var lengthM: String?
+    var beamM: String?
+    var draftM: String?
+    var grossTonnage: String?
+    var cruisingSpeedKnot: String?
+    var topSpeedKnot: String?
+    var charterPriceLowSeasonPerWeek: String?
+    var charterPriceHighSeasonPerWeek: String?
+    var yachtType: [Taxonomy]?
+    var yachtStatus: [Taxonomy]?
+    var yachtExtras: [Taxonomy]?
+    var charterPriceLowSeasonPerDay: String?
+    var charterPriceHighSeasonPerDay: String?
 //    Restaurant related
-    let tripadvisor: String?
-    let address: String?
-    let phone: String?
-    let zipCode: String?
-    let email: String?
-    let website: String?
-    let starChief: String?
-    let restaurantCategory: [Taxonomy]?
-    let cuisineCategory: [Taxonomy]?
-    let michelinStar: [Taxonomy]?
+    var tripadvisor: String?
+    var address: String?
+    var phone: String?
+    var zipCode: String?
+    var email: String?
+    var website: String?
+    var starChief: String?
+    var restaurantCategory: [Taxonomy]?
+    var cuisineCategory: [Taxonomy]?
+    var michelinStar: [Taxonomy]?
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -316,7 +316,14 @@ struct Product: Codable {
 
 
 extension Product {
-
+    
+    init(id:Int, type:String){
+        self.id = id
+        self.type = type
+        self.name =  ""
+        self.description =  ""
+    }
+    
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)

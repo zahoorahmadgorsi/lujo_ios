@@ -62,15 +62,15 @@ class ChatListViewController: UIViewController {
         getChatsList(showActivity: false)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        login()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        chatManager.shutdown()
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        login()
+//    }
+//
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        chatManager.shutdown()
+//    }
     
     func login() {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
@@ -102,16 +102,16 @@ class ChatListViewController: UIViewController {
     }
     
     func getChatsList(showActivity: Bool) {
-        if showActivity {
-            self.showNetworkActivity()
-        }
-        self.chatManager.getUserChannels() {channels in
-            for channel in channels {
-                print("Channel: \(channel.friendlyName)")
-            }
-            self.channels = channels
-            self.tblView.reloadData()
-        }
+//        if showActivity {
+//            self.showNetworkActivity()
+//        }
+//        self.chatManager.getUserChannels() {channels in
+//            for channel in channels {
+//                print("Channel: \(channel.friendlyName)")
+//            }
+//            self.channels = channels
+//            self.tblView.reloadData()
+//        }
     }
     
     func showError(_ error: Error , isInformation:Bool = false) {
