@@ -44,7 +44,7 @@ class ChatListViewController: UIViewController {
         return UIStoryboard.main.instantiate(identifier)
     }
     // Convenience class to manage interactions with Twilio Chat
-    var chatManager = ChatManager()
+//    var chatManager = ChatManager()
     var identity = "USER_IDENTITY"
     
     //MARK:- View life cycle
@@ -72,29 +72,29 @@ class ChatListViewController: UIViewController {
 //        chatManager.shutdown()
 //    }
     
-    func login() {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            LoginError.errorLogin(description: "User does not exist or is not verified")
-            return
-        }
-        self.showNetworkActivity()
-        chatManager.login(self.identity) { (success) in
-            self.hideNetworkActivity()
-            DispatchQueue.main.async {
-                if success {
-//                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
-                    print("Logged in as \"\(self.identity)\"")
-                    //after logging in getting the list of subscribed channels
-                    self.getChatsList(showActivity: true)
-                } else {
-//                    self.navigationItem.prompt = "Unable to login"
-                    print("Unable to login")
-                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
-                    self.showError(error)
-                }
-            }
-        }
-    }
+//    func login() {
+//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+//            LoginError.errorLogin(description: "User does not exist or is not verified")
+//            return
+//        }
+//        self.showNetworkActivity()
+//        chatManager.login(self.identity) { (success) in
+//            self.hideNetworkActivity()
+//            DispatchQueue.main.async {
+//                if success {
+////                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
+//                    print("Logged in as \"\(self.identity)\"")
+//                    //after logging in getting the list of subscribed channels
+//                    self.getChatsList(showActivity: true)
+//                } else {
+////                    self.navigationItem.prompt = "Unable to login"
+//                    print("Unable to login")
+//                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
+//                    self.showError(error)
+//                }
+//            }
+//        }
+//    }
     
     @objc func refreshConversations() {
         self.refreshControl.beginRefreshing()

@@ -16,7 +16,7 @@ class CustomRequestAPIManager {
     
     private init() {}
     
-    func requestYacht(destination: String, yachtName: String?, yachtCharter: String, yachtLenght: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String, completion: @escaping (Error?) -> Void) {
+    func requestYacht(destination: String, yachtName: String?, yachtCharter: String, yachtLenght: String? = nil, dateFrom: String, dateTo: String, guestsCount: Int, token: String, completion: @escaping (Error?) -> Void) {
         
         Alamofire.request(CustomRequestRouter.requestYacht(destination, yachtName, yachtCharter, yachtLenght, dateFrom, dateTo, guestsCount, token))
             .responseJSON { response in

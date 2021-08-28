@@ -1060,10 +1060,10 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.modalPresentationStyle = .overFullScreen
 
-        present(viewController, animated: true)
-        
-//        self.navigationController?.delegate = self //for push/pop navigation
-//        self.navigationController?.pushViewController(viewController, animated: true)
+        // Initialize a navigation controller, with your view controller as its root
+        let navigationController = UINavigationController(rootViewController: viewController)
+        present(navigationController, animated: true, completion: nil)
+//        present(viewController, animated: true)
     }
     
 }

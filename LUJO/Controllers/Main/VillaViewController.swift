@@ -19,7 +19,7 @@ class VillaViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "VillaViewController" }
     
-    private(set) var product: Product?
+    private(set) var product: Product!
     
     /// Init method that will init and return view controller.
     class func instantiate(product: Product) -> VillaViewController {
@@ -227,7 +227,26 @@ class VillaViewController: UIViewController {
                                                    ,"Villa Check In Date" : dateString
                                                    ,"Villa Check Out Date" : returnDateString])
         
-
+        //Zahoor Start
+//        guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+//        let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
+//        let channelName = userFirstName+product.type+dateTime
+////            print(channelName)
+//        let initialMessage = """
+//        Hi Concierge team
+//
+//        I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
+//
+//        \(LujoSetup().getLujoUser()?.firstName ?? "User")
+//        """
+//
+////            print(initialMessage)
+//        let viewController = BasicChatViewController()
+//        viewController.chatManager = ChatManager(channelName: channelName)
+//        viewController.product = product
+//        viewController.initialMessage = initialMessage
+//        self.navigationController?.pushViewController(viewController, animated: true)
+        
         EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
@@ -246,11 +265,12 @@ class VillaViewController: UIViewController {
         Hi Concierge team
 
         I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
-        
+
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
         startChatWithInitialMessage(initialMessage)
+        //Zahoor end
         
         //showNetworkActivity()
         CustomRequestAPIManager.shared.requestVilla( villaName: villaName, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token, villaRooms: -1) { error in
@@ -261,10 +281,8 @@ class VillaViewController: UIViewController {
                     //self.showErrorPopup(withTitle: "Error", error:error)
                     return
                 }
-
                 print ("Success: custom request villa.")
                 self.dismiss(animated: true, completion: nil)
-                
             }
         }
     }

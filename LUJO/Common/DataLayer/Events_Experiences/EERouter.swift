@@ -29,7 +29,7 @@ enum EERouter: URLRequestConvertible {
     case home(String)
     case events(String, Bool, String?, Int?, Int?)
     case experiences(String, String?, Int?, Int?)
-    case salesforce(Int, String)
+    case salesforce(Int, String, String?)
     case geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
@@ -273,8 +273,8 @@ enum EERouter: URLRequestConvertible {
             return getTopRatedDataAsJSONData(token: token, type: type, term:term )
         case .recents:
             return nil
-        case let .salesforce(itemId, token):
-            return getSalesforceDataAsJSONData(itemId: itemId, token: token)
+        case let .salesforce(itemId, token, channelID):
+            return getSalesforceDataAsJSONData(itemId: itemId, token: token, channelId: channelID)
         case let .geopoint(token, type, latitude, longitude, _):
             return getGeopointDataAsJSONData(type: type, latitude: latitude, longitude: longitude, token: token)
         case .citySearch:
@@ -309,11 +309,14 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getSalesforceDataAsJSONData(itemId: Int, token: String) -> Data? {
-        let body: [String: Any] = [
+    fileprivate func getSalesforceDataAsJSONData(itemId: Int, token: String, channelId: String?) -> Data? {
+        var body: [String: Any] = [
             "item_id": itemId,
             "token": token
         ]
+        if let channelId = channelId {
+            body["channelId"] = channelId
+        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 }

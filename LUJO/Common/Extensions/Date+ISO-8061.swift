@@ -19,6 +19,13 @@ public extension Date {
         return dateFormatter.date(from: string)
     }
 
+    static func dateToString(date: Date, format: String = "yyyy-MM-dd-HH-mm-ss") -> String {
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = format
+        let dateTimePrefix: String = formatter.string(from: date)
+        return dateTimePrefix
+    }
+    
     static func isoStringNow() -> String {
         return Date.ISOStringFromDate(date: Date())
     }

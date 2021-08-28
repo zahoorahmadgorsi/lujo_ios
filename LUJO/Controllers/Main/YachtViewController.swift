@@ -18,7 +18,7 @@ class YachtViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "YachtViewController" }
     
-    private(set) var product: Product?
+    private(set) var product: Product!
     
     /// Init method that will init and return view controller.
     class func instantiate(product: Product) -> YachtViewController {
@@ -207,10 +207,10 @@ class YachtViewController: UIViewController {
             return
         }
         
-        guard let lenghtText = selectedYachtLenght, !lenghtText.isEmpty else {
-            showInformationPopup(withTitle: "Info", message:"Please choose yacht lenght.")
-            return
-        }
+//        guard let lenghtText = selectedYachtLenght, !lenghtText.isEmpty else {
+//            showInformationPopup(withTitle: "Info", message:"Please choose yacht lenght.")
+//            return
+//        }
         
         guard !dateTime.date.isEmpty else {
             showInformationPopup(withTitle: "Info", message:"Please select embarkation date.")
@@ -235,8 +235,8 @@ class YachtViewController: UIViewController {
         
         Mixpanel.mainInstance().track(event: "Yacht Custom Request",
                                       properties: ["Yacht Charter" : yachtCharter
-                                                   ,"Yacht destination" : destination
-                                                   ,"Yacht Length" : lenghtText])
+                                                   ,"Yacht destination" : destination])
+//                                                   ,"Yacht Length" : lenghtText])
         
         var returnDateString = ""
         if let yachtCharter = selectedYachtCharter{
@@ -251,6 +251,25 @@ class YachtViewController: UIViewController {
         
         // if return date is empty then from date is the return date
         returnDateString = (returnDateString.count == 0 ? dateString : returnDateString)
+        
+        //Zahoor Start
+//        guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+//        let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
+//        let channelName = userFirstName+product.type+dateTime
+////            print(channelName)
+//        let initialMessage = """
+//        Hi Concierge team,
+//        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
+//        
+//        \(LujoSetup().getLujoUser()?.firstName ?? "User")
+//        """
+//        
+////            print(initialMessage)
+//        let viewController = BasicChatViewController()
+//        viewController.chatManager = ChatManager(channelName: channelName)
+//        viewController.product = product
+//        viewController.initialMessage = initialMessage
+//        self.navigationController?.pushViewController(viewController, animated: true)
         
         EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
             guard error == nil else {
@@ -268,15 +287,15 @@ class YachtViewController: UIViewController {
         
         let initialMessage = """
         Hi Concierge team,
-        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")with lenght of \(lenghtText)m, to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
-        
+        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
+
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
         startChatWithInitialMessage(initialMessage)
-        
+        //Zahoor end
         //showNetworkActivity()
-        CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtCharter: yachtCharter, yachtLenght: lenghtText, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
+        CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtCharter: yachtCharter, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
             DispatchQueue.main.async {
                 //self.hideNetworkActivity()
                 if let error = error {
@@ -287,11 +306,6 @@ class YachtViewController: UIViewController {
 
                 print ("Success: custom request yacht.")
                 self.dismiss(animated: true, completion: nil)
-                /*
-                showCardAlertWith(title: "Info", body: "Your request is being processed. We will get back to you shortly. You can follow the status of your request in My bookings.", buttonTitle: "Ok", cancelButtonTitle: nil, buttonTapHandler: {
-                    self.dismiss(animated: true, completion: nil)
-                })
-                */
             }
         }
     }

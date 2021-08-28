@@ -11,7 +11,10 @@ import TwilioChatClient
 
 protocol ChatManagerDelegate: AnyObject {
     func reloadMessages()
-    func receivedNewMessage(message: TCHMessage)
+    func receivedNewMessage(message: TCHMessage , channel: TCHChannel)
+    func channelJoined(channel: TCHChannel)
+    func showNetworkActivity()
+    func hideNetworkActivity()
 }
 
 class ChatManager: NSObject, TwilioChatClientDelegate {
@@ -19,8 +22,8 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
     
     // the unique name of the channel you create
-    private let uniqueChannelName = "generalTwo"
-    private let friendlyChannelName = "General Channel"
+    private var uniqueChannelName = "generalTwo"
+    private var friendlyChannelName = "General Channel"
 
     // For the quickstart, this will be the view controller
     weak var delegate: ChatManagerDelegate?
@@ -31,7 +34,11 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     private(set) var messages: [TCHMessage] = []
     private var identity: String?
     
-
+    init( channelName : String ){
+        self.uniqueChannelName = channelName
+        self.friendlyChannelName = channelName
+    }
+    
     func chatClient(_ client: TwilioChatClient, synchronizationStatusUpdated status: TCHClientSynchronizationStatus) {
         guard status == .completed else {
             return
@@ -49,7 +56,6 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                         }
                         channelsList.channel(withSidOrUniqueName:self.uniqueChannelName, completion: { channelResult, channel in
                             if let channel = channel {
-                                print(channel.sid as Any)
                                 channel.join(completion: { channelResult in
                                     if channelResult.isSuccessful() {
                                         print("Channel joined.")
@@ -57,6 +63,8 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                                         print("Channel NOT joined.")
                                     }
                                 })
+                            }else{
+                                self.delegate?.hideNetworkActivity()
                             }
                         })
                     }
@@ -74,7 +82,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             if let delegate = self.delegate {
                 delegate.reloadMessages()
                 if self.messages.count > 0 {
-                    delegate.receivedNewMessage(message: message)
+                    delegate.receivedNewMessage(message: message, channel: channel)
                 }
             }
         }
@@ -122,11 +130,12 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
         // calling a Twilio function, as described in the Quickstart docs
         let urlString = "\(TOKEN_URL)?identity=\(identity)"
         self.identity = identity
-
+        delegate?.showNetworkActivity()
         TokenUtils.retrieveToken(url: urlString) { (token, _, error) in
             guard let token = token else {
                 print("Error retrieving token: \(error.debugDescription)")
                 completion(false)
+                self.delegate?.hideNetworkActivity()
                 return
             }
             // Set up Twilio Chat client
@@ -158,7 +167,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             ]
         channelsList.createChannel(options: options, completion: { channelResult, channel in
             if channelResult.isSuccessful() {
-                print("Channel created.")
+                print("Channel created: \(channel?.sid)")
             } else {
                 print(channelResult.resultText)
             }
@@ -177,7 +186,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
 
     private func joinChannel(_ channel: TCHChannel) {
         self.channel = channel
-        print(channel.sid)
+        delegate?.channelJoined(channel: channel)
         if channel.status == .joined {
             print("Current user already exists in channel")
         } else {

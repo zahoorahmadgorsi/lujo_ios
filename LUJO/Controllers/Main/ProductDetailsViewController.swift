@@ -153,11 +153,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         activateKeyboardManager()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     func getProductDetails(completion: @escaping (Product?, Error?) -> Void) {
@@ -878,46 +880,71 @@ extension ProductDetailsViewController {
 extension ProductDetailsViewController {
     
     fileprivate func sendInitialInformation() {
-        print(product.type)
+//        print(product.type)
         if (product.type == "yacht"){
-            self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
+            let viewController = YachtViewController.instantiate(product: product)
+//            let navigationController = UINavigationController(rootViewController: viewController)
+//            present(navigationController, animated: true, completion: nil)
+            self.present(viewController, animated: true, completion: nil)
         }else if (product.type == "villa"){
-            self.present(VillaViewController.instantiate(product: product), animated: true, completion: nil)
+            let viewController = VillaViewController.instantiate(product: product)
+//            let navigationController = UINavigationController(rootViewController: viewController)
+//            present(navigationController, animated: true, completion: nil)
+            self.present(viewController, animated: true, completion: nil)
         }else if(product.type == "restaurant"){
             let viewController = RestaurantRequestReservationViewController.instantiate(restaurant: product)
+//            let navigationController = UINavigationController(rootViewController: viewController)
+//            present(navigationController, animated: true, completion: nil)
             present(viewController, animated: true, completion: nil)
         }
         else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-            
-            EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
-                guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
-                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
-                    return
-                }
-                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-                if let user = LujoSetup().getLujoUser(), user.id > 0 {
-                    Intercom.logEvent(withName: "custom_request", metaData:[
-                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-                                        ,"user_id":user.id])
-                }
-            }
-            
-            Mixpanel.mainInstance().track(event: "Product Custom Request",
-                                          properties: ["Product Name" : product.name
-                                                       ,"Product Type" : product.type
-                                                       ,"ProductId" : product.id])
-            
+            //zahoor start
+            let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
+            let channelName = userFirstName+product.type+dateTime
+//            print(channelName)
             let initialMessage = """
             Hi Concierge team,
-            
+
             I am interested in \(product.name), can you assist me?
-            
+
             \(userFirstName)
             """
-            
-            startChatWithInitialMessage(initialMessage)
+//            print(initialMessage)
+            let viewController = BasicChatViewController()
+            viewController.chatManager = ChatManager(channelName: channelName)
+            viewController.product = product
+            viewController.initialMessage = initialMessage
+            self.navigationController?.pushViewController(viewController, animated: true)
+//            EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
+//                guard error == nil else {
+//                    Crashlytics.sharedInstance().recordError(error!)
+//                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
+//                    return
+//                }
+//                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//                if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                    Intercom.logEvent(withName: "custom_request", metaData:[
+//                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+//                                        ,"user_id":user.id])
+//                }
+//            }
+//
+//            Mixpanel.mainInstance().track(event: "Product Custom Request",
+//                                          properties: ["Product Name" : product.name
+//                                                       ,"Product Type" : product.type
+//                                                       ,"ProductId" : product.id])
+//
+//            let initialMessage = """
+//            Hi Concierge team,
+//
+//            I am interested in \(product.name), can you assist me?
+//
+//            \(userFirstName)
+//            """
+//
+//            startChatWithInitialMessage(initialMessage)
+            //Zahoor end
         }
         
     }

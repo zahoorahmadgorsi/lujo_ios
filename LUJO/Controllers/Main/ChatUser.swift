@@ -11,7 +11,7 @@ import MessageKit
 struct ChatUser: SenderType, Equatable {
     var senderId: String
     var displayName: String
-    var avatar:String
+    var avatar:String?
     
     init(senderId: String,displayName: String, avatar:String = "https://www.golujo.com/_assets/media/icons/footer-logo.svg") {
         self.senderId = senderId

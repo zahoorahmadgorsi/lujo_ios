@@ -54,12 +54,14 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         return formatter
     }()
 
-    // Important - this identity would be assigned by your app, for
-    // instance after a user logs in
+//    // Important - this identity would be assigned by your app, for
+//    // instance after a user logs in
     var identity = "USER_IDENTITY"
-
-    // Convenience class to manage interactions with Twilio Chat
-    var chatManager = ChatManager()
+//    // Convenience class to manage interactions with Twilio Chat
+//    var chatManager = ChatManager()
+    var chatManager:ChatManager!
+    var product:Product!
+    var initialMessage:String?
     
     // MARK: - Lifecycle
 
@@ -69,18 +71,18 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         configureMessageCollectionView()
         configureMessageInputBar()
         
-        if (channel != nil){  //user isnt coming to start a new conversation
-            getConversationDetails(showActivity: true)
-        }else{
-//            if let user:ChatUser = self.systemUser() as? ChatUser  {
-                let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
-                let chatUser:ChatUser = ChatUser(senderId: "0000" , displayName:"LUJO", avatar: displayPicture)
-                let chatMessage:ChatMessage = ChatMessage(text: "How may we assist you today?", user: chatUser, messageId: UUID().uuidString, date: Date())
-                self.messageList.append(chatMessage)
-                self.messagesCollectionView.reloadData()
-                self.messagesCollectionView.scrollToLastItem(animated: true)
-//            }
-        }
+//        if (channel != nil){  //user isnt coming to start a new conversation
+//            getConversationDetails(showActivity: true)
+//        }else{
+////            if let user:ChatUser = self.systemUser() as? ChatUser  {
+//                let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
+//                let chatUser:ChatUser = ChatUser(senderId: "0000" , displayName:"LUJO", avatar: displayPicture)
+//                let chatMessage:ChatMessage = ChatMessage(text: "How may we assist you today?", user: chatUser, messageId: UUID().uuidString, date: Date())
+//                self.messageList.append(chatMessage)
+//                self.messagesCollectionView.reloadData()
+//                self.messagesCollectionView.scrollToLastItem(animated: true)
+////            }
+//        }
         title = "LUJO"
         
         chatManager.delegate = self
@@ -102,9 +104,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     // MARK: Login
 
     func login() {
-        self.showNetworkActivity()
         chatManager.login(self.identity) { (success) in
-            self.hideNetworkActivity()
             DispatchQueue.main.async {
                 if success {
 //                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
@@ -117,44 +117,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 }
             }
         }
-    }
-    
-    func getConversationDetails(showActivity: Bool) {
-//        if showActivity {
-//            self.showNetworkActivity()
-//        }
-//        getConversationDetails() {information, error in
-//            self.hideNetworkActivity()
-//
-//            if let error = error {
-//                self.showError(error)
-//                return
-//            }
-//
-//            if let informations = information {
-//                self.update(informations)
-//            } else {
-//                let error = BackendError.parsing(reason: "Could not obtain chat list")
-//                self.showError(error)
-//            }
-//        }
-    }
-    
-    func getConversationDetails(completion: @escaping (ConversationDetails?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
-        
-//        GoLujoAPIManager().getConversationDetails(token: token,conversationID: conversationId) { items, error in
-//            guard error == nil else {
-//                Crashlytics.sharedInstance().recordError(error!)
-//                let error = BackendError.parsing(reason: "Could not obtain the chat list")
-//                completion(nil, error)
-//                return
-//            }
-//            completion(items, error)
-//        }
     }
     
     func update(_ information: ConversationDetails?) {
@@ -178,10 +140,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-    
-    func loadFirstMessages() {
-        getConversationDetails(showActivity: true)
     }
     
     @objc func loadMoreMessages() {
@@ -211,6 +169,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     func configureMessageInputBar() {
         messageInputBar.delegate = self
+        messageInputBar.inputTextView.text = self.initialMessage
         messageInputBar.inputTextView.tintColor = .rgMid
         messageInputBar.sendButton.setTitleColor(.rgMid, for: .normal)
         messageInputBar.sendButton.setTitleColor(
@@ -369,31 +328,6 @@ extension ChatViewController: MessageCellDelegate {
         print("Bottom label tapped")
     }
 
-//    func didTapPlayButton(in cell: AudioMessageCell) {
-//        guard let indexPath = messagesCollectionView.indexPath(for: cell),
-//            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
-//                print("Failed to identify message when audio cell receive tap gesture")
-//                return
-//        }
-//        guard audioController.state != .stopped else {
-//            // There is no audio sound playing - prepare to start playing for given audio message
-//            audioController.playSound(for: message, in: cell)
-//            return
-//        }
-//        if audioController.playingMessage?.messageId == message.messageId {
-//            // tap occur in the current cell that is playing audio sound
-//            if audioController.state == .playing {
-//                audioController.pauseSound(for: message, in: cell)
-//            } else {
-//                audioController.resumeSound()
-//            }
-//        } else {
-//            // tap occur in a difference cell that the one is currently playing sound. First stop currently playing and start the sound for given message
-//            audioController.stopAnyOngoingPlaying()
-//            audioController.playSound(for: message, in: cell)
-//        }
-//    }
-
     func didStartAudio(in cell: AudioMessageCell) {
         print("Did start playing audio sound")
     }
@@ -462,7 +396,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         let attributedText = inputBar.inputTextView.attributedText!
         let range = NSRange(location: 0, length: attributedText.length)
         attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
-
             let substring = attributedText.attributedSubstring(from: range)
             let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
             print("Autocompleted: `", substring, "` with context: ", context ?? [])
@@ -483,6 +416,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                     if result.isSuccessful() {
                         inputBar.sendButton.stopAnimating()
                         inputBar.inputTextView.placeholder = "Aa"
+                        
 //                        if let user:ChatUser = self.currentSender() as? ChatUser  {
 //                            let message = ChatMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
 //                            self.insertMessage(message)
@@ -494,39 +428,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                         self.showError(error)
                     }
                 })
-//                self.sendMessage(messageText: str, conversation_id: conversationId, conversationTitle: "", sales_force_id: "", completion: {information, error in
-//                    if let error = error {
-//                        self.showError(error)
-//                        return
-//                    }
-//                    inputBar.sendButton.stopAnimating()
-//                    inputBar.inputTextView.placeholder = "Aa"
-//                    if let user:ChatUser = self.currentSender() as? ChatUser  {
-//                        let message = ChatMessage(text: str, user: user, messageId: information?.messageId ?? UUID().uuidString, date: Date())
-//                        self.insertMessage(message)
-//                        self.messagesCollectionView.scrollToLastItem(animated: true)
-//                    }
-//                })
             }
         }
     }
-
-//    func sendMessage(messageText:String, conversation_id:String, conversationTitle:String, sales_force_id:String, completion: @escaping (SendMessageResponse?, Error?) -> Void) {
-//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-//            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-//            return
-//        }
-//
-//        GoLujoAPIManager().sendMessage( token: token,message: messageText,conversationId: conversation_id,title: conversationTitle,sales_force_id: sales_force_id) { response, error in
-//            guard error == nil else {
-//                Crashlytics.sharedInstance().recordError(error!)
-//                let error = BackendError.parsing(reason: "Could not send the message")
-//                completion(nil, error)
-//                return
-//            }
-//            completion(response, error)
-//        }
-//    }
 
     private func insertMessages(_ data: [Any]) {
         for component in data {
@@ -552,11 +456,37 @@ extension ChatViewController: ChatManagerDelegate {
     }
 
     // Scroll to bottom of table view for messages
-    func receivedNewMessage(message: TCHMessage) {
-        if let user:ChatUser = self.currentSender() as? ChatUser  {
-            let message = ChatMessage(text: message.body ?? "", user: user, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
-            self.insertMessage(message)
-            self.messagesCollectionView.scrollToLastItem(animated: true)
+    func receivedNewMessage(message: TCHMessage , channel: TCHChannel) {
+        if (self.channel.sid == channel.sid){    //currently opened channel received the messages
+            if (identity == message.member?.identity){ //its current users message
+                if let user:ChatUser = self.currentSender() as? ChatUser  {
+                    let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
+                    self.insertMessage(msg)
+                    self.messagesCollectionView.scrollToLastItem(animated: true)
+                }
+            }else{
+                let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "0000", displayName: message.member?.identity ?? "Default User")
+                let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
+                self.insertMessage(msg)
+                self.messagesCollectionView.scrollToLastItem(animated: true)
+            }
+        }else{
+            print("An other channel has received the message")
+        }
+
+    }
+    
+    func channelJoined(channel: TCHChannel){
+        self.channel = channel
+        self.showNetworkActivity()
+        EEAPIManager().sendRequestForSalesForce(itemId: product.id, channelId: channel.sid ?? "NoChannel"){ customBookingResponse, error in
+            self.hideNetworkActivity()
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                return
+            }
+            print("After channel creation, joining, channelID is sent to salesforce successfully")
         }
     }
 }
