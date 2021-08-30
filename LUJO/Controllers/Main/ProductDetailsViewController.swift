@@ -11,6 +11,10 @@ import JGProgressHUD
 import Mixpanel
 import Intercom
 
+protocol ProductDetailDelegate{
+    func tappedOnBookRequest(viewController:UIViewController)
+}
+
 class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     //MARK:- Init
@@ -95,6 +99,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     var pgrFullView: UIPanGestureRecognizer?
     var originalPosition: CGPoint?
     var currentPositionTouched: CGPoint?
+    var delegate: ProductDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,15 +137,9 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     self.showError(error)
                     return
                 }
-
-                if let informations = information {
-                    if (informations == nil ){
-                        let error = WishListError.noDataFound(reason: "Could not obtain product details")
-                        self.showError(error)
-                    }else{
-                        self.product = information
-                        self.setUpUi()
-                    }
+                if let info = information {
+                    self.product = info
+                    self.setUpUi()
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain product details")
                     self.showError(error)
@@ -153,13 +152,11 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         activateKeyboardManager()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     func getProductDetails(completion: @escaping (Product?, Error?) -> Void) {
@@ -878,71 +875,65 @@ extension ProductDetailsViewController {
 
 // Chat functionality
 extension ProductDetailsViewController {
-    
-    fileprivate func sendInitialInformation() {
+
+    func sendInitialInformation(initialMsg:String = "") {//if initialMessage is empty then user is coming to fill the booking details of yacht,villa and restaurnat
+        var initialMessage = initialMsg
 //        print(product.type)
-        if (product.type == "yacht"){
+        if (product.type == "yacht" && initialMessage.count == 0){
             let viewController = YachtViewController.instantiate(product: product)
-//            let navigationController = UINavigationController(rootViewController: viewController)
-//            present(navigationController, animated: true, completion: nil)
             self.present(viewController, animated: true, completion: nil)
-        }else if (product.type == "villa"){
+        }else if (product.type == "villa" && initialMessage.count == 0){
             let viewController = VillaViewController.instantiate(product: product)
-//            let navigationController = UINavigationController(rootViewController: viewController)
-//            present(navigationController, animated: true, completion: nil)
             self.present(viewController, animated: true, completion: nil)
-        }else if(product.type == "restaurant"){
+        }else if(product.type == "restaurant" && initialMessage.count == 0){
             let viewController = RestaurantRequestReservationViewController.instantiate(restaurant: product)
-//            let navigationController = UINavigationController(rootViewController: viewController)
-//            present(navigationController, animated: true, completion: nil)
             present(viewController, animated: true, completion: nil)
         }
         else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
             //zahoor start
+            
             let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
             let channelName = userFirstName+product.type+dateTime
 //            print(channelName)
-            let initialMessage = """
-            Hi Concierge team,
+            if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
+                initialMessage = """
+                Hi Concierge team,
 
-            I am interested in \(product.name), can you assist me?
+                I am interested in \(product.name), can you assist me?
 
-            \(userFirstName)
-            """
+                \(userFirstName)
+                """
+//                Now we are calling this in chatViewControll
+//                EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
+//                    guard error == nil else {
+//                        Crashlytics.sharedInstance().recordError(error!)
+//                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
+//                        return
+//                    }
+//                    https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//                    if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                        Intercom.logEvent(withName: "custom_request", metaData:[
+//                                            "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+//                                            ,"user_id":user.id])
+//                    }
+//                }
+
+//                Mixpanel.mainInstance().track(event: "Product Custom Request",
+//                                              properties: ["Product Name" : product.name
+//                                                           ,"Product Type" : product.type
+//                                                           ,"ProductId" : product.id])
+            }
+
 //            print(initialMessage)
             let viewController = BasicChatViewController()
             viewController.chatManager = ChatManager(channelName: channelName)
             viewController.product = product
             viewController.initialMessage = initialMessage
-            self.navigationController?.pushViewController(viewController, animated: true)
-//            EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
-//                guard error == nil else {
-//                    Crashlytics.sharedInstance().recordError(error!)
-//                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
-//                    return
-//                }
-//                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-//                if let user = LujoSetup().getLujoUser(), user.id > 0 {
-//                    Intercom.logEvent(withName: "custom_request", metaData:[
-//                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-//                                        ,"user_id":user.id])
-//                }
-//            }
-//
-//            Mixpanel.mainInstance().track(event: "Product Custom Request",
-//                                          properties: ["Product Name" : product.name
-//                                                       ,"Product Type" : product.type
-//                                                       ,"ProductId" : product.id])
-//
-//            let initialMessage = """
-//            Hi Concierge team,
-//
-//            I am interested in \(product.name), can you assist me?
-//
-//            \(userFirstName)
-//            """
-//
+            viewController.modalPresentationStyle = .overFullScreen
+            self.dismiss(animated: true, completion: {
+                self.delegate?.tappedOnBookRequest(viewController: viewController)
+            })
 //            startChatWithInitialMessage(initialMessage)
             //Zahoor end
         }

@@ -27,6 +27,8 @@ import MessageKit
 import InputBarAccessoryView
 import JGProgressHUD
 import TwilioChatClient
+import Mixpanel
+import Intercom
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -486,6 +488,16 @@ extension ChatViewController: ChatManagerDelegate {
                 BackendError.parsing(reason: "Could not obtain the salesforce_id")
                 return
             }
+//            https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//            if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                Intercom.logEvent(withName: "custom_request", metaData:[
+//                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+//                                    ,"user_id":user.id])
+//            }
+            Mixpanel.mainInstance().track(event: "Product Custom Request",
+                                          properties: ["Product Name" : self.product.name
+                                                       ,"Product Type" : self.product.type
+                                                       ,"ProductId" : self.product.id])
             print("After channel creation, joining, channelID is sent to salesforce successfully")
         }
     }

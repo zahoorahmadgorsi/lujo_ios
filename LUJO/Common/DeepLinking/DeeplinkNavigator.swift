@@ -34,26 +34,29 @@ class DeeplinkNavigator {
                 let product = Product(id: id,type: type)
                
                 let viewController = ProductDetailsViewController.instantiate(product: product)
-                viewController.modalPresentationStyle = .overFullScreen
-                let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                if let tabBar = keyWindow?.rootViewController as? UITabBarController, var window = tabBar.selectedViewController as? UINavigationController {
-                    while window.presentedViewController != nil {
-                        if let current =  window.presentedViewController as? UINavigationController{
-                        window = current
-                        }
-                    }
-                    viewController.modalPresentationStyle = .overFullScreen
-//                    window.pushViewController(viewController, animated: true)
-                    
-                    if (viewController.isBeingPresented){   //if user is already on detail page then first dismiss it and present new one
-                        viewController.dismiss(animated: true, completion: {
-                            window.present(viewController, animated: true)
-                        })
-                    }else{
-                        window.present(viewController, animated: true)
-                    }
-                    
-                }
+                viewController.delegate = self
+                presentViewController(viewController: viewController)
+//                viewController.modalPresentationStyle = .overFullScreen
+//                let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+//                if let tabBar = keyWindow?.rootViewController as? UITabBarController, var window = tabBar.selectedViewController as? UINavigationController {
+//                    while window.presentedViewController != nil {
+//                        if let current =  window.presentedViewController as? UINavigationController{
+//                        window = current
+//                        }
+//                    }
+//                    viewController.modalPresentationStyle = .overFullScreen
+//                    viewController.delegate = self
+////                    window.pushViewController(viewController, animated: true)
+//
+//                    if (viewController.isBeingPresented){   //if user is already on detail page then first dismiss it and present new one
+//                        viewController.dismiss(animated: true, completion: {
+//                            window.present(viewController, animated: true)
+//                        })
+//                    }else{
+//                        window.present(viewController, animated: true)
+//                    }
+//
+//                }
             }
         }
     }
@@ -72,5 +75,37 @@ class DeeplinkNavigator {
                 vc.present(alertController, animated: true, completion: nil)
             }
         }
+    }
+    
+    private func presentViewController(viewController:UIViewController){
+        viewController.modalPresentationStyle = .overFullScreen
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        if let tabBar = keyWindow?.rootViewController as? UITabBarController, var window = tabBar.selectedViewController as? UINavigationController {
+            while window.presentedViewController != nil {
+                if let current =  window.presentedViewController as? UINavigationController{
+                window = current
+                }
+            }
+            viewController.modalPresentationStyle = .overFullScreen
+//                    window.pushViewController(viewController, animated: true)
+            
+            if (viewController.isBeingPresented){   //if user is already on detail page then first dismiss it and present new one
+                viewController.dismiss(animated: true, completion: {
+                    window.present(viewController, animated: true)
+                })
+            }else{
+                window.present(viewController, animated: true)
+            }
+            
+        }
+    }
+}
+
+extension DeeplinkNavigator : ProductDetailDelegate{
+    func tappedOnBookRequest(viewController:UIViewController) {
+        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        present(navigationController, animated: true, completion: nil)
+        presentViewController(viewController: viewController)
     }
 }

@@ -292,13 +292,17 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
 //            viewController.transitioningDelegate = self
             viewController.modalPresentationStyle = .overFullScreen
+            viewController.delegate = self
             present(viewController, animated: true)
         }
     }
     
     @IBAction func restaurantButton_onClick(_ sender: UIButton) {
         if let restaurant = cityInformation?.restaurant.items[sender.tag] {
-            self.present(ProductDetailsViewController.instantiate(product: restaurant), animated: true, completion: nil)
+            let viewController = ProductDetailsViewController.instantiate(product: restaurant)
+            viewController.modalPresentationStyle = .overFullScreen
+            viewController.delegate = self
+            present(viewController, animated: true)
         }
     }
     
@@ -307,6 +311,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
 //            self.navigationController?.pushViewController(EventDetailsViewController.instantiate(event: experience), animated: true)
             let viewController = ProductDetailsViewController.instantiate(product: experience)
             viewController.modalPresentationStyle = .overFullScreen
+            viewController.delegate = self
             present(viewController, animated: true)
         }
     }
@@ -461,6 +466,13 @@ class CityCell: UITableViewCell {
     }
 }
 
+extension GlobalSearchViewController : ProductDetailDelegate{
+    func tappedOnBookRequest(viewController:UIViewController) {
+        // Initialize a navigation controller, with your view controller as its root
+        let navigationController = UINavigationController(rootViewController: viewController)
+        present(navigationController, animated: true, completion: nil)
+    }
+}
 
 // B1 - 1
 //extension HomeViewController: UIViewControllerTransitioningDelegate {

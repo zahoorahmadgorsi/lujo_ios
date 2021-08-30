@@ -232,12 +232,6 @@ class YachtViewController: UIViewController {
             return
         }
         
-        
-        Mixpanel.mainInstance().track(event: "Yacht Custom Request",
-                                      properties: ["Yacht Charter" : yachtCharter
-                                                   ,"Yacht destination" : destination])
-//                                                   ,"Yacht Length" : lenghtText])
-        
         var returnDateString = ""
         if let yachtCharter = selectedYachtCharter{
             if yachtCharter != "Day charter"{
@@ -253,51 +247,49 @@ class YachtViewController: UIViewController {
         returnDateString = (returnDateString.count == 0 ? dateString : returnDateString)
         
         //Zahoor Start
-//        guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-//        let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
-//        let channelName = userFirstName+product.type+dateTime
-////            print(channelName)
+//                Now we are calling this in chatViewControll
+//        Mixpanel.mainInstance().track(event: "Yacht Custom Request",
+//                                      properties: ["Yacht Charter" : yachtCharter
+//                                                   ,"Yacht destination" : destination])
+////                                                   ,"Yacht Length" : lenghtText])
 //        let initialMessage = """
 //        Hi Concierge team,
 //        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
 //        
 //        \(LujoSetup().getLujoUser()?.firstName ?? "User")
 //        """
-//        
-////            print(initialMessage)
-//        let viewController = BasicChatViewController()
-//        viewController.chatManager = ChatManager(channelName: channelName)
-//        viewController.product = product
-//        viewController.initialMessage = initialMessage
-//        self.navigationController?.pushViewController(viewController, animated: true)
-        
-        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                BackendError.parsing(reason: "Could not obtain the salesforce_id")
-                return
-            }
-            //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-            if let user = LujoSetup().getLujoUser(), user.id > 0 {
-                Intercom.logEvent(withName: "custom_request", metaData:[
-                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-                                    ,"user_id":user.id])
-            }
-        }
+//
+ 
+        //Now we are calling this in chatViewControll
+//        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
+//            guard error == nil else {
+//                Crashlytics.sharedInstance().recordError(error!)
+//                BackendError.parsing(reason: "Could not obtain the salesforce_id")
+//                return
+//            }
+//              commenting this as we arent using intercom logging event
+//            //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//            if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                Intercom.logEvent(withName: "custom_request", metaData:[
+//                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+//                                    ,"user_id":user.id])
+//            }
+//        }
         
         let initialMessage = """
         Hi Concierge team,
-        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
+
+        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you please assist me?
 
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
-        startChatWithInitialMessage(initialMessage)
+//        startChatWithInitialMessage(initialMessage)
         //Zahoor end
-        //showNetworkActivity()
+        showNetworkActivity()
         CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtCharter: yachtCharter, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
             DispatchQueue.main.async {
-                //self.hideNetworkActivity()
+                self.hideNetworkActivity()
                 if let error = error {
                     print ("ERROR: \(error.localizedDescription)")
                     //self.showErrorPopup(withTitle: "Error", error:error)
@@ -305,7 +297,14 @@ class YachtViewController: UIViewController {
                 }
 
                 print ("Success: custom request yacht.")
-                self.dismiss(animated: true, completion: nil)
+//                self.dismiss(animated: true, completion: nil)
+                //this VC is always get called from ProductDetailsViewController only
+                if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
+                    self.dismiss(animated: true) {
+//                        presentingViewController.startChatWithInitialMessage(initialMessage)
+                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
+                    }
+                }
             }
         }
     }

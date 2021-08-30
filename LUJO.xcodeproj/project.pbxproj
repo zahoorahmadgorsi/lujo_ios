@@ -93,7 +93,6 @@
 		557BB5E3231592F100744188 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 557BB5E2231592F100744188 /* Main.storyboard */; };
 		557BB5E52315930400744188 /* GlobalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5E42315930400744188 /* GlobalExtensions.swift */; };
 		557BB5E82315955A00744188 /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5E72315955A00744188 /* DiningViewController.swift */; };
-		557BB5EA231596B100744188 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5E9231596B100744188 /* RestaurantDetailViewController.swift */; };
 		557BB5EC231599F500744188 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5EB231599F500744188 /* MainTabBarController.swift */; };
 		557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */; };
 		557BB5F02315A87200744188 /* RestaurantRequestReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */; };
@@ -483,7 +482,6 @@
 		557BB5E2231592F100744188 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		557BB5E42315930400744188 /* GlobalExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalExtensions.swift; sourceTree = "<group>"; };
 		557BB5E72315955A00744188 /* DiningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
-		557BB5E9231596B100744188 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; };
 		557BB5EB231599F500744188 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRequestReservationViewController.swift; sourceTree = "<group>"; };
@@ -1027,7 +1025,6 @@
 			children = (
 				557BB5E72315955A00744188 /* DiningViewController.swift */,
 				557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */,
-				557BB5E9231596B100744188 /* RestaurantDetailViewController.swift */,
 				557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */,
 				1DFE1AC82349FEFD0025410D /* RestaurantListViewController.swift */,
 			);
@@ -2407,7 +2404,6 @@
 				9A16408321FB1A960041FFCE /* CCRouter.swift in Sources */,
 				3005D47A23202B7D00401243 /* AviationViewController.swift in Sources */,
 				9183E84325EBEF2400656B48 /* GalleryView1.swift in Sources */,
-				557BB5EA231596B100744188 /* RestaurantDetailViewController.swift in Sources */,
 				16433521006C0083D625164C /* LujoSetup.swift in Sources */,
 				9AF561E921833D5800B7BD1A /* UIImageView+Download.swift in Sources */,
 				9A194FF022945A5E00E3DBD1 /* HomeEventCell.swift in Sources */,
@@ -2491,7 +2487,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2517,7 +2513,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2542,7 +2538,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2706,7 +2702,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2770,7 +2766,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2980,7 +2976,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
