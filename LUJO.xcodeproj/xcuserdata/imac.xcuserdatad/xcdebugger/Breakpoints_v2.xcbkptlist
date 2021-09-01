@@ -736,7 +736,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "21"
                   endingLineNumber = "21"
-                  offsetFromSymbolStart = "23">
+                  offsetFromSymbolStart = "40">
                </Location>
                <Location
                   uuid = "4926F6FD-1F5F-48E7-9315-43CD9E3796C8 - 871967a2eafc359"
@@ -751,7 +751,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "21"
                   endingLineNumber = "21"
-                  offsetFromSymbolStart = "676">
+                  offsetFromSymbolStart = "552">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2063,7 +2063,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "24">
                </Location>
                <Location
                   uuid = "2F2F1C62-307D-4A33-A3E6-024809CB78F1 - 2022d32cd5b8da56"
@@ -2078,7 +2078,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "17"
                   endingLineNumber = "17"
-                  offsetFromSymbolStart = "30">
+                  offsetFromSymbolStart = "44">
                </Location>
                <Location
                   uuid = "2F2F1C62-307D-4A33-A3E6-024809CB78F1 - 2f746e08accad62d"
@@ -2093,7 +2093,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "8">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -3465,7 +3465,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
                   endingLineNumber = "94"
-                  offsetFromSymbolStart = "5229">
+                  offsetFromSymbolStart = "3932">
                </Location>
                <Location
                   uuid = "2F21C1FD-6589-4CE2-A02D-3948263E57CE - 7f175f489c8692f0"
@@ -3480,7 +3480,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
                   endingLineNumber = "94"
-                  offsetFromSymbolStart = "6114">
+                  offsetFromSymbolStart = "4944">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -11497,7 +11497,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "285"
                   endingLineNumber = "285"
-                  offsetFromSymbolStart = "1518">
+                  offsetFromSymbolStart = "1028">
                </Location>
                <Location
                   uuid = "73C87D9C-0007-4982-B04C-A03E0C228C3F - 90e83255731d132c"
@@ -11512,7 +11512,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "286"
                   endingLineNumber = "286"
-                  offsetFromSymbolStart = "92">
+                  offsetFromSymbolStart = "32">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -174,8 +174,8 @@ extension BasicChatViewController: MessagesLayoutDelegate {
     
     //display name
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        //return 20
-        return 0
+        return 20
+//        return 0
     }
     
     //time 

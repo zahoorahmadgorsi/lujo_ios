@@ -43,9 +43,9 @@ class DeepLinkManager {
 //        return deeplinkType != nil
 //    }
     
-    // check existing deepling and perform action
+    // check existing deeplink and perform action
     func checkDeepLink() {
-        guard let deeplinkType = deeplinkType else {
+        guard let deeplinkType = self.deeplinkType else {
             return
         }
         DeeplinkNavigator.shared.proceedToDeeplink(deeplinkType)

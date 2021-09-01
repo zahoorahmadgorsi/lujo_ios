@@ -288,6 +288,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         // Safe guard to that won't display both loaders at same time.
 //        if !refreshControl.isRefreshing {
             naHUD.show(in: view)
+//        messageInputBar.sendButton.isEnabled = false
+        messageInputBar.isUserInteractionEnabled = false
 //        }
     }
     
@@ -295,6 +297,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         // Safe guard that will call dismiss only if HUD is shown on screen.
         if naHUD.isVisible {
             naHUD.dismiss()
+//            messageInputBar.sendButton.isEnabled = true
+            messageInputBar.isUserInteractionEnabled = true
         }
     }
 }
@@ -467,7 +471,8 @@ extension ChatViewController: ChatManagerDelegate {
                     self.messagesCollectionView.scrollToLastItem(animated: true)
                 }
             }else{
-                let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "0000", displayName: message.member?.identity ?? "Default User")
+//                print(message.member?.identity , message.body )
+                let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "0000", displayName: message.author ?? "Author name")
                 let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
                 self.insertMessage(msg)
                 self.messagesCollectionView.scrollToLastItem(animated: true)
