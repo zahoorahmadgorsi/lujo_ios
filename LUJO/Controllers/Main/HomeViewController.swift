@@ -104,6 +104,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     private(set) var aviationDataSource: [AirportSuggestion] = []
     var profileButton: UIButton!
     private var canSendRequest: Bool = true
+    
     /// Refresh control view. Used to display network activity when user pull scroll view down
     /// view to fetch new data.
     private lazy var refreshControl: UIRefreshControl = {

@@ -103,6 +103,7 @@
 		880B9B0925582E350070D7CD /* Yacht.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0825582E350070D7CD /* Yacht.swift */; };
 		880B9B0B255840C10070D7CD /* Villa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0A255840C10070D7CD /* Villa.swift */; };
 		880B9B0D255845B10070D7CD /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0C255845B10070D7CD /* Gift.swift */; };
+		882AAAB826E81B31006B7D03 /* ChatOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */; };
 		882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */; };
 		882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */; };
 		88310DFE2635FF3900301667 /* Mixpanel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C083FA2635FA4A00204475 /* Mixpanel.xcframework */; };
@@ -497,6 +498,7 @@
 		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
 		880B9B0A255840C10070D7CD /* Villa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Villa.swift; sourceTree = "<group>"; };
 		880B9B0C255845B10070D7CD /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
+		882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOptionsViewController.swift; sourceTree = "<group>"; };
 		882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedAPIManager.swift; sourceTree = "<group>"; };
 		882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedRouter.swift; sourceTree = "<group>"; };
 		8844D9B02563F712002FF846 /* FavouriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCell.swift; sourceTree = "<group>"; };
@@ -1061,6 +1063,7 @@
 				5527642F2317FE8200380BEB /* ChatListViewController.swift */,
 				888B00E926AF42AB004FA1B5 /* ChatViewController.swift */,
 				888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */,
+				882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2334,6 +2337,7 @@
 				9AAA102022773540008CE1D2 /* MyBookingsCell.swift in Sources */,
 				9A194FE3228DDD0200E3DBD1 /* EEAPIManager.swift in Sources */,
 				1D7819B72301A9EE0044C70B /* DiningAPIManager.swift in Sources */,
+				882AAAB826E81B31006B7D03 /* ChatOptionsViewController.swift in Sources */,
 				9AF1A0D42249072B00E0680B /* AviationSingleLegSearchOptionsView.swift in Sources */,
 				9156B75126148F3A00404E1D /* EventsAnimator.swift in Sources */,
 				9A89D3E621C595E8002D249F /* LujoTextField.swift in Sources */,
