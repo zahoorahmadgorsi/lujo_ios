@@ -44,9 +44,8 @@ class ChatListViewController: UIViewController {
         return UIStoryboard.main.instantiate(identifier)
     }
     // Convenience class to manage interactions with Twilio Chat
-//    var chatManager = ChatManager()
+//    var chatManager = ChatManager(channelName: "")
     var identity = "USER_IDENTITY"
-    
     //MARK:- View life cycle
     
     override func viewDidLoad() {
@@ -54,47 +53,25 @@ class ChatListViewController: UIViewController {
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
         self.tblView.refreshControl = refreshControl
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .done, target: self, action: #selector(addTapped))
-        getChatsList(showActivity: true)
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .done, target: self, action: #selector(addTapped))
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getChatsList(showActivity: false)
+
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        login()
-//    }
-//
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        chatManager.shutdown()
-//    }
-    
-//    func login() {
-//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-//            LoginError.errorLogin(description: "User does not exist or is not verified")
-//            return
-//        }
-//        self.showNetworkActivity()
-//        chatManager.login(self.identity) { (success) in
-//            self.hideNetworkActivity()
-//            DispatchQueue.main.async {
-//                if success {
-////                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
-//                    print("Logged in as \"\(self.identity)\"")
-//                    //after logging in getting the list of subscribed channels
-//                    self.getChatsList(showActivity: true)
-//                } else {
-////                    self.navigationItem.prompt = "Unable to login"
-//                    print("Unable to login")
-//                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
-//                    self.showError(error)
-//                }
-//            }
-//        }
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if (self.channels.count == 0){
+            self.getChatsList(showActivity: true)
+        }else{
+            self.getChatsList(showActivity: false)
+        }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
     
     @objc func refreshConversations() {
         self.refreshControl.beginRefreshing()
@@ -102,16 +79,19 @@ class ChatListViewController: UIViewController {
     }
     
     func getChatsList(showActivity: Bool) {
-//        if showActivity {
-//            self.showNetworkActivity()
-//        }
-//        self.chatManager.getUserChannels() {channels in
-//            for channel in channels {
-//                print("Channel: \(channel.friendlyName)")
-//            }
-//            self.channels = channels
-//            self.tblView.reloadData()
-//        }
+        if showActivity {
+            self.showNetworkActivity()
+        }
+        ChatManager.sharedChatManager.getUserChannels() {channels in
+            if showActivity {
+                self.hideNetworkActivity()
+            }
+            for channel in channels {
+                print("Twilio: Channel: \(channel.friendlyName)")
+            }
+            self.channels = channels
+            self.tblView.reloadData()
+        }
     }
     
     func showError(_ error: Error , isInformation:Bool = false) {
@@ -184,7 +164,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         let newViewController = BasicChatViewController()
         channelDescriptor.channel(completion:{ (result, channel) in
           if result.isSuccessful(){
-            print("Channel Status: \(String(describing: channel?.status))")
+            print("Twilio: Channel Status: \(String(describing: channel?.status))")
             if  let channel = channel{
                 newViewController.channel = channel
             }

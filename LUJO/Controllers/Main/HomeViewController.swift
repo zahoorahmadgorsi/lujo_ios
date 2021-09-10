@@ -133,6 +133,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     var timer = Timer()
 //    var isPaused = true
     var pgrFullView: UIPanGestureRecognizer?    //to handle swipe left and right
+    @IBOutlet weak var viewCallToAction: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,13 +156,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         updateUI()
         setupTapGesturesForEventsAndExperiences()
         
-        let searchBarButton = UIButton(type: .system)
-        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
-        searchBarButton.setTitle("  SEARCH", for: .normal)
-        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
-        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-        searchBarButton.sizeToFit()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+//        let searchBarButton = UIButton(type: .system)
+//        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
+////        searchBarButton.setTitle("  SEARCH", for: .normal)
+//        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
+//        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+//        searchBarButton.sizeToFit()
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+        
+        let imgSearch    = UIImage(named: "Search Icon White")!
+        let imgCallToActions  = UIImage(named: "ctas")!
+        let imgChat  = UIImage(named: "chatList")!
+        let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
+        let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
+        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
+        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch ]
         
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
@@ -453,9 +462,27 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
-        Mixpanel.mainInstance().track(event: "GlobalSearchButtonOnClick")
+        Mixpanel.mainInstance().track(event: "GlobalSearchButtonTappedAtHome")
         self.navigationController?.pushViewController(GlobalSearchViewController.instantiate(), animated: true)
-        
+    }
+
+    @IBAction func btnCallToActionTapped(_ sender: Any) {
+        Mixpanel.mainInstance().track(event: "btnCallToActionTappedAtHome")
+//        print("btnCallToActionTapped")
+        if (self.viewCallToAction.isHidden){
+            scrollView.scrollToTop()    //because now call to action uiview would become visible to scroll to the top
+    //        viewCallToAction.isHidden = !(viewCallToAction.isHidden)
+        }
+        UIView.transition(with: viewCallToAction, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.viewCallToAction.isHidden = !(self.viewCallToAction.isHidden)
+        })
+    }
+    
+    @IBAction func btnChatTapped(_ sender: Any) {
+        Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
+        let viewController = ChatListViewController.instantiate()
+        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+        self.present(navViewController, animated: true, completion: nil)
     }
     
     @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {
@@ -565,6 +592,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             welcomeLabel.text = "\(PreloadDataManager.UserEntryType.isOldUser ? "Welcome back" : "Welcome"),\n\(LujoSetup().getLujoUser()?.firstName ?? "") \(LujoSetup().getLujoUser()?.lastName ?? "")"
             PreloadDataManager.UserEntryType.isOldUser = true
 
+            //************
+            //Chat Manager
+            //************
+            ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
+                if success {
+                    print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
+                } else {
+                    print("Twilio: Unable to login")
+                }
+            }
             //********
             //MaxPanel
             //********

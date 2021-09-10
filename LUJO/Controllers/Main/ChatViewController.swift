@@ -61,7 +61,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     var identity = "USER_IDENTITY"
 //    // Convenience class to manage interactions with Twilio Chat
 //    var chatManager = ChatManager()
-    var chatManager:ChatManager!
+//    var chatManager:ChatManager!
     var product:Product!
     var initialMessage:String?
     
@@ -87,7 +87,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //        }
         title = "LUJO"
         
-        chatManager.delegate = self
+        ChatManager.sharedChatManager.delegate = self
         if let user = LujoSetup().getLujoUser(), user.id > 0 {
             identity = user.email //+ " " + user.lastName
         }
@@ -95,31 +95,31 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        login()
+//        login()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        chatManager.shutdown()
+//        chatManager.shutdown()
     }
 
     // MARK: Login
 
-    func login() {
-        chatManager.login(self.identity) { (success) in
-            DispatchQueue.main.async {
-                if success {
-//                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
-                    print("Logged in as \"\(self.identity)\"")
-                } else {
-//                    self.navigationItem.prompt = "Unable to login"
-                    print("Unable to login")
-                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
-                    self.showError(error)
-                }
-            }
-        }
-    }
+//    func login() {
+//        chatManager.login(self.identity) { (success) in
+//            DispatchQueue.main.async {
+//                if success {
+////                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
+//                    print("Logged in as \"\(self.identity)\"")
+//                } else {
+////                    self.navigationItem.prompt = "Unable to login"
+//                    print("Unable to login")
+//                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
+//                    self.showError(error)
+//                }
+//            }
+//        }
+//    }
     
     func update(_ information: ConversationDetails?) {
         guard information != nil else {
@@ -418,7 +418,8 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         
         for component in components {
             if let str = component as? String  {
-                chatManager.sendMessage(str, completion: { (result, _) in
+                //chatManager.sendMessage(str, completion: { (result, _) in
+                ChatManager.sharedChatManager.sendMessage(str, completion: { (result, _) in
                     if result.isSuccessful() {
                         inputBar.sendButton.stopAnimating()
                         inputBar.inputTextView.placeholder = "Aa"

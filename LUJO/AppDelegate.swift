@@ -186,6 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func removePushToken(userId: Int) {
         Intercom.logout()
         GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
+        ChatManager.sharedChatManager.shutdown()
     }
     
     func registerForOurPushService(deviceToken: String) {

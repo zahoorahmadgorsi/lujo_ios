@@ -15,15 +15,18 @@ protocol ChatManagerDelegate: AnyObject {
     func channelJoined(channel: TCHChannel)
     func showNetworkActivity()
     func hideNetworkActivity()
+    
 }
 
 class ChatManager: NSObject, TwilioChatClientDelegate {
 
     let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
     
+    static let sharedChatManager = ChatManager()
+//    static let shared = ChatManager()
     // the unique name of the channel you create
-    private var uniqueChannelName = "generalTwo"
-    private var friendlyChannelName = "General Channel"
+    var uniqueChannelName = "general"
+    var friendlyChannelName = "General Channel"
 
     // For the quickstart, this will be the view controller
     weak var delegate: ChatManagerDelegate?
@@ -34,10 +37,11 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     private(set) var messages: [TCHMessage] = []
     private var identity: String?
     
-    init( channelName : String ){
-        self.uniqueChannelName = channelName
-        self.friendlyChannelName = channelName
-    }
+//    private init (channelName:String = ""){
+//        self.uniqueChannelName = channelName
+//        self.friendlyChannelName = channelName
+//    }
+    
     
     func chatClient(_ client: TwilioChatClient, synchronizationStatusUpdated status: TCHClientSynchronizationStatus) {
         guard status == .completed else {
@@ -58,9 +62,9 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                             if let channel = channel {
                                 channel.join(completion: { channelResult in
                                     if channelResult.isSuccessful() {
-                                        print("Channel joined.")
+                                        print("Twilio:Channel joined.")
                                     } else {
-                                        print("Channel NOT joined.")
+                                        print("Twilio:Channel NOT joined.")
                                     }
                                 })
                             }else{
@@ -89,7 +93,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     }
     
     func chatClientTokenWillExpire(_ client: TwilioChatClient) {
-        print("Chat Client Token will expire.")
+        print("Twilio:Chat Client Token will expire.")
         // the chat token is about to expire, so refresh it
         refreshAccessToken()
     }
@@ -102,14 +106,14 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
 
         TokenUtils.retrieveToken(url: urlString) { (token, _, error) in
             guard let token = token else {
-               print("Error retrieving token: \(error.debugDescription)")
+               print("Twilio:Error retrieving token: \(error.debugDescription)")
                return
            }
             self.client?.updateToken(token, completion: { (result) in
                 if (result.isSuccessful()) {
-                    print("Access token refreshed")
+                    print("Twilio:Access token refreshed")
                 } else {
-                    print("Unable to refresh access token")
+                    print("Twilio:Unable to refresh access token")
                 }
             })
         }
@@ -133,7 +137,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
         delegate?.showNetworkActivity()
         TokenUtils.retrieveToken(url: urlString) { (token, _, error) in
             guard let token = token else {
-                print("Error retrieving token: \(error.debugDescription)")
+                print("Twilio: Error retrieving token: \(error.debugDescription)")
                 completion(false)
                 self.delegate?.hideNetworkActivity()
                 return
@@ -167,7 +171,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             ]
         channelsList.createChannel(options: options, completion: { channelResult, channel in
             if channelResult.isSuccessful() {
-                print("Channel created: \(channel?.sid)")
+                print("Twilio:Channel created: \(channel?.sid)")
             } else {
                 print(channelResult.resultText)
             }
@@ -201,7 +205,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
 //        if let channels = client?.channelsList()?.subscribedChannels(){
 //            completion(channels)
 //        }
-        client?.channelsList()?.userChannelDescriptors(completion: { (result, paginator) in
+        self.client?.channelsList()?.userChannelDescriptors(completion: { (result, paginator) in
           if (result.isSuccessful()) {
             if let channels = paginator?.items() {
                 completion(channels)

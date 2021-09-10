@@ -927,7 +927,8 @@ extension ProductDetailsViewController {
 
 //            print(initialMessage)
             let viewController = BasicChatViewController()
-            viewController.chatManager = ChatManager(channelName: channelName)
+//            viewController.chatManager = ChatManager(channelName: channelName)
+            ChatManager.sharedChatManager.uniqueChannelName = channelName
             viewController.product = product
             viewController.initialMessage = initialMessage
             viewController.modalPresentationStyle = .overFullScreen
