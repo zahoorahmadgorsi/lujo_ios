@@ -317,10 +317,10 @@ struct Product: Codable {
 
 extension Product {
     
-    init(id:Int, type:String){
+    init(id:Int, type:String, name:String = ""){
         self.id = id
         self.type = type
-        self.name =  ""
+        self.name =  name
         self.description =  ""
     }
     

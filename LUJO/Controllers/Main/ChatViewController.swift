@@ -39,7 +39,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
     lazy var messageList: [ChatMessage] = []
-    var channel = TCHChannel()
+    var channel: TCHChannel?
     private let naHUD = JGProgressHUD(style: .dark)
     
     private(set) lazy var refreshControl: UIRefreshControl = {
@@ -56,12 +56,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         return formatter
     }()
 
-//    // Important - this identity would be assigned by your app, for
-//    // instance after a user logs in
+//  Important - this identity would be assigned by your app, for instance after a user logs in
     var identity = "USER_IDENTITY"
-//    // Convenience class to manage interactions with Twilio Chat
-//    var chatManager = ChatManager()
-//    var chatManager:ChatManager!
     var product:Product!
     var initialMessage:String?
     
@@ -72,24 +68,28 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         configureMessageCollectionView()
         configureMessageInputBar()
-        
-//        if (channel != nil){  //user isnt coming to start a new conversation
-//            getConversationDetails(showActivity: true)
-//        }else{
-////            if let user:ChatUser = self.systemUser() as? ChatUser  {
-//                let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
-//                let chatUser:ChatUser = ChatUser(senderId: "0000" , displayName:"LUJO", avatar: displayPicture)
-//                let chatMessage:ChatMessage = ChatMessage(text: "How may we assist you today?", user: chatUser, messageId: UUID().uuidString, date: Date())
-//                self.messageList.append(chatMessage)
-//                self.messagesCollectionView.reloadData()
-//                self.messagesCollectionView.scrollToLastItem(animated: true)
-////            }
-//        }
         title = "LUJO"
         
         ChatManager.sharedChatManager.delegate = self
-        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+        if let channel = self.channel{
+            ChatManager.sharedChatManager.setChannel(channel: channel)
+            identity = channel.createdBy ?? identity
+        }else if let user = LujoSetup().getLujoUser(), user.id > 0 {
             identity = user.email //+ " " + user.lastName
+            let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
+            //Creating channel if doesnt exist else joining
+            let channelUniqueName = product.type + " " + user.firstName + " " + dateTime
+            let channelFriendlyName = product.name
+            let attribute :Dictionary<String,String> = ["type" : product.type]
+            showNetworkActivity()
+            ChatManager.sharedChatManager.createChannel(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
+                self.hideNetworkActivity()
+//                if channelResult {
+//                    print("Twilio:Channel created: \(String(describing: channel?.sid))")
+//                } else {
+//                    print("Twilio:Channel can not be created")
+//                }
+            })
         }
     }
     
@@ -103,23 +103,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //        chatManager.shutdown()
     }
 
-    // MARK: Login
-
-//    func login() {
-//        chatManager.login(self.identity) { (success) in
-//            DispatchQueue.main.async {
-//                if success {
-////                    self.navigationItem.prompt = "Logged in as \"\(self.identity)\""
-//                    print("Logged in as \"\(self.identity)\"")
-//                } else {
-////                    self.navigationItem.prompt = "Unable to login"
-//                    print("Unable to login")
-//                    let error = BackendError.parsing(reason: "Unable to login - check the token URL in ChatConstants.swift")
-//                    self.showError(error)
-//                }
-//            }
-//        }
-//    }
+    // MARK: update
     
     func update(_ information: ConversationDetails?) {
         guard information != nil else {
@@ -420,8 +404,8 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             if let str = component as? String  {
                 //chatManager.sendMessage(str, completion: { (result, _) in
                 ChatManager.sharedChatManager.sendMessage(str, completion: { (result, _) in
+                    inputBar.sendButton.stopAnimating()
                     if result.isSuccessful() {
-                        inputBar.sendButton.stopAnimating()
                         inputBar.inputTextView.placeholder = "Aa"
                         
 //                        if let user:ChatUser = self.currentSender() as? ChatUser  {
@@ -464,7 +448,7 @@ extension ChatViewController: ChatManagerDelegate {
 
     // Scroll to bottom of table view for messages
     func receivedNewMessage(message: TCHMessage , channel: TCHChannel) {
-        if (self.channel.sid == channel.sid){    //currently opened channel received the messages
+        if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
             if (identity == message.member?.identity){ //its current users message
                 if let user:ChatUser = self.currentSender() as? ChatUser  {
                     let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())

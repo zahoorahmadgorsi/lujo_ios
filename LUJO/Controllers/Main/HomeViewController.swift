@@ -481,8 +481,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBAction func btnChatTapped(_ sender: Any) {
         Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
         let viewController = ChatListViewController.instantiate()
-        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-        self.present(navViewController, animated: true, completion: nil)
+//        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+//        self.present(navViewController, animated: true, completion: nil)
+        self.present(viewController, animated: true, completion: nil)
     }
     
     @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {
@@ -853,7 +854,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             self.navigationController?.pushViewController(viewController, animated: true)
             UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
         }else{
-            self.present(HotelViewController.instantiate(), animated: true, completion: nil)
+            let viewController = HotelViewController.instantiate()
+            viewController.delegate = self
+            self.present(viewController, animated: true, completion: nil)
         }
     }
     

@@ -11,9 +11,11 @@ import UIKit
 class ChatCell: UITableViewCell {
 //    static var identifier: String = "chatCell"
     @IBOutlet weak var imgAvatar: UIImageView!
-    @IBOutlet weak var lblAuthorName: UILabel!
-    @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblCreatedAt: UILabel!
+    @IBOutlet weak var lblChannelFriendlyName: UILabel!
+    @IBOutlet weak var lblLastMessage: UILabel!
+    @IBOutlet weak var lblCreatedAtDate: UILabel!
+    @IBOutlet weak var lblCreatedAtTime: UILabel!
+    
     //    var customer_id: String
 //    var conversation_id: String
     
@@ -28,9 +30,9 @@ class ChatCell: UITableViewCell {
     }
 
     private func reset() {
-        lblAuthorName.text = ""
-        lblTitle.text = ""
-        lblCreatedAt.text = ""
+        lblChannelFriendlyName.text = ""
+        lblLastMessage.text = ""
+        lblCreatedAtDate.text = ""
 
     }
     

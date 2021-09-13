@@ -257,7 +257,19 @@ class LiftDetailViewController: UIViewController {
 
     @IBAction func showChat(_ sender: Any) {
         if LujoSetup().getLujoUser()?.membershipPlan != nil {
-            startChatWithInitialMessage()
+            //            startChatWithInitialMessage()
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            let initialMessage = """
+            Hi Concierge team,
+            
+            How can i book a flight, can you please assist me?
+            
+            \(userFirstName)
+            """
+            let viewController = BasicChatViewController()
+            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.initialMessage = initialMessage
+            self.navigationController?.pushViewController(viewController,animated: true)
         } else {
             showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
         }
@@ -305,11 +317,16 @@ class LiftDetailViewController: UIViewController {
 //            ZDCChatAPI.instance().appendNote(bookingInformation)
 
             // swiftlint:disable line_length
-            let presentationMessage = """
+            let initialMessage = """
             Hi there, I'm interested in doing \(returnTrip ? "a round trip" : "one way") flight from \(origin) to \(destination) on \(depart)\(back) with \(currentLift.paxCount) seats. Can we reserve \(currentLift.aircraft.name) for it?
             """
 
-            startChatWithInitialMessage(presentationMessage)
+            //            startChatWithInitialMessage()
+
+            let viewController = BasicChatViewController()
+            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.initialMessage = initialMessage
+            self.navigationController?.pushViewController(viewController,animated: true)
         }
 
         initalMessageSent = true

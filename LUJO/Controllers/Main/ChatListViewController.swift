@@ -18,20 +18,9 @@ class ChatListViewController: UIViewController {
     private let naHUD = JGProgressHUD(style: .dark)
     //var items = [ChatHeader]()
     var channels = [TCHChannelDescriptor]()
-    @IBOutlet weak var tblView: UITableView!
-    let serverDateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
-        result.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
-        return result
-    }()
     
-    let localDateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateStyle = .medium
-        result.timeStyle = .medium
-        return result
-    }()
+    @IBOutlet weak var imgCross: UIImageView!
+    @IBOutlet weak var tblView: UITableView!
     
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -50,10 +39,21 @@ class ChatListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: 24.0)
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
         self.tblView.refreshControl = refreshControl
+        
+        //tap gesture on cross button
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imgCrossTapped))
+        imgCross.isUserInteractionEnabled = true
+        imgCross.addGestureRecognizer(tapGesture)
+        
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .done, target: self, action: #selector(addTapped))
+    }
+    
+    @objc func imgCrossTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion:nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,10 +86,11 @@ class ChatListViewController: UIViewController {
             if showActivity {
                 self.hideNetworkActivity()
             }
-            for channel in channels {
-                print("Twilio: Channel: \(channel.friendlyName)")
-            }
-            self.channels = channels
+//            for channel in channels {
+//                print("Twilio: Channel: \(channel.friendlyName)")
+//            }
+            //sorting channels by date.. most recetnly update comes at top
+            self.channels = channels.sorted(by: { $0.dateUpdated ?? Date() > $1.dateUpdated ?? Date()})
             self.tblView.reloadData()
         }
     }
@@ -137,15 +138,37 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
         let model = channels[indexPath.row]
+        if let attributes = model.attributes()?.dictionary , let type = attributes["type"] as? String{
+            if type == "event" || type  == "experience" || type  == "special-event" {
+                cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
+            }else if type  == "villa"{
+                cell.imgAvatar.image = UIImage(named:"villa cta")
+            }else if type  == "gift"{
+                cell.imgAvatar.image = UIImage(named:"Purchase Goods Icon")
+            }else if type  == "yacht"{
+                cell.imgAvatar.image = UIImage(named:"Charter Yacht Icon")
+            }else if type  == "aviation"{
+                cell.imgAvatar.image = UIImage(named:"aviation_icon")
+            }else if type  == "restaurant"{
+                cell.imgAvatar.image = UIImage(named:"Book Table Icon")
+            }else if type  == "travel"{
+                cell.imgAvatar.image = UIImage(named:"Find Hotel Icon")
+            }else{
+                cell.imgAvatar.image = UIImage(named:"Lujo Logo")
+            }
+        }else{
+            cell.imgAvatar.image = UIImage(named:"Lujo Logo")
+        }
+        
         cell.tag = indexPath.row
-        cell.lblAuthorName.text = model.createdBy
-        cell.lblTitle.text = model.friendlyName
+        cell.lblChannelFriendlyName.text = model.friendlyName?.uppercased()
+        cell.lblLastMessage.text = model.uniqueName
         
         if let dateFromServer = model.dateCreated{
-            let strDate = myDate.localDateFormatter.string(from: dateFromServer)
-//            print (dateFromServer)
-//            print (strDate)
-            cell.lblCreatedAt.text = strDate
+            cell.lblCreatedAtDate.text = dateFromServer.whatsAppTimeFormat()
+            cell.lblCreatedAtTime.text = ""
+//            cell.lblCreatedAtDate.text = Date.dateToString(date:dateFromServer, format: "MMM dd,yyyy")
+//            cell.lblCreatedAtTime.text = Date.dateToString(date:dateFromServer, format: "h:mm a")
         }
 
 //        if let avatarLink = model.meta?.avatar {
@@ -153,7 +176,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
 //        }
         
         self.tblView.separatorStyle = .singleLine
-        self.tblView.separatorColor = .systemOrange
+        self.tblView.separatorColor = .lightGray
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }

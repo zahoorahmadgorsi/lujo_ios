@@ -95,7 +95,7 @@ extension BARouter {
                 URLQueryItem(name: "token", value: token),
             ]
         case .search:
-            components.path = "/baroque/aviation/search"
+            components.path = "/baroque/aviation/search"    //this API isnt working often on staging and many times on production
         case .authorize:
             components.path = "/baroque/credit-cards/authorize"
         case let .bookings(type, token):

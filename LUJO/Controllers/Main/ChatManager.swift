@@ -25,8 +25,8 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     static let sharedChatManager = ChatManager()
 //    static let shared = ChatManager()
     // the unique name of the channel you create
-    var uniqueChannelName = "general"
-    var friendlyChannelName = "General Channel"
+//    var uniqueChannelName = "general"
+//    var friendlyChannelName = "General Channel"
 
     // For the quickstart, this will be the view controller
     weak var delegate: ChatManagerDelegate?
@@ -42,41 +42,16 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
 //        self.friendlyChannelName = channelName
 //    }
     
+    func setChannel (channel: TCHChannel){
+        self.channel = channel
+    }
     
     func chatClient(_ client: TwilioChatClient, synchronizationStatusUpdated status: TCHClientSynchronizationStatus) {
         guard status == .completed else {
             return
         }
-        checkChannelCreation { (_, channel) in
-            if let channel = channel {
-                self.joinChannel(channel)
-            } else {
-                self.createChannel { (success, channel) in
-                    if success, let channel = channel {
-                        self.joinChannel(channel)
-                    }else{  //joining already existed channel
-                        guard let channelsList = client.channelsList() else {
-                            return
-                        }
-                        channelsList.channel(withSidOrUniqueName:self.uniqueChannelName, completion: { channelResult, channel in
-                            if let channel = channel {
-                                channel.join(completion: { channelResult in
-                                    if channelResult.isSuccessful() {
-                                        print("Twilio:Channel joined.")
-                                    } else {
-                                        print("Twilio:Channel NOT joined.")
-                                    }
-                                })
-                            }else{
-                                self.delegate?.hideNetworkActivity()
-                            }
-                        })
-                    }
-                }
-            }
-        }
     }
-
+    
     // Called whenever a channel we've joined receives a new message
     func chatClient(_ client: TwilioChatClient, channel: TCHChannel,
                     messageAdded message: TCHMessage) {
@@ -126,6 +101,8 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             messages.sendMessage(with: messageOptions, completion: { (result, message) in
                 completion(result, message)
             })
+        }else{
+            print("Twilio: Message could not sent")
         }
     }
 
@@ -158,32 +135,45 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             self.client = nil
         }
     }
-
-    private func createChannel(_ completion: @escaping (Bool, TCHChannel?) -> Void) {
+    
+    // MARK: - Create channel
+    
+    public func createChannel(uniqueChannelName: String, friendlyName: String, customAttribute: Dictionary<String,String>,_ completion: @escaping (Bool, TCHChannel?) -> Void) {
         guard let client = client, let channelsList = client.channelsList() else {
             return
         }
-        // Create the channel if it hasn't been created yet
-        let options: [String: Any] = [
-            TCHChannelOptionUniqueName: uniqueChannelName,
-            TCHChannelOptionFriendlyName: friendlyChannelName,
-            TCHChannelOptionType: TCHChannelType.private.rawValue
-            ]
-        channelsList.createChannel(options: options, completion: { channelResult, channel in
-            if channelResult.isSuccessful() {
-                print("Twilio:Channel created: \(channel?.sid)")
+        
+        checkChannelCreation(uniqueName: uniqueChannelName) { (_, channel) in
+            if let channel = channel {
+                self.joinChannel(channel)
             } else {
-                print(channelResult.resultText)
+                // Create a channel if it hasn't been created yet
+                let options: [String: Any] = [
+                    TCHChannelOptionUniqueName: uniqueChannelName,
+                    TCHChannelOptionFriendlyName: friendlyName,
+                    TCHChannelOptionType: TCHChannelType.private.rawValue
+                    ,TCHChannelOptionAttributes: customAttribute
+                    ]
+                channelsList.createChannel(options: options, completion: { channelResult, channel in
+                    if channelResult.isSuccessful() {
+                        if let channel = channel{
+                            self.joinChannel(channel)
+                        }
+                        print("Twilio: Channel created: \(String(describing: channel?.sid))")
+                    } else {
+                        print(channelResult.resultText as Any)
+                    }
+                    completion(channelResult.isSuccessful(), channel)
+                })
             }
-            completion(channelResult.isSuccessful(), channel)
-        })
+        }
     }
 
-    private func checkChannelCreation(_ completion: @escaping(TCHResult?, TCHChannel?) -> Void) {
+    private func checkChannelCreation(uniqueName: String, completion: @escaping(TCHResult?, TCHChannel?) -> Void) {
         guard let client = client, let channelsList = client.channelsList() else {
             return
         }
-        channelsList.channel(withSidOrUniqueName: uniqueChannelName, completion: { (result, channel) in
+        channelsList.channel(withSidOrUniqueName: uniqueName, completion: { (result, channel) in
             completion(result, channel)
         })
     }

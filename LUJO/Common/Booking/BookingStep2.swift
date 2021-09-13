@@ -76,11 +76,12 @@ class BookingStep2: UIViewController {
         PaymentMethodInfo(icon: "Wire Transfer Payment Type",
                           name: "Wire transfer",
                           comment: "*we ask clients to cover bank charges on wire payments",
-                          enabled: true),
-        PaymentMethodInfo(icon: "Credit Card Payment Type",
+                          enabled: true)
+        ,PaymentMethodInfo(icon: "Credit Card Payment Type",
                           name: "Credit Card",
                           comment: "*some cards are subject to a small merchant processing fee",
-                          enabled: false),
+                          //enabled: false),
+                          enabled: true),
     ]
 
     override func viewDidLoad() {
@@ -123,7 +124,20 @@ class BookingStep2: UIViewController {
 
     @IBAction func chatButton_onClick(_ sender: UIButton) {
         if LujoSetup().getLujoUser()?.membershipPlan != nil {
-            startChatWithInitialMessage()
+            //            startChatWithInitialMessage()
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            let initialMessage = """
+            Hi Concierge team,
+            
+            How can i book using this app, can you please assist me?
+            
+            \(userFirstName)
+            """
+            
+            let viewController = BasicChatViewController()
+            viewController.product = Product(id: -1 , type: "Bookings" , name: "Payments Inquiry")
+            viewController.initialMessage = initialMessage
+            self.navigationController?.pushViewController(viewController,animated: true)
         } else {
             showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
         }

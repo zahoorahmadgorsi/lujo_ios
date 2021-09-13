@@ -893,8 +893,8 @@ extension ProductDetailsViewController {
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
             //zahoor start
             
-            let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
-            let channelName = userFirstName+product.type+dateTime
+            
+            
 //            print(channelName)
             if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
                 initialMessage = """
@@ -928,7 +928,7 @@ extension ProductDetailsViewController {
 //            print(initialMessage)
             let viewController = BasicChatViewController()
 //            viewController.chatManager = ChatManager(channelName: channelName)
-            ChatManager.sharedChatManager.uniqueChannelName = channelName
+//            ChatManager.sharedChatManager.uniqueChannelName = channelName
             viewController.product = product
             viewController.initialMessage = initialMessage
             viewController.modalPresentationStyle = .overFullScreen
