@@ -11,4 +11,6 @@ target 'LUJO' do
   pod 'MessageKit', '~> 3.3.0'
   #Twilio chat
   pod 'TwilioChatClient', '~> 5.0'
+  #Intercom
+  pod 'Intercom'
 end

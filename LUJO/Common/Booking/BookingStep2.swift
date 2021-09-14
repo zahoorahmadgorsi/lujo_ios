@@ -107,6 +107,7 @@ class BookingStep2: UIViewController {
             performSegue(withIdentifier: "wireTransfer", sender: nil)
         } else { // Credit card
             // Nothing to do here as it is not enabled yet
+            performSegue(withIdentifier: "wireTransfer", sender: nil)   //as per sahle it would be the same
         }
     }
 
@@ -124,20 +125,20 @@ class BookingStep2: UIViewController {
 
     @IBAction func chatButton_onClick(_ sender: UIButton) {
         if LujoSetup().getLujoUser()?.membershipPlan != nil {
-            //            startChatWithInitialMessage()
-            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-            let initialMessage = """
-            Hi Concierge team,
-            
-            How can i book using this app, can you please assist me?
-            
-            \(userFirstName)
-            """
-            
-            let viewController = BasicChatViewController()
-            viewController.product = Product(id: -1 , type: "Bookings" , name: "Payments Inquiry")
-            viewController.initialMessage = initialMessage
-            self.navigationController?.pushViewController(viewController,animated: true)
+            startChatWithInitialMessage()
+//            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+//            let initialMessage = """
+//            Hi Concierge team,
+//            
+//            I want to choose one preferred payment method, can you please assist me?
+//            
+//            \(userFirstName)
+//            """
+//            
+//            let viewController = BasicChatViewController()
+//            viewController.product = Product(id: -1 , type: "Booking Request" , name: "Choose preferred payment method")
+//            viewController.initialMessage = initialMessage
+//            self.navigationController?.pushViewController(viewController,animated: true)
         } else {
             showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
         }

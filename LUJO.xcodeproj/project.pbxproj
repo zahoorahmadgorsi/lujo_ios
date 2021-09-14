@@ -47,7 +47,6 @@
 		1D88012C233E49630039DEA6 /* DiningCategorySlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D88012B233E49630039DEA6 /* DiningCategorySlider.swift */; };
 		1D88012F233E4AB30039DEA6 /* DiningCategorySliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D88012D233E4AB30039DEA6 /* DiningCategorySliderCell.swift */; };
 		1D880130233E4AB30039DEA6 /* DiningCategorySliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D88012E233E4AB30039DEA6 /* DiningCategorySliderCell.xib */; };
-		1D8801312341E6AB0039DEA6 /* Intercom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3A71E7233A8E140037AE81 /* Intercom.framework */; };
 		1DBC9BF8235F4FB200F0F133 /* Bookings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC9BF7235F4FB200F0F133 /* Bookings.swift */; };
 		1DBC9BFC235F6BCA00F0F133 /* BookingDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC9BFA235F6BCA00F0F133 /* BookingDetailCell.swift */; };
 		1DBC9BFD235F6BCA00F0F133 /* BookingDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC9BFB235F6BCA00F0F133 /* BookingDetailCell.xib */; };
@@ -398,7 +397,6 @@
 		16433ACA3C4582AF064E31E6 /* LoginProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginProtocols.swift; sourceTree = "<group>"; };
 		16433F301118F589A55481D6 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1D3A71E3233919840037AE81 /* AviationAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationAPIManager.swift; sourceTree = "<group>"; };
-		1D3A71E7233A8E140037AE81 /* Intercom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intercom.framework; path = Carthage/Build/iOS/Intercom.framework; sourceTree = "<group>"; };
 		1D3E09D622D4C33E0051BDBC /* NoSelectTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSelectTextView.swift; sourceTree = "<group>"; };
 		1D3E09D822D747FE0051BDBC /* LUJO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LUJO.entitlements; sourceTree = "<group>"; };
 		1D44A6F92356250F0073C682 /* GlobalSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSearchViewController.swift; sourceTree = "<group>"; };
@@ -763,7 +761,6 @@
 				88B30C792670234C0090B3B5 /* ActiveLabel.framework in Frameworks */,
 				1D600684239952D400B9BA2A /* GoogleAppMeasurement.framework in Frameworks */,
 				1D60067023994B9300B9BA2A /* libc++abi.tbd in Frameworks */,
-				1D8801312341E6AB0039DEA6 /* Intercom.framework in Frameworks */,
 				9A72C3C3213831ED009FE9E2 /* SwiftEntryKit.framework in Frameworks */,
 				9ACE52C1212D309400BB287A /* Fabric.framework in Frameworks */,
 				88310E232636043E00301667 /* OneSignal.xcframework in Frameworks */,
@@ -1553,7 +1550,6 @@
 				1D523A9D23995516009E78D8 /* Firebase.h */,
 				88029BA22633BF42003F1E77 /* OneSignalNotificationServiceExtension */,
 				9AECC13A2111CBD700C00C07 /* Frameworks */,
-				1D3A71E7233A8E140037AE81 /* Intercom.framework */,
 				9A818F4920EE74CA005B6455 /* LUJO */,
 				9A818F5E20EE74CC005B6455 /* LUJOTests */,
 				9A818F6920EE74CC005B6455 /* LUJOUITests */,
@@ -2163,7 +2159,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/IQKeyboardManagerSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftMessages.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Intercom.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -2179,7 +2174,6 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/IQKeyboardManagerSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftMessages.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Intercom.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
