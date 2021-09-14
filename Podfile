@@ -7,4 +7,5 @@ target 'LUJO' do
 
   # Pods for LUJO
   pod "Delighted", "~> 1.0.3"
+  pod "Intercom"
 end

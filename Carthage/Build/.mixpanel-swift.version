@@ -1,60 +1,35 @@
 {
   "Mac" : [
     {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "29de3c2c22a454c775cd3ca9ef62ba35f644c334df30f5ad52f55bad3472ca91",
+      "hash" : "fed587f74b7e6d287e246d1cbe7471f0f826ba5ee6fd4a3a16733a7658e0ea91",
       "name" : "Mixpanel",
-      "container" : "Mixpanel.xcframework",
-      "identifier" : "macos-arm64_x86_64"
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ],
   "watchOS" : [
     {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "215311b800919da479caf58632d18de9078ae93aab8fcca1d309fea650a01e59",
+      "hash" : "a4fedf34ed589d4e63dc577beec44d7ed03d969495e13d3dfa76cd18329e1a44",
       "name" : "Mixpanel",
-      "container" : "Mixpanel.xcframework",
-      "identifier" : "watchos-arm64_i386_x86_64-simulator"
-    },
-    {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "54b570e2a1ef7142823112f66127002d6eb480a23f39b87ea78239f8016784ba",
-      "name" : "Mixpanel",
-      "container" : "Mixpanel.xcframework",
-      "identifier" : "watchos-arm64_32_armv7k"
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ],
   "tvOS" : [
     {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "d8f6d9c8f149dc32985207438537855cbbc1728e7f11bf607d1f098346772673",
+      "hash" : "aa060e49f49b0a5df3e567d28b10874f1080e27a3c9b7248c06593a3383771ad",
       "name" : "Mixpanel",
-      "container" : "Mixpanel.xcframework",
-      "identifier" : "tvos-arm64"
-    },
-    {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "30af862c5b6152258a347c834f9a3a5ee75a7666638ce1a15af2982b51ddd2eb",
-      "name" : "Mixpanel",
-      "container" : "Mixpanel.xcframework",
-      "identifier" : "tvos-arm64_x86_64-simulator"
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ],
-  "commitish" : "v2.9.3",
+  "commitish" : "v2.10.1",
   "iOS" : [
     {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "70df0960ad039abbbb5ea5345f37ce175b33581402d1cc602cbafb9372be88e5",
+      "hash" : "0b9e1241ab162383a10e359deb42188bd80e433ce2803ffbb4cb25e30c610f67",
       "name" : "Mixpanel",
-      "container" : "Mixpanel.xcframework",
-      "identifier" : "ios-arm64_i386_x86_64-simulator"
-    },
-    {
-      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "ec830dc0cadad2db1d153cfd33b3cf6be218ef460f436a677bb79ab1ccde6f5b",
-      "name" : "Mixpanel",
-      "container" : "Mixpanel.xcframework",
-      "identifier" : "ios-arm64_armv7"
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
     }
   ]
 }

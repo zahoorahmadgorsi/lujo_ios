@@ -9,7 +9,6 @@ github "patchthecode/JTAppleCalendar" ~> 7.0
 github "hackiftekhar/IQKeyboardManager"
 github "onevcat/Kingfisher" ~> 5.0
 github "SwiftKickMobile/SwiftMessages" == 7.0.0
-github "intercom/intercom-ios" == 5.4.1
 github "mixpanel/mixpanel-swift"
 github "OneSignal/OneSignal-iOS-SDK"
 github "evgenyneu/Cosmos" ~> 23.0
