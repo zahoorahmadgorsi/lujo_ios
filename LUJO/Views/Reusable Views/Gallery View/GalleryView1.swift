@@ -17,8 +17,8 @@ protocol GalleryViewProtocol:class {
 class GalleryView1: UIView {
 
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var product1ImageContainer: UIView!
-    @IBOutlet weak var product1ImageView: UIImageView!
+    @IBOutlet weak var ImgView1Container: UIView!
+    @IBOutlet weak var ImgView1: UIImageView!
     weak var delegate: GalleryViewProtocol?
     
     var gallery: [Gallery]?{
@@ -44,8 +44,8 @@ class GalleryView1: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
         //Adding tap gesture on whole product view
-        let tgrOnProduct1 = UITapGestureRecognizer(target: self, action: #selector(CityView1.tappedOnProduct(_:)))
-        product1ImageContainer.addGestureRecognizer(tgrOnProduct1)
+        let tgrOnProduct1 = UITapGestureRecognizer(target: self, action: #selector(GalleryView1.tappedOnImage(_:)))
+        ImgView1Container.addGestureRecognizer(tgrOnProduct1)
         
     }
     
@@ -53,21 +53,21 @@ class GalleryView1: UIView {
         for (index, media) in gallery?.enumerated() ?? [].enumerated() {
             if index == 0 {
                 if (media.type == "image"){
-                    product1ImageView.downloadImageFrom(link: media.mediaUrl, contentMode: .scaleAspectFill)
+                    ImgView1.downloadImageFrom(link: media.mediaUrl, contentMode: .scaleAspectFill)
                     
                 }else if( media.type == "video"){
                     var avPlayer: AVPlayer!
                     //Playing the video
                     if let videoLink = URL(string: media.mediaUrl ){
-                        product1ImageView.isHidden = true;
-                        product1ImageContainer.removeLayer(layerName: "videoPlayer") //removing video player if was added
+                        ImgView1.isHidden = true;
+                        ImgView1Container.removeLayer(layerName: "videoPlayer") //removing video player if was added
                         
                         avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
                         let avPlayerLayer = AVPlayerLayer(player: avPlayer)
                         avPlayerLayer.name = "videoPlayer"
-                        avPlayerLayer.frame = product1ImageContainer.bounds
+                        avPlayerLayer.frame = ImgView1Container.bounds
                         avPlayerLayer.videoGravity = .resizeAspectFill
-                        product1ImageContainer.layer.insertSublayer(avPlayerLayer, at: 0)
+                        ImgView1Container.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
@@ -79,11 +79,12 @@ class GalleryView1: UIView {
         }
     }
     
-    @objc func tappedOnProduct(_ sender:AnyObject){
+    @objc func tappedOnImage(_ sender:AnyObject){
 //        if let product = gallery?.items?[sender.view.tag] {
 //            delegate?.didTappedOnProductAt(product: product)
 //        }
-        delegate?.didTappedOnViewGallery()
+//        print(sender.view.tag)
+        delegate?.didTappedOnImage(itemIndex: sender.view.tag)
     }
 
     @IBAction func btnSeeAllTapped(_ sender: Any) {

@@ -113,9 +113,10 @@ class RestaurantRequestReservationViewController: UIViewController {
             \(userFirstName)
             """
             
-            if let presentingViewController = self.presentingViewController {
+            if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
                 self.dismiss(animated: true) {
-                    presentingViewController.startChatWithInitialMessage(initialMessage)
+//                    presentingViewController.startChatWithInitialMessage(initialMessage)
+                    presentingViewController.sendInitialInformation(initialMsg: initialMessage)
                 }
             }
             

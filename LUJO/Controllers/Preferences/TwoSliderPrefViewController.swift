@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
 
 class TwoSliderPrefViewController: UIViewController {
     
@@ -150,12 +151,10 @@ class TwoSliderPrefViewController: UIViewController {
     func cabinClassToInt(cabinClass: String)-> Int{
         if cabinClass.equals(rhs: CabinClass.Economy.rawValue){
             return 0
-        }else if cabinClass.equals(rhs: CabinClass.Second.rawValue){
+        }else if cabinClass.equals(rhs: CabinClass.Business.rawValue){
             return 1
         }else if cabinClass.equals(rhs: CabinClass.First.rawValue){
             return 2
-        }else if cabinClass.equals(rhs: CabinClass.Business.rawValue){
-            return 3
         }else{
             return 1
         }
@@ -164,12 +163,10 @@ class TwoSliderPrefViewController: UIViewController {
     func intToCabinClass(int: Int)-> String{
         if int == 0 {
             return CabinClass.Economy.rawValue
-        }else if int == 1 {
-            return CabinClass.Second.rawValue
+        }else if int == 1{
+            return CabinClass.Business.rawValue
         }else if int == 2{
             return CabinClass.First.rawValue
-        }else if int == 3{
-            return CabinClass.Business.rawValue
         }else{
             return CabinClass.Economy.rawValue
         }
@@ -322,14 +319,6 @@ class TwoSliderPrefViewController: UIViewController {
         case .aviation:
             switch self.prefInformationType {
             case .aviationCharterFrequency:
-//                if (self.userPreferences?.aviation.aviation_times_charter_corporate_jet == self.previouslySelectedItems[0]
-//                    && self.userPreferences?.aviation.aviation_times_charter_leisure_jet == self.previouslySelectedItems[1]){
-//                    btnNextStep.setTitle("S K I P", for: .normal)
-//                    return false
-//                }else{
-//                    btnNextStep.setTitle("S A V E", for: .normal)
-//                    return true
-//                }
                 var current :[Int] = []
                 current.append(self.userPreferences?.aviation.aviation_times_charter_corporate_jet ?? sliderDefaultVal)  //default value is set to 1
                 current.append(self.userPreferences?.aviation.aviation_times_charter_leisure_jet ?? sliderDefaultVal)
@@ -378,15 +367,17 @@ class TwoSliderPrefViewController: UIViewController {
     func compare(current:[Int] , previous:[Int] ) -> Bool{
         if (Set(previous ) == Set(current)){
 //            btnNextStep.setTitle("S K I P", for: .normal)
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return true
         }else{
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return false
         }
     }
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
+        Mixpanel.mainInstance().track(event: "preferences_skip_all_clicked",
+                                      properties: ["SkippingAllFrom" : prefInformationType.rawValue])
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
             //if user came from my preferences
             navigationController?.popToViewController(viewController, animated: true)

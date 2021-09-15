@@ -34,7 +34,7 @@ enum CustomRequestRouter: URLRequestConvertible {
         return scheme
     }()
     
-    case requestYacht(String, String?, String, String, String, String, Int, String)
+    case requestYacht(String, String?, String, String?, String, String, Int, String)
     case requestVilla(String, String, Int,String, String,Int)
     case findHotel(String, String?, String, String, String, Int, Int, Int, String)
     
@@ -105,10 +105,10 @@ enum CustomRequestRouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getYachtDataAsJSONData (destination: String, yachtName: String?, yachtChareter: String, yachtLenght: String, dateFrom: String, dateTo: String, guestsCount: Int, token: String) -> Data? {
+    fileprivate func getYachtDataAsJSONData (destination: String, yachtName: String?, yachtChareter: String, yachtLenght: String?, dateFrom: String, dateTo: String, guestsCount: Int, token: String) -> Data? {
         var body: [String: Any] = [
             "yacht_destination": destination,
-            "yacht_length": yachtLenght,
+            "yacht_length": yachtLenght ?? "-100",
             "yacht_date_from": dateFrom,
             "yacht_date_to": dateTo,
             "yacht_guests": guestsCount,

@@ -110,6 +110,7 @@ class RestaurantSearchViewController: UIViewController {
     
     fileprivate func presentRestaurantDetailViewController(restaurant: Product) {
         let viewController = ProductDetailsViewController.instantiate(product: restaurant)
+        viewController.delegate = self
         present(viewController, animated: true, completion: nil)
     }
     
@@ -310,5 +311,13 @@ extension RestaurantSearchViewController {
             }
             completion(strResponse, error)
         }
+    }
+}
+
+extension RestaurantSearchViewController : ProductDetailDelegate{
+    func tappedOnBookRequest(viewController:UIViewController) {
+        // Initialize a navigation controller, with your view controller as its root
+        let navigationController = UINavigationController(rootViewController: viewController)
+        present(navigationController, animated: true, completion: nil)
     }
 }

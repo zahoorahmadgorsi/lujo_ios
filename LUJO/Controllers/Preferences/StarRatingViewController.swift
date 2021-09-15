@@ -9,6 +9,8 @@
 import UIKit
 import JGProgressHUD
 import Cosmos
+import Mixpanel
+import Mixpanel
 
 class StarRatingViewController: UIViewController {
     
@@ -208,16 +210,17 @@ class StarRatingViewController: UIViewController {
     
     func compare(current:[Int] , previous:[Int] ) -> Bool{
         if (Set(previous ) == Set(current)){
-//            btnNextStep.setTitle("S K I P", for: .normal)
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return true
         }else{
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return false
         }
     }
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
+        Mixpanel.mainInstance().track(event: "preferences_skip_all_clicked",
+                                      properties: ["SkippingAllFrom" : prefInformationType.rawValue])
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
             //if user came from my preferences
             navigationController?.popToViewController(viewController, animated: true)

@@ -19,6 +19,13 @@ public extension Date {
         return dateFormatter.date(from: string)
     }
 
+    static func dateToString(date: Date, format: String = "yyyy-MM-dd-HH-mm-ss") -> String {
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = format
+        let dateTimePrefix: String = formatter.string(from: date)
+        return dateTimePrefix
+    }
+    
     static func isoStringNow() -> String {
         return Date.ISOStringFromDate(date: Date())
     }
@@ -36,4 +43,52 @@ public extension Date {
             "time": String(format: "%02d", components.hour!) + ":" + String(format: "%02d", components.minute!),
         ]
     }
+    
+    func dateToDayWeekYear() -> String{
+        let formatter = DateFormatter()
+        switch true {
+        case Calendar.current.isDateInToday(self) || Calendar.current.isDateInYesterday(self):
+            formatter.doesRelativeDateFormatting = true
+            formatter.dateStyle = .short
+            formatter.timeStyle = .none
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .weekOfYear):
+            formatter.dateFormat = "EEEE"
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year):
+            formatter.dateFormat = "E, d MMM"
+        default:
+            formatter.dateFormat = "MMM d, yyyy"
+        }
+//        print(formatter.string(from: self))
+        return formatter.string(from: self)
+    }
+    
+    func whatsAppTimeFormat() -> String{
+        let formatter = DateFormatter()
+        switch true {
+        case Calendar.current.isDateInToday(self) :
+            formatter.doesRelativeDateFormatting = true
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+        case Calendar.current.isDateInYesterday(self):
+            formatter.doesRelativeDateFormatting = true
+            formatter.dateStyle = .short
+            formatter.timeStyle = .none
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .weekOfYear):
+            formatter.dateFormat = "EEEE"
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year):
+            formatter.dateFormat = "E, d MMM"
+        default:
+            formatter.dateFormat = "MMM d, yyyy"
+        }
+//        print(formatter.string(from: self))
+        return formatter.string(from: self)
+    }
+    
+    func stripTime() -> Date {
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        let date = Calendar.current.date(from: components)
+        return date!
+    }
+
+    
 }

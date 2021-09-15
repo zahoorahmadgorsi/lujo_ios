@@ -19,7 +19,7 @@ class VillaViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "VillaViewController" }
     
-    private(set) var product: Product?
+    private(set) var product: Product!
     
     /// Init method that will init and return view controller.
     class func instantiate(product: Product) -> VillaViewController {
@@ -72,7 +72,7 @@ class VillaViewController: UIViewController {
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-    
+
     //MARK:- Life cicyle
     
     override func viewDidLoad() {
@@ -222,49 +222,66 @@ class VillaViewController: UIViewController {
             return
         }
         
-        Mixpanel.mainInstance().track(event: "Villa Custom Request",
-                                      properties: ["villa Name" : villaName
-                                                   ,"Villa Check In Date" : dateString
-                                                   ,"Villa Check Out Date" : returnDateString])
+        //Zahoor Start
+//                Now we are calling this in chatViewControll
+//        Mixpanel.mainInstance().track(event: "Villa Custom Request",
+//                                      properties: ["villa Name" : villaName
+//                                                   ,"Villa Check In Date" : dateString
+//                                                   ,"Villa Check Out Date" : returnDateString])
         
-
-        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                BackendError.parsing(reason: "Could not obtain the salesforce_id")
-                return
-            }
-            //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-            if let user = LujoSetup().getLujoUser(), user.id > 0 {
-                Intercom.logEvent(withName: "custom_request", metaData:[
-                                    "sales_force_villa_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-                                    ,"user_id":user.id])
-            }
-        }
+//        let initialMessage = """
+//        Hi Concierge team
+//
+//        I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
+//
+//        \(LujoSetup().getLujoUser()?.firstName ?? "User")
+//        """
+//
+////            print(initialMessage)
+        
+        //Now we are calling this in chatViewController
+//        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
+//            guard error == nil else {
+//                Crashlytics.sharedInstance().recordError(error!)
+//                BackendError.parsing(reason: "Could not obtain the salesforce_id")
+//                return
+//            }
+//            //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//            if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                Intercom.logEvent(withName: "custom_request", metaData:[
+//                                    "sales_force_villa_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+//                                    ,"user_id":user.id])
+//            }
+//        }
         
         let initialMessage = """
         Hi Concierge team
 
-        I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
-        
+        I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me, please?
+
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
-        startChatWithInitialMessage(initialMessage)
+//        startChatWithInitialMessage(initialMessage)
+        //Zahoor end
         
-        //showNetworkActivity()
+        showNetworkActivity()
         CustomRequestAPIManager.shared.requestVilla( villaName: villaName, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token, villaRooms: -1) { error in
             DispatchQueue.main.async {
-                //self.hideNetworkActivity()
+                self.hideNetworkActivity()
                 if let error = error {
                     print ("ERROR: \(error.localizedDescription)")
                     //self.showErrorPopup(withTitle: "Error", error:error)
                     return
                 }
-
                 print ("Success: custom request villa.")
-                self.dismiss(animated: true, completion: nil)
-                
+                //this VC is always get called from ProductDetailsViewController only
+                if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
+                    self.dismiss(animated: true) {
+//                        presentingViewController.startChatWithInitialMessage(initialMessage)
+                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
+                    }
+                }
             }
         }
     }

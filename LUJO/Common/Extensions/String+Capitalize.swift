@@ -113,4 +113,15 @@ extension String {
             numberFormatter.numberStyle = .decimal
             return numberFormatter.string(from: NSNumber(value:Int(self) ?? 0))!
         }
+    
+    //func time24To12(dateAsString:String) -> String {
+    func time24To12() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+
+        let date = dateFormatter.date(from: self)
+        dateFormatter.dateFormat = "h:mm a"
+        let Date12 = dateFormatter.string(from: date!)
+        return Date12
+    }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import Mixpanel
 
 class PrefProductCategoryViewController: UIViewController {
     
@@ -298,12 +299,17 @@ class PrefProductCategoryViewController: UIViewController {
             //if selected array is zero then its mean all previous selection has been un selected
 //            if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
                 let commaSeparatedString = selectedArray.map{String($0)}.joined(separator: ",")
+            Mixpanel.mainInstance().track(event: "preferences_submitted",
+                                          properties: ["Submitting" : prefInformationType.rawValue
+                                                       ,"Values" : commaSeparatedString])
                 setPreferences(commaSeparatedString: commaSeparatedString)
 //            }else{
 //    //            showCardAlertWith(title: "My Preferences", body: "Please select one option at least.")
 //                navigateToNextVC()  //skipping this step
 //            }
         }else{
+            Mixpanel.mainInstance().track(event: "preferences_skip_clicked",
+                                          properties: ["SkippingFrom" : prefInformationType.rawValue])
             navigateToNextVC()
         }
         
@@ -423,10 +429,10 @@ class PrefProductCategoryViewController: UIViewController {
     func compare(current:[String] , previous:[String] ) -> Bool{
         if (Set(previous ) == Set(current)){
 //            btnNextStep.setTitle("S K I P", for: .normal)
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return true
         }else{
-            btnNextStep.setTitle("S A V E", for: .normal)
+            btnNextStep.setTitle("N E X T", for: .normal)
             return false
         }
     }
@@ -460,6 +466,8 @@ class PrefProductCategoryViewController: UIViewController {
     
     //@objc func skipTapped(sender: UIBarButtonItem){
     @objc func skipTapped(){
+        Mixpanel.mainInstance().track(event: "preferences_skip_all_clicked",
+                                      properties: ["SkippingAllFrom" : prefInformationType.rawValue])
         if let viewController = navigationController?.viewControllers.first(where: {$0 is PreferencesHomeViewController}) {
             //if user came from my preferences
             navigationController?.popToViewController(viewController, animated: true)

@@ -84,7 +84,8 @@ class RestaurantDetailViewController: UIViewController {
             let viewController = GalleryViewControllerNEW.instantiate(dataSource: restaurant.getGalleryImagesURL())
             present(viewController, animated: true, completion: nil)
         } else {
-            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
+            print("There are no images in the gallery, sorry!")
+//            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
         }
     }
     
@@ -92,7 +93,7 @@ class RestaurantDetailViewController: UIViewController {
         
         guard
             let latitudeString = restaurant.latitude,
-            let longitudeString = restaurant.longtitude,
+            let longitudeString = restaurant.longitude,
             let latitude = Double(latitudeString),
             let longitude = Double(longitudeString)
             else {

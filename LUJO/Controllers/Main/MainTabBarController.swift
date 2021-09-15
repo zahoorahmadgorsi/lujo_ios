@@ -80,9 +80,13 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController is ChatViewController {
+        if viewController.restorationIdentifier == "ChatListNavigationController"{
+            //Zahoor start
             openChatWindow()
+//            let viewController = ChatOptionsViewController.instantiate()
+//            self.present(viewController, animated: true, completion: nil)
             return false
+            //Zahoor ends
         }
         return true
     }

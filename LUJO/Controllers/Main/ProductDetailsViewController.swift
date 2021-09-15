@@ -11,7 +11,12 @@ import JGProgressHUD
 import Mixpanel
 import Intercom
 
+protocol ProductDetailDelegate{
+    func tappedOnBookRequest(viewController:UIViewController)
+}
+
 class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
+    
     //MARK:- Init
     
     /// Class storyboard identifier.
@@ -94,38 +99,12 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     var pgrFullView: UIPanGestureRecognizer?
     var originalPosition: CGPoint?
     var currentPositionTouched: CGPoint?
+    var delegate: ProductDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        switch product.type {
-            case "event":           fallthrough
-            case "special-event":   setupEvents(product)
-            case "gift":            fallthrough
-            case "experience":      setupExperience(product)
-            case "yacht":           setupYacht(product)
-            case "villa":           setupVilla(product)
-            default:
-                setupEvents(product)//("It could be restaurant")
-                break
-        }
-        //setting up gallery
-        setUpGallery(product)
         
         scrollView.delegate = self
-        if let font = descriptionTextView.font{
-            let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
-//            print(currentHeight,descHeightToShowReadMore)
-                if (currentHeight > descHeightToShowReadMore){
-                    viewReadMore.isHidden = false
-                    lblDescriptionHeight.constant = descHeightToShowReadMore
-                }else{
-                    viewReadMore.isHidden = true  //no need to show readmore button
-                    lblDescriptionHeight.constant = currentHeight
-                }
-        }
-        
-        
         bottomLineViewHeight.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20 ? 34 : 0
         //setting tapping event on viewheart
         //Add tap gesture on favourite
@@ -148,22 +127,147 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         
         pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
-        setRecentlyViewed()
+        
+        if (product.name.count == 0 ){  //detail is going to open due to some push notification
+            self.showNetworkActivity()
+            getProductDetails() {information, error in
+                self.hideNetworkActivity()
+
+                if let error = error {
+                    self.showError(error)
+                    return
+                }
+                if let info = information {
+                    self.product = info
+                    self.setUpUi()
+                } else {
+                    let error = BackendError.parsing(reason: "Could not obtain product details")
+                    self.showError(error)
+                }
+            }
+        }else{
+            setUpUi()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activateKeyboardManager()
-        //No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //No need to hide/unhide now as now wer are presenting/dismissing , before we were doing push/pop view controller
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func getProductDetails(completion: @escaping (Product?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        if (product.type == "event"){
+            EEAPIManager().getEvents(token, past: false, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "experience"){
+            EEAPIManager().getExperiences(token, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "villa"){
+            EEAPIManager().getVillas(token, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "gift"){
+            EEAPIManager().getGoods(token, term: nil, category_term_id: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "yacht"){
+            EEAPIManager().getYachts(token, term: nil, cityId: nil, productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.sharedInstance().recordError(error!)
+                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }
+    }
+    
+    func setUpUi(){
+        switch product.type {
+            case "event":           fallthrough
+            case "special-event":   setupEvents(product)
+            case "gift":            fallthrough
+            case "experience":      setupExperience(product)
+            case "yacht":
+                setupYacht(product)
+                getYachtGallery(product: product)
+            case "villa":           setupVilla(product)
+            default:
+                setupEvents(product)//("It could be restaurant")
+                break
+        }
+        //Setting up ReadMore
+        if let font = descriptionTextView.font{
+            let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+            print(currentHeight,descHeightToShowReadMore)
+            if (currentHeight > descHeightToShowReadMore){
+                viewReadMore.isHidden = false
+                lblDescriptionHeight.constant = descHeightToShowReadMore
+            }else{
+                viewReadMore.isHidden = true  //no need to show readmore button
+                lblDescriptionHeight.constant = currentHeight
+            }
+        }
+        
+        //setting up gallery
+        setUpGallery(product)
+        setRecentlyViewed()
+    }
+    
+    
+    func getYachtGallery(product: Product){
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            LoginError.errorLogin(description: "User does not exist or is not verified")
+            return
+        }
+        
+        EEAPIManager().getYachtGallery(token, postId: product.id) { gallery, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                _ = BackendError.parsing(reason: "Could not get yacht's gallery")
+                return
+            }
+            if (gallery.count > 0){
+                self.product.gallery = gallery
+                self.setUpGallery(self.product)
+            }
+        }
     }
     
     @IBAction func requestBooking(_ sender: Any) {
@@ -172,45 +276,53 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     func didTappedOnImage(itemIndex: Int) {
         print("didTappedOnImage")
+//        didTappedOnViewGallery(scrollToThisItem: itemIndex)
+        let dataSource = product.getGalleryImagesURL()
+        if dataSource.count > 0 {
+            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource , scrollToItem: itemIndex)
+            self.present(viewController, animated: true, completion: nil)
+        } else {
+            print("There are no images in the gallery, sorry!")
+        }
     }
     
     @IBAction func viewGalleryButton_onClick(_ sender: UIButton) {
         didTappedOnViewGallery()
     }
-    
+
     func didTappedOnViewGallery() {
         let dataSource = product.getGalleryImagesURL()
         if dataSource.isEmpty {
-            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
+            print("There are no images in the gallery, sorry!")
+//            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
         } else {
-            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource)
+            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource )
             self.present(viewController, animated: true, completion: nil)
         }
     }
     
     @IBAction func btnSeeMoreTapped(_ sender: Any) {
         if isLabelAtMaxHeight {
-                btnReadMore.setTitle("Read more", for: .normal)
-                isLabelAtMaxHeight = false
+            btnReadMore.setTitle("Read more", for: .normal)
+            isLabelAtMaxHeight = false
 
-                if let font = descriptionTextView.font{
-                    let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+            if let font = descriptionTextView.font{
+                let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
 //                    print(currentHeight,descHeightToShowReadMore)
-                    if (currentHeight > descHeightToShowReadMore){
-                        lblDescriptionHeight.constant = descHeightToShowReadMore
-                    }else{
-                        lblDescriptionHeight.constant = currentHeight
-                    }
-                }
-
-            }
-            else {
-                btnReadMore.setTitle("Read less", for: .normal)
-                isLabelAtMaxHeight = true
-                if let font = descriptionTextView.font{
-                    lblDescriptionHeight.constant = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+                if (currentHeight > descHeightToShowReadMore){
+                    lblDescriptionHeight.constant = descHeightToShowReadMore
+                }else{
+                    lblDescriptionHeight.constant = currentHeight
                 }
             }
+        }
+        else {
+            btnReadMore.setTitle("Read less", for: .normal)
+            isLabelAtMaxHeight = true
+            if let font = descriptionTextView.font{
+                lblDescriptionHeight.constant = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
+            }
+        }
     }
     
     func getTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
@@ -715,7 +827,8 @@ extension ProductDetailsViewController {
     }
     
     private func convertToAttributedString(_ text: String) -> NSAttributedString {
-        let range = NSRange(location: 0, length: text.count)
+//        let range = NSRange(location: 0, length: text.count)
+        let range = NSRange(location: 0, length: text.unicodeScalars.count) //unicodeScalars will count \n and \r as well.
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
         let aString = NSMutableAttributedString(string: text)
@@ -762,48 +875,68 @@ extension ProductDetailsViewController {
 
 // Chat functionality
 extension ProductDetailsViewController {
-    
-    fileprivate func sendInitialInformation() {
-        print(product.type)
-        if (product.type == "yacht"){
-            self.present(YachtViewController.instantiate(product: product), animated: true, completion: nil)
-        }else if (product.type == "villa"){
-            self.present(VillaViewController.instantiate(product: product), animated: true, completion: nil)
-        }else if(product.type == "restaurant"){
+
+    func sendInitialInformation(initialMsg:String = "") {//if initialMessage is empty then user is coming to fill the booking details of yacht,villa and restaurnat
+        var initialMessage = initialMsg
+//        print(product.type)
+        if (product.type == "yacht" && initialMessage.count == 0){
+            let viewController = YachtViewController.instantiate(product: product)
+            self.present(viewController, animated: true, completion: nil)
+        }else if (product.type == "villa" && initialMessage.count == 0){
+            let viewController = VillaViewController.instantiate(product: product)
+            self.present(viewController, animated: true, completion: nil)
+        }else if(product.type == "restaurant" && initialMessage.count == 0){
             let viewController = RestaurantRequestReservationViewController.instantiate(restaurant: product)
             present(viewController, animated: true, completion: nil)
         }
         else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            //zahoor start
             
-            EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
-                guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
-                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
-                    return
-                }
-                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-                if let user = LujoSetup().getLujoUser(), user.id > 0 {
-                    Intercom.logEvent(withName: "custom_request", metaData:[
-                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-                                        ,"user_id":user.id])
-                }
+            
+            
+//            print(channelName)
+            if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
+                initialMessage = """
+                Hi Concierge team,
+
+                I am interested in \(product.name), can you assist me?
+
+                \(userFirstName)
+                """
+//                Now we are calling this in chatViewControll
+//                EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
+//                    guard error == nil else {
+//                        Crashlytics.sharedInstance().recordError(error!)
+//                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
+//                        return
+//                    }
+//                    https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//                    if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                        Intercom.logEvent(withName: "custom_request", metaData:[
+//                                            "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+//                                            ,"user_id":user.id])
+//                    }
+//                }
+
+//                Mixpanel.mainInstance().track(event: "Product Custom Request",
+//                                              properties: ["Product Name" : product.name
+//                                                           ,"Product Type" : product.type
+//                                                           ,"ProductId" : product.id])
             }
-            
-            Mixpanel.mainInstance().track(event: "Product Custom Request",
-                                          properties: ["Product Name" : product.name
-                                                       ,"Product Type" : product.type
-                                                       ,"ProductId" : product.id])
-            
-            let initialMessage = """
-            Hi Concierge team,
-            
-            I am interested in \(product.name), can you assist me?
-            
-            \(userFirstName)
-            """
-            
-            startChatWithInitialMessage(initialMessage)
+
+//            print(initialMessage)
+            let viewController = BasicChatViewController()
+//            viewController.chatManager = ChatManager(channelName: channelName)
+//            ChatManager.sharedChatManager.uniqueChannelName = channelName
+            viewController.product = product
+            viewController.initialMessage = initialMessage
+            viewController.modalPresentationStyle = .overFullScreen
+            self.dismiss(animated: true, completion: {
+                self.delegate?.tappedOnBookRequest(viewController: viewController)
+            })
+//            startChatWithInitialMessage(initialMessage)
+            //Zahoor end
         }
         
     }
@@ -870,7 +1003,7 @@ extension ProductDetailsViewController {
             }
         }
     }
-    
+        
     func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))

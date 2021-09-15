@@ -59,6 +59,16 @@ class ProductsViewController: UIViewController {
     // B2 - 15
     var eventsAnimator: EventsAnimator?
     
+    /// Refresh control view. Used to display network activity when user pull scroll view down
+    /// view to fetch new data.
+    private lazy var refreshControl: UIRefreshControl = {
+        // Create refresh control and link it with scroll view.
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+        self.collectionView.refreshControl = refreshControl
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,13 +105,13 @@ class ProductsViewController: UIViewController {
                     self.navigationController?.pushViewController(viewController, animated: true)
                     UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
                 }
-//            case .villa:
-//                //Loading the preferences related to dining only very first time
-//                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
-//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
-//                    self.navigationController?.pushViewController(viewController, animated: true)
-//                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
-//                }
+            case .villa:
+                //Loading the preferences related to dining only very first time
+                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
+                    let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
+                }
             case .yacht:
                 //Loading the preferences related to dining only very first time
                 if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
@@ -136,6 +146,12 @@ class ProductsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    /// Refresh control target action that will trigger once user pull to refresh scroll view.
+    @objc func refresh(_ sender: AnyObject) {
+        // Force data fetch.
+        getInformation(for: category, past: false, term: nil, cityId: city?.termId)
     }
     
     @IBAction func eventTypeChanged(_ sender: Any) {
@@ -190,11 +206,17 @@ class ProductsViewController: UIViewController {
     }
     
     func showNetworkActivity() {
-        naHUD.show(in: view)
+        // Safe guard to that won't display both loaders at same time.
+        if !refreshControl.isRefreshing {
+            naHUD.show(in: view)
+        }
     }
     
     func hideNetworkActivity() {
-        naHUD.dismiss()
+        // Safe guard that will call dismiss only if HUD is shown on screen.
+        if naHUD.isVisible {
+            naHUD.dismiss()
+        }
     }
     
     func update(listOf objects: [Product]) {
@@ -202,6 +224,7 @@ class ProductsViewController: UIViewController {
 //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
         collectionView.reloadData()
+
     }
 }
 
@@ -300,6 +323,7 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = dataSource[indexPath.row]
         let viewController = ProductDetailsViewController.instantiate(product: event)
+        viewController.delegate = self
         // B2 - 6
         selectedCell = collectionView.cellForItem(at: indexPath) as? HomeSliderCell
         // B2 - 7
@@ -319,6 +343,8 @@ extension ProductsViewController {
         showNetworkActivity()
         getList(for: category, past: past, term: term, cityId: cityId) { items, error in
             self.hideNetworkActivity()
+            // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
+            self.refreshControl.endRefreshing()
             if let error = error {
                 self.showError(error)
             } else {
@@ -335,7 +361,7 @@ extension ProductsViewController {
         
         switch category {
             case .event:
-                EEAPIManager().getEvents(token, past: past, term: term, cityId: cityId) { list, error in
+                EEAPIManager().getEvents(token, past: past, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain Events information")
@@ -345,7 +371,7 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .experience:
-                EEAPIManager().getExperiences(token, term: term, cityId: cityId) { list, error in
+                EEAPIManager().getExperiences(token, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain experience information")
@@ -355,7 +381,7 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .villa:
-                EEAPIManager().getVillas(token, term: term, cityId: cityId) { list, error in
+                EEAPIManager().getVillas(token, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")
@@ -366,7 +392,7 @@ extension ProductsViewController {
                 }
             case .gift:
                 //sending category_term_id in case of gifts in the paraeter cityid
-                EEAPIManager().getGoods(token, term: term, category_term_id: cityId) { list, error in
+                EEAPIManager().getGoods(token, term: term, category_term_id: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
@@ -376,7 +402,7 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .yacht:
-                EEAPIManager().getYachts(token, term: term, cityId: cityId) { list, error in
+                EEAPIManager().getYachts(token, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
@@ -505,7 +531,15 @@ extension ProductsViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-//extension EventsViewController: UINavigationControllerDelegate{
+extension ProductsViewController : ProductDetailDelegate{
+    func tappedOnBookRequest(viewController:UIViewController) {
+        // Initialize a navigation controller, with your view controller as its root
+        let navigationController = UINavigationController(rootViewController: viewController)
+        present(navigationController, animated: true, completion: nil)
+    }
+}
+
+//extension ProductsViewController: UINavigationControllerDelegate{
 //    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
 //    {
 //        switch operation {
