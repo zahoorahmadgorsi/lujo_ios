@@ -156,22 +156,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         updateUI()
         setupTapGesturesForEventsAndExperiences()
         
-//        let searchBarButton = UIButton(type: .system)
-//        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
-////        searchBarButton.setTitle("  SEARCH", for: .normal)
-//        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
-//        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-//        searchBarButton.sizeToFit()
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+        let searchBarButton = UIButton(type: .system)
+        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
+        searchBarButton.setTitle("  SEARCH", for: .normal)
+        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
+        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+        searchBarButton.sizeToFit()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
         
-        let imgSearch    = UIImage(named: "Search Icon White")!
-        let imgCallToActions  = UIImage(named: "ctas")!
-        let imgChat  = UIImage(named: "chatList")!
-        let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
-        let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
-        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
-        //navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch ]
-        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
+//        let imgSearch    = UIImage(named: "Search Icon White")!
+//        let imgCallToActions  = UIImage(named: "ctas")!
+//        let imgChat  = UIImage(named: "chatList")!
+//        let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
+//        let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
+//        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
+//        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch ]
+////        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
         
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
@@ -1138,7 +1138,7 @@ extension HomeViewController {
             }
             
             //25.2048,55.2708   //dubai lat, long
-//            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
+            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
             EEAPIManager().geopoint(token: token, type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
                 self.canSendRequest = true
                 
@@ -1149,12 +1149,12 @@ extension HomeViewController {
                     self.noNearbyEventsContainerView?.isHidden = false
                     self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"))
                 } else {
-                    if let information = information {
+                    if let info = information , info.count > 0{
                         // NEED TO BE REPLACED WITH UI VIEW
-                        self.updateEventsByGeoLocation(information)
+                        self.updateEventsByGeoLocation(info)
                     } else {
                         // NEED TO BE REPLACED WITH UI VIEW
-                        self.showFeedback("No nearby Places available")
+//                        self.showFeedback("No nearby Places available")
                         self.locationEventContainerView.isHidden = true
                         self.noNearbyEventsContainerView?.isHidden = false
                         
