@@ -178,9 +178,10 @@ class HotelViewController: UIViewController {
                 viewController.initialMessage = initialMessage
                 viewController.modalPresentationStyle = .overFullScreen
                 self.dismiss(animated: true, completion: {
-                    self.delegate?.tappedOnBookRequest(viewController: viewController)
+                    self.startChatWithInitialMessage(initialMessage)
+//                    self.delegate?.tappedOnBookRequest(viewController: viewController)
                 })
-    //            startChatWithInitialMessage(initialMessage)
+
                 //Zahoor end
                 /*
                 showCardAlertWith(title: "Info", body: "Your request is being processed. We will get back to you shortly. You can follow the status of your request in My bookings.", buttonTitle: "Ok", cancelButtonTitle: nil, buttonTapHandler: {

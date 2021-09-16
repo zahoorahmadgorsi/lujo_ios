@@ -905,37 +905,35 @@ extension ProductDetailsViewController {
                 \(userFirstName)
                 """
 //                Now we are calling this in chatViewControll
-//                EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
-//                    guard error == nil else {
-//                        Crashlytics.sharedInstance().recordError(error!)
-//                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
-//                        return
-//                    }
-//                    https://developers.intercom.com/installing-intercom/docs/ios-configuration
-//                    if let user = LujoSetup().getLujoUser(), user.id > 0 {
-//                        Intercom.logEvent(withName: "custom_request", metaData:[
-//                                            "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-//                                            ,"user_id":user.id])
-//                    }
-//                }
+                EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
+                    guard error == nil else {
+                        Crashlytics.sharedInstance().recordError(error!)
+                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                        return
+                    }
+                    https://developers.intercom.com/installing-intercom/docs/ios-configuration
+                    if let user = LujoSetup().getLujoUser(), user.id > 0 {
+                        Intercom.logEvent(withName: "custom_request", metaData:[
+                                            "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+                                            ,"user_id":user.id])
+                    }
+                }
 
-//                Mixpanel.mainInstance().track(event: "Product Custom Request",
-//                                              properties: ["Product Name" : product.name
-//                                                           ,"Product Type" : product.type
-//                                                           ,"ProductId" : product.id])
+                Mixpanel.mainInstance().track(event: "Product Custom Request",
+                                              properties: ["Product Name" : product.name
+                                                           ,"Product Type" : product.type
+                                                           ,"ProductId" : product.id])
             }
 
 //            print(initialMessage)
-            let viewController = BasicChatViewController()
-//            viewController.chatManager = ChatManager(channelName: channelName)
-//            ChatManager.sharedChatManager.uniqueChannelName = channelName
-            viewController.product = product
-            viewController.initialMessage = initialMessage
-            viewController.modalPresentationStyle = .overFullScreen
-            self.dismiss(animated: true, completion: {
-                self.delegate?.tappedOnBookRequest(viewController: viewController)
-            })
-//            startChatWithInitialMessage(initialMessage)
+//            let viewController = BasicChatViewController()
+//            viewController.product = product
+//            viewController.initialMessage = initialMessage
+//            viewController.modalPresentationStyle = .overFullScreen
+//            self.dismiss(animated: true, completion: {
+//                self.delegate?.tappedOnBookRequest(viewController: viewController)
+//            })
+            self.startChatWithInitialMessage(initialMessage)
             //Zahoor end
         }
         

@@ -321,12 +321,12 @@ class LiftDetailViewController: UIViewController {
             Hi there, I'm interested in doing \(returnTrip ? "a round trip" : "one way") flight from \(origin) to \(destination) on \(depart)\(back) with \(currentLift.paxCount) seats. Can we reserve \(currentLift.aircraft.name) for it?
             """
 
-            //            startChatWithInitialMessage()
+            startChatWithInitialMessage()
 
-            let viewController = BasicChatViewController()
-            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
-            viewController.initialMessage = initialMessage
-            self.navigationController?.pushViewController(viewController,animated: true)
+//            let viewController = BasicChatViewController()
+//            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+//            viewController.initialMessage = initialMessage
+//            self.navigationController?.pushViewController(viewController,animated: true)
         }
 
         initalMessageSent = true
