@@ -157,8 +157,6 @@ class HotelViewController: UIViewController {
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
-//        startChatWithInitialMessage(initialMessage)
-        
         showNetworkActivity()
         CustomRequestAPIManager.shared.findHotel(cityName: cityName, hotelName: hotelNameTextField.text, hotelRadius: String.localizedStringWithFormat("%.0f", distanceSlider.value), checkInDate: checkInDateString, checkOutDate: checkOutDateString, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: lastButton.tag, token: token) { error in
             DispatchQueue.main.async {
@@ -178,8 +176,8 @@ class HotelViewController: UIViewController {
                 viewController.initialMessage = initialMessage
                 viewController.modalPresentationStyle = .overFullScreen
                 self.dismiss(animated: true, completion: {
-                    self.startChatWithInitialMessage(initialMessage)
-//                    self.delegate?.tappedOnBookRequest(viewController: viewController)
+//                    self.startChatWithInitialMessage(initialMessage)
+                    self.delegate?.tappedOnBookRequest(viewController: viewController)
                 })
 
                 //Zahoor end

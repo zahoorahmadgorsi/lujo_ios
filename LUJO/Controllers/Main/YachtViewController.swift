@@ -284,7 +284,6 @@ class YachtViewController: UIViewController {
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
-//        startChatWithInitialMessage(initialMessage)
         //Zahoor end
         showNetworkActivity()
         CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtCharter: yachtCharter, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
@@ -301,8 +300,8 @@ class YachtViewController: UIViewController {
                 //this VC is always get called from ProductDetailsViewController only
                 if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
                     self.dismiss(animated: true) {
-                        presentingViewController.startChatWithInitialMessage(initialMessage)
-//                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
+//                        presentingViewController.startChatWithInitialMessage(initialMessage)
+                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
                     }
                 }
             }

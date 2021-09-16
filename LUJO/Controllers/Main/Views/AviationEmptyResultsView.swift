@@ -36,20 +36,20 @@ class AviationEmptyResultsView: UIView {
             label.customColor[termsOfUseType] = UIColor.rgMid
             label.handleCustomTap(for: termsOfUseType) { [weak self] _ in
                 if LujoSetup().getLujoUser()?.membershipPlan != nil {
-                    self?.parentViewController?.startChatWithInitialMessage()
-//                    guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-//                    let initialMessage = """
-//                    Hi Concierge team,
-//
-//                    How can i book a flight, can you please assist me?
-//
-//                    \(userFirstName)
-//                    """
-//
-//                    let viewController = BasicChatViewController()
-//                    viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
-//                    viewController.initialMessage = initialMessage
-//                    self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
+//                    self?.parentViewController?.startChatWithInitialMessage()
+                    guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+                    let initialMessage = """
+                    Hi Concierge team,
+
+                    How can i book a flight, can you please assist me?
+
+                    \(userFirstName)
+                    """
+
+                    let viewController = BasicChatViewController()
+                    viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+                    viewController.initialMessage = initialMessage
+                    self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
                     
                     self?.isHidden = true
                 } else {

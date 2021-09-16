@@ -105,7 +105,20 @@ class RestaurantSearchViewController: UIViewController {
     }
     
     @IBAction func actionButton_onClick(_ sender: UIButton) {
-        startChatWithInitialMessage("Hi Concierge team, I could not find any restaurants when I typed '\(keyword)'. Can you assist?")
+        guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+        let initialMessage = """
+        "Hi Concierge team,
+        I could not find any restaurants when I typed '\(keyword)'. Can you assist?"
+        
+        \(userFirstName)
+        """
+        
+        let viewController = BasicChatViewController()
+        viewController.product = Product(id: -1 , type: "restaurant" , name: "Restaurant Searched")
+        viewController.initialMessage = initialMessage
+        self.navigationController?.pushViewController(viewController,animated: true)
+        
+        startChatWithInitialMessage(initialMessage)
     }
     
     fileprivate func presentRestaurantDetailViewController(restaurant: Product) {

@@ -261,8 +261,7 @@ class VillaViewController: UIViewController {
 
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
-        
-//        startChatWithInitialMessage(initialMessage)
+    
         //Zahoor end
         
         showNetworkActivity()
@@ -278,8 +277,8 @@ class VillaViewController: UIViewController {
                 //this VC is always get called from ProductDetailsViewController only
                 if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
                     self.dismiss(animated: true) {
-                        presentingViewController.startChatWithInitialMessage(initialMessage)
-//                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
+//                        presentingViewController.startChatWithInitialMessage(initialMessage)
+                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
                     }
                 }
             }

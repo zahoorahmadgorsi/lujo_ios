@@ -149,20 +149,20 @@ class BookingsViewController: UIViewController {
     
     @IBAction func placeholderButton_onClick(_ sender: Any) {
         if LujoSetup().getLujoUser()?.membershipPlan != nil {
-            startChatWithInitialMessage()
-//            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-//            let initialMessage = """
-//            Hi Concierge team,
-//            
-//            How can i book some thing like an event, experience, villa, yacht, private jet or a luxurious good, can you please assist me?
-//            
-//            \(userFirstName)
-//            """
-//            
-//            let viewController = BasicChatViewController()
-//            viewController.product = Product(id: -1 , type: "My Bookings" , name: "Booking Inquiry")
-//            viewController.initialMessage = initialMessage
-//            self.navigationController?.pushViewController(viewController,animated: true)
+//            startChatWithInitialMessage()
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            let initialMessage = """
+            Hi Concierge team,
+            
+            How can i book some thing like an event, experience, villa, yacht, private jet or a luxurious good, can you please assist me?
+            
+            \(userFirstName)
+            """
+            
+            let viewController = BasicChatViewController()
+            viewController.product = Product(id: -1 , type: "My Bookings" , name: "Booking Inquiry")
+            viewController.initialMessage = initialMessage
+            self.navigationController?.pushViewController(viewController,animated: true)
         } else {
             showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
         }

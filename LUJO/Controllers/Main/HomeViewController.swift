@@ -170,8 +170,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
         let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
         let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
-        //navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch ]
-        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
+        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]
+//        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
         
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
