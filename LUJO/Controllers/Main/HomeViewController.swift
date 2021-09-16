@@ -180,6 +180,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(btnLocationEventsSeeAllTapped))
         locationEventViewSeeAll.isUserInteractionEnabled = true
         locationEventViewSeeAll.addGestureRecognizer(tapGesture)
+        
         //tap gesture on toprated's see all
         let tgTopRated = UITapGestureRecognizer(target: self, action: #selector(btnTopRatedSeeAllTapped))
         topRatedViewSeeAll.isUserInteractionEnabled = true
