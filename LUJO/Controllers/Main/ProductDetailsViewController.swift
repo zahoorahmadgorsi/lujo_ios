@@ -1023,11 +1023,9 @@ extension ProductDetailsViewController {
         let minimumVelocityToHide: CGFloat = 1500
         let minimumScreenRatioToHide: CGFloat = 0.25
         let animationDuration: TimeInterval = 0.2
-//        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         
         func slideViewTo(_ x: CGFloat ,_ y: CGFloat) {
-                self.view.frame.origin = CGPoint(x: x, y: y)
-
+            self.view.frame.origin = CGPoint(x: x, y: y)
         }
         
         switch panGesture.state {
@@ -1035,9 +1033,9 @@ extension ProductDetailsViewController {
             case .changed:
                 // If pan started or is ongoing then slide the view to follow the finger
                 let translation = panGesture.translation(in: view)
-                let x = max(0, translation.x)
-                let y = max(0, translation.y)                           //it works but with status bar
-                print(x,y)
+//                let x = max(0, translation.x)
+//                let y = max(0, translation.y)                           //it works but with status bar
+//                print(x,y)
                 if (translation.x > 0){ //to disable swiping from right to left
                     if (panGesture.view == self.view ){
                         slideViewTo(translation.x,0)    //only swipe horizontal if its on main view

@@ -156,22 +156,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         updateUI()
         setupTapGesturesForEventsAndExperiences()
         
-        let searchBarButton = UIButton(type: .system)
-        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
-        searchBarButton.setTitle("  SEARCH", for: .normal)
-        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
-        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-        searchBarButton.sizeToFit()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+//        let searchBarButton = UIButton(type: .system)
+//        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
+//        searchBarButton.setTitle("  SEARCH", for: .normal)
+//        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
+//        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+//        searchBarButton.sizeToFit()
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
         
-//        let imgSearch    = UIImage(named: "Search Icon White")!
-//        let imgCallToActions  = UIImage(named: "ctas")!
-//        let imgChat  = UIImage(named: "chatList")!
-//        let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
-//        let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
-//        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
+        let imgSearch    = UIImage(named: "Search Icon White")!
+        let imgCallToActions  = UIImage(named: "ctas")!
+        let imgChat  = UIImage(named: "chatList")!
+        let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
+        let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
+        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
 //        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch ]
-////        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
+        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
         
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
@@ -281,6 +281,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
     }
     
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         startPauseAnimation(isPausing: true)
@@ -407,7 +408,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         locationEventContainerView.isHidden = events.count == 0
         locationEventSlider.itemsList = Array(events.prefix(5))
         noNearbyEventsContainerView?.isHidden = events.count > 0
-        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? "your city")"
+//        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? "your city")"
+//        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? (events.first?.location?.first?.country.name ?? "your city"))"
+        let location = "Upcoming in \(events.first?.location?.first?.city?.name ?? (events.first?.location?.first?.country.name ?? "your city"))"
+        locationEventTitleLabel.text = location
+        print(location)
     }
     
     func update(_ information: HomeObjects?) {
@@ -475,9 +480,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             scrollView.scrollToTop()    //because now call to action uiview would become visible to scroll to the top
     //        viewCallToAction.isHidden = !(viewCallToAction.isHidden)
         }
-        UIView.transition(with: viewCallToAction, duration: 0.5, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: viewCallToAction, duration: 0.5, options: .curveLinear, animations: {
             self.viewCallToAction.isHidden = !(self.viewCallToAction.isHidden)
         })
+
     }
     
     @IBAction func btnChatTapped(_ sender: Any) {
@@ -884,8 +890,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let minimumScreenRatioToHide: CGFloat = 0.25
         let animationDuration: TimeInterval = 0.2
         
-        func slideViewTo(_ x: CGFloat ,_ y: CGFloat) {
-                self.view.frame.origin = CGPoint(x: x, y: y)
+        func slideViewTo(x: CGFloat) {
+            self.view.frame.origin = CGPoint(x: x, y: self.view.frame.origin.y) //keep y position as static
         }
         
         switch panGesture.state {
@@ -893,8 +899,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             case .changed:
                 // If pan started or is ongoing then slide the view to follow the finger
                 let translation = panGesture.translation(in: view)
+                
                 if (panGesture.view == self.view ){
-                    slideViewTo(translation.x,0)    //only swipe horizontal if its on main view
+                    slideViewTo(x: translation.x)    //only swipe horizontal if its on main view
                 }
             case .ended:
                 // If pan ended, decide it we should close or reset the view based on the final position and the speed of the gesture
@@ -905,21 +912,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 if closing {
                     if (translation.x > 0){ //swiped from left to right
                         UIView.animate(withDuration: animationDuration, animations: {
-                            slideViewTo(0,0)
+                            slideViewTo(x: 0)
                         },completion: {_ in
                             self.fetchAndPresentUserAccount()  //open the profile screen
                         })
                         
                     }else{  //swiped from right to left
                         UIView.animate(withDuration: animationDuration, animations: {
-                            slideViewTo(0,0)
+                            slideViewTo(x: 0)
                         },completion: {_ in
                             NotificationCenter.default.post(name: Notification.Name(rawValue: "openChatWindow"), object: nil)
                         })
                     }
                 }else{
                     UIView.animate(withDuration: animationDuration, animations: {
-                        slideViewTo(0,0)
+                        slideViewTo(x: 0)
                     })
                 }
             default:
