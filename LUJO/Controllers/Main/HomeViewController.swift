@@ -156,14 +156,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         updateUI()
         setupTapGesturesForEventsAndExperiences()
         
-//        let searchBarButton = UIButton(type: .system)
-//        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
-////        searchBarButton.setTitle("  SEARCH", for: .normal)
-//        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
-//        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-//        searchBarButton.sizeToFit()
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
-        
         let imgSearch    = UIImage(named: "Search Icon White")!
         let imgCallToActions  = UIImage(named: "ctas")!
         let imgChat  = UIImage(named: "chatList")!
@@ -483,9 +475,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBAction func btnChatTapped(_ sender: Any) {
         Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
         let viewController = ChatListViewController.instantiate()
-//        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-//        self.present(navViewController, animated: true, completion: nil)
-        self.present(viewController, animated: true, completion: nil)
+        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+        self.present(navViewController, animated: true, completion: nil)
+//        self.present(viewController, animated: true, completion: nil)
     }
     
     @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {

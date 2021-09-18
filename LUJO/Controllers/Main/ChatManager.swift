@@ -204,6 +204,27 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
         })
 
     }
+    
+    func getChannelFromDescriptor(channelDescriptor:TCHChannelDescriptor, completion: @escaping (Bool,TCHChannel) -> Void){
+        channelDescriptor.channel(completion:{ (result, channel) in
+            if let channel = channel{
+                if result.isSuccessful() {
+                    completion(result.isSuccessful(),channel)
+                }
+            }
+        })
+    }
+    
+    func getChannelMessages(_ channel: TCHChannel, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
+        channel.messages?.getLastWithCount(msgsCount, completion: { (result, messages) in
+            if let msgs = messages{
+                channel.messages?.setLastConsumedMessageIndex(NSNumber(value: 1), completion: { (result, count) in
+                    print("Updated Last Consumed Message Index:\(count)")
+                })
+                completion(msgs)
+            }
+        })
+    }
 }
 
 

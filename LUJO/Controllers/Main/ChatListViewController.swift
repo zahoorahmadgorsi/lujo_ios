@@ -44,20 +44,23 @@ class ChatListViewController: UIViewController {
         self.tblView.delegate = self;
         self.tblView.refreshControl = refreshControl
         
-        //tap gesture on cross button
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imgCrossTapped))
-        imgCross.isUserInteractionEnabled = true
-        imgCross.addGestureRecognizer(tapGesture)
+//        //tap gesture on cross button
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imgCrossTapped))
+//        imgCross.isUserInteractionEnabled = true
+//        imgCross.addGestureRecognizer(tapGesture)
+        self.title = "Conversations"
         
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .done, target: self, action: #selector(addTapped))
+        let searchBarButton = UIButton(type: .system)
+        searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
+//        searchBarButton.setTitle("Cancel", for: .normal)
+        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+        searchBarButton.addTarget(self, action: #selector(imgCrossTapped(_:)), for: .touchUpInside)
+        searchBarButton.sizeToFit()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
     }
     
     @objc func imgCrossTapped(_ sender: Any) {
         self.dismiss(animated: true, completion:nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -162,11 +165,33 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         
         cell.tag = indexPath.row
         cell.lblChannelFriendlyName.text = model.friendlyName?.uppercased()
-        cell.lblLastMessage.text = model.uniqueName
+        if let count = model.unconsumedMessagesCount() , count.intValue > 0{
+            cell.lblUnConsumedMessagesCount.text = count.stringValue
+            cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
+        }else{
+            cell.lblUnConsumedMessagesCount.text = ""
+            cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
+        }
+        ChatManager.sharedChatManager.getChannelFromDescriptor(channelDescriptor: model){(result,channel)  in
+            if (result){
+                ChatManager.sharedChatManager.getChannelMessages(channel, msgsCount: 1, completion: {messages in
+                    for message in messages {   //it will always be 1
+//                        print("Message body: \(String(describing: message.body))")
+                        if (cell.tag == indexPath.row){  //because this cell is reuseable
+                            cell.lblLastMessage.text = message.body
+                            cell.setNeedsLayout()
+                        }
+                    }
+                })
+            }
+        }
+        
+        
+        
+        
         
         if let dateFromServer = model.dateCreated{
-            cell.lblCreatedAtDate.text = dateFromServer.whatsAppTimeFormat()
-            cell.lblCreatedAtTime.text = ""
+            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
 //            cell.lblCreatedAtDate.text = Date.dateToString(date:dateFromServer, format: "MMM dd,yyyy")
 //            cell.lblCreatedAtTime.text = Date.dateToString(date:dateFromServer, format: "h:mm a")
         }
@@ -184,14 +209,16 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let model = self.items[indexPath.item]
         let channelDescriptor = self.channels[indexPath.item]
-        let newViewController = BasicChatViewController()
+        let viewController = BasicChatViewController()
         channelDescriptor.channel(completion:{ (result, channel) in
           if result.isSuccessful(){
-            print("Twilio: Channel Status: \(String(describing: channel?.status))")
+            print("Twilio: Channel didSelectRowAt Status: \(String(describing: channel?.status))")
             if  let channel = channel{
-                newViewController.channel = channel
+                viewController.channel = channel
             }
-            self.navigationController?.pushViewController(newViewController, animated: true)
+            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+            self.present(navViewController, animated: true, completion: nil)
+//            self.present(viewController, animated: true)
           }
         })
     }

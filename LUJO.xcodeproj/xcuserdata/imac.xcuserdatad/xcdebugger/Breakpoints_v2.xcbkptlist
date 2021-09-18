@@ -775,22 +775,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C9EB106D-051D-4DD3-8F52-D81427824988"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LUJO/Controllers/Main/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B142ECAF-0D3C-401C-9BB5-E98CB03E4518"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -798,8 +782,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -814,8 +798,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "691"
-            endingLineNumber = "691"
+            startingLineNumber = "683"
+            endingLineNumber = "683"
             landmarkName = "updateContent()"
             landmarkType = "7">
          </BreakpointContent>
@@ -894,8 +878,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "592"
-            endingLineNumber = "592"
+            startingLineNumber = "584"
+            endingLineNumber = "584"
             landmarkName = "updateUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1310,8 +1294,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "707"
-            endingLineNumber = "707"
+            startingLineNumber = "699"
+            endingLineNumber = "699"
             landmarkName = "updateContent()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1805,8 +1789,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1003"
-            endingLineNumber = "1003"
+            startingLineNumber = "995"
+            endingLineNumber = "995"
             landmarkName = "didTappedOnHeartAt(index:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1821,8 +1805,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1019"
-            endingLineNumber = "1019"
+            startingLineNumber = "1011"
+            endingLineNumber = "1011"
             landmarkName = "didTappedOnHeartAt(index:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1933,8 +1917,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "HomeViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -1949,8 +1933,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1020"
-            endingLineNumber = "1020"
+            startingLineNumber = "1012"
+            endingLineNumber = "1012"
             landmarkName = "didTappedOnHeartAt(index:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1965,8 +1949,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "588"
-            endingLineNumber = "588"
+            startingLineNumber = "580"
+            endingLineNumber = "580"
             landmarkName = "hideNetworkActivity()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2300,8 +2284,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
+            startingLineNumber = "439"
+            endingLineNumber = "439"
             landmarkName = "update(_:)"
             landmarkType = "7">
             <Locations>
@@ -3799,8 +3783,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "871"
-            endingLineNumber = "871"
+            startingLineNumber = "863"
+            endingLineNumber = "863"
             landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3895,8 +3879,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "830"
-            endingLineNumber = "830"
+            startingLineNumber = "822"
+            endingLineNumber = "822"
             landmarkName = "getTicketsButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3911,8 +3895,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "822"
-            endingLineNumber = "822"
+            startingLineNumber = "814"
+            endingLineNumber = "814"
             landmarkName = "HomeViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3927,8 +3911,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "874"
-            endingLineNumber = "874"
+            startingLineNumber = "866"
+            endingLineNumber = "866"
             landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3943,8 +3927,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "821"
-            endingLineNumber = "821"
+            startingLineNumber = "813"
+            endingLineNumber = "813"
             landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
             <Locations>
@@ -3991,8 +3975,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
             landmarkName = "enableLocationButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4007,8 +3991,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "846"
-            endingLineNumber = "846"
+            startingLineNumber = "838"
+            endingLineNumber = "838"
             landmarkName = "findAYachtButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4023,8 +4007,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "851"
-            endingLineNumber = "851"
+            startingLineNumber = "843"
+            endingLineNumber = "843"
             landmarkName = "HomeViewController"
             landmarkType = "3">
             <Locations>
@@ -4071,8 +4055,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "862"
-            endingLineNumber = "862"
+            startingLineNumber = "854"
+            endingLineNumber = "854"
             landmarkName = "findAHotelButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4087,8 +4071,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "866"
-            endingLineNumber = "866"
+            startingLineNumber = "858"
+            endingLineNumber = "858"
             landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4103,8 +4087,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "842"
-            endingLineNumber = "842"
+            startingLineNumber = "834"
+            endingLineNumber = "834"
             landmarkName = "villaButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4151,8 +4135,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "837"
-            endingLineNumber = "837"
+            startingLineNumber = "829"
+            endingLineNumber = "829"
             landmarkName = "purchaseGoodsButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4167,8 +4151,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "843"
-            endingLineNumber = "843"
+            startingLineNumber = "835"
+            endingLineNumber = "835"
             landmarkName = "villaButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4183,8 +4167,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "865"
-            endingLineNumber = "865"
+            startingLineNumber = "857"
+            endingLineNumber = "857"
             landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4199,8 +4183,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "863"
-            endingLineNumber = "863"
+            startingLineNumber = "855"
+            endingLineNumber = "855"
             landmarkName = "findAHotelButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4215,8 +4199,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "571"
+            endingLineNumber = "571"
             landmarkName = "hideNetworkActivity()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4231,8 +4215,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "972"
-            endingLineNumber = "972"
+            startingLineNumber = "964"
+            endingLineNumber = "964"
             landmarkName = "didTappedOnHeartAt(index:sender:)"
             landmarkType = "7">
             <Locations>
@@ -4279,8 +4263,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "772"
-            endingLineNumber = "772"
+            startingLineNumber = "764"
+            endingLineNumber = "764"
             landmarkName = "scrollViewDidEndScrollingAnimation(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4295,8 +4279,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "758"
-            endingLineNumber = "758"
+            startingLineNumber = "750"
+            endingLineNumber = "750"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5255,8 +5239,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
+            startingLineNumber = "525"
+            endingLineNumber = "525"
             landmarkName = "showEventDetail(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5271,8 +5255,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
+            startingLineNumber = "510"
+            endingLineNumber = "510"
             landmarkName = "btnYachtSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5287,8 +5271,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "563"
+            endingLineNumber = "563"
             landmarkName = "showNetworkActivity()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5335,8 +5319,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "563"
-            endingLineNumber = "563"
+            startingLineNumber = "555"
+            endingLineNumber = "555"
             landmarkName = "showEventDetail(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8516,8 +8500,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "623"
-            endingLineNumber = "623"
+            startingLineNumber = "615"
+            endingLineNumber = "615"
             landmarkName = "updateUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8532,8 +8516,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1108"
-            endingLineNumber = "1108"
+            startingLineNumber = "1100"
+            endingLineNumber = "1100"
             landmarkName = "didSelectSliderItemAt(indexPath:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8564,8 +8548,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11575,8 +11559,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "491"
-            endingLineNumber = "491"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
             landmarkName = "btnLocationEventsSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11591,8 +11575,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1140"
-            endingLineNumber = "1140"
+            startingLineNumber = "1132"
+            endingLineNumber = "1132"
             landmarkName = "getLocationPlaces(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11607,8 +11591,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1156"
-            endingLineNumber = "1156"
+            startingLineNumber = "1148"
+            endingLineNumber = "1148"
             landmarkName = "getLocationPlaces(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11623,8 +11607,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1153"
-            endingLineNumber = "1153"
+            startingLineNumber = "1145"
+            endingLineNumber = "1145"
             landmarkName = "getLocationPlaces(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11639,8 +11623,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "496"
-            endingLineNumber = "496"
+            startingLineNumber = "488"
+            endingLineNumber = "488"
             landmarkName = "btnTopRatedSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11655,8 +11639,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "497"
-            endingLineNumber = "497"
+            startingLineNumber = "489"
+            endingLineNumber = "489"
             landmarkName = "btnTopRatedSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11671,8 +11655,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
+            startingLineNumber = "493"
+            endingLineNumber = "493"
             landmarkName = "btnGiftSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11687,8 +11671,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
+            startingLineNumber = "498"
+            endingLineNumber = "498"
             landmarkName = "btnVillaSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11703,8 +11687,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "511"
-            endingLineNumber = "511"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
             landmarkName = "btnEventSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11719,8 +11703,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
+            startingLineNumber = "508"
+            endingLineNumber = "508"
             landmarkName = "btnYachtSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11735,8 +11719,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "521"
-            endingLineNumber = "521"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
             landmarkName = "btnExperienceSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11751,8 +11735,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1105"
-            endingLineNumber = "1105"
+            startingLineNumber = "1097"
+            endingLineNumber = "1097"
             landmarkName = "didSelectSliderItemAt(indexPath:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11847,8 +11831,8 @@
             filePath = "LUJO/Controllers/Main/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1106"
-            endingLineNumber = "1106"
+            startingLineNumber = "1098"
+            endingLineNumber = "1098"
             landmarkName = "didSelectSliderItemAt(indexPath:sender:)"
             landmarkType = "7">
          </BreakpointContent>

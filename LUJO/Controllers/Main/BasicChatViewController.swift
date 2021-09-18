@@ -183,7 +183,10 @@ extension BasicChatViewController: MessagesLayoutDelegate {
     //display name
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         if let firstItem = messageList[safe:indexPath.section - 1] , let secondItem = messageList[safe:indexPath.section]{
-            if (firstItem.sender.senderId == secondItem.sender.senderId){ //if last message and this message sender are same
+            print(firstItem.sender.displayName,secondItem.sender.displayName)
+            if (firstItem.sender.displayName == secondItem.sender.displayName){ //if last message and this message sender are same
+//                print(indexPath.section)
+//                print(firstItem.sender.senderId,secondItem.sender.senderId)
                 return 0  //no need to allot height to display name
             }
         }

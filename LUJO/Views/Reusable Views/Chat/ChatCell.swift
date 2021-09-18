@@ -13,8 +13,9 @@ class ChatCell: UITableViewCell {
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var lblChannelFriendlyName: UILabel!
     @IBOutlet weak var lblLastMessage: UILabel!
-    @IBOutlet weak var lblCreatedAtDate: UILabel!
-    @IBOutlet weak var lblCreatedAtTime: UILabel!
+    @IBOutlet weak var lblCreatedAt: UILabel!
+    @IBOutlet weak var lblUnConsumedMessagesCount: UILabel!
+    @IBOutlet weak var viewUnConsumedMessagesCount: UIView!
     
     //    var customer_id: String
 //    var conversation_id: String
@@ -32,7 +33,7 @@ class ChatCell: UITableViewCell {
     private func reset() {
         lblChannelFriendlyName.text = ""
         lblLastMessage.text = ""
-        lblCreatedAtDate.text = ""
+        lblCreatedAt.text = ""
 
     }
     

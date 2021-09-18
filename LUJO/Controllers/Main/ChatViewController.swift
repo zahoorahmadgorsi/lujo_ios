@@ -72,8 +72,15 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         ChatManager.sharedChatManager.delegate = self
         if let channel = self.channel{
+            print(channel.sid)
             ChatManager.sharedChatManager.setChannel(channel: channel)
             identity = channel.createdBy ?? identity
+            ChatManager.sharedChatManager.getChannelMessages(channel, msgsCount: 100, completion: {messages in
+                for message in messages {
+//                    print("Message body: \(String(describing: message.body))")
+                    self.receivedNewMessage(message: message, channel: channel)
+                }
+            })
         }else if let user = LujoSetup().getLujoUser(), user.id > 0 {
             identity = user.email //+ " " + user.lastName
             let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
@@ -95,34 +102,32 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        login()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-//        chatManager.shutdown()
     }
 
     // MARK: update
     
-    func update(_ information: ConversationDetails?) {
-        guard information != nil else {
-            return
-        }
-        
-        if let messages = information?.items{
-            for item in messages{
-                let displayPicture =  item.meta?.avatar ?? "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
-                let chatUser:ChatUser = ChatUser(senderId:String(item.meta?.id ?? 0000) , displayName:item.author, avatar: displayPicture)
-                let dateFromServer = item.createdAt.date
-                let dtDate = myDate.serverDateFormatter.date(from: dateFromServer)!
-                let chatMessage:ChatMessage = ChatMessage(text: item.body, user: chatUser, messageId: UUID().uuidString, date: dtDate)
-                self.messageList.append(chatMessage)
-            }
-            self.messagesCollectionView.reloadData()
-            self.messagesCollectionView.scrollToLastItem(animated: true)
-        }
-    }
+//    func update(_ information: ConversationDetails?) {
+//        guard information != nil else {
+//            return
+//        }
+//
+//        if let messages = information?.items{
+//            for item in messages{
+//                let displayPicture =  item.meta?.avatar ?? "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
+//                let chatUser:ChatUser = ChatUser(senderId:String(item.meta?.id ?? 0000) , displayName:item.author, avatar: displayPicture)
+//                let dateFromServer = item.createdAt.date
+//                let dtDate = myDate.serverDateFormatter.date(from: dateFromServer)!
+//                let chatMessage:ChatMessage = ChatMessage(text: item.body, user: chatUser, messageId: UUID().uuidString, date: dtDate)
+//                self.messageList.append(chatMessage)
+//            }
+//            self.messagesCollectionView.reloadData()
+//            self.messagesCollectionView.scrollToLastItem(animated: true)
+//        }
+//    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -407,12 +412,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                     inputBar.sendButton.stopAnimating()
                     if result.isSuccessful() {
                         inputBar.inputTextView.placeholder = "Aa"
-                        
-//                        if let user:ChatUser = self.currentSender() as? ChatUser  {
-//                            let message = ChatMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
-//                            self.insertMessage(message)
-//                            self.messagesCollectionView.scrollToLastItem(animated: true)
-//                        }
                     } else {
 //                        self.displayErrorMessage("Unable to send message")
                         let error = BackendError.parsing(reason: "Unable to send message")
@@ -456,8 +455,8 @@ extension ChatViewController: ChatManagerDelegate {
                     self.messagesCollectionView.scrollToLastItem(animated: true)
                 }
             }else{
-//                print(message.member?.identity , message.body )
-                let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "0000", displayName: message.author ?? "Author name")
+                print(message.member?.identity as Any , message.member?.sid as Any )
+                let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
                 let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
                 self.insertMessage(msg)
                 self.messagesCollectionView.scrollToLastItem(animated: true)
