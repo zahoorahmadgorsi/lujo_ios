@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Intercom
 import Mixpanel
 
 class RestaurantRequestReservationViewController: UIViewController {
@@ -92,12 +91,12 @@ class RestaurantRequestReservationViewController: UIViewController {
                     BackendError.parsing(reason: "Could not obtain the salesforce_id")
                     return
                 }
-                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-                if let user = LujoSetup().getLujoUser(), user.id > 0 {
-                    Intercom.logEvent(withName: "custom_request", metaData:[
-                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceID"
-                                        ,"user_id":user.id])
-                }
+//                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//                if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                    Intercom.logEvent(withName: "custom_request", metaData:[
+//                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceID"
+//                                        ,"user_id":user.id])
+//                }
             }
             
             dateFormatter.dateFormat = "E, MMM d 'at' H:mm a"
@@ -113,13 +112,11 @@ class RestaurantRequestReservationViewController: UIViewController {
             \(userFirstName)
             """
             
-            if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
+            if let presentingVC = self.presentingViewController as? ProductDetailsViewController {
                 self.dismiss(animated: true) {
-//                    presentingViewController.startChatWithInitialMessage(initialMessage)
-                    presentingViewController.sendInitialInformation(initialMsg: initialMessage)
+                    presentingVC.sendInitialInformation(initialMsg: initialMessage)
                 }
             }
-            
         } else {
             showInformationPopup(withTitle: "Info", message: "Please, select date in future.")
         }

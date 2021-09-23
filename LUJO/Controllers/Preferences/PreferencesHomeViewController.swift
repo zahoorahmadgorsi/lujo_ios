@@ -120,7 +120,7 @@ class PreferencesHomeViewController: UIViewController {
         return viewController
     }
     private let naHUD = JGProgressHUD(style: .dark)
-    var delegate: ProductDetailDelegate?
+//    var delegate: ProductDetailDelegate?
     
     //MARK:- Globals
     
@@ -238,7 +238,6 @@ class PreferencesHomeViewController: UIViewController {
         viewController.product = Product(id: -1 , type: "Preferences" , name: "Preferences Inquiry")
         viewController.initialMessage = initialMessage
         self.navigationController?.pushViewController(viewController,animated: true)
-//        startChatWithInitialMessage(initialMessage)
         //Zahoor end
         
     }

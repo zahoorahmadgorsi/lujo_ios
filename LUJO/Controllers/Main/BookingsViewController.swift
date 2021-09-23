@@ -149,7 +149,6 @@ class BookingsViewController: UIViewController {
     
     @IBAction func placeholderButton_onClick(_ sender: Any) {
         if LujoSetup().getLujoUser()?.membershipPlan != nil {
-//            startChatWithInitialMessage()
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
             let initialMessage = """
             Hi Concierge team,

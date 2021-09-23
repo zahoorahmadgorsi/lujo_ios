@@ -265,7 +265,7 @@ extension PerCityViewController: CityViewProtocol {
     
     func didTappedOnProductAt(product: Product, itemIndex: Int) {
         let viewController = ProductDetailsViewController.instantiate(product: product)
-        viewController.delegate = self
+//        viewController.delegate = self
         animationtype = .featured //tapped on city view
             // B2 - 6
             //Finding UIImageView of restaurant where user has tapped so that we can animate this image
@@ -499,7 +499,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
         }
         
         let viewController = ProductDetailsViewController.instantiate(product: product)
-        viewController.delegate = self
+//        viewController.delegate = self
 //        self.navigationController?.pushViewController(viewController, animated: true)
         // B2 - 6
         selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
@@ -560,13 +560,13 @@ extension PerCityViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension PerCityViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-}
+//extension PerCityViewController : ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController) {
+//        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        present(navigationController, animated: true, completion: nil)
+//    }
+//}
 
 //extension PerCityViewController: UINavigationControllerDelegate{
 //    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?

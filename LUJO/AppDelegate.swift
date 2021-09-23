@@ -3,7 +3,6 @@ import Fabric
 import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications
-import Intercom
 import Firebase
 import Mixpanel
 import OneSignal
@@ -53,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         IQKeyboardManager.shared.enable = true
 
-        Intercom.setApiKey("ios_sdk-6458822f5722423dbb6aef0b2dd9b0f44a694fe3", forAppId:"vc290ayr")
+//        Intercom.setApiKey("ios_sdk-6458822f5722423dbb6aef0b2dd9b0f44a694fe3", forAppId:"vc290ayr")
 
         Fabric.with([Crashlytics.self])
         
@@ -122,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let tokenParts = tokenData.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
 //        print("Device Token: \(token)")
-        Intercom.setDeviceToken(tokenData)
+//        Intercom.setDeviceToken(tokenData)
         registerForOurPushService(deviceToken: token)
     }
 
@@ -133,12 +132,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             Mixpanel.mainInstance().identify(distinctId: "\(user.id)")
             
-            Intercom.registerUser(withUserId: "\(user.id)")
-            
-            let userAttributes = ICMUserAttributes()
-            userAttributes.name = "\(user.firstName) \(user.lastName)"
-            userAttributes.email = user.email
-            Intercom.updateUser(userAttributes)
+//            Intercom.registerUser(withUserId: "\(user.id)")
+//            let userAttributes = ICMUserAttributes()
+//            userAttributes.name = "\(user.firstName) \(user.lastName)"
+//            userAttributes.email = user.email
+//            Intercom.updateUser(userAttributes)
         }
         
         UNUserNotificationCenter.current()
@@ -170,21 +168,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 
     
-    func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-        if let navController = base as? UINavigationController {
-            return getTopViewController(base: navController.visibleViewController)
-
-        } else if let tabController = base as? UITabBarController, let selected = tabController.selectedViewController {
-            return getTopViewController(base: selected)
-
-        } else if let presented = base?.presentedViewController {
-            return getTopViewController(base: presented)
-        }
-        return base
-    }
+//    func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+//        if let navController = base as? UINavigationController {
+//            return getTopViewController(base: navController.visibleViewController)
+//
+//        } else if let tabController = base as? UITabBarController, let selected = tabController.selectedViewController {
+//            return getTopViewController(base: selected)
+//
+//        } else if let presented = base?.presentedViewController {
+//            return getTopViewController(base: presented)
+//        }
+//        return base
+//    }
 
     func removePushToken(userId: Int) {
-        Intercom.logout()
+//        Intercom.logout()
         GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
         ChatManager.sharedChatManager.shutdown()
     }

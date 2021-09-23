@@ -637,7 +637,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningCuisines(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining cuisines preferences")
                         completion(nil, error)
                         return
                     }
@@ -652,7 +652,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningAllergies(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining allergies preferences")
                         completion(nil, error)
                         return
                     }
@@ -667,7 +667,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningPreferences(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -682,7 +682,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningTimings(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining timings preferences")
                         completion(nil, error)
                         return
                     }
@@ -697,7 +697,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningBeverages(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining beverages preferences")
                         completion(nil, error)
                         return
                     }
@@ -712,7 +712,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningSeatings(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining seatings preferences")
                         completion(nil, error)
                         return
                     }
@@ -732,7 +732,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getEventCategory(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain event category information")
+                        let error = BackendError.parsing(reason: "Could not obtain event category preferences")
                         completion(nil, error)
                         return
                     }
@@ -747,7 +747,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getEventLocation(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain event location information")
+                        let error = BackendError.parsing(reason: "Could not obtain event location preferences")
                         completion(nil, error)
                         return
                     }
@@ -767,7 +767,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getTravelAmenities(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain amenities information")
+                        let error = BackendError.parsing(reason: "Could not obtain amenities preferences")
                         completion(nil, error)
                         return
                     }
@@ -783,7 +783,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningPreferences(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain airline meals information")
+                        let error = BackendError.parsing(reason: "Could not obtain airline meals preferences")
                         completion(nil, error)
                         return
                     }
@@ -798,7 +798,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getTravelMedicalMeals(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain airline medical meals information")
+                        let error = BackendError.parsing(reason: "Could not obtain airline medical meals preferences")
                         completion(nil, error)
                         return
                     }
@@ -814,7 +814,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningAllergies(token) { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not obtain airline allergies information")
+                        let error = BackendError.parsing(reason: "Could not obtain airline allergies preferences")
                         completion(nil, error)
                         return
                     }
@@ -834,7 +834,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().getVillaAmenities(token) { taxonomies, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain villa amenities information")
+                            let error = BackendError.parsing(reason: "Could not obtain villa amenities preferences")
                             completion(nil, error)
                             return
                         }
@@ -849,7 +849,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().getVillaAccomodation(token) { taxonomies, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not obtain villa accomodation information")
+                            let error = BackendError.parsing(reason: "Could not obtain villa accomodation preferences")
                             completion(nil, error)
                             return
                         }
@@ -1387,7 +1387,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftHabbits(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1397,7 +1397,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftCategories(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1407,7 +1407,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftPreferences(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1423,7 +1423,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1433,7 +1433,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1443,7 +1443,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredCharter(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1453,7 +1453,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1464,7 +1464,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredBeverages(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1480,7 +1480,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1490,7 +1490,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1500,7 +1500,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtType(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1510,7 +1510,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtStyle(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1520,7 +1520,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1531,7 +1531,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtOtherInterests(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1547,7 +1547,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1557,7 +1557,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningAllergies(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1567,7 +1567,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningPreferences(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1577,7 +1577,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningTimings(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1587,7 +1587,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningBeverages(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1597,7 +1597,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningSeatings(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1613,7 +1613,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setEventCategory(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1623,7 +1623,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setEventLocation(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1639,7 +1639,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelAmenities(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1649,7 +1649,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelAirplaneSeat(token: token, airplaneSeat: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1659,7 +1659,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelMeals(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1669,7 +1669,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelMedicalMeals(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1679,7 +1679,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelAllergies(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.sharedInstance().recordError(error!)
-                        let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                         completion(nil, error)
                         return
                     }
@@ -1694,7 +1694,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setVillaAmenities(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }
@@ -1704,7 +1704,7 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setVillaAccomodation(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.sharedInstance().recordError(error!)
-                            let error = BackendError.parsing(reason: "Could not set the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the Preferences preferences")
                             completion(nil, error)
                             return
                         }

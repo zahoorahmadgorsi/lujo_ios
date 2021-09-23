@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Intercom
 
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
@@ -51,11 +50,11 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.chatLog_onNewEvent()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(chatLog_onNewEvent),
-                                               name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
-                                               object: nil)
+//        self.chatLog_onNewEvent()
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(chatLog_onNewEvent),
+//                                               name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
+//                                               object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(openChatWindow),
                                                name: Notification.Name(rawValue: "openChatWindow"),
@@ -71,10 +70,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK:- Utilities
     
-    @objc func chatLog_onNewEvent() {
-        let count = Intercom.unreadConversationCount()
-        self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
-    }
+//    @objc func chatLog_onNewEvent() {
+//        let count = Intercom.unreadConversationCount()
+//        self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
+//    }
     
     //MARK:- User Interaction
     
@@ -84,6 +83,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             //Zahoor start
 //            openChatWindow()
             let viewController = ChatOptionsViewController.instantiate()
+//            viewController.delegate = self
             self.present(viewController, animated: true, completion: nil)
             return false
             //Zahoor ends
@@ -93,10 +93,19 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     @objc func openChatWindow(){
         if LujoSetup().getLujoUser()?.membershipPlan != nil {
-            Intercom.presentMessenger()
+//            Intercom.presentMessenger()
         } else {
             showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
         }
     }
+    
     //MARK:- Utilities
 }
+
+//extension MainTabBarController : ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController) {
+//        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        self.present(navigationController, animated: true, completion: nil)
+//    }
+//}

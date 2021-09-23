@@ -54,7 +54,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         self.scrollView.refreshControl = refreshControl
         return refreshControl
     }()
-    var delegate: ProductDetailDelegate?
+//    var delegate: ProductDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -452,7 +452,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .event:
                 if let event = wishListInformations?.events?[indexPath.row]{
                     let viewController = ProductDetailsViewController.instantiate(product: event)
-                    viewController.delegate = self
+//                    viewController.delegate = self
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -466,7 +466,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .experience:
                 if let event = wishListInformations?.experiences?[indexPath.row]{
                     let viewController = ProductDetailsViewController.instantiate(product: event)
-                    viewController.delegate = self
+//                    viewController.delegate = self
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -480,7 +480,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .specialEvent:
                 if let event = wishListInformations?.specialEvents?[indexPath.row]{
                     let viewController = ProductDetailsViewController.instantiate(product: event)
-                    viewController.delegate = self
+//                    viewController.delegate = self
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -494,7 +494,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .restaurant:
                 if let item = wishListInformations?.restaurants?[indexPath.row]{
                     let viewController = ProductDetailsViewController.instantiate(product: item)
-                    viewController.delegate = self
+//                    viewController.delegate = self
     //                self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -508,7 +508,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .villa:
                 if let event = wishListInformations?.villas?[indexPath.row]{
                     let viewController = ProductDetailsViewController.instantiate(product: event)
-                    viewController.delegate = self
+//                    viewController.delegate = self
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -522,7 +522,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .yacht:
                 if let event = wishListInformations?.yachts?[indexPath.row]{
                     let viewController = ProductDetailsViewController.instantiate(product: event)
-                    viewController.delegate = self
+//                    viewController.delegate = self
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -536,7 +536,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             case .gift:
                 if let event = wishListInformations?.gifts?[indexPath.row]{
                     let viewController = ProductDetailsViewController.instantiate(product: event)
-                    viewController.delegate = self
+//                    viewController.delegate = self
 //                    self.navigationController?.pushViewController(viewController, animated: true)
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
@@ -728,13 +728,13 @@ extension WishListViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension WishListViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-}
+//extension WishListViewController : ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController) {
+//        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        present(navigationController, animated: true, completion: nil)
+//    }
+//}
 
 //extension WishListViewController: UINavigationControllerDelegate{
 //    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?

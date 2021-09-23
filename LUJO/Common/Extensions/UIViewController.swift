@@ -2,7 +2,6 @@ import IQKeyboardManagerSwift
 import SwiftEntryKit
 import UIKit
 import SwiftMessages
-import Intercom
 
 extension UIViewController {
     func canPerformSegue(withIdentifier identifier: String) -> Bool {
@@ -26,10 +25,6 @@ extension UIViewController {
     
     func activateKeyboardManager() {
         IQKeyboardManager.shared.enable = true
-    }
-    
-    func startChatWithInitialMessage(_ message: String? = nil) {
-        Intercom.presentMessageComposer(message)
     }
     
     var isModal: Bool {

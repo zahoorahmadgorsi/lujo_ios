@@ -312,7 +312,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     fileprivate func presentRestaurantDetailViewController(restaurant: Product , presentationStyle : UIModalPresentationStyle) {
 //        let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
         let viewController = ProductDetailsViewController.instantiate(product: restaurant)
-        viewController.delegate = self
+//        viewController.delegate = self
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
@@ -431,7 +431,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not set/UnSet dining favourites information")
                 completion(nil, error)
                 return
             }
@@ -500,9 +500,8 @@ extension DiningViewController {
             
             if let informations = information {
                 self.update(informations)
-            } else {
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
-                self.showError(error)
+            } else if let err = error {
+                self.showError(err)
             }
         }
     }
@@ -672,10 +671,10 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension DiningViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-}
+//extension DiningViewController : ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController) {
+//        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        present(navigationController, animated: true, completion: nil)
+//    }
+//}

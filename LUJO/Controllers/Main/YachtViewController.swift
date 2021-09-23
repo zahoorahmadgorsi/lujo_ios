@@ -9,7 +9,6 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
-import Intercom
 
 class YachtViewController: UIViewController {
     
@@ -298,11 +297,8 @@ class YachtViewController: UIViewController {
                 print ("Success: custom request yacht.")
 //                self.dismiss(animated: true, completion: nil)
                 //this VC is always get called from ProductDetailsViewController only
-                if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
-                    self.dismiss(animated: true) {
-//                        presentingViewController.startChatWithInitialMessage(initialMessage)
-                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
-                    }
+                if let presentingVC = self.presentingViewController as? ProductDetailsViewController {
+                    presentingVC.sendInitialInformation(initialMsg: initialMessage)
                 }
             }
         }

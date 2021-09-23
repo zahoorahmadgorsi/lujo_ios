@@ -10,7 +10,6 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
-import Intercom
 
 class VillaViewController: UIViewController {
     
@@ -275,11 +274,8 @@ class VillaViewController: UIViewController {
                 }
                 print ("Success: custom request villa.")
                 //this VC is always get called from ProductDetailsViewController only
-                if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
-                    self.dismiss(animated: true) {
-//                        presentingViewController.startChatWithInitialMessage(initialMessage)
-                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
-                    }
+                if let presentingC = self.presentingViewController as? ProductDetailsViewController {
+                    presentingC.sendInitialInformation(initialMsg: initialMessage)
                 }
             }
         }

@@ -131,9 +131,9 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.channels.count == 0 {
-            self.tblView.setEmptyMessage("No data is available")
+            self.tblView.setEmptyMessage("No conversation(s) are available")
         }else{
-            self.tblView.setEmptyMessage("")
+            self.tblView.restore()
         }
         return channels.count
     }

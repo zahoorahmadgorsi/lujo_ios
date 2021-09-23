@@ -204,7 +204,7 @@ extension AviationResultsViewController: LiftDetailDelegate {
         }
         
         self.dismiss(animated: true, completion: {
-            (viewController as? MainTabBarController)?.selectedIndex = 4
+            (viewController as? MainTabBarController)?.selectedIndex = 4    //it has been given to wishlist zahoor
         })
     }
 

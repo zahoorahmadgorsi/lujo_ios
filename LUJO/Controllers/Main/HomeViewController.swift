@@ -10,9 +10,9 @@ import UIKit
 import JGProgressHUD
 import Crashlytics
 import CoreLocation
-import Intercom
 import Kingfisher
 import Mixpanel
+import TwilioChatClient
 
 enum HomeElementType: Int {
     case events, experiences
@@ -233,6 +233,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                                                name: Notification.Name(rawValue: "getAllUserPreferences"),
                                                object: nil)
         getAllUserPreferences() //fetching all user preferenes from the server
+        loginToTwilio()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -278,6 +280,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         startPauseAnimation(isPausing: true)
     }
     
+    //MARK:- loginToTwilio
+    
+    func loginToTwilio(){
+        //************
+        //Chat Manager
+        //************
+        showNetworkActivity()
+        ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
+            self.hideNetworkActivity()
+            if success {
+                print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
+            } else {
+                print("Twilio: Unable to login")
+            }
+        }
+    }
     //this method will fetch all user preferences from the server
     @objc func getAllUserPreferences() {
         self.showNetworkActivity()
@@ -464,10 +482,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         Mixpanel.mainInstance().track(event: "btnCallToActionTappedAtHome")
 //        print("btnCallToActionTapped")
         if (self.viewCallToAction.isHidden){
-            scrollView.scrollToTop()    //because now call to action uiview would become visible to scroll to the top
+            scrollView.scrollToTop()    //because now call to action uiview would become visible to scroll to the top transitionCrossDissolve
     //        viewCallToAction.isHidden = !(viewCallToAction.isHidden)
         }
-        UIView.transition(with: viewCallToAction, duration: 0.5, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: viewCallToAction, duration: 0.5, options: .curveEaseInOut, animations: {
             self.viewCallToAction.isHidden = !(self.viewCallToAction.isHidden)
         })
     }
@@ -547,7 +565,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
             viewController.transitioningDelegate = self
             viewController.modalPresentationStyle = .overFullScreen
-            viewController.delegate = self
+//            viewController.delegate = self
             
             present(viewController, animated: true)
 
@@ -587,16 +605,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             welcomeLabel.text = "\(PreloadDataManager.UserEntryType.isOldUser ? "Welcome back" : "Welcome"),\n\(LujoSetup().getLujoUser()?.firstName ?? "") \(LujoSetup().getLujoUser()?.lastName ?? "")"
             PreloadDataManager.UserEntryType.isOldUser = true
 
-            //************
-            //Chat Manager
-            //************
-            ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
-                if success {
-                    print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
-                } else {
-                    print("Twilio: Unable to login")
-                }
-            }
+
             //********
             //MaxPanel
             //********
@@ -849,7 +858,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
         }else{
             let viewController = HotelViewController.instantiate()
-            viewController.delegate = self
+//            viewController.delegate = self
             self.present(viewController, animated: true, completion: nil)
         }
     }
@@ -1096,20 +1105,20 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.modalPresentationStyle = .overFullScreen
-        viewController.delegate = self
+//        viewController.delegate = self
 
         present(viewController, animated: true)
     }
     
 }
 
-extension HomeViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-}
+//extension HomeViewController : ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController) {
+//        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        present(navigationController, animated: true, completion: nil)
+//    }
+//}
 
 // Helper functions
 extension HomeViewController {
@@ -1293,6 +1302,21 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+
+extension HomeViewController:ChatManagerDelegate{
+    func reloadMessages() {
+        print("Twilio: reloadMessages")
+    }
+
+    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
+        print("Twilio: receivedNewMessage")
+    }
+
+    func channelJoined(channel: TCHChannel) {
+        print("Twilio: channelJoined")
+    }
+
+}
 //extension HomeViewController: UINavigationControllerDelegate{
 //    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
 //    {

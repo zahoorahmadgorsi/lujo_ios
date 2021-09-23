@@ -9,11 +9,10 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
-import Intercom
 
-protocol ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController)
-}
+//protocol ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController)
+//}
 
 class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
@@ -99,7 +98,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     var pgrFullView: UIPanGestureRecognizer?
     var originalPosition: CGPoint?
     var currentPositionTouched: CGPoint?
-    var delegate: ProductDetailDelegate?
+//    var delegate: ProductDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -911,12 +910,6 @@ extension ProductDetailsViewController {
 //                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
 //                        return
 //                    }
-//                    https://developers.intercom.com/installing-intercom/docs/ios-configuration
-//                    if let user = LujoSetup().getLujoUser(), user.id > 0 {
-//                        Intercom.logEvent(withName: "custom_request", metaData:[
-//                                            "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-//                                            ,"user_id":user.id])
-//                    }
 //                }
 //
 //                Mixpanel.mainInstance().track(event: "Product Custom Request",
@@ -929,11 +922,8 @@ extension ProductDetailsViewController {
             let viewController = BasicChatViewController()
             viewController.product = product
             viewController.initialMessage = initialMessage
-            viewController.modalPresentationStyle = .overFullScreen
-            self.dismiss(animated: true, completion: {
-                self.delegate?.tappedOnBookRequest(viewController: viewController)
-            })
-//            self.startChatWithInitialMessage(initialMessage)
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
             //Zahoor end
         }
         

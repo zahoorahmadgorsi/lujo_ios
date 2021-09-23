@@ -116,14 +116,13 @@ class RestaurantSearchViewController: UIViewController {
         let viewController = BasicChatViewController()
         viewController.product = Product(id: -1 , type: "restaurant" , name: "Restaurant Searched")
         viewController.initialMessage = initialMessage
-        self.navigationController?.pushViewController(viewController,animated: true)
-        
-        startChatWithInitialMessage(initialMessage)
+        let navController = UINavigationController(rootViewController:viewController)
+        UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
     fileprivate func presentRestaurantDetailViewController(restaurant: Product) {
         let viewController = ProductDetailsViewController.instantiate(product: restaurant)
-        viewController.delegate = self
+//        viewController.delegate = self
         present(viewController, animated: true, completion: nil)
     }
     
@@ -272,7 +271,7 @@ extension RestaurantSearchViewController {
         GoLujoAPIManager().search(token, term: term, cityId: nil, currentLocation: currentLocation) { restaurants, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not search dining information")
                 completion(nil, error)
                 return
             }
@@ -327,10 +326,10 @@ extension RestaurantSearchViewController {
     }
 }
 
-extension RestaurantSearchViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-}
+//extension RestaurantSearchViewController : ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController) {
+//        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        present(navigationController, animated: true, completion: nil)
+//    }
+//}

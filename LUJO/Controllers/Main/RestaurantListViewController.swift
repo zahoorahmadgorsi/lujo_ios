@@ -180,7 +180,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewController = ProductDetailsViewController.instantiate(product: dataSource[indexPath.row])
-        viewController.delegate = self
+//        viewController.delegate = self
         present(viewController, animated: true, completion: nil)
     }
     
@@ -221,7 +221,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not set/UnSet dining favourites")
                 completion(nil, error)
                 return
             }
@@ -230,10 +230,10 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
     }
 }
 
-extension RestaurantListViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-}
+//extension RestaurantListViewController : ProductDetailDelegate{
+//    func presentChatViewController(viewController:UIViewController) {
+//        // Initialize a navigation controller, with your view controller as its root
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        present(navigationController, animated: true, completion: nil)
+//    }
+//}
