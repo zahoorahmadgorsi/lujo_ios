@@ -143,10 +143,10 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             return
         }
         
-        checkChannelCreation(uniqueName: uniqueChannelName) { (_, channel) in
-            if let channel = channel {
-                self.joinChannel(channel)
-            } else {
+//        checkChannelCreation(uniqueName: uniqueChannelName) { (_, channel) in
+//            if let channel = channel {
+//                self.joinChannel(channel)
+//            } else {
                 // Create a channel if it hasn't been created yet
                 let options: [String: Any] = [
                     TCHChannelOptionUniqueName: uniqueChannelName,
@@ -157,35 +157,40 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                 channelsList.createChannel(options: options, completion: { channelResult, channel in
                     if channelResult.isSuccessful() {
                         if let channel = channel{
-                            self.joinChannel(channel)
+                            self.joinChannel(channel, completion: { channelResult in
+                                completion(channelResult, channel)
+                            })
                         }
                         print("Twilio: Channel created: \(String(describing: channel?.sid))")
                     } else {
-                        print(channelResult.resultText as Any)
+                        print("Twilio: Channel Result: \(channelResult.resultText as Any)")
+                        completion(channelResult.isSuccessful(), channel)
                     }
-                    completion(channelResult.isSuccessful(), channel)
+                    
                 })
-            }
-        }
+//            }
+//        }
     }
 
-    private func checkChannelCreation(uniqueName: String, completion: @escaping(TCHResult?, TCHChannel?) -> Void) {
-        guard let client = client, let channelsList = client.channelsList() else {
-            return
-        }
-        channelsList.channel(withSidOrUniqueName: uniqueName, completion: { (result, channel) in
-            completion(result, channel)
-        })
-    }
+//    private func checkChannelCreation(uniqueName: String, completion: @escaping(TCHResult?, TCHChannel?) -> Void) {
+//        guard let client = client, let channelsList = client.channelsList() else {
+//            return
+//        }
+//        channelsList.channel(withSidOrUniqueName: uniqueName, completion: { (result, channel) in
+//            completion(result, channel)
+//        })
+//    }
 
-    private func joinChannel(_ channel: TCHChannel) {
+    private func joinChannel(_ channel: TCHChannel, completion: @escaping (Bool) -> Void) {
         self.channel = channel
         delegate?.channelJoined(channel: channel)
         if channel.status == .joined {
             print("Current user already exists in channel")
+            completion(true)
         } else {
             channel.join(completion: { result in
-                print("Result of channel join: \(result.resultText ?? "No Result")")
+                print("Twilio: Channel joined result: \(result.isSuccessful() )")
+                completion(result.isSuccessful())
             })
         }
     }

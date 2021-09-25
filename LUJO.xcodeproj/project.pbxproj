@@ -2491,7 +2491,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2500,7 +2500,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
@@ -2517,7 +2517,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2526,7 +2526,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2542,7 +2542,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2551,7 +2551,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2706,7 +2706,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2733,7 +2733,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2758,8 +2758,8 @@
 				AVIATION_AUTHORISATION_TOKEN = "NzI0ZWM0YjBkOTRmYjNiN8_glYxP5P2QdQdXximXf9vqVOXcH-fgzn9zaksoJCJS3kNBoG3VvyyUcL4cbhMVQTpaUDiWZXVaph_BSWpAYgWod2ep6Fn125y56wCHMG4lPkDjn57-kDE_Xwfe43a5jw==";
 				AVIATION_PRODUCT_NAME = "baroqueaviation-software";
 				AVIATION_SERVER = sandbox.avinode.com;
-				BACKEND_CONNECTION_SCHEME = http;
-				BACKEND_SERVER = "api-stage.golujo.com";
+				BACKEND_CONNECTION_SCHEME = https;
+				BACKEND_SERVER = api.golujo.com;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CARDCONNECT_API_PASSWORD = "RVKz4#sP2T@hKnm!gR5b";
 				CARDCONNECT_API_USERNAME = baroquea;
@@ -2770,7 +2770,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2796,7 +2796,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2968,8 +2968,8 @@
 				AVIATION_AUTHORISATION_TOKEN = "NzI0ZWM0YjBkOTRmYjNiN8_glYxP5P2QdQdXximXf9vqVOXcH-fgzn9zaksoJCJS3kNBoG3VvyyUcL4cbhMVQTpaUDiWZXVaph_BSWpAYgWod2ep6Fn125y56wCHMG4lPkDjn57-kDE_Xwfe43a5jw==";
 				AVIATION_PRODUCT_NAME = "baroqueaviation-software";
 				AVIATION_SERVER = sandbox.avinode.com;
-				BACKEND_CONNECTION_SCHEME = http;
-				BACKEND_SERVER = "api-stage.golujo.com";
+				BACKEND_CONNECTION_SCHEME = https;
+				BACKEND_SERVER = api.golujo.com;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CARDCONNECT_API_PASSWORD = testing123;
 				CARDCONNECT_API_USERNAME = testing;
@@ -2980,7 +2980,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3007,7 +3007,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.2;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;

@@ -87,6 +87,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
             let channelUniqueName = product.type + " " + user.firstName + " " + dateTime
             let channelFriendlyName = product.name
             let attribute :Dictionary<String,String> = ["type" : product.type]
+            if (initialMessage == nil ){    //user is coming for some general inquiry thats why initial message is nil
+                let chatMessage:ChatMessage = addDefaultMessage(type:product.type)
+                self.messageList.append(chatMessage)
+            }
             showNetworkActivity()
             ChatManager.sharedChatManager.createChannel(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
                 self.hideNetworkActivity()
@@ -101,27 +105,35 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
+    
+    func addDefaultMessage(type:String)->ChatMessage{
+        let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
+        let chatUser:ChatUser = ChatUser(senderId:"0000" , displayName:"LUJO", avatar: displayPicture)
+        var defaultMessage:String = "Please include all the important details such as "
+        if (type == "event" || type == "experience" || type == "special-event"){
+            defaultMessage += "number of guests, location, date, time, budget "
+        }else
+        if(type == "gift"){
+            defaultMessage += "name, brand, color, model etc "
+        }else if(type == "yacht"){
+            defaultMessage += "yacht charter type, yacht name, yacht type & cruising speed, number of guests, number of cabins, number of crews, builder name & year, refit year, yacht length, style, region, preferred cuisines, embarkation date and disembarkation date etc "
+        }else if(type == "villa"){
+            defaultMessage += "villa location, amenities, number of guests, number of rooms and number of washrooms, check in date and check out date etc "
+        }else if(type == "travel"){
+            defaultMessage += "travel destinations, travel activities, hotel star ratings, hotel groups & styles, amenities,  airlines, cabin class, seating in the airplane, meals, any allergies? etc "
+        }else if(type == "restaurant"){
+            defaultMessage += "restaurant name, date and time, preferred cuisines, beverages & seatings, any allergies, dining preference, dining time etc "
+        }else if(type == "aviation"){
+            defaultMessage += "one way or round trip, destination city & airport, aircraft category, charter date & time, cuisines & beverages, smoking? etc "
+        }else{
+            defaultMessage += "number of guests, locations, date, time, budget "
+        }
+        defaultMessage +=  "and any other preferences we should note."
+        let chatMessage:ChatMessage = ChatMessage(text: defaultMessage, user: chatUser, messageId: UUID().uuidString, date: Date())
+        return chatMessage
+    }
 
     // MARK: update
-    
-//    func update(_ information: ConversationDetails?) {
-//        guard information != nil else {
-//            return
-//        }
-//
-//        if let messages = information?.items{
-//            for item in messages{
-//                let displayPicture =  item.meta?.avatar ?? "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
-//                let chatUser:ChatUser = ChatUser(senderId:String(item.meta?.id ?? 0000) , displayName:item.author, avatar: displayPicture)
-//                let dateFromServer = item.createdAt.date
-//                let dtDate = myDate.serverDateFormatter.date(from: dateFromServer)!
-//                let chatMessage:ChatMessage = ChatMessage(text: item.body, user: chatUser, messageId: UUID().uuidString, date: dtDate)
-//                self.messageList.append(chatMessage)
-//            }
-//            self.messagesCollectionView.reloadData()
-//            self.messagesCollectionView.scrollToLastItem(animated: true)
-//        }
-//    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -230,7 +242,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         if let firstItem = messageList[safe:indexPath.section - 1] , let secondItem = messageList[safe:indexPath.section]{
 //            print(firstItem.sentDate.stripTime(),secondItem.sentDate.stripTime())
             if (firstItem.sentDate.stripTime() == secondItem.sentDate.stripTime()){
-//                print("Dates are same")
                 return nil  //no need to display message date as
             }
         }
