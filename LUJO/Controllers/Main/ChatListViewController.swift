@@ -16,8 +16,8 @@ class ChatListViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "ChatListViewController" }
     private let naHUD = JGProgressHUD(style: .dark)
-    //var items = [ChatHeader]()
-    var channels = [TCHChannelDescriptor]()
+//    var channelDescriptors = [TCHChannelDescriptor]()
+    var conversations = [Conversation]()
     
     @IBOutlet weak var imgCross: UIImageView!
     @IBOutlet weak var tblView: UITableView!
@@ -39,15 +39,13 @@ class ChatListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ChatManager.sharedChatManager.delegate = self
+        
         self.view.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: 24.0)
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
         self.tblView.refreshControl = refreshControl
         
-//        //tap gesture on cross button
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imgCrossTapped))
-//        imgCross.isUserInteractionEnabled = true
-//        imgCross.addGestureRecognizer(tapGesture)
         self.title = "Conversations"
         
         let searchBarButton = UIButton(type: .system)
@@ -65,15 +63,11 @@ class ChatListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (self.channels.count == 0){
+        if (self.conversations.count == 0){
             self.getChatsList(showActivity: true)
         }else{
             self.getChatsList(showActivity: false)
         }
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
     }
     
     @objc func refreshConversations() {
@@ -85,16 +79,46 @@ class ChatListViewController: UIViewController {
         if showActivity {
             self.showNetworkActivity()
         }
-        ChatManager.sharedChatManager.getUserChannels() {channels in
+        ChatManager.sharedChatManager.getUserChannelDescriptors() {channelDescriptors in
             if showActivity {
                 self.hideNetworkActivity()
+            }else{
+                self.refreshControl.endRefreshing()
             }
-//            for channel in channels {
-//                print("Twilio: Channel: \(channel.friendlyName)")
-//            }
-            //sorting channels by date.. most recetnly update comes at top
-            self.channels = channels.sorted(by: { $0.dateUpdated ?? Date() > $1.dateUpdated ?? Date()})
-            self.tblView.reloadData()
+            var count = 0   //to trace if all descriptor's channel last message body and time has been fetched or not
+            self.conversations.removeAll()
+            for channelDescriptor in channelDescriptors {
+                var item:Conversation = Conversation(channelDescriptor: channelDescriptor)
+                item.lastMessageDateTime = channelDescriptor.dateCreated
+                self.conversations.append(item)
+                ChatManager.sharedChatManager.getChannelFromDescriptor(channelDescriptor: channelDescriptor){(result,channel)  in
+                    count += 1
+                    if (result){
+                        channel.messages?.message(withIndex: channel.lastMessageIndex ?? 0, completion: { (result, message) in
+                            if let msg = message{
+                                if let fooOffset = self.conversations.firstIndex(where: {$0.channelDescriptor == channelDescriptor}) {
+                                    self.conversations[fooOffset].lastMessageBody = msg.body
+                                    if let utcTime = msg.dateCreated{
+                                        let date = Date.dateFromUTC(utcTimeString: utcTime)
+//                                        print("utc: \(utcTime), date: \(String(describing: date))")
+                                        self.conversations[fooOffset].lastMessageDateTime =  date
+                                    }
+                                }
+                            }
+                            //if all channels last message's body and time has been fetched then reload the whole grid
+                            if (count == self.conversations.count){
+                                self.conversations = self.conversations.sorted(by: { $0.lastMessageDateTime ?? Date() > $1.lastMessageDateTime ?? Date()})
+                                self.tblView.reloadData()
+                            }
+                        })
+                    }else{//some error while fetching the channel from descriptor now just load the tableview
+                        //sorting channelDescriptor by date.. most recetnly update comes at top
+                        self.conversations = self.conversations.sorted(by: { $0.lastMessageDateTime ?? Date() > $1.lastMessageDateTime ?? Date()})
+                        self.tblView.reloadData()
+                    }
+                }
+            }
+            
         }
     }
     
@@ -130,18 +154,18 @@ class ChatListViewController: UIViewController {
 extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.channels.count == 0 {
+        if self.conversations.count == 0 {
             self.tblView.setEmptyMessage("No conversation(s) are available")
         }else{
             self.tblView.restore()
         }
-        return channels.count
+        return conversations.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
-        let model = channels[indexPath.row]
-        if let attributes = model.attributes()?.dictionary , let type = attributes["type"] as? String{
+        let model = conversations[indexPath.row]
+        if let attributes = model.channelDescriptor.attributes()?.dictionary , let type = attributes["type"] as? String{
             if type == "event" || type  == "experience" || type  == "special-event" {
                 cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
             }else if type  == "villa"{
@@ -164,41 +188,23 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         cell.tag = indexPath.row
-        cell.lblChannelFriendlyName.text = model.friendlyName?.uppercased()
-        if let count = model.unconsumedMessagesCount() , count.intValue > 0{
+        
+        cell.lblChannelFriendlyName.text = model.channelDescriptor.friendlyName?.uppercased()
+        if let dateFromServer = model.channelDescriptor.dateUpdated{
+            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
+        }
+        cell.lblLastMessage.text = model.lastMessageBody
+        if let dateFromServer = model.lastMessageDateTime{
+            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
+        }
+        if let count = model.channelDescriptor.unconsumedMessagesCount() , count.intValue > 0{
             cell.lblUnConsumedMessagesCount.text = count.stringValue
             cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
         }else{
             cell.lblUnConsumedMessagesCount.text = ""
             cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
         }
-        ChatManager.sharedChatManager.getChannelFromDescriptor(channelDescriptor: model){(result,channel)  in
-            if (result){
-                ChatManager.sharedChatManager.getChannelMessages(channel, msgsCount: 1, completion: {messages in
-                    for message in messages {   //it will always be 1
-//                        print("Message body: \(String(describing: message.body))")
-                        if (cell.tag == indexPath.row){  //because this cell is reuseable
-                            cell.lblLastMessage.text = message.body
-                            cell.setNeedsLayout()
-                        }
-                    }
-                })
-            }
-        }
-        
-        
-        
-        
-        
-        if let dateFromServer = model.dateCreated{
-            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
-//            cell.lblCreatedAtDate.text = Date.dateToString(date:dateFromServer, format: "MMM dd,yyyy")
-//            cell.lblCreatedAtTime.text = Date.dateToString(date:dateFromServer, format: "h:mm a")
-        }
 
-//        if let avatarLink = model.meta?.avatar {
-//            cell.imgAvatar.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
-//        }
         
         self.tblView.separatorStyle = .singleLine
         self.tblView.separatorColor = .lightGray
@@ -208,7 +214,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let model = self.items[indexPath.item]
-        let channelDescriptor = self.channels[indexPath.item]
+        let channelDescriptor = self.conversations[indexPath.item].channelDescriptor
         let viewController = BasicChatViewController()
         channelDescriptor.channel(completion:{ (result, channel) in
           if result.isSuccessful(){
@@ -222,4 +228,20 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
           }
         })
     }
+}
+
+extension ChatListViewController: ChatManagerDelegate {
+    func reloadMessages() {
+        print("Twilio: reloadMessages")
+    }
+    
+    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
+        self.viewDidAppear(true)    //it will update the last message body, time and consumed index
+    }
+    
+    func channelJoined(channel: TCHChannel) {
+        print("Twilio: channelJoined")
+    }
+    
+    
 }

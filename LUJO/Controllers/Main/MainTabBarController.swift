@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TwilioChatClient
 
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
@@ -31,7 +32,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         // Set delegate
         self.delegate = self
-        
+        ChatManager.sharedChatManager.delegate = self
         // Change unselected color.
         self.tabBar.unselectedItemTintColor = UIColor.white
         self.tabBar.clipsToBounds = true
@@ -49,16 +50,18 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        self.chatLog_onNewEvent()
+    
 //        NotificationCenter.default.addObserver(self,
 //                                               selector: #selector(chatLog_onNewEvent),
 //                                               name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
 //                                               object: nil)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(openChatWindow),
                                                name: Notification.Name(rawValue: "openChatWindow"),
                                                object: nil)
+        
+//        self.chatLog_onNewEvent() //it will not work here as it requires to login to twilio which takes some seconds
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,15 +73,19 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK:- Utilities
     
-//    @objc func chatLog_onNewEvent() {
-//        let count = Intercom.unreadConversationCount()
-//        self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
-//    }
+    @objc func chatLog_onNewEvent() {
+        ChatManager.sharedChatManager.getTotalUnConsumedMessagesCount(completion: { (count) in
+            print("Twilio: Total UnConsumed messages count:\(count)")
+            self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
+        })
+        
+    }
     
     //MARK:- User Interaction
     
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        ChatManager.sharedChatManager.delegate = self
         if viewController.restorationIdentifier == "ChatListNavigationController"{
             //Zahoor start
 //            openChatWindow()
@@ -102,10 +109,26 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     //MARK:- Utilities
 }
 
-//extension MainTabBarController : ProductDetailDelegate{
-//    func presentChatViewController(viewController:UIViewController) {
-//        // Initialize a navigation controller, with your view controller as its root
-//        let navigationController = UINavigationController(rootViewController: viewController)
-//        self.present(navigationController, animated: true, completion: nil)
-//    }
-//}
+extension MainTabBarController: ChatManagerDelegate {
+    func showNetworkActivity() {
+        print("Twilio: showNetworkActivity")
+    }
+    
+    func hideNetworkActivity() {
+        print("Twilio: hideNetworkActivity")
+    }
+    
+    func reloadMessages() {
+        print("Twilio: reloadMessages")
+    }
+    
+    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
+        chatLog_onNewEvent()
+    }
+    
+    func channelJoined(channel: TCHChannel) {
+        print("Twilio: channelJoined")
+    }
+    
+    
+}

@@ -69,7 +69,16 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         configureMessageInputBar()
         title = "LUJO"
         
+        let searchBarButton = UIButton(type: .system)
+        searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
+//        searchBarButton.setTitle("Cancel", for: .normal)
+        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+        searchBarButton.addTarget(self, action: #selector(imgCrossTapped(_:)), for: .touchUpInside)
+        searchBarButton.sizeToFit()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+        
         ChatManager.sharedChatManager.delegate = self
+        
         if let channel = self.channel{
             print(channel.sid)
             ChatManager.sharedChatManager.setChannel(channel: channel)
@@ -98,12 +107,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    @objc func imgCrossTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion:nil)
     }
     
     func addDefaultMessage(type:String)->ChatMessage{
@@ -453,6 +458,10 @@ extension ChatViewController: ChatManagerDelegate {
     // Scroll to bottom of table view for messages
     func receivedNewMessage(message: TCHMessage , channel: TCHChannel) {
         if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
+            //if channel is opened and recieved a new message then set its consumed messages to all
+            ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
+                print("Twilio: set All Messages Consumed Result:\(result.isSuccessful())" , "Count:\(count)")
+            }
             if (identity == message.member?.identity){ //its current users message
                 if let user:ChatUser = self.currentSender() as? ChatUser  {
                     let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())

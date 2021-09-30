@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var isBackground: Bool!
 
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        loginToTwilio()
+        
         isBackground = false
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -72,6 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         OneSignal.promptForPushNotifications(userResponse: { accepted in
         print("User accepted notifications: \(accepted)")
         })
+        
+        
         
         return true
     }
@@ -166,21 +170,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         })
     }
 
-
-    
-//    func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-//        if let navController = base as? UINavigationController {
-//            return getTopViewController(base: navController.visibleViewController)
-//
-//        } else if let tabController = base as? UITabBarController, let selected = tabController.selectedViewController {
-//            return getTopViewController(base: selected)
-//
-//        } else if let presented = base?.presentedViewController {
-//            return getTopViewController(base: presented)
-//        }
-//        return base
-//    }
-
     func removePushToken(userId: Int) {
 //        Intercom.logout()
         GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
@@ -194,5 +183,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
          GoLujoAPIManager().registerForOurPushService(userId: String(userId), deviceToken: deviceToken)
+    }
+    
+    //MARK:- loginToTwilio
+    
+    func loginToTwilio(){
+        //************
+        //Chat Manager
+        //************
+        ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
+            if success {
+                print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
+            } else {
+                print("Twilio: Unable to login")
+            }
+        }
     }
 }

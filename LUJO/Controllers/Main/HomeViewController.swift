@@ -233,7 +233,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                                                name: Notification.Name(rawValue: "getAllUserPreferences"),
                                                object: nil)
         getAllUserPreferences() //fetching all user preferenes from the server
-        loginToTwilio()
+        
         
     }
     
@@ -280,22 +280,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         startPauseAnimation(isPausing: true)
     }
     
-    //MARK:- loginToTwilio
-    
-    func loginToTwilio(){
-        //************
-        //Chat Manager
-        //************
-        showNetworkActivity()
-        ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
-            self.hideNetworkActivity()
-            if success {
-                print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
-            } else {
-                print("Twilio: Unable to login")
-            }
-        }
-    }
+
     //this method will fetch all user preferences from the server
     @objc func getAllUserPreferences() {
         self.showNetworkActivity()

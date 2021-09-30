@@ -197,19 +197,3 @@ extension SendMessageResponse {
         }
     }
 }
-
-struct myDate{
-    static var  serverDateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
-        result.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
-        return result
-    }()
-    
-    static var  localDateFormatter: DateFormatter = {
-        let result = DateFormatter()
-        result.dateStyle = .medium
-        result.timeStyle = .medium
-        return result
-    }()
-}

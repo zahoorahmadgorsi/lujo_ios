@@ -101,6 +101,7 @@
 		880B9B0925582E350070D7CD /* Yacht.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0825582E350070D7CD /* Yacht.swift */; };
 		880B9B0B255840C10070D7CD /* Villa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0A255840C10070D7CD /* Villa.swift */; };
 		880B9B0D255845B10070D7CD /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0C255845B10070D7CD /* Gift.swift */; };
+		8819B334270506E200007922 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819B333270506E200007922 /* Conversation.swift */; };
 		882AAAB826E81B31006B7D03 /* ChatOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */; };
 		882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */; };
 		882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */; };
@@ -498,6 +499,7 @@
 		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
 		880B9B0A255840C10070D7CD /* Villa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Villa.swift; sourceTree = "<group>"; };
 		880B9B0C255845B10070D7CD /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
+		8819B333270506E200007922 /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOptionsViewController.swift; sourceTree = "<group>"; };
 		882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedAPIManager.swift; sourceTree = "<group>"; };
 		882AD4CF25515EBB00F0FCDE /* RecentlyViewedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedRouter.swift; sourceTree = "<group>"; };
@@ -528,8 +530,8 @@
 		888A30702646196F008754AD /* PreferencesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesRouter.swift; sourceTree = "<group>"; };
 		888A307826461984008754AD /* PreferencesAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesAPIManager.swift; sourceTree = "<group>"; };
 		888B00E926AF42AB004FA1B5 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		888B00EE26AF51EE004FA1B5 /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatUser.swift; path = LUJO/Controllers/Main/ChatUser.swift; sourceTree = SOURCE_ROOT; };
-		888B00F326AF54D7004FA1B5 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessage.swift; path = LUJO/Controllers/Main/ChatMessage.swift; sourceTree = SOURCE_ROOT; };
+		888B00EE26AF51EE004FA1B5 /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatUser.swift; path = LUJO/Models/ChatUser.swift; sourceTree = SOURCE_ROOT; };
+		888B00F326AF54D7004FA1B5 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessage.swift; path = LUJO/Models/ChatMessage.swift; sourceTree = SOURCE_ROOT; };
 		888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicChatViewController.swift; sourceTree = "<group>"; };
 		888B010926B89C3E004FA1B5 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		888D93BF26FA97E100F07896 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1100,15 +1102,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		557BB5DF23158F9B00744188 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				888B00EE26AF51EE004FA1B5 /* ChatUser.swift */,
-				888B00F326AF54D7004FA1B5 /* ChatMessage.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		557BB5E62315954F00744188 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -1138,6 +1131,16 @@
 				88029BA52633BF42003F1E77 /* Info.plist */,
 			);
 			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		8819B332270506AC00007922 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				888B00EE26AF51EE004FA1B5 /* ChatUser.swift */,
+				8819B333270506E200007922 /* Conversation.swift */,
+				888B00F326AF54D7004FA1B5 /* ChatMessage.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		882AD4CE25515E8A00F0FCDE /* Recently Viewed */ = {
@@ -1589,7 +1592,7 @@
 				9AE0B2AA21232F7F00E55E6C /* Common */,
 				557BB5DD23158F8900744188 /* Controllers */,
 				9ADE2DE8211316D900D7293C /* Features */,
-				557BB5DF23158F9B00744188 /* Models */,
+				8819B332270506AC00007922 /* Models */,
 				3052319E23408B8A00D24596 /* Resources */,
 				30985BBA233E6E1D0090D4CB /* Supporting Files */,
 				557BB5DE23158F9000744188 /* Views */,
@@ -2337,6 +2340,7 @@
 				9AAA102022773540008CE1D2 /* MyBookingsCell.swift in Sources */,
 				9A194FE3228DDD0200E3DBD1 /* EEAPIManager.swift in Sources */,
 				1D7819B72301A9EE0044C70B /* DiningAPIManager.swift in Sources */,
+				8819B334270506E200007922 /* Conversation.swift in Sources */,
 				882AAAB826E81B31006B7D03 /* ChatOptionsViewController.swift in Sources */,
 				9AF1A0D42249072B00E0680B /* AviationSingleLegSearchOptionsView.swift in Sources */,
 				9156B75126148F3A00404E1D /* EventsAnimator.swift in Sources */,

@@ -18,7 +18,15 @@ public extension Date {
 
         return dateFormatter.date(from: string)
     }
-
+    
+    static func dateFromUTC(utcTimeString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        let date = dateFormatter.date(from: utcTimeString)
+        return date
+    }
+    
     static func dateToString(date: Date, format: String = "yyyy-MM-dd-HH-mm-ss") -> String {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = format
@@ -89,6 +97,5 @@ public extension Date {
         let date = Calendar.current.date(from: components)
         return date!
     }
-
     
 }

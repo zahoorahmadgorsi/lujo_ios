@@ -21,7 +21,8 @@ protocol ChatManagerDelegate: AnyObject {
 class ChatManager: NSObject, TwilioChatClientDelegate {
 
     let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
-    
+    var serverURL = "https://seashell-snowshoe-5113.twil.io/send-notification"
+
     static let sharedChatManager = ChatManager()
 //    static let shared = ChatManager()
     // the unique name of the channel you create
@@ -196,14 +197,14 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     }
     
     //func getSubscribeChannels(_ completion: @escaping( [TCHChannel]?) -> Void){
-    func getUserChannels(_ completion: @escaping([TCHChannelDescriptor]) -> Void){
+    func getUserChannelDescriptors(_ completion: @escaping([TCHChannelDescriptor]) -> Void){
 //        if let channels = client?.channelsList()?.subscribedChannels(){
 //            completion(channels)
 //        }
         self.client?.channelsList()?.userChannelDescriptors(completion: { (result, paginator) in
           if (result.isSuccessful()) {
-            if let channels = paginator?.items() {
-                completion(channels)
+            if let channelDecriptors = paginator?.items() {
+                completion(channelDecriptors)
             }
           }
         })
@@ -223,12 +224,35 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     func getChannelMessages(_ channel: TCHChannel, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
         channel.messages?.getLastWithCount(msgsCount, completion: { (result, messages) in
             if let msgs = messages{
-                channel.messages?.setLastConsumedMessageIndex(NSNumber(value: 1), completion: { (result, count) in
-                    print("Updated Last Consumed Message Index:\(count)")
-                })
+                self.setAllMessagesConsumed(channel) { (result, count) in
+                    print("Twilio: setAllMessagesConsumed Result:\(result.isSuccessful())" , "Count:\(count)")
+                }
+//                channel.messages?.setAllMessagesConsumedWithCompletion({ (result, count) in
+//                    print("Twilio: Consumed Message Index:\(count)")
+//                })
+//                channel.messages?.setLastConsumedMessageIndex(NSNumber(value: 1), completion: { (result, count) in
+//                    print("Updated Last Consumed Message Index:\(count)")
+//                })
                 completion(msgs)
             }
         })
+    }
+    
+    func setAllMessagesConsumed(_ channel: TCHChannel,completion: @escaping (TCHResult,UInt) -> Void){
+        channel.messages?.setAllMessagesConsumedWithCompletion({ (result, count) in
+            print("Twilio: Consumed Message Index:\(count)")
+            completion(result, count)
+        })
+    }
+    
+    func getTotalUnConsumedMessagesCount(completion: @escaping (UInt) -> Void){
+        var count = 0
+        self.getUserChannelDescriptors(){channelDescriptors in
+            for channelDescriptor in channelDescriptors {
+                count += channelDescriptor.unconsumedMessagesCount()?.intValue ?? 0
+            }
+            completion(UInt(count))
+        }
     }
 }
 
