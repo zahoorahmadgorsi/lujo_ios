@@ -51,10 +51,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(chatLog_onNewEvent),
-//                                               name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
-//                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(showBadgeValue),
+                                               name: NSNotification.Name(rawValue: "showBadgeValue"),
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(openChatWindow),
@@ -73,7 +73,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK:- Utilities
     
-    @objc func chatLog_onNewEvent() {
+    @objc func showBadgeValue() {
         ChatManager.sharedChatManager.getTotalUnConsumedMessagesCount(completion: { (count) in
             print("Twilio: Total UnConsumed messages count:\(count)")
             self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
@@ -123,7 +123,7 @@ extension MainTabBarController: ChatManagerDelegate {
     }
     
     func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
-        chatLog_onNewEvent()
+        showBadgeValue()
     }
     
     func channelJoined(channel: TCHChannel) {

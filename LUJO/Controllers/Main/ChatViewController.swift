@@ -59,6 +59,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     var identity = "USER_IDENTITY"
     var product:Product!
     var initialMessage:String?
+    var delegate:UIAdaptivePresentationControllerDelegate?
     
     // MARK: - Lifecycle
 
@@ -78,6 +79,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
         
         ChatManager.sharedChatManager.delegate = self
+        
         
         if let channel = self.channel{
             print(channel.sid)
@@ -108,7 +110,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
     
     @objc func imgCrossTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion:nil)
+        self.dismiss(animated: true, completion:{
+            self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
+        })
     }
     
     func addDefaultMessage(type:String)->ChatMessage{

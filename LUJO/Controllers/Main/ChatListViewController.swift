@@ -35,6 +35,8 @@ class ChatListViewController: UIViewController {
     // Convenience class to manage interactions with Twilio Chat
 //    var chatManager = ChatManager(channelName: "")
     var identity = "USER_IDENTITY"
+    var delegate:UIAdaptivePresentationControllerDelegate?
+    
     //MARK:- View life cycle
     
     override func viewDidLoad() {
@@ -58,11 +60,13 @@ class ChatListViewController: UIViewController {
     }
     
     @objc func imgCrossTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion:nil)
+        self.dismiss(animated: true, completion:{
+            self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
+        })
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if (self.conversations.count == 0){
             self.getChatsList(showActivity: true)
         }else{
@@ -222,11 +226,29 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
             if  let channel = channel{
                 viewController.channel = channel
             }
+
             let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+            if #available(iOS 13.0, *) {
+                let controller = navViewController.topViewController
+                // Modal Dismiss iOS 13 onward
+                controller?.presentationController?.delegate = self
+            }
+            //incase user will do some messaging in basicchatviewcontroller and then dismiss it then chatlistviewcontroller should reflect last message body and time
+            navViewController.presentationController?.delegate = self
             self.present(navViewController, animated: true, completion: nil)
-//            self.present(viewController, animated: true)
           }
         })
+    }
+}
+
+extension ChatListViewController: UIAdaptivePresentationControllerDelegate {
+    // Only called when the sheet is dismissed by DRAGGING as well as when tapped on cross button
+    public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        if #available(iOS 13, *) {
+            //Call viewWillAppear only in iOS 13
+            viewWillAppear(true)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "showBadgeValue"), object: nil)
+        }
     }
 }
 

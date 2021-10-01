@@ -479,8 +479,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
         let viewController = ChatListViewController.instantiate()
         let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navViewController.topViewController
+            // Modal Dismiss iOS 13 onward
+            controller?.presentationController?.delegate = self
+        }
+        //incase user will do some messaging in basicchatviewcontroller and then dismiss it then chatlistviewcontroller should reflect last message body and time
+        navViewController.presentationController?.delegate = self
         self.present(navViewController, animated: true, completion: nil)
-//        self.present(viewController, animated: true, completion: nil)
     }
     
     @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {
@@ -1287,6 +1293,15 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+extension HomeViewController: UIAdaptivePresentationControllerDelegate {
+    // Only called when the sheet is dismissed by DRAGGING as well as when tapped on cross button.
+    public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        if #available(iOS 13, *) {
+            //Call viewWillAppear only in iOS 13
+            ChatManager.sharedChatManager.delegate = self.tabBarController as? ChatManagerDelegate
+        }
+    }
+}
 
 extension HomeViewController:ChatManagerDelegate{
     func reloadMessages() {
@@ -1302,17 +1317,3 @@ extension HomeViewController:ChatManagerDelegate{
     }
 
 }
-//extension HomeViewController: UINavigationControllerDelegate{
-//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
-//    {
-//        switch operation {
-//            case .push:
-//                return animationController(forPresented: toVC , presenting: fromVC, source: fromVC)
-//            case .pop:
-//                return animationController(forDismissed: fromVC)
-//            default:
-//                return nil
-//        }
-//        
-//    }
-//}
