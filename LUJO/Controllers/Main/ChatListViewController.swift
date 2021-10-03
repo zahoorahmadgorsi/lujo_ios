@@ -194,12 +194,12 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         cell.tag = indexPath.row
         
         cell.lblChannelFriendlyName.text = model.channelDescriptor.friendlyName?.uppercased()
-        if let dateFromServer = model.channelDescriptor.dateUpdated{
-            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
-        }
+//        if let dateFromServer = model.channelDescriptor.dateUpdated{
+//            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
+//        }
         cell.lblLastMessage.text = model.lastMessageBody
         if let dateFromServer = model.lastMessageDateTime{
-            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
+            cell.lblCreatedAt.text = dateFromServer.dateToDayWeekYear()
         }
         if let count = model.channelDescriptor.unconsumedMessagesCount() , count.intValue > 0{
             cell.lblUnConsumedMessagesCount.text = count.stringValue
