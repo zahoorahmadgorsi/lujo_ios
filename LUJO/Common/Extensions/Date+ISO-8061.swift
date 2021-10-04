@@ -52,6 +52,7 @@ public extension Date {
         ]
     }
     
+    //shown on chatviewcontroller
     func dateToDayWeekYear() -> String{
         let formatter = DateFormatter()
         switch true {
@@ -59,17 +60,17 @@ public extension Date {
             formatter.doesRelativeDateFormatting = true
             formatter.dateStyle = .short
             formatter.timeStyle = .none
-        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .weekOfYear):
+        case self.isInSevenDays():
             formatter.dateFormat = "EEEE"
-        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year):
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month):
             formatter.dateFormat = "E, d MMM"
         default:
             formatter.dateFormat = "MMM d, yyyy"
         }
-//        print(formatter.string(from: self))
         return formatter.string(from: self)
     }
     
+    //Show on conversation list
     func whatsAppTimeFormat() -> String{
         let formatter = DateFormatter()
         switch true {
@@ -81,14 +82,13 @@ public extension Date {
             formatter.doesRelativeDateFormatting = true
             formatter.dateStyle = .short
             formatter.timeStyle = .none
-        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .weekOfYear):
+        case self.isInSevenDays():
             formatter.dateFormat = "EEEE"
-        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year):
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month):
             formatter.dateFormat = "E, d MMM"
         default:
             formatter.dateFormat = "MMM d, yyyy"
         }
-//        print(formatter.string(from: self))
         return formatter.string(from: self)
     }
     
@@ -96,6 +96,12 @@ public extension Date {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: self)
         let date = Calendar.current.date(from: components)
         return date!
+    }
+    
+    func isInSevenDays() -> Bool {
+        let today = Date()
+        guard let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: today) else { return false }
+        return self >= sevenDaysAgo && self < today
     }
     
 }

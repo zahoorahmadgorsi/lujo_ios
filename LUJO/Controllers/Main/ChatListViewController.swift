@@ -32,8 +32,6 @@ class ChatListViewController: UIViewController {
     class func instantiate() -> ChatListViewController {
         return UIStoryboard.main.instantiate(identifier)
     }
-    // Convenience class to manage interactions with Twilio Chat
-//    var chatManager = ChatManager(channelName: "")
     var identity = "USER_IDENTITY"
     var delegate:UIAdaptivePresentationControllerDelegate?
     
@@ -67,6 +65,17 @@ class ChatListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //loading cached conversations list
+        do {
+            if let decoded  = UserDefaults.standard.object(forKey: "sorted_conversations") as? Data{
+                conversations = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded) as? [Conversation] ?? [Conversation]()
+                self.tblView.reloadData()
+            }
+        } catch {
+            print(error)
+        }
+        
         if (self.conversations.count == 0){
             self.getChatsList(showActivity: true)
         }else{
@@ -90,39 +99,59 @@ class ChatListViewController: UIViewController {
                 self.refreshControl.endRefreshing()
             }
             var count = 0   //to trace if all descriptor's channel last message body and time has been fetched or not
-            self.conversations.removeAll()
+//            self.channelDescriptors.removeAll()
+//            self.conversations.removeAll()
+            var tempConversations = [Conversation]()
+
             for channelDescriptor in channelDescriptors {
-                var item:Conversation = Conversation(channelDescriptor: channelDescriptor)
-                item.lastMessageDateTime = channelDescriptor.dateCreated
-                self.conversations.append(item)
+//                self.channelDescriptors.append(channelDescriptor)
+                if let attributes = channelDescriptor.attributes()?.dictionary , let type = attributes["type"] as? String{
+                    let item:Conversation = Conversation(channelDescriptor,channelDescriptor.sid, type,channelDescriptor.friendlyName , channelDescriptor.unconsumedMessagesCount(),"" , Date())
+                    item.lastMessageDateTime = channelDescriptor.dateCreated
+                    //self.conversations.append(item)
+                    tempConversations.append(item)
+                }
                 ChatManager.sharedChatManager.getChannelFromDescriptor(channelDescriptor: channelDescriptor){(result,channel)  in
-                    count += 1
                     if (result){
                         channel.messages?.message(withIndex: channel.lastMessageIndex ?? 0, completion: { (result, message) in
+                            count += 1
                             if let msg = message{
-                                if let fooOffset = self.conversations.firstIndex(where: {$0.channelDescriptor == channelDescriptor}) {
-                                    self.conversations[fooOffset].lastMessageBody = msg.body
+                                if let fooOffset = tempConversations.firstIndex(where: {$0.sid == channelDescriptor.sid}) {
+                                    tempConversations[fooOffset].lastMessageBody = msg.body
                                     if let utcTime = msg.dateCreated{
                                         let date = Date.dateFromUTC(utcTimeString: utcTime)
 //                                        print("utc: \(utcTime), date: \(String(describing: date))")
-                                        self.conversations[fooOffset].lastMessageDateTime =  date
+                                        tempConversations[fooOffset].lastMessageDateTime =  date
                                     }
                                 }
                             }
                             //if all channels last message's body and time has been fetched then reload the whole grid
-                            if (count == self.conversations.count){
-                                self.conversations = self.conversations.sorted(by: { $0.lastMessageDateTime ?? Date() > $1.lastMessageDateTime ?? Date()})
-                                self.tblView.reloadData()
+//                            print("Count:\(count)" , "channelDescriptors count: \(channelDescriptors.count)")
+                            if (count == channelDescriptors.count){
+                                self.storeConversations(tempConversations)
                             }
                         })
                     }else{//some error while fetching the channel from descriptor now just load the tableview
                         //sorting channelDescriptor by date.. most recetnly update comes at top
-                        self.conversations = self.conversations.sorted(by: { $0.lastMessageDateTime ?? Date() > $1.lastMessageDateTime ?? Date()})
-                        self.tblView.reloadData()
+                        self.storeConversations(tempConversations)
                     }
                 }
             }
             
+        }
+    }
+    
+    func storeConversations(_ tempConversations:[Conversation]){
+        do {
+            //self.conversations = self.conversations.sorted(by: { $0.lastMessageDateTime ?? Date() > $1.lastMessageDateTime ?? Date()})
+            let conversations = tempConversations.sorted(by: { $0.lastMessageDateTime ?? Date() > $1.lastMessageDateTime ?? Date()})
+            let encodedData = try NSKeyedArchiver.archivedData(withRootObject: conversations, requiringSecureCoding: false)
+            UserDefaults.standard.set(encodedData, forKey: "sorted_conversations")
+            self.tblView.reloadData()
+            self.conversations = conversations
+            
+        } catch {
+            print(error)
         }
     }
     
@@ -169,7 +198,8 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
         let model = conversations[indexPath.row]
-        if let attributes = model.channelDescriptor.attributes()?.dictionary , let type = attributes["type"] as? String{
+        //if let attributes = model.channelDescriptor.attributes()?.dictionary , let type = attributes["type"] as? String{
+        if let type = model.type {
             if type == "event" || type  == "experience" || type  == "special-event" {
                 cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
             }else if type  == "villa"{
@@ -193,16 +223,13 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         
         cell.tag = indexPath.row
         
-        cell.lblChannelFriendlyName.text = model.channelDescriptor.friendlyName?.uppercased()
-//        if let dateFromServer = model.channelDescriptor.dateUpdated{
-//            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
-//        }
+        cell.lblChannelFriendlyName.text = model.friendlyName?.uppercased()
         cell.lblLastMessage.text = model.lastMessageBody
         if let dateFromServer = model.lastMessageDateTime{
-            cell.lblCreatedAt.text = dateFromServer.dateToDayWeekYear()
+            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
         }
-        if let count = model.channelDescriptor.unconsumedMessagesCount() , count.intValue > 0{
-            cell.lblUnConsumedMessagesCount.text = count.stringValue
+        if model.unConsumedMessagesCount.intValue > 0{
+            cell.lblUnConsumedMessagesCount.text = model.unConsumedMessagesCount.stringValue
             cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
         }else{
             cell.lblUnConsumedMessagesCount.text = ""
@@ -218,26 +245,29 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let model = self.items[indexPath.item]
-        let channelDescriptor = self.conversations[indexPath.item].channelDescriptor
-        let viewController = BasicChatViewController()
-        channelDescriptor.channel(completion:{ (result, channel) in
-          if result.isSuccessful(){
-            print("Twilio: Channel didSelectRowAt Status: \(String(describing: channel?.status))")
-            if  let channel = channel{
-                viewController.channel = channel
-            }
+        //let channelDescriptor = self.channelDescriptors[indexPath.item]
+        if let channelDescriptor = self.conversations[indexPath.item].channelDescriptor{
+            let viewController = BasicChatViewController()
+            channelDescriptor.channel(completion:{ (result, channel) in
+              if result.isSuccessful(){
+                print("Twilio: Channel didSelectRowAt Status: \(String(describing: channel?.status))")
+                if  let channel = channel{
+                    viewController.channel = channel
+                }
 
-            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-            if #available(iOS 13.0, *) {
-                let controller = navViewController.topViewController
-                // Modal Dismiss iOS 13 onward
-                controller?.presentationController?.delegate = self
-            }
-            //incase user will do some messaging in basicchatviewcontroller and then dismiss it then chatlistviewcontroller should reflect last message body and time
-            navViewController.presentationController?.delegate = self
-            self.present(navViewController, animated: true, completion: nil)
-          }
-        })
+                let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+                if #available(iOS 13.0, *) {
+                    let controller = navViewController.topViewController
+                    // Modal Dismiss iOS 13 onward
+                    controller?.presentationController?.delegate = self
+                }
+                //incase user will do some messaging in basicchatviewcontroller and then dismiss it then chatlistviewcontroller should reflect last message body and time
+                navViewController.presentationController?.delegate = self
+                self.present(navViewController, animated: true, completion: nil)
+              }
+            })
+        }
+        
     }
 }
 
