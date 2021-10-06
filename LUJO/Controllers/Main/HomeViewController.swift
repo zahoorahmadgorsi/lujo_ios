@@ -138,6 +138,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ChatManager.sharedChatManager.delegate = self
 //        naHUD.textLabel.text = "Loading Information"
         featured.overlay = true
         featured.delegate = self
@@ -156,14 +157,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         updateUI()
         setupTapGesturesForEventsAndExperiences()
         
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(showBadgeValue),
+//                                               name: NSNotification.Name(rawValue: "showBadgeValue"),
+//                                               object: nil)
+        
         let imgSearch    = UIImage(named: "Search Icon White")!
         let imgCallToActions  = UIImage(named: "ctas")!
         let imgChat  = UIImage(named: "chatList")!
         let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
         let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
         let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
-        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]
-//        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
+        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]   //order is first second and third
+
         
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
@@ -274,6 +280,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
     }
+    
+
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -1237,6 +1245,16 @@ extension HomeViewController {
         }
     }
 
+    
+    @objc func showBadgeValue() {
+        ChatManager.sharedChatManager.getTotalUnConsumedMessagesCount(completion: { (count) in
+            print("Twilio: Total UnConsumed messages count:\(count)")
+            //setting the badge value
+            let rightBarButtons = self.navigationItem.rightBarButtonItems
+            let lastBarButton = rightBarButtons?.first
+            lastBarButton?.setBadge(text: count == 0 ? "" : String(count))  //show empty string if count is zero
+        })
+    }
 }
 
 // B1 - 1
@@ -1298,8 +1316,9 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
         if #available(iOS 13, *) {
             //Call viewWillAppear only in iOS 13
-            ChatManager.sharedChatManager.delegate = self.tabBarController as? ChatManagerDelegate
+//            ChatManager.sharedChatManager.delegate = self.tabBarController as? ChatManagerDelegate
         }
+        showBadgeValue()
     }
 }
 
@@ -1309,7 +1328,7 @@ extension HomeViewController:ChatManagerDelegate{
     }
 
     func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
-        print("Twilio: receivedNewMessage")
+        showBadgeValue()
     }
 
     func channelJoined(channel: TCHChannel) {

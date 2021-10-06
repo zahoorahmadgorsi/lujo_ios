@@ -32,7 +32,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         // Set delegate
         self.delegate = self
-        ChatManager.sharedChatManager.delegate = self
+//        ChatManager.sharedChatManager.delegate = self
         // Change unselected color.
         self.tabBar.unselectedItemTintColor = UIColor.white
         self.tabBar.clipsToBounds = true
@@ -50,11 +50,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(showBadgeValue),
-                                               name: NSNotification.Name(rawValue: "showBadgeValue"),
-                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(openChatWindow),
@@ -73,19 +68,18 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK:- Utilities
     
-    @objc func showBadgeValue() {
-        ChatManager.sharedChatManager.getTotalUnConsumedMessagesCount(completion: { (count) in
-            print("Twilio: Total UnConsumed messages count:\(count)")
-            self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
-        })
-        
-    }
+//    @objc func showBadgeValue() {
+//        ChatManager.sharedChatManager.getTotalUnConsumedMessagesCount(completion: { (count) in
+//            print("Twilio: Total UnConsumed messages count:\(count)")
+//            self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
+//        })
+//    }
     
     //MARK:- User Interaction
     
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        ChatManager.sharedChatManager.delegate = self
+//        ChatManager.sharedChatManager.delegate = self
         if viewController.restorationIdentifier == "ChatListNavigationController"{
             //Zahoor start
 //            openChatWindow()
@@ -109,26 +103,26 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     //MARK:- Utilities
 }
 
-extension MainTabBarController: ChatManagerDelegate {
-    func showNetworkActivity() {
-        print("Twilio: showNetworkActivity")
-    }
-    
-    func hideNetworkActivity() {
-        print("Twilio: hideNetworkActivity")
-    }
-    
-    func reloadMessages() {
-        print("Twilio: reloadMessages")
-    }
-    
-    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
-        showBadgeValue()
-    }
-    
-    func channelJoined(channel: TCHChannel) {
-        print("Twilio: channelJoined")
-    }
-    
-    
-}
+//extension MainTabBarController: ChatManagerDelegate {
+//    func showNetworkActivity() {
+//        print("Twilio: showNetworkActivity")
+//    }
+//
+//    func hideNetworkActivity() {
+//        print("Twilio: hideNetworkActivity")
+//    }
+//
+//    func reloadMessages() {
+//        print("Twilio: reloadMessages")
+//    }
+//
+//    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
+////        showBadgeValue()
+//    }
+//
+//    func channelJoined(channel: TCHChannel) {
+//        print("Twilio: channelJoined")
+//    }
+//
+//
+//}
