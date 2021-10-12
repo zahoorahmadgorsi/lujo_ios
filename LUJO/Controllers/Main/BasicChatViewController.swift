@@ -39,6 +39,24 @@ class BasicChatViewController: ChatViewController {
     func textCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator? {
         return nil
     }
+    
+    override func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if !isPreviousMessageSameSender(at: indexPath) {
+            let name = message.sender.displayName
+            return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        }
+        return nil
+    }
+    
+    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section - 1 >= 0 else { return false }
+        return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
+    }
+    
+    func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section + 1 < messageList.count else { return false }
+        return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
+    }
 }
 // MARK: - MessagesDisplayDelegate
 
@@ -52,7 +70,13 @@ extension BasicChatViewController: MessagesDisplayDelegate {
     
     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
         switch detector {
-        case .hashtag, .mention: return [.foregroundColor: UIColor.blue]
+        case .hashtag, .mention:
+//            return [.foregroundColor: UIColor.blue]
+            if isFromCurrentSender(message: message) {
+                return [.foregroundColor: UIColor.white]
+            } else {
+                return [.foregroundColor: UIColor.blue]
+            }
         default: return MessageLabel.defaultAttributes
         }
     }
@@ -70,38 +94,55 @@ extension BasicChatViewController: MessagesDisplayDelegate {
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
 //        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
 //        return .bubbleTail(tail, .curved)
-        return .bubble
+        
+//        return .bubble
+        
+        var corners: UIRectCorner = []
+        
+        if isFromCurrentSender(message: message) {
+            corners.formUnion(.topLeft)
+            corners.formUnion(.bottomLeft)
+            if !isPreviousMessageSameSender(at: indexPath) {
+                corners.formUnion(.topRight)
+            }
+            if !isNextMessageSameSender(at: indexPath) {
+                corners.formUnion(.bottomRight)
+            }
+        } else {
+            corners.formUnion(.topRight)
+            corners.formUnion(.bottomRight)
+            if !isPreviousMessageSameSender(at: indexPath) {
+                corners.formUnion(.topLeft)
+            }
+            if !isNextMessageSameSender(at: indexPath) {
+                corners.formUnion(.bottomLeft)
+            }
+        }
+        
+        return .custom { view in
+            let radius: CGFloat = 16
+            let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+            let mask = CAShapeLayer()
+            mask.path = path.cgPath
+            view.layer.mask = mask
+        }
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-//        if isLastInSet(indexOfMessage: indexPath) {
-//            avatarView.isHidden = false
-            let chatUser = message.sender as? ChatUser
-            if let avatarLink = chatUser?.avatar {
-                avatarView.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
-            }
-            
-            if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-                // set the vertical position of the Avatar for incoming messages so that the bottom of the Avatar
-                // aligns with the bottom of the Message
-                layout.setMessageIncomingAvatarPosition(.init(vertical: .messageBottom))
+        let chatUser = message.sender as? ChatUser
+        if let avatarLink = chatUser?.avatar {
+            avatarView.downloadImageFrom(link: avatarLink, contentMode: .scaleAspectFill)
+        }
+        
+        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+            // set the vertical position of the Avatar for incoming messages so that the bottom of the Avatar
+            // aligns with the bottom of the Message
+            layout.setMessageIncomingAvatarPosition(.init(vertical: .messageBottom))
 
-                // set the vertical position of the Avatar for outgoing messages so that the bottom of the Avatar
-                // aligns with the `cellBottom`
-                layout.setMessageOutgoingAvatarPosition(.init(vertical: .messageBottom))
-            }
-//        }else{
-//            avatarView.isHidden = true    //You can set the AvatarView to hidden
-//            if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-//              layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
-//              layout.textMessageSizeCalculator.incomingAvatarSize = .zero
-//            }
-////            If you would like to remove the space the AvatarView occupies from all CellSizeCalculator
-//            if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-//              layout.setMessageIncomingAvatarSize(.zero)
-//              layout.setMessageOutgoingAvatarSize(.zero)
-//            }
-//        }
+            // set the vertical position of the Avatar for outgoing messages so that the bottom of the Avatar
+            // aligns with the `cellBottom`
+            layout.setMessageOutgoingAvatarPosition(.init(vertical: .messageBottom))
+        }
     }
 
 
@@ -157,6 +198,7 @@ extension BasicChatViewController: MessagesDisplayDelegate {
 //         }
 //     }
 
+    
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -185,8 +227,6 @@ extension BasicChatViewController: MessagesLayoutDelegate {
         if let firstItem = messageList[safe:indexPath.section - 1] , let secondItem = messageList[safe:indexPath.section]{
             print(firstItem.sender.displayName,secondItem.sender.displayName)
             if (firstItem.sender.displayName == secondItem.sender.displayName){ //if last message and this message sender are same
-//                print(indexPath.section)
-//                print(firstItem.sender.senderId,secondItem.sender.senderId)
                 return 0  //no need to allot height to display name
             }
         }

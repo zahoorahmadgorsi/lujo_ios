@@ -288,6 +288,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         startPauseAnimation(isPausing: true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showBadgeValue()
+    }
 
     //this method will fetch all user preferences from the server
     @objc func getAllUserPreferences() {
@@ -492,7 +496,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             // Modal Dismiss iOS 13 onward
             controller?.presentationController?.delegate = self
         }
-        //incase user will do some messaging in basicchatviewcontroller and then dismiss it then chatlistviewcontroller should reflect last message body and time
+        //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
         navViewController.presentationController?.delegate = self
         self.present(navViewController, animated: true, completion: nil)
     }
@@ -1316,7 +1320,8 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
         if #available(iOS 13, *) {
             //Call viewWillAppear only in iOS 13
-//            ChatManager.sharedChatManager.delegate = self.tabBarController as? ChatManagerDelegate
+            //ChatManager.sharedChatManager.delegate = self.tabBarController as? ChatManagerDelegate
+            ChatManager.sharedChatManager.delegate = self
         }
         showBadgeValue()
     }

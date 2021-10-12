@@ -60,9 +60,9 @@ public extension Date {
             formatter.doesRelativeDateFormatting = true
             formatter.dateStyle = .short
             formatter.timeStyle = .none
-        case self.isInSevenDays():
-            formatter.dateFormat = "EEEE"
-        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month):
+//        case self.isInSevenDays():
+//            formatter.dateFormat = "EEEE"
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month): //its mean month and not 30 days
             formatter.dateFormat = "E, d MMM"
         default:
             formatter.dateFormat = "MMM d, yyyy"
@@ -70,22 +70,30 @@ public extension Date {
         return formatter.string(from: self)
     }
     
-    //Show on conversation list
+    //Shown on conversation list
     func whatsAppTimeFormat() -> String{
         let formatter = DateFormatter()
         switch true {
-        case Calendar.current.isDateInToday(self) :
+//        case Calendar.current.isDateInToday(self) :
+//            formatter.doesRelativeDateFormatting = true
+////            formatter.dateStyle = .none
+//            formatter.dateStyle = .short    //Today
+//            formatter.timeStyle = .short
+//        case Calendar.current.isDateInYesterday(self):
+//            formatter.doesRelativeDateFormatting = true
+//            formatter.dateStyle = .short    //Yesterday
+//            formatter.timeStyle = .short    // 09:87 AM
+////            formatter.timeStyle = .none   //not showing time at all
+        case Calendar.current.isDateInToday(self) || Calendar.current.isDateInYesterday(self):
             formatter.doesRelativeDateFormatting = true
-            formatter.dateStyle = .none
-            formatter.timeStyle = .short
-        case Calendar.current.isDateInYesterday(self):
-            formatter.doesRelativeDateFormatting = true
-            formatter.dateStyle = .short
-            formatter.timeStyle = .none
+            formatter.dateStyle = .short    //today or yesterday
+            formatter.timeStyle = .short    // time will be displayed
         case self.isInSevenDays():
-            formatter.dateFormat = "EEEE"
-        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month):
-            formatter.dateFormat = "E, d MMM"
+//            formatter.dateFormat = "EEEE"
+            formatter.dateFormat = "EEEE, h:mm a"
+        case Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month): //its mean month and not 30 days
+//            formatter.dateFormat = "E, d MMM"
+            formatter.dateFormat = "MMM d, h:mm a"
         default:
             formatter.dateFormat = "MMM d, yyyy"
         }

@@ -221,18 +221,20 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
         })
     }
     
-    func getChannelMessages(_ channel: TCHChannel, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
+    func getLastMessagesWithCount(_ channel: TCHChannel, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
         channel.messages?.getLastWithCount(msgsCount, completion: { (result, messages) in
             if let msgs = messages{
                 self.setAllMessagesConsumed(channel) { (result, count) in
                     print("Twilio: setAllMessagesConsumed Result:\(result.isSuccessful())" , "Count:\(count)")
                 }
-//                channel.messages?.setAllMessagesConsumedWithCompletion({ (result, count) in
-//                    print("Twilio: Consumed Message Index:\(count)")
-//                })
-//                channel.messages?.setLastConsumedMessageIndex(NSNumber(value: 1), completion: { (result, count) in
-//                    print("Updated Last Consumed Message Index:\(count)")
-//                })
+                completion(msgs)
+            }
+        })
+    }
+    
+    func getOldMessagesWithCount(_ channel: TCHChannel, startingIndex:UInt = 0 ,msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
+        channel.messages?.getBefore(startingIndex,withCount: msgsCount, completion: { (result, messages) in
+            if let msgs = messages{
                 completion(msgs)
             }
         })
@@ -254,6 +256,14 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             completion(UInt(count))
         }
     }
+    
+    func deleteChannel(_ channel: TCHChannel,completion: @escaping (TCHResult) -> Void){
+        channel.destroy(completion: { (result) in
+            print("Twilio: channel deleted:\(result.isSuccessful())")
+            completion(result)
+        })
+    }
+    
 }
 
 

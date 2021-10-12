@@ -20,7 +20,6 @@ class ChatOptionsViewController: UIViewController {
     }
     @IBOutlet weak var imgCross: UIImageView!
     @IBOutlet weak var innerContentView: UIView!
-//    var delegate: ProductDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,42 +38,42 @@ class ChatOptionsViewController: UIViewController {
     
     
     @IBAction func btnFindATableTapped(_ sender: Any) {
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "restaurant" , name: "Restaurant Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
     @IBAction func btnEventTapped(_ sender: Any) {
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "event" , name: "Event Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
     @IBAction func btnAviationTapped(_ sender: Any) {
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "aviation" , name: "Aviation Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
     @IBAction func btnCharterAYachtTapped(_ sender: Any) {
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "yacht" , name: "Yacht Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
     @IBAction func btnVillaTapped(_ sender: Any) {
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "villa" , name: "Villa Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
     @IBAction func btnTravelTapped(_ sender: Any) {
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "travel" , name: "Hotel Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

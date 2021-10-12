@@ -34,6 +34,7 @@ class ChatListViewController: UIViewController {
     }
     var identity = "USER_IDENTITY"
     var delegate:UIAdaptivePresentationControllerDelegate?
+    var deleteIndexPath: IndexPath? = nil //used while deleting at swipe left
     
     //MARK:- View life cycle
     
@@ -77,7 +78,7 @@ class ChatListViewController: UIViewController {
         }
         
         if (self.conversations.count == 0){
-            self.getChatsList(showActivity: true)
+            self.getChatsList(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
         }else{
             self.getChatsList(showActivity: false)
         }
@@ -99,8 +100,6 @@ class ChatListViewController: UIViewController {
                 self.refreshControl.endRefreshing()
             }
             var count = 0   //to trace if all descriptor's channel last message body and time has been fetched or not
-//            self.channelDescriptors.removeAll()
-//            self.conversations.removeAll()
             var tempConversations = [Conversation]()
 
             for channelDescriptor in channelDescriptors {
@@ -128,10 +127,20 @@ class ChatListViewController: UIViewController {
                             //if all channels last message's body and time has been fetched then reload the whole grid
 //                            print("Count:\(count)" , "channelDescriptors count: \(channelDescriptors.count)")
                             if (count == channelDescriptors.count){
+//                                if showActivity {
+//                                    self.hideNetworkActivity()
+//                                }else{
+//                                    self.refreshControl.endRefreshing()
+//                                }
                                 self.storeConversations(tempConversations)
                             }
                         })
                     }else{//some error while fetching the channel from descriptor now just load the tableview
+//                        if showActivity {
+//                            self.hideNetworkActivity()
+//                        }else{
+//                            self.refreshControl.endRefreshing()
+//                        }
                         //sorting channelDescriptor by date.. most recetnly update comes at top
                         self.storeConversations(tempConversations)
                     }
@@ -147,9 +156,8 @@ class ChatListViewController: UIViewController {
             let conversations = tempConversations.sorted(by: { $0.lastMessageDateTime ?? Date() > $1.lastMessageDateTime ?? Date()})
             let encodedData = try NSKeyedArchiver.archivedData(withRootObject: conversations, requiringSecureCoding: false)
             UserDefaults.standard.set(encodedData, forKey: "sorted_conversations")
-            self.tblView.reloadData()
             self.conversations = conversations
-            
+            self.tblView.reloadData()
         } catch {
             print(error)
         }
@@ -179,7 +187,7 @@ class ChatListViewController: UIViewController {
     }
     
     @objc func addTapped(){
-        let newViewController = BasicChatViewController()
+        let newViewController = AdvanceChatViewController()
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
 }
@@ -192,11 +200,13 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         }else{
             self.tblView.restore()
         }
+        print("conversations.count: \(conversations.count)")
         return conversations.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
+//        print("indexPath.row: \(indexPath.row)")
         let model = conversations[indexPath.row]
         //if let attributes = model.channelDescriptor.attributes()?.dictionary , let type = attributes["type"] as? String{
         if let type = model.type {
@@ -247,7 +257,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         //let model = self.items[indexPath.item]
         //let channelDescriptor = self.channelDescriptors[indexPath.item]
         if let channelDescriptor = self.conversations[indexPath.item].channelDescriptor{
-            let viewController = BasicChatViewController()
+            let viewController = AdvanceChatViewController()
             channelDescriptor.channel(completion:{ (result, channel) in
               if result.isSuccessful(){
                 print("Twilio: Channel didSelectRowAt Status: \(String(describing: channel?.status))")
@@ -261,13 +271,73 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
                     // Modal Dismiss iOS 13 onward
                     controller?.presentationController?.delegate = self
                 }
-                //incase user will do some messaging in basicchatviewcontroller and then dismiss it then chatlistviewcontroller should reflect last message body and time
+                //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
                 navViewController.presentationController?.delegate = self
                 self.present(navViewController, animated: true, completion: nil)
               }
             })
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            self.deleteIndexPath = indexPath
+            let itemToDelete = self.conversations[indexPath.row].friendlyName
+            confirmDelete(name: itemToDelete ?? "*this channel*")
+        }
+    }
+    
+    func confirmDelete(name: String) {
+        let alert = UIAlertController(title: "Delete Channel \(name)", message: "Are you sure you want to permanently delete this channel?", preferredStyle: .actionSheet)
+
+        let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteChannel)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: handleCancelChannel)
+        
+        alert.addAction(DeleteAction)
+        alert.addAction(CancelAction)
+
+        self.present(alert, animated: true, completion: nil)
+   }
+    
+    func handleDeleteChannel(alertAction: UIAlertAction! ) -> Void {
+        if let indexPath = self.deleteIndexPath {
+            if let channelDescriptor = self.conversations[indexPath.row].channelDescriptor{
+                self.showNetworkActivity()
+                ChatManager.sharedChatManager.getChannelFromDescriptor(channelDescriptor: channelDescriptor){(result,channel)  in
+                    if (result){
+                        ChatManager.sharedChatManager.deleteChannel(channel) { (resulted) in
+                            self.hideNetworkActivity()
+                            if (resulted.isSuccessful()){
+                                print("indexPath:\(indexPath)")
+                                self.conversations.remove(at: indexPath.row)
+                                // Note that indexPath is wrapped in an array:  [indexPath]
+                                self.tblView.deleteRows(at: [indexPath], with: .automatic)
+//                                self.tblView.reloadData()
+                                self.deleteIndexPath = nil       //re setting the index
+                                
+                            }else{
+                                AlertService.showAlert(style: .actionSheet, title: nil, message: "You can not delete this channel")
+                            }
+                        }
+                    }else{
+                        self.hideNetworkActivity()
+                        AlertService.showAlert(style: .alert, title: nil, message: "You can not delete this channel")
+                    }
+                }
+            }else{
+                print("No channel descriptor")
+            }
+        }
+    }
+    
+    func handleCancelChannel(alertAction: UIAlertAction! ) -> Void {
+        deleteIndexPath = nil       //re setting the index
     }
 }
 

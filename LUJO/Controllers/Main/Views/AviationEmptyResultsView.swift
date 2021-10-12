@@ -45,7 +45,7 @@ class AviationEmptyResultsView: UIView {
                     \(userFirstName)
                     """
 
-                    let viewController = BasicChatViewController()
+                    let viewController = AdvanceChatViewController()
                     viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
                     viewController.initialMessage = initialMessage
                     self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)

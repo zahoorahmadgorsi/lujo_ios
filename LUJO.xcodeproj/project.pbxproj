@@ -139,10 +139,8 @@
 		888B00F426AF54D7004FA1B5 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F326AF54D7004FA1B5 /* ChatMessage.swift */; };
 		888B00F926B012C0004FA1B5 /* BasicChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */; };
 		888B010A26B89C3E004FA1B5 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B010926B89C3E004FA1B5 /* Collection.swift */; };
-		888D93C026FA97E100F07896 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888D93BF26FA97E100F07896 /* GoogleService-Info.plist */; };
 		888D93C126FA97E100F07896 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888D93BF26FA97E100F07896 /* GoogleService-Info.plist */; };
 		888D93C226FA97E100F07896 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888D93BF26FA97E100F07896 /* GoogleService-Info.plist */; };
-		888D93C326FA97E100F07896 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888D93BF26FA97E100F07896 /* GoogleService-Info.plist */; };
 		8894D02825629CD200BF84D8 /* Product1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Product1.swift */; };
 		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
 		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
@@ -168,6 +166,13 @@
 		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
 		88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F982554552300514626 /* WishListAPIManager.swift */; };
 		88EBB73F270CFFD00064338B /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EBB73E270CFFD00064338B /* UIBarButtonItem.swift */; };
+		88FBE0F02710EA4D00452EB4 /* AdvanceChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBE0EF2710EA4D00452EB4 /* AdvanceChatViewController.swift */; };
+		88FBE0F52710EBD600452EB4 /* CustomMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBE0F42710EBD600452EB4 /* CustomMessagesFlowLayout.swift */; };
+		88FBE11F2710EEE000452EB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88FBE11E2710EEE000452EB4 /* GoogleService-Info.plist */; };
+		88FBE1232710EF3E00452EB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88FBE11E2710EEE000452EB4 /* GoogleService-Info.plist */; };
+		88FBE1292710F0E200452EB4 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBE1282710F0E200452EB4 /* CustomCell.swift */; };
+		88FBE12E2710F25400452EB4 /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBE12D2710F25400452EB4 /* CameraInputBarAccessoryView.swift */; };
+		88FBE1332710F53000452EB4 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBE1322710F53000452EB4 /* AlertService.swift */; };
 		91522DAF2608B2100023BAD8 /* DiningFeaturedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DAE2608B2100023BAD8 /* DiningFeaturedAnimator.swift */; };
 		91522DB4260A1B8A0023BAD8 /* DiningSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */; };
 		91522DBF260CD8300023BAD8 /* WishListSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */; };
@@ -559,6 +564,12 @@
 		88EA9F962554550D00514626 /* WishListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListRouter.swift; sourceTree = "<group>"; };
 		88EA9F982554552300514626 /* WishListAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListAPIManager.swift; sourceTree = "<group>"; };
 		88EBB73E270CFFD00064338B /* UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
+		88FBE0EF2710EA4D00452EB4 /* AdvanceChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvanceChatViewController.swift; sourceTree = "<group>"; };
+		88FBE0F42710EBD600452EB4 /* CustomMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesFlowLayout.swift; sourceTree = "<group>"; };
+		88FBE11E2710EEE000452EB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		88FBE1282710F0E200452EB4 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		88FBE12D2710F25400452EB4 /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
+		88FBE1322710F53000452EB4 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		91522DAE2608B2100023BAD8 /* DiningFeaturedAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningFeaturedAnimator.swift; sourceTree = "<group>"; };
 		91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningSliderAnimator.swift; sourceTree = "<group>"; };
 		91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListSliderAnimator.swift; sourceTree = "<group>"; };
@@ -987,11 +998,11 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
-				886145F326AC01DE0023E92E /* Chat */,
 				9A194FEF22945A5D00E3DBD1 /* HomeEventCell.swift */,
 				30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */,
 				9AAA101F22773540008CE1D2 /* MyBookingsCell.swift */,
 				30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */,
+				886145F326AC01DE0023E92E /* Chat */,
 				91F610CC25BDB1C9005BCDA2 /* City View */,
 				1D88012A233E48420039DEA6 /* Dining Category Slider */,
 				1DFE1AC323476EA50025410D /* Dining City View */,
@@ -1067,6 +1078,7 @@
 				5527642F2317FE8200380BEB /* ChatListViewController.swift */,
 				888B00E926AF42AB004FA1B5 /* ChatViewController.swift */,
 				888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */,
+				88FBE0EF2710EA4D00452EB4 /* AdvanceChatViewController.swift */,
 				882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */,
 			);
 			name = Chat;
@@ -1284,6 +1296,15 @@
 			path = WishList;
 			sourceTree = "<group>";
 		};
+		88FBE1272710F0B600452EB4 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				88FBE1282710F0E200452EB4 /* CustomCell.swift */,
+				88FBE12D2710F25400452EB4 /* CameraInputBarAccessoryView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		9183E82125EBEC7500656B48 /* Gallery View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1433,6 +1454,7 @@
 		9A4313F521BFBBB5004F0AD4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				88FBE1272710F0B600452EB4 /* Chat */,
 				1D7819BA2301CED20044C70B /* Dining Collection */,
 				9A89D3E521C595E8002D249F /* LujoTextField.swift */,
 				9A38EF692253D01F0097BA0B /* DarkActionButton.swift */,
@@ -1444,6 +1466,7 @@
 				553BF855230D4E4700EF4671 /* CardAlertView.xib */,
 				1DD785B723749B27001A9CF9 /* PayAlertView.swift */,
 				1DD785B623749B27001A9CF9 /* PayAlertView.xib */,
+				88FBE0F42710EBD600452EB4 /* CustomMessagesFlowLayout.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1530,6 +1553,7 @@
 				5583730D230D559100F9536C /* SwiftMessagesManger.swift */,
 				888B010926B89C3E004FA1B5 /* Collection.swift */,
 				88EBB73E270CFFD00064338B /* UIBarButtonItem.swift */,
+				88FBE1322710F53000452EB4 /* AlertService.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1556,6 +1580,7 @@
 		9A818F3E20EE74CA005B6455 = {
 			isa = PBXGroup;
 			children = (
+				88FBE11E2710EEE000452EB4 /* GoogleService-Info.plist */,
 				1D523A9D23995516009E78D8 /* Firebase.h */,
 				88029BA22633BF42003F1E77 /* OneSignalNotificationServiceExtension */,
 				9AECC13A2111CBD700C00C07 /* Frameworks */,
@@ -1959,7 +1984,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				888D93C326FA97E100F07896 /* GoogleService-Info.plist in Resources */,
+				88FBE11F2710EEE000452EB4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1967,6 +1992,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88FBE1232710EF3E00452EB4 /* GoogleService-Info.plist in Resources */,
 				9AD1CE0022817F48007A0D63 /* BookingPaymentSummaryView.xib in Resources */,
 				9A990C1A21C94E4A00056E31 /* SF-Pro-Text-Bold.otf in Resources */,
 				9183E82E25EBEE8800656B48 /* GalleryView2.xib in Resources */,
@@ -1992,7 +2018,6 @@
 				1DBC9C02236567C200F0F133 /* Assets.xcassets in Resources */,
 				9A0E586D2260E5B800F7848A /* BookingSegmentView.xib in Resources */,
 				9A4CE04120F6F0AC00BB27FC /* HelveticaLTStd-Light.otf in Resources */,
-				888D93C026FA97E100F07896 /* GoogleService-Info.plist in Resources */,
 				9183E83625EBEEA300656B48 /* GalleryView3.xib in Resources */,
 				9A4CE04320F6F0AC00BB27FC /* HelveticaLTStd-Roman.otf in Resources */,
 				9A33941D212665990057CA93 /* HelveticaNeueLTStd-Roman.otf in Resources */,
@@ -2224,6 +2249,7 @@
 				88C5EEE726C5D61E00052CE5 /* Utils.swift in Sources */,
 				9A9EC8AD2253BA2800098E7D /* AviationLegCell.swift in Sources */,
 				9A16408521FB22CA0041FFCE /* CCAPIManager.swift in Sources */,
+				88FBE1332710F53000452EB4 /* AlertService.swift in Sources */,
 				5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */,
 				9AE0B2AD2123304B00E55E6C /* GoLujoAPIManager.swift in Sources */,
 				9A645BA3226492CD009BF14D /* BookingPriceSummaryView.swift in Sources */,
@@ -2297,6 +2323,7 @@
 				88C083C92635CCB400204475 /* WishListViewController.swift in Sources */,
 				9A6583C3221C4E6A00EB8EEA /* CountryCodeSelectionView.swift in Sources */,
 				88EA9F972554550D00514626 /* WishListRouter.swift in Sources */,
+				88FBE12E2710F25400452EB4 /* CameraInputBarAccessoryView.swift in Sources */,
 				9AF422672265DF4F003CE562 /* BookingStep2.swift in Sources */,
 				9AC6DA6D217D8F700098B016 /* Lift.swift in Sources */,
 				9A74716E2244D8A60047F4AE /* ImageCarousel.swift in Sources */,
@@ -2313,6 +2340,8 @@
 				9A53A6A52152085E00AAE322 /* AviationProtocols.swift in Sources */,
 				1DFE1AC92349FEFD0025410D /* RestaurantListViewController.swift in Sources */,
 				9A87214D21F0D4F80010AA37 /* Error.swift in Sources */,
+				88FBE0F02710EA4D00452EB4 /* AdvanceChatViewController.swift in Sources */,
+				88FBE0F52710EBD600452EB4 /* CustomMessagesFlowLayout.swift in Sources */,
 				30368DD72339200D00EDF549 /* MainScreenAviationCell.swift in Sources */,
 				91522DB4260A1B8A0023BAD8 /* DiningSliderAnimator.swift in Sources */,
 				88814DD02659B31A0082AA2C /* DestinationSelectionViewController.swift in Sources */,
@@ -2349,6 +2378,7 @@
 				9AF1A0D42249072B00E0680B /* AviationSingleLegSearchOptionsView.swift in Sources */,
 				9156B75126148F3A00404E1D /* EventsAnimator.swift in Sources */,
 				9A89D3E621C595E8002D249F /* LujoTextField.swift in Sources */,
+				88FBE1292710F0E200452EB4 /* CustomCell.swift in Sources */,
 				9A2AEBC321626A0300F92FB3 /* AirportSearchCell.swift in Sources */,
 				9183E85225EBEF6100656B48 /* GalleryView4.swift in Sources */,
 				1D88012F233E4AB30039DEA6 /* DiningCategorySliderCell.swift in Sources */,
@@ -2499,7 +2529,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2525,7 +2555,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2550,7 +2580,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2714,7 +2744,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2778,7 +2808,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2988,7 +3018,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

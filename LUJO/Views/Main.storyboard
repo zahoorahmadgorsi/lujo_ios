@@ -7837,27 +7837,27 @@ New York, NY 10011 USA</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="chatCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="chatCell" id="ewP-sT-7pj" customClass="ChatCell" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="64"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="66.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ewP-sT-7pj" id="eSf-6N-MGV">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Lujo Logo" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-5x-nOz">
-                                                    <rect key="frame" x="10" y="12" width="40" height="40"/>
+                                                    <rect key="frame" x="10" y="13.5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="YIg-5x-nOz" secondAttribute="height" multiplier="1:1" id="Kdq-1F-llE"/>
                                                         <constraint firstAttribute="height" constant="40" id="ni6-0F-OTm"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="1vN-KA-z3w">
-                                                    <rect key="frame" x="65" y="15" width="334" height="34"/>
+                                                    <rect key="frame" x="65" y="15" width="334" height="36.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Psr-7M-jEN">
                                                             <rect key="frame" x="0.0" y="0.0" width="334" height="12.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86d-Ph-8ND">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="256" height="12.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="226" height="12.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" name="Palette - R-G Mid"/>
                                                                     <nil key="highlightedColor"/>
@@ -7865,28 +7865,25 @@ New York, NY 10011 USA</string>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                     </variation>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sept 22, 2021" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8wW-JW-PnU">
-                                                                    <rect key="frame" x="264" y="0.0" width="70" height="12.5"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yesterday, 09:09 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8wW-JW-PnU">
+                                                                    <rect key="frame" x="234" y="0.0" width="100" height="12.5"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="70" id="6wf-DD-gvz"/>
+                                                                        <constraint firstAttribute="width" constant="100" id="6wf-DD-gvz"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                     <color key="textColor" name="Palette - Placeholder Text"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     </variation>
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p5k-o1-urv">
-                                                            <rect key="frame" x="0.0" y="16.5" width="334" height="17.5"/>
+                                                            <rect key="frame" x="0.0" y="16.5" width="334" height="20"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcf-Pf-qcm">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="308.5" height="17.5"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="17.5" id="krQ-nm-GlR"/>
-                                                                    </constraints>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="306" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" name="White Text"/>
                                                                     <nil key="highlightedColor"/>
@@ -7895,10 +7892,10 @@ New York, NY 10011 USA</string>
                                                                     </variation>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fqq-xO-cdA">
-                                                                    <rect key="frame" x="316.5" y="0.0" width="17.5" height="17.5"/>
+                                                                    <rect key="frame" x="314" y="0.0" width="20" height="20"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAq-Ok-Dso">
-                                                                            <rect key="frame" x="9" y="9" width="0.0" height="0.0"/>
+                                                                            <rect key="frame" x="10" y="10" width="0.0" height="0.0"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                             <color key="textColor" name="Palette - R-G Mid"/>
                                                                             <nil key="highlightedColor"/>
@@ -7909,8 +7906,8 @@ New York, NY 10011 USA</string>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="height" constant="20" id="3XM-bx-zUG"/>
                                                                         <constraint firstItem="XAq-Ok-Dso" firstAttribute="centerY" secondItem="Fqq-xO-cdA" secondAttribute="centerY" id="K61-qH-TbB"/>
-                                                                        <constraint firstAttribute="width" secondItem="Fqq-xO-cdA" secondAttribute="height" multiplier="1:1" id="RO4-dO-6fy"/>
                                                                         <constraint firstItem="XAq-Ok-Dso" firstAttribute="centerX" secondItem="Fqq-xO-cdA" secondAttribute="centerX" id="dXE-uL-kP8"/>
                                                                         <constraint firstAttribute="width" constant="20" id="tSh-rJ-JRS"/>
                                                                     </constraints>

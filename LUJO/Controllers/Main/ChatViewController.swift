@@ -40,6 +40,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     lazy var messageList: [ChatMessage] = []
     var channel: TCHChannel?
     private let naHUD = JGProgressHUD(style: .dark)
+    let pageSize: UInt = 10
     
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -69,7 +70,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         configureMessageCollectionView()
         configureMessageInputBar()
         title = "LUJO"
-        
+        overrideUserInterfaceStyle = .dark  //showing chat window in dark mode
         let searchBarButton = UIButton(type: .system)
         searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
 //        searchBarButton.setTitle("Cancel", for: .normal)
@@ -82,12 +83,12 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         
         if let channel = self.channel{
-            print(channel.sid)
+//            print(channel.sid as Any)
             ChatManager.sharedChatManager.setChannel(channel: channel)
             identity = channel.createdBy ?? identity
-            ChatManager.sharedChatManager.getChannelMessages(channel, msgsCount: 100, completion: {messages in
+            ChatManager.sharedChatManager.getLastMessagesWithCount(channel, msgsCount: pageSize, completion: {messages in
                 for message in messages {
-//                    print("Message body: \(String(describing: message.body))")
+//                    print("Message body: \(String(describing: message.body))" , message.index as Any)
                     self.receivedNewMessage(message: message, channel: channel)
                 }
             })
@@ -138,7 +139,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
             defaultMessage += "number of guests, locations, date, time, budget "
         }
         defaultMessage +=  "and any other preferences we should note."
-        let chatMessage:ChatMessage = ChatMessage(text: defaultMessage, user: chatUser, messageId: UUID().uuidString, date: Date())
+        let chatMessage:ChatMessage = ChatMessage(text: defaultMessage, user: chatUser, messageId: UUID().uuidString, date: Date(), messageIndex: 0)
         return chatMessage
     }
 
@@ -149,15 +150,22 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
     
     @objc func loadMoreMessages() {
-//        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-//            SampleData.shared.getMessages(count: 20) { messages in
-//                DispatchQueue.main.async {
-//                    self.messageList.insert(contentsOf: messages, at: 0)
-//                    self.messagesCollectionView.reloadDataAndKeepOffset()
-//                    self.refreshControl.endRefreshing()
-//                }
-//            }
-//        }
+        if let channel = self.channel{
+            var lastMessageIndex = messageList[0].messageIndex?.uintValue ?? 0  //get the index of very first message
+            lastMessageIndex = lastMessageIndex <= 0 ? 0 : (lastMessageIndex - 1)  //subtracting 1 from last messageIndex, to load further old messages
+            if (lastMessageIndex > 0){
+                ChatManager.sharedChatManager.getOldMessagesWithCount(channel,startingIndex: lastMessageIndex, msgsCount: pageSize, completion: {messages in
+                    let reversedMessages = messages.reversed()  //reversing because we are loading old messages in newer messages first order i.e. reversed order
+                    for message in reversedMessages {
+                        print("Message body: \(String(describing: message.body))")
+                        self.receivedOldMessage(message: message, channel: channel)
+                    }
+                    self.refreshControl.endRefreshing()
+                })
+            }else{
+                self.refreshControl.endRefreshing()
+            }
+        }
     }
     
     func configureMessageCollectionView() {
@@ -426,6 +434,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                     inputBar.sendButton.stopAnimating()
                     if result.isSuccessful() {
                         inputBar.inputTextView.placeholder = "Aa"
+                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
                     } else {
 //                        self.displayErrorMessage("Unable to send message")
                         let error = BackendError.parsing(reason: "Unable to send message")
@@ -464,25 +473,39 @@ extension ChatViewController: ChatManagerDelegate {
         if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
             //if channel is opened and recieved a new message then set its consumed messages to all
             ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
-                print("Twilio: set All Messages Consumed Result:\(result.isSuccessful())" , "Count:\(count)")
+//                print("Twilio: set All Messages Consumed Result:\(result.isSuccessful())" , "Count:\(count)")
             }
             if (identity == message.member?.identity){ //its current users message
                 if let user:ChatUser = self.currentSender() as? ChatUser  {
-                    let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
+                    let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
                     self.insertMessage(msg)
                     self.messagesCollectionView.scrollToLastItem(animated: true)
                 }
             }else{
-                print(message.member?.identity as Any , message.member?.sid as Any )
+//                print(message.member?.identity as Any , message.member?.sid as Any )
                 let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
-                let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date())
+                let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                 self.insertMessage(msg)
                 self.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }else{
             print("An other channel has received the message")
         }
-
+    }
+    
+    func receivedOldMessage(message: TCHMessage , channel: TCHChannel) {
+        if (identity == message.member?.identity){ //its current users message
+            if let user:ChatUser = self.currentSender() as? ChatUser  {
+                let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
+                self.messageList.insert(msg, at: 0)
+                self.messagesCollectionView.reloadDataAndKeepOffset()
+            }
+        }else{
+            let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
+            let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+            self.messageList.insert(msg, at: 0)
+            self.messagesCollectionView.reloadDataAndKeepOffset()
+        }
     }
     
     func channelJoined(channel: TCHChannel){

@@ -234,7 +234,7 @@ class PreferencesHomeViewController: UIViewController {
         \(userFirstName)
         """
         
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "Preferences" , name: "Preferences Inquiry")
         viewController.initialMessage = initialMessage
         self.navigationController?.pushViewController(viewController,animated: true)

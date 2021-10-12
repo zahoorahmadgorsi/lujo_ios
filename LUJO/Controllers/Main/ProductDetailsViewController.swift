@@ -518,7 +518,6 @@ extension ProductDetailsViewController {
         
         
         if (itemsList.count > 0){
-            
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()
                 tv.translatesAutoresizingMaskIntoConstraints = false
@@ -919,7 +918,7 @@ extension ProductDetailsViewController {
             }
 
 //            print(initialMessage)
-            let viewController = BasicChatViewController()
+            let viewController = AdvanceChatViewController()
             viewController.product = product
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)

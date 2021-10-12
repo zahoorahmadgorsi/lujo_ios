@@ -57,7 +57,7 @@ extension UIBarButtonItem {
 //        let x = view.frame.width + offset.x + 30
         let y = offset.y + 5
         
-        print("x:\(x) , y:\(y)")
+//        print("x:\(x) , y:\(y)")
         let badgeFrame = CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: width, height: height))
 
         badge.drawRoundedRect(rect: badgeFrame, andColor: color, filled: filled)

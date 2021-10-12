@@ -158,7 +158,7 @@ class BookingsViewController: UIViewController {
             \(userFirstName)
             """
             
-            let viewController = BasicChatViewController()
+            let viewController = AdvanceChatViewController()
             viewController.product = Product(id: -1 , type: "My Bookings" , name: "Booking Inquiry")
             viewController.initialMessage = initialMessage
             self.navigationController?.pushViewController(viewController,animated: true)

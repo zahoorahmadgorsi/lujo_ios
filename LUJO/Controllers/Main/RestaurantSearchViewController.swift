@@ -113,7 +113,7 @@ class RestaurantSearchViewController: UIViewController {
         \(userFirstName)
         """
         
-        let viewController = BasicChatViewController()
+        let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "restaurant" , name: "Restaurant Searched")
         viewController.initialMessage = initialMessage
         let navController = UINavigationController(rootViewController:viewController)

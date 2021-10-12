@@ -36,7 +36,7 @@ class BookingStep3: UIViewController {
             \(userFirstName)
             """
 
-            let viewController = BasicChatViewController()
+            let viewController = AdvanceChatViewController()
             viewController.product = Product(id: -1 , type: "aviation" , name: "Authorize card and verify booking request")
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
