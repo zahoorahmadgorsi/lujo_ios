@@ -40,7 +40,6 @@ class ChatListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ChatManager.sharedChatManager.delegate = self
         
         self.view.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: 24.0)
         self.tblView.dataSource = self;
@@ -66,7 +65,8 @@ class ChatListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        //when chatViewController was opened fro self and then get closed, then this viewWillAppear would set delegate to self again
+        ChatManager.sharedChatManager.delegate = self
         //loading cached conversations list
         do {
             if let decoded  = UserDefaults.standard.object(forKey: "sorted_conversations") as? Data{
@@ -346,8 +346,7 @@ extension ChatListViewController: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
         if #available(iOS 13, *) {
             //Call viewWillAppear only in iOS 13
-            viewWillAppear(true)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "showBadgeValue"), object: nil)
+            self.getChatsList(showActivity: false)    //chatViewController is closed time to update the last message body, time and unconsumed index
         }
     }
 }
@@ -357,8 +356,9 @@ extension ChatListViewController: ChatManagerDelegate {
         print("Twilio: reloadMessages")
     }
     
-    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
-        self.viewDidAppear(true)    //it will update the last message body, time and consumed index
+    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) -> ChatMessage? {
+        self.getChatsList(showActivity: false)    //New message is recived on chatlistViewController time to update the last message body, time and unconsumed index
+        return nil
     }
     
     func channelJoined(channel: TCHChannel) {

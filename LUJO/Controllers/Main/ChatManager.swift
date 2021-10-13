@@ -11,7 +11,7 @@ import TwilioChatClient
 
 protocol ChatManagerDelegate: AnyObject {
     func reloadMessages()
-    func receivedNewMessage(message: TCHMessage , channel: TCHChannel)
+    func receivedNewMessage(message: TCHMessage , channel: TCHChannel) -> ChatMessage?
     func channelJoined(channel: TCHChannel)
     func showNetworkActivity()
     func hideNetworkActivity()
