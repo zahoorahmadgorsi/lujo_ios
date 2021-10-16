@@ -432,7 +432,6 @@ extension AdvanceChatViewController: MessagesDisplayDelegate {
     }
     
     func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
-        
         return LocationMessageSnapshotOptions(showsBuildings: true, showsPointsOfInterest: true, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
     }
 
@@ -497,20 +496,27 @@ extension AdvanceChatViewController: MessagesLayoutDelegate {
 extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
 
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
-        for item in attachments {
-            if  case .image(let image) = item {
-                self.sendImageMessage(photo: image)
+        if let channel = self.channel{
+            for item in attachments {
+                if  case .image(let image) = item {
+//                    self.sendImageMessage(photo: image)
+                    ChatManager.sharedChatManager.sendImageMessage(photo: image, channel)
+//                    ChatManager.sharedChatManager.sendImageMessage(photo: image, chanel) { (result, message) in
+//                    {
+//                        let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
+//                        self.insertMessage(photoMessage)
+//                    }
+                }
             }
+            inputBar.invalidatePlugins()
         }
-        inputBar.invalidatePlugins()
     }
     
     
-    func sendImageMessage( photo  : UIImage)  {
-        //let photoMessage = MockMessage(image: photo, user: self.currentSender() as! MockUser, messageId: UUID().uuidString, date: Date())
-        let photoMessage = ChatMessage(image: photo, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
-        self.insertMessage(photoMessage)
-    }
+//    func sendImageMessage( photo  : UIImage)  {
+//        let photoMessage = ChatMessage(image: photo, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
+//        self.insertMessage(photoMessage)
+//    }
     
 }
 

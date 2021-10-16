@@ -95,18 +95,6 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
         }
     }
 
-    func sendMessage(_ messageText: String,
-                     completion: @escaping (TCHResult, TCHMessage?) -> Void) {
-        if let messages = self.channel?.messages {
-            let messageOptions = TCHMessageOptions().withBody(messageText)
-            messages.sendMessage(with: messageOptions, completion: { (result, message) in
-                completion(result, message)
-            })
-        }else{
-            print("Twilio: Message could not sent")
-        }
-    }
-
     func login(_ identity: String, completion: @escaping (Bool) -> Void) {
         // Fetch Access Token from the server and initialize Chat Client - this assumes you are
         // calling a Twilio function, as described in the Quickstart docs
@@ -172,15 +160,6 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
 //            }
 //        }
     }
-
-//    private func checkChannelCreation(uniqueName: String, completion: @escaping(TCHResult?, TCHChannel?) -> Void) {
-//        guard let client = client, let channelsList = client.channelsList() else {
-//            return
-//        }
-//        channelsList.channel(withSidOrUniqueName: uniqueName, completion: { (result, channel) in
-//            completion(result, channel)
-//        })
-//    }
 
     private func joinChannel(_ channel: TCHChannel, completion: @escaping (Bool) -> Void) {
         self.channel = channel
@@ -264,6 +243,63 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
         })
     }
     
+    func sendMessage(_ messageText: String
+                     , _ cutomAttributes: Dictionary<String,String>
+                     , completion: @escaping (TCHResult, TCHMessage?) -> Void) {
+        if let messages = self.channel?.messages{
+            let messageOptions = TCHMessageOptions().withBody(messageText)  //setting message body
+
+            let attributes:TCHJsonAttributes = .init(dictionary: cutomAttributes)
+            messageOptions.withAttributes(attributes) { (result) in //setting message attributes
+                print("Twilio: Attributes has been set with the message")
+//                messages.sendMessage(with: messageOptions, completion: { (result, message) in
+//                    completion(result, message)
+//                })
+            }
+            messages.sendMessage(with: messageOptions, completion: { (result, message) in
+                completion(result, message)
+            })
+        }else{
+            print("Twilio: Message could not sent")
+        }
+    }
+    
+    //func sendImageMessage(photo  : UIImage,_ channel: TCHChannel, completion: @escaping (TCHResult, TCHMessage?) -> Void){
+    func sendImageMessage(photo  : UIImage,_ channel: TCHChannel){
+        // The data for the image you would like to send
+        //let data = Data()
+        if let data = photo.pngData(){
+            // Prepare the upload stream and parameters
+            let messageOptions = TCHMessageOptions()
+            let inputStream = InputStream(data: data)
+            messageOptions.withMediaStream(inputStream,
+                                           contentType: "image/jpeg"
+                                           ,defaultFilename: Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss") + ".png" , //optional
+                                           onStarted: {
+                                            // Called when upload of media begins.
+                                            print("Twilio: Media upload started")
+            },
+                                           onProgress: { (bytes) in
+                                            // Called as upload progresses, with the current byte count.
+                                            print("Twilio: Media upload progress: \(bytes)")
+            }) { (mediaSid) in
+                // Called when upload is completed, with the new mediaSid if successful.
+                // Full failure details will be provided through sendMessage's completion.
+                print("Media upload completed")
+            }
+
+            // Trigger the sending of the message. it will be received at receivedNewMessage in chatViewController
+            channel.messages?.sendMessage(with: messageOptions,
+                                               completion: { (result, message) in
+                                                if !result.isSuccessful() {
+                                                    print("Twilio: Image creation failed: \(String(describing: result.error))")
+                                                } else {
+                                                    print("Twilio: Image creation successful")
+                                                }
+//                                                completion(result, message)
+            })
+        }
+    }
 }
 
 

@@ -90,13 +90,13 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
                     //if channel is opened and recieved a new message then set its consumed messages to all
                     ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
-                        print("Twilio: channel's consumed count set to zero. Result:\(result.isSuccessful())" , "Count:\(count)")
+//                        print("Twilio: channel's UnConsumed messages count set to zero. Result:\(result.isSuccessful())" , "Count:\(count)")
                     }
                 }
                 var tempMessages:[ChatMessage] = []
-                for message in messages {
-//                    print("Message body: \(String(describing: message.body))" , message.index as Any)
-                    if let message = self.convertTCHMessageToChatMessage(message: message){
+                for tchMessage in messages {
+                    print(tchMessage.attributes()?.dictionary)
+                    if let message = self.convertTCHMessageToChatMessage(message: tchMessage){
                         tempMessages.append(message)
                     }
                 }
@@ -428,40 +428,47 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
 
     func processInputBar(_ inputBar: InputBarAccessoryView) {
-        // Here we can parse for which substrings were autocompleted
-        let attributedText = inputBar.inputTextView.attributedText!
-        let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
-            let substring = attributedText.attributedSubstring(from: range)
-            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
-            print("Autocompleted: `", substring, "` with context: ", context ?? [])
-        }
+        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+            let attribute :Dictionary<String,String> = [
+                                                        "profile_picture" : user.avatar
+                                                        ,"customer_name" : user.firstName + " " + user.lastName]
+            
+            // Here we can parse for which substrings were autocompleted
+            let attributedText = inputBar.inputTextView.attributedText!
+            let range = NSRange(location: 0, length: attributedText.length)
+            attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
+                let substring = attributedText.attributedSubstring(from: range)
+                let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
+                print("Autocompleted: `", substring, "` with context: ", context ?? [])
+            }
 
-        let components = inputBar.inputTextView.components
-        inputBar.inputTextView.text = String()
-        inputBar.invalidatePlugins()
-        // Send button activity animation
-        inputBar.sendButton.startAnimating()
-        inputBar.inputTextView.placeholder = "Sending..."
-        // Resign first responder for iPad split view
-        inputBar.inputTextView.resignFirstResponder()
-        
-        for component in components {
-            if let str = component as? String  {
-                //chatManager.sendMessage(str, completion: { (result, _) in
-                ChatManager.sharedChatManager.sendMessage(str, completion: { (result, _) in
-                    inputBar.sendButton.stopAnimating()
-                    if result.isSuccessful() {
-                        inputBar.inputTextView.placeholder = "Aa"
-                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
-                    } else {
-//                        self.displayErrorMessage("Unable to send message")
-                        let error = BackendError.parsing(reason: "Unable to send message")
-                        self.showError(error)
-                    }
-                })
+            let components = inputBar.inputTextView.components
+            inputBar.inputTextView.text = String()
+            inputBar.invalidatePlugins()
+            // Send button activity animation
+            inputBar.sendButton.startAnimating()
+            inputBar.inputTextView.placeholder = "Sending..."
+            // Resign first responder for iPad split view
+            inputBar.inputTextView.resignFirstResponder()
+            
+            for component in components {
+                if let str = component as? String  {
+                    //chatManager.sendMessage(str, completion: { (result, _) in
+                    ChatManager.sharedChatManager.sendMessage(str,attribute, completion: { (result, _) in
+                        inputBar.sendButton.stopAnimating()
+                        if result.isSuccessful() {
+                            inputBar.inputTextView.placeholder = "Aa"
+                            inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
+                        } else {
+    //                        self.displayErrorMessage("Unable to send message")
+                            let error = BackendError.parsing(reason: "Unable to send message")
+                            self.showError(error)
+                        }
+                    })
+                }
             }
         }
+
     }
 
 //    private func insertMessages(_ data: [Any]) {
@@ -470,22 +477,32 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 //                let message = ChatMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
 //                insertMessage(message)
 //            }
-////            else if let img = component as? UIImage {
-////                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
-////                insertMessage(message)
-////            }
+//            else if let img = component as? UIImage {
+//                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
+//                insertMessage(message)
+//            }
 //        }
 //    }
+    
     private func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
+        
+//        if message.hasMedia(){
+//            message.getMediaContentTemporaryUrl { (result, mediaContentUrl) in
+//                guard let mediaContentUrl = mediaContentUrl else {
+//                    return
+//                }
+//                // Use the url to download an image or other media
+//                print(mediaContentUrl)
+//                let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
+//                }
+//        }
+        
         if (identity == message.member?.identity){ //its current user's message
             if let user:ChatUser = self.currentSender() as? ChatUser  {
                 let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
                 return msg
-//                    self.insertMessage(msg)
-//                    self.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }else{
-//                print(message.member?.identity as Any , message.member?.sid as Any )
             let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
             let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
             return msg
@@ -507,33 +524,30 @@ extension ChatViewController: ChatManagerDelegate {
         if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
             //if channel chat window is opened and recieved a new message then set its Un Consumed messages count to 0
             ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
-//                print("Twilio: set channel's unConsumed messages count to zero. Consumed Result:\(result.isSuccessful())" , "Count:\(count)")
+                print("Twilio: set channel's unConsumed messages count to zero. Consumed Result:\(result.isSuccessful())" , "Count:\(count)")
+            }
+//            print(message.mediaFilename,message.mediaSid)
+//            if message.hasMedia(){
+                message.getMediaContentTemporaryUrl { (result, mediaContentUrl) in
+                    guard let mediaContentUrl = mediaContentUrl else {
+                        return
+                    }
+//                    // Use the url to download an image or other media
+                    print(mediaContentUrl)
+//                    let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
+//                    }
+//            }else{
+                    if let chatMessage = self.convertTCHMessageToChatMessage(message: message){
+                    self.insertMessage(chatMessage)
+                }
             }
             
-            if let chatMessage = convertTCHMessageToChatMessage(message: message){
-                self.insertMessage(chatMessage)
-            }
         }else{
             print("Twilio: Some other channel has received the message")
         }
         return nil
         
     }
-    
-//    func receivedOldMessage(message: TCHMessage , channel: TCHChannel) {
-//        if (identity == message.member?.identity){ //its current users message
-//            if let user:ChatUser = self.currentSender() as? ChatUser  {
-//                let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
-//                self.messageList.insert(msg, at: 0)
-//                self.messagesCollectionView.reloadDataAndKeepOffset()
-//            }
-//        }else{
-//            let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
-//            let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
-//            self.messageList.insert(msg, at: 0)
-//            self.messagesCollectionView.reloadDataAndKeepOffset()
-//        }
-//    }
     
     func channelJoined(channel: TCHChannel){
         self.channel = channel
