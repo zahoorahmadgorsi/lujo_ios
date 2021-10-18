@@ -36,7 +36,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     /// The `BasicAudioController` control the AVAudioPlayer state (play, pause, stop) and update audio cell UI accordingly.
 //    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
-
+    let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg"
     lazy var messageList: [ChatMessage] = []
     var channel: TCHChannel?
     private let naHUD = JGProgressHUD(style: .dark)
@@ -94,9 +94,13 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                     }
                 }
                 var tempMessages:[ChatMessage] = []
-                for tchMessage in messages {
-                    print(tchMessage.attributes()?.dictionary)
-                    if let message = self.convertTCHMessageToChatMessage(message: tchMessage){
+//              print(tchMessage.attributes()?.dictionary)
+                for msg in messages {
+                    if msg.hasMedia(){
+                        self.getImageMessage(msg) { (chatImageMessage) in
+                            self.insertMessage(chatImageMessage)
+                        }
+                    }else if let message = self.convertTCHMessageToChatMessage(message: msg){
                         tempMessages.append(message)
                     }
                 }
@@ -132,7 +136,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
     
     func addDefaultMessage(type:String)->ChatMessage{
-        let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg" //if default avatar isnt available then just display the app logo
+         //if default avatar isnt available then just display the app logo
         let chatUser:ChatUser = ChatUser(senderId:"0000" , displayName:"LUJO", avatar: displayPicture)
         var defaultMessage:String = "Please include all the important details such as "
         if (type == "event" || type == "experience" || type == "special-event"){
@@ -485,18 +489,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 //    }
     
     private func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
-        
-//        if message.hasMedia(){
-//            message.getMediaContentTemporaryUrl { (result, mediaContentUrl) in
-//                guard let mediaContentUrl = mediaContentUrl else {
-//                    return
-//                }
-//                // Use the url to download an image or other media
-//                print(mediaContentUrl)
-//                let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
-//                }
-//        }
-        
         if (identity == message.member?.identity){ //its current user's message
             if let user:ChatUser = self.currentSender() as? ChatUser  {
                 let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
@@ -509,10 +501,32 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         }
         return nil
     }
+    
+    private func getImageMessage(_ message: TCHMessage
+                                 , completion: @escaping (ChatMessage) -> Void){
+        message.getMediaContentTemporaryUrl { (result, mediaContentUrl) in
+            guard let mediaContentUrl = URL( string:mediaContentUrl ?? self.displayPicture) else {
+                return
+            }
+            // Use this url to download an image or other media
+            print("Twilio: mediaContentUrl:\(mediaContentUrl)mediaContentUrl")
+            DispatchQueue.global().async {
+                if let data = try? Data( contentsOf:mediaContentUrl) , let image:UIImage = UIImage( data:data)
+                {
+                    DispatchQueue.main.async {
+                        let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
+                        completion(photoMessage)
+//                            self.insertMessage(photoMessage)
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: QuickstartChatManagerDelegate
 extension ChatViewController: ChatManagerDelegate {
+    
     func reloadMessages() {
 //        if (messageList.count == 1 ){
 //            self.messagesCollectionView.reloadData()    // <-- This line will make UICollection crash if it has 0 items
@@ -520,33 +534,27 @@ extension ChatViewController: ChatManagerDelegate {
     }
 
     // Convert TCHMessage to ChatMessage and return it
-    internal func receivedNewMessage(message: TCHMessage , channel: TCHChannel) -> ChatMessage? {
+    //internal func receivedNewMessage(message: TCHMessage , channel: TCHChannel) -> ChatMessage? {
+    internal func receivedNewMessage(message: TCHMessage
+                                     , channel: TCHChannel
+                                     ){
         if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
             //if channel chat window is opened and recieved a new message then set its Un Consumed messages count to 0
             ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
                 print("Twilio: set channel's unConsumed messages count to zero. Consumed Result:\(result.isSuccessful())" , "Count:\(count)")
             }
 //            print(message.mediaFilename,message.mediaSid)
-//            if message.hasMedia(){
-                message.getMediaContentTemporaryUrl { (result, mediaContentUrl) in
-                    guard let mediaContentUrl = mediaContentUrl else {
-                        return
-                    }
-//                    // Use the url to download an image or other media
-                    print(mediaContentUrl)
-//                    let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
-//                    }
-//            }else{
-                    if let chatMessage = self.convertTCHMessageToChatMessage(message: message){
-                    self.insertMessage(chatMessage)
+            if message.hasMedia(){
+                getImageMessage(message) { (chatImageMessage) in
+                    self.insertMessage(chatImageMessage)
                 }
+            }else if let chatMessage = self.convertTCHMessageToChatMessage(message: message){
+                self.insertMessage(chatMessage)
             }
-            
         }else{
             print("Twilio: Some other channel has received the message")
         }
-        return nil
-        
+//        return nil
     }
     
     func channelJoined(channel: TCHChannel){

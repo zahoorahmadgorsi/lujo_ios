@@ -154,6 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
     }
+    
     func setExternalUserId(externalUserId:String){
         // Setting External User Id with Callback Available in SDK Version 3.x.x
         OneSignal.setExternalUserId(externalUserId, withSuccess: { results in

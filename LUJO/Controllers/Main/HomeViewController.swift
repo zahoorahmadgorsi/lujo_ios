@@ -1332,9 +1332,9 @@ extension HomeViewController:ChatManagerDelegate{
         print("Twilio: reloadMessages")
     }
 
-    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) -> ChatMessage?{
+    func receivedNewMessage(message: TCHMessage, channel: TCHChannel){
         showBadgeValue()
-        return nil
+//        return nil
     }
 
     func channelJoined(channel: TCHChannel) {

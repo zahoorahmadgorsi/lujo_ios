@@ -65,8 +65,7 @@ class ChatListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //when chatViewController was opened fro self and then get closed, then this viewWillAppear would set delegate to self again
-        ChatManager.sharedChatManager.delegate = self
+
         //loading cached conversations list
         do {
             if let decoded  = UserDefaults.standard.object(forKey: "sorted_conversations") as? Data{
@@ -90,6 +89,8 @@ class ChatListViewController: UIViewController {
     }
     
     func getChatsList(showActivity: Bool) {
+        //when chatViewController was opened from chatlistViewController and then get closed, then this method would be called from presentationControllerDidDismiss would set delegate to self again
+        ChatManager.sharedChatManager.delegate = self
         if showActivity {
             self.showNetworkActivity()
         }
@@ -356,9 +357,10 @@ extension ChatListViewController: ChatManagerDelegate {
         print("Twilio: reloadMessages")
     }
     
-    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) -> ChatMessage? {
+    //func receivedNewMessage(message: TCHMessage, channel: TCHChannel) -> ChatMessage? {
+    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
         self.getChatsList(showActivity: false)    //New message is recived on chatlistViewController time to update the last message body, time and unconsumed index
-        return nil
+//        return nil
     }
     
     func channelJoined(channel: TCHChannel) {

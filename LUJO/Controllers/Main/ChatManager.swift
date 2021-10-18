@@ -11,7 +11,8 @@ import TwilioChatClient
 
 protocol ChatManagerDelegate: AnyObject {
     func reloadMessages()
-    func receivedNewMessage(message: TCHMessage , channel: TCHChannel) -> ChatMessage?
+//    func receivedNewMessage(message: TCHMessage , channel: TCHChannel ) -> ChatMessage?
+    func receivedNewMessage(message: TCHMessage , channel: TCHChannel )
     func channelJoined(channel: TCHChannel)
     func showNetworkActivity()
     func hideNetworkActivity()
@@ -128,7 +129,10 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     // MARK: - Create channel
     
     public func createChannel(uniqueChannelName: String, friendlyName: String, customAttribute: Dictionary<String,String>,_ completion: @escaping (Bool, TCHChannel?) -> Void) {
-        guard let client = client, let channelsList = client.channelsList() else {
+        guard let client = self.client, let channelsList = client.channelsList() else {
+            // get a reference to the app delegate
+            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.loginToTwilio()
             return
         }
         
@@ -180,13 +184,20 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
 //        if let channels = client?.channelsList()?.subscribedChannels(){
 //            completion(channels)
 //        }
-        self.client?.channelsList()?.userChannelDescriptors(completion: { (result, paginator) in
-          if (result.isSuccessful()) {
-            if let channelDecriptors = paginator?.items() {
-                completion(channelDecriptors)
-            }
-          }
-        })
+        if let client = self.client{
+            client.channelsList()?.userChannelDescriptors(completion: { (result, paginator) in
+              if (result.isSuccessful()) {
+                if let channelDecriptors = paginator?.items() {
+                    completion(channelDecriptors)
+                }
+              }
+            })
+        }else{
+            // get a reference to the app delegate
+            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.loginToTwilio()
+        }
+
 
     }
     

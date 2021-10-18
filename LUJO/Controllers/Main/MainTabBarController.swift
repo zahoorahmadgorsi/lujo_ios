@@ -102,27 +102,3 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK:- Utilities
 }
-
-//extension MainTabBarController: ChatManagerDelegate {
-//    func showNetworkActivity() {
-//        print("Twilio: showNetworkActivity")
-//    }
-//
-//    func hideNetworkActivity() {
-//        print("Twilio: hideNetworkActivity")
-//    }
-//
-//    func reloadMessages() {
-//        print("Twilio: reloadMessages")
-//    }
-//
-//    func receivedNewMessage(message: TCHMessage, channel: TCHChannel) {
-////        showBadgeValue()
-//    }
-//
-//    func channelJoined(channel: TCHChannel) {
-//        print("Twilio: channelJoined")
-//    }
-//
-//
-//}
