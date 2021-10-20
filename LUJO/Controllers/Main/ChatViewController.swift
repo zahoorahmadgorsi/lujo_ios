@@ -60,7 +60,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     var identity = "USER_IDENTITY"
     var product:Product!
     var initialMessage:String?
-//    var delegate:UIAdaptivePresentationControllerDelegate?
     
     // MARK: - Lifecycle
 
@@ -82,7 +81,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         ChatManager.sharedChatManager.delegate = self   //not chat manager should report about any new message to chatViewController
         
         
-        if let channel = self.channel{
+        if let channel = self.channel{  //loading messages of existing channel
 //            print(channel.sid as Any)
             ChatManager.sharedChatManager.setChannel(channel: channel)
             identity = channel.createdBy ?? identity
@@ -95,18 +94,29 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 }
                 var tempMessages:[ChatMessage] = []
 //              print(tchMessage.attributes()?.dictionary)
+                let myGroup = DispatchGroup()
+                self.showNetworkActivity()
                 for msg in messages {
+                    myGroup.enter()
                     if msg.hasMedia(){
-                        self.getImageMessage(msg) { (chatImageMessage) in
-                            self.insertMessage(chatImageMessage)
+                        //this is an asynch call
+                        self.getAndConvertTCHImageMessageToChatMessage(msg) { (chatImageMessage, isCached) in
+                            tempMessages.append(chatImageMessage)
+                            myGroup.leave()
                         }
-                    }else if let message = self.convertTCHMessageToChatMessage(message: msg){
+                    }else if let message = self.convertTCHMessageToChatMessage(message: msg){   //its a synch call
                         tempMessages.append(message)
+                        myGroup.leave()
                     }
                 }
-                self.messageList.insert(contentsOf: tempMessages, at: 0)
-                self.messagesCollectionView.reloadData()
-                self.messagesCollectionView.scrollToLastItem(animated: true)
+                myGroup.notify(queue: .main) {
+                    print("Finished all requests.")
+                    self.hideNetworkActivity()
+                    tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
+                    self.messageList.insert(contentsOf: tempMessages, at: 0)
+                    self.messagesCollectionView.reloadData()
+                    self.messagesCollectionView.scrollToLastItem(animated: true)
+                }
             })
         }else if let user = LujoSetup().getLujoUser(), user.id > 0 {
             identity = user.email //+ " " + user.lastName
@@ -169,21 +179,35 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     }
     
     @objc func loadMoreMessages() {
-        if let channel = self.channel{
-            var lastMessageIndex = messageList[0].messageIndex?.uintValue ?? 0  //get the index of very first message
-            lastMessageIndex = lastMessageIndex <= 0 ? 0 : (lastMessageIndex - 1)  //subtracting 1 from last messageIndex, to load further old messages
-            if (lastMessageIndex > 0){
-                ChatManager.sharedChatManager.getOldMessagesWithCount(channel,startingIndex: lastMessageIndex, msgsCount: pageSize, completion: {messages in
+        if let channel = self.channel , messageList.count > 0{
+            var lastMessageIndex = messageList[0].messageIndex?.intValue ?? 0  //get the index of very first message in UInt
+            lastMessageIndex -= 1   //fetch one index less downward
+            if (lastMessageIndex >= 0){
+                ChatManager.sharedChatManager.getOldMessagesWithCount(channel,startingIndex: UInt(lastMessageIndex), msgsCount: pageSize, completion: {messages in
                     var tempMessages:[ChatMessage] = []
+                    let myGroup = DispatchGroup()
                     for message in messages {
+                        myGroup.enter()
     //                    print("Message body: \(String(describing: message.body))" , message.index as Any)
-                        if let message = self.convertTCHMessageToChatMessage(message: message){
-                            tempMessages.append(message)
-                        }
+                            if message.hasMedia(){
+                                //this is an asynch call
+                                self.getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
+                                    tempMessages.append(chatImageMessage)
+                                    myGroup.leave()
+                                }
+                            }else if let message = self.convertTCHMessageToChatMessage(message: message){ //its a synch call
+                                tempMessages.append(message)
+                                myGroup.leave()
+                            }
+//                        }
                     }
-                    self.messageList.insert(contentsOf: tempMessages, at: 0)
-                    self.messagesCollectionView.reloadDataAndKeepOffset()
-                    self.refreshControl.endRefreshing()
+                    myGroup.notify(queue: .main) {
+                        print("Finished all requests.")
+                        tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
+                        self.messageList.insert(contentsOf: tempMessages, at: 0)
+                        self.messagesCollectionView.reloadDataAndKeepOffset()
+                        self.refreshControl.endRefreshing()
+                    }
                 })
             }else{
                 self.refreshControl.endRefreshing()
@@ -260,14 +284,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messageList[indexPath.section]
-        //adding time inside the text bubble
-//        let item:MessageType = messageList[indexPath.section]
-//        guard let time24hours = item.sentDate.asDateAndTime()["time"] else {
-//            return messageList[indexPath.section]
-//        }
-//
-//        let chatMessage:ChatMessage = ChatMessage(text: getTheMessageText(messageKind: item.kind) + "\n" + time24hours.time24To12(), user: item.sender as! ChatUser, messageId: item.messageId, date: item.sentDate)
-//        return chatMessage
     }
 
     func getTheMessageText(messageKind: MessageKind) -> String {
@@ -474,19 +490,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         }
 
     }
-
-//    private func insertMessages(_ data: [Any]) {
-//        for component in data {
-//            if let str = component as? String, let user:ChatUser = self.currentSender() as? ChatUser  {
-//                let message = ChatMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
-//                insertMessage(message)
-//            }
-//            else if let img = component as? UIImage {
-//                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
-//                insertMessage(message)
-//            }
-//        }
-//    }
     
     private func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
         if (identity == message.member?.identity){ //its current user's message
@@ -502,21 +505,47 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         return nil
     }
     
-    private func getImageMessage(_ message: TCHMessage
-                                 , completion: @escaping (ChatMessage) -> Void){
-        message.getMediaContentTemporaryUrl { (result, mediaContentUrl) in
-            guard let mediaContentUrl = URL( string:mediaContentUrl ?? self.displayPicture) else {
-                return
-            }
-            // Use this url to download an image or other media
-            print("Twilio: mediaContentUrl:\(mediaContentUrl)mediaContentUrl")
-            DispatchQueue.global().async {
-                if let data = try? Data( contentsOf:mediaContentUrl) , let image:UIImage = UIImage( data:data)
-                {
-                    DispatchQueue.main.async {
-                        let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
-                        completion(photoMessage)
-//                            self.insertMessage(photoMessage)
+    private func getAndConvertTCHImageMessageToChatMessage(_ message: TCHMessage
+                                                           , completion: @escaping (ChatMessage , _ isCached:Bool) -> Void){
+        
+        if let sid = message.mediaSid{
+//            print("Twilio: message.index:\(String(describing: message.index))")
+            if let cachedImage = ChatManager.sharedCache.object(forKey: sid as NSString) {
+                print("Twilio: Image from cache")
+                if (identity == message.member?.identity){ //its current user's message
+                    if let chatUser:ChatUser = self.currentSender() as? ChatUser  {
+                        let photoMessage = ChatMessage(image: cachedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                        completion(photoMessage, true)
+                    }
+                }else{
+                    let chatUser:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
+                    let photoMessage = ChatMessage(image: cachedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                    completion(photoMessage, true)
+                }
+            }else{  //image not found in the cache
+                message.getMediaContentTemporaryUrl { (result, mediaContentUrl) in
+                    guard let mediaContentUrl = URL( string:mediaContentUrl ?? self.displayPicture) else {
+                        return
+                    }
+                    // Use this url to download an image or other media
+//                    print("Twilio: mediaContentUrl:\(mediaContentUrl)")
+                    DispatchQueue.global().async {
+                        if let data = try? Data( contentsOf:mediaContentUrl) , let loadedImage:UIImage = UIImage( data:data)
+                        {
+                            DispatchQueue.main.async {
+                                ChatManager.sharedCache.setObject(loadedImage, forKey: sid as NSString) //putting image into the cache
+                                if (self.identity == message.member?.identity){ //its current user's message
+                                    if let chatUser:ChatUser = self.currentSender() as? ChatUser  {
+                                        let photoMessage = ChatMessage(image: loadedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                                        completion(photoMessage, false)
+                                    }
+                                }else{
+                                    let chatUser:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
+                                    let photoMessage = ChatMessage(image: loadedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                                    completion(photoMessage, false)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -528,24 +557,19 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 extension ChatViewController: ChatManagerDelegate {
     
     func reloadMessages() {
-//        if (messageList.count == 1 ){
-//            self.messagesCollectionView.reloadData()    // <-- This line will make UICollection crash if it has 0 items
-//        }
     }
-
-    // Convert TCHMessage to ChatMessage and return it
-    //internal func receivedNewMessage(message: TCHMessage , channel: TCHChannel) -> ChatMessage? {
+    
     internal func receivedNewMessage(message: TCHMessage
                                      , channel: TCHChannel
                                      ){
         if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
             //if channel chat window is opened and recieved a new message then set its Un Consumed messages count to 0
             ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
-                print("Twilio: set channel's unConsumed messages count to zero. Consumed Result:\(result.isSuccessful())" , "Count:\(count)")
+                print("Twilio: set channel's unConsumed messages count to zero")
             }
 //            print(message.mediaFilename,message.mediaSid)
             if message.hasMedia(){
-                getImageMessage(message) { (chatImageMessage) in
+                getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
                     self.insertMessage(chatImageMessage)
                 }
             }else if let chatMessage = self.convertTCHMessageToChatMessage(message: message){
@@ -554,7 +578,6 @@ extension ChatViewController: ChatManagerDelegate {
         }else{
             print("Twilio: Some other channel has received the message")
         }
-//        return nil
     }
     
     func channelJoined(channel: TCHChannel){

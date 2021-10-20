@@ -102,22 +102,28 @@ class ChatListViewController: UIViewController {
             }
             var count = 0   //to trace if all descriptor's channel last message body and time has been fetched or not
             var tempConversations = [Conversation]()
-
+    
             for channelDescriptor in channelDescriptors {
-//                self.channelDescriptors.append(channelDescriptor)
+                
                 if let attributes = channelDescriptor.attributes()?.dictionary , let type = attributes["type"] as? String{
                     let item:Conversation = Conversation(channelDescriptor,channelDescriptor.sid, type,channelDescriptor.friendlyName , channelDescriptor.unconsumedMessagesCount(),"" , Date())
                     item.lastMessageDateTime = channelDescriptor.dateCreated
                     //self.conversations.append(item)
                     tempConversations.append(item)
                 }
+            
                 ChatManager.sharedChatManager.getChannelFromDescriptor(channelDescriptor: channelDescriptor){(result,channel)  in
                     if (result){
                         channel.messages?.message(withIndex: channel.lastMessageIndex ?? 0, completion: { (result, message) in
                             count += 1
                             if let msg = message{
                                 if let fooOffset = tempConversations.firstIndex(where: {$0.sid == channelDescriptor.sid}) {
-                                    tempConversations[fooOffset].lastMessageBody = msg.body
+                                    if msg.hasMedia(){
+                                        tempConversations[fooOffset].lastMessageBody = "PHOTO"
+                                    }else{
+                                        tempConversations[fooOffset].lastMessageBody = msg.body
+                                    }
+                                    
                                     if let utcTime = msg.dateCreated{
                                         let date = Date.dateFromUTC(utcTimeString: utcTime)
 //                                        print("utc: \(utcTime), date: \(String(describing: date))")
@@ -128,20 +134,10 @@ class ChatListViewController: UIViewController {
                             //if all channels last message's body and time has been fetched then reload the whole grid
 //                            print("Count:\(count)" , "channelDescriptors count: \(channelDescriptors.count)")
                             if (count == channelDescriptors.count){
-//                                if showActivity {
-//                                    self.hideNetworkActivity()
-//                                }else{
-//                                    self.refreshControl.endRefreshing()
-//                                }
                                 self.storeConversations(tempConversations)
                             }
                         })
                     }else{//some error while fetching the channel from descriptor now just load the tableview
-//                        if showActivity {
-//                            self.hideNetworkActivity()
-//                        }else{
-//                            self.refreshControl.endRefreshing()
-//                        }
                         //sorting channelDescriptor by date.. most recetnly update comes at top
                         self.storeConversations(tempConversations)
                     }

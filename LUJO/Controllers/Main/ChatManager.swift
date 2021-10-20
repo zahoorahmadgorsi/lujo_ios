@@ -25,11 +25,8 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     var serverURL = "https://seashell-snowshoe-5113.twil.io/send-notification"
 
     static let sharedChatManager = ChatManager()
-//    static let shared = ChatManager()
-    // the unique name of the channel you create
-//    var uniqueChannelName = "general"
-//    var friendlyChannelName = "General Channel"
-
+    static let sharedCache = NSCache<NSString, UIImage>()
+    
     // For the quickstart, this will be the view controller
     weak var delegate: ChatManagerDelegate?
 
@@ -192,11 +189,12 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                 }
               }
             })
-        }else{
-            // get a reference to the app delegate
-            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-            appDelegate?.loginToTwilio()
         }
+//        else{
+//            // get a reference to the app delegate
+//            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+//            appDelegate?.loginToTwilio()
+//        }
 
 
     }
@@ -276,16 +274,20 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
     }
     
     //func sendImageMessage(photo  : UIImage,_ channel: TCHChannel, completion: @escaping (TCHResult, TCHMessage?) -> Void){
-    func sendImageMessage(photo  : UIImage,_ channel: TCHChannel){
+    func sendImageMessage(photo  : UIImage
+                          ,_ channel: TCHChannel
+                          , completion: @escaping (TCHResult, TCHMessage?) -> Void){
         // The data for the image you would like to send
         //let data = Data()
         if let data = photo.pngData(){
             // Prepare the upload stream and parameters
             let messageOptions = TCHMessageOptions()
             let inputStream = InputStream(data: data)
+            let fileName = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss") + ".png"
+            
             messageOptions.withMediaStream(inputStream,
                                            contentType: "image/jpeg"
-                                           ,defaultFilename: Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss") + ".png" , //optional
+                                           ,defaultFilename: fileName , //optional
                                            onStarted: {
                                             // Called when upload of media begins.
                                             print("Twilio: Media upload started")
@@ -296,7 +298,8 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
             }) { (mediaSid) in
                 // Called when upload is completed, with the new mediaSid if successful.
                 // Full failure details will be provided through sendMessage's completion.
-                print("Media upload completed")
+                ChatManager.sharedCache.setObject(photo, forKey: mediaSid as NSString)
+                print("Twilio: Media uploaded and cached successfully")
             }
 
             // Trigger the sending of the message. it will be received at receivedNewMessage in chatViewController
@@ -307,7 +310,7 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                                                 } else {
                                                     print("Twilio: Image creation successful")
                                                 }
-//                                                completion(result, message)
+                                                completion(result, message)
             })
         }
     }

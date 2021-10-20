@@ -42,41 +42,7 @@ final class AdvanceChatViewController: ChatViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-//        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
-//            .onTypingStatus { [weak self] in
-//                self?.setTypingIndicatorViewHidden(false)
-//            }.onNewMessage { [weak self] message in
-//                self?.setTypingIndicatorViewHidden(true, performUpdates: {
-//                    self?.insertMessage(message)
-//                })
-//        }
     }
-    
-//    override func loadFirstMessages() {
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            let count = UserDefaults.standard.mockMessagesCount()
-//            SampleData.shared.getAdvancedMessages(count: count) { messages in
-//                DispatchQueue.main.async {
-//                    self.messageList = messages
-//                    self.messagesCollectionView.reloadData()
-//                    self.messagesCollectionView.scrollToLastItem()
-//                }
-//            }
-//        }
-//    }
-//
-//    override func loadMoreMessages() {
-//        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-//            SampleData.shared.getAdvancedMessages(count: 20) { messages in
-//                DispatchQueue.main.async {
-//                    self.messageList.insert(contentsOf: messages, at: 0)
-//                    self.messagesCollectionView.reloadDataAndKeepOffset()
-//                    self.refreshControl.endRefreshing()
-//                }
-//            }
-//        }
-//    }
     
     override func configureMessageCollectionView() {
         super.configureMessageCollectionView()
@@ -497,26 +463,24 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
 
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
         if let channel = self.channel{
+            let myGroup = DispatchGroup()
+            self.showNetworkActivity()
+            
             for item in attachments {
                 if  case .image(let image) = item {
-//                    self.sendImageMessage(photo: image)
-                    ChatManager.sharedChatManager.sendImageMessage(photo: image, channel)
-//                    ChatManager.sharedChatManager.sendImageMessage(photo: image, chanel) { (result, message) in
-//                    {
-//                        let photoMessage = ChatMessage(image: image, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
-//                        self.insertMessage(photoMessage)
-//                    }
+                    myGroup.enter()
+                    ChatManager.sharedChatManager.sendImageMessage(photo: image, channel) { (result, message) in
+                        myGroup.leave()
+                    }
                 }
             }
             inputBar.invalidatePlugins()
+            myGroup.notify(queue: .main) {
+                print("Finished all requests.")
+                self.hideNetworkActivity()
+            }
         }
     }
-    
-    
-//    func sendImageMessage( photo  : UIImage)  {
-//        let photoMessage = ChatMessage(image: photo, user: self.currentSender() as! ChatUser, messageId: UUID().uuidString, date: Date())
-//        self.insertMessage(photoMessage)
-//    }
     
 }
 

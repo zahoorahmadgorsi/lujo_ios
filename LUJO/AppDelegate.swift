@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var isBackground: Bool!
 
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        loginToTwilio()
+        
         
         isBackground = false
 
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("User accepted notifications: \(accepted)")
         })
         
-        
+        loginToTwilio()
         
         return true
     }
