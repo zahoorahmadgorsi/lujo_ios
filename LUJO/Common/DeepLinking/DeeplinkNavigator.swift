@@ -40,7 +40,6 @@ class DeeplinkNavigator {
 
                 let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
                 if let tabBar = keyWindow?.rootViewController as? UITabBarController, let window = tabBar.selectedViewController as? UINavigationController {
-                    print(window, window.presentedViewController as Any)
                     if (window.presentedViewController != nil){
                         window.dismiss(animated: true, completion: nil)
                     }else{
@@ -48,9 +47,6 @@ class DeeplinkNavigator {
                     }
                     window.present(viewController, animated: true)
                 }
-//                UIApplication.topViewController()?.present(viewController, animated: true) {
-//                    print("Presented")
-//                }
             }
         }
     }

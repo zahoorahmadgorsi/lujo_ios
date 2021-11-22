@@ -11,6 +11,7 @@ import UIKit
 import JGProgressHUD
 import Crashlytics
 import AVFoundation
+import Mixpanel
 
 class PerCityViewController: UIViewController {
     
@@ -29,6 +30,7 @@ class PerCityViewController: UIViewController {
     }
     
     //MARK:- Globals
+    
     @IBOutlet weak var viewSeeAll: UIView!
     private(set) var category: ProductCategory!
     private var city: DiningCity?
@@ -46,6 +48,8 @@ class PerCityViewController: UIViewController {
     @IBOutlet weak var svPerCity: UIStackView!
     @IBOutlet var homeTopRatedSlider: HomeSlider!
     private var homeObjects: PerCityObjects?
+    private var filters:Filters?
+    
     // B2 - 5
     var selectedCell: HomeSliderCell?
     var selectedImageView: UIImageView?
@@ -67,6 +71,21 @@ class PerCityViewController: UIViewController {
         return refreshControl
     }()
     private var animationtype: AnimationType = .slider  //by default top rated to detail animation would be called
+    
+    //MARK:-  Filters
+    
+    var firstFilter:String = ""                 //name
+    var secondFilter: Taxonomy?     //yacht Charter
+    var thirdFilter: String = ""     //yacht Guests
+    var fourthFilter: Taxonomy?     //yacht Length in Feet
+    var fifthFilter: Taxonomy?     //yacht Length in Meters
+    var sixthFilter: Taxonomy?     //yacht Type
+    var seventhFilter: String = ""     //yacht Built After
+    var eighthFilter: Taxonomy?     //yacht tags
+    var ninthFilter: Taxonomy?      //Interested in charter or sale
+    var tenthFilter: Taxonomy?      //Region
+    var eleventhFilter: String = ""     //min price
+    var twelvethFilter: String = ""     //max price
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,9 +135,19 @@ class PerCityViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if homeObjects == nil { //home objects will be nill if loading it for the first time
-            getInformation(for: category)
-        }
+        print(" First Filter: \(self.firstFilter) \n Second Filter: \(String(describing: self.secondFilter))  \n Third Filter: \(String(describing: self.thirdFilter)) \n Fourth Filter: \(String(describing: self.fourthFilter)) \n Fifth Filter: \(String(describing: self.fifthFilter)) \n Sixth Filter: \(String(describing: self.sixthFilter)) \n Seventh Filter: \(String(describing: self.seventhFilter)) \n Eighth Filter: \(String(describing: self.eighthFilter)) ")
+//        if (homeObjects == nil)
+//            || self.firstFilter.count > 0
+//            || self.secondFilter != nil
+//            || self.thirdFilter != nil
+//            || self.fourthFilter != nil
+//            || self.fifthFilter != nil
+//            || self.sixthFilter != nil
+//            || self.seventhFilter != nil
+//            || self.eighthFilter != nil { //home objects will be nill if loading it for the first time
+//            getInformation(for: category)
+//        }
+        getInformation(for: category)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -191,45 +220,54 @@ class PerCityViewController: UIViewController {
     
     func updatePopularCities() {
         // if homeObjects?.citie is nill then check homeObjects?.categories because homeObjects?.categories will have values in case of gift
-        for city in homeObjects?.cities ?? homeObjects?.categories ?? [] {    //if cities are nil then categories will have gifts data
-//        for city in homeObjects?.cities ?? [] {
-            switch city.itemsNum {
-            case 0:
-                print("No city to show")
-            case 1:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termId == city.termId && $0.tag != 999 }) {
-                        cityView.removeFromSuperview() //remove if already added
+        if let cities = homeObjects?.cities ?? homeObjects?.categories{
+            //user might have applied the filters so remove pre filter applied views
+            for view in svPerCity.arrangedSubviews{
+                if view is CityView1 || view is CityView2 || view is CityView3 || view is CityView4{
+                    view.removeFromSuperview()
                 }
-                let cityView = CityView1()
-                cityView.city = city
-                cityView.delegate = self
-                svPerCity.addArrangedSubview(cityView)
-            case 2:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView2)?.city?.termId == city.termId && $0.tag != 999 }) {
+            }
+            for city in cities {    //if cities are nil then categories will have gifts data
+    //        for city in homeObjects?.cities ?? [] {
+                //switch city.itemsNum {
+                switch city.items?.count{
+                case 0:
+                    print("No city to show")
+                case 1:
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView1)?.city?.termId == city.termId && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
-                }
-                let cityView = CityView2()
-                cityView.city = city
-                cityView.delegate = self
-                svPerCity.addArrangedSubview(cityView)
-            case 3:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView3)?.city?.termId == city.termId && $0.tag != 999 }) {
+                    }
+                    let cityView = CityView1()
+                    cityView.city = city
+                    cityView.delegate = self
+                    svPerCity.addArrangedSubview(cityView)
+                case 2:
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView2)?.city?.termId == city.termId && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
-                }
-                let cityView = CityView3()
-                cityView.city = city
-                cityView.delegate = self
-                svPerCity.addArrangedSubview(cityView)
-            default:
-                if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView4)?.city?.termId == city.termId && $0.tag != 999 }) {
+                    }
+                    let cityView = CityView2()
+                    cityView.city = city
+                    cityView.delegate = self
+                    svPerCity.addArrangedSubview(cityView)
+                case 3:
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView3)?.city?.termId == city.termId && $0.tag != 999 }) {
                         cityView.removeFromSuperview() //remove if already added
+                    }
+                    let cityView = CityView3()
+                    cityView.city = city
+                    cityView.delegate = self
+                    svPerCity.addArrangedSubview(cityView)
+                default:
+                    if let cityView = svPerCity.arrangedSubviews.first(where: { ($0 as? CityView4)?.city?.termId == city.termId && $0.tag != 999 }) {
+                        cityView.removeFromSuperview() //remove if already added
+                    }
+                    let cityView = CityView4()
+                    cityView.city = city
+                    cityView.delegate = self
+                    svPerCity.addArrangedSubview(cityView)
+                
+                    print("Default is 4 and above")
                 }
-                let cityView = CityView4()
-                cityView.city = city
-                cityView.delegate = self
-                svPerCity.addArrangedSubview(cityView)
-            
-                print("Default is 4 and above")
             }
         }
     }
@@ -239,6 +277,28 @@ class PerCityViewController: UIViewController {
         let viewController = ProductsViewController.instantiate(category: .topRated, subCategory: self.category)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    @IBAction func viewFilterTapped(_ sender: Any) {
+        if let filters = self.filters{
+            let viewController = FiltersViewController.instantiate(filters: filters, category:self.category)
+            //Clear all filters
+//            self.firstFilter = ""
+//            self.secondFilter = nil
+//            self.thirdFilter = ""
+//            self.fourthFilter = nil
+//            self.fifthFilter = nil
+//            self.sixthFilter = nil
+//            self.seventhFilter = ""
+//            self.eighthFilter = nil
+            viewController.delegate = self
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }else{
+            let error = BackendError.parsing(reason: "No filters are available")
+            self.showError(error)
+        }
+    }
+    
+
 }
 
 extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -383,11 +443,20 @@ extension PerCityViewController: CityViewProtocol {
         }
     }
     
-    
     func getInformation(for category: ProductCategory) {
         showNetworkActivity()
         getList(for: category) { items, error in
-            self.hideNetworkActivity()
+            //loading the filters
+            self.getFilters(for: category) { (filters, filterError) in
+                self.hideNetworkActivity()
+                if let error = filterError {
+                    self.showError(error)
+                } else {
+                    self.filters = filters
+//                    print(filters as Any)
+//                    self.update(listOf: filters ?? nil)
+                }
+            }
             if let error = error {
                 self.showError(error)
             } else {
@@ -417,10 +486,109 @@ extension PerCityViewController: CityViewProtocol {
                 categoryType = "event"
        
         }
-        EEAPIManager().getPerCity(token, type: categoryType) { list, error in
+        
+        var secondFilterTermId = "" , fourthFilterTermId = "", fifthFilterTermId = "", sixthFilterTermId = "", eighthFilterTermId = "", ninthFilterTermId = "", tenthFilterTermId = ""
+        
+        var dictFilter = [String: String]()
+        if (firstFilter.count > 0){
+            dictFilter["Filter First (Name)"] = firstFilter
+        }
+        if let filter = secondFilter{
+            secondFilterTermId = String(filter.termId)
+            dictFilter["Filter Second"] = filter.name
+        }
+        if (thirdFilter.count > 0){
+            dictFilter["Filter Third"] = thirdFilter
+        }
+        if let filter = fourthFilter{
+            fourthFilterTermId = String(filter.termId)
+            dictFilter["Filter Fourth (Length In Feet)"] = filter.name
+        }
+        if let filter = fifthFilter{
+            fifthFilterTermId = String(filter.termId)
+            dictFilter["Filter Fifth (Length In Meters)"] = filter.name
+        }
+        if let filter = sixthFilter{
+            sixthFilterTermId = String(filter.termId)
+            dictFilter["Filter Sixth"] = filter.name
+        }
+        if (seventhFilter.count > 0){
+            dictFilter["Filter Seventh"] = seventhFilter
+        }
+        if let filter = eighthFilter{
+            eighthFilterTermId = String(filter.termId)
+            dictFilter["Filter Eighth"] = filter.name
+        }
+        if let filter = ninthFilter{
+            ninthFilterTermId = String(filter.termId)
+            dictFilter["Filter Ninth"] = filter.name
+        }
+        if let filter = tenthFilter{
+            tenthFilterTermId = String(filter.termId)
+            dictFilter["Filter Tenth"] = filter.name
+        }
+        if (eleventhFilter.count > 0){
+            dictFilter["Filter Eleventh (Min Price)"] = eleventhFilter
+        }
+        if (twelvethFilter.count > 0){
+            dictFilter["Filter Twelveth (Max Price)"] = twelvethFilter
+        }
+        if (dictFilter.count > 0){
+            Mixpanel.mainInstance().track(event: "Filters Applied On \(category.rawValue)",
+                                          properties: dictFilter)
+        }
+        
+        
+        EEAPIManager().getPerCity(token
+                                  , type: categoryType
+                                  , yachtName: firstFilter
+                                  , yachtCharter: secondFilterTermId
+                                  , yachtGuests: thirdFilter
+                                  , yachtLengthFeet: fourthFilterTermId
+                                  , yachtLengthMeters: fifthFilterTermId
+                                  , yachtType: sixthFilterTermId
+                                  , yachtBuiltAfter: seventhFilter
+                                  , yachtTag: eighthFilterTermId
+                                  , yachtStatus: ninthFilterTermId
+                                  , region:  tenthFilterTermId
+                                  , minPrice: eleventhFilter
+                                  , maxPrice: twelvethFilter) { list, error in
             guard error == nil else {
                 Crashlytics.sharedInstance().recordError(error!)
                 let error = BackendError.parsing(reason: "Could not obtain per city objects information")
+                completion(nil, error)
+                return
+            }
+            completion(list, error)
+        }
+        
+    }
+    
+    func getFilters(for category: ProductCategory, completion: @escaping (Filters?, Error?) -> Void) {
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        var categoryType = ""
+        switch category {
+            case .event:
+                categoryType = "event"
+            case .experience:
+                categoryType = "experience"
+            case .villa:
+                categoryType = "villa"
+            case .yacht:
+                categoryType = "yacht"
+            case .gift:
+                categoryType = "gift"
+            default:
+                categoryType = "event"
+       
+        }
+        EEAPIManager().getFilters(token, type: categoryType) { list, error in
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                let error = BackendError.parsing(reason: "Could not obtain filters on per city")
                 completion(nil, error)
                 return
             }
@@ -485,10 +653,6 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
         
     }
  
-   
-    
-    
-    
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider) {
         let product: Product!
         
@@ -568,17 +732,52 @@ extension PerCityViewController : ProductDetailDelegate{
     }
 }
 
-//extension PerCityViewController: UINavigationControllerDelegate{
-//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
-//    {
-//        switch operation {
-//            case .push:
-//                return animationController(forPresented: toVC , presenting: fromVC, source: fromVC)
-//            case .pop:
-//                return animationController(forDismissed: fromVC)
-//            default:
-//                return nil
-//        }
-//
-//    }
-//}
+extension PerCityViewController: FiltersVCProtocol{
+    func setFirstFilter(filter: String) {
+        self.firstFilter = filter
+    }
+    
+    func setSecondFilter(filter: Taxonomy?) {
+        self.secondFilter = filter
+    }
+    
+    func setThirdFilter(filter: String) {
+        self.thirdFilter = filter
+    }
+    
+    func setFourthFilter(filter: Taxonomy?) {
+        self.fourthFilter = filter
+    }
+    
+    func setFifthFilter(filter: Taxonomy?) {
+        self.fifthFilter = filter
+    }
+    
+    func setSixthFilter(filter: Taxonomy?) {
+        self.sixthFilter = filter
+    }
+    
+    func setSeventhFilter(filter: String) {
+        self.seventhFilter = filter
+    }
+    
+    func setEighthFilter(filter: Taxonomy?) {
+        self.eighthFilter = filter
+    }
+    
+    func setNinthFilter(filter: Taxonomy?) {
+        self.ninthFilter = filter
+    }
+    
+    func setTenthFilter(filter: Taxonomy?) {
+        self.tenthFilter = filter
+    }
+    
+    func setEleventhFilter(filter: String) {
+        self.eleventhFilter = filter
+    }
+    
+    func setTwelvethFilter(filter: String) {
+        self.twelvethFilter = filter
+    }
+}

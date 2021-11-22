@@ -137,6 +137,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             let userAttributes = ICMUserAttributes()
             userAttributes.name = "\(user.firstName) \(user.lastName)"
+            if LujoSetup().getLujoUser()?.membershipPlan == nil {
+                if let name = userAttributes.name{
+                    userAttributes.name = name + " (Non Member)" //appending non member with the user name if user is free
+                }
+            }
             userAttributes.email = user.email
             Intercom.updateUser(userAttributes)
         }
@@ -152,6 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
     }
+    
     func setExternalUserId(externalUserId:String){
         // Setting External User Id with Callback Available in SDK Version 3.x.x
         OneSignal.setExternalUserId(externalUserId, withSuccess: { results in

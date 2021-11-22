@@ -10,6 +10,7 @@ import UIKit
 import JGProgressHUD
 import Kingfisher
 import Delighted
+import Intercom
 
 class AccountViewController: UIViewController {
     
@@ -95,8 +96,19 @@ class AccountViewController: UIViewController {
                     // Do any view/screen changes that you need
                 }
             })
+            
+            //If user has paid and came on this screen then we are removing (Non Member) from the name 
+            let userAttributes = ICMUserAttributes()
+            userAttributes.name = "\(user.firstName) \(user.lastName)"
+            if LujoSetup().getLujoUser()?.membershipPlan == nil {
+                if let name = userAttributes.name{
+                    userAttributes.name = name + " (Non Member)" //appending non member with the user name if user is free
+                }
+            }
+            userAttributes.email = user.email
+            Intercom.updateUser(userAttributes)
+            
         }
-
     }
     
     override func viewWillAppear(_ animated: Bool) {

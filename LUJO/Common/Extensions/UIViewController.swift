@@ -20,8 +20,8 @@ extension UIViewController {
         showCardAlertWith(title: title, body: error.localizedDescription)
     }
 
-    func showInformationPopup(withTitle title: String, message: String) {
-        showCardAlertWith(title: title, body: message)
+    func showInformationPopup(withTitle title: String, message: String, btnTitle: String = "Dismiss" ,  btnTapHandler: (()->Swift.Void)? = nil) {
+        showCardAlertWith(title: title, body: message, buttonTitle: btnTitle, cancelButtonTitle: nil, buttonTapHandler:btnTapHandler)
     }
     
     func activateKeyboardManager() {
@@ -29,7 +29,20 @@ extension UIViewController {
     }
     
     func startChatWithInitialMessage(_ message: String? = nil) {
-        Intercom.presentMessageComposer(message)
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            Intercom.presentMessageComposer(message)
+        } else {
+            showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.", btnTitle: "Update" , btnTapHandler: { () in
+                if let user = LujoSetup().getLujoUser(), user.id > 0 {
+                    let userFullname = "\(user.firstName) \(user.lastName)"
+                    let hasMembership = LujoSetup().getLujoUser()?.membershipPlan ?? nil != nil
+                    let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: hasMembership ? .viewMembership : .buyMembership, paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .dining : .all)
+                    let navController = UINavigationController(rootViewController: viewController)
+                    self.present(navController, animated: true)
+                }
+            })
+        }
+        
     }
     
     var isModal: Bool {

@@ -83,6 +83,10 @@ class MembershipViewControllerNEW: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if self.isModal{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "X", style: .plain, target: self, action: #selector(cancelTapped))
+        }
+        
     }
     
     private var navigationBarBackgroundColor: UIColor?
@@ -99,6 +103,12 @@ class MembershipViewControllerNEW: UIViewController {
         super.viewWillDisappear(animated)
         
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc func cancelTapped() {
+        if self.isModal{
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func payNowButton_onClick(_ sender: Any) {

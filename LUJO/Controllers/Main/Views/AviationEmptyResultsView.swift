@@ -35,7 +35,7 @@ class AviationEmptyResultsView: UIView {
             label.textColor = UIColor.whiteText
             label.customColor[termsOfUseType] = UIColor.rgMid
             label.handleCustomTap(for: termsOfUseType) { [weak self] _ in
-                if LujoSetup().getLujoUser()?.membershipPlan != nil {
+//                if LujoSetup().getLujoUser()?.membershipPlan != nil {
                     self?.parentViewController?.startChatWithInitialMessage()
 //                    guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
 //                    let initialMessage = """
@@ -52,9 +52,9 @@ class AviationEmptyResultsView: UIView {
 //                    self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
                     
                     self?.isHidden = true
-                } else {
-                    self?.parentViewController?.showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
-                }
+//                } else {
+//                    self?.parentViewController?.showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.", btnTitle: "Update")
+//                }
             }
         }
     }

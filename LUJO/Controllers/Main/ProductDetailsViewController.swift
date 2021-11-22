@@ -153,6 +153,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activateKeyboardManager()
+//        showInformationPopup(withTitle: "Only For Charmaine Diaz", message: "\n type: \(product.type) \n id:\(product.id)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -933,6 +934,7 @@ extension ProductDetailsViewController {
 //            self.dismiss(animated: true, completion: {
 //                self.delegate?.tappedOnBookRequest(viewController: viewController)
 //            })
+            
             self.startChatWithInitialMessage(initialMessage)
             //Zahoor end
         }

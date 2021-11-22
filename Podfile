@@ -12,5 +12,5 @@ target 'LUJO' do
   #Twilio chat
   pod 'TwilioChatClient', '~> 5.0'
   #Intercom
-  pod 'Intercom'
+  pod 'Intercom' , '~> 10.0.0'
 end

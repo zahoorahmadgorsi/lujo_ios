@@ -92,10 +92,11 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc func openChatWindow(){
-        if LujoSetup().getLujoUser()?.membershipPlan != nil {
-            Intercom.presentMessenger()
-        } else {
-            showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
+        if let destNav = viewControllers?[2] as? UINavigationController {
+            if let destVC = destNav.children.first {
+                destVC.startChatWithInitialMessage()
+                //do stuff
+            }
         }
     }
     //MARK:- Utilities

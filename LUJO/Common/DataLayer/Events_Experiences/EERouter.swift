@@ -39,7 +39,8 @@ enum EERouter: URLRequestConvertible {
     case getYachtGallery(String, Int)
     case topRated(token: String, type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
-    case perCity(String, String)
+    case perCity(String, String, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?)
+    case filters(String, String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -92,6 +93,8 @@ enum EERouter: URLRequestConvertible {
             return .get
         case .perCity:
             return .get
+        case .filters:
+            return .post
         }
     }
 
@@ -229,7 +232,7 @@ enum EERouter: URLRequestConvertible {
                     URLQueryItem(name: "token", value: token),
                     URLQueryItem(name: "place_id", value: cityId)
                 ]
-            case let .perCity(token, type):
+            case let .perCity(token, type, yachtName, yachtCharter, yachtGuests, yachtLengthFeet, yachtLengthMeters, yachtType, yachtBuiltAfter, yachtTag, yachtStatus, region, minPrice, MaxPrice):
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
@@ -239,7 +242,46 @@ enum EERouter: URLRequestConvertible {
                 }else{
                     newURLComponents.path.append("/per-city")
                     newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
+                    if let filter = yachtName , filter.count > 0 {
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "yacht_name", value: filter))
+                    }
+                    if let filter = yachtCharter , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "charter_term_id", value: filter))
+                    }
+                    if let filter = yachtGuests , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "guests", value: filter))
+                    }
+                    if let filter = yachtLengthFeet , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "length_feet_term_id", value: filter))
+                    }
+                    if let filter = yachtLengthMeters , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "length_meter_term_id", value: filter))
+                    }
+                    if let filter = yachtType , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "type_term_id", value: filter))
+                    }
+                    if let filter = yachtBuiltAfter , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "build_year", value: filter))
+                    }
+                    if let filter = yachtTag , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "lujo_tag_term_id", value: filter))
+                    }
+                    if let filter = yachtStatus , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "yacht_status", value: filter))
+                    }
+                    if let filter = region , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "region_term_id", value: filter))
+                    }
+                    
+                    if let filter = minPrice , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "min_price", value: filter))
+                    }
+                    if let filter = MaxPrice , filter.count > 0{
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "max_price", value: filter))
+                    }
                 }
+            case .filters:
+                newURLComponents.path.append("/filters")
         }
         
         do {
@@ -283,6 +325,8 @@ enum EERouter: URLRequestConvertible {
             return nil
         case .perCity:
             return nil
+        case let .filters(token, type):
+            return getFiltersDataAsJSONData(type: type, token: token)
         }
     }
     
@@ -317,6 +361,14 @@ enum EERouter: URLRequestConvertible {
         if let channelId = channelId {
             body["channelId"] = channelId
         }
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func getFiltersDataAsJSONData(type: String, token: String) -> Data? {
+        let body: [String: Any] = [
+            "type": type,
+            "token": token
+        ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 }

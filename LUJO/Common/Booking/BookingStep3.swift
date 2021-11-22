@@ -26,7 +26,6 @@ class BookingStep3: UIViewController {
     }
 
     @IBAction func chatButton_onClick(_ sender: UIButton) {
-        if LujoSetup().getLujoUser()?.membershipPlan != nil {
             startChatWithInitialMessage()
 //            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
 //            let initialMessage = """
@@ -41,9 +40,6 @@ class BookingStep3: UIViewController {
 //            viewController.product = Product(id: -1 , type: "Booking Request" , name: "Authorize card and verify booking request")
 //            viewController.initialMessage = initialMessage
 //            self.navigationController?.pushViewController(viewController,animated: true)
-        } else {
-            showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
-        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

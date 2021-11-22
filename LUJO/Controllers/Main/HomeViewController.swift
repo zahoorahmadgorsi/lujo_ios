@@ -169,7 +169,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let imgChat  = UIImage(named: "chatList")!
         let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
         let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
-        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
+//        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
 //        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch ]
         navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
         
@@ -480,7 +480,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             scrollView.scrollToTop()    //because now call to action uiview would become visible to scroll to the top
     //        viewCallToAction.isHidden = !(viewCallToAction.isHidden)
         }
-        UIView.transition(with: viewCallToAction, duration: 0.5, options: .curveLinear, animations: {
+        UIView.transition(with: viewCallToAction, duration: 0.5, options: .curveEaseInOut, animations: {
             self.viewCallToAction.isHidden = !(self.viewCallToAction.isHidden)
         })
 
@@ -601,16 +601,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             welcomeLabel.text = "\(PreloadDataManager.UserEntryType.isOldUser ? "Welcome back" : "Welcome"),\n\(LujoSetup().getLujoUser()?.firstName ?? "") \(LujoSetup().getLujoUser()?.lastName ?? "")"
             PreloadDataManager.UserEntryType.isOldUser = true
 
-            //************
-            //Chat Manager
-            //************
-            ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
-                if success {
-                    print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
-                } else {
-                    print("Twilio: Unable to login")
-                }
-            }
+//            //************
+//            //Chat Manager
+//            //************
+//            ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
+//                if success {
+//                    print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
+//                } else {
+//                    print("Twilio: Unable to login")
+//                }
+//            }
             //********
             //MaxPanel
             //********

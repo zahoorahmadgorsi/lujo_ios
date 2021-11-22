@@ -69,6 +69,7 @@ class RestaurantSearchViewController: UIViewController {
         title = "Search dining spots"
         searchTextField.text = searchTerm
         if let term = searchTerm {
+            keyword = term
             searchRestaurants(term: term)
         } else {
             searchTextField.becomeFirstResponder()

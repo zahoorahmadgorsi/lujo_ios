@@ -117,6 +117,14 @@
 		886145E026AB74AE0023E92E /* ChatAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145DF26AB74AE0023E92E /* ChatAPIManager.swift */; };
 		886145F526AC02090023E92E /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145F426AC02090023E92E /* ChatCell.swift */; };
 		886145FD26AC04610023E92E /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145FC26AC04610023E92E /* UITableView.swift */; };
+		886FE4372722637A000B9530 /* TextFieldFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886FE4362722637A000B9530 /* TextFieldFilter.xib */; };
+		886FE43F272268E9000B9530 /* YachtLengthFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886FE43E272268E9000B9530 /* YachtLengthFilter.xib */; };
+		886FE44C27226DE4000B9530 /* TextFieldFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886FE44B27226DE4000B9530 /* TextFieldFilter.swift */; };
+		886FE45627226E04000B9530 /* YachtLengthFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886FE45527226E04000B9530 /* YachtLengthFilter.swift */; };
+		886FE46127227AD8000B9530 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886FE46027227AD8000B9530 /* Filters.swift */; };
+		886FE46927228E8E000B9530 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886FE46827228E8E000B9530 /* FiltersViewController.swift */; };
+		887E27B32748E099000A93B8 /* MinMaxFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 887E27B22748E099000A93B8 /* MinMaxFilter.xib */; };
+		887E27B82748E0B2000A93B8 /* MinMaxFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */; };
 		88814DBA2656A20C0082AA2C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DB92656A20C0082AA2C /* Preferences.swift */; };
 		88814DC8265995480082AA2C /* PrefProductCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */; };
 		88814DD02659B31A0082AA2C /* DestinationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DCF2659B31A0082AA2C /* DestinationSelectionViewController.swift */; };
@@ -142,6 +150,10 @@
 		8894D02825629CD200BF84D8 /* Product1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7819C02301D2EA0044C70B /* Product1.swift */; };
 		8894D0302562E61300BF84D8 /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894D02F2562E61300BF84D8 /* WishListView.swift */; };
 		8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8894D0312562E63C00BF84D8 /* WishListView.xib */; };
+		88988673272363DE0030613A /* SingleLineCollectionFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88988672272363DE0030613A /* SingleLineCollectionFilter.xib */; };
+		88988675272363F60030613A /* SingleLineCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88988674272363F60030613A /* SingleLineCollectionFilter.swift */; };
+		8898867A2723DF6A0030613A /* SingleLineFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889886792723DF6A0030613A /* SingleLineFilterCell.xib */; };
+		8898867F2723E2450030613A /* SingleLineFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898867E2723E2450030613A /* SingleLineFilterCell.swift */; };
 		88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; };
 		88B30C792670234C0090B3B5 /* ActiveLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44CDE62130753100699E1A /* ActiveLabel.framework */; };
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
@@ -506,6 +518,14 @@
 		886145DF26AB74AE0023E92E /* ChatAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPIManager.swift; sourceTree = "<group>"; };
 		886145F426AC02090023E92E /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatCell.swift; path = "LUJO/Views/Reusable Views/Chat/ChatCell.swift"; sourceTree = SOURCE_ROOT; };
 		886145FC26AC04610023E92E /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		886FE4362722637A000B9530 /* TextFieldFilter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldFilter.xib; sourceTree = "<group>"; };
+		886FE43E272268E9000B9530 /* YachtLengthFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YachtLengthFilter.xib; sourceTree = "<group>"; };
+		886FE44B27226DE4000B9530 /* TextFieldFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldFilter.swift; sourceTree = "<group>"; };
+		886FE45527226E04000B9530 /* YachtLengthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtLengthFilter.swift; sourceTree = "<group>"; };
+		886FE46027227AD8000B9530 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
+		886FE46827228E8E000B9530 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
+		887E27B22748E099000A93B8 /* MinMaxFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinMaxFilter.xib; sourceTree = "<group>"; };
+		887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinMaxFilter.swift; sourceTree = "<group>"; };
 		88814DB92656A20C0082AA2C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		88814DC7265995480082AA2C /* PrefProductCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefProductCategoryViewController.swift; sourceTree = "<group>"; };
 		88814DCF2659B31A0082AA2C /* DestinationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationSelectionViewController.swift; sourceTree = "<group>"; };
@@ -532,6 +552,10 @@
 		888B010926B89C3E004FA1B5 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		8894D02F2562E61300BF84D8 /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
 		8894D0312562E63C00BF84D8 /* WishListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WishListView.xib; sourceTree = "<group>"; };
+		88988672272363DE0030613A /* SingleLineCollectionFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineCollectionFilter.xib; sourceTree = "<group>"; };
+		88988674272363F60030613A /* SingleLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineCollectionFilter.swift; sourceTree = "<group>"; };
+		889886792723DF6A0030613A /* SingleLineFilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLineFilterCell.xib; sourceTree = "<group>"; };
+		8898867E2723E2450030613A /* SingleLineFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineFilterCell.swift; sourceTree = "<group>"; };
 		88B57274256AC32000FF9E4C /* DiningViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiningViewCell.xib; sourceTree = "<group>"; };
 		88B90AA02634389700DE2089 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		88C083C82635CCB400204475 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
@@ -819,6 +843,7 @@
 				9A194FE4228DE66D00E3DBD1 /* EventsAndExperiences */,
 				88814DB82656A1D80082AA2C /* Preferences */,
 				88EA9F9225544E6E00514626 /* WishList */,
+				886FE46027227AD8000B9530 /* Filters.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -980,6 +1005,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				886FE43527226195000B9530 /* Filters */,
 				886145F326AC01DE0023E92E /* Chat */,
 				9A194FEF22945A5D00E3DBD1 /* HomeEventCell.swift */,
 				30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */,
@@ -1123,6 +1149,7 @@
 				5527641C23165A8800380BEB /* Dining */,
 				5527641D23165BFD00380BEB /* Home */,
 				88EA9F8D2554069100514626 /* WishList */,
+				886FE46827228E8E000B9530 /* FiltersViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1172,6 +1199,23 @@
 				886145F426AC02090023E92E /* ChatCell.swift */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		886FE43527226195000B9530 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */,
+				887E27B22748E099000A93B8 /* MinMaxFilter.xib */,
+				88988674272363F60030613A /* SingleLineCollectionFilter.swift */,
+				88988672272363DE0030613A /* SingleLineCollectionFilter.xib */,
+				8898867E2723E2450030613A /* SingleLineFilterCell.swift */,
+				889886792723DF6A0030613A /* SingleLineFilterCell.xib */,
+				886FE44B27226DE4000B9530 /* TextFieldFilter.swift */,
+				886FE4362722637A000B9530 /* TextFieldFilter.xib */,
+				886FE45527226E04000B9530 /* YachtLengthFilter.swift */,
+				886FE43E272268E9000B9530 /* YachtLengthFilter.xib */,
+			);
+			path = Filters;
 			sourceTree = "<group>";
 		};
 		88814DB82656A1D80082AA2C /* Preferences */ = {
@@ -1962,6 +2006,7 @@
 				9183E82E25EBEE8800656B48 /* GalleryView2.xib in Resources */,
 				9A990C1B21C94E4A00056E31 /* SF-Pro-Text-Regular.otf in Resources */,
 				9A2AEBC12162683A00F92FB3 /* HelveticaNeueLTStd-Bd.otf in Resources */,
+				886FE4372722637A000B9530 /* TextFieldFilter.xib in Resources */,
 				918BA97F25BDCD49007B4D43 /* CityView2.xib in Resources */,
 				9A40F6282185FC520038D0C4 /* AviationEmptyResult.xib in Resources */,
 				88E731AA256FC5B700BEDD00 /* ProductDetailCell.xib in Resources */,
@@ -1981,6 +2026,8 @@
 				9A72C3C72138456D009FE9E2 /* Localizable.strings in Resources */,
 				1DBC9C02236567C200F0F133 /* Assets.xcassets in Resources */,
 				9A0E586D2260E5B800F7848A /* BookingSegmentView.xib in Resources */,
+				8898867A2723DF6A0030613A /* SingleLineFilterCell.xib in Resources */,
+				886FE43F272268E9000B9530 /* YachtLengthFilter.xib in Resources */,
 				9A4CE04120F6F0AC00BB27FC /* HelveticaLTStd-Light.otf in Resources */,
 				9183E83625EBEEA300656B48 /* GalleryView3.xib in Resources */,
 				9A4CE04320F6F0AC00BB27FC /* HelveticaLTStd-Roman.otf in Resources */,
@@ -2003,12 +2050,14 @@
 				9AC4FE0D225F4E550031E57E /* BookingRequestSummaryView.xib in Resources */,
 				553BF856230D4E4700EF4671 /* CardAlertView.xib in Resources */,
 				1D618004238A56C600F01199 /* CustomRequests.storyboard in Resources */,
+				887E27B32748E099000A93B8 /* MinMaxFilter.xib in Resources */,
 				1DEDB9EE22F2109600903CAC /* HomeSliderCell.xib in Resources */,
 				30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */,
 				9A194FE822901A5100E3DBD1 /* HomeEventSummary.xib in Resources */,
 				888A306526460C9D008754AD /* PrefCollViewCell.xib in Resources */,
 				9A4CE04220F6F0AC00BB27FC /* HelveticaLTStd-Bold.otf in Resources */,
 				1D880130233E4AB30039DEA6 /* DiningCategorySliderCell.xib in Resources */,
+				88988673272363DE0030613A /* SingleLineCollectionFilter.xib in Resources */,
 				88CEBD0726546D1A00360CB6 /* AirportCollViewCell.xib in Resources */,
 				1DBC9BFD235F6BCA00F0F133 /* BookingDetailCell.xib in Resources */,
 				9A645BA1226492BB009BF14D /* BookingPriceSummaryView.xib in Resources */,
@@ -2232,6 +2281,7 @@
 				557BB5F02315A87200744188 /* RestaurantRequestReservationViewController.swift in Sources */,
 				9A194FEA22901C3300E3DBD1 /* HomeEventSummary.swift in Sources */,
 				9A0E58692260D96600F7848A /* BookingSegmentsSummaryView.swift in Sources */,
+				88988675272363F60030613A /* SingleLineCollectionFilter.swift in Sources */,
 				1D7819BD2301CF140044C70B /* DiningViewCell.swift in Sources */,
 				1D3E09D722D4C33E0051BDBC /* NoSelectTextView.swift in Sources */,
 				1D81515722DE442E00B203D8 /* HomeSpecialEventSummary.swift in Sources */,
@@ -2259,10 +2309,12 @@
 				9AD1CE02228182B2007A0D63 /* BookingPaymentSummaryView.swift in Sources */,
 				1D70B11922B95F35007051FA /* ImageCarouselCell.swift in Sources */,
 				1DD785B923749B27001A9CF9 /* PayAlertView.swift in Sources */,
+				886FE45627226E04000B9530 /* YachtLengthFilter.swift in Sources */,
 				9A86F07D218A088E00495E4D /* LiftSpecsSubView.swift in Sources */,
 				888A305D26458ADB008754AD /* PrefCollectionsViewController.swift in Sources */,
 				882AD4D025515EBB00F0FCDE /* RecentlyViewedRouter.swift in Sources */,
 				164333AF71D8F174F6F5CC65 /* Protocols.swift in Sources */,
+				886FE46127227AD8000B9530 /* Filters.swift in Sources */,
 				886145F526AC02090023E92E /* ChatCell.swift in Sources */,
 				9A2C2C4622788B0100CE2591 /* UIStackView+removeAll.swift in Sources */,
 				553A8EE22303EBD90051006E /* PreloadDataManager.swift in Sources */,
@@ -2290,6 +2342,7 @@
 				9A86F0792189DC6300495E4D /* LiftOverviewSubVIew.swift in Sources */,
 				9AF4226B2266026F003CE562 /* BookingStep3.swift in Sources */,
 				88C5EF0B26CDFEBF00052CE5 /* DeepLinkManager.swift in Sources */,
+				887E27B82748E0B2000A93B8 /* MinMaxFilter.swift in Sources */,
 				1D3A71E4233919840037AE81 /* AviationAPIManager.swift in Sources */,
 				5527644923195D3700380BEB /* AccountViewController.swift in Sources */,
 				9AEBA3FA2209B4A50010A25B /* BAPayment.swift in Sources */,
@@ -2349,10 +2402,12 @@
 				9ABCF5C22163E55500D062C9 /* EntityProtocols.swift in Sources */,
 				88E731A9256FC5B700BEDD00 /* ProductDetailCell.swift in Sources */,
 				9A6583C5221C4EC900EB8EEA /* CountryCodeCell.swift in Sources */,
+				886FE44C27226DE4000B9530 /* TextFieldFilter.swift in Sources */,
 				553BF858230D4E9F00EF4671 /* CardAlertView.swift in Sources */,
 				88814DF3265AA9950082AA2C /* ProdCategoryCollViewCell.swift in Sources */,
 				1D7819B52301A9DF0044C70B /* DiningRouter.swift in Sources */,
 				3005D48623202CDA00401243 /* AviationResultsFilterViewController.swift in Sources */,
+				886FE46927228E8E000B9530 /* FiltersViewController.swift in Sources */,
 				91522DD7261263530023BAD8 /* PerCityViewAnimator.swift in Sources */,
 				9A59A5AE215E2FC9004322A1 /* Date+ISO-8061.swift in Sources */,
 				1643375A4FDC11CBEE93371A /* LoginInteractor.swift in Sources */,
@@ -2397,6 +2452,7 @@
 				1D618014238EA51A00F01199 /* HotelViewController.swift in Sources */,
 				9A4CB3942161C4D900856930 /* JSONDecoder+DataResponse.swift in Sources */,
 				1DEDB9EA22F20D4000903CAC /* HomeSlider.swift in Sources */,
+				8898867F2723E2450030613A /* SingleLineFilterCell.swift in Sources */,
 				9A38EF6A2253D01F0097BA0B /* DarkActionButton.swift in Sources */,
 				3005D47C23202BAC00401243 /* AviationAirportSelectionViewController.swift in Sources */,
 				9A16408321FB1A960041FFCE /* CCRouter.swift in Sources */,
@@ -2485,7 +2541,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2494,7 +2550,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
@@ -2511,7 +2567,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2520,7 +2576,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2536,7 +2592,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2545,7 +2601,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2700,7 +2756,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2727,7 +2783,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2764,7 +2820,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2790,7 +2846,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2974,7 +3030,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3001,7 +3057,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.3;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
