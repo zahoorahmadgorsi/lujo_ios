@@ -2133,7 +2133,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Cosmos.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ActiveLabel.framework",
 			);
 			outputFileListPaths = (
