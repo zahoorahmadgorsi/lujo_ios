@@ -158,7 +158,27 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                                     print("User NOT added.")
                                 }
                             }
-
+                            channel.members?.add(byIdentity: "admin@gmail.com") { result in
+                                if result.isSuccessful() {
+                                    print("User added.")
+                                } else {
+                                    print("User NOT added.")
+                                }
+                            }
+                            channel.members?.add(byIdentity: "deseriejoy.cruz@baroqueaviation.com") { result in
+                                if result.isSuccessful() {
+                                    print("User added.")
+                                } else {
+                                    print("User NOT added.")
+                                }
+                            }
+                            channel.members?.add(byIdentity: "zairalujo@gmail.com") { result in
+                                if result.isSuccessful() {
+                                    print("User added.")
+                                } else {
+                                    print("User NOT added.")
+                                }
+                            }
                         }
                         print("Twilio: Channel created: \(String(describing: channel?.sid))")
                     } else {
