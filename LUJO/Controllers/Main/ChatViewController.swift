@@ -84,11 +84,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
             showNetworkActivity()
             ChatManager.sharedChatManager.createChannel(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
                 self.hideNetworkActivity()
-//                if channelResult {
-//                    print("Twilio:Channel created: \(String(describing: channel?.sid))")
-//                } else {
-//                    print("Twilio:Channel can not be created")
-//                }
+                if channelResult {
+                    print("Twilio:Channel created: \(String(describing: channel?.sid))")
+                } else {
+                    print("Twilio:Channel can not be created")
+                }
             })
         }
     }

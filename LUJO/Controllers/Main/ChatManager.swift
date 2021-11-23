@@ -158,6 +158,22 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                     if channelResult.isSuccessful() {
                         if let channel = channel{
                             self.joinChannel(channel)
+                            channel.members?.add(byIdentity: "shujahm@gmail.com") { result in
+                                if result.isSuccessful() {
+                                    print("User added.")
+                                } else {
+                                    print("User NOT added.")
+                                }
+                            }
+                            
+//                            channel.members?.add(byIdentity: "admin@gmail.com, shujahm@gmail.com, deseriejoy.cruz@baroqueaviation.com, zairalujo@gmail.com") { result in
+//                                if result.isSuccessful() {
+//                                    print("User invited.")
+//                                } else {
+//                                    print("User NOT invited.")
+//                                }
+//                            }
+
                         }
                         print("Twilio: Channel created: \(String(describing: channel?.sid))")
                     } else {
