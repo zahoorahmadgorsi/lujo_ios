@@ -17,7 +17,7 @@ protocol FiltersVCProtocol:class {
     func setFifthFilter(filter:Taxonomy?)
     func setSixthFilter(filter:Taxonomy?)
     func setSeventhFilter(filter:String)
-    func setEighthFilter(filter:Taxonomy?)
+    func setEighthFilter(filter:Taxonomy?)  //yacht tag
     func setNinthFilter(filter:Taxonomy?)   //charter or sale
     func setTenthFilter(filter:Taxonomy?)   //region
     func setEleventhFilter(filter:String)    //min price
