@@ -6,7 +6,7 @@ import UserNotifications
 import Firebase
 import Mixpanel
 import OneSignal
-import Delighted
+//import Delighted
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface. applicationDidBecomeActive will never be called if app is in foreground and you have received a push notification
     func applicationDidBecomeActive(_ application: UIApplication) {
-        Delighted.initializeSDK()
+//        Delighted.initializeSDK()
         // handle any deeplink
         Deeplinker.checkDeepLink()
     }

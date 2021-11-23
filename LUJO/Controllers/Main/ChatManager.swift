@@ -150,6 +150,15 @@ class ChatManager: NSObject, TwilioChatClientDelegate {
                             self.joinChannel(channel, completion: { channelResult in
                                 completion(channelResult, channel)
                             })
+                            
+                            channel.members?.add(byIdentity: "shujahm@gmail.com") { result in
+                                if result.isSuccessful() {
+                                    print("User added.")
+                                } else {
+                                    print("User NOT added.")
+                                }
+                            }
+
                         }
                         print("Twilio: Channel created: \(String(describing: channel?.sid))")
                     } else {

@@ -9,7 +9,7 @@
 import UIKit
 import JGProgressHUD
 import Kingfisher
-import Delighted
+//import Delighted
 
 class AccountViewController: UIViewController {
     
@@ -65,36 +65,36 @@ class AccountViewController: UIViewController {
         logoutLabel.addGestureRecognizer(logoutTapResponder)
         
         if let user = LujoSetup().getLujoUser(), user.id > 0 {
-            let person = Person(
-                name: user.firstName + " " + user.lastName,
-                email: user.email,
-                phoneNumber: user.phoneNumber.readableNumber
-            )
-
-            let eligibilityOverrides = EligibilityOverrides(
-//                testMode: true
-                testMode: false
-                ,initialDelay: 86400
-            )
-            
-            Delighted.survey(delightedID: "mobile-sdk-RuEQ5n7SDsCU6roX", person: person, eligibilityOverrides: eligibilityOverrides , callback: { (status) in
-                switch status {
-                case let .failedClientEligibility(status):
-                    print(status)
-                    print("Eligibility check failed")
-                    // Maybe log this?
-                    // Do any view/screen changes that you need
-                case let .error(status):
-                    print(status)
-                    print("An error occurred")
-                    // Maybe log this?
-                case let .surveyClosed(status):
-                    print(status)
-                    print("Survey closed")
-                    // Re-register for keyboard notifications if unregistered
-                    // Do any view/screen changes that you need
-                }
-            })
+//            let person = Person(
+//                name: user.firstName + " " + user.lastName,
+//                email: user.email,
+//                phoneNumber: user.phoneNumber.readableNumber
+//            )
+//
+//            let eligibilityOverrides = EligibilityOverrides(
+////                testMode: true
+//                testMode: false
+//                ,initialDelay: 86400
+//            )
+//
+//            Delighted.survey(delightedID: "mobile-sdk-RuEQ5n7SDsCU6roX", person: person, eligibilityOverrides: eligibilityOverrides , callback: { (status) in
+//                switch status {
+//                case let .failedClientEligibility(status):
+//                    print(status)
+//                    print("Eligibility check failed")
+//                    // Maybe log this?
+//                    // Do any view/screen changes that you need
+//                case let .error(status):
+//                    print(status)
+//                    print("An error occurred")
+//                    // Maybe log this?
+//                case let .surveyClosed(status):
+//                    print(status)
+//                    print("Survey closed")
+//                    // Re-register for keyboard notifications if unregistered
+//                    // Do any view/screen changes that you need
+//                }
+//            })
         }
 
     }
