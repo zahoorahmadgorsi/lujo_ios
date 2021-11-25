@@ -12,7 +12,7 @@ import Crashlytics
 import CoreLocation
 import Kingfisher
 import Mixpanel
-import TwilioChatClient
+import TwilioConversationsClient
 
 enum HomeElementType: Int {
     case events, experiences
@@ -138,7 +138,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ChatManager.sharedChatManager.delegate = self
+        ConversationsManager.sharedConversationsManager.delegate = self
 //        naHUD.textLabel.text = "Loading Information"
         featured.overlay = true
         featured.delegate = self
@@ -1251,7 +1251,7 @@ extension HomeViewController {
 
     
     @objc func showBadgeValue() {
-        ChatManager.sharedChatManager.getTotalUnConsumedMessagesCount(completion: { (count) in
+        ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
             print("Twilio: Total UnConsumed messages count:\(count)")
             //setting the badge value
             let rightBarButtons = self.navigationItem.rightBarButtonItems
@@ -1320,24 +1320,23 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
         if #available(iOS 13, *) {
             //Call viewWillAppear only in iOS 13
-            //ChatManager.sharedChatManager.delegate = self.tabBarController as? ChatManagerDelegate
-            ChatManager.sharedChatManager.delegate = self
+            ConversationsManager.sharedConversationsManager.delegate = self
         }
         showBadgeValue()
     }
 }
 
-extension HomeViewController:ChatManagerDelegate{
+extension HomeViewController:ConversationsManagerDelegate{
     func reloadMessages() {
         print("Twilio: reloadMessages")
     }
 
-    func receivedNewMessage(message: TCHMessage, channel: TCHChannel){
+    func receivedNewMessage(message: TCHMessage, channel: TCHConversation){
         showBadgeValue()
 //        return nil
     }
 
-    func channelJoined(channel: TCHChannel) {
+    func channelJoined(channel: TCHConversation) {
         print("Twilio: channelJoined")
     }
 

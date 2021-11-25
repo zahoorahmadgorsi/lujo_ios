@@ -32,7 +32,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         // Set delegate
         self.delegate = self
-//        ChatManager.sharedChatManager.delegate = self
         // Change unselected color.
         self.tabBar.unselectedItemTintColor = UIColor.white
         self.tabBar.clipsToBounds = true
@@ -68,26 +67,21 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     //MARK:- Utilities
     
-//    @objc func showBadgeValue() {
-//        ChatManager.sharedChatManager.getTotalUnConsumedMessagesCount(completion: { (count) in
-//            print("Twilio: Total UnConsumed messages count:\(count)")
-//            self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
-//        })
-//    }
+    @objc func showBadgeValue() {
+        ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
+            print("Twilio: Total UnConsumed messages count:\(count)")
+            self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
+        })
+    }
     
     //MARK:- User Interaction
     
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//        ChatManager.sharedChatManager.delegate = self
         if viewController.restorationIdentifier == "ChatListNavigationController"{
-            //Zahoor start
-//            openChatWindow()
             let viewController = ChatOptionsViewController.instantiate()
-//            viewController.delegate = self
             self.present(viewController, animated: true, completion: nil)
             return false
-            //Zahoor ends
         }
         return true
     }

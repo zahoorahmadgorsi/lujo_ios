@@ -66,25 +66,25 @@ class ChatListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (self.conversations.count == 0){
-            self.getChatsList(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
+            self.getConversations(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
         }else{
-            self.getChatsList(showActivity: false)
+            self.getConversations(showActivity: false)
         }
     }
     
     @objc func refreshConversations() {
         self.refreshControl.beginRefreshing()
-        getChatsList(showActivity: false)
+        getConversations(showActivity: false)
     }
     
-    func getChatsList(showActivity: Bool) {
+    func getConversations(showActivity: Bool) {
         //when chatViewController was opened from chatlistViewController and then get closed, then this method would be called from presentationControllerDidDismiss would set delegate to self again
-        ConversationManager.sharedChatManager.delegate = self
+        ConversationsManager.sharedConversationsManager.delegate = self
         if showActivity {
             self.showNetworkActivity()
         }
         
-        ConversationManager.sharedChatManager.getConversations{conversations in
+        ConversationsManager.sharedConversationsManager.getConversations{conversations in
             if showActivity {
                 self.hideNetworkActivity()
             }else{
@@ -140,6 +140,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
 //        print("indexPath.row: \(indexPath.row)")
         let model = conversations[indexPath.row]
+//        print("Twilio: CoversationID: \(String(describing: model.sid))")
         if let attributes = model.attributes()?.dictionary , let type = attributes["type"] as? String{
             if type == "event" || type  == "experience" || type  == "special-event" {
                 cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
@@ -268,18 +269,18 @@ extension ChatListViewController: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
         if #available(iOS 13, *) {
             //Call viewWillAppear only in iOS 13
-            self.getChatsList(showActivity: false)    //chatViewController is closed time to update the last message body, time and unconsumed index
+            self.getConversations(showActivity: false)    //chatViewController is closed time to update the last message body, time and unconsumed index
         }
     }
 }
 
-extension ChatListViewController: ChatManagerDelegate {
+extension ChatListViewController: ConversationsManagerDelegate {
     func reloadMessages() {
         print("Twilio: reloadMessages")
     }
 
     func receivedNewMessage(message: TCHMessage, channel: TCHConversation) {
-        self.getChatsList(showActivity: false)    //New message is recived on chatlistViewController time to update the last message body, time and unconsumed index
+        self.getConversations(showActivity: false)    //New message is recived on chatlistViewController time to update the last message body, time and unconsumed index
     }
     
     func channelJoined(channel: TCHConversation) {

@@ -1,5 +1,5 @@
 //
-//  QuickstartChatManager.swift
+//  ConversationsManager.swift
 //  ChatQuickstart
 //
 //  Created by Jeffrey Linwood on 3/11/20.
@@ -9,7 +9,7 @@
 import UIKit
 import TwilioConversationsClient
 
-protocol ChatManagerDelegate: AnyObject {
+protocol ConversationsManagerDelegate: AnyObject {
     func reloadMessages()
     func receivedNewMessage(message: TCHMessage , channel: TCHConversation )
     func channelJoined(channel: TCHConversation)
@@ -18,16 +18,16 @@ protocol ChatManagerDelegate: AnyObject {
     
 }
 
-class ConversationManager: NSObject, TwilioConversationsClientDelegate {
+class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
 
     let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
     var serverURL = "https://seashell-snowshoe-5113.twil.io/send-notification"
 
-    static let sharedChatManager = ConversationManager()
+    static let sharedConversationsManager = ConversationsManager()
     static let sharedCache = NSCache<NSString, UIImage>()
     
     // For the quickstart, this will be the view controller
-    weak var delegate: ChatManagerDelegate?
+    weak var delegate: ConversationsManagerDelegate?
 
     // MARK: Conversations variables
     private var client: TwilioConversationsClient?
@@ -47,7 +47,6 @@ class ConversationManager: NSObject, TwilioConversationsClientDelegate {
     }
     
     // Called whenever a conversation we've joined receives a new message
-//    func conversationsClient(_ client: TwilioConversationsClient, conversation: TCHConversation, messageAdded message: TCHMessage)
     func conversationsClient(_ client: TwilioConversationsClient, conversation: TCHConversation, messageAdded message: TCHMessage) {
         messages.append(message)
 
@@ -135,7 +134,6 @@ class ConversationManager: NSObject, TwilioConversationsClientDelegate {
         let options: [String: Any] = [
             TCHConversationOptionUniqueName: uniqueChannelName,
             TCHConversationOptionFriendlyName: friendlyName
-//            ,TCHConversationNotificationLevel: .
             ,TCHConversationOptionAttributes: customAttribute
             ]
         client.createConversation(options: options) { (result, conversation: TCHConversation?) in
@@ -175,8 +173,6 @@ class ConversationManager: NSObject, TwilioConversationsClientDelegate {
         }
     }
     
-    //zahoor start
-    
     func getConversations(_ completion: @escaping([TCHConversation]) -> Void){
         if let client = self.client{
             if let conversations = client.myConversations(){
@@ -185,34 +181,11 @@ class ConversationManager: NSObject, TwilioConversationsClientDelegate {
         }
     }
     
-//    func getUserChannelDescriptors(_ completion: @escaping([TCHConversationDescriptor]) -> Void){
-//        if let client = self.client{
-//            client.channelsList()? .userChannelDescriptors(completion: { (result, paginator) in
-//              if (result.isSuccessful()) {
-//                if let channelDecriptors = paginator?.items() {
-//                    completion(channelDecriptors)
-//                }
-//              }
-//            })
-//        }
-//    }
-    
-    //zahoor
-//    func getChannelFromDescriptor(channelDescriptor:TCHConversationDescriptor, completion: @escaping (Bool,TCHConversation) -> Void){
-//        channelDescriptor.channel(completion:{ (result, channel) in
-//            if let channel = channel{
-//                if result.isSuccessful() {
-//                    completion(result.isSuccessful(),channel)
-//                }
-//            }
-//        })
-//    }
-    
     func getLastMessagesWithCount(_ channel: TCHConversation, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
         
         channel.getLastMessages(withCount:msgsCount, completion: { (result, messages) in
             if let msgs = messages{
-                self.setAllMessagesConsumed(channel) { (result, count) in
+                self.setAllMessagesRead(channel) { (result, count) in
                     print("Twilio: setAllMessagesConsumed Result:\(result.isSuccessful)" , "Count:\(count)")
                 }
                 completion(msgs)
@@ -228,24 +201,35 @@ class ConversationManager: NSObject, TwilioConversationsClientDelegate {
         })
     }
 
-    func setAllMessagesConsumed(_ channel: TCHConversation,completion: @escaping (TCHResult,UInt) -> Void){
-        channel.setAllMessagesUnreadWithCompletion({ (result, count) in
+    func setAllMessagesRead(_ conversation: TCHConversation,completion: @escaping (TCHResult,UInt) -> Void){
+        conversation.setAllMessagesReadWithCompletion({ (result, count) in
             print("Twilio: Unread Message Index:\(String(describing: count))")
-            completion(result, count?.uintValue ?? 0)
+            completion(result, count)
         })
     }
 
-//    func getTotalUnConsumedMessagesCount(completion: @escaping (UInt) -> Void){
-//        var count = 0
-//        self.getUserChannelDescriptors(){channelDescriptors in
-//            for channelDescriptor in channelDescriptors {
-//                count += channelDescriptor.unconsumedMessagesCount()?.intValue ?? 0
-//            }
-//            completion(UInt(count))
-//        }
-//    }
-    
-    //zahoor end
+    func getTotalUnReadMessagesCount(completion: @escaping (UInt) -> Void){
+        var unReadCount = 0
+        if let conversations = self.client?.myConversations(){
+            let myGroup = DispatchGroup()
+            for conversation in conversations{
+                myGroup.enter()
+                conversation.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in
+                    myGroup.leave()
+                    if result.isSuccessful ,let count = unReadMsgsCount{
+                        if count.intValue > 0{
+                            unReadCount += count.intValue
+                        }
+                    }
+                }
+            }
+            myGroup.notify(queue: .main) {
+                print("Finished all requests.")
+                completion(UInt(unReadCount))
+            }
+        }
+        
+    }
     
     func deleteChannel(_ channel: TCHConversation,completion: @escaping (TCHResult) -> Void){
         channel.destroy(completion: { (result) in
@@ -294,7 +278,7 @@ class ConversationManager: NSObject, TwilioConversationsClientDelegate {
             }) { (mediaSid) in
                 // Called when upload is completed, with the new mediaSid if successful.
                 // Full failure details will be provided through sendMessage's completion.
-                ConversationManager.sharedCache.setObject(photo, forKey: mediaSid as NSString)
+                ConversationsManager.sharedCache.setObject(photo, forKey: mediaSid as NSString)
                 print("Twilio: Media uploaded and cached successfully")
             }
 
