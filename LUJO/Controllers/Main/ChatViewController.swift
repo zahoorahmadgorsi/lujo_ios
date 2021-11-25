@@ -26,7 +26,7 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import JGProgressHUD
-import TwilioChatClient
+import TwilioConversationsClient
 import Mixpanel
 
 /// A base class for the example controllers
@@ -38,7 +38,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 //    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg"
     lazy var messageList: [ChatMessage] = []
-    var channel: TCHChannel?
+    var channel: TCHConversation?
     private let naHUD = JGProgressHUD(style: .dark)
     let pageSize: UInt = 10
     
@@ -78,17 +78,17 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         searchBarButton.sizeToFit()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
         
-        ChatManager.sharedChatManager.delegate = self   //not chat manager should report about any new message to chatViewController
+        ConversationManager.sharedChatManager.delegate = self   //not chat manager should report about any new message to chatViewController
         
         
         if let channel = self.channel{  //loading messages of existing channel
 //            print(channel.sid as Any)
-            ChatManager.sharedChatManager.setChannel(channel: channel)
+            ConversationManager.sharedChatManager.setChannel(channel: channel)
             identity = channel.createdBy ?? identity
-            ChatManager.sharedChatManager.getLastMessagesWithCount(channel, msgsCount: pageSize, completion: {messages in
+            ConversationManager.sharedChatManager.getLastMessagesWithCount(channel, msgsCount: pageSize, completion: {messages in
                 if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
                     //if channel is opened and recieved a new message then set its consumed messages to all
-                    ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
+                    ConversationManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
 //                        print("Twilio: channel's UnConsumed messages count set to zero. Result:\(result.isSuccessful())" , "Count:\(count)")
                     }
                 }
@@ -133,7 +133,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 self.messageList.append(chatMessage)
             }
             showNetworkActivity()
-            ChatManager.sharedChatManager.createChannel(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
+            ConversationManager.sharedChatManager.createConversation(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
                 self.hideNetworkActivity()
             })
         }
@@ -183,7 +183,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
             var lastMessageIndex = messageList[0].messageIndex?.intValue ?? 0  //get the index of very first message in UInt
             lastMessageIndex -= 1   //fetch one index less downward
             if (lastMessageIndex >= 0){
-                ChatManager.sharedChatManager.getOldMessagesWithCount(channel,startingIndex: UInt(lastMessageIndex), msgsCount: pageSize, completion: {messages in
+                ConversationManager.sharedChatManager.getOldMessagesWithCount(channel,startingIndex: UInt(lastMessageIndex), msgsCount: pageSize, completion: {messages in
                     var tempMessages:[ChatMessage] = []
                     let myGroup = DispatchGroup()
                     for message in messages {
@@ -474,9 +474,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             for component in components {
                 if let str = component as? String  {
                     //chatManager.sendMessage(str, completion: { (result, _) in
-                    ChatManager.sharedChatManager.sendMessage(str,attribute, completion: { (result, _) in
+                    ConversationManager.sharedChatManager.sendMessage(str,attribute, completion: { (result, _) in
                         inputBar.sendButton.stopAnimating()
-                        if result.isSuccessful() {
+                        if result.isSuccessful {
                             inputBar.inputTextView.placeholder = "Aa"
                             inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
                         } else {
@@ -492,13 +492,13 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
     
     private func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
-        if (identity == message.member?.identity){ //its current user's message
+        if (identity == message.participant?.identity){ //its current user's message
             if let user:ChatUser = self.currentSender() as? ChatUser  {
                 let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
                 return msg
             }
         }else{
-            let currentSender:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
+            let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
             let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
             return msg
         }
@@ -510,15 +510,15 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         
         if let sid = message.mediaSid{
 //            print("Twilio: message.index:\(String(describing: message.index))")
-            if let cachedImage = ChatManager.sharedCache.object(forKey: sid as NSString) {
+            if let cachedImage = ConversationManager.sharedCache.object(forKey: sid as NSString) {
                 print("Twilio: Image from cache")
-                if (identity == message.member?.identity){ //its current user's message
+                if (identity == message.participant?.identity){ //its current user's message
                     if let chatUser:ChatUser = self.currentSender() as? ChatUser  {
                         let photoMessage = ChatMessage(image: cachedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                         completion(photoMessage, true)
                     }
                 }else{
-                    let chatUser:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
+                    let chatUser:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
                     let photoMessage = ChatMessage(image: cachedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     completion(photoMessage, true)
                 }
@@ -533,14 +533,14 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                         if let data = try? Data( contentsOf:mediaContentUrl) , let loadedImage:UIImage = UIImage( data:data)
                         {
                             DispatchQueue.main.async {
-                                ChatManager.sharedCache.setObject(loadedImage, forKey: sid as NSString) //putting image into the cache
-                                if (self.identity == message.member?.identity){ //its current user's message
+                                ConversationManager.sharedCache.setObject(loadedImage, forKey: sid as NSString) //putting image into the cache
+                                if (self.identity == message.participant?.identity){ //its current user's message
                                     if let chatUser:ChatUser = self.currentSender() as? ChatUser  {
                                         let photoMessage = ChatMessage(image: loadedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                                         completion(photoMessage, false)
                                     }
                                 }else{
-                                    let chatUser:ChatUser = ChatUser(senderId: message.member?.sid ?? "000", displayName: message.author ?? "Author name")
+                                    let chatUser:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
                                     let photoMessage = ChatMessage(image: loadedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                                     completion(photoMessage, false)
                                 }
@@ -560,13 +560,13 @@ extension ChatViewController: ChatManagerDelegate {
     }
     
     internal func receivedNewMessage(message: TCHMessage
-                                     , channel: TCHChannel
+                                     , channel: TCHConversation
                                      ){
         if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
             //if channel chat window is opened and recieved a new message then set its Un Consumed messages count to 0
-            ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
-                print("Twilio: set channel's unConsumed messages count to zero")
-            }
+//            ChatManager.sharedChatManager.setAllMessagesConsumed(channel) { (result, count) in
+//                print("Twilio: set channel's unConsumed messages count to zero")
+//            }
 //            print(message.mediaFilename,message.mediaSid)
             if message.hasMedia(){
                 getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
@@ -580,7 +580,7 @@ extension ChatViewController: ChatManagerDelegate {
         }
     }
     
-    func channelJoined(channel: TCHChannel){
+    func channelJoined(channel: TCHConversation){
         self.channel = channel
         self.showNetworkActivity()
         EEAPIManager().sendRequestForSalesForce(itemId: product.id, channelId: channel.sid ?? "NoChannel"){ customBookingResponse, error in

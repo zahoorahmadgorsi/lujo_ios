@@ -469,7 +469,7 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
             for item in attachments {
                 if  case .image(let image) = item {
                     myGroup.enter()
-                    ChatManager.sharedChatManager.sendImageMessage(photo: image, channel) { (result, message) in
+                    ConversationManager.sharedChatManager.sendImageMessage(photo: image, channel) { (result, message) in
                         myGroup.leave()
                     }
                 }

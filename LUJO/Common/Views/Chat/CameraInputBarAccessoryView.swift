@@ -122,14 +122,10 @@ extension CameraInputBarAccessoryView : UIImagePickerControllerDelegate , UINavi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let editedImage = info[  UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            // self.sendImageMessage(photo: editedImage)
             self.inputPlugins.forEach { _ = $0.handleInput(of: editedImage)}
-
         }
         else if let originImage = info[  UIImagePickerController.InfoKey.originalImage] as? UIImage {
- 
             self.inputPlugins.forEach { _ = $0.handleInput(of: originImage)}
-             //self.sendImageMessage(photo: originImage)
         }
 //        getRootViewController()?.dismiss(animated: true, completion: nil)
         UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
@@ -139,17 +135,9 @@ extension CameraInputBarAccessoryView : UIImagePickerControllerDelegate , UINavi
     
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        getRootViewController()?.dismiss(animated: true, completion: nil)
         UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
         inputAccessoryView?.isHidden = false
     }
-    
-    
-//    func getRootViewController() -> UIViewController? {
-//       return (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController
-//    }
-    
-    
 }
 
 

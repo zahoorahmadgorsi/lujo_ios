@@ -148,7 +148,7 @@
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
 		88B90A6B2634346F00DE2089 /* IQKeyboardManagerSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */; };
 		88C083C92635CCB400204475 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C083C82635CCB400204475 /* WishListViewController.swift */; };
-		88C5EEE126C5D43A00052CE5 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EEE026C5D43A00052CE5 /* ChatManager.swift */; };
+		88C5EEE126C5D43A00052CE5 /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EEE026C5D43A00052CE5 /* ConversationManager.swift */; };
 		88C5EEE726C5D61E00052CE5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EEE626C5D61E00052CE5 /* Utils.swift */; };
 		88C5EF0526CDFBF400052CE5 /* NotificationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EF0426CDFBF100052CE5 /* NotificationParser.swift */; };
 		88C5EF0B26CDFEBF00052CE5 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EF0A26CDFEBF00052CE5 /* DeepLinkManager.swift */; };
@@ -546,7 +546,7 @@
 		88B90AA02634389700DE2089 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		88C083C82635CCB400204475 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
 		88C083FA2635FA4A00204475 /* Mixpanel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Mixpanel.xcframework; path = Carthage/Build/Mixpanel.xcframework; sourceTree = "<group>"; };
-		88C5EEE026C5D43A00052CE5 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		88C5EEE026C5D43A00052CE5 /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		88C5EEE626C5D61E00052CE5 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		88C5EF0426CDFBF100052CE5 /* NotificationParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationParser.swift; sourceTree = "<group>"; };
 		88C5EF0A26CDFEBF00052CE5 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
@@ -1072,7 +1072,7 @@
 		5527642D2317FDCE00380BEB /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				88C5EEE026C5D43A00052CE5 /* ChatManager.swift */,
+				88C5EEE026C5D43A00052CE5 /* ConversationManager.swift */,
 				5527642F2317FE8200380BEB /* ChatListViewController.swift */,
 				888B00E926AF42AB004FA1B5 /* ChatViewController.swift */,
 				888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */,
@@ -2434,7 +2434,7 @@
 				888A30712646196F008754AD /* PreferencesRouter.swift in Sources */,
 				164330344F7315887695337E /* User.swift in Sources */,
 				88CEBCFC265457EC00360CB6 /* PreferredDestinationaViewController.swift in Sources */,
-				88C5EEE126C5D43A00052CE5 /* ChatManager.swift in Sources */,
+				88C5EEE126C5D43A00052CE5 /* ConversationManager.swift in Sources */,
 				1D618014238EA51A00F01199 /* HotelViewController.swift in Sources */,
 				9A4CB3942161C4D900856930 /* JSONDecoder+DataResponse.swift in Sources */,
 				1DEDB9EA22F20D4000903CAC /* HomeSlider.swift in Sources */,
@@ -2526,7 +2526,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2535,7 +2535,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
@@ -2552,7 +2552,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2561,7 +2561,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2577,7 +2577,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2586,7 +2586,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2741,7 +2741,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2768,7 +2768,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2805,7 +2805,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2831,7 +2831,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3015,7 +3015,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3042,7 +3042,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;

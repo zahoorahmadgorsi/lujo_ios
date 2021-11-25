@@ -174,7 +174,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func removePushToken(userId: Int) {
 //        Intercom.logout()
         GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
-        ChatManager.sharedChatManager.shutdown()
+        ConversationManager.sharedChatManager.shutdown()
     }
     
     func registerForOurPushService(deviceToken: String) {
@@ -192,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //************
         //Chat Manager
         //************
-        ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
+        ConversationManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
             if success {
                 print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
             } else {

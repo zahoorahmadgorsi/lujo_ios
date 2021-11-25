@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TwilioChatClient
+import TwilioConversationsClient
 
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     

@@ -10,6 +10,6 @@ target 'LUJO' do
   # Swift 5.0
   pod 'MessageKit', '~> 3.3.0'
   #Twilio chat
-  pod 'TwilioChatClient', '~> 5.0'
+  pod 'TwilioConversationsClient', '~> 2.0'
   pod 'Cosmos', '~> 23.0'
 end
