@@ -151,6 +151,37 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                             print("Twilio: User could NOT added.")
                         }
                     })
+                    conversation?.addParticipant(byIdentity: "admin@gmail.com", attributes: nil, completion: { (result) in
+                        if result.isSuccessful {
+                            print("Twilio: User added.")
+                        } else {
+                            print("Twilio: User could NOT added.")
+                        }
+                    })
+                    
+                    conversation?.addParticipant(byIdentity: "deseriejoy.cruz@baroqueaviation.com", attributes: nil, completion: { (result) in
+                        if result.isSuccessful {
+                            print("Twilio: User added.")
+                        } else {
+                            print("Twilio: User could NOT added.")
+                        }
+                    })
+                    
+                    conversation?.addParticipant(byIdentity: "zairalujo@gmail.com", attributes: nil, completion: { (result) in
+                        if result.isSuccessful {
+                            print("Twilio: User added.")
+                        } else {
+                            print("Twilio: User could NOT added.")
+                        }
+                    })
+                    
+                    conversation?.addParticipant(byIdentity: "sahleg@golujo.com", attributes: nil, completion: { (result) in
+                        if result.isSuccessful {
+                            print("Twilio: User added.")
+                        } else {
+                            print("Twilio: User could NOT added.")
+                        }
+                    })
                 }
             }else{
                 print("Twilio: Conversation could not created")

@@ -416,7 +416,7 @@ extension AdvanceChatViewController: MessagesDisplayDelegate {
 // MARK: - MessagesLayoutDelegate
 
 extension AdvanceChatViewController: MessagesLayoutDelegate {
-
+    //date under which all messages are grouped
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
 //        if isTimeLabelVisible(at: indexPath) {
 //            return 18
@@ -430,6 +430,7 @@ extension AdvanceChatViewController: MessagesLayoutDelegate {
         return 30
     }
     
+    //display name
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
 //        if isFromCurrentSender(message: message) {
 //            return !isPreviousMessageSameSender(at: indexPath) ? 20 : 0
