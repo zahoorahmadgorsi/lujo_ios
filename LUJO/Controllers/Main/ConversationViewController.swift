@@ -30,7 +30,7 @@ import TwilioConversationsClient
 import Mixpanel
 
 /// A base class for the example controllers
-class ChatViewController: MessagesViewController, MessagesDataSource {
+class ConversationViewController: MessagesViewController, MessagesDataSource {
 
     // MARK: - Public properties
 
@@ -355,7 +355,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
 // MARK: - MessageCellDelegate
 
-extension ChatViewController: MessageCellDelegate {
+extension ConversationViewController: MessageCellDelegate {
     func didTapAvatar(in cell: MessageCollectionViewCell) {
         print("Avatar tapped")
     }
@@ -404,7 +404,7 @@ extension ChatViewController: MessageCellDelegate {
 
 // MARK: - MessageLabelDelegate
 
-extension ChatViewController: MessageLabelDelegate {
+extension ConversationViewController: MessageLabelDelegate {
     func didSelectAddress(_ addressComponents: [String: String]) {
         print("Address Selected: \(addressComponents)")
     }
@@ -440,7 +440,7 @@ extension ChatViewController: MessageLabelDelegate {
 
 // MARK: - MessageInputBarDelegate
 
-extension ChatViewController: InputBarAccessoryViewDelegate {
+extension ConversationViewController: InputBarAccessoryViewDelegate {
 
     @objc
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
@@ -498,8 +498,20 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             }
         }else{
             let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
-            let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
-            return msg
+//            let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+            if let htmlString = message.body{
+                let data = htmlString.data(using: .utf8)!
+                if let attributedString = try? NSAttributedString(
+                    data: data,
+                    options: [.documentType: NSAttributedString.DocumentType.html],
+                    documentAttributes: nil){
+                    let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                    return msg
+                }
+                
+                
+            }
+            
         }
         return nil
     }
@@ -553,7 +565,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 }
 
 // MARK: QuickstartConversationsManagerDelegate
-extension ChatViewController: ConversationsManagerDelegate {
+extension ConversationViewController: ConversationsManagerDelegate {
     
     func reloadMessages() {
     }

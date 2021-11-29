@@ -10,7 +10,7 @@ import UIKit
 import JGProgressHUD
 import TwilioConversationsClient
 
-class ChatListViewController: UIViewController {
+class ConversationsViewController: UIViewController {
     //MARK:- Init
     
     /// Class storyboard identifier.
@@ -29,7 +29,7 @@ class ChatListViewController: UIViewController {
     }()
     
     /// Init method that will init and return view controller.
-    class func instantiate() -> ChatListViewController {
+    class func instantiate() -> ConversationsViewController {
         return UIStoryboard.main.instantiate(identifier)
     }
     var identity = "USER_IDENTITY"
@@ -124,7 +124,7 @@ class ChatListViewController: UIViewController {
     }
 }
 
-extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
+extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.conversations.count == 0 {
@@ -264,7 +264,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
-extension ChatListViewController: UIAdaptivePresentationControllerDelegate {
+extension ConversationsViewController: UIAdaptivePresentationControllerDelegate {
     // Only called when the sheet is dismissed by DRAGGING as well as when tapped on cross button
     public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
         if #available(iOS 13, *) {
@@ -274,7 +274,7 @@ extension ChatListViewController: UIAdaptivePresentationControllerDelegate {
     }
 }
 
-extension ChatListViewController: ConversationsManagerDelegate {
+extension ConversationsViewController: ConversationsManagerDelegate {
     func reloadMessages() {
         print("Twilio: reloadMessages")
     }

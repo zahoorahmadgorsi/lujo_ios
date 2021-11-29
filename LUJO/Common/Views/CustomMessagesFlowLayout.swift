@@ -48,6 +48,7 @@ open class CustomMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         superCalculators.append(customMessageSizeCalculator)
         return superCalculators
     }
+    
 }
 
 open class CustomMessageSizeCalculator: MessageSizeCalculator {

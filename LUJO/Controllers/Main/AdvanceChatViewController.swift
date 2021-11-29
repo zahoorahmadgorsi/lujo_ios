@@ -28,7 +28,7 @@ import MessageKit
 import InputBarAccessoryView
 import Kingfisher
 
-final class AdvanceChatViewController: ChatViewController {
+final class AdvanceChatViewController: ConversationViewController {
         
     let outgoingAvatarOverlap: CGFloat = 17.5
     
@@ -215,7 +215,7 @@ final class AdvanceChatViewController: ChatViewController {
     // MARK: - UICollectionViewDataSource
     
     public override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError("Ouch. nil data source for messages")
         }

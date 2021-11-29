@@ -489,7 +489,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBAction func btnChatTapped(_ sender: Any) {
         Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
-        let viewController = ChatListViewController.instantiate()
+        let viewController = ConversationsViewController.instantiate()
         let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
         if #available(iOS 13.0, *) {
             let controller = navViewController.topViewController

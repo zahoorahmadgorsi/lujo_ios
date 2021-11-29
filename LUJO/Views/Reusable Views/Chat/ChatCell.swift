@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageKit
 
 class ChatCell: UITableViewCell {
 //    static var identifier: String = "chatCell"
@@ -38,3 +39,4 @@ class ChatCell: UITableViewCell {
     }
     
 }
+

@@ -26,21 +26,21 @@ struct ChatMessage: MessageType {
         self.messageIndex = index
     }
     
-//    init(custom: Any?, user: ChatUser, messageId: String, date: Date) {
-//        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
+//    init(custom: Any?, user: ChatUser, messageId: String, date: Date, messageIndex:NSNumber = 0) {
+//        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date, index: messageIndex)
 //    }
 
     init(text: String, user: ChatUser, messageId: String, date: Date, messageIndex:NSNumber = 0) {
-        self.init(kind: .text(text), user: user, messageId: messageId, date: date,index: messageIndex)
+        self.init(kind: .text(text), user: user, messageId: messageId, date: date, index: messageIndex)
     }
 
-//    init(attributedText: NSAttributedString, user: ChatUser, messageId: String, date: Date) {
-//        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
-//    }
-//
+    init(attributedText: NSAttributedString, user: ChatUser, messageId: String, date: Date, messageIndex:NSNumber = 0) {
+        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
+    }
+
     init(image: UIImage, user: ChatUser, messageId: String, date: Date, messageIndex:NSNumber = 0) {
         let mediaItem = ImageMediaItem(image: image)
-        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date,index: messageIndex)
+        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date, index: messageIndex)
     }
 //
 //    init(imageURL: URL, user: ChatUser, messageId: String, date: Date) {

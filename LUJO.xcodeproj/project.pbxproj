@@ -80,7 +80,7 @@
 		5527642723165D4400380BEB /* GalleryViewControllerNEW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */; };
 		5527642A2317F6AD00380BEB /* BookingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552764292317F6AD00380BEB /* BookingsViewController.swift */; };
 		5527642C2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642B2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift */; };
-		552764302317FE8200380BEB /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642F2317FE8200380BEB /* ChatListViewController.swift */; };
+		552764302317FE8200380BEB /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642F2317FE8200380BEB /* ConversationsViewController.swift */; };
 		5527644723195CF800380BEB /* AccountNEW.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5527644623195CF800380BEB /* AccountNEW.storyboard */; };
 		5527644923195D3700380BEB /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527644823195D3700380BEB /* AccountViewController.swift */; };
 		5527644B23195D4300380BEB /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527644A23195D4300380BEB /* UserProfileViewController.swift */; };
@@ -134,7 +134,7 @@
 		888A306526460C9D008754AD /* PrefCollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A306326460C9D008754AD /* PrefCollViewCell.xib */; };
 		888A30712646196F008754AD /* PreferencesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A30702646196F008754AD /* PreferencesRouter.swift */; };
 		888A307926461984008754AD /* PreferencesAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A307826461984008754AD /* PreferencesAPIManager.swift */; };
-		888B00EA26AF42AB004FA1B5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00E926AF42AB004FA1B5 /* ChatViewController.swift */; };
+		888B00EA26AF42AB004FA1B5 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00E926AF42AB004FA1B5 /* ConversationViewController.swift */; };
 		888B00EF26AF51EE004FA1B5 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00EE26AF51EE004FA1B5 /* ChatUser.swift */; };
 		888B00F426AF54D7004FA1B5 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F326AF54D7004FA1B5 /* ChatMessage.swift */; };
 		888B00F926B012C0004FA1B5 /* BasicChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */; };
@@ -478,7 +478,7 @@
 		5527642623165D4400380BEB /* GalleryViewControllerNEW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewControllerNEW.swift; sourceTree = "<group>"; };
 		552764292317F6AD00380BEB /* BookingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingsViewController.swift; sourceTree = "<group>"; };
 		5527642B2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingsPaymentInstructionsViewController.swift; sourceTree = "<group>"; };
-		5527642F2317FE8200380BEB /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		5527642F2317FE8200380BEB /* ConversationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsViewController.swift; sourceTree = "<group>"; };
 		5527644623195CF800380BEB /* AccountNEW.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AccountNEW.storyboard; sourceTree = "<group>"; };
 		5527644823195D3700380BEB /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		5527644A23195D4300380BEB /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -534,7 +534,7 @@
 		888A306326460C9D008754AD /* PrefCollViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrefCollViewCell.xib; sourceTree = "<group>"; };
 		888A30702646196F008754AD /* PreferencesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesRouter.swift; sourceTree = "<group>"; };
 		888A307826461984008754AD /* PreferencesAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesAPIManager.swift; sourceTree = "<group>"; };
-		888B00E926AF42AB004FA1B5 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		888B00E926AF42AB004FA1B5 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		888B00EE26AF51EE004FA1B5 /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatUser.swift; path = LUJO/Models/ChatUser.swift; sourceTree = SOURCE_ROOT; };
 		888B00F326AF54D7004FA1B5 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessage.swift; path = LUJO/Models/ChatMessage.swift; sourceTree = SOURCE_ROOT; };
 		888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicChatViewController.swift; sourceTree = "<group>"; };
@@ -1073,8 +1073,8 @@
 			isa = PBXGroup;
 			children = (
 				88C5EEE026C5D43A00052CE5 /* ConversationsManager.swift */,
-				5527642F2317FE8200380BEB /* ChatListViewController.swift */,
-				888B00E926AF42AB004FA1B5 /* ChatViewController.swift */,
+				5527642F2317FE8200380BEB /* ConversationsViewController.swift */,
+				888B00E926AF42AB004FA1B5 /* ConversationViewController.swift */,
 				888B00F826B012C0004FA1B5 /* BasicChatViewController.swift */,
 				88FBE0EF2710EA4D00452EB4 /* AdvanceChatViewController.swift */,
 				882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */,
@@ -2361,7 +2361,7 @@
 				9AF561E52183311100B7BD1A /* LiftCollectionViewCell.swift in Sources */,
 				1643305211AD52F06A13F51D /* LoginProtocols.swift in Sources */,
 				9A61F59E21788DEF00D67907 /* CalendarHeaderView.swift in Sources */,
-				552764302317FE8200380BEB /* ChatListViewController.swift in Sources */,
+				552764302317FE8200380BEB /* ConversationsViewController.swift in Sources */,
 				9A8D0F0B2289D98F001C0B15 /* UINavigationController+StatusBar.swift in Sources */,
 				164331801802251D8B984178 /* LoginView.swift in Sources */,
 				9A194FF22294614B00E3DBD1 /* HomeEventsLayout.swift in Sources */,
@@ -2428,7 +2428,7 @@
 				1DDD07D222BCF03700C79AAE /* UIDevice.swift in Sources */,
 				9AF1A0D62249073C00E0680B /* AviationMultiLegSearchOptionsView.swift in Sources */,
 				1D70B11C22BA2724007051FA /* UILabel.swift in Sources */,
-				888B00EA26AF42AB004FA1B5 /* ChatViewController.swift in Sources */,
+				888B00EA26AF42AB004FA1B5 /* ConversationViewController.swift in Sources */,
 				1DBC9C042365B7CA00F0F133 /* PaymentAPIManager.swift in Sources */,
 				3005D48423202CC700401243 /* AviationResultsViewController.swift in Sources */,
 				888A30712646196F008754AD /* PreferencesRouter.swift in Sources */,

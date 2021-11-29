@@ -28,7 +28,7 @@ import MessageKit
 import Kingfisher
 
 
-class BasicChatViewController: ChatViewController {
+class BasicChatViewController: ConversationViewController {
 
     override func configureMessageCollectionView() {
         super.configureMessageCollectionView()
