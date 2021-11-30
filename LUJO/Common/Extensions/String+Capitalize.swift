@@ -16,6 +16,11 @@ extension String {
     mutating func capitalizeAllFirstLetters() {
         self = capitalizingAllFirstLetters()
     }
+    
+    func isHtml() -> Bool {
+        let validateTest = NSPredicate(format:"SELF MATCHES %@", "<[a-z][\\s\\S]*>")
+        return validateTest.evaluate(with: self)
+    }
 }
 
 extension String {

@@ -493,23 +493,38 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
     private func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
         if (identity == message.participant?.identity){ //its current user's message
             if let user:ChatUser = self.currentSender() as? ChatUser  {
-                let msg = ChatMessage(text: message.body ?? "", user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
-                return msg
+                if let messageBody = message.body {
+                    if messageBody.isHtml(){
+                        let data = messageBody.data(using: .utf8)!
+                        if let attributedString = try? NSAttributedString(
+                            data: data,
+                            options: [.documentType: NSAttributedString.DocumentType.html],
+                            documentAttributes: nil){
+                            let msg = ChatMessage(attributedText: attributedString, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                            return msg
+                        }
+                    }else{
+                        let msg = ChatMessage(text: messageBody, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
+                        return msg
+                    }
+                }
             }
         }else{
             let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
-//            let msg = ChatMessage(text: message.body ?? "", user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
-            if let htmlString = message.body{
-                let data = htmlString.data(using: .utf8)!
-                if let attributedString = try? NSAttributedString(
-                    data: data,
-                    options: [.documentType: NSAttributedString.DocumentType.html],
-                    documentAttributes: nil){
-                    let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+            if let messageBody = message.body {
+                if messageBody.isHtml(){
+                    let data = messageBody.data(using: .utf8)!
+                    if let attributedString = try? NSAttributedString(
+                        data: data,
+                        options: [.documentType: NSAttributedString.DocumentType.html],
+                        documentAttributes: nil){
+                        let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                        return msg
+                    }
+                }else{
+                    let msg = ChatMessage(text: messageBody, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     return msg
                 }
-                
-                
             }
             
         }

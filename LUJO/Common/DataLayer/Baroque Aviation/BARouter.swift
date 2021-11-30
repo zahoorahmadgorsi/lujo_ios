@@ -100,7 +100,9 @@ extension BARouter {
             components.path = "/baroque/credit-cards/authorize"
         case let .bookings(type, token):
             components.path = "/baroque/aviation"
-            if type != .trip { components.path.append("/booking-requests") }
+            if type != .trip {
+                components.path.append("/booking-requests")
+            }
             components.path.append("/\(type.rawValue)")
             components.queryItems = [
                 URLQueryItem(name: "token", value: token),
