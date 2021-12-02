@@ -504,6 +504,7 @@
 		88029BB42633C811003F1E77 /* OneSignal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OneSignal.xcframework; path = Carthage/Build/OneSignal.xcframework; sourceTree = "<group>"; };
 		88029BCA2633CBCF003F1E77 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IQKeyboardManagerSwift.xcframework; path = Carthage/Build/IQKeyboardManagerSwift.xcframework; sourceTree = "<group>"; };
+		880A182827596680004E2C40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		880B9B0625582ABC0070D7CD /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
 		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
 		880B9B0A255840C10070D7CD /* Villa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Villa.swift; sourceTree = "<group>"; };
@@ -1591,6 +1592,7 @@
 		9A818F3E20EE74CA005B6455 = {
 			isa = PBXGroup;
 			children = (
+				880A182827596680004E2C40 /* GoogleService-Info.plist */,
 				1D523A9D23995516009E78D8 /* Firebase.h */,
 				88029BA22633BF42003F1E77 /* OneSignalNotificationServiceExtension */,
 				9AECC13A2111CBD700C00C07 /* Frameworks */,
