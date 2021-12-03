@@ -1,4 +1,4 @@
-import Crashlytics
+import FirebaseCrashlytics
 import UIKit
 import Kingfisher
 

@@ -8,7 +8,7 @@
 
 import UIKit
 import JGProgressHUD
-import Crashlytics
+import FirebaseCrashlytics
 import CoreLocation
 import Intercom
 import Kingfisher
@@ -315,7 +315,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
         GoLujoAPIManager().getAllPreferences(token) { Preferences, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not fetch user preferences")
                 completion(nil, error)
                 return
@@ -876,7 +876,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return
@@ -1150,7 +1150,7 @@ extension HomeViewController {
                 self.canSendRequest = true
                 
                 if let error = error {
-                    Crashlytics.sharedInstance().recordError(error)
+                    Crashlytics.crashlytics().record(error: error)
                     // NEED TO BE REPLACED WITH UI VIEW
                     self.locationEventContainerView.isHidden = true
                     self.noNearbyEventsContainerView?.isHidden = false
@@ -1190,7 +1190,7 @@ extension HomeViewController {
             self.hideNetworkActivity()
             
             if let error = error {
-                Crashlytics.sharedInstance().recordError(error)
+                Crashlytics.crashlytics().record(error: error)
                 self.showError(BackendError.parsing(reason: "Could not obtain Home Events information"))
             } else {
                 if let information = information {

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import FirebaseCrashlytics
+
 struct Preferences: Codable {
     var gift: GiftPreferences
     var aviation: AviationPreferences
@@ -37,7 +39,7 @@ struct Preferences: Codable {
             yacht = try values.decode(YachtPreferences.self, forKey: .yacht)
             villa = try values.decode(VillaPreferences.self, forKey: .villa)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -70,7 +72,7 @@ struct GiftPreferences : Codable {
             gift_preferences_id = try values.decodeIfPresent([String].self, forKey: .gift_preferences_id)
             gift_preferences_id_other = try values.decodeIfPresent(String.self, forKey: .gift_preferences_id_other)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -153,7 +155,7 @@ struct AviationPreferences  : Codable {
             aviation_preferred_beverage_id_other = try values.decodeIfPresent(String.self, forKey: .aviation_preferred_beverage_id_other)
             aviation_aircraft_category_id = try values.decodeIfPresent([String].self, forKey: .aviation_aircraft_category_id)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -201,7 +203,7 @@ struct YachtPreferences : Codable {
             yacht_preferred_cuisine_id_other = try values.decodeIfPresent(String.self, forKey: .yacht_preferred_cuisine_id_other)
             yacht_interests_id = try values.decodeIfPresent([String].self, forKey: .yacht_interests_id)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -246,7 +248,7 @@ struct RestaurantPreferences : Codable {
             restaurant_beverage_id_other = try values.decodeIfPresent(String.self, forKey: .restaurant_beverage_id_other)
             restaurant_seating_id = try values.decodeIfPresent([String].self, forKey: .restaurant_seating_id)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -271,7 +273,7 @@ struct EventPreferences : Codable {
             event_category_id_other = try values.decodeIfPresent(String.self, forKey: .event_category_id_other)
             event_location_id = try values.decodeIfPresent([String].self, forKey: .event_location_id)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -349,7 +351,7 @@ struct TravelPreferences : Codable {
             travel_allergy_id = try values.decodeIfPresent([String].self, forKey: .travel_allergy_id)
             travel_allergy_id_other = try values.decodeIfPresent(String.self, forKey: .travel_allergy_id_other)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -379,7 +381,7 @@ struct VillaPreferences : Codable {
             villa_preferred_accommodations_id = try values.decodeIfPresent([String].self, forKey: .villa_preferred_accommodations_id)
             villa_preferred_accommodations_id_other = try values.decodeIfPresent(String.self, forKey: .villa_preferred_accommodations_id_other)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

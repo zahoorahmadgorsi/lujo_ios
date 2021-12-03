@@ -1,4 +1,4 @@
-import Crashlytics
+import FirebaseCrashlytics
 import DefaultsKit
 
 extension DefaultsKey {
@@ -97,7 +97,7 @@ class LujoSetup: LoginDataStorable, AppDefaults {
     func getSetup() {
         dataLayer.getDefaults { result, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 return
             }
             self.storeDefaults(result)
@@ -107,7 +107,7 @@ class LujoSetup: LoginDataStorable, AppDefaults {
     func updateDefaults(_ completion: (() -> Void)?) {
         dataLayer.getDefaults { result, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 return
             }
             self.storeDefaults(result)
@@ -185,7 +185,7 @@ class LujoSetup: LoginDataStorable, AppDefaults {
 //            storeUserImage(image)
 //        } catch {
 //            let error = BackendError.parsing(reason: "Error loading Image from \(user.avatar)")
-//            Crashlytics.sharedInstance().recordError(error)
+//            Crashlytics.crashlytics().record(error: error)
 //        }
     }
 

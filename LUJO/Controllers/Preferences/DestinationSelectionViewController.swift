@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseCrashlytics
 
 protocol DestinationSearchViewDelegate: class {
     func select(_ destination: Taxonomy)
@@ -147,7 +148,7 @@ extension DestinationSelectionViewController {
         case .villaDestinations:
             GoLujoAPIManager().searchDestination(token: token, strToSearch: pattern) { taxonomies, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain preferred destinations")
                     self.showErrorPopup(withTitle: "Error", error: error)
                     return
@@ -157,7 +158,7 @@ extension DestinationSelectionViewController {
         case .yachtPreferredRegions:
             GoLujoAPIManager().searchRegions(token: token, strToSearch: pattern) { taxonomies, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain preferred regions")
                     self.showErrorPopup(withTitle: "Error", error: error)
                     return

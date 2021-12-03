@@ -6,7 +6,7 @@
 //  Copyright © 2021 Baroque Access. All rights reserved.
 //
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 import UIKit
 
@@ -313,7 +313,7 @@ enum PreferencesRouter: URLRequestConvertible {
             let callURL = try newURLComponents.asURL()
             return callURL
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
         }
 
         return URL(string: "https://\(EERouter.baseURLString)")!

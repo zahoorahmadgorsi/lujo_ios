@@ -1,5 +1,5 @@
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 
 enum BARouter: URLRequestConvertible {
@@ -80,7 +80,7 @@ extension BARouter {
             print(try newURLComponents.asURL())
             return try newURLComponents.asURL()
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
         }
 //        print("https://\(BARouter.baseURLString)")a
         return URL(string: "https://\(BARouter.baseURLString)")!

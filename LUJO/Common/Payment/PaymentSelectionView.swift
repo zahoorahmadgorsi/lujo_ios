@@ -1,5 +1,5 @@
 import ActiveLabel
-import Crashlytics
+import FirebaseCrashlytics
 import JGProgressHUD
 import UIKit
 
@@ -240,7 +240,7 @@ extension PaymentSelectionView {
                                                       _ error: Error? = nil) {
         hideNetworkActivity()
         if let error = error {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
         } else {
             NSError.logLUJOError(for: domain, description: description)
         }

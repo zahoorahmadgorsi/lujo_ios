@@ -263,7 +263,7 @@ class YachtViewController: UIViewController {
         //Now we are calling this in chatViewControll
 //        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
 //            guard error == nil else {
-//                Crashlytics.sharedInstance().recordError(error!)
+//                Crashlytics.crashlytics().record(error: error!)
 //                BackendError.parsing(reason: "Could not obtain the salesforce_id")
 //                return
 //            }

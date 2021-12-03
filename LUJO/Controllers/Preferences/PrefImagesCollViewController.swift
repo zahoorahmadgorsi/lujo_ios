@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
+import FirebaseCrashlytics
 
 class PrefImagesCollViewController: UIViewController {
     
@@ -245,7 +246,7 @@ class PrefImagesCollViewController: UIViewController {
             case .travelHotelGroups:
                 GoLujoAPIManager().getTravelHotelGroups(token) { taxonomies, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain travel information")
                         completion(nil, error)
                         return
@@ -261,7 +262,7 @@ class PrefImagesCollViewController: UIViewController {
             case .travelActivities:
                 GoLujoAPIManager().getTravelActivities(token) { taxonomies, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain travel information")
                         completion(nil, error)
                         return
@@ -436,7 +437,7 @@ class PrefImagesCollViewController: UIViewController {
             case .travelDestinationType:
                 GoLujoAPIManager().setTravelDestinationType(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the Preferences information")
                         completion(nil, error)
                         return
@@ -446,7 +447,7 @@ class PrefImagesCollViewController: UIViewController {
             case .travelHotelGroups:
                 GoLujoAPIManager().setTravelHotelGroups(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the Preferences information")
                         completion(nil, error)
                         return
@@ -456,7 +457,7 @@ class PrefImagesCollViewController: UIViewController {
             case .travelActivities:
                 GoLujoAPIManager().setTravelActivities(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the Preferences information")
                         completion(nil, error)
                         return
@@ -466,7 +467,7 @@ class PrefImagesCollViewController: UIViewController {
             case .travelAirlines:
                 GoLujoAPIManager().setTravelAirlines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the Preferences information")
                         completion(nil, error)
                         return
@@ -476,7 +477,7 @@ class PrefImagesCollViewController: UIViewController {
             case .travelHotelStyles:
                 GoLujoAPIManager().setTravelHotelStyles(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the Preferences information")
                         completion(nil, error)
                         return

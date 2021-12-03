@@ -1,4 +1,4 @@
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 
 //struct Taxonomy: Codable {
@@ -22,7 +22,7 @@ import Foundation
 //            isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
 //
 //        } catch {
-//            Crashlytics.sharedInstance().recordError(error)
+//            Crashlytics.crashlytics().record(error: error)
 //            throw error
 //        }
 //    }
@@ -48,7 +48,7 @@ struct Taxonomy: Codable {
             //isSelected would never be sent from API
             isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -88,7 +88,7 @@ struct TaxonomyBaroqueAviation: Codable {
             state = try values.decode(String.self, forKey: .state)
             data = try values.decode([BaroqueAviationCategory].self, forKey: .data)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -111,7 +111,7 @@ struct BaroqueAviationCategory: Codable {
             name = try values.decode(String.self, forKey: .name)
 
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -152,7 +152,7 @@ struct City: Codable {
             placeId = try values.decode(String.self, forKey: .placeId)
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -472,7 +472,7 @@ extension Product {
             cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)
             michelinStar = try values.decodeIfPresent([Taxonomy].self, forKey: .michelinStar)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -570,7 +570,7 @@ struct Cities: Codable{
             items = try values.decodeIfPresent([Product].self, forKey: .items)
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

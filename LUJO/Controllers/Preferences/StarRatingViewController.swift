@@ -10,7 +10,7 @@ import UIKit
 import JGProgressHUD
 import Cosmos
 import Mixpanel
-import Mixpanel
+import FirebaseCrashlytics
 
 class StarRatingViewController: UIViewController {
     
@@ -158,7 +158,8 @@ class StarRatingViewController: UIViewController {
             case .travelHotelRating:
                 GoLujoAPIManager().setTravelHotelRating(token: token, businessStarRating: businessRating , leisureStarRating: leisureRating) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the preferences information")
                         completion(nil, error)
                         return

@@ -1,4 +1,4 @@
-//import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 
 extension NSError {
@@ -8,6 +8,6 @@ extension NSError {
                             userInfo: [
                                 NSLocalizedDescriptionKey: "Payment Session does not contain payment methods",
                             ])
-        Crashlytics.sharedInstance().recordError(error)
+        Crashlytics.crashlytics().record(error: error)
     }
 }

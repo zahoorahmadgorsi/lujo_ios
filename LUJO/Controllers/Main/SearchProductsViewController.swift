@@ -9,7 +9,7 @@
 import UIKit
 import JGProgressHUD
 import IQKeyboardManagerSwift
-import Crashlytics
+import FirebaseCrashlytics
 import AVFoundation
 import Mixpanel
 
@@ -279,7 +279,7 @@ extension SearchProductsViewController {
                 Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getEvents(token, past: past, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain events information")
                         completion([], error)
                         return
@@ -292,7 +292,7 @@ extension SearchProductsViewController {
                       properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getExperiences(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experiences information")
                         completion([], error)
                         return
@@ -304,7 +304,7 @@ extension SearchProductsViewController {
                       properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getVillas(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")
                         completion([], error)
                         return
@@ -316,7 +316,7 @@ extension SearchProductsViewController {
                       properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getGoods(token, term: term, category_term_id: nil, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
                         completion([], error)
                         return
@@ -328,7 +328,7 @@ extension SearchProductsViewController {
                       properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getYachts(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
                         completion([], error)
                         return
@@ -340,7 +340,7 @@ extension SearchProductsViewController {
                       properties: ["searchedText" : term ?? "EmptyString"])
                 EEAPIManager().getTopRated(token, type: nil, term: term) { list, error in   //type nil mean bring all types(event, experience) of toprated
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain top rated information")
                         completion([], error)
                         return
@@ -350,7 +350,7 @@ extension SearchProductsViewController {
             case .recent:   //it will never be called
                 EEAPIManager().getYachts(token, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")
                         completion([], error)
                         return
@@ -398,7 +398,7 @@ extension SearchProductsViewController {
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return

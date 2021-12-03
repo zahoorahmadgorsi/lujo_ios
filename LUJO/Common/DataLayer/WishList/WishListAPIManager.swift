@@ -7,7 +7,7 @@
 //
 
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import UIKit
 import CoreLocation
 import Mixpanel
@@ -120,7 +120,7 @@ extension GoLujoAPIManager  {
                                 NSLocalizedDescriptionKey: "Unexpected \(statusCode) received on \(sourceURL)",
                                 NSLocalizedFailureReasonErrorKey: "Expected code 20X, 40X or 50X",
                             ])
-        Crashlytics.sharedInstance().recordError(error)
+        Crashlytics.crashlytics().record(error: error)
     }
     
     

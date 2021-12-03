@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
+import FirebaseCrashlytics
 
 class TwoSliderPrefViewController: UIViewController {
     
@@ -224,7 +225,7 @@ class TwoSliderPrefViewController: UIViewController {
             case .aviationCharterFrequency:
                 GoLujoAPIManager().setAviationCharterFrequency(token: token,corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                         completion(nil, error)
                         return
@@ -239,7 +240,7 @@ class TwoSliderPrefViewController: UIViewController {
             case .yachtCharterFrequency:
                 GoLujoAPIManager().setYachtCharterFrequency(token: token,corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                         completion(nil, error)
                         return
@@ -254,7 +255,7 @@ class TwoSliderPrefViewController: UIViewController {
             case .travelFrequency:
                 GoLujoAPIManager().setTravelFrequency(token: token, corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the preferences information")
                         completion(nil, error)
                         return
@@ -264,7 +265,7 @@ class TwoSliderPrefViewController: UIViewController {
             case .travelCabinClass:
                 GoLujoAPIManager().setTravelCabinClass(token: token, cabinClass: intToCabinClass(int: corporateFrequency), leisureClass: intToCabinClass(int: leisureFrequency)) { (contentString, error) in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the preferences information")
                         completion(nil, error)
                         return

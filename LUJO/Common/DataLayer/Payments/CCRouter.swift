@@ -1,5 +1,5 @@
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 
 enum CCRouter: URLRequestConvertible {
@@ -136,7 +136,7 @@ extension CCRouter {
             print(newURLComponents)
             return try newURLComponents.asURL()
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
         }
 
         return URL(string: "https://\(CCRouter.baseURLHost)")!

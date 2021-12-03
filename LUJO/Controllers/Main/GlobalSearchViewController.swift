@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Crashlytics
+import FirebaseCrashlytics
 import IQKeyboardManagerSwift
 import JGProgressHUD
 import Mixpanel
@@ -424,7 +424,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         
         EEAPIManager().search(token: token, searchText: text) { (cities, error) in
             if let error = error {
-                Crashlytics.sharedInstance().recordError(error)
+                Crashlytics.crashlytics().record(error: error)
                 self.showFeedback(error.localizedDescription)
             } else {
                 self.dataSource = cities
@@ -444,7 +444,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
             self.hideNetworkActivity()
             
             if let error = error {
-                Crashlytics.sharedInstance().recordError(error)
+                Crashlytics.crashlytics().record(error: error)
                 self.showFeedback(error.localizedDescription)
             } else if let informations = informations {
                 self.updateUI(informations: informations)

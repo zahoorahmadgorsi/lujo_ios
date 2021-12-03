@@ -6,7 +6,7 @@
 //  Copyright © 2020 Baroque Access. All rights reserved.
 //
 
-import Crashlytics
+import FirebaseCrashlytics
 import UIKit
 
 struct Yacht: Codable {
@@ -121,7 +121,7 @@ extension Yacht {
             charter_price_low_season_per_day = try values.decodeIfPresent(String.self, forKey: .charter_price_low_season_per_day)
             charter_price_high_season_per_day = try values.decodeIfPresent(String.self, forKey: .charter_price_high_season_per_day)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

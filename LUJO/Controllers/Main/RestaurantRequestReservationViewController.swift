@@ -9,6 +9,7 @@
 import UIKit
 import Intercom
 import Mixpanel
+import FirebaseCrashlytics
 
 class RestaurantRequestReservationViewController: UIViewController {
     
@@ -88,7 +89,7 @@ class RestaurantRequestReservationViewController: UIViewController {
             
             GoLujoAPIManager.shared.sendRequestForSalesForce(itemId: restaurant.id, date: dateStr, time: timeStr, persons: Int(peopleNumber.text!) ?? 1){ customBookingResponse, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     BackendError.parsing(reason: "Could not obtain the salesforce_id")
                     return
                 }

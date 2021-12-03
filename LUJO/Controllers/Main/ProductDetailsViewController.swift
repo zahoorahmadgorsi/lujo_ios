@@ -10,6 +10,7 @@ import UIKit
 import JGProgressHUD
 import Mixpanel
 import Intercom
+import FirebaseCrashlytics
 
 protocol ProductDetailDelegate{
     func tappedOnBookRequest(viewController:UIViewController)
@@ -169,7 +170,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         if (product.type == "event"){
             EEAPIManager().getEvents(token, past: false, term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
                     completion(nil, error)
                     return
@@ -179,7 +180,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         }else if (product.type == "experience"){
             EEAPIManager().getExperiences(token, term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
                     completion(nil, error)
                     return
@@ -189,7 +190,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         }else if (product.type == "villa"){
             EEAPIManager().getVillas(token, term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
                     completion(nil, error)
                     return
@@ -199,7 +200,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         }else if (product.type == "gift"){
             EEAPIManager().getGoods(token, term: nil, category_term_id: nil, productId: product.id) { list, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
                     completion(nil, error)
                     return
@@ -209,7 +210,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         }else if (product.type == "yacht"){
             EEAPIManager().getYachts(token, term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
                     completion(nil, error)
                     return
@@ -260,7 +261,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         
         EEAPIManager().getYachtGallery(token, postId: product.id) { gallery, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 _ = BackendError.parsing(reason: "Could not get yacht's gallery")
                 return
             }
@@ -908,7 +909,7 @@ extension ProductDetailsViewController {
 //                Now we are calling this in chatViewControll
                 EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         BackendError.parsing(reason: "Could not obtain the salesforce_id")
                         return
                     }
@@ -1012,7 +1013,7 @@ extension ProductDetailsViewController {
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Baroque Access. All rights reserved.
 //
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 
 class RecentlyViewedAPIManager {
@@ -68,6 +68,6 @@ class RecentlyViewedAPIManager {
                                 NSLocalizedDescriptionKey: "Unexpected \(statusCode) received on \(sourceURL)",
                                 NSLocalizedFailureReasonErrorKey: "Expected code 20X, 40X or 50X",
                             ])
-        Crashlytics.sharedInstance().recordError(error)
+        Crashlytics.crashlytics().record(error: error)
     }
 }

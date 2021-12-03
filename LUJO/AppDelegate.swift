@@ -1,5 +1,4 @@
-import Crashlytics
-import Fabric
+import FirebaseCrashlytics
 import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications
@@ -54,8 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         IQKeyboardManager.shared.enable = true
 
         Intercom.setApiKey("ios_sdk-6458822f5722423dbb6aef0b2dd9b0f44a694fe3", forAppId:"vc290ayr")
-
-        Fabric.with([Crashlytics.self])
         
         ChatStyling.appyStyling()
 

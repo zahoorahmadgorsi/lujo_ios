@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseCrashlytics
 
 class Favourite{
     internal init(id: Int? = nil, name: String? = nil, description: String? = nil, primaryMedia: Gallery? = nil, location: [TaxonomyLocation]? = nil, isFavourite: Bool? = nil
@@ -76,7 +77,7 @@ extension WishListObjects {
             gifts = try values.decodeIfPresent([Product].self, forKey: .gifts)
             yachts = try values.decodeIfPresent([Product].self, forKey: .yachts)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -90,7 +91,7 @@ struct wishListRestaurants: Codable {
             var container = try decoder.unkeyedContainer()  // having no key
             self.restaurant = try container.decodeIfPresent(Product.self)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -104,7 +105,7 @@ struct wishListProducts: Codable {
             var container = try decoder.unkeyedContainer()  // having no key
             self.product = try container.decodeIfPresent(Product.self)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -118,7 +119,7 @@ struct wishListHotel: Codable {
             var container = try decoder.unkeyedContainer()  // having no key
             self.hotel = try container.decodeIfPresent(Hotel.self)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

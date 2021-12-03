@@ -8,7 +8,7 @@
 
 import UIKit
 import JGProgressHUD
-import Crashlytics
+import FirebaseCrashlytics
 import AVFoundation
 
 class RestaurantListViewController: UIViewController {
@@ -99,7 +99,7 @@ class RestaurantListViewController: UIViewController {
         GoLujoAPIManager().search(token, term: nil, cityId: city.termId, currentLocation: nil) { restaurants, error in
             self.hideNetworkActivity()
             if let error = error {
-                Crashlytics.sharedInstance().recordError(error)
+                Crashlytics.crashlytics().record(error: error)
                 self.showError(error)
             } else {
                 self.update(listOf: restaurants ?? [])
@@ -220,7 +220,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain Dining information")
                 completion(nil, error)
                 return

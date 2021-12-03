@@ -7,7 +7,7 @@
 //
 
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 import UIKit
 
@@ -56,7 +56,7 @@ enum RecentlyViewedRouter: URLRequestConvertible {
                 let callURL = try newURLComponents.asURL()
                 return callURL
             } catch {
-                Crashlytics.sharedInstance().recordError(error)
+                Crashlytics.crashlytics().record(error: error)
             }
             return URL(string: "https://\(EERouter.baseURLString)")!
         }

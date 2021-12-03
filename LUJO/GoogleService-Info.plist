@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1090590112441-elou8aibpu6nrm41qj92jbgv3gaj1s34.apps.googleusercontent.com</string>
+	<string>1079785199950-300bu5c8b89gphg5vk52j4lonuo9n4hb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1090590112441-elou8aibpu6nrm41qj92jbgv3gaj1s34</string>
+	<string>com.googleusercontent.apps.1079785199950-300bu5c8b89gphg5vk52j4lonuo9n4hb</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDm-hXENrGvDEecA0jBaTDERLQDDFqDHok</string>
+	<string>AIzaSyB3xG5YjlhM4Wb0doJyohnhdzyA-Ga1OB0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1090590112441</string>
+	<string>1079785199950</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.Baroqueaccess.Lujo</string>
 	<key>PROJECT_ID</key>
-	<string>golujo-1541423574973</string>
+	<string>lujo-249d1</string>
 	<key>STORAGE_BUCKET</key>
-	<string>golujo-1541423574973.appspot.com</string>
+	<string>lujo-249d1.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1090590112441:ios:3a91a43865855171</string>
-	<key>DATABASE_URL</key>
-	<string>https://golujo-1541423574973.firebaseio.com</string>
+	<string>1:1079785199950:ios:f8fbdc14262eeda56f661f</string>
 </dict>
 </plist>

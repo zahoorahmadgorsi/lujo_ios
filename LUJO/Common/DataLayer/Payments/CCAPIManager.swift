@@ -1,5 +1,5 @@
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 
 class CCAPIManager: PaymentAPIManager {
     // swiftlint:disable line_length
@@ -167,8 +167,7 @@ extension CCAPIManager {
         if let extraInfo = otherInfo {
             userInfo["otherInfo"] = extraInfo
         }
-
-        Crashlytics.sharedInstance().recordError(error, withAdditionalUserInfo: userInfo)
+        Crashlytics.crashlytics().record(error: error)
     }
 }
 

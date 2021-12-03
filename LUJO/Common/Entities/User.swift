@@ -1,4 +1,6 @@
 // swiftlint:disable identifier_name
+import UIKit
+
 enum UserTitle: String, Codable, CaseIterable {
     case mr = "Mr."
     case mrs = "Mrs."

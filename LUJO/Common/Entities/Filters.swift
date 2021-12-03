@@ -6,7 +6,7 @@
 //  Copyright © 2021 Baroque Access. All rights reserved.
 //
 
-import Crashlytics
+import FirebaseCrashlytics
 
 struct Filters: Codable{
     var yachtTag : [Taxonomy]?
@@ -36,7 +36,7 @@ struct Filters: Codable{
             yachtStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtStatus)
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

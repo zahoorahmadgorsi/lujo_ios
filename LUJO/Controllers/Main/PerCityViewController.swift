@@ -9,7 +9,7 @@
 
 import UIKit
 import JGProgressHUD
-import Crashlytics
+import FirebaseCrashlytics
 import AVFoundation
 import Mixpanel
 
@@ -554,7 +554,7 @@ extension PerCityViewController: CityViewProtocol {
                                   , minPrice: eleventhFilter
                                   , maxPrice: twelvethFilter) { list, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain per city objects information")
                 completion(nil, error)
                 return
@@ -587,7 +587,7 @@ extension PerCityViewController: CityViewProtocol {
         }
         EEAPIManager().getFilters(token, type: categoryType) { list, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain filters on per city")
                 completion(nil, error)
                 return
@@ -605,7 +605,7 @@ extension PerCityViewController: CityViewProtocol {
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return

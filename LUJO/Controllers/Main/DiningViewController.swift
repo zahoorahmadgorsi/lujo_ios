@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Crashlytics
+import FirebaseCrashlytics
 import JGProgressHUD
 import CoreLocation
 
@@ -344,7 +344,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
                 self.canSendRequest = true
                 
                 if let error = error {
-                    Crashlytics.sharedInstance().recordError(error)
+                    Crashlytics.crashlytics().record(error: error)
                     // NEED TO BE REPLACED WITH UI VIEW
                     self.myLocationCityView.isHidden = true
                     self.noNearbyRestaurantsContainerView?.isHidden = false
@@ -431,7 +431,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain Dining information")
                 completion(nil, error)
                 return
@@ -516,7 +516,7 @@ extension DiningViewController {
         
         GoLujoAPIManager().home(token) { restaurants, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain Dining information")
                 completion(nil, error)
                 return

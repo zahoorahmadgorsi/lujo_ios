@@ -14,4 +14,10 @@ target 'LUJO' do
   #Intercom
   pod 'Intercom' , '~> 10.0.0'
   pod 'Cosmos', '~> 23.0'
+  
+  # Add the Firebase pod for Google Analytics
+  pod 'Firebase/Analytics'
+  # For Analytics without IDFA collection capability, use this pod instead
+  # pod ‘Firebase/AnalyticsWithoutAdIdSupport’
+  pod 'Firebase/Crashlytics'
 end

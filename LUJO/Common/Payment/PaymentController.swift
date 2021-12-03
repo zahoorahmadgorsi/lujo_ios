@@ -1,4 +1,4 @@
-import Crashlytics
+import FirebaseCrashlytics
 import DefaultsKit
 import Foundation
 
@@ -110,7 +110,7 @@ extension PaymentController {
         paymentAPI.encodeCard(number: card.cardNumber) { cardToken, error in
             guard error == nil, let token = cardToken else {
                 self.delegate.show("Error saving your credit card")
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 return
             }
             let cardInfo = CreditCardInfo(cardToken: token,
@@ -173,7 +173,7 @@ extension PaymentController {
                     self.paymentAPI.add(paymentMethodSelected, to: self.paymentSession!) { error in
                         guard error == nil else {
                             self.delegate.show("Unable to save your credit card")
-                            Crashlytics.sharedInstance().recordError(error!)
+                            Crashlytics.crashlytics().record(error: error!)
                             return
                         }
                         self.paymentSession?.paymentMethods.append(paymentMethodSelected as Any)

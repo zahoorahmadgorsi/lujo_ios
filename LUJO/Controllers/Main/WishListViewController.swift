@@ -8,6 +8,7 @@
 
 import UIKit
 import JGProgressHUD
+import FirebaseCrashlytics
 
 enum WishListError: Error {
     case noDataFound(reason: String)
@@ -407,7 +408,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         
         GoLujoAPIManager().getFavourites(token) { favourites, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain the wish list information")
                 completion(nil, error)
                 return
@@ -657,7 +658,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain wish list information")
                 completion(nil, error)
                 return

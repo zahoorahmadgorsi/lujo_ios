@@ -7,7 +7,7 @@
 //
 
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 
 class CustomRequestAPIManager {
@@ -130,6 +130,6 @@ class CustomRequestAPIManager {
                                 NSLocalizedDescriptionKey: "Unexpected \(statusCode) received on \(sourceURL)",
                                 NSLocalizedFailureReasonErrorKey: "Expected code 20X, 40X or 50X",
             ])
-        Crashlytics.sharedInstance().recordError(error)
+        Crashlytics.crashlytics().record(error: error)
     }
 }

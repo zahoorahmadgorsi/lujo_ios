@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 
 let LIGHTJETS = "Light Jets"
 let SUPERMIDJETS = "Super midsize Jets"
@@ -165,7 +165,7 @@ class AviationAPIManagerNEW {
                                                                from: response.data!)
                 airportList = airportResponse.content.data.map { $0.toAirport() }
             } catch {
-                Crashlytics.sharedInstance().recordError(error)
+                Crashlytics.crashlytics().record(error: error)
             }
             
             completionHandler(airportList, nil)

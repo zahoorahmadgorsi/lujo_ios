@@ -18,16 +18,6 @@
 		1D3E09D722D4C33E0051BDBC /* NoSelectTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3E09D622D4C33E0051BDBC /* NoSelectTextView.swift */; };
 		1D44A6FA2356250F0073C682 /* GlobalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44A6F92356250F0073C682 /* GlobalSearchViewController.swift */; };
 		1D60067023994B9300B9BA2A /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60066F23994B9300B9BA2A /* libc++abi.tbd */; };
-		1D60067B239952D400B9BA2A /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600671239952D300B9BA2A /* FirebaseAnalytics.framework */; };
-		1D60067C239952D400B9BA2A /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600672239952D300B9BA2A /* FirebaseCore.framework */; };
-		1D60067D239952D400B9BA2A /* FirebaseCoreDiagnostics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600673239952D300B9BA2A /* FirebaseCoreDiagnostics.framework */; };
-		1D60067E239952D400B9BA2A /* GoogleDataTransportCCTSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600674239952D300B9BA2A /* GoogleDataTransportCCTSupport.framework */; };
-		1D60067F239952D400B9BA2A /* FIRAnalyticsConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600675239952D300B9BA2A /* FIRAnalyticsConnector.framework */; };
-		1D600680239952D400B9BA2A /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600676239952D300B9BA2A /* nanopb.framework */; };
-		1D600681239952D400B9BA2A /* GoogleDataTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600677239952D400B9BA2A /* GoogleDataTransport.framework */; };
-		1D600682239952D400B9BA2A /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600678239952D400B9BA2A /* FirebaseInstanceID.framework */; };
-		1D600683239952D400B9BA2A /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D600679239952D400B9BA2A /* GoogleUtilities.framework */; };
-		1D600684239952D400B9BA2A /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60067A239952D400B9BA2A /* GoogleAppMeasurement.framework */; };
 		1D618004238A56C600F01199 /* CustomRequests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D618003238A56C600F01199 /* CustomRequests.storyboard */; };
 		1D618007238AADBA00F01199 /* CustomRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D618006238AADBA00F01199 /* CustomRequestRouter.swift */; };
 		1D618009238AAF0000F01199 /* CustomRequestAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D618008238AAF0000F01199 /* CustomRequestAPIManager.swift */; };
@@ -168,6 +158,7 @@
 		88CEBCFC265457EC00360CB6 /* PreferredDestinationaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */; };
 		88CEBD0726546D1A00360CB6 /* AirportCollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */; };
 		88CEBD0C26546D2D00360CB6 /* AirportCollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEBD0B26546D2D00360CB6 /* AirportCollViewCell.swift */; };
+		88E4A6F92759B36600081270 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88E4A6F82759B36600081270 /* GoogleService-Info.plist */; };
 		88E731A9256FC5B700BEDD00 /* ProductDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */; };
 		88E731AA256FC5B700BEDD00 /* ProductDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */; };
 		88E731AC256FFA7200BEDD00 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */; };
@@ -310,8 +301,6 @@
 		9AC6DA6D217D8F700098B016 /* Lift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6DA6C217D8F700098B016 /* Lift.swift */; };
 		9AC9542221A7055A00C7A119 /* UpdatePhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC9542121A7055A00C7A119 /* UpdatePhoneNumberView.swift */; };
 		9ACE52BD212D1F3F00BB287A /* M13Checkbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE52BC212D1F3F00BB287A /* M13Checkbox.framework */; };
-		9ACE52C1212D309400BB287A /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE52BF212D309400BB287A /* Fabric.framework */; };
-		9ACE52C2212D309400BB287A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE52C0212D309400BB287A /* Crashlytics.framework */; };
 		9AD1CE0022817F48007A0D63 /* BookingPaymentSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AD1CDFF22817F48007A0D63 /* BookingPaymentSummaryView.xib */; };
 		9AD1CE02228182B2007A0D63 /* BookingPaymentSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD1CE01228182B2007A0D63 /* BookingPaymentSummaryView.swift */; };
 		9AD6EAB821E3621400B695A3 /* Payment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6EAB721E3621400B695A3 /* Payment.storyboard */; };
@@ -412,8 +401,6 @@
 		1D3E09D622D4C33E0051BDBC /* NoSelectTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSelectTextView.swift; sourceTree = "<group>"; };
 		1D3E09D822D747FE0051BDBC /* LUJO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LUJO.entitlements; sourceTree = "<group>"; };
 		1D44A6F92356250F0073C682 /* GlobalSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSearchViewController.swift; sourceTree = "<group>"; };
-		1D523A9D23995516009E78D8 /* Firebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = "Firebase Analytics/Firebase.h"; sourceTree = "<group>"; };
-		1D523A9E23995545009E78D8 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "Firebase Analytics/module.modulemap"; sourceTree = "<group>"; };
 		1D60066F23994B9300B9BA2A /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		1D600671239952D300B9BA2A /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = "Firebase Analytics/FirebaseAnalytics.framework"; sourceTree = "<group>"; };
 		1D600672239952D300B9BA2A /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = "Firebase Analytics/FirebaseCore.framework"; sourceTree = "<group>"; };
@@ -504,7 +491,6 @@
 		88029BB42633C811003F1E77 /* OneSignal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OneSignal.xcframework; path = Carthage/Build/OneSignal.xcframework; sourceTree = "<group>"; };
 		88029BCA2633CBCF003F1E77 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IQKeyboardManagerSwift.xcframework; path = Carthage/Build/IQKeyboardManagerSwift.xcframework; sourceTree = "<group>"; };
-		880A182827596680004E2C40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		880B9B0625582ABC0070D7CD /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
 		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
 		880B9B0A255840C10070D7CD /* Villa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Villa.swift; sourceTree = "<group>"; };
@@ -570,6 +556,7 @@
 		88CEBCFB265457EC00360CB6 /* PreferredDestinationaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredDestinationaViewController.swift; sourceTree = "<group>"; };
 		88CEBD0626546D1A00360CB6 /* AirportCollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AirportCollViewCell.xib; sourceTree = "<group>"; };
 		88CEBD0B26546D2D00360CB6 /* AirportCollViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportCollViewCell.swift; sourceTree = "<group>"; };
+		88E4A6F82759B36600081270 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88E731A7256FC5B700BEDD00 /* ProductDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCell.swift; sourceTree = "<group>"; };
 		88E731A8256FC5B700BEDD00 /* ProductDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailCell.xib; sourceTree = "<group>"; };
 		88E731AB256FFA7200BEDD00 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
@@ -774,24 +761,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60067B239952D400B9BA2A /* FirebaseAnalytics.framework in Frameworks */,
-				1D60067C239952D400B9BA2A /* FirebaseCore.framework in Frameworks */,
-				1D60067D239952D400B9BA2A /* FirebaseCoreDiagnostics.framework in Frameworks */,
-				1D60067E239952D400B9BA2A /* GoogleDataTransportCCTSupport.framework in Frameworks */,
-				1D60067F239952D400B9BA2A /* FIRAnalyticsConnector.framework in Frameworks */,
-				1D600680239952D400B9BA2A /* nanopb.framework in Frameworks */,
-				1D600681239952D400B9BA2A /* GoogleDataTransport.framework in Frameworks */,
-				1D600682239952D400B9BA2A /* FirebaseInstanceID.framework in Frameworks */,
-				1D600683239952D400B9BA2A /* GoogleUtilities.framework in Frameworks */,
 				88B30C792670234C0090B3B5 /* ActiveLabel.framework in Frameworks */,
-				1D600684239952D400B9BA2A /* GoogleAppMeasurement.framework in Frameworks */,
 				1D60067023994B9300B9BA2A /* libc++abi.tbd in Frameworks */,
 				9A72C3C3213831ED009FE9E2 /* SwiftEntryKit.framework in Frameworks */,
-				9ACE52C1212D309400BB287A /* Fabric.framework in Frameworks */,
 				88310E232636043E00301667 /* OneSignal.xcframework in Frameworks */,
 				9A72C3C92138D9A6009FE9E2 /* JGProgressHUD.framework in Frameworks */,
 				9AECC1432111CBD700C00C07 /* ObjectMapper.framework in Frameworks */,
-				9ACE52C2212D309400BB287A /* Crashlytics.framework in Frameworks */,
 				88310DFE2635FF3900301667 /* Mixpanel.xcframework in Frameworks */,
 				88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */,
 				9AECC1442111CBD700C00C07 /* DefaultsKit.framework in Frameworks */,
@@ -1592,14 +1567,11 @@
 		9A818F3E20EE74CA005B6455 = {
 			isa = PBXGroup;
 			children = (
-				880A182827596680004E2C40 /* GoogleService-Info.plist */,
-				1D523A9D23995516009E78D8 /* Firebase.h */,
 				88029BA22633BF42003F1E77 /* OneSignalNotificationServiceExtension */,
 				9AECC13A2111CBD700C00C07 /* Frameworks */,
 				9A818F4920EE74CA005B6455 /* LUJO */,
 				9A818F5E20EE74CC005B6455 /* LUJOTests */,
 				9A818F6920EE74CC005B6455 /* LUJOUITests */,
-				1D523A9E23995545009E78D8 /* module.modulemap */,
 				9A818F4820EE74CA005B6455 /* Products */,
 				917FBD0B25A32A7400F6BA5E /* tmp.xcconfig */,
 				AA08F477D8A9D3D052367B11 /* Pods */,
@@ -1620,6 +1592,7 @@
 		9A818F4920EE74CA005B6455 /* LUJO */ = {
 			isa = PBXGroup;
 			children = (
+				88E4A6F82759B36600081270 /* GoogleService-Info.plist */,
 				1D6006852399535900B9BA2A /* LUJO-Bridging-Header.h */,
 				9AC4FE08225CA31F0031E57E /* AppDelegate.swift */,
 				557BB5E42315930400744188 /* GlobalExtensions.swift */,
@@ -1886,6 +1859,7 @@
 				88310E002635FF3900301667 /* Embed Frameworks */,
 				2E461DCF362ECED2DF565CE5 /* [CP] Embed Pods Frameworks */,
 				88B30C3A266FE7600090B3B5 /* ShellScript */,
+				88E4A6C12759A67B00081270 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2055,6 +2029,7 @@
 				887E27B32748E099000A93B8 /* MinMaxFilter.xib in Resources */,
 				1DEDB9EE22F2109600903CAC /* HomeSliderCell.xib in Resources */,
 				30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */,
+				88E4A6F92759B36600081270 /* GoogleService-Info.plist in Resources */,
 				9A194FE822901A5100E3DBD1 /* HomeEventSummary.xib in Resources */,
 				888A306526460C9D008754AD /* PrefCollViewCell.xib in Resources */,
 				9A4CE04220F6F0AC00BB27FC /* HelveticaLTStd-Bold.otf in Resources */,
@@ -2145,6 +2120,25 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
 		};
+		88E4A6C12759A67B00081270 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		9A1006B7217D85F6009219EA /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2189,7 +2183,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 221292bb9044510d4b6fb6b986ada6984cc76548 9b8c9457b4a1aa2ba0e085b4b30a4ce7e74a778d25fba5bfbbe439ebc0451cc8\n";
+			shellScript = "
+";
 		};
 		9AECC1492111CC0100C00C07 /* Carthage Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2765,16 +2760,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/CardConnect/Universal",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = LUJO/Info.plist;
@@ -2785,7 +2770,7 @@
 				);
 				LUJO_API_VERSION = v1;
 				MARKETING_VERSION = 5.3;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2828,16 +2813,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/CardConnect/Universal",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = LUJO/Info.plist;
@@ -2848,7 +2823,7 @@
 				);
 				LUJO_API_VERSION = v1;
 				MARKETING_VERSION = 5.3;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3039,16 +3014,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/CardConnect/Universal",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
-					"$(PROJECT_DIR)/Firebase\\ Analytics",
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = LUJO/Info.plist;
@@ -3060,7 +3025,7 @@
 				LUJO_API_VERSION = v1;
 				MARKETING_VERSION = 5.3;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

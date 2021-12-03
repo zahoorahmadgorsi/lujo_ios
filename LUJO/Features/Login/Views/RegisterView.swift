@@ -1,5 +1,5 @@
 import ActiveLabel
-import Crashlytics
+import FirebaseCrashlytics
 import JGProgressHUD
 import M13Checkbox
 import MessageUI
@@ -269,7 +269,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
 extension RegisterView: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         if error != nil {
-            Crashlytics.sharedInstance().recordError(error!)
+            Crashlytics.crashlytics().record(error: error!)
         }
 
         controller.dismiss(animated: true, completion: nil)

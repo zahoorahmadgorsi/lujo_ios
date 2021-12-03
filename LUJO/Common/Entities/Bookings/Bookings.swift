@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Crashlytics
+import FirebaseCrashlytics
 
 struct Booking: Codable {
     let bookingId: String?
@@ -65,7 +65,7 @@ extension Booking {
             }
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

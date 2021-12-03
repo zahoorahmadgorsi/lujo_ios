@@ -8,7 +8,7 @@
 
 import UIKit
 import JGProgressHUD
-import Crashlytics
+import FirebaseCrashlytics
 import AVFoundation
 
 enum ProductCategory: String {
@@ -363,7 +363,7 @@ extension ProductsViewController {
             case .event:
                 EEAPIManager().getEvents(token, past: past, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Events information")
                         completion([], error)
                         return
@@ -373,7 +373,7 @@ extension ProductsViewController {
             case .experience:
                 EEAPIManager().getExperiences(token, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experience information")
                         completion([], error)
                         return
@@ -383,7 +383,7 @@ extension ProductsViewController {
             case .villa:
                 EEAPIManager().getVillas(token, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")
                         completion([], error)
                         return
@@ -394,7 +394,7 @@ extension ProductsViewController {
                 //sending category_term_id in case of gifts in the paraeter cityid
                 EEAPIManager().getGoods(token, term: term, category_term_id: cityId, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
                         completion([], error)
                         return
@@ -404,7 +404,7 @@ extension ProductsViewController {
             case .yacht:
                 EEAPIManager().getYachts(token, term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
                         completion([], error)
                         return
@@ -415,7 +415,7 @@ extension ProductsViewController {
                 print(self.subCategoryType) //subcategory is nill if view toprated frome home screen, but it will contain some value if viewing toprate yachts, event etc
                 EEAPIManager().getTopRated(token, type: self.subCategoryType, term: nil) { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain top rated items information")
                         completion([], error)
                         return
@@ -425,7 +425,7 @@ extension ProductsViewController {
             case .recent:
                 EEAPIManager().getRecents(token, limit: "30", type: "") { list, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")
                         completion([], error)
                         return
@@ -472,7 +472,7 @@ extension ProductsViewController {
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return

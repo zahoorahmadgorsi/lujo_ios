@@ -6,99 +6,8 @@
 //  Copyright © 2019 Baroque Access. All rights reserved.
 //
 
-import Crashlytics
+import FirebaseCrashlytics
 import UIKit
-
-//struct Product1: Codable {
-//    let id: Int
-//    let name: String
-//    let description: String
-//
-//    let tripadvisor: String?
-//    let address: String
-//    let phone: String?
-//    let zipCode: String?
-//    let email: String?
-//    let website: String?
-//    let starChief: String?
-//    let restaurantCategory: [Taxonomy]?
-//    let cuisineCategory: [Taxonomy]?
-//    let michelinStar: [Taxonomy]?
-//
-//    let primaryMedia: Gallery?
-//    let gallery: [Gallery]?
-//
-//    let latitude: String?
-//    let longtitude: String?
-//
-//
-//
-//    let priceRange: [Taxonomy]?
-//    let location: [TaxonomyLocation]
-//    var isFavourite: Bool?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case name
-//        case description
-//        case tripadvisor
-//        case address
-//        case zipCode = "zip"
-//        case phone
-//        case email
-//        case website
-//        case primaryMedia = "featured_media"
-//        case gallery
-//        case latitude
-//        case longtitude
-//        case starChief = "star-chef"
-//        case restaurantCategory = "restaurant_category"
-//        case cuisineCategory = "cuisine_category"
-//        case michelinStar = "michelin_star"
-//        case priceRange = "price_range"
-//        case location
-//        case isFavourite = "is_favorite"
-//    }
-//
-//    func getAllImagesURL() -> [String] {
-//        return gallery?.filter({ $0.type == "image" }).map({ $0.mediaUrl }) ?? []
-//    }
-//}
-
-//extension Product {
-//    init(from decoder: Decoder) throws {
-//        do {
-//            let values = try decoder.container(keyedBy: CodingKeys.self)
-//
-//            id = try values.decode(Int.self, forKey: .id)
-//            name = try values.decode(String.self, forKey: .name)
-//            description = try values.decode(String.self, forKey: .description)
-//            tripadvisor = try values.decodeIfPresent(String.self, forKey: .tripadvisor)
-//            address = try values.decode(String.self, forKey: .address)
-//            phone = try values.decodeIfPresent(String.self, forKey: .phone)
-//            zipCode = try values.decodeIfPresent(String.self, forKey: .zipCode)
-//            email = try values.decodeIfPresent(String.self, forKey: .email)
-//            website = try values.decodeIfPresent(String.self, forKey: .website)
-//
-//            primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
-//            gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
-//
-//            latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
-//            longtitude = try values.decodeIfPresent(String.self, forKey: .longtitude)
-//            starChief = try values.decodeIfPresent(String.self, forKey: .starChief)
-//
-//            restaurantCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .restaurantCategory)
-//            cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)
-//            michelinStar = try values.decodeIfPresent([Taxonomy].self, forKey: .michelinStar)
-//            priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
-//            location = try values.decode([TaxonomyLocation].self, forKey: .location)
-//            isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
-//        } catch {
-//            Crashlytics.sharedInstance().recordError(error)
-//            throw error
-//        }
-//    }
-//}
 
 struct StarChief: Codable {
     let chiefName: String
@@ -122,7 +31,7 @@ extension StarChief {
             chiefRestaurant = try values.decode(Product.self, forKey: .chiefRestaurant)
 
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -150,7 +59,7 @@ extension Cuisine {
             iconUrl = try values.decodeIfPresent(String.self, forKey: .iconUrl)
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -181,7 +90,7 @@ extension DiningCity {
             restaurants = try values.decode([Product].self, forKey: .restaurants)
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -253,7 +162,7 @@ extension DiningHomeObjects {
             cities = try values.decode([DiningCity].self, forKey: .cities)
 
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

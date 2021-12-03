@@ -7,7 +7,8 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
-import Mixpanel
+import FirebaseCrashlytics
+
 
 class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate, DestinationSearchViewDelegate,AirportSearchViewDelegate  {
     //MARK: - 🎲 - Init
@@ -280,7 +281,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             case .aviationPreferredDestination:
                 GoLujoAPIManager().setAviationPreferredDestinations(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                         completion(nil, error)
                         return
@@ -290,7 +291,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             case .aviationPreferredAirport:
             GoLujoAPIManager().setAviationPreferredAirports(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                 guard error == nil else {
-                    Crashlytics.sharedInstance().recordError(error!)
+                    Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                     completion(nil, error)
                     return
@@ -306,7 +307,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             case .yachtPreferredRegions:
                 GoLujoAPIManager().setYachtPreferredRegions(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                         completion(nil, error)
                         return
@@ -322,7 +323,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             case .travelDestinations:
                 GoLujoAPIManager().setTravelDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                         completion(nil, error)
                         return
@@ -338,7 +339,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 case .villaDestinations:
                     GoLujoAPIManager().setVillaDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
+                            Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                             completion(nil, error)
                             return

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseCrashlytics
 
 struct ConversationList: Codable {
     let message: String?
@@ -26,7 +27,7 @@ extension ConversationList {
             items = try values.decodeIfPresent([ChatHeader].self, forKey: .items)
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -61,7 +62,7 @@ extension ChatHeader {
             createdAt = try values.decode(String.self, forKey: .createdAt)
             meta = try values.decodeIfPresent(Meta.self, forKey: .meta)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -88,7 +89,7 @@ extension Meta {
             sfid = try values.decodeIfPresent(String.self, forKey: .sfid)
             avatar = try values.decodeIfPresent(String.self, forKey: .avatar)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -112,11 +113,12 @@ extension ConversationDetails {
             items = try values.decodeIfPresent([Message].self, forKey: .items)
             
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
 }
+
 
 struct Message: Codable {
     let body: String
@@ -141,7 +143,7 @@ extension Message {
             createdAt = try values.decode(CreatedAt.self, forKey: .createdAt)
             meta = try values.decodeIfPresent(Meta.self, forKey: .meta)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -168,7 +170,7 @@ extension CreatedAt {
             timezoneType = try values.decode(Int.self, forKey: .timezoneType)
             timezone = try values.decode(String.self, forKey: .timezone)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
@@ -192,7 +194,7 @@ extension SendMessageResponse {
             conversationId = try values.decode(String.self, forKey: .conversationId)
             messageId = try values.decode(String.self, forKey: .messageId)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

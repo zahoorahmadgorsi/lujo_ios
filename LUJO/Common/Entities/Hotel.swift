@@ -6,7 +6,7 @@
 //  Copyright © 2020 Baroque Access. All rights reserved.
 //
 
-import Crashlytics
+import FirebaseCrashlytics
 import UIKit
 
 struct Hotel: Codable {
@@ -90,7 +90,7 @@ extension Hotel {
             location = try values.decode([TaxonomyLocation].self, forKey: .location)
             isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }

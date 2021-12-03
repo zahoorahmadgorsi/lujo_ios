@@ -1,5 +1,5 @@
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import UIKit
 
 class EEAPIManager {
@@ -457,7 +457,7 @@ class EEAPIManager {
                                 NSLocalizedDescriptionKey: "Unexpected \(statusCode) received on \(sourceURL)",
                                 NSLocalizedFailureReasonErrorKey: "Expected code 20X, 40X or 50X",
                             ])
-        Crashlytics.sharedInstance().recordError(error)
+        Crashlytics.crashlytics().record(error: error)
     }
     
     func sendRequestForSalesForce(itemId: Int, channelId: String? = nil, completion: @escaping (CustomBookingResponse?, Error?) -> Void) {

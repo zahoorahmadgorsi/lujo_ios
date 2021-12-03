@@ -1,5 +1,5 @@
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Foundation
 import UIKit
 
@@ -289,7 +289,7 @@ enum EERouter: URLRequestConvertible {
 //            print (callURL)
             return callURL
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
         }
 //        print("https://\(EERouter.baseURLString)")
         return URL(string: "https://\(EERouter.baseURLString)")!

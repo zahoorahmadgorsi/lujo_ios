@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
+import FirebaseCrashlytics
 
 class PrefProductCategoryViewController: UIViewController {
     
@@ -229,7 +230,7 @@ class PrefProductCategoryViewController: UIViewController {
                 case .aviationAircraftCategory:
                 GoLujoAPIManager().getAviationCategories(token) { taxonomies, error in
                     guard error == nil else {
-                        Crashlytics.sharedInstance().recordError(error!)
+                        Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                         completion(nil, error)
                         return
@@ -369,7 +370,7 @@ class PrefProductCategoryViewController: UIViewController {
                 case .aviationAircraftCategory:
                     GoLujoAPIManager().setAviationAircraftCategory(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
+                            Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                             completion(nil, error)
                             return
@@ -386,7 +387,7 @@ class PrefProductCategoryViewController: UIViewController {
                 case .yachtPreferredLength:
                     GoLujoAPIManager().setYachtLength(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
-                            Crashlytics.sharedInstance().recordError(error!)
+                            Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
                             completion(nil, error)
                             return

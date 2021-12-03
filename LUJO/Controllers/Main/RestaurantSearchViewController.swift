@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import IQKeyboardManagerSwift
 import JGProgressHUD
-import Crashlytics
+import FirebaseCrashlytics
 import AVFoundation
 import Mixpanel
 
@@ -259,7 +259,7 @@ extension RestaurantSearchViewController {
         
         GoLujoAPIManager().search(token, term: term, cityId: nil, currentLocation: currentLocation) { restaurants, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain Dining information")
                 completion(nil, error)
                 return
@@ -305,7 +305,7 @@ extension RestaurantSearchViewController {
         
         GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")
                 completion(nil, error)
                 return
