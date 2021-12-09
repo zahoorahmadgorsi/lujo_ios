@@ -1340,4 +1340,6 @@ extension HomeViewController:ConversationsManagerDelegate{
         print("Twilio: channelJoined")
     }
 
+    func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
+    }
 }

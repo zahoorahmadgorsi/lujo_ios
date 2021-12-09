@@ -32,7 +32,7 @@ class ConversationsViewController: UIViewController {
     class func instantiate() -> ConversationsViewController {
         return UIStoryboard.main.instantiate(identifier)
     }
-    var identity = "USER_IDENTITY"
+//    var identity = "USER_IDENTITY"
     var delegate:UIAdaptivePresentationControllerDelegate?
     var deleteIndexPath: IndexPath? = nil //used while deleting at swipe left
     
@@ -172,6 +172,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         }else if let dateFromServer = model.dateCreatedAsDate{  //this channel has no last message hence showing the channel created date
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
         }
+        
         //last message of the conversation as per design
         model.getLastMessages(withCount: 1) { (result, messages: [TCHMessage]?) in
             
@@ -179,9 +180,15 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
                 if msgs[0].hasMedia(){
                     cell.lblLastMessage.text = "PHOTO"
                 }else{
-                    cell.lblLastMessage.text = msgs[0].body
+                    if let messageBody = msgs[0].body {
+                        if messageBody.isHtml(){
+                            let attributedString = messageBody.parseHTML()
+                            cell.lblLastMessage.text = attributedString.string
+                        }else{
+                            cell.lblLastMessage.text = msgs[0].body
+                        }
+                    }
                 }
-                
             }
         }
         //number of un read messages of this conversation
@@ -288,4 +295,7 @@ extension ConversationsViewController: ConversationsManagerDelegate {
     }
     
     
+    func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
+        print("Twilio: typingOn : \(String(describing: conversation.friendlyName)) by \(String(describing: participant.identity)) is \(isTyping)")
+    }
 }

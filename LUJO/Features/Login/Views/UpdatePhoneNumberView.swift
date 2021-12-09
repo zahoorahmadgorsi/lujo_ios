@@ -6,7 +6,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
 
     func showError(_ error: Error) {
         switch error.localizedDescription {
-        case "The account was not found":
+        case "The account was not found":   //it will never execute as server isnt sending this error any more
             errorLabel.isHidden = false
             phoneNumberContainer.layer.borderColor = UIColor.error.cgColor
             

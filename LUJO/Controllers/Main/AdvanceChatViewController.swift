@@ -27,6 +27,8 @@ import MapKit
 import MessageKit
 import InputBarAccessoryView
 import Kingfisher
+import TwilioConversationsClient
+import Mixpanel
 
 final class AdvanceChatViewController: ConversationViewController {
         
@@ -36,8 +38,10 @@ final class AdvanceChatViewController: ConversationViewController {
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: CustomMessagesFlowLayout())
         messagesCollectionView.register(CustomCell.self)
         super.viewDidLoad()
+        ConversationsManager.sharedConversationsManager.delegate = self
         
-        updateTitleView(title: "LUJO", subtitle: "2 Online")    //extension 
+        //updateTitleView(title: "LUJO", subtitle: "2 Online")    //extension
+        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: "2 Online")    //extension
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,6 +81,8 @@ final class AdvanceChatViewController: ConversationViewController {
         messageInputBar.delegate = self
 //        messageInputBar.overrideUserInterfaceStyle = .dark  //zahoor showing advance chat window always in dark mode
         messageInputBar.inputTextView.tintColor = .rgMid
+        messageInputBar.inputTextView.delegate = self // to show typingIndicator
+        
         messageInputBar.sendButton.setTitleColor(.rgMid, for: .normal)
         messageInputBar.sendButton.setTitleColor(
             UIColor.rgMid.withAlphaComponent(0.3),
@@ -179,14 +185,19 @@ final class AdvanceChatViewController: ConversationViewController {
         return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
     }
     
-    func setTypingIndicatorViewHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
-        updateTitleView(title: "LUJO", subtitle: isHidden ? "2 Online" : "Typing...")
+    func setTypingIndicatorViewHidden(_ isHidden: Bool, _ participant: TCHParticipant, performUpdates updates: (() -> Void)? = nil) {
+        var whoIsTyping = "Typing..."
+        if isHidden == false, let name = participant.identity{
+            whoIsTyping = name + " is typing..."
+        }
+        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : whoIsTyping)
         setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
             if success, self?.isLastSectionVisible() == true {
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }
     }
+    
     
 //    private func makeButton(named: String) -> InputBarButtonItem {
 //        return InputBarButtonItem()
@@ -485,3 +496,80 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
     
 }
 
+extension AdvanceChatViewController: ConversationsManagerDelegate {
+    
+    func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
+        print("Twilio: typingOn : \(String(describing: conversation.friendlyName)) by \(String(describing: participant.identity)) is \(isTyping)")
+        if(conversation.sid == self.channel?.sid){
+            self.setTypingIndicatorViewHidden(!isTyping , participant)
+        }
+        
+    }
+    
+    
+    func reloadMessages() {
+    }
+    
+    internal func receivedNewMessage(message: TCHMessage
+                                     , channel: TCHConversation
+                                     ){
+        if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
+            //if channel chat window is opened and recieved a new message then set its Un Consumed messages count to 0
+            ConversationsManager.sharedConversationsManager.setAllMessagesRead(channel) { (result, count) in
+                print("Twilio: set channel's unConsumed messages count to zero")
+            }
+//            print(message.mediaFilename,message.mediaSid)
+            if message.hasMedia(){
+                getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
+                    self.insertMessage(chatImageMessage)
+                }
+            }else if let chatMessage = self.convertTCHMessageToChatMessage(message: message){
+                self.insertMessage(chatMessage)
+            }
+        }else{
+            print("Twilio: Some other channel has received the message")
+        }
+    }
+    
+    func channelJoined(channel: TCHConversation){
+        self.channel = channel
+        self.showNetworkActivity()
+        EEAPIManager().sendRequestForSalesForce(itemId: product.id, channelId: channel.sid ?? "NoChannel"){ customBookingResponse, error in
+            self.hideNetworkActivity()
+            guard error == nil else {
+                Crashlytics.sharedInstance().recordError(error!)
+                BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                return
+            }
+//            https://developers.intercom.com/installing-intercom/docs/ios-configuration
+//            if let user = LujoSetup().getLujoUser(), user.id > 0 {
+//                Intercom.logEvent(withName: "custom_request", metaData:[
+//                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
+//                                    ,"user_id":user.id])
+//            }
+            Mixpanel.mainInstance().track(event: "Product Custom Request",
+                                          properties: ["Product Name" : self.product.name
+                                                       ,"Product Type" : self.product.type
+                                                       ,"ProductId" : self.product.id])
+            print("Twilio: Channel created, joined, channelID been sent to salesforce successfully")
+        }
+    }
+    
+    
+}
+
+extension AdvanceChatViewController: UITextViewDelegate{
+    
+    func textViewDidChange(_ textView: UITextView) {
+        switch (textView) {
+            case messageInputBar.inputTextView:
+                print("Twilio: textViewDidChange")
+                if let channel = self.channel , let conversationSid = channel.sid{
+                    ConversationsManager.sharedConversationsManager.notifyTypingOnConversation(conversationSid)
+                }
+                
+            default: break
+        }
+    }
+    
+}

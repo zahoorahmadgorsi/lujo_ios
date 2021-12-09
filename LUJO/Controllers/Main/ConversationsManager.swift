@@ -15,13 +15,15 @@ protocol ConversationsManagerDelegate: AnyObject {
     func channelJoined(channel: TCHConversation)
     func showNetworkActivity()
     func hideNetworkActivity()
-    
+    func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool)
 }
 
 class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
-
-    let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
-    var serverURL = "https://seashell-snowshoe-5113.twil.io/send-notification"
+    
+    //var serverURL = "https://seashell-snowshoe-5113.twil.io/send-notification"
+//    let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
+    let TOKEN_URL = "https://boysenberry-flamingo-2375.twil.io/chat-token"
+    
 
     static let sharedConversationsManager = ConversationsManager()
     static let sharedCache = NSCache<NSString, UIImage>()
@@ -59,6 +61,21 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             }
         }
     }
+    //called when some one is typing on in any conversation you are the participant
+    func conversationsClient(_ client: TwilioConversationsClient, typingStartedOn conversation: TCHConversation, participant: TCHParticipant) {
+        guard participant.sid != nil else {
+            return
+        }
+        delegate?.typingOn(conversation, participant , isTyping: true)
+    }
+
+    func conversationsClient(_ client: TwilioConversationsClient, typingEndedOn conversation: TCHConversation, participant: TCHParticipant) {
+        guard participant.sid != nil else {
+            return
+        }
+        delegate?.typingOn(conversation, participant, isTyping: false)
+    }
+    
     
     func conversationsClientTokenWillExpire(_ client: TwilioConversationsClient) {
             print("Twilio: Access token will expire.")
@@ -104,12 +121,20 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                 self.delegate?.hideNetworkActivity()
                 return
             }
+            
             // Set up Twilio Chat client
             TwilioConversationsClient.conversationsClient(withToken: token, properties: nil,
                                         delegate: self) { (result, chatClient) in
                 self.client = chatClient
+                
+                //updating user, right after login
+                let attributes = Utility.getAttributes(onlyRelatedToUser: false)
+                self.updateUser(customAttributes: attributes)
+                
                 completion(result.isSuccessful)
+                
             }
+            
         }
     }
 
@@ -182,6 +207,22 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                             print("Twilio: User could NOT added.")
                         }
                     })
+                    
+                    conversation?.addParticipant(byIdentity: "zahoor.ahmad@live.com", attributes: nil, completion: { (result) in
+                        if result.isSuccessful {
+                            print("Twilio: User added.")
+                        } else {
+                            print("Twilio: User could NOT added.")
+                        }
+                    })
+                    
+                    conversation?.addParticipant(byIdentity: "zahoor.gorsi@gmail.com", attributes: nil, completion: { (result) in
+                        if result.isSuccessful {
+                            print("Twilio: User added.")
+                        } else {
+                            print("Twilio: User could NOT added.")
+                        }
+                    })
                 }
             }else{
                 print("Twilio: Conversation could not created")
@@ -209,6 +250,12 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             if let conversations = client.myConversations(){
                 completion(conversations)
             }
+        }else{
+            //client is nill so try to login again
+            // get a reference to the app delegate
+            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.loginToTwilio()
+            completion([])
         }
     }
     
@@ -325,6 +372,26 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             })
         }
     }
+    
+    func notifyTypingOnConversation(_ conversationSid: String) {
+        guard let client = self.client else {
+            print ("Twilio: No client exists")
+            return
+        }
+        client.conversation(withSidOrUniqueName: conversationSid) { result, conversation in
+            conversation?.typing()
+        }
+    }
+    
+    
+    func updateUser(customAttributes: Dictionary<String,String>){
+        //updating user
+        let attributes:TCHJsonAttributes = .init(dictionary: customAttributes)
+        self.client?.user?.setAttributes(attributes, completion: { (result) in
+            print("Twilio: User attributes are updated?: \(result.isSuccessful)")
+        })
+    }
+    
 }
 
 

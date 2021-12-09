@@ -28,6 +28,7 @@ import InputBarAccessoryView
 import JGProgressHUD
 import TwilioConversationsClient
 import Mixpanel
+import CoreLocation
 
 /// A base class for the example controllers
 class ConversationViewController: MessagesViewController, MessagesDataSource {
@@ -60,6 +61,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     var identity = "USER_IDENTITY"
     var product:Product!
     var initialMessage:String?
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
     
     // MARK: - Lifecycle
 
@@ -68,7 +71,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         
         configureMessageCollectionView()
         configureMessageInputBar()
-        title = "LUJO"
+//        title = "LUJO"  //this name would be override with channel friendly name
         overrideUserInterfaceStyle = .dark  //showing chat window in dark mode
         let searchBarButton = UIButton(type: .system)
         searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
@@ -78,13 +81,11 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         searchBarButton.sizeToFit()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
         
-        ConversationsManager.sharedConversationsManager.delegate = self   //not chat manager should report about any new message to chatViewController
-        
+        identity = LujoSetup().getLujoUser()?.email ?? identity //current logged in user
         
         if let channel = self.channel{  //loading messages of existing channel
 //            print(channel.sid as Any)
             ConversationsManager.sharedConversationsManager.setChannel(channel: channel)
-            identity = channel.createdBy ?? identity
             ConversationsManager.sharedConversationsManager.getLastMessagesWithCount(channel, msgsCount: pageSize, completion: {messages in
                 if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
                     //if channel is opened and recieved a new message then set its consumed messages to all
@@ -119,14 +120,14 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 }
             })
         }else if let user = LujoSetup().getLujoUser(), user.id > 0 {
-            identity = user.email //+ " " + user.lastName
             let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
             //Creating channel if doesnt exist else joining
             let channelUniqueName = product.type + " " + user.firstName + " " + dateTime
             let channelFriendlyName = product.name
-            let attribute :Dictionary<String,String> = ["type" : product.type
-                                                        ,"profile_picture" : user.avatar
-                                                        ,"customer_name" : user.firstName + " " + user.lastName]
+            
+//            var attribute = Utility.getAttributes()
+            var attribute = Dictionary<String,String>()
+            attribute["type"] = product.type
             
             if (initialMessage == nil ){    //user is coming for some general inquiry thats why initial message is nil
                 let chatMessage:ChatMessage = addDefaultMessage(type:product.type)
@@ -137,6 +138,18 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 self.hideNetworkActivity()
             })
         }
+        
+        //Need to send LAT/LONG with each message to the server
+        // Ask for Authorisation from the User.
+        self.locationManager.requestAlwaysAuthorization()
+        // For use in foreground
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
     }
     
     @objc func imgCrossTapped(_ sender: Any) {
@@ -231,12 +244,14 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     func configureMessageInputBar() {
         messageInputBar.delegate = self
         messageInputBar.inputTextView.text = self.initialMessage
+        
         messageInputBar.inputTextView.tintColor = .rgMid
         messageInputBar.sendButton.setTitleColor(.rgMid, for: .normal)
         messageInputBar.sendButton.setTitleColor(
             UIColor.rgMid.withAlphaComponent(0.3),
             for: .highlighted
         )
+        
     }
     
     // MARK: - Helpers
@@ -448,11 +463,13 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
     }
 
     func processInputBar(_ inputBar: InputBarAccessoryView) {
-        if let user = LujoSetup().getLujoUser(), user.id > 0 {
-            let attribute :Dictionary<String,String> = [
-                                                        "profile_picture" : user.avatar
-                                                        ,"customer_name" : user.firstName + " " + user.lastName]
             
+        let attribute = Utility.getAttributes(onlyRelatedToUser: true) //sending user attributes with each message as well
+//        if let currentLoc = currentLocation{
+//            attribute["device_latitude"] = String(currentLoc.coordinate.latitude)
+//            attribute["device_longitude"] = String(currentLoc.coordinate.longitude)
+//        }
+        
             // Here we can parse for which substrings were autocompleted
             let attributedText = inputBar.inputTextView.attributedText!
             let range = NSRange(location: 0, length: attributedText.length)
@@ -470,10 +487,10 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
             inputBar.inputTextView.placeholder = "Sending..."
             // Resign first responder for iPad split view
             inputBar.inputTextView.resignFirstResponder()
-            
+        
             for component in components {
                 if let str = component as? String  {
-                    ConversationsManager.sharedConversationsManager.sendMessage(str,attribute, completion: { (result, _) in
+                    ConversationsManager.sharedConversationsManager.sendMessage(str, attribute, completion: { (result, _) in
                         inputBar.sendButton.stopAnimating()
                         if result.isSuccessful {
                             inputBar.inputTextView.placeholder = "Aa"
@@ -486,23 +503,18 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                     })
                 }
             }
-        }
+//        }
 
     }
     
-    private func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
+    internal func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
         if (identity == message.participant?.identity){ //its current user's message
             if let user:ChatUser = self.currentSender() as? ChatUser  {
                 if let messageBody = message.body {
                     if messageBody.isHtml(){
-                        let data = messageBody.data(using: .utf8)!
-                        if let attributedString = try? NSAttributedString(
-                            data: data,
-                            options: [.documentType: NSAttributedString.DocumentType.html],
-                            documentAttributes: nil){
-                            let msg = ChatMessage(attributedText: attributedString, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
-                            return msg
-                        }
+                        let attributedString = messageBody.parseHTML()
+                        let msg = ChatMessage(attributedText: attributedString, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                        return msg
                     }else{
                         let msg = ChatMessage(text: messageBody, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
                         return msg
@@ -513,14 +525,9 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
             let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
             if let messageBody = message.body {
                 if messageBody.isHtml(){
-                    let data = messageBody.data(using: .utf8)!
-                    if let attributedString = try? NSAttributedString(
-                        data: data,
-                        options: [.documentType: NSAttributedString.DocumentType.html],
-                        documentAttributes: nil){
-                        let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
-                        return msg
-                    }
+                    let attributedString = messageBody.parseHTML()
+                    let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                    return msg
                 }else{
                     let msg = ChatMessage(text: messageBody, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     return msg
@@ -531,7 +538,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
         return nil
     }
     
-    private func getAndConvertTCHImageMessageToChatMessage(_ message: TCHMessage
+    internal func getAndConvertTCHImageMessageToChatMessage(_ message: TCHMessage
                                                            , completion: @escaping (ChatMessage , _ isCached:Bool) -> Void){
         
         if let sid = message.mediaSid{
@@ -579,54 +586,19 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
     }
 }
 
-// MARK: QuickstartConversationsManagerDelegate
-extension ConversationViewController: ConversationsManagerDelegate {
-    
-    func reloadMessages() {
-    }
-    
-    internal func receivedNewMessage(message: TCHMessage
-                                     , channel: TCHConversation
-                                     ){
-        if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
-            //if channel chat window is opened and recieved a new message then set its Un Consumed messages count to 0
-            ConversationsManager.sharedConversationsManager.setAllMessagesRead(channel) { (result, count) in
-                print("Twilio: set channel's unConsumed messages count to zero")
-            }
-//            print(message.mediaFilename,message.mediaSid)
-            if message.hasMedia(){
-                getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
-                    self.insertMessage(chatImageMessage)
-                }
-            }else if let chatMessage = self.convertTCHMessageToChatMessage(message: message){
-                self.insertMessage(chatMessage)
-            }
-        }else{
-            print("Twilio: Some other channel has received the message")
+extension ConversationViewController:CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        self.locationManager.stopUpdatingLocation()
+        self.currentLocation = locations.first
+        
+        //updating user
+        var attributes = Utility.getAttributes(onlyRelatedToUser: false)
+        if let currentLoc = currentLocation{
+            attributes["device_latitude"] = String(currentLoc.coordinate.latitude)
+            attributes["device_longitude"] = String(currentLoc.coordinate.longitude)
         }
-    }
-    
-    func channelJoined(channel: TCHConversation){
-        self.channel = channel
-        self.showNetworkActivity()
-        EEAPIManager().sendRequestForSalesForce(itemId: product.id, channelId: channel.sid ?? "NoChannel"){ customBookingResponse, error in
-            self.hideNetworkActivity()
-            guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
-                BackendError.parsing(reason: "Could not obtain the salesforce_id")
-                return
-            }
-//            https://developers.intercom.com/installing-intercom/docs/ios-configuration
-//            if let user = LujoSetup().getLujoUser(), user.id > 0 {
-//                Intercom.logEvent(withName: "custom_request", metaData:[
-//                                    "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-//                                    ,"user_id":user.id])
-//            }
-            Mixpanel.mainInstance().track(event: "Product Custom Request",
-                                          properties: ["Product Name" : self.product.name
-                                                       ,"Product Type" : self.product.type
-                                                       ,"ProductId" : self.product.id])
-            print("Twilio: Channel created, joined, channelID been sent to salesforce successfully")
-        }
+        ConversationsManager.sharedConversationsManager.updateUser(customAttributes: attributes)
     }
 }

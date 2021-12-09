@@ -5,6 +5,8 @@
 //
 
 import Foundation
+import CoreTelephony
+import MessageUI
 
 // Helper to determine if we're running on simulator or device
 struct PlatformUtils {
@@ -42,5 +44,56 @@ struct TokenUtils {
             })
             task.resume()
         }
+    }
+}
+
+
+struct Utility
+{
+    static func getAppBuild() -> String {
+        if let dictionary = Bundle.main.infoDictionary{
+            if let strBuild = dictionary["CFBundleVersion"] as? String{
+                return  strBuild
+            }
+        }
+        return ""
+    }
+    
+    static func getAppVersion() -> String {
+        if let dictionary = Bundle.main.infoDictionary{
+            if let strVersion = dictionary["CFBundleShortVersionString"] as? String{
+                return strVersion
+            }
+        }
+        return ""
+    }
+    
+    static func getAttributes(onlyRelatedToUser:Bool) -> Dictionary<String,String>{
+        var attribute = Dictionary<String,String>()
+        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+            attribute["profile_picture"] = user.avatar
+            attribute["customer_name"] = user.firstName + " " + user.lastName
+            attribute["customer_email"] = user.email
+            attribute["customer_phone"] = user.phoneNumber.readableNumber
+            if (onlyRelatedToUser == false){
+                attribute["app_version"] = getAppVersion()
+                attribute["app_build"] = getAppBuild()
+                
+                attribute["device_name"] = UIDevice.modelName
+                attribute["device_ios_version"] = UIDevice.current.systemVersion
+                attribute["device_language"] = Locale.current.languageCode
+                if let carrier = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders?.first?.value{
+                    attribute["device_carrier_name"] = carrier.carrierName
+                    
+                }
+                attribute["device_timezone"] = TimeZone.current.abbreviation()
+                if let network = CTTelephonyNetworkInfo().serviceCurrentRadioAccessTechnology?.first?.value {// .serviceSubscriberCellularProviders?.first?.value{
+                    attribute["device_connection"] = network.localizedLowercase
+                    
+                }
+            }
+            
+        }
+        return attribute
     }
 }
