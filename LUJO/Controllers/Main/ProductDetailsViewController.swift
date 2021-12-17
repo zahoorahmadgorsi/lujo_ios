@@ -130,10 +130,16 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
         
         if (product.name.count == 0 ){  //detail is going to open due to some push notification
-            self.showNetworkActivity()
+            //showig animation
+            let jeremyGif = UIImage.gifImageWithName("logo animation")
+            let imageView = UIImageView(image: jeremyGif)
+            imageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            view.addSubview(imageView)
+            
+//            self.showNetworkActivity()
             getProductDetails() {information, error in
-                self.hideNetworkActivity()
-
+//                self.hideNetworkActivity()
+                imageView.removeFromSuperview()
                 if let error = error {
                     self.showError(error)
                     return

@@ -144,6 +144,7 @@
 		88988675272363F60030613A /* SingleLineCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88988674272363F60030613A /* SingleLineCollectionFilter.swift */; };
 		8898867A2723DF6A0030613A /* SingleLineFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889886792723DF6A0030613A /* SingleLineFilterCell.xib */; };
 		8898867F2723E2450030613A /* SingleLineFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898867E2723E2450030613A /* SingleLineFilterCell.swift */; };
+		889D6321276CEBAD005C3363 /* logo animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 889D6320276CEBAD005C3363 /* logo animation.gif */; };
 		88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; };
 		88B30C792670234C0090B3B5 /* ActiveLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44CDE62130753100699E1A /* ActiveLabel.framework */; };
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
@@ -543,6 +544,7 @@
 		88988674272363F60030613A /* SingleLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineCollectionFilter.swift; sourceTree = "<group>"; };
 		889886792723DF6A0030613A /* SingleLineFilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLineFilterCell.xib; sourceTree = "<group>"; };
 		8898867E2723E2450030613A /* SingleLineFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineFilterCell.swift; sourceTree = "<group>"; };
+		889D6320276CEBAD005C3363 /* logo animation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "logo animation.gif"; sourceTree = "<group>"; };
 		88B57274256AC32000FF9E4C /* DiningViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiningViewCell.xib; sourceTree = "<group>"; };
 		88B90AA02634389700DE2089 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		88C083C82635CCB400204475 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
@@ -1003,6 +1005,7 @@
 		3052319E23408B8A00D24596 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				889D6320276CEBAD005C3363 /* logo animation.gif */,
 				1DBC9C01236567C100F0F133 /* Assets.xcassets */,
 				9A4CE03D20F6F08500BB27FC /* Fonts */,
 			);
@@ -2022,6 +2025,7 @@
 				88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */,
 				1DFE1AC523476FCD0025410D /* DiningCityView.xib in Resources */,
 				9AD6EAB821E3621400B695A3 /* Payment.storyboard in Resources */,
+				889D6321276CEBAD005C3363 /* logo animation.gif in Resources */,
 				1D70B11A22B95F35007051FA /* ImageCarouselCell.xib in Resources */,
 				9AC4FE0D225F4E550031E57E /* BookingRequestSummaryView.xib in Resources */,
 				553BF856230D4E4700EF4671 /* CardAlertView.xib in Resources */,
@@ -2537,7 +2541,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2563,7 +2567,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2588,7 +2592,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2752,7 +2756,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2806,7 +2810,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3006,7 +3010,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

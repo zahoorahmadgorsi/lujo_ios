@@ -163,10 +163,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Push can be expected in almost every situation with a success status, but
         // as a pre-caution its good to verify it exists
         if let pushResults = results!["push"] {
-        print("Set external user id push status: ", pushResults)
+            print("Set external user id push status: ", pushResults)
         }
         if let emailResults = results!["email"] {
-          print("Set external user id email status: ", emailResults)
+            print("Set external user id email status: ", emailResults)
         }
         })
     }
