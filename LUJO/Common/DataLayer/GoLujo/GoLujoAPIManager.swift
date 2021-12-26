@@ -421,7 +421,8 @@ extension GoLujoAPIManager {
                                             approved: resultResponse.content.approved,
                                             referralCode: resultResponse.content.referralCode,
                                             points: resultResponse.content.points,
-                                            membershipPlan: resultResponse.content.membershipPlan)
+                                            membershipPlan: resultResponse.content.membershipPlan,
+                                            sfid: resultResponse.content.sfid)
                         completion(user, nil)
 
                     } catch {

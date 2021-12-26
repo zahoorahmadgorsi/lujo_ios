@@ -163,7 +163,7 @@ class BookingsViewController: UIViewController {
             viewController.initialMessage = initialMessage
             self.navigationController?.pushViewController(viewController,animated: true)
         } else {
-            showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
+            showInformationPopup()
         }
     }
     

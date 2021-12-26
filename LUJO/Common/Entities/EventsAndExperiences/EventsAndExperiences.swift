@@ -330,7 +330,7 @@ extension Product {
 
             type = try values.decode(String.self, forKey: .type)
             id = try values.decode(Int.self, forKey: .id)
-            print("Product id:\(id)")
+//            print("Product id:\(id)")
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
             let priceStr = try values.decodeIfPresent(String.self, forKey: .price)

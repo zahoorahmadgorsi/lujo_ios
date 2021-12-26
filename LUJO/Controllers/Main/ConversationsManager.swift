@@ -127,9 +127,10 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                                         delegate: self) { (result, chatClient) in
                 self.client = chatClient
                 
-                //updating user, right after login
-                let attributes = Utility.getAttributes(onlyRelatedToUser: false)
-                self.updateUser(customAttributes: attributes)
+                //no need as shuja cant access user level info
+//                //updating user, right after login
+//                let attributes = Utility.getAttributes(onlyRelatedToUser: false)
+//                self.updateUser(customAttributes: attributes)
                 
                 completion(result.isSuccessful)
                 
@@ -148,7 +149,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     
     // MARK: - Create conversation
     
-    public func createConversation(uniqueChannelName: String, friendlyName: String, customAttribute: Dictionary<String,String>,_ completion: @escaping (Bool, TCHConversation?) -> Void) {
+    public func createConversation(uniqueChannelName: String, friendlyName: String, customAttribute: Dictionary<String,Any>,_ completion: @escaping (Bool, TCHConversation?) -> Void) {
         guard let client = self.client else {
             // get a reference to the app delegate
             let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
@@ -173,14 +174,14 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: User could NOT added.")
+                            print("Twilio: shujahm@gmail.com could NOT added.")
                         }
                     })
                     conversation?.addParticipant(byIdentity: "admin@gmail.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: User could NOT added.")
+                            print("Twilio: admin@gmail.com could NOT added.")
                         }
                     })
                     
@@ -188,7 +189,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: User could NOT added.")
+                            print("Twilio: deseriejoy.cruz@baroqueaviation.com could NOT added.")
                         }
                     })
                     
@@ -196,7 +197,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: User could NOT added.")
+                            print("Twilio: zairalujo@gmail.com could NOT added.")
                         }
                     })
                     
@@ -204,7 +205,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: User could NOT added.")
+                            print("Twilio: sahleg@golujo.com could NOT added.")
                         }
                     })
                     
@@ -212,7 +213,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: User could NOT added.")
+                            print("Twilio: zahoor.ahmad@live.com could NOT added.")
                         }
                     })
                     
@@ -220,7 +221,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: User could NOT added.")
+                            print("Twilio: zahoor.gorsi@gmail.com could NOT added.")
                         }
                     })
                 }
@@ -317,7 +318,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
     
     func sendMessage(_ messageText: String
-                     , _ cutomAttributes: Dictionary<String,String>
+                     , _ cutomAttributes: Dictionary<String,Any>
                      , completion: @escaping (TCHResult, TCHMessage?) -> Void) {
         if let conversation = self.conversation{
             let messageOptions = TCHMessageOptions().withBody(messageText)  //setting message body
@@ -334,15 +335,20 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     
     func sendImageMessage(photo  : UIImage
                           ,_ conversation: TCHConversation
+                          , _ cutomAttributes: Dictionary<String,Any>
                           , completion: @escaping (TCHResult, TCHMessage?) -> Void){
         // The data for the image you would like to send
         //let data = Data()
         if let data = photo.pngData(){
             // Prepare the upload stream and parameters
             let messageOptions = TCHMessageOptions()
+            
             let inputStream = InputStream(data: data)
             let fileName = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss") + ".png"
-
+            //adding custom attributes in the message
+            let attributes:TCHJsonAttributes = .init(dictionary: cutomAttributes)
+            messageOptions.withAttributes(attributes, error: nil)
+            
             messageOptions.withMediaStream(inputStream,
                                            contentType: "image/jpeg"
                                            ,defaultFilename: fileName , //optional

@@ -125,8 +125,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             let channelUniqueName = product.type + " " + user.firstName + " " + dateTime
             let channelFriendlyName = product.name
             
-//            var attribute = Utility.getAttributes()
-            var attribute = Dictionary<String,String>()
+            var attribute = Utility.getAttributes(onlyRelatedToUser: false)
+//            var attribute = Dictionary<String,String>()
             attribute["type"] = product.type
             
             if (initialMessage == nil ){    //user is coming for some general inquiry thats why initial message is nil
@@ -463,12 +463,12 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
     }
 
     func processInputBar(_ inputBar: InputBarAccessoryView) {
-            
-        let attribute = Utility.getAttributes(onlyRelatedToUser: true) //sending user attributes with each message as well
-//        if let currentLoc = currentLocation{
-//            attribute["device_latitude"] = String(currentLoc.coordinate.latitude)
-//            attribute["device_longitude"] = String(currentLoc.coordinate.longitude)
-//        }
+        
+        var attribute = Utility.getAttributes(onlyRelatedToUser: true) //sending user attributes with each message as well
+        if let currentLoc = currentLocation{
+            attribute["device_latitude"] = String(currentLoc.coordinate.latitude)
+            attribute["device_longitude"] = String(currentLoc.coordinate.longitude)
+        }
         
             // Here we can parse for which substrings were autocompleted
             let attributedText = inputBar.inputTextView.attributedText!
@@ -522,7 +522,8 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                 }
             }
         }else{
-            let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
+            //let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
+            let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: "Customer Support")
             if let messageBody = message.body {
                 if messageBody.isHtml(){
                     let attributedString = messageBody.parseHTML()
@@ -551,7 +552,8 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                         completion(photoMessage, true)
                     }
                 }else{
-                    let chatUser:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
+//                    let chatUser:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
+                    let chatUser:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: "Customer Support")
                     let photoMessage = ChatMessage(image: cachedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     completion(photoMessage, true)
                 }
@@ -593,12 +595,13 @@ extension ConversationViewController:CLLocationManagerDelegate{
         self.locationManager.stopUpdatingLocation()
         self.currentLocation = locations.first
         
+        //no need as shuja cant access user level information
         //updating user
-        var attributes = Utility.getAttributes(onlyRelatedToUser: false)
-        if let currentLoc = currentLocation{
-            attributes["device_latitude"] = String(currentLoc.coordinate.latitude)
-            attributes["device_longitude"] = String(currentLoc.coordinate.longitude)
-        }
-        ConversationsManager.sharedConversationsManager.updateUser(customAttributes: attributes)
+//        var attributes = Utility.getAttributes(onlyRelatedToUser: false)
+//        if let currentLoc = currentLocation{
+//            attributes["device_latitude"] = String(currentLoc.coordinate.latitude)
+//            attributes["device_longitude"] = String(currentLoc.coordinate.longitude)
+//        }
+//        ConversationsManager.sharedConversationsManager.updateUser(customAttributes: attributes)
     }
 }

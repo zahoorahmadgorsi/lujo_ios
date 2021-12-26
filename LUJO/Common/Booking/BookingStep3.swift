@@ -41,9 +41,8 @@ class BookingStep3: UIViewController {
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
-
         } else {
-            showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
+            showInformationPopup()
         }
     }
 

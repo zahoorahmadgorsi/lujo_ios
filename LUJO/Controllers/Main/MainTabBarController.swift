@@ -78,9 +78,13 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController.restorationIdentifier == "ChatListNavigationController"{
-            let viewController = ChatOptionsViewController.instantiate()
-            self.present(viewController, animated: true, completion: nil)
+        if viewController.restorationIdentifier == "ChatListNavigationController" {
+            if LujoSetup().getLujoUser()?.membershipPlan != nil {
+                let viewController = ChatOptionsViewController.instantiate()
+                self.present(viewController, animated: true, completion: nil)
+            }else{
+                openChatWindow()
+            }
             return false
         }
         return true
@@ -90,7 +94,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         if LujoSetup().getLujoUser()?.membershipPlan != nil {
 //            Intercom.presentMessenger()
         } else {
-            showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.")
+            showInformationPopup()
         }
     }
     

@@ -186,11 +186,12 @@ final class AdvanceChatViewController: ConversationViewController {
     }
     
     func setTypingIndicatorViewHidden(_ isHidden: Bool, _ participant: TCHParticipant, performUpdates updates: (() -> Void)? = nil) {
-        var whoIsTyping = "Typing..."
-        if isHidden == false, let name = participant.identity{
-            whoIsTyping = name + " is typing..."
-        }
-        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : whoIsTyping)
+//        var whoIsTyping = "Typing..."
+//        if isHidden == false, let name = participant.identity{
+//            whoIsTyping = name + " is typing..."
+//        }
+//        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : whoIsTyping)
+        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : "Typing...")
         setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
             if success, self?.isLastSectionVisible() == true {
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
@@ -481,7 +482,12 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
             for item in attachments {
                 if  case .image(let image) = item {
                     myGroup.enter()
-                    ConversationsManager.sharedConversationsManager.sendImageMessage(photo: image, channel) { (result, message) in
+                    var attribute = Utility.getAttributes(onlyRelatedToUser: true) //sending user attributes with each message as well
+                    if let currentLoc = currentLocation{
+                        attribute["device_latitude"] = String(currentLoc.coordinate.latitude)
+                        attribute["device_longitude"] = String(currentLoc.coordinate.longitude)
+                    }
+                    ConversationsManager.sharedConversationsManager.sendImageMessage(photo: image, channel, attribute) { (result, message) in
                         myGroup.leave()
                     }
                 }
@@ -563,7 +569,7 @@ extension AdvanceChatViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         switch (textView) {
             case messageInputBar.inputTextView:
-                print("Twilio: textViewDidChange")
+//                print("Twilio: textViewDidChange")
                 if let channel = self.channel , let conversationSid = channel.sid{
                     ConversationsManager.sharedConversationsManager.notifyTypingOnConversation(conversationSid)
                 }

@@ -217,6 +217,7 @@ extension AviationResultsViewController {
             completion(error)
         }
     }
+    
     func save(_ payment: PaymentResult, for aircraft: String, with method: Int, completion: @escaping (Error?) -> Void) {
         guard let currentUser = LujoSetup().getLujoUser() else { return }
         

@@ -90,7 +90,7 @@ class ConversationsViewController: UIViewController {
             }else{
                 self.refreshControl.endRefreshing()
             }
-            self.conversations = conversations.sorted(by: { $0.lastMessageDate ?? Date() > $1.lastMessageDate ?? Date()})
+            self.conversations = conversations.sorted(by: { ($0.lastMessageDate ?? $0.dateCreatedAsDate) ?? Date() > ($1.lastMessageDate ?? $0.dateCreatedAsDate) ?? Date()})
             self.tblView.reloadData()
         }
     }
@@ -140,8 +140,10 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
 //        print("indexPath.row: \(indexPath.row)")
         let model = conversations[indexPath.row]
-//        print("Twilio: CoversationID: \(String(describing: model.sid))")
+        
+        print("Twilio: attributes: \(String(describing: model.attributes()?.dictionary?["type"]) )")
         if let attributes = model.attributes()?.dictionary , let type = attributes["type"] as? String{
+            print(type)
             if type == "event" || type  == "experience" || type  == "special-event" {
                 cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
             }else if type  == "villa"{
@@ -172,25 +174,30 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         }else if let dateFromServer = model.dateCreatedAsDate{  //this channel has no last message hence showing the channel created date
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
         }
-        
-        //last message of the conversation as per design
-        model.getLastMessages(withCount: 1) { (result, messages: [TCHMessage]?) in
-            
-            if result.isSuccessful , let msgs = messages , msgs.count > 0{
-                if msgs[0].hasMedia(){
-                    cell.lblLastMessage.text = "PHOTO"
-                }else{
-                    if let messageBody = msgs[0].body {
-                        if messageBody.isHtml(){
-                            let attributedString = messageBody.parseHTML()
-                            cell.lblLastMessage.text = attributedString.string
-                        }else{
-                            cell.lblLastMessage.text = msgs[0].body
+
+        //if other user is typing then show "Typing..." else show the last message
+//        if let attributes = model.attributes()?.dictionary, let isTyping = attributes["isTyping"] as? Bool, isTyping == true{
+//            cell.lblLastMessage.text = "<I>Typing...</I>".parseHTML().string
+//        }else{
+            //last message of the conversation as per design
+            model.getLastMessages(withCount: 1) { (result, messages: [TCHMessage]?) in
+                if result.isSuccessful , let msgs = messages , msgs.count > 0{
+                    if msgs[0].hasMedia(){
+                        cell.lblLastMessage.text = "PHOTO"
+                    }else{
+                        if let messageBody = msgs[0].body {
+                            if messageBody.isHtml(){
+                                let attributedString = messageBody.parseHTML()
+                                cell.lblLastMessage.text = attributedString.string
+                            }else{
+                                cell.lblLastMessage.text = msgs[0].body
+                            }
                         }
                     }
                 }
             }
-        }
+//        }
+        
         //number of un read messages of this conversation
         model.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in
             if result.isSuccessful ,let count = unReadMsgsCount{
@@ -294,8 +301,33 @@ extension ConversationsViewController: ConversationsManagerDelegate {
         print("Twilio: channelJoined")
     }
     
-    
+    //if index is visible then reload that cell with text "Typing..."
+    // incase of multithreading this code might fail
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
-        print("Twilio: typingOn : \(String(describing: conversation.friendlyName)) by \(String(describing: participant.identity)) is \(isTyping)")
+//        if let typingOnIndex = self.conversations.firstIndex(where: {$0.sid == conversation.sid})
+//            ,let indices = self.tblView.indexPathsForVisibleRows {
+//            for index in indices {
+//                if index.row == typingOnIndex {
+////                    var attribute = Dictionary<String,Bool>()
+//                    if var attribute = conversation.attributes()?.dictionary as? Dictionary<String,Any>{
+//                        attribute["isTyping"] = isTyping
+//                        let attributes:TCHJsonAttributes = .init(dictionary: attribute)
+//                        self.conversations[typingOnIndex].setAttributes(attributes) { (result) in
+//                            if result.isSuccessful{
+//                                // index could have been changed by now, incase self.conversations data got changed due to sorting
+//                                self.tblView.reloadRows(at: [index], with: UITableView.RowAnimation.none)
+//                            }else{
+//                                print("Twilio: isTypingOnOff setAttributes not working")
+//                            }
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+        if let friendlyName = conversation.friendlyName, let identity = participant.identity{
+            print("Twilio: typingOn : \(friendlyName) by \(identity) is \(isTyping)")
+        }
+       
     }
 }

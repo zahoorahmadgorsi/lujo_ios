@@ -888,42 +888,42 @@ extension ProductDetailsViewController {
             present(viewController, animated: true, completion: nil)
         }
         else{
-            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-            //zahoor start
-            
-            
-            
-//            print(channelName)
-            if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
-                initialMessage = """
-                Hi Concierge team,
+            if LujoSetup().getLujoUser()?.membershipPlan != nil {
+                guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+                if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
+                    initialMessage = """
+                    Hi Concierge team,
 
-                I am interested in \(product.name), can you assist me?
+                    I am interested in \(product.name), can you assist me?
 
-                \(userFirstName)
-                """
-//                Now we are calling this in chatViewControll
-//                EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
-//                    guard error == nil else {
-//                        Crashlytics.sharedInstance().recordError(error!)
-//                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
-//                        return
-//                    }
-//                }
-//
-//                Mixpanel.mainInstance().track(event: "Product Custom Request",
-//                                              properties: ["Product Name" : product.name
-//                                                           ,"Product Type" : product.type
-//                                                           ,"ProductId" : product.id])
+                    \(userFirstName)
+                    """
+    //                Now we are calling this in chatViewControll
+    //                EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
+    //                    guard error == nil else {
+    //                        Crashlytics.sharedInstance().recordError(error!)
+    //                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
+    //                        return
+    //                    }
+    //                }
+    //
+    //                Mixpanel.mainInstance().track(event: "Product Custom Request",
+    //                                              properties: ["Product Name" : product.name
+    //                                                           ,"Product Type" : product.type
+    //                                                           ,"ProductId" : product.id])
+                }
+
+    //            print(initialMessage)
+                let viewController = AdvanceChatViewController()
+                viewController.product = product
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+                //Zahoor end
+                
+            } else {
+                showInformationPopup()
             }
-
-//            print(initialMessage)
-            let viewController = AdvanceChatViewController()
-            viewController.product = product
-            viewController.initialMessage = initialMessage
-            let navController = UINavigationController(rootViewController:viewController)
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
-            //Zahoor end
         }
         
     }

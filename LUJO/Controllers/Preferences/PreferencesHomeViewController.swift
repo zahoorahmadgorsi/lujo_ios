@@ -225,20 +225,23 @@ class PreferencesHomeViewController: UIViewController {
     }
     
     fileprivate func sendInitialInformation() {
-        guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-        let initialMessage = """
-        Hi Concierge team,
-        
-        I want to know the details about my preferences, can you please assist me?
-        
-        \(userFirstName)
-        """
-        
-        let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: -1 , type: "Preferences" , name: "Preferences Inquiry")
-        viewController.initialMessage = initialMessage
-        self.navigationController?.pushViewController(viewController,animated: true)
-        //Zahoor end
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            let initialMessage = """
+            Hi Concierge team,
+            
+            I want to know the details about my preferences, can you please assist me?
+            
+            \(userFirstName)
+            """
+            
+            let viewController = AdvanceChatViewController()
+            viewController.product = Product(id: -1 , type: "Preferences" , name: "Preferences Inquiry")
+            viewController.initialMessage = initialMessage
+            self.navigationController?.pushViewController(viewController,animated: true)
+        } else {
+            showInformationPopup()
+        }
         
     }
     

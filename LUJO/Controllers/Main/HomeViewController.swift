@@ -272,7 +272,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         if !UserDefaults.standard.bool(forKey: "showWelcome") {
             dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
-            navigationItem.rightBarButtonItem?.isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
+            hideUnhideRightBarButtons()
         }
         
         // Check for location permission.
@@ -888,8 +888,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let minimumScreenRatioToHide: CGFloat = 0.25
         let animationDuration: TimeInterval = 0.2
         
-        func slideViewTo(_ x: CGFloat ,_ y: CGFloat) {
-                self.view.frame.origin = CGPoint(x: x, y: y)
+        func slideViewTo(x: CGFloat) {
+            self.view.frame.origin = CGPoint(x: x, y: self.view.frame.origin.y) //keep y position as static
         }
         
         switch panGesture.state {
@@ -898,7 +898,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 // If pan started or is ongoing then slide the view to follow the finger
                 let translation = panGesture.translation(in: view)
                 if (panGesture.view == self.view ){
-                    slideViewTo(translation.x,0)    //only swipe horizontal if its on main view
+                    slideViewTo(x: translation.x)    //only swipe horizontal if its on main view
                 }
             case .ended:
                 // If pan ended, decide it we should close or reset the view based on the final position and the speed of the gesture
@@ -909,21 +909,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 if closing {
                     if (translation.x > 0){ //swiped from left to right
                         UIView.animate(withDuration: animationDuration, animations: {
-                            slideViewTo(0,0)
+                            slideViewTo(x: 0)
                         },completion: {_ in
                             self.fetchAndPresentUserAccount()  //open the profile screen
                         })
                         
                     }else{  //swiped from right to left
                         UIView.animate(withDuration: animationDuration, animations: {
-                            slideViewTo(0,0)
+                            slideViewTo(x: 0)
                         },completion: {_ in
                             NotificationCenter.default.post(name: Notification.Name(rawValue: "openChatWindow"), object: nil)
                         })
                     }
                 }else{
                     UIView.animate(withDuration: animationDuration, animations: {
-                        slideViewTo(0,0)
+                        slideViewTo(x: 0)
                     })
                 }
             default:
@@ -1220,9 +1220,18 @@ extension HomeViewController {
         getUserProfile(completion: { _,_ in
             self.dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             self.membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
-            self.navigationItem.rightBarButtonItem?.isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
+            self.hideUnhideRightBarButtons()
+//            self.navigationItem.rightBarButtonItem?.isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             self.getHomeInformation()
         })
+    }
+    
+    func hideUnhideRightBarButtons(){
+        if let rightBarButtonItems = navigationItem.rightBarButtonItems{
+            rightBarButtonItems[0].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target != nil     //chat is only visible to paid users
+            rightBarButtonItems[1].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //CTA is only visible to users having membership plan all
+            rightBarButtonItems[2].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //search only visible to users having membership plan all
+        }
     }
     
     func getUserProfile(completion: @escaping (LujoUser?, Error?) -> Void) {
