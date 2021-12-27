@@ -4311,8 +4311,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
             landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4327,8 +4327,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
             landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4343,8 +4343,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
             landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4407,8 +4407,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "451"
-            endingLineNumber = "451"
+            startingLineNumber = "453"
+            endingLineNumber = "453"
             landmarkName = "didTappedOnHeartAt(index:sender:)"
             landmarkType = "7">
             <Locations>
@@ -4471,8 +4471,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "showRestaurantDetail(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4487,8 +4487,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
             landmarkName = "setupTapGesturesForRestaurants()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4503,8 +4503,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "updatePopularCities()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4519,8 +4519,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
             landmarkName = "showRestaurantDetail(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4535,8 +4535,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "511"
-            endingLineNumber = "511"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
             landmarkName = "getDiningInformation(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4551,8 +4551,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
+            startingLineNumber = "508"
+            endingLineNumber = "508"
             landmarkName = "getDiningInformation(showActivity:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4583,8 +4583,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
             landmarkName = "updateContent()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4599,8 +4599,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "updateContent()"
             landmarkType = "7">
             <Locations>
@@ -4647,8 +4647,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "updateContent()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4663,8 +4663,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "updateContent()"
             landmarkType = "7">
             <Locations>
@@ -4711,8 +4711,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "updateContent()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4727,8 +4727,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "261"
-            endingLineNumber = "261"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
             landmarkName = "updateContent()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4743,8 +4743,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "515"
-            endingLineNumber = "515"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
             landmarkName = "getDiningInformation(completion:)"
             landmarkType = "7">
             <Locations>
@@ -4791,8 +4791,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
+            startingLineNumber = "518"
+            endingLineNumber = "518"
             landmarkName = "getDiningInformation(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4807,8 +4807,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "527"
-            endingLineNumber = "527"
+            startingLineNumber = "529"
+            endingLineNumber = "529"
             landmarkName = "seeAllRestaurantsForCity(city:view:)"
             landmarkType = "7">
             <Locations>
@@ -4855,8 +4855,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "530"
-            endingLineNumber = "530"
+            startingLineNumber = "532"
+            endingLineNumber = "532"
             landmarkName = "seeAllRestaurantsForCity(city:view:)"
             landmarkType = "7">
             <Locations>
@@ -4903,8 +4903,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
+            startingLineNumber = "535"
+            endingLineNumber = "535"
             landmarkName = "seeAllRestaurantsForCity(city:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4919,8 +4919,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
             landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4935,8 +4935,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
             landmarkName = "getLocationPlaces(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4951,8 +4951,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
             landmarkName = "DiningViewController"
             landmarkType = "21">
          </BreakpointContent>
@@ -4967,8 +4967,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
             landmarkName = "didTappedOnHeartAt(index:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4983,8 +4983,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "updateContent()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4999,8 +4999,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "seeAllRestaurantsForCity(city:view:)"
             landmarkType = "7">
             <Locations>
@@ -5047,8 +5047,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "549"
-            endingLineNumber = "549"
+            startingLineNumber = "551"
+            endingLineNumber = "551"
             landmarkName = "didTappedOnRestaurantAt(index:restaurant:)"
             landmarkType = "7">
             <Locations>
@@ -5095,8 +5095,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "551"
-            endingLineNumber = "551"
+            startingLineNumber = "553"
+            endingLineNumber = "553"
             landmarkName = "didTappedOnRestaurantAt(index:restaurant:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5111,8 +5111,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "538"
-            endingLineNumber = "538"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
             landmarkName = "didTappedOnRestaurantAt(index:restaurant:)"
             landmarkType = "7">
             <Locations>
@@ -5159,8 +5159,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "537"
-            endingLineNumber = "537"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
             landmarkName = "didTappedOnRestaurantAt(index:restaurant:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5175,8 +5175,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "536"
-            endingLineNumber = "536"
+            startingLineNumber = "538"
+            endingLineNumber = "538"
             landmarkName = "didTappedOnRestaurantAt(index:restaurant:)"
             landmarkType = "7">
             <Locations>
@@ -6311,8 +6311,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
             landmarkName = "DiningViewController"
             landmarkType = "3">
             <Locations>
@@ -6375,8 +6375,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "currentLocation"
             landmarkType = "24">
          </BreakpointContent>
@@ -6391,8 +6391,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
             landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6407,8 +6407,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8596,8 +8596,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
+            startingLineNumber = "424"
+            endingLineNumber = "424"
             landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8612,8 +8612,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "411"
-            endingLineNumber = "411"
+            startingLineNumber = "413"
+            endingLineNumber = "413"
             landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8628,8 +8628,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "viewWillDisappear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8772,8 +8772,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
             landmarkName = "showRestaurantDetail(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8804,8 +8804,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "666"
-            endingLineNumber = "666"
+            startingLineNumber = "668"
+            endingLineNumber = "668"
             landmarkName = "animationController(forDismissed:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8820,8 +8820,8 @@
             filePath = "LUJO/Controllers/Main/DiningViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "641"
-            endingLineNumber = "641"
+            startingLineNumber = "643"
+            endingLineNumber = "643"
             landmarkName = "animationController(forPresented:presenting:source:)"
             landmarkType = "7">
          </BreakpointContent>

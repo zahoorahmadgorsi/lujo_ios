@@ -37,8 +37,8 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     private(set) var messages: [TCHMessage] = []
     private var identity: String?
     
-    func setChannel (channel: TCHConversation){
-        self.conversation = channel
+    func setConversation (conversation: TCHConversation){
+        self.conversation = conversation
     }
     
     func conversationsClient(_ client: TwilioConversationsClient, synchronizationStatusUpdated status: TCHClientSynchronizationStatus) {
@@ -156,28 +156,30 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             appDelegate?.loginToTwilio()
             return
         }
-        // Create a channel if it hasn't been created yet
+        // Create a conversation if it hasn't been created yet
         let options: [String: Any] = [
             TCHConversationOptionUniqueName: uniqueChannelName,
             TCHConversationOptionFriendlyName: friendlyName
             ,TCHConversationOptionAttributes: customAttribute
             ]
+        
         client.createConversation(options: options) { (result, conversation: TCHConversation?) in
             if result.isSuccessful{
+//                self.conversation = conversation
                 print("Twilio: Conversation created")
                 if let convers = conversation{
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
                     }
 
-                    conversation?.addParticipant(byIdentity: "shujahm@gmail.com", attributes: nil, completion: { (result) in
+                    convers.addParticipant(byIdentity: "shujahm@gmail.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: shujahm@gmail.com could NOT added.")
+                            print("Twilio: shujahm@gmail.com could not added.")
                         }
                     })
-                    conversation?.addParticipant(byIdentity: "admin@gmail.com", attributes: nil, completion: { (result) in
+                    convers.addParticipant(byIdentity: "admin@gmail.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
@@ -185,43 +187,43 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         }
                     })
                     
-                    conversation?.addParticipant(byIdentity: "deseriejoy.cruz@baroqueaviation.com", attributes: nil, completion: { (result) in
+                    convers.addParticipant(byIdentity: "deseriejoy.cruz@baroqueaviation.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: deseriejoy.cruz@baroqueaviation.com could NOT added.")
+                            print("Twilio: deseriejoy.cruz@baroqueaviation.com could not added.")
                         }
                     })
                     
-                    conversation?.addParticipant(byIdentity: "zairalujo@gmail.com", attributes: nil, completion: { (result) in
+                    convers.addParticipant(byIdentity: "zairalujo@gmail.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: zairalujo@gmail.com could NOT added.")
+                            print("Twilio: zairalujo@gmail.com could not added.")
                         }
                     })
                     
-                    conversation?.addParticipant(byIdentity: "sahleg@golujo.com", attributes: nil, completion: { (result) in
+                    convers.addParticipant(byIdentity: "sahleg@golujo.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: sahleg@golujo.com could NOT added.")
+                            print("Twilio: sahleg@golujo.com could not added.")
                         }
                     })
                     
-                    conversation?.addParticipant(byIdentity: "zahoor.ahmad@live.com", attributes: nil, completion: { (result) in
+                    convers.addParticipant(byIdentity: "zahoor.ahmad@live.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: zahoor.ahmad@live.com could NOT added.")
+                            print("Twilio: zahoor.ahmad@live.com could not added.")
                         }
                     })
                     
-                    conversation?.addParticipant(byIdentity: "zahoor.gorsi@gmail.com", attributes: nil, completion: { (result) in
+                    convers.addParticipant(byIdentity: "zahoor.gorsi@gmail.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
                         } else {
-                            print("Twilio: zahoor.gorsi@gmail.com could NOT added.")
+                            print("Twilio: zahoor.gorsi@gmail.com could not added.")
                         }
                     })
                 }
@@ -232,10 +234,10 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
 
     private func joinConversation(_ conversation: TCHConversation, completion: @escaping (Bool) -> Void) {
-        self.conversation = conversation
+        setConversation(conversation: conversation)
         delegate?.channelJoined(channel: conversation)
         if conversation.status == .joined {
-            print("Twilio: Current user already exists in channel")
+            print("Twilio: Current user already exists in conversation")
             completion(true)
         } else {
             conversation.join(completion: { result in
@@ -281,6 +283,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
 
     func setAllMessagesRead(_ conversation: TCHConversation,completion: @escaping (TCHResult,UInt) -> Void){
+        
         conversation.setAllMessagesReadWithCompletion({ (result, count) in
             print("Twilio: Unread Message Index:\(String(describing: count))")
             completion(result, count)
@@ -312,7 +315,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     
     func deleteChannel(_ channel: TCHConversation,completion: @escaping (TCHResult) -> Void){
         channel.destroy(completion: { (result) in
-            print("Twilio: channel deleted:\(result.isSuccessful)")
+            print("Twilio: conversation deleted:\(result.isSuccessful)")
             completion(result)
         })
     }
@@ -390,12 +393,26 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
     
     
-    func updateUser(customAttributes: Dictionary<String,String>){
+//    func updateUser(customAttributes: Dictionary<String,Any>){
+//        //updating user
+//        let attributes:TCHJsonAttributes = .init(dictionary: customAttributes)
+//        self.client?.user?.setAttributes(attributes, completion: { (result) in
+//            print("Twilio: User attributes are updated?: \(result.isSuccessful)")
+//        })
+//    }
+
+    func updateConversationAttributes(customAttributes: Dictionary<String,Any>){
         //updating user
-        let attributes:TCHJsonAttributes = .init(dictionary: customAttributes)
-        self.client?.user?.setAttributes(attributes, completion: { (result) in
-            print("Twilio: User attributes are updated?: \(result.isSuccessful)")
-        })
+        if let conversation = self.conversation{
+            let attributes:TCHJsonAttributes = .init(dictionary: customAttributes)
+            conversation.setAttributes(attributes, completion: { (result) in
+                print("Twilio: conversation attributes are updated: \(result.isSuccessful)")
+//                completion(result.isSuccessful)
+            })
+        }else{
+//            completion(false)
+            print("Twilio: conversation not available to update")
+        }
     }
     
 }

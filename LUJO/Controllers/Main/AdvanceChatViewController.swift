@@ -41,7 +41,7 @@ final class AdvanceChatViewController: ConversationViewController {
         ConversationsManager.sharedConversationsManager.delegate = self
         
         //updateTitleView(title: "LUJO", subtitle: "2 Online")    //extension
-        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: "2 Online")    //extension
+        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: "2 Online")    //extension
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -190,8 +190,8 @@ final class AdvanceChatViewController: ConversationViewController {
 //        if isHidden == false, let name = participant.identity{
 //            whoIsTyping = name + " is typing..."
 //        }
-//        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : whoIsTyping)
-        updateTitleView(title: channel?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : "Typing...")
+//        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : whoIsTyping)
+        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : "Typing...")
         setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
             if success, self?.isLastSectionVisible() == true {
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
@@ -475,7 +475,7 @@ extension AdvanceChatViewController: MessagesLayoutDelegate {
 extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
 
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
-        if let channel = self.channel{
+        if let channel = self.conversation{
             let myGroup = DispatchGroup()
             self.showNetworkActivity()
             
@@ -506,7 +506,7 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
     
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
         print("Twilio: typingOn : \(String(describing: conversation.friendlyName)) by \(String(describing: participant.identity)) is \(isTyping)")
-        if(conversation.sid == self.channel?.sid){
+        if(conversation.sid == self.conversation?.sid){
             self.setTypingIndicatorViewHidden(!isTyping , participant)
         }
         
@@ -519,10 +519,10 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
     internal func receivedNewMessage(message: TCHMessage
                                      , channel: TCHConversation
                                      ){
-        if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
-            //if channel chat window is opened and recieved a new message then set its Un Consumed messages count to 0
+        if let chanel = self.conversation , chanel.sid == channel.sid{    //currently opened conversation received the messages, one conversation is with single n 'chanel'
+            //if conversation chat window is opened and recieved a new message then set its Un Consumed messages count to 0
             ConversationsManager.sharedConversationsManager.setAllMessagesRead(channel) { (result, count) in
-                print("Twilio: set channel's unConsumed messages count to zero")
+                print("Twilio: set conversation's unConsumed messages count to zero")
             }
 //            print(message.mediaFilename,message.mediaSid)
             if message.hasMedia(){
@@ -533,12 +533,12 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
                 self.insertMessage(chatMessage)
             }
         }else{
-            print("Twilio: Some other channel has received the message")
+            print("Twilio: Some other conversation has received the message")
         }
     }
     
     func channelJoined(channel: TCHConversation){
-        self.channel = channel
+        self.conversation = channel
         self.showNetworkActivity()
         EEAPIManager().sendRequestForSalesForce(itemId: product.id, channelId: channel.sid ?? "NoChannel"){ customBookingResponse, error in
             self.hideNetworkActivity()
@@ -570,7 +570,7 @@ extension AdvanceChatViewController: UITextViewDelegate{
         switch (textView) {
             case messageInputBar.inputTextView:
 //                print("Twilio: textViewDidChange")
-                if let channel = self.channel , let conversationSid = channel.sid{
+                if let channel = self.conversation , let conversationSid = channel.sid{
                     ConversationsManager.sharedConversationsManager.notifyTypingOnConversation(conversationSid)
                 }
                 

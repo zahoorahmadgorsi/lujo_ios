@@ -39,7 +39,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
 //    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     let displayPicture =  "https://www.golujo.com/_assets/media/icons/footer-logo.svg"
     lazy var messageList: [ChatMessage] = []
-    var channel: TCHConversation?
+    var conversation: TCHConversation?
     private let naHUD = JGProgressHUD(style: .dark)
     let pageSize: UInt = 10
     
@@ -62,16 +62,22 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     var product:Product!
     var initialMessage:String?
     let locationManager = CLLocationManager()
+    
     var currentLocation: CLLocation?
     
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Need to send LAT/LONG with each message to the server
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+        }
         
         configureMessageCollectionView()
         configureMessageInputBar()
-//        title = "LUJO"  //this name would be override with channel friendly name
+//        title = "LUJO"  //this name would be override with conversation friendly name
         overrideUserInterfaceStyle = .dark  //showing chat window in dark mode
         let searchBarButton = UIButton(type: .system)
         searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
@@ -83,11 +89,11 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         
         identity = LujoSetup().getLujoUser()?.email ?? identity //current logged in user
         
-        if let channel = self.channel{  //loading messages of existing channel
+        if let channel = self.conversation{  //loading messages of existing conversation
 //            print(channel.sid as Any)
-            ConversationsManager.sharedConversationsManager.setChannel(channel: channel)
+            ConversationsManager.sharedConversationsManager.setConversation(conversation: channel)
             ConversationsManager.sharedConversationsManager.getLastMessagesWithCount(channel, msgsCount: pageSize, completion: {messages in
-                if let chanel = self.channel , chanel.sid == channel.sid{    //currently opened channel received the messages, one channel is with single n 'chanel'
+                if let chanel = self.conversation , chanel.sid == channel.sid{    //currently opened conversation received the messages, one channel is with single n 'chanel'
                     //if channel is opened and recieved a new message then set its consumed messages to all
                     ConversationsManager.sharedConversationsManager.setAllMessagesRead(channel) { (result, count) in
 //                        print("Twilio: channel's UnConsumed messages count set to zero. Result:\(result.isSuccessful())" , "Count:\(count)")
@@ -124,32 +130,26 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             //Creating channel if doesnt exist else joining
             let channelUniqueName = product.type + " " + user.firstName + " " + dateTime
             let channelFriendlyName = product.name
-            
+
             var attribute = Utility.getAttributes(onlyRelatedToUser: false)
-//            var attribute = Dictionary<String,String>()
             attribute["type"] = product.type
-            
+
             if (initialMessage == nil ){    //user is coming for some general inquiry thats why initial message is nil
                 let chatMessage:ChatMessage = addDefaultMessage(type:product.type)
                 self.messageList.append(chatMessage)
             }
             showNetworkActivity()
             ConversationsManager.sharedConversationsManager.createConversation(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
+                    if let location = self.currentLocation { //updating location (if user has enabled) and other attributes
+                        var attributes = Utility.getAttributes(onlyRelatedToUser: false)
+                        attributes["device_latitude"] = String(location.coordinate.latitude)
+                        attributes["device_longitude"] = String(location.coordinate.longitude)
+                        attributes["type"] = self.product.type
+                        ConversationsManager.sharedConversationsManager.updateConversationAttributes(customAttributes: attributes)
+                    }
                 self.hideNetworkActivity()
             })
         }
-        
-        //Need to send LAT/LONG with each message to the server
-        // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
-        // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
-        
     }
     
     @objc func imgCrossTapped(_ sender: Any) {
@@ -192,7 +192,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     }
     
     @objc func loadMoreMessages() {
-        if let channel = self.channel , messageList.count > 0{
+        if let channel = self.conversation , messageList.count > 0{
             var lastMessageIndex = messageList[0].messageIndex?.intValue ?? 0  //get the index of very first message in UInt
             lastMessageIndex -= 1   //fetch one index less downward
             if (lastMessageIndex >= 0){
@@ -470,39 +470,39 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
             attribute["device_longitude"] = String(currentLoc.coordinate.longitude)
         }
         
-            // Here we can parse for which substrings were autocompleted
-            let attributedText = inputBar.inputTextView.attributedText!
-            let range = NSRange(location: 0, length: attributedText.length)
-            attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
-                let substring = attributedText.attributedSubstring(from: range)
-                let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
-                print("Autocompleted: `", substring, "` with context: ", context ?? [])
-            }
+        // Here we can parse for which substrings were autocompleted
+        let attributedText = inputBar.inputTextView.attributedText!
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
+            let substring = attributedText.attributedSubstring(from: range)
+            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
+            print("Autocompleted: `", substring, "` with context: ", context ?? [])
+        }
 
-            let components = inputBar.inputTextView.components
-            inputBar.inputTextView.text = String()
-            inputBar.invalidatePlugins()
-            // Send button activity animation
-            inputBar.sendButton.startAnimating()
-            inputBar.inputTextView.placeholder = "Sending..."
-            // Resign first responder for iPad split view
-            inputBar.inputTextView.resignFirstResponder()
-        
-            for component in components {
-                if let str = component as? String  {
-                    ConversationsManager.sharedConversationsManager.sendMessage(str, attribute, completion: { (result, _) in
-                        inputBar.sendButton.stopAnimating()
-                        if result.isSuccessful {
-                            inputBar.inputTextView.placeholder = "Aa"
-                            inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
-                        } else {
-    //                        self.displayErrorMessage("Unable to send message")
-                            let error = BackendError.parsing(reason: "Unable to send message")
-                            self.showError(error)
-                        }
-                    })
-                }
+        let components = inputBar.inputTextView.components
+        inputBar.inputTextView.text = String()
+        inputBar.invalidatePlugins()
+        // Send button activity animation
+        inputBar.sendButton.startAnimating()
+        inputBar.inputTextView.placeholder = "Sending..."
+        // Resign first responder for iPad split view
+        inputBar.inputTextView.resignFirstResponder()
+    
+        for component in components {
+            if let str = component as? String  {
+                ConversationsManager.sharedConversationsManager.sendMessage(str, attribute, completion: { (result, _) in
+                    inputBar.sendButton.stopAnimating()
+                    if result.isSuccessful {
+                        inputBar.inputTextView.placeholder = "Aa"
+                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
+                    } else {
+//                        self.displayErrorMessage("Unable to send message")
+                        let error = BackendError.parsing(reason: "Unable to send message")
+                        self.showError(error)
+                    }
+                })
             }
+        }
 //        }
 
     }
@@ -590,18 +590,10 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
 
 extension ConversationViewController:CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-//        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        self.locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingLocation()
         self.currentLocation = locations.first
-        
-        //no need as shuja cant access user level information
-        //updating user
-//        var attributes = Utility.getAttributes(onlyRelatedToUser: false)
-//        if let currentLoc = currentLocation{
-//            attributes["device_latitude"] = String(currentLoc.coordinate.latitude)
-//            attributes["device_longitude"] = String(currentLoc.coordinate.longitude)
-//        }
-//        ConversationsManager.sharedConversationsManager.updateUser(customAttributes: attributes)
+        //for printing
+//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+//        print("Twilio: location updated = \(locValue.latitude) \(locValue.longitude)")
     }
 }

@@ -90,7 +90,8 @@ class ConversationsViewController: UIViewController {
             }else{
                 self.refreshControl.endRefreshing()
             }
-            self.conversations = conversations.sorted(by: { ($0.lastMessageDate ?? $0.dateCreatedAsDate) ?? Date() > ($1.lastMessageDate ?? $0.dateCreatedAsDate) ?? Date()})
+            self.conversations = conversations.sorted(by: { ($0.lastMessageDate ?? $0.dateCreatedAsDate) ?? Date() > ($1.lastMessageDate ?? $1.dateCreatedAsDate) ?? Date()})
+//            self.conversations = conversations.sorted(by: { ($0.lastMessageDate ?? Date())  > ($1.lastMessageDate ?? Date()) })
             self.tblView.reloadData()
         }
     }
@@ -171,7 +172,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         //date of the conversation
         if let dateFromServer = model.lastMessageDate{
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
-        }else if let dateFromServer = model.dateCreatedAsDate{  //this channel has no last message hence showing the channel created date
+        }else if let dateFromServer = model.dateCreatedAsDate{  //this conversation has no last message hence showing the conversation created date
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
         }
 
@@ -219,7 +220,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conversation = self.conversations[indexPath.item]
         let viewController = AdvanceChatViewController()
-        viewController.channel = conversation
+        viewController.conversation = conversation
         let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
         if #available(iOS 13.0, *) {
             let controller = navViewController.topViewController
@@ -240,7 +241,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
             // handle delete (by removing the data from your array and updating the tableview)
             self.deleteIndexPath = indexPath
             let itemToDelete = self.conversations[indexPath.row].friendlyName
-            confirmDelete(name: itemToDelete ?? "*this channel*")
+            confirmDelete(name: itemToDelete ?? "*this conversation*")
         }
     }
     

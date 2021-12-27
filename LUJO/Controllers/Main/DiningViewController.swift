@@ -129,6 +129,8 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
+        @unknown default:
+            break
         }
     }
     
