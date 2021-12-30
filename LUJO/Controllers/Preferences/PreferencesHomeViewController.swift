@@ -31,6 +31,7 @@ enum PrefType:String{
     case villas
     case yachts
     case events
+    case profile
 }
 
 enum PrefInformationType:String{
@@ -82,6 +83,8 @@ enum PrefInformationType:String{
     case villaDestinations
     case villaAmenities
     case villaAccomodation
+    
+    case profile
 }
 
 enum PreferenceError: Error {

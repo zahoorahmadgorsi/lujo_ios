@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Intercom
 
 protocol PurchasePaymentDelegate: class {
     func paymentFished(with result: PaymentResult, at session: PaymentSession?, completion: @escaping (Error?) -> Void)
@@ -127,6 +128,13 @@ extension PurchaseViewController: PaymentControllerDelegate {
                     return
                 }
                 self.showSuccessPopup(with: paymentInfo)
+                //removing non member from user name
+                if let user = LujoSetup().getLujoUser(), user.id > 0 {
+                    let userAttributes = ICMUserAttributes()
+                    userAttributes.name = "\(user.firstName) \(user.lastName)"
+                    Intercom.updateUser(userAttributes)
+                }
+                
             }
         case let .failure(error as PaymentError):
             showFailurePopup(with: error.localizedDescription)

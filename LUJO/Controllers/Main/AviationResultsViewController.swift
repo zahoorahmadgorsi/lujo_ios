@@ -204,6 +204,7 @@ extension AviationResultsViewController: LiftDetailDelegate {
         }
         
         self.dismiss(animated: true, completion: {
+            //this part isnt tested due to unavailability of CC
             (viewController as? MainTabBarController)?.selectedIndex = 4
         })
     }

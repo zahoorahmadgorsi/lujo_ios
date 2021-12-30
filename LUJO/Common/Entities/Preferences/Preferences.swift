@@ -17,6 +17,7 @@ struct Preferences: Codable {
     var travel: TravelPreferences
     var yacht: YachtPreferences
     var villa: VillaPreferences
+    var profile : [String]?
     
     enum CodingKeys: String, CodingKey {
         case gift
@@ -26,6 +27,7 @@ struct Preferences: Codable {
         case travel
         case yacht
         case villa
+        case profile
     }
     
     init(from decoder: Decoder) throws {
@@ -38,6 +40,7 @@ struct Preferences: Codable {
             travel = try values.decode(TravelPreferences.self, forKey: .travel)
             yacht = try values.decode(YachtPreferences.self, forKey: .yacht)
             villa = try values.decode(VillaPreferences.self, forKey: .villa)
+            profile = try values.decodeIfPresent([String].self, forKey: .profile)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
@@ -101,6 +104,7 @@ struct PrefMasterData : Codable {
     var travelAllergies : [Taxonomy]?
     var villaAmenities : [Taxonomy]?
     var villaAccomodation : [Taxonomy]?
+    var profilePreferences : [String]?
     
     init(giftHabits:[Taxonomy]? = [] ,giftCategories : [Taxonomy]? = [], giftPreferences : [Taxonomy]? = []){
         self.giftHabits = giftHabits

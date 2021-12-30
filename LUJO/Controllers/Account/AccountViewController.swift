@@ -105,7 +105,6 @@ class AccountViewController: UIViewController {
                     userAttributes.name = name + " (Non Member)" //appending non member with the user name if user is free
                 }
             }
-            userAttributes.email = user.email
             Intercom.updateUser(userAttributes)
             
         }

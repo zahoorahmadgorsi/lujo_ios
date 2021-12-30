@@ -1541,10 +1541,10 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="1780"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQV-I8-dS9" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3223.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3207.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-94-B9B">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3223.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3207.5"/>
                                                 <subviews>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mL5-em-HIW">
                                                         <rect key="frame" x="0.0" y="-220" width="414" height="220"/>
@@ -2123,22 +2123,22 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS8-a3-gbq">
-                                                        <rect key="frame" x="0.0" y="308" width="414" height="136"/>
+                                                        <rect key="frame" x="0.0" y="308" width="414" height="120"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UoV-ar-PE3">
-                                                                <rect key="frame" x="16" y="0.0" width="382" height="136"/>
+                                                                <rect key="frame" x="16" y="8" width="382" height="112"/>
                                                                 <subviews>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="RHa-QM-lgx">
-                                                                        <rect key="frame" x="0.0" y="16" width="382" height="104"/>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RHa-QM-lgx">
+                                                                        <rect key="frame" x="0.0" y="16" width="382" height="80"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enable location to see if there are events in your city" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9U-ql-EO7">
-                                                                                <rect key="frame" x="28.5" y="0.0" width="325" height="58"/>
+                                                                                <rect key="frame" x="28.5" y="0.0" width="325" height="42"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7K-jG-JfF">
-                                                                                <rect key="frame" x="113" y="74" width="156" height="30"/>
+                                                                                <rect key="frame" x="113" y="50" width="156" height="30"/>
                                                                                 <color key="backgroundColor" name="Action Button"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="30" id="usC-lx-pTy"/>
@@ -2182,12 +2182,12 @@
                                                             <constraint firstAttribute="bottom" secondItem="UoV-ar-PE3" secondAttribute="bottom" id="CMs-yY-Ef4"/>
                                                             <constraint firstItem="UoV-ar-PE3" firstAttribute="leading" secondItem="zS8-a3-gbq" secondAttribute="leading" constant="16" id="CwG-6s-sdj"/>
                                                             <constraint firstAttribute="trailing" secondItem="UoV-ar-PE3" secondAttribute="trailing" constant="16" id="Fsl-8d-cvd"/>
-                                                            <constraint firstAttribute="height" constant="136" id="JMW-hh-q4L"/>
-                                                            <constraint firstItem="UoV-ar-PE3" firstAttribute="top" secondItem="zS8-a3-gbq" secondAttribute="top" id="fEY-IY-NMJ"/>
+                                                            <constraint firstAttribute="height" constant="120" id="JMW-hh-q4L"/>
+                                                            <constraint firstItem="UoV-ar-PE3" firstAttribute="top" secondItem="zS8-a3-gbq" secondAttribute="top" constant="8" id="fEY-IY-NMJ"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hGt-oK-Lhl">
-                                                        <rect key="frame" x="0.0" y="444" width="414" height="65"/>
+                                                        <rect key="frame" x="0.0" y="428" width="414" height="65"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Featured worldwide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u7-tg-wve">
                                                                 <rect key="frame" x="16" y="18" width="382" height="27"/>
@@ -2206,7 +2206,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhd-qr-rVw">
-                                                        <rect key="frame" x="0.0" y="509" width="414" height="310.5"/>
+                                                        <rect key="frame" x="0.0" y="493" width="414" height="310.5"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiL-5u-ekj" customClass="ImageCarousel" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="310.5"/>
@@ -2322,7 +2322,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S5a-dF-Gvi">
-                                                        <rect key="frame" x="0.0" y="819.5" width="414" height="72"/>
+                                                        <rect key="frame" x="0.0" y="803.5" width="414" height="72"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently Viewed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9V-Bs-6ma">
                                                                 <rect key="frame" x="16" y="32" width="382" height="30"/>
@@ -2340,14 +2340,14 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEQ-nZ-si2" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="891.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="875.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="XjG-ce-xzq"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKt-sf-CGt">
-                                                        <rect key="frame" x="0.0" y="1063.5" width="414" height="72"/>
+                                                        <rect key="frame" x="0.0" y="1047.5" width="414" height="72"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9V-gB-9v4">
                                                                 <rect key="frame" x="16" y="10" width="382" height="52"/>
@@ -2365,7 +2365,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wew-QQ-0FJ">
-                                                        <rect key="frame" x="0.0" y="1135.5" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="1119.5" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hdB-8K-vKa">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2431,14 +2431,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="REP-GX-7yF" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="1199.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="1183.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="sFz-pa-TE7"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqj-rY-stY">
-                                                        <rect key="frame" x="0.0" y="1371.5" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="1355.5" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bIJ-xb-irr">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2504,14 +2504,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bz5-uT-nHb" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="1435.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="1419.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="u4G-o5-DgQ"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8v-RR-PAt">
-                                                        <rect key="frame" x="0.0" y="1607.5" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="1591.5" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hke-le-KPw">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2577,14 +2577,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BkX-aH-hhz" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="1671.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="1655.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="X6v-Yd-dRh"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-lg-kvk">
-                                                        <rect key="frame" x="0.0" y="1843.5" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="1827.5" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ZQE-NX-QXv">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2650,14 +2650,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hY-jc-IjZ" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="1907.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="1891.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="sFl-kS-n5y"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UY5-0D-R0A">
-                                                        <rect key="frame" x="0.0" y="2079.5" width="414" height="226"/>
+                                                        <rect key="frame" x="0.0" y="2063.5" width="414" height="226"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6kP-Yd-qTZ" customClass="HomeSpecialEventSummary" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="32" width="382" height="178"/>
@@ -2676,7 +2676,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVf-wF-TA5">
-                                                        <rect key="frame" x="0.0" y="2305.5" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="2289.5" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fWl-HU-Ofn">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2742,14 +2742,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fq2-fW-DyO" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="2369.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="2353.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="oUM-Ye-FrS"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-tC-X0r">
-                                                        <rect key="frame" x="0.0" y="2541.5" width="414" height="192"/>
+                                                        <rect key="frame" x="0.0" y="2525.5" width="414" height="192"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xce-M1-HfE">
                                                                 <rect key="frame" x="0.0" y="16" width="414" height="160"/>
@@ -2884,7 +2884,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpT-Py-B9W">
-                                                        <rect key="frame" x="0.0" y="2733.5" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="2717.5" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WVJ-2K-JM9">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2950,14 +2950,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rH6-PR-1o6" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="2797.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="2781.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="W4w-V0-fdT"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Bz-tS-yAL">
-                                                        <rect key="frame" x="0.0" y="2969.5" width="414" height="234"/>
+                                                        <rect key="frame" x="0.0" y="2953.5" width="414" height="234"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZBv-V4-hkh" customClass="HomeSpecialEventSummary" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="32" width="382" height="178"/>
@@ -2976,7 +2976,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eHi-xM-Dno">
-                                                        <rect key="frame" x="0.0" y="3203.5" width="414" height="20"/>
+                                                        <rect key="frame" x="0.0" y="3187.5" width="414" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="iKR-4l-RuN"/>
@@ -2994,7 +2994,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnF-XJ-t3F">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3223.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3207.5"/>
                                         <color key="backgroundColor" white="0.070000000000000007" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>

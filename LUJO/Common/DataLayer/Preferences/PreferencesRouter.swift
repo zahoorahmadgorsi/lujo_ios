@@ -105,12 +105,16 @@ enum PreferencesRouter: URLRequestConvertible {
     case setTravelHotelStyles(String, String)
     case setTravelAllergies(String, String,String)
     
+    case setProfilePreferences(String, String)
+    
     case getVillaDestinations(String)
     case getVillaAmenities(String)
     case getVillaAccomodation(String)
     case setVillaDestinations(String,String)
     case setVillaAmenities(String, String,String)
     case setVillaAccomodation(String, String,String)
+    
+    
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -204,6 +208,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setTravelMedicalMeals: fallthrough
         case .setTravelHotelStyles: fallthrough
         case .setTravelAllergies: fallthrough
+            
+        case .setProfilePreferences: fallthrough
             
         case .getVillaDestinations: fallthrough
         case .getVillaAmenities: fallthrough
@@ -300,7 +306,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setTravelMedicalMeals: fallthrough
         case .setTravelHotelStyles: fallthrough
         case .setTravelAllergies: newURLComponents.path.append("/preferences/travel")
-        
+        case .setProfilePreferences: newURLComponents.path.append("/users/update-profile-preference")
+            
         case .getVillaDestinations: newURLComponents.path.append("/reference/locations")
         case .getVillaAmenities: newURLComponents.path.append("/reference/villa-amenities")
         case .getVillaAccomodation: newURLComponents.path.append("/reference/accommodations")
@@ -453,6 +460,9 @@ enum PreferencesRouter: URLRequestConvertible {
             return setVillaAmenitiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
         case let  .setVillaAccomodation(token, commaSeparatedString, typedPreference):
             return setVillaAccomodationAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+            
+        case let.setProfilePreferences(token, commaSeparatedString):
+            return setProfilePreferencesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         }
     }
     
@@ -869,5 +879,13 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
+    
+    fileprivate func setProfilePreferencesAsJSONData(token: String , commaSeparatedString:String) -> Data?{
+        let body: [String: Any] = [
+            "token": token
+            ,"types": commaSeparatedString
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
 }
 

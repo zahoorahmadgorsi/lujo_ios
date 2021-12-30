@@ -272,7 +272,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         if !UserDefaults.standard.bool(forKey: "showWelcome") {
             dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
-            navigationItem.rightBarButtonItem?.isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
+            hideUnhideRightBarButtons()
+            
         }
         
         // Check for location permission.
@@ -589,6 +590,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         UserDefaults.standard.set(false, forKey: "showWelcome")
         tabBarController?.tabBar.isHidden = false
         splashView.isHidden = true
+        
+        //Loading the preferences related to users profile only for the very first time
+        if !UserDefaults.standard.bool(forKey: "isProfilePreferencesAlreadyShown")  {
+            let viewController = PrefImagesCollViewController.instantiate(prefType: .profile, prefInformationType: .profile)
+            self.navigationController?.pushViewController(viewController, animated: true)
+            UserDefaults.standard.set(true, forKey: "isProfilePreferencesAlreadyShown")
+        }
+        
         if initialLoad {
             tabBarController?.selectedIndex = LujoSetup().getLujoUser()?.membershipPlan != nil ? LujoSetup().getLujoUser()?.membershipPlan?.target ?? "" == "all" ? 0 : 1 : 3
         }
@@ -600,17 +609,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             tabBarController?.tabBar.isHidden = true
             welcomeLabel.text = "\(PreloadDataManager.UserEntryType.isOldUser ? "Welcome back" : "Welcome"),\n\(LujoSetup().getLujoUser()?.firstName ?? "") \(LujoSetup().getLujoUser()?.lastName ?? "")"
             PreloadDataManager.UserEntryType.isOldUser = true
-
-//            //************
-//            //Chat Manager
-//            //************
-//            ChatManager.sharedChatManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
-//                if success {
-//                    print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
-//                } else {
-//                    print("Twilio: Unable to login")
-//                }
-//            }
             //********
             //MaxPanel
             //********
@@ -1223,9 +1221,17 @@ extension HomeViewController {
         getUserProfile(completion: { _,_ in
             self.dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             self.membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
-            self.navigationItem.rightBarButtonItem?.isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
+            self.hideUnhideRightBarButtons()
             self.getHomeInformation()
         })
+    }
+    
+    func hideUnhideRightBarButtons(){
+        if let rightBarButtonItems = navigationItem.rightBarButtonItems{
+            rightBarButtonItems[0].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all" //!= nil     //chat is only visible to paid users
+            rightBarButtonItems[1].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //CTA is only visible to users having membership plan all
+//            rightBarButtonItems[2].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //search only visible to users having membership plan all
+        }
     }
     
     func getUserProfile(completion: @escaping (LujoUser?, Error?) -> Void) {

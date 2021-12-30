@@ -113,16 +113,35 @@ class PrefImagesCollViewController: UIViewController {
                 default:
                     print("default of travel")
                 }
-            default:
-                print("Others")
+            case .profile:
+                self.navigationItem.rightBarButtonItem = nil     //hiding skip  button
+                self.navigationItem.setHidesBackButton(true, animated: true)    //hiding back all button
+                navigationItem.title = "Welcome"
+                imgPreference.image = UIImage(named: "Lujo Logo")
+                lblPrefLabel.isHidden = true
+                btnNextStep.setTitle("S U B M I T", for: .normal)
+                
+                lblPrefQuestion.text = "Interested In"
+                txtPleaseSpecify.isHidden = true
+                previouslySelectedItems = self.userPreferences?.profile ?? []
+                if let bgImage = UIImage(named: "general_preference_bg"){   //setting background image on profile preference
+                    self.view.backgroundColor = UIColor(patternImage:  bgImage)
+                }
+                
+                default:
+                    print("Others")
         }
         getPrefMasterData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationItem.title = "Preferences"
+        switch prefType {
+            case .profile:
+                navigationItem.title = "Welcome"
+            default:
+                navigationItem.title = "Preferences"
+        }
         activateKeyboardManager()
-
         self.tabBarController?.tabBar.isHidden = true
     }
     
@@ -206,6 +225,27 @@ class PrefImagesCollViewController: UIViewController {
             default:
                 print("default of travel")
             }
+        case .profile:
+            let taxonomyObj1 = Taxonomy(termId:-1 , name: "aviation")
+            let taxonomyObj2 = Taxonomy(termId:-1 , name: "dining")
+            let taxonomyObj3 = Taxonomy(termId:-1 , name: "events")
+            let taxonomyObj4 = Taxonomy(termId:-1 , name: "experience")
+            let taxonomyObj5 = Taxonomy(termId:-1 , name: "gifts")
+            let taxonomyObj6 = Taxonomy(termId:-1 , name: "travel")
+            let taxonomyObj7 = Taxonomy(termId:-1 , name: "properties")
+            let taxonomyObj8 = Taxonomy(termId:-1 , name: "yachting")
+            
+            var taxonomies = [Taxonomy]()
+            taxonomies.append(taxonomyObj1)
+            taxonomies.append(taxonomyObj2)
+            taxonomies.append(taxonomyObj3)
+            taxonomies.append(taxonomyObj4)
+            taxonomies.append(taxonomyObj5)
+            taxonomies.append(taxonomyObj6)
+            taxonomies.append(taxonomyObj7)
+            taxonomies.append(taxonomyObj8)
+            self.itemsList = taxonomies
+
         default:
             print("Others")
         }
@@ -284,6 +324,9 @@ class PrefImagesCollViewController: UIViewController {
             default:
                 print("default of travel")
             }
+        case .profile:
+            print("Not required for hard coded data")
+            completion(self.itemsList, nil)
         default:
             print("Others")
         }
@@ -349,6 +392,14 @@ class PrefImagesCollViewController: UIViewController {
                 default:
                     print("default of travel")
              }
+            case .profile:
+                if let types = userPreferences?.profile{
+                    for type in types {
+                        if type.count > 0{ //to avoid empty string
+                            selectedArray.append(type) //making lowercased, Aviation to aviation
+                        }
+                    }
+                }
             default:
                 print("Default of main switch")
             }
@@ -412,6 +463,11 @@ class PrefImagesCollViewController: UIViewController {
                         default:
                             print("default of travel")
                      }
+                    case .profile:
+                        if arr.count > 0 && arr[0].count > 0{   //avoid empty string
+                            userPreferences.profile = arr
+                        }
+                        LujoSetup().store(userPreferences: userPreferences)
                     default:
                         print("Default of main switch")
                     }
@@ -487,6 +543,16 @@ class PrefImagesCollViewController: UIViewController {
             default:
                 print("default of travel")
             }
+        case .profile:
+            GoLujoAPIManager().setProfilePreferences(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    let error = BackendError.parsing(reason: "Could not set the profile preferences")
+                    completion(nil, error)
+                    return
+                }
+                completion(contentString, error)
+            }
         default:
             print("Main switch default ")
         }
@@ -514,6 +580,8 @@ class PrefImagesCollViewController: UIViewController {
             default:
                 print("default of travel")
         }
+        case .profile:
+            self.navigationController?.popViewController(animated: true)
         default:
             print("default of main switch")
         }
@@ -549,6 +617,10 @@ class PrefImagesCollViewController: UIViewController {
             default:
                 print("default of travel")
         }
+        case .profile:
+            let current = self.userPreferences?.profile ?? []
+            let previous = self.previouslySelectedItems
+            return !compare(current: current , previous: previous)
         default:
             print("default clause of main switch")
         }
@@ -558,10 +630,10 @@ class PrefImagesCollViewController: UIViewController {
     func compare(current:String , previous:String) -> Bool{
         if previous == current{
 //            btnNextStep.setTitle("S K I P", for: .normal)
-            btnNextStep.setTitle("N E X T", for: .normal)
+//            btnNextStep.setTitle("N E X T", for: .normal)
             return true
         }else{
-            btnNextStep.setTitle("N E X T", for: .normal)
+//            btnNextStep.setTitle("N E X T", for: .normal)
             return false
         }
     }
@@ -570,10 +642,10 @@ class PrefImagesCollViewController: UIViewController {
         let currentTypedStr = self.txtPleaseSpecify.text
         if (Set(previous ) == Set(current) && (previousTypedStr ?? currentTypedStr == self.txtPleaseSpecify.text)){
 //            btnNextStep.setTitle("S K I P", for: .normal)
-            btnNextStep.setTitle("N E X T", for: .normal)
+//            btnNextStep.setTitle("N E X T", for: .normal)
             return true
         }else{
-            btnNextStep.setTitle("N E X T", for: .normal)
+//            btnNextStep.setTitle("N E X T", for: .normal)
             return false
         }
     }
@@ -692,6 +764,16 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
             default:
                 print("default of travel")
          }
+        case .profile:
+            cell.imgView.image = UIImage(named: model.name + " general white")
+            cell.lblTitle.text = model.name.capitalizingFirstLetter()
+            cell.lblTitle.textColor = .white
+            if let ids = userPreferences?.profile{
+                if (ids.contains(model.name)){
+                    cell.imgView.image = UIImage(named: model.name + " general selected")
+                    cell.lblTitle.textColor = .rgMid
+                }
+            }
         default:
             print("default statement of main switch")
         }
@@ -708,75 +790,88 @@ extension PrefImagesCollViewController: UICollectionViewDelegate {
         
         switch self.prefType {
         case .travel:
-        switch prefInformationType {
-        case .travelDestinationType:
-            if var ids = userPreferences?.travel.travel_destination_type{
-                if ids.contains(name){
-                    //remove all occurances in case there is duplication i.e. dirty data
-                    ids.removeAll{ value in return value == name}
-                    userPreferences?.travel.travel_destination_type = ids
+            switch prefInformationType {
+            case .travelDestinationType:
+                if var ids = userPreferences?.travel.travel_destination_type{
+                    if ids.contains(name){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == name}
+                        userPreferences?.travel.travel_destination_type = ids
+                    }else{
+                        userPreferences?.travel.travel_destination_type?.append(name)
+                    }
                 }else{
+                    userPreferences?.travel.travel_destination_type = []    //initializing first
                     userPreferences?.travel.travel_destination_type?.append(name)
                 }
-            }else{
-                userPreferences?.travel.travel_destination_type = []    //initializing first
-                userPreferences?.travel.travel_destination_type?.append(name)
-            }
-        case .travelHotelGroups:
-            if var ids = userPreferences?.travel.travel_hotel_group{
-                if ids.contains(termId){
-                    //remove all occurances in case there is duplication i.e. dirty data
-                    ids.removeAll{ value in return value == termId}
-                    userPreferences?.travel.travel_hotel_group = ids
+            case .travelHotelGroups:
+                if var ids = userPreferences?.travel.travel_hotel_group{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.travel.travel_hotel_group = ids
+                    }else{
+                        userPreferences?.travel.travel_hotel_group?.append(termId)
+                    }
                 }else{
+                    userPreferences?.travel.travel_hotel_group = []    //initializing first
                     userPreferences?.travel.travel_hotel_group?.append(termId)
                 }
-            }else{
-                userPreferences?.travel.travel_hotel_group = []    //initializing first
-                userPreferences?.travel.travel_hotel_group?.append(termId)
-            }
-        case .travelActivities:
-            if var ids = userPreferences?.travel.travel_activity_id{
-                if ids.contains(termId){
-                    //remove all occurances in case there is duplication i.e. dirty data
-                    ids.removeAll{ value in return value == termId}
-                    userPreferences?.travel.travel_activity_id = ids
+            case .travelActivities:
+                if var ids = userPreferences?.travel.travel_activity_id{
+                    if ids.contains(termId){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == termId}
+                        userPreferences?.travel.travel_activity_id = ids
+                    }else{
+                        userPreferences?.travel.travel_activity_id?.append(termId)
+                    }
                 }else{
+                    userPreferences?.travel.travel_activity_id = []    //initializing first
                     userPreferences?.travel.travel_activity_id?.append(termId)
                 }
-            }else{
-                userPreferences?.travel.travel_activity_id = []    //initializing first
-                userPreferences?.travel.travel_activity_id?.append(termId)
-            }
-        case .travelAirlines:
-            if var ids = userPreferences?.travel.travel_airline_id{
-                if ids.contains(name){
-                    //remove all occurances in case there is duplication i.e. dirty data
-                    ids.removeAll{ value in return value == name}
-                    userPreferences?.travel.travel_airline_id = ids
+            case .travelAirlines:
+                if var ids = userPreferences?.travel.travel_airline_id{
+                    if ids.contains(name){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == name}
+                        userPreferences?.travel.travel_airline_id = ids
+                    }else{
+                        userPreferences?.travel.travel_airline_id?.append(name)
+                    }
                 }else{
+                    userPreferences?.travel.travel_airline_id = []    //initializing first
                     userPreferences?.travel.travel_airline_id?.append(name)
                 }
-            }else{
-                userPreferences?.travel.travel_airline_id = []    //initializing first
-                userPreferences?.travel.travel_airline_id?.append(name)
-            }
-        case .travelHotelStyles:
-            if var ids = userPreferences?.travel.travel_hotel_styles{
-                if ids.contains(name){
-                    //remove all occurances in case there is duplication i.e. dirty data
-                    ids.removeAll{ value in return value == name}
-                    userPreferences?.travel.travel_hotel_styles = ids
+            case .travelHotelStyles:
+                if var ids = userPreferences?.travel.travel_hotel_styles{
+                    if ids.contains(name){
+                        //remove all occurances in case there is duplication i.e. dirty data
+                        ids.removeAll{ value in return value == name}
+                        userPreferences?.travel.travel_hotel_styles = ids
+                    }else{
+                        userPreferences?.travel.travel_hotel_styles?.append(name)
+                    }
                 }else{
+                    userPreferences?.travel.travel_hotel_styles = []    //initializing first
                     userPreferences?.travel.travel_hotel_styles?.append(name)
                 }
-            }else{
-                userPreferences?.travel.travel_hotel_styles = []    //initializing first
-                userPreferences?.travel.travel_hotel_styles?.append(name)
-            }
-        default:
-            print("default of travel")
+            default:
+                print("default of travel")
         }
+        case .profile:
+            if var types = userPreferences?.profile{
+                if types.contains(name){
+                    //remove all occurances in case there is duplication i.e. dirty data
+                    types.removeAll{ value in return value == name}
+                    userPreferences?.profile = types
+                }else{
+                    userPreferences?.profile?.append(name)
+                }
+            }else{
+                userPreferences?.profile = []    //initializing first
+                userPreferences?.profile?.append(name)
+            }
         default:
             print("default statement of main switch")
         }
@@ -792,12 +887,14 @@ extension PrefImagesCollViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = Int(collectionView.bounds.size.width)
+        cellWidth = width / 4  - PrefCollSize.itemMargin.rawValue / 4    //to keep horizontal and vertical margin same
         switch prefInformationType {
         case .travelHotelStyles:
             cellWidth = width / 3  - PrefCollSize.itemMargin.rawValue / 3    //to keep horizontal and vertical margin same
             return CGSize(width: cellWidth, height: cellWidth + 30)
+        case .profile:
+            return CGSize(width: cellWidth, height: cellWidth)
         default:
-            cellWidth = width / 4  - PrefCollSize.itemMargin.rawValue / 4    //to keep horizontal and vertical margin same
             return CGSize(width: cellWidth, height: cellWidth + 30)
         }   
     }

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xl8-A2-p7O">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xl8-A2-p7O">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,13 +32,13 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request to Book" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BoD-Xm-40T">
-                                        <rect key="frame" x="123.66666666666669" y="13.666666666666671" width="128" height="17"/>
+                                        <rect key="frame" x="123.66666666666669" y="12" width="128" height="20"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTq-2x-0Xw">
-                                        <rect key="frame" x="16" y="11" width="32" height="22"/>
+                                        <rect key="frame" x="16" y="6" width="32" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="lTb-40-Yw8"/>
                                         </constraints>
@@ -67,13 +65,13 @@
                                 <rect key="frame" x="18" y="148" width="339" height="235"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Booking request authorization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcl-Cc-UF0">
-                                        <rect key="frame" x="16" y="25" width="188" height="14"/>
+                                        <rect key="frame" x="16" y="25" width="188" height="16.333333333333329"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ks4-PP-N3b">
-                                        <rect key="frame" x="16" y="57" width="32" height="1"/>
+                                        <rect key="frame" x="16" y="59.333333333333343" width="32" height="1"/>
                                         <color key="backgroundColor" name="Action Button"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="BJY-LO-sqk"/>
@@ -81,38 +79,38 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected payment method" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcd-q2-NO5">
-                                        <rect key="frame" x="16" y="78" width="189" height="16"/>
+                                        <rect key="frame" x="16" y="80.333333333333343" width="189" height="18.666666666666671"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="16"/>
                                         <color key="textColor" name="Placeholder Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorization hold amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSH-tD-Icf">
-                                        <rect key="frame" x="16" y="110" width="189" height="16"/>
+                                        <rect key="frame" x="16" y="115" width="189" height="18.666666666666657"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="16"/>
                                         <color key="textColor" name="Placeholder Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ln0-j5-koY">
-                                        <rect key="frame" x="16" y="142" width="307" height="56"/>
+                                        <rect key="frame" x="16" y="149.66666666666669" width="307" height="65.333333333333314"/>
                                         <string key="text">This step prevents spam requests. We will freeze a total of 500 EUR on you credit card…. The frozen amount will be released as soon as we confirm…</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                         <color key="textColor" name="Placeholder Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credit card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlf-cn-6n0">
-                                        <rect key="frame" x="253.33333333333329" y="79" width="69.666666666666657" height="14"/>
+                                        <rect key="frame" x="253.33333333333329" y="81.666666666666657" width="69.666666666666657" height="16.333333333333329"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4p-Dw-0SO">
-                                        <rect key="frame" x="293" y="112" width="30" height="12"/>
+                                        <rect key="frame" x="293" y="117.33333333333331" width="30" height="14"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="12"/>
                                         <color key="textColor" name="Placeholder Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="84,300,300" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aH0-Th-vaO">
-                                        <rect key="frame" x="210" y="110" width="81" height="16"/>
+                                        <rect key="frame" x="210" y="115" width="81" height="18.666666666666657"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="16"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
@@ -153,33 +151,33 @@
                                         <rect key="frame" x="0.0" y="28" width="339" height="93"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eI2-XT-RBT" id="8hL-Wg-Dg7">
-                                            <rect key="frame" x="0.0" y="0.0" width="339" height="92.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="339" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JG3-AY-k6M" userLabel="Background View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="339" height="80.666666666666671"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="339" height="81"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MasterCardImage" translatesAutoresizingMaskIntoConstraints="NO" id="DnE-Rk-ywh">
-                                                            <rect key="frame" x="20" y="20.333333333333329" width="60" height="40"/>
+                                                            <rect key="frame" x="20" y="20.666666666666671" width="60" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="IHs-31-Ek9"/>
                                                                 <constraint firstAttribute="width" constant="60" id="UAh-el-XlM"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credit Card Brand" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLe-kY-YPQ">
-                                                            <rect key="frame" x="88" y="26.333333333333329" width="112" height="14"/>
+                                                            <rect key="frame" x="88" y="24.333333333333336" width="114" height="16.333333333333336"/>
                                                             <fontDescription key="fontDescription" name="HelveticaLTStd-Roman" family="Helvetica LT Std" pointSize="14"/>
                                                             <color key="textColor" name="Action Button"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ending with xxx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-Sq-J7Y">
-                                                            <rect key="frame" x="88" y="45.333333333333336" width="71" height="10"/>
+                                                            <rect key="frame" x="88" y="45.666666666666664" width="71" height="11.666666666666664"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="10"/>
                                                             <color key="textColor" name="Placeholder Text"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqw-Hh-hXC" userLabel="Selected View">
-                                                            <rect key="frame" x="335" y="0.0" width="4" height="80.666666666666671"/>
+                                                            <rect key="frame" x="335" y="0.0" width="4" height="81"/>
                                                             <color key="backgroundColor" name="Action Button"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="4" id="n0r-9z-sZM"/>
@@ -220,33 +218,33 @@
                                         <rect key="frame" x="0.0" y="121" width="339" height="93"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n8y-gL-bXD" id="XrT-zQ-VTC">
-                                            <rect key="frame" x="0.0" y="0.0" width="339" height="92.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="339" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYu-6u-UVy" userLabel="Background View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="339" height="80.666666666666671"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="339" height="81"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Credit Card Payment Type" translatesAutoresizingMaskIntoConstraints="NO" id="Gd1-EK-NRa">
-                                                            <rect key="frame" x="20" y="13.333333333333336" width="41" height="24"/>
+                                                            <rect key="frame" x="20" y="13.666666666666664" width="41" height="24"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="24" id="JmH-hk-kIJ"/>
                                                                 <constraint firstAttribute="width" constant="41" id="lBl-md-yxg"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credit Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLY-ex-6bF">
-                                                            <rect key="frame" x="80" y="18.333333333333332" width="70.666666666666686" height="13.999999999999996"/>
+                                                            <rect key="frame" x="80" y="17.333333333333336" width="72.333333333333314" height="16.333333333333336"/>
                                                             <fontDescription key="fontDescription" name="HelveticaLTStd-Roman" family="Helvetica LT Std" pointSize="14"/>
                                                             <color key="textColor" name="Action Button"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*subject to a 4% merchant processing fee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWf-UA-h5H">
-                                                            <rect key="frame" x="20" y="45.333333333333336" width="188" height="10"/>
+                                                            <rect key="frame" x="20" y="45.666666666666664" width="188" height="11.666666666666664"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="10"/>
                                                             <color key="textColor" name="Placeholder Text"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXD-ku-C8Y" userLabel="Selected View">
-                                                            <rect key="frame" x="335" y="0.0" width="4" height="80.666666666666671"/>
+                                                            <rect key="frame" x="335" y="0.0" width="4" height="81"/>
                                                             <color key="backgroundColor" name="Action Button"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="4" id="kll-xM-da5"/>
@@ -288,7 +286,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyJ-Op-39D">
                                 <rect key="frame" x="0.0" y="710" width="375" height="68"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48a-NA-EFW">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48a-NA-EFW">
                                         <rect key="frame" x="16" y="12" width="287" height="44"/>
                                         <color key="backgroundColor" name="Action Button"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="10"/>
@@ -333,12 +331,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+ Add credit card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xsb-jF-Lm0" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="248" y="643" width="109" height="14"/>
+                                <rect key="frame" x="248" y="643" width="109" height="16.333333333333371"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                 <color key="textColor" name="Action Button"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="ZwC-yd-LQU"/>
                         <color key="backgroundColor" name="Popup Top Bar"/>
                         <constraints>
                             <constraint firstItem="ZwC-yd-LQU" firstAttribute="trailing" secondItem="NLH-ke-uls" secondAttribute="trailing" constant="18" id="0z5-02-qw4"/>
@@ -362,7 +361,6 @@
                             <constraint firstItem="Fqj-bY-Ah0" firstAttribute="leading" secondItem="ZwC-yd-LQU" secondAttribute="leading" id="y6e-Py-wSp"/>
                             <constraint firstItem="Xsb-jF-Lm0" firstAttribute="top" secondItem="Kd4-PZ-ih7" secondAttribute="bottom" constant="16" id="yzT-d3-wKt"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ZwC-yd-LQU"/>
                     </view>
                     <navigationItem key="navigationItem" id="EqY-ht-W90"/>
                     <connections>
@@ -386,8 +384,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ZP-f3-9LJ">
-                                <rect key="frame" x="311" y="62" width="48" height="24"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ZP-f3-9LJ">
+                                <rect key="frame" x="311" y="62" width="48" height="26"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="12"/>
                                 <state key="normal" title="CANCEL">
                                     <color key="titleColor" name="Button Text"/>
@@ -397,46 +395,41 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDi-CS-hk2">
-                                <rect key="frame" x="0.0" y="100" width="375" height="678"/>
+                                <rect key="frame" x="0.0" y="102" width="375" height="676"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your credit card details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wcc-tB-5ef">
-                                        <rect key="frame" x="75" y="46" width="225" height="14"/>
+                                        <rect key="frame" x="75" y="46" width="225" height="16.333333333333329"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="14"/>
                                         <color key="textColor" name="Placeholder Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Cardholder full name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3cy-u4-VfA" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="86" width="343" height="30"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="16" y="88.333333333333343" width="343" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Card number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vwl-qG-H07" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="133" width="343" height="30"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="16" y="139.33333333333334" width="343" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Month" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-Wo-S26" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="15.999999999999993" y="179" width="105.33333333333331" height="30"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="15.999999999999993" y="189.33333333333331" width="105.33333333333331" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Year" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="igI-5c-3Di" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="135" y="179" width="105.33333333333331" height="30"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="135" y="189.33333333333331" width="105.33333333333331" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLe-Hk-CSm" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="253.00000000000003" y="179" width="105.33333333333334" height="30"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="253.00000000000003" y="189.33333333333331" width="105.33333333333334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ers-nd-OXd">
-                                        <rect key="frame" x="16" y="242" width="343" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ers-nd-OXd">
+                                        <rect key="frame" x="16" y="256.33333333333331" width="343" height="44"/>
                                         <color key="backgroundColor" name="Action Button"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="M68-fU-sUS"/>
@@ -475,12 +468,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add credit card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MaM-H8-jrZ">
-                                <rect key="frame" x="128.66666666666666" y="65.666666666666671" width="118" height="17"/>
+                                <rect key="frame" x="128.66666666666666" y="65" width="118" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTStd-Roman" family="Helvetica Neue LT Std" pointSize="17"/>
                                 <color key="textColor" name="White Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="FoH-nP-Yeb"/>
                         <color key="backgroundColor" name="Popup Top Bar"/>
                         <constraints>
                             <constraint firstItem="MaM-H8-jrZ" firstAttribute="centerY" secondItem="0ZP-f3-9LJ" secondAttribute="centerY" id="1kI-hU-0GU"/>
@@ -492,7 +486,6 @@
                             <constraint firstItem="MaM-H8-jrZ" firstAttribute="centerX" secondItem="FoH-nP-Yeb" secondAttribute="centerX" id="ogX-Al-8al"/>
                             <constraint firstItem="eDi-CS-hk2" firstAttribute="trailing" secondItem="FoH-nP-Yeb" secondAttribute="trailing" id="ysz-uO-n2F"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="FoH-nP-Yeb"/>
                     </view>
                     <connections>
                         <outlet property="addCreditCardButton" destination="Ers-nd-OXd" id="AwZ-Hp-XBf"/>
@@ -541,7 +534,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KNz-wf-i4l">
                                         <rect key="frame" x="0.0" y="710" width="375" height="68"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-HN-o3b" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-HN-o3b" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="24" y="12" width="327" height="44"/>
                                                 <color key="backgroundColor" name="Action Button"/>
                                                 <constraints>
@@ -603,16 +596,16 @@ Please make sure you review your request.</string>
                                                                 <rect key="frame" x="16" y="50" width="303" height="30"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="$ 1500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6x-JH-xFH">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="92" height="30"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="92.333333333333329" height="30"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                                                                         <color key="textColor" name="White Text"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MrP-zJ-1S3">
-                                                                        <rect key="frame" x="96" y="0.0" width="35" height="30"/>
+                                                                        <rect key="frame" x="96.333333333333343" y="0.0" width="34.666666666666657" height="30"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="/ YEAR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QGv-mk-DiC">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="35" height="13.333333333333334"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="34.666666666666664" height="13.333333333333334"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <nil key="highlightedColor"/>
@@ -729,7 +722,6 @@ Please make sure you review your request.</string>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="hO1-Be-0Uh"/>
                                                         </constraints>
-                                                        <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
@@ -738,7 +730,6 @@ Please make sure you review your request.</string>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="0XT-fC-rDh"/>
                                                         </constraints>
-                                                        <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                     </textField>
@@ -769,7 +760,6 @@ Please make sure you review your request.</string>
                                                                     <constraint firstAttribute="height" constant="44" id="6ja-XX-osV"/>
                                                                     <constraint firstAttribute="width" constant="115" id="NHa-KP-PMj"/>
                                                                 </constraints>
-                                                                <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             </textField>
@@ -778,7 +768,6 @@ Please make sure you review your request.</string>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="115" id="hsF-Rb-Tje"/>
                                                                 </constraints>
-                                                                <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             </textField>
@@ -815,7 +804,6 @@ Please make sure you review your request.</string>
                                                                     <constraint firstAttribute="width" constant="115" id="IDq-iB-MOD"/>
                                                                     <constraint firstAttribute="height" constant="44" id="MLd-Xd-2MI"/>
                                                                 </constraints>
-                                                                <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             </textField>
@@ -850,7 +838,7 @@ Please make sure you review your request.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tC6-cC-dyK" userLabel="Title Bar">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9l-PR-pLH">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9l-PR-pLH">
                                         <rect key="frame" x="314" y="9" width="45" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <state key="normal" title="CANCEL">
@@ -861,7 +849,7 @@ Please make sure you review your request.</string>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase membership" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4vx-8M-LcC">
-                                        <rect key="frame" x="102.00000000000001" y="11.999999999999998" width="171.33333333333337" height="20.333333333333329"/>
+                                        <rect key="frame" x="102.33333333333333" y="11.999999999999998" width="170.33333333333337" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -891,7 +879,7 @@ Please make sure you review your request.</string>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorizing payment..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKP-ec-KX7">
-                                        <rect key="frame" x="97" y="472" width="181" height="20.333333333333314"/>
+                                        <rect key="frame" x="102.33333333333333" y="472" width="170.66666666666669" height="20"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                         <color key="textColor" name="Palette - Paragraph White"/>
                                         <nil key="highlightedColor"/>
@@ -906,6 +894,7 @@ Please make sure you review your request.</string>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="b4Z-Vi-9UH"/>
                         <color key="backgroundColor" name="Navigation Bar"/>
                         <constraints>
                             <constraint firstItem="gtY-TN-uF5" firstAttribute="leading" secondItem="b4Z-Vi-9UH" secondAttribute="leading" id="1hv-QF-GHg"/>
@@ -925,7 +914,6 @@ Please make sure you review your request.</string>
                             <constraint firstItem="gtY-TN-uF5" firstAttribute="bottom" secondItem="7Sc-Kj-q3z" secondAttribute="bottom" id="rDG-sC-HEX"/>
                             <constraint firstItem="TCh-Ed-gk0" firstAttribute="leading" secondItem="b4Z-Vi-9UH" secondAttribute="leading" id="tw9-3m-ZpF"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="b4Z-Vi-9UH"/>
                     </view>
                     <size key="freeformSize" width="375" height="900"/>
                     <connections>
@@ -950,7 +938,7 @@ Please make sure you review your request.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="Back Button Top" width="11.333333015441895" height="21"/>
+        <image name="Back Button Top" width="32" height="32"/>
         <image name="Chat Button" width="20" height="20"/>
         <image name="Credit Card Payment Type" width="48" height="48"/>
         <image name="MasterCardImage" width="60" height="40"/>
@@ -971,7 +959,7 @@ Please make sure you review your request.</string>
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Palette - R-G Mid">
-            <color red="0.95686274509803926" green="0.63921568627450975" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.90196078431372551" green="0.52549019607843139" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Placeholder Text">
             <color red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
