@@ -262,11 +262,10 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         }
     }
     
-    func getLastMessagesWithCount(_ channel: TCHConversation, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
-        
-        channel.getLastMessages(withCount:msgsCount, completion: { (result, messages) in
+    func getLastMessagesWithCount(_ conversation: TCHConversation, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
+        conversation.getLastMessages(withCount:msgsCount, completion: { (result, messages) in
             if let msgs = messages{
-                self.setAllMessagesRead(channel) { (result, count) in
+                self.setAllMessagesRead(conversation) { (result, count) in
                     print("Twilio: setAllMessagesConsumed Result:\(result.isSuccessful)" , "Count:\(count)")
                 }
                 completion(msgs)
@@ -283,9 +282,10 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
 
     func setAllMessagesRead(_ conversation: TCHConversation,completion: @escaping (TCHResult,UInt) -> Void){
-        
+        //Cosumption horizon
         conversation.setAllMessagesReadWithCompletion({ (result, count) in
             print("Twilio: Unread Message Index:\(String(describing: count))")
+            
             completion(result, count)
         })
     }
@@ -313,6 +313,23 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         
     }
     
+    //This method will iterate through the list of participants of this conversation and will fetch the max last message read index of all particiapnts other then me
+    func getOthersLastMessageRead() -> Int{
+        var lastReadMessageIndex = 0
+        let participants = conversation?.participants()
+        if let participants = participants{
+            for participant in participants{
+                if (participant.identity != self.identity){
+                    if let lastMessageIndex = participant.lastReadMessageIndex?.intValue{
+                        lastReadMessageIndex = lastMessageIndex > lastReadMessageIndex ? lastMessageIndex : lastReadMessageIndex
+                    }
+                    
+                }
+            }
+        }
+        return lastReadMessageIndex;
+    }
+    
     func deleteChannel(_ channel: TCHConversation,completion: @escaping (TCHResult) -> Void){
         channel.destroy(completion: { (result) in
             print("Twilio: conversation deleted:\(result.isSuccessful)")
@@ -336,7 +353,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         }
     }
     
-    func sendImageMessage(photo  : UIImage
+    func sendMessageHavingImage(photo  : UIImage
                           ,_ conversation: TCHConversation
                           , _ cutomAttributes: Dictionary<String,Any>
                           , completion: @escaping (TCHResult, TCHMessage?) -> Void){

@@ -33,6 +33,8 @@ import Mixpanel
 final class AdvanceChatViewController: ConversationViewController {
         
     let outgoingAvatarOverlap: CGFloat = 17.5
+    var readConsumptionTimer = Timer()
+    let readConsumptionTimerInterval:TimeInterval = 2
     
     override func viewDidLoad() {
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: CustomMessagesFlowLayout())
@@ -40,8 +42,7 @@ final class AdvanceChatViewController: ConversationViewController {
         super.viewDidLoad()
         ConversationsManager.sharedConversationsManager.delegate = self
         
-        //updateTitleView(title: "LUJO", subtitle: "2 Online")    //extension
-        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: "2 Online")    //extension
+        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: "")    //extension 2 Online
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -191,7 +192,7 @@ final class AdvanceChatViewController: ConversationViewController {
 //            whoIsTyping = name + " is typing..."
 //        }
 //        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : whoIsTyping)
-        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: isHidden ? "2 Online" : "Typing...")
+        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: isHidden ? "" : "Typing...") //2 Online
         setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
             if success, self?.isLastSectionVisible() == true {
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
@@ -466,8 +467,11 @@ extension AdvanceChatViewController: MessagesLayoutDelegate {
     
     // read
     func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        //return 17
-        return 0
+        if isFromCurrentSender(message: message){
+            return 17
+        }else{
+            return 0
+        }
     }
 }
 
@@ -487,7 +491,7 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
                         attribute["device_latitude"] = String(currentLoc.coordinate.latitude)
                         attribute["device_longitude"] = String(currentLoc.coordinate.longitude)
                     }
-                    ConversationsManager.sharedConversationsManager.sendImageMessage(photo: image, channel, attribute) { (result, message) in
+                    ConversationsManager.sharedConversationsManager.sendMessageHavingImage(photo: image, channel, attribute) { (result, message) in
                         myGroup.leave()
                     }
                 }
@@ -520,9 +524,24 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
                                      , channel: TCHConversation
                                      ){
         if let chanel = self.conversation , chanel.sid == channel.sid{    //currently opened conversation received the messages, one conversation is with single n 'chanel'
-            //if conversation chat window is opened and recieved a new message then set its Un Consumed messages count to 0
+            //if conversation chat window is opened and recieved a new message then set its Consumed messages to all
             ConversationsManager.sharedConversationsManager.setAllMessagesRead(channel) { (result, count) in
-                print("Twilio: set conversation's unConsumed messages count to zero")
+                if let id = message.author, id == self.identity{ //if this message is from myself only then chek the reading receipt
+                    self.readConsumptionTimer = Timer.scheduledTimer(withTimeInterval: self.readConsumptionTimerInterval, repeats: true, block: { _ in
+                    let lastMessageReadIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
+                        if lastMessageReadIndex > self.lastMessageReadIndex{
+                            self.lastMessageReadIndex = lastMessageReadIndex
+                            //refresh the grid
+                            self.readConsumptionTimer.invalidate()
+                            self.messagesCollectionView.reloadData()
+                            self.messagesCollectionView.scrollToLastItem(animated: true)
+                            
+                        }
+                    })
+                }
+                
+                
+                print("Twilio: set conversation's consumption horizon to last message")
             }
 //            print(message.mediaFilename,message.mediaSid)
             if message.hasMedia(){

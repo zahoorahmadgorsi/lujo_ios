@@ -62,8 +62,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     var product:Product!
     var initialMessage:String?
     let locationManager = CLLocationManager()
-    
     var currentLocation: CLLocation?
+    var lastMessageReadIndex:Int = 0
     
     // MARK: - Lifecycle
 
@@ -92,6 +92,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         if let channel = self.conversation{  //loading messages of existing conversation
 //            print(channel.sid as Any)
             ConversationsManager.sharedConversationsManager.setConversation(conversation: channel)
+            //Reading last message read index of other participant
+            lastMessageReadIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
             ConversationsManager.sharedConversationsManager.getLastMessagesWithCount(channel, msgsCount: pageSize, completion: {messages in
                 if let chanel = self.conversation , chanel.sid == channel.sid{    //currently opened conversation received the messages, one channel is with single n 'chanel'
                     //if channel is opened and recieved a new message then set its consumed messages to all
@@ -320,6 +322,11 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if let currentMessage = messageList[safe:indexPath.section] , let currentMessageIndex =  currentMessage.messageIndex?.intValue{
+            if currentMessageIndex > lastMessageReadIndex{
+                return NSAttributedString(string: "Unread", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+            }
+        }
         return NSAttributedString(string: "Read", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     }
 
@@ -508,6 +515,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
     }
     
     internal func convertTCHMessageToChatMessage(message: TCHMessage) -> ChatMessage? {
+        
         if (identity == message.participant?.identity){ //its current user's message
             if let user:ChatUser = self.currentSender() as? ChatUser  {
                 if let messageBody = message.body {

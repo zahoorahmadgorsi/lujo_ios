@@ -185,12 +185,12 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>LUJO App needs to access to your location to be able to find the best possible events near your location.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>LUJO App needs to access to your bluetooth connection to use Bluetooth payment peripherics to process your payment with a Cards.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>LUJO App needs to access to your cammera to be able to send images to our agents.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>LUJO App needs to access to your location to be able to find the best possible events near your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>LUJO App needs to access to your location to be able to find the best possible events near your location.</string>
 	<key>NSMicrophoneUsageDescription</key>
