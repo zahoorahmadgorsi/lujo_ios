@@ -42,11 +42,16 @@ final class AdvanceChatViewController: ConversationViewController {
         super.viewDidLoad()
         ConversationsManager.sharedConversationsManager.delegate = self
         
-        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: "")    //extension 2 Online
+        updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: nil)    //extension 2 Online
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.readConsumptionTimer.invalidate()
     }
     
     override func configureMessageCollectionView() {
@@ -504,9 +509,28 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
         }
     }
     
+    //This method checks that other user (not me) has read the message upto what point
+    func checkConsumptionHorizon(){
+        let messageIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
+        if messageIndex > self.lastReadMessageIndex{
+            self.lastReadMessageIndex = messageIndex
+            //refresh the collectionview
+            self.readConsumptionTimer.invalidate()
+            self.messagesCollectionView.reloadData()
+            self.messagesCollectionView.scrollToLastItem(animated: true)
+        }
+    }
 }
 
 extension AdvanceChatViewController: ConversationsManagerDelegate {
+    
+//    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) {
+//        if(conversation == self.conversation && updated == .lastReadMessageIndex){
+//            checkConsumptionHorizon()
+//        }
+//    }
+    
+    
     
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
         print("Twilio: typingOn : \(String(describing: conversation.friendlyName)) by \(String(describing: participant.identity)) is \(isTyping)")
@@ -521,26 +545,16 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
     }
     
     internal func receivedNewMessage(message: TCHMessage
-                                     , channel: TCHConversation
+                                     , conversation: TCHConversation
                                      ){
-        if let chanel = self.conversation , chanel.sid == channel.sid{    //currently opened conversation received the messages, one conversation is with single n 'chanel'
+        if let converse = self.conversation , converse.sid == conversation.sid{
             //if conversation chat window is opened and recieved a new message then set its Consumed messages to all
-            ConversationsManager.sharedConversationsManager.setAllMessagesRead(channel) { (result, count) in
+            ConversationsManager.sharedConversationsManager.setAllMessagesRead(conversation) { (result, count) in
                 if let id = message.author, id == self.identity{ //if this message is from myself only then chek the reading receipt
                     self.readConsumptionTimer = Timer.scheduledTimer(withTimeInterval: self.readConsumptionTimerInterval, repeats: true, block: { _ in
-                    let lastMessageReadIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
-                        if lastMessageReadIndex > self.lastMessageReadIndex{
-                            self.lastMessageReadIndex = lastMessageReadIndex
-                            //refresh the grid
-                            self.readConsumptionTimer.invalidate()
-                            self.messagesCollectionView.reloadData()
-                            self.messagesCollectionView.scrollToLastItem(animated: true)
-                            
-                        }
+                        self.checkConsumptionHorizon()
                     })
                 }
-                
-                
                 print("Twilio: set conversation's consumption horizon to last message")
             }
 //            print(message.mediaFilename,message.mediaSid)

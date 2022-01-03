@@ -63,7 +63,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     var initialMessage:String?
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
-    var lastMessageReadIndex:Int = 0
+    var lastReadMessageIndex:Int = -1
     
     // MARK: - Lifecycle
 
@@ -89,18 +89,19 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         
         identity = LujoSetup().getLujoUser()?.email ?? identity //current logged in user
         
-        if let channel = self.conversation{  //loading messages of existing conversation
+        if let converse = self.conversation{  //loading messages of existing conversation
 //            print(channel.sid as Any)
-            ConversationsManager.sharedConversationsManager.setConversation(conversation: channel)
-            //Reading last message read index of other participant
-            lastMessageReadIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
-            ConversationsManager.sharedConversationsManager.getLastMessagesWithCount(channel, msgsCount: pageSize, completion: {messages in
-                if let chanel = self.conversation , chanel.sid == channel.sid{    //currently opened conversation received the messages, one channel is with single n 'chanel'
-                    //if channel is opened and recieved a new message then set its consumed messages to all
-                    ConversationsManager.sharedConversationsManager.setAllMessagesRead(channel) { (result, count) in
-//                        print("Twilio: channel's UnConsumed messages count set to zero. Result:\(result.isSuccessful())" , "Count:\(count)")
-                    }
+            //Using setter to assign conversation
+            ConversationsManager.sharedConversationsManager.setConversation(conversation: converse)
+            //getting last pageSize count message of this conversation
+            ConversationsManager.sharedConversationsManager.getLastMessagesWithCount(converse, msgsCount: pageSize, completion: {messages in
+                //Since last pageSize count messages are fetched so we can safely set All messsages to be read for current participant
+                ConversationsManager.sharedConversationsManager.setAllMessagesRead(converse) { (result, count) in
+    //                        print("Twilio: channel's UnConsumed messages count set to zero. Result:\(result.isSuccessful())" , "Count:\(count)")
                 }
+                //Getting last message read index of other participants
+                self.lastReadMessageIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
+                
                 var tempMessages:[ChatMessage] = []
 //              print(tchMessage.attributes()?.dictionary)
                 let myGroup = DispatchGroup()
@@ -127,7 +128,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                     self.messagesCollectionView.scrollToLastItem(animated: true)
                 }
             })
-        }else if let user = LujoSetup().getLujoUser(), user.id > 0 {
+        }else if let user = LujoSetup().getLujoUser(), user.id > 0 { //creating new conversation
             let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
             //Creating channel if doesnt exist else joining
             let channelUniqueName = product.type + " " + user.firstName + " " + dateTime
@@ -323,7 +324,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if let currentMessage = messageList[safe:indexPath.section] , let currentMessageIndex =  currentMessage.messageIndex?.intValue{
-            if currentMessageIndex > lastMessageReadIndex{
+            if currentMessageIndex > lastReadMessageIndex{
                 return NSAttributedString(string: "Unread", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
             }
         }

@@ -41,6 +41,14 @@ class ChatOptionsViewController: UIViewController {
         let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "restaurant" , name: "Restaurant Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navController.topViewController
+            // Modal Dismiss iOS 13 onward
+            //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+            controller?.presentationController?.delegate = self
+        }
+        //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+        navController.presentationController?.delegate = self
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
@@ -48,6 +56,14 @@ class ChatOptionsViewController: UIViewController {
         let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "event" , name: "Event Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navController.topViewController
+            // Modal Dismiss iOS 13 onward
+            //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+            controller?.presentationController?.delegate = self
+        }
+        //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+        navController.presentationController?.delegate = self
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
@@ -55,6 +71,14 @@ class ChatOptionsViewController: UIViewController {
         let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "aviation" , name: "Aviation Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navController.topViewController
+            // Modal Dismiss iOS 13 onward
+            //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+            controller?.presentationController?.delegate = self
+        }
+        //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+        navController.presentationController?.delegate = self
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
@@ -62,6 +86,14 @@ class ChatOptionsViewController: UIViewController {
         let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "yacht" , name: "Yacht Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navController.topViewController
+            // Modal Dismiss iOS 13 onward
+            //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+            controller?.presentationController?.delegate = self
+        }
+        //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+        navController.presentationController?.delegate = self
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
@@ -69,6 +101,14 @@ class ChatOptionsViewController: UIViewController {
         let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "villa" , name: "Villa Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navController.topViewController
+            // Modal Dismiss iOS 13 onward
+            //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+            controller?.presentationController?.delegate = self
+        }
+        //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+        navController.presentationController?.delegate = self
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
     }
     
@@ -76,6 +116,32 @@ class ChatOptionsViewController: UIViewController {
         let viewController = AdvanceChatViewController()
         viewController.product = Product(id: -1 , type: "travel" , name: "Hotel Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navController.topViewController
+            // Modal Dismiss iOS 13 onward
+            //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+            controller?.presentationController?.delegate = self
+        }
+        //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+        navController.presentationController?.delegate = self
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+    }
+}
+
+extension ChatOptionsViewController: UIAdaptivePresentationControllerDelegate {
+    // Only called when the sheet is dismissed by DRAGGING as well as when tapped on cross button
+    public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        if #available(iOS 13, *) {
+            //Call viewWillAppear only in iOS 13
+            //so that receivedNewMessage should stop calling on AdvanceChatViewController and start calling on homeViewcontroller
+            
+            if let tabbarController = self.presentingViewController as? MainTabBarController{
+                if let navViewController = tabbarController.viewControllers?[0] as? UINavigationController {
+                    if let viewController = navViewController.children.first as?  HomeViewController{
+                        ConversationsManager.sharedConversationsManager.delegate = viewController
+                    }
+                }
+            }
+        }
     }
 }

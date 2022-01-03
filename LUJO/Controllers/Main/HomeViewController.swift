@@ -568,11 +568,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
             viewController.transitioningDelegate = self
             viewController.modalPresentationStyle = .overFullScreen
-//            viewController.delegate = self
-            
             present(viewController, animated: true)
 
-    //        self.navigationController?.pushViewController(viewController, animated: true)
         }
 
     }
@@ -1108,8 +1105,6 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.modalPresentationStyle = .overFullScreen
-//        viewController.delegate = self
-
         present(viewController, animated: true)
     }
     
@@ -1261,7 +1256,7 @@ extension HomeViewController {
     
     @objc func showBadgeValue() {
         ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
-            print("Twilio: Total UnConsumed messages count:\(count)")
+            print("Twilio: showBadgeValue on homeview controller:\(count)")
             //setting the badge value
             let rightBarButtons = self.navigationItem.rightBarButtonItems
             let lastBarButton = rightBarButtons?.first
@@ -1302,6 +1297,10 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     // B1 - 3
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 //        return nil
+        //Assigning conversation manager to homeviewController so that now incase of new chat message homeview controller would be called and new message badge may show appropriately
+        ConversationsManager.sharedConversationsManager.delegate = self
+        showBadgeValue()
+    
         // B2 - 17
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         guard let secondViewController = dismissed as? ProductDetailsViewController,
@@ -1322,6 +1321,8 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
             return nil
         }
     }
+    
+    
 }
 
 extension HomeViewController: UIAdaptivePresentationControllerDelegate {
@@ -1336,11 +1337,14 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate {
 }
 
 extension HomeViewController:ConversationsManagerDelegate{
+    
+//    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) {}
+    
     func reloadMessages() {
         print("Twilio: reloadMessages")
     }
 
-    func receivedNewMessage(message: TCHMessage, channel: TCHConversation){
+    func receivedNewMessage(message: TCHMessage, conversation: TCHConversation){
         showBadgeValue()
 //        return nil
     }

@@ -10,10 +10,6 @@ import UIKit
 import JGProgressHUD
 import Mixpanel
 
-//protocol ProductDetailDelegate{
-//    func presentChatViewController(viewController:UIViewController)
-//}
-
 class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     //MARK:- Init
@@ -918,6 +914,15 @@ extension ProductDetailsViewController {
                 viewController.product = product
                 viewController.initialMessage = initialMessage
                 let navController = UINavigationController(rootViewController:viewController)
+                if #available(iOS 13.0, *) {
+                    let controller = navController.topViewController
+                    // Modal Dismiss iOS 13 onward
+                    //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+                    controller?.presentationController?.delegate = self
+                }
+                
+                //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+                navController.presentationController?.delegate = self
                 UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
                 //Zahoor end
                 
@@ -1090,6 +1095,17 @@ extension ProductDetailsViewController: UIGestureRecognizerDelegate {
             return true
         }else{
             return false
+        }
+    }
+}
+
+extension ProductDetailsViewController: UIAdaptivePresentationControllerDelegate {
+    // Only called when the sheet is dismissed by DRAGGING as well as when tapped on cross button
+    public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        if #available(iOS 13, *) {
+            //Call viewWillAppear only in iOS 13
+            //so that receivedNewMessage should stop calling on AdvanceChatViewController
+            ConversationsManager.sharedConversationsManager.delegate = nil
         }
     }
 }

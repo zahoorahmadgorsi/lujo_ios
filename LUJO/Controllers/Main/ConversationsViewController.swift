@@ -119,10 +119,10 @@ class ConversationsViewController: UIViewController {
         }
     }
     
-    @objc func addTapped(){
-        let newViewController = AdvanceChatViewController()
-        self.navigationController?.pushViewController(newViewController, animated: true)
-    }
+//    @objc func addTapped(){
+//        let newViewController = AdvanceChatViewController()
+//        self.navigationController?.pushViewController(newViewController, animated: true)
+//    }
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource{
@@ -142,7 +142,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 //        print("indexPath.row: \(indexPath.row)")
         let model = conversations[indexPath.row]
         
-        print("Twilio: attributes: \(String(describing: model.attributes()?.dictionary?["type"]) )")
+//        print("Twilio: attributes: \(String(describing: model.attributes()?.dictionary?["type"]) )")
         if let attributes = model.attributes()?.dictionary , let type = attributes["type"] as? String{
             print(type)
             if type == "event" || type  == "experience" || type  == "special-event" {
@@ -290,11 +290,14 @@ extension ConversationsViewController: UIAdaptivePresentationControllerDelegate 
 }
 
 extension ConversationsViewController: ConversationsManagerDelegate {
+    
+//    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) {}
+    
     func reloadMessages() {
         print("Twilio: reloadMessages")
     }
 
-    func receivedNewMessage(message: TCHMessage, channel: TCHConversation) {
+    func receivedNewMessage(message: TCHMessage, conversation: TCHConversation) {
         self.getConversations(showActivity: false)    //New message is recived on chatlistViewController time to update the last message body, time and unconsumed index
     }
     

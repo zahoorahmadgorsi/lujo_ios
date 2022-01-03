@@ -11,11 +11,12 @@ import TwilioConversationsClient
 
 protocol ConversationsManagerDelegate: AnyObject {
     func reloadMessages()
-    func receivedNewMessage(message: TCHMessage , channel: TCHConversation )
+    func receivedNewMessage(message: TCHMessage , conversation: TCHConversation )
     func channelJoined(channel: TCHConversation)
     func showNetworkActivity()
     func hideNetworkActivity()
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool)
+//    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) //not working
 }
 
 class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
@@ -45,7 +46,6 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         guard status == .completed else {
             return
         }
-
     }
     
     // Called whenever a conversation we've joined receives a new message
@@ -56,7 +56,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             if let delegate = self.delegate {
                 delegate.reloadMessages()
                 if self.messages.count > 0 {
-                    delegate.receivedNewMessage(message: message, channel: conversation)
+                    delegate.receivedNewMessage(message: message, conversation: conversation)
                 }
             }
         }
@@ -76,6 +76,12 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         delegate?.typingOn(conversation, participant, isTyping: false)
     }
     
+//    func conversationsClient(_ client: TwilioConversationsClient, conversation: TCHConversation, updated: TCHConversationUpdate) {
+//        if updated == .lastReadMessageIndex{
+//            print("Twilio: Conversation: \(String(describing: conversation.friendlyName)) updated: \(updated.rawValue) ")
+//        }
+//        delegate?.conversationUpdated(conversation: conversation, updated: updated)
+//    }
     
     func conversationsClientTokenWillExpire(_ client: TwilioConversationsClient) {
             print("Twilio: Access token will expire.")
@@ -171,7 +177,6 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
                     }
-
                     convers.addParticipant(byIdentity: "shujahm@gmail.com", attributes: nil, completion: { (result) in
                         if result.isSuccessful {
                             print("Twilio: User added.")
@@ -262,12 +267,12 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         }
     }
     
+    //read the last messages and set the consumption horizon to last message
     func getLastMessagesWithCount(_ conversation: TCHConversation, msgsCount:UInt,completion: @escaping([TCHMessage]) -> Void ){
         conversation.getLastMessages(withCount:msgsCount, completion: { (result, messages) in
             if let msgs = messages{
-                self.setAllMessagesRead(conversation) { (result, count) in
-                    print("Twilio: setAllMessagesConsumed Result:\(result.isSuccessful)" , "Count:\(count)")
-                }
+//                self.setAllMessagesRead(conversation) { (result, count) in
+//                }
                 completion(msgs)
             }
         })
@@ -282,12 +287,12 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
 
     func setAllMessagesRead(_ conversation: TCHConversation,completion: @escaping (TCHResult,UInt) -> Void){
-        //Cosumption horizon
+        //Consumption horizon
         conversation.setAllMessagesReadWithCompletion({ (result, count) in
-            print("Twilio: Unread Message Index:\(String(describing: count))")
-            
+            print("Twilio: set All Messages Read result:\(String(describing: result.isSuccessful))")
             completion(result, count)
         })
+
     }
 
     func getTotalUnReadMessagesCount(completion: @escaping (UInt) -> Void){
@@ -315,11 +320,12 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     
     //This method will iterate through the list of participants of this conversation and will fetch the max last message read index of all particiapnts other then me
     func getOthersLastMessageRead() -> Int{
-        var lastReadMessageIndex = 0
+        var lastReadMessageIndex = -1
         let participants = conversation?.participants()
         if let participants = participants{
             for participant in participants{
                 if (participant.identity != self.identity){
+                    print(participant.identity as Any,self.identity as Any)
                     if let lastMessageIndex = participant.lastReadMessageIndex?.intValue{
                         lastReadMessageIndex = lastMessageIndex > lastReadMessageIndex ? lastMessageIndex : lastReadMessageIndex
                     }
@@ -340,12 +346,12 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     func sendMessage(_ messageText: String
                      , _ cutomAttributes: Dictionary<String,Any>
                      , completion: @escaping (TCHResult, TCHMessage?) -> Void) {
-        if let conversation = self.conversation{
+        if let converse = self.conversation{
             let messageOptions = TCHMessageOptions().withBody(messageText)  //setting message body
             let attributes:TCHJsonAttributes = .init(dictionary: cutomAttributes)
             //messageOptions.withAttributes(attributes, error: AutoreleasingUnsafeMutablePointer<TCHError?>?)
             messageOptions.withAttributes(attributes, error: nil) //, error: AutoreleasingUnsafeMutablePointer<TCHError?>?)
-            conversation.sendMessage(with: messageOptions) { (result, message:TCHMessage?) in
+            converse.sendMessage(with: messageOptions) { (result, message:TCHMessage?) in
                 completion(result, message)
             }
         }else{
