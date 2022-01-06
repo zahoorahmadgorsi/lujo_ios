@@ -2121,30 +2121,30 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
                 case .giftHabbits:
                     if let ids = userPreferences?.gift.gift_habit_id{
                         if (ids.contains(String(model.termId))){
-                            cell.imgContainerView.backgroundColor = UIColor.rgMid
+                            cell.containerView.backgroundColor = UIColor.rgMid
                             cell.lblTitle.textColor = UIColor.white
                         }else{
-                            cell.imgContainerView.backgroundColor = UIColor.clear
+                            cell.containerView.backgroundColor = UIColor.clear
                             cell.lblTitle.textColor = UIColor.rgMid
                         }
                     }
                 case .giftCategories:
                     if let ids = userPreferences?.gift.gift_category_id{
                         if (ids.contains(String(model.termId))){
-                            cell.imgContainerView.backgroundColor = UIColor.rgMid
+                            cell.containerView.backgroundColor = UIColor.rgMid
                             cell.lblTitle.textColor = UIColor.white
                         }else{
-                            cell.imgContainerView.backgroundColor = UIColor.clear
+                            cell.containerView.backgroundColor = UIColor.clear
                             cell.lblTitle.textColor = UIColor.rgMid
                         }
                     }
                 case .giftPreferences:
                     if let ids = userPreferences?.gift.gift_preferences_id{
                         if (ids.contains(String(model.termId))){
-                            cell.imgContainerView.backgroundColor = UIColor.rgMid
+                            cell.containerView.backgroundColor = UIColor.rgMid
                             cell.lblTitle.textColor = UIColor.white
                         }else{
-                            cell.imgContainerView.backgroundColor = UIColor.clear
+                            cell.containerView.backgroundColor = UIColor.clear
                             cell.lblTitle.textColor = UIColor.rgMid
                         }
                     }
@@ -2156,50 +2156,50 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .aviationHaveCharteredBefore:
                 if let str = userPreferences?.aviation.aviation_chartered_before{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationInterestedIn:
                 if let str = userPreferences?.aviation.aviation_interested_in{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationPreferredCharter:
                 if let str = userPreferences?.aviation.aviation_preferred_charter_range{
                     if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationPreferredCuisine:
                 if let ids = userPreferences?.aviation.aviation_preferred_cuisine_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .aviationPreferredBevereges:
                 if let ids = userPreferences?.aviation.aviation_preferred_beverage_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
@@ -2211,60 +2211,60 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .yachtHaveCharteredBefore:
                 if let str = userPreferences?.yacht.yacht_chartered_before{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtInterestedIn:
                 if let str = userPreferences?.yacht.yacht_interested_in{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtType:
                 if let str = userPreferences?.yacht.yacht_type{
                     if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtStyle:
                 if let str = userPreferences?.yacht.yacht_style{
                     if(model.name.lowercased().contains(str) ){ //model name is longer in length then the str i.e. Long Range and long respectively
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtPreferredCuisines:
                 if let ids = userPreferences?.yacht.yacht_preferred_cuisine_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .yachtOtherInterests:
                 if let ids = userPreferences?.yacht.yacht_interests_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
@@ -2277,60 +2277,60 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .diningCuisines:
                 if let ids = userPreferences?.restaurant.restaurant_preferred_cuisine_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .diningAllergies:
                 if let ids = userPreferences?.restaurant.restaurant_allergy_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .diningPreferences:
                 if let ids = userPreferences?.restaurant.restaurant_dinning_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .diningTimings:
                 if let ids = userPreferences?.restaurant.restaurant_timing_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .diningBeverages:
                 if let ids = userPreferences?.restaurant.restaurant_beverage_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .diningSeatings:
                 if let ids = userPreferences?.restaurant.restaurant_seating_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
@@ -2343,20 +2343,20 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .eventCategory:
                 if let ids = userPreferences?.event.event_category_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .eventLocation:
                 if let ids = userPreferences?.event.event_location_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
@@ -2369,50 +2369,50 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .travelAmenities:
                 if let ids = userPreferences?.travel.travel_amenity_id{
                     if (ids.contains(String(model.termId))){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .travelAirplaneSeat:
                 if let str = userPreferences?.travel.travel_airplane_seat{
                     if(str.contains(model.name.lowercased()) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .travelMeals:
                 if let str = userPreferences?.travel.travel_airplane_meals{
                     if(str.contains(String(model.termId)) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .travelMedicalMeals:
                 if let str = userPreferences?.travel.travel_medical_dietary_meal{
                     if(str.contains(String(model.termId)) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .travelAllergies:
                 if let str = userPreferences?.travel.travel_allergy_id{
                     if(str.contains(String(model.termId)) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
@@ -2424,20 +2424,20 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
             case .villaAmenities:
                 if let str = userPreferences?.villa.villa_preferred_amenities_id{
                     if(str.contains(String(model.termId)) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }
             case .villaAccomodation:
                 if let str = userPreferences?.villa.villa_preferred_accommodations_id{
                     if(str.contains(String(model.termId)) ){
-                        cell.imgContainerView.backgroundColor = UIColor.rgMid
+                        cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
-                        cell.imgContainerView.backgroundColor = UIColor.clear
+                        cell.containerView.backgroundColor = UIColor.clear
                         cell.lblTitle.textColor = UIColor.rgMid
                     }
                 }

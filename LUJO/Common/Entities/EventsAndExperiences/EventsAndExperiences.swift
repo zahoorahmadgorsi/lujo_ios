@@ -32,11 +32,15 @@ struct Taxonomy: Codable {
     let termId: Int
     let name: String
     var isSelected: Bool?
+    var filterParameter: String?   //used in per city filters
+//    var taxonomyName: String?   //used in filters
     
     enum CodingKeys: String, CodingKey {
         case termId = "term_id"
         case name
         case isSelected
+        case filterParameter = "per_city_input_param"
+//        case taxonomyName = "taxonomy"
     }
     
     init(from decoder: Decoder) throws {
@@ -47,6 +51,8 @@ struct Taxonomy: Codable {
             termId = try values.decode(Int.self, forKey: .termId)
             //isSelected would never be sent from API
             isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
+            filterParameter = try values.decodeIfPresent(String.self, forKey: .filterParameter)
+//            taxonomyName = try values.decodeIfPresent(String.self, forKey: .taxonomyName)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error

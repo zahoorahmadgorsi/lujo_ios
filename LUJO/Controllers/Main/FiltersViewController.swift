@@ -119,9 +119,9 @@ class FiltersViewController: UIViewController {
                     
                     //To pre-fill with existing filters
                     //if previous VC is percity and second filter was set
-                    if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter != nil {
+                    if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter.count != 0 {
                         for (index, element) in items.enumerated() {
-                            if element.termId == viewController.ninthFilter?.termId{
+                            if element.termId == viewController.ninthFilter[0].termId{
                                 items[index].isSelected = true
                             }
                         }
@@ -139,9 +139,9 @@ class FiltersViewController: UIViewController {
                     
                     //To pre-fill with existing filters
                     //if previous VC is percity and second filter was set
-                    if let viewController = previousViewController as? PerCityViewController , viewController.secondFilter != nil {
+                    if let viewController = previousViewController as? PerCityViewController , viewController.secondFilter.count != 0 {
                         for (index, element) in items.enumerated() {
-                            if element.termId == viewController.secondFilter?.termId{
+                            if element.termId == viewController.secondFilter[0].termId{
                                 items[index].isSelected = true
                             }
                         }
@@ -149,9 +149,10 @@ class FiltersViewController: UIViewController {
                     
                     view.items = items
                     view.tag = 2
-                    if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter != nil{
+                    if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter.count != 0{
                         //if user had selected *purchase* in interest in
-                        if let termID = viewController.ninthFilter?.termId, (termID == 3023 || termID == 273 ){ //3023 = Sale on production and 273 = sale on staging
+                        let termID = viewController.ninthFilter[0].termId
+                        if (termID == 3023 || termID == 273 ){ //3023 = Sale on production and 273 = sale on staging
                             view.isHidden = true    //Hide yacht charter view if user is interested in purchase
                         }
                     }
@@ -217,9 +218,9 @@ class FiltersViewController: UIViewController {
                     
                     //To pre-fill with existing filters
                     //if previous VC is percity and second filter was set
-                    if let viewController = previousViewController as? PerCityViewController , viewController.sixthFilter != nil {
+                    if let viewController = previousViewController as? PerCityViewController , viewController.sixthFilter.count != 0{
                         for (index, element) in items.enumerated() {
-                            if element.termId == viewController.sixthFilter?.termId{
+                            if element.termId == viewController.sixthFilter[0].termId{
                                 items[index].isSelected = true
                             }
                         }

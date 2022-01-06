@@ -43,7 +43,7 @@
                 <constraint firstAttribute="bottom" secondItem="6Jd-0M-Szf" secondAttribute="bottom" id="lJA-vu-k35"/>
             </constraints>
             <connections>
-                <outlet property="imgContainerView" destination="6Jd-0M-Szf" id="qzH-jT-w9V"/>
+                <outlet property="containerView" destination="6Jd-0M-Szf" id="qzH-jT-w9V"/>
                 <outlet property="lblTitle" destination="XYO-cq-YsY" id="w9k-oS-C80"/>
             </connections>
             <point key="canvasLocation" x="141" y="119"/>

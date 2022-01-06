@@ -15,6 +15,7 @@ struct Filters: Codable{
     var yachtLengthInFeet : [Taxonomy]?
     var yachtCharterType : [Taxonomy]?
     var yachtStatus : [Taxonomy]?
+    var quickFilters : [Taxonomy]?
     
     enum CodingKeys: String,CodingKey{
         case yachtTag = "lujo_tag"
@@ -23,6 +24,7 @@ struct Filters: Codable{
         case yachtLengthInFeet = "length_feet"
         case yachtCharterType = "charter_type"
         case yachtStatus = "yacht_status"
+        case quickFilters = "quick_filters"
     }
     
     init(from decoder: Decoder) throws {
@@ -34,7 +36,7 @@ struct Filters: Codable{
             yachtLengthInFeet = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtLengthInFeet)
             yachtCharterType = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtCharterType)
             yachtStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtStatus)
-            
+            quickFilters = try values.decodeIfPresent([Taxonomy].self, forKey: .quickFilters)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error

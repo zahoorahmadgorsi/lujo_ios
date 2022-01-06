@@ -11,7 +11,7 @@ import UIKit
 class PrefCollViewCell: UICollectionViewCell {
 
     static var identifier: String = "PrefCollViewCell"
-    @IBOutlet weak var imgContainerView: UIView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
 
     
@@ -26,7 +26,7 @@ class PrefCollViewCell: UICollectionViewCell {
     }
 
     private func reset() {
-        imgContainerView.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: 6.0)
+        containerView.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: 6.0)
         lblTitle.text = ""
     }
     

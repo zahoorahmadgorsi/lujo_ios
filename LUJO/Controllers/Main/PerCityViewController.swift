@@ -35,7 +35,21 @@ class PerCityViewController: UIViewController {
     private(set) var category: ProductCategory!
     private var city: DiningCity?
     
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet weak var collContainerView: UIView!
+    
+    lazy var collectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
+        let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        contentView.dataSource = self
+        contentView.delegate = self
+        contentView.register(UINib(nibName: PrefCollViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: PrefCollViewCell.identifier)
+        contentView.backgroundColor = .clear
+        contentView.showsHorizontalScrollIndicator = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
+    }()
+    
     private var dataSource: PerCityObjects!
     
     private let naHUD = JGProgressHUD(style: .dark)
@@ -43,12 +57,18 @@ class PerCityViewController: UIViewController {
     private var currentLayout: LiftLayout?
     
     @IBOutlet weak var btnFilter: UIButton!
-    @IBOutlet weak var collFilters: UICollectionView!
     private var filtersDataSource: [Product]!
     @IBOutlet weak var svPerCity: UIStackView!
+    @IBOutlet weak var svFilters: UIStackView!
     @IBOutlet var homeTopRatedSlider: HomeSlider!
     private var homeObjects: PerCityObjects?
     private var filters:Filters?
+    var quickFilters: [Taxonomy] = [] {
+        didSet {
+            collectionView.reloadData()
+            collectionView.layoutIfNeeded() //forces the reload to happen immediately instead of on the next runloop cycle.
+        }
+    }
     
     // B2 - 5
     var selectedCell: HomeSliderCell?
@@ -75,14 +95,14 @@ class PerCityViewController: UIViewController {
     //MARK:-  Filters
     
     var firstFilter:String = ""                 //name
-    var secondFilter: Taxonomy?     //yacht Charter
+    var secondFilter: [Taxonomy] = []     //yacht Charter
     var thirdFilter: String = ""     //yacht Guests
     var fourthFilter: Taxonomy?     //yacht Length in Feet
     var fifthFilter: Taxonomy?     //yacht Length in Meters
-    var sixthFilter: Taxonomy?     //yacht Type
+    var sixthFilter: [Taxonomy] = []     //yacht Type
     var seventhFilter: String = ""     //yacht Built After
     var eighthFilter: Taxonomy?     //yacht tags
-    var ninthFilter: Taxonomy?      //Interested in charter or sale
+    var ninthFilter: [Taxonomy] = []      //Interested in charter or sale
     var tenthFilter: Taxonomy?      //Region
     var eleventhFilter: String = ""     //min price
     var twelvethFilter: String = ""     //max price
@@ -98,9 +118,13 @@ class PerCityViewController: UIViewController {
         viewSeeAll.isUserInteractionEnabled = true
         viewSeeAll.addGestureRecognizer(tapGesture)
         
+        self.collContainerView.addSubview(collectionView)
+        applyConstraints()
+        
         switch category {
             case .event: fallthrough
             case .experience:
+                self.svFilters.isHidden = true
                 //Loading the preferences related to events and experience only very first time
                 if !UserDefaults.standard.bool(forKey: "isEventPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
@@ -108,6 +132,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
                 }
             case .villa:
+                self.svFilters.isHidden = true
                 //Loading the preferences related to villa only very first time
                 if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
                     let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
@@ -115,6 +140,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
             case .yacht:
+                self.svFilters.isHidden = false
                 //Loading the preferences related to yacht only very first time
                 if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
@@ -122,6 +148,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isYachtPreferencesAlreadyShown")
                 }
             case .gift:
+                self.svFilters.isHidden = true
                 //Loading the preferences related to gift only very first time
                 if !UserDefaults.standard.bool(forKey: "isGiftPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
@@ -132,22 +159,48 @@ class PerCityViewController: UIViewController {
                 print("No preferences to load")
        
         }
+        //get the quick filters
+        getFilters()
     }
     
+    //this method is mainly used when user is coming back from filters screen after picking some filters, this function first clears all quick filters selction, and then checks if user has picked some filter which also exists in quick filter then its highlighting that quick filter, then sorts the quick filters on the bases of selection and then fetches the data on the bases of filters
     override func viewDidAppear(_ animated: Bool) {
-        print(" First Filter: \(self.firstFilter) \n Second Filter: \(String(describing: self.secondFilter))  \n Third Filter: \(String(describing: self.thirdFilter)) \n Fourth Filter: \(String(describing: self.fourthFilter)) \n Fifth Filter: \(String(describing: self.fifthFilter)) \n Sixth Filter: \(String(describing: self.sixthFilter)) \n Seventh Filter: \(String(describing: self.seventhFilter)) \n Eighth Filter: \(String(describing: self.eighthFilter)) ")
-//        if (homeObjects == nil)
-//            || self.firstFilter.count > 0
-//            || self.secondFilter != nil
-//            || self.thirdFilter != nil
-//            || self.fourthFilter != nil
-//            || self.fifthFilter != nil
-//            || self.sixthFilter != nil
-//            || self.seventhFilter != nil
-//            || self.eighthFilter != nil { //home objects will be nill if loading it for the first time
-//            getInformation(for: category)
-//        }
-        getInformation(for: category)
+        clearQuickFilterSelection()     //first clearing all selection
+        //highlight the quick filter if filter selection matches with quick
+        if secondFilter.count > 0 {     //yacht Charter
+            selectQuickFilter(secondFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
+        }
+        //yacht Length in Feet
+        if let filter = fourthFilter{
+            selectQuickFilter(filter)
+        }
+        //yacht Length in Meters
+        if let filter = fifthFilter{
+            selectQuickFilter(filter)
+        }
+        //yacht Type
+        if sixthFilter.count > 0 {     //yacht Charter
+            selectQuickFilter(sixthFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
+        }
+        //yacht tags
+        if let filter = eighthFilter{
+            selectQuickFilter(filter)
+        }
+        //Interested in charter or sale
+        if ninthFilter.count > 0 {     //yacht Charter
+            selectQuickFilter(ninthFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
+        }
+        
+        //Region
+        if let filter = tenthFilter{
+            selectQuickFilter(filter)
+        }
+    
+        quickFilters.sort { ($0.isSelected ?? false) && !($1.isSelected ?? false) }
+        collectionView.reloadData()
+        collectionView.scrollToTop()
+        
+        getInformation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -160,8 +213,41 @@ class PerCityViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    private func selectQuickFilter(_ filter:Taxonomy){
+        if let row = self.quickFilters.firstIndex(where: {$0.termId == filter.termId}) {
+            self.quickFilters[row].isSelected = true
+        }
+    }
+    
+    private func clearQuickFilterSelection(){
+        for i in 0..<quickFilters.count {
+            quickFilters[i].isSelected = false
+        }
+    }
+    
+    private func getFilters(){
+        //loading the filters
+        self.getFilters(for: category) { (filters, filterError) in
+            self.hideNetworkActivity()
+            if let error = filterError {
+                self.showError(error)
+            } else {
+                self.filters = filters
+                self.quickFilters = filters?.quickFilters ?? []
+            }
+        }
+    }
+    
+    private func applyConstraints() {
+        collectionView.leadingAnchor.constraint(equalTo: self.collContainerView.leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: self.collContainerView.trailingAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: self.collContainerView.topAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: self.collContainerView.bottomAnchor).isActive = true
+//        self.collContainerView.heightAnchor.constraint(equalTo: collectionView.heightAnchor).isActive = true
+    }
+    
     @IBAction func eventTypeChanged(_ sender: Any) {
-        getInformation(for: category)
+        getInformation()
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
@@ -198,7 +284,7 @@ class PerCityViewController: UIViewController {
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
-        getInformation(for: category)
+        getInformation()
     }
     
     func update(listOf information: PerCityObjects?) {
@@ -281,15 +367,6 @@ class PerCityViewController: UIViewController {
     @IBAction func viewFilterTapped(_ sender: Any) {
         if let filters = self.filters{
             let viewController = FiltersViewController.instantiate(filters: filters, category:self.category)
-            //Clear all filters
-//            self.firstFilter = ""
-//            self.secondFilter = nil
-//            self.thirdFilter = ""
-//            self.fourthFilter = nil
-//            self.fifthFilter = nil
-//            self.sixthFilter = nil
-//            self.seventhFilter = ""
-//            self.eighthFilter = nil
             viewController.delegate = self
             self.navigationController?.pushViewController(viewController, animated: false)
         }else{
@@ -304,17 +381,99 @@ class PerCityViewController: UIViewController {
 extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0 //return dataSource.count
+        return filters?.quickFilters?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSliderCell.identifier, for: indexPath) as! HomeSliderCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PrefCollViewCell.identifier, for: indexPath) as! PrefCollViewCell
+        
+        let model = quickFilters[indexPath.row]
+        cell.lblTitle.text = model.name
+        cell.lblTitle.textColor = UIColor.white
+        
+        if model.isSelected ?? false{
+            cell.containerView.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: 6.0)
+        }else{
+            cell.containerView.addViewBorder( borderColor: UIColor.white.cgColor, borderWidth: 1.0, borderCornerRadius: 6.0)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.quickFilters[indexPath.row].isSelected = !(self.quickFilters[indexPath.row].isSelected ?? false)
+        self.collectionView.reloadItems(at: [indexPath])    //only refresh current selection
+//        quickFilters.sort { ($0.isSelected ?? false) && !($1.isSelected ?? false) }     //taking selected quick filters to top
+//        collectionView.scrollToTop()    //take the scroll to the top
+        
+        //assign quick filter value to noral filter and then load the data
+        let filter = self.quickFilters[indexPath.row]
+        
+//        if let filter.filterParameter = secondFilter{     //yacht Charter
+        if filter.filterParameter == "charter_term_id" {     //yacht Charter
+            if filter.isSelected ?? false {     //if is selected is true then append
+                secondFilter.append( filter)
+            }else { //if is selected is false then remove if exists
+                if let idx = secondFilter.firstIndex(where: { $0.termId == filter.termId }) {
+                    secondFilter.remove(at: idx)
+                }
+            }
+        }
+//        //yacht Length in Feet (not used in quick filters)
+//        if filter.filterParameter == "" {
+//            fourthFilter = filter
+//        }
+//        //yacht Length in Meters  (not used in quick filters)
+//        if filter.filterParameter == "" {
+//            fifthFilter = filter
+//        }
+        //yacht Type (motor/sail)
+        if filter.filterParameter == "type_term_id" {
+            if filter.isSelected ?? false {     //if is selected is true then append
+                sixthFilter.append( filter)
+            }else { //if is selected is false then remove if exists
+                if let idx = sixthFilter.firstIndex(where: { $0.termId == filter.termId }) {
+                    sixthFilter.remove(at: idx)
+                }
+            }
+        }
+//        //yacht tags (not used in quick filters)
+//        if filter.filterParameter == "" {
+//            eighthFilter = filter
+//        }
+        //Interested in charter or sale
+        if filter.filterParameter == "yacht_status" {
+            if filter.isSelected ?? false {     //if is selected is true then append
+                ninthFilter.append( filter)
+            }else { //if is selected is false then remove if exists
+                if let idx = ninthFilter.firstIndex(where: { $0.termId == filter.termId }) {
+                    ninthFilter.remove(at: idx)
+                }
+            }
+        }
+        //Region
+        if filter.filterParameter == "region" {
+            if filter.isSelected ?? false {
+                tenthFilter = filter
+            }else{
+                tenthFilter = nil
+            }
+        }
+    
+
+        getInformation()    //applying the quick filter
+        
     }
     
+}
+
+extension PerCityViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = Int(collectionView.bounds.size.width)
+        let cellWidth = width / 3  - PrefCollSize.itemMargin.rawValue / 3    //to show 3 items at a time
+            return CGSize(width: cellWidth, height: PrefCollSize.itemHeight.rawValue)
+    }
 }
 
 extension PerCityViewController: CityViewProtocol {
@@ -443,20 +602,10 @@ extension PerCityViewController: CityViewProtocol {
         }
     }
     
-    func getInformation(for category: ProductCategory) {
+    func getInformation() {
         showNetworkActivity()
         getList(for: category) { items, error in
-            //loading the filters
-            self.getFilters(for: category) { (filters, filterError) in
-                self.hideNetworkActivity()
-                if let error = filterError {
-                    self.showError(error)
-                } else {
-                    self.filters = filters
-//                    print(filters as Any)
-//                    self.update(listOf: filters ?? nil)
-                }
-            }
+            self.hideNetworkActivity()
             if let error = error {
                 self.showError(error)
             } else {
@@ -489,13 +638,16 @@ extension PerCityViewController: CityViewProtocol {
         
         var secondFilterTermId = "" , fourthFilterTermId = "", fifthFilterTermId = "", sixthFilterTermId = "", eighthFilterTermId = "", ninthFilterTermId = "", tenthFilterTermId = ""
         
-        var dictFilter = [String: String]()
+        var dictFilter = [String: String]() //used for mixpanle logging
         if (firstFilter.count > 0){
             dictFilter["Filter First (Name)"] = firstFilter
         }
-        if let filter = secondFilter{
-            secondFilterTermId = String(filter.termId)
-            dictFilter["Filter Second"] = filter.name
+        if secondFilter.count > 0{
+            let ids = secondFilter.map { $0.termId }
+            secondFilterTermId = (ids.map{String($0)}).joined(separator: ",")
+            
+            let names = secondFilter.map{($0.name)}
+            dictFilter["Filter Second"] = names.joined(separator: ",")
         }
         if (thirdFilter.count > 0){
             dictFilter["Filter Third"] = thirdFilter
@@ -508,10 +660,15 @@ extension PerCityViewController: CityViewProtocol {
             fifthFilterTermId = String(filter.termId)
             dictFilter["Filter Fifth (Length In Meters)"] = filter.name
         }
-        if let filter = sixthFilter{
-            sixthFilterTermId = String(filter.termId)
-            dictFilter["Filter Sixth"] = filter.name
+
+        if sixthFilter.count > 0{
+            let ids = sixthFilter.map { $0.termId }
+            sixthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
+            
+            let names = sixthFilter.map{($0.name)}
+            dictFilter["Filter Sixth"] = names.joined(separator: ",")
         }
+        
         if (seventhFilter.count > 0){
             dictFilter["Filter Seventh"] = seventhFilter
         }
@@ -519,10 +676,15 @@ extension PerCityViewController: CityViewProtocol {
             eighthFilterTermId = String(filter.termId)
             dictFilter["Filter Eighth"] = filter.name
         }
-        if let filter = ninthFilter{
-            ninthFilterTermId = String(filter.termId)
-            dictFilter["Filter Ninth"] = filter.name
+        
+        if ninthFilter.count > 0{
+            let ids = ninthFilter.map { $0.termId }
+            ninthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
+            
+            let names = ninthFilter.map{($0.name)}
+            dictFilter["Ninth Sixth"] = names.joined(separator: ",")
         }
+        
         if let filter = tenthFilter{
             tenthFilterTermId = String(filter.termId)
             dictFilter["Filter Tenth"] = filter.name
@@ -738,7 +900,11 @@ extension PerCityViewController: FiltersVCProtocol{
     }
     
     func setSecondFilter(filter: Taxonomy?) {
-        self.secondFilter = filter
+        self.secondFilter = []  //from filter multiple selection isnt allowed
+        if let filt = filter{
+            self.secondFilter.append(filt)
+        }
+        
     }
     
     func setThirdFilter(filter: String) {
@@ -754,7 +920,10 @@ extension PerCityViewController: FiltersVCProtocol{
     }
     
     func setSixthFilter(filter: Taxonomy?) {
-        self.sixthFilter = filter
+        self.sixthFilter = []  //from filter multiple selection isnt allowed
+        if let filt = filter{
+            self.sixthFilter.append(filt)
+        }
     }
     
     func setSeventhFilter(filter: String) {
@@ -766,7 +935,10 @@ extension PerCityViewController: FiltersVCProtocol{
     }
     
     func setNinthFilter(filter: Taxonomy?) {
-        self.ninthFilter = filter
+        self.ninthFilter = []  //from filter multiple selection isnt allowed
+        if let filt = filter{
+            self.ninthFilter.append(filt)
+        }
     }
     
     func setTenthFilter(filter: Taxonomy?) {
