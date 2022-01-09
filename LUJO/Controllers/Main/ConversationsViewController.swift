@@ -16,8 +16,7 @@ class ConversationsViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "ChatListViewController" }
     private let naHUD = JGProgressHUD(style: .dark)
-//    var conversations = [Conversation]()
-    var conversations = [TCHConversation]()
+    var conversations = [Conversation]()
     
     @IBOutlet weak var imgCross: UIImageView!
     @IBOutlet weak var tblView: UITableView!
@@ -68,6 +67,8 @@ class ConversationsViewController: UIViewController {
         if (self.conversations.count == 0){
             self.getConversations(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
         }else{
+//            loadFromUserDefaults()
+//            self.tblView.reloadData()
             self.getConversations(showActivity: false)
         }
     }
@@ -85,16 +86,55 @@ class ConversationsViewController: UIViewController {
         }
         
         ConversationsManager.sharedConversationsManager.getConversations{conversations in
-            if showActivity {
-                self.hideNetworkActivity()
-            }else{
-                self.refreshControl.endRefreshing()
+            let myGroup = DispatchGroup()
+            self.conversations = []     //clearing conversations
+            for conversation in conversations {
+                myGroup.enter()
+                //last message of the conversation as per design
+                conversation.getLastMessages(withCount: 1) { (result, messages: [TCHMessage]?) in
+                    let tempConversation:Conversation = Conversation(conversation)
+                    if  let msgs = messages , msgs.count > 0{
+                        tempConversation.tchMessage = msgs[0]
+                    }
+                    self.conversations.append(tempConversation)
+                    myGroup.leave()
+                }
             }
-            self.conversations = conversations.sorted(by: { ($0.lastMessageDate ?? $0.dateCreatedAsDate) ?? Date() > ($1.lastMessageDate ?? $1.dateCreatedAsDate) ?? Date()})
-//            self.conversations = conversations.sorted(by: { ($0.lastMessageDate ?? Date())  > ($1.lastMessageDate ?? Date()) })
-            self.tblView.reloadData()
+            myGroup.notify(queue: .main) {
+                if showActivity {
+                    self.hideNetworkActivity()
+                }else{
+                    self.refreshControl.endRefreshing()
+                }
+                self.conversations = self.conversations.sorted(by: { ($0.tchConversation.lastMessageDate ?? $0.tchConversation.dateCreatedAsDate) ?? Date() > ($1.tchConversation.lastMessageDate ?? $1.tchConversation.dateCreatedAsDate) ?? Date()})
+                //Storing into user defaults
+//                self.saveIntoUserDefaults()
+                self.tblView.reloadData()
+            }
         }
     }
+    
+//    private func saveIntoUserDefaults(){
+//        do{
+//            let conversationsData = try NSKeyedArchiver.archivedData(withRootObject: self.conversations, requiringSecureCoding: false)
+//            UserDefaults.standard.set(conversationsData, forKey: "conversationsData")
+//        }catch {
+//            print(error.localizedDescription)
+//        }
+//    }
+//
+//    private func loadFromUserDefaults(){
+//        guard let conversationsData = UserDefaults.standard.object(forKey: "conversationsData") as? NSData else {
+//            print("'conversationsData' not found in UserDefaults")
+//            return
+//        }
+//        do {
+//            guard let conversationsArray = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(conversationsData as Data) as? [Conversation] else { return }
+//            self.conversations = conversationsArray
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
     
     func showError(_ error: Error , isInformation:Bool = false) {
         if (isInformation){
@@ -118,11 +158,6 @@ class ConversationsViewController: UIViewController {
             naHUD.dismiss()
         }
     }
-    
-//    @objc func addTapped(){
-//        let newViewController = AdvanceChatViewController()
-//        self.navigationController?.pushViewController(newViewController, animated: true)
-//    }
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource{
@@ -139,12 +174,9 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
-//        print("indexPath.row: \(indexPath.row)")
         let model = conversations[indexPath.row]
         
-//        print("Twilio: attributes: \(String(describing: model.attributes()?.dictionary?["type"]) )")
-        if let attributes = model.attributes()?.dictionary , let type = attributes["type"] as? String{
-            print(type)
+        if let attributes = model.tchConversation.attributes()?.dictionary , let type = attributes["type"] as? String{
             if type == "event" || type  == "experience" || type  == "special-event" {
                 cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
             }else if type  == "villa"{
@@ -168,39 +200,17 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         
         cell.tag = indexPath.row
         //Title of the conversation
-        cell.lblChannelFriendlyName.text = model.friendlyName?.uppercased()
+        cell.lblChannelFriendlyName.text = model.tchConversation.friendlyName?.uppercased()
         //date of the conversation
-        if let dateFromServer = model.lastMessageDate{
+        if let dateFromServer = model.tchConversation.lastMessageDate{
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
-        }else if let dateFromServer = model.dateCreatedAsDate{  //this conversation has no last message hence showing the conversation created date
+        }else if let dateFromServer = model.tchConversation.dateCreatedAsDate{  //this conversation has no last message hence showing the conversation created date
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
         }
-
-        //if other user is typing then show "Typing..." else show the last message
-//        if let attributes = model.attributes()?.dictionary, let isTyping = attributes["isTyping"] as? Bool, isTyping == true{
-//            cell.lblLastMessage.text = "<I>Typing...</I>".parseHTML().string
-//        }else{
-            //last message of the conversation as per design
-            model.getLastMessages(withCount: 1) { (result, messages: [TCHMessage]?) in
-                if result.isSuccessful , let msgs = messages , msgs.count > 0{
-                    if msgs[0].hasMedia(){
-                        cell.lblLastMessage.text = "PHOTO"
-                    }else{
-                        if let messageBody = msgs[0].body {
-                            if messageBody.isHtml(){
-                                let attributedString = messageBody.parseHTML()
-                                cell.lblLastMessage.text = attributedString.string
-                            }else{
-                                cell.lblLastMessage.text = msgs[0].body
-                            }
-                        }
-                    }
-                }
-            }
-//        }
+        cell.lblLastMessage.text = model.tchMessage?.body
         
         //number of un read messages of this conversation
-        model.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in
+        model.tchConversation.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in
             if result.isSuccessful ,let count = unReadMsgsCount{
                 if count.intValue > 0{
                     cell.lblUnConsumedMessagesCount.text = count.stringValue
@@ -218,7 +228,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conversation = self.conversations[indexPath.item]
+        let conversation = self.conversations[indexPath.item].tchConversation
         let viewController = AdvanceChatViewController()
         viewController.conversation = conversation
         let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
@@ -240,7 +250,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         if (editingStyle == .delete) {
             // handle delete (by removing the data from your array and updating the tableview)
             self.deleteIndexPath = indexPath
-            let itemToDelete = self.conversations[indexPath.row].friendlyName
+            let itemToDelete = self.conversations[indexPath.row].tchConversation.friendlyName
             confirmDelete(name: itemToDelete ?? "*this conversation*")
         }
     }
@@ -259,7 +269,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func handleDeleteChannel(alertAction: UIAlertAction! ) -> Void {
         if let indexPath = self.deleteIndexPath {
-            let conversation = self.conversations[indexPath.row]
+            let conversation = self.conversations[indexPath.row].tchConversation
             conversation.destroy { (result) in
                 if (result.isSuccessful){
                     self.conversations.remove(at: indexPath.row)

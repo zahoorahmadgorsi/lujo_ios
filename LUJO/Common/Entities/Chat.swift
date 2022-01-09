@@ -7,76 +7,42 @@
 //
 
 import Foundation
+import TwilioConversationsClient
 
-struct ConversationList: Codable {
-    let message: String?
-    var items: [ChatHeader]?
+class Conversation: NSObject, NSCoding {  //conforming NSObject, NSCoding  to store in user defaults
+    var tchConversation: TCHConversation
+    var tchMessage: TCHMessage?
+    var unReadMessageCount: String?
     
-    enum CodingKeys: String, CodingKey {
-        case message
-        case items
+    init(_ tchConversation:TCHConversation ,_ tchMessage:TCHMessage? = nil,_ unReadMessageCount:String? = nil){
+        self.tchConversation = tchConversation
+        self.tchMessage = tchMessage
+        self.unReadMessageCount = unReadMessageCount
     }
-}
-
-extension ConversationList {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            message = try values.decodeIfPresent(String.self, forKey: .message)
-            items = try values.decodeIfPresent([ChatHeader].self, forKey: .items)
-            
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
-
-struct ChatHeader: Codable {
-    let customerId: Int?
-    let authorName: String
-    let conversationId: String
-    let title: String
-    let createdAt: String
-    let meta:Meta?
     
-    enum CodingKeys: String, CodingKey {
-        case customerId = "customer_id"
-        case authorName = "author_name"
-        case conversationId = "conversation_id"
-        case title
-        case createdAt = "created_at"
-        case meta
+    required init(coder aDecoder: NSCoder) {
+        self.tchConversation = aDecoder.decodeObject(forKey: "tchConversation") as! TCHConversation
+        self.tchMessage = aDecoder.decodeObject(forKey: "tchMessage") as? TCHMessage
+        self.unReadMessageCount = aDecoder.decodeObject(forKey: "unReadMessageCount") as? String ?? ""
     }
-}
 
-extension ChatHeader {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            customerId = try values.decodeIfPresent(Int.self, forKey: .customerId)
-            authorName = try values.decode(String.self, forKey: .authorName)
-            conversationId = try values.decode(String.self, forKey: .conversationId)
-            title = try values.decode(String.self, forKey: .title)
-            createdAt = try values.decode(String.self, forKey: .createdAt)
-            meta = try values.decodeIfPresent(Meta.self, forKey: .meta)
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.tchConversation, forKey: "tchConversation")
+        aCoder.encode(self.tchMessage, forKey: "tchMessage")
+        aCoder.encode(self.unReadMessageCount, forKey: "unReadMessageCount")
     }
+    
 }
 
 struct Meta: Codable {
     let id: Int?
     let sfid: String?
     let avatar: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case sfid
         case avatar
-
     }
 }
 
@@ -87,110 +53,6 @@ extension Meta {
             id = try values.decodeIfPresent(Int.self, forKey: .id)
             sfid = try values.decodeIfPresent(String.self, forKey: .sfid)
             avatar = try values.decodeIfPresent(String.self, forKey: .avatar)
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
-
-struct ConversationDetails: Codable {
-    let message: String?
-    var items: [Message]?
-    
-    enum CodingKeys: String, CodingKey {
-        case message
-        case items
-    }
-}
-
-extension ConversationDetails {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            message = try values.decodeIfPresent(String.self, forKey: .message)
-            items = try values.decodeIfPresent([Message].self, forKey: .items)
-            
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
-
-struct Message: Codable {
-    let body: String
-    let author: String
-    let createdAt: CreatedAt
-    let meta:Meta?
-    
-    enum CodingKeys: String, CodingKey {
-        case body
-        case author
-        case createdAt = "created_at"
-        case meta
-    }
-}
-
-extension Message {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            body = try values.decode(String.self, forKey: .body)
-            author = try values.decode(String.self, forKey: .author)
-            createdAt = try values.decode(CreatedAt.self, forKey: .createdAt)
-            meta = try values.decodeIfPresent(Meta.self, forKey: .meta)
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
-
-struct CreatedAt: Codable {
-    let date: String
-    let timezoneType: Int
-    let timezone: String
-
-    
-    enum CodingKeys: String, CodingKey {
-        case date
-        case timezoneType = "timezone_type"
-        case timezone
-    }
-}
-
-extension CreatedAt {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            date = try values.decode(String.self, forKey: .date)
-            timezoneType = try values.decode(Int.self, forKey: .timezoneType)
-            timezone = try values.decode(String.self, forKey: .timezone)
-        } catch {
-            Crashlytics.sharedInstance().recordError(error)
-            throw error
-        }
-    }
-}
-
-struct SendMessageResponse: Codable {
-    let conversationId: String
-    let messageId: String
-
-    
-    enum CodingKeys: String, CodingKey {
-        case conversationId = "conversation_id"
-        case messageId = "message_id"
-    }
-}
-
-extension SendMessageResponse {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            conversationId = try values.decode(String.self, forKey: .conversationId)
-            messageId = try values.decode(String.self, forKey: .messageId)
         } catch {
             Crashlytics.sharedInstance().recordError(error)
             throw error

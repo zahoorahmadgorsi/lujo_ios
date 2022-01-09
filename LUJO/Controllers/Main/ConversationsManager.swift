@@ -231,6 +231,14 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                             print("Twilio: zahoor.gorsi@gmail.com could not added.")
                         }
                     })
+                    
+                    convers.addParticipant(byIdentity: "request@golujo.com", attributes: nil, completion: { (result) in
+                        if result.isSuccessful {
+                            print("Twilio: User added.")
+                        } else {
+                            print("Twilio: request@golujo.com could not added.")
+                        }
+                    })
                 }
             }else{
                 print("Twilio: Conversation could not created")

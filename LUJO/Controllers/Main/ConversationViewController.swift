@@ -90,7 +90,6 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         identity = LujoSetup().getLujoUser()?.email ?? identity //current logged in user
         
         if let converse = self.conversation{  //loading messages of existing conversation
-//            print(channel.sid as Any)
             //Using setter to assign conversation
             ConversationsManager.sharedConversationsManager.setConversation(conversation: converse)
             //getting last pageSize count message of this conversation
@@ -105,7 +104,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 var tempMessages:[ChatMessage] = []
 //              print(tchMessage.attributes()?.dictionary)
                 let myGroup = DispatchGroup()
-                self.showNetworkActivity()
+//                self.showNetworkActivity()
                 for msg in messages {
                     myGroup.enter()
                     if msg.hasMedia(){
@@ -121,7 +120,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 }
                 myGroup.notify(queue: .main) {
                     print("Finished all requests.")
-                    self.hideNetworkActivity()
+//                    self.hideNetworkActivity()
                     tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
                     self.messageList.insert(contentsOf: tempMessages, at: 0)
                     self.messagesCollectionView.reloadData()
@@ -204,18 +203,16 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                     let myGroup = DispatchGroup()
                     for message in messages {
                         myGroup.enter()
-    //                    print("Message body: \(String(describing: message.body))" , message.index as Any)
-                            if message.hasMedia(){
-                                //this is an asynch call
-                                self.getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
-                                    tempMessages.append(chatImageMessage)
-                                    myGroup.leave()
-                                }
-                            }else if let message = self.convertTCHMessageToChatMessage(message: message){ //its a synch call
-                                tempMessages.append(message)
+                        if message.hasMedia(){
+                            //this is an asynch call
+                            self.getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
+                                tempMessages.append(chatImageMessage)
                                 myGroup.leave()
                             }
-//                        }
+                        }else if let message = self.convertTCHMessageToChatMessage(message: message){ //its a synch call
+                            tempMessages.append(message)
+                            myGroup.leave()
+                        }
                     }
                     myGroup.notify(queue: .main) {
                         print("Finished all requests.")
