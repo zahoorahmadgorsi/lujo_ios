@@ -319,7 +319,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                 }
             }
             myGroup.notify(queue: .main) {
-                print("Finished all requests.")
+                print("Twilio: getTotalUnReadMessagesCount Finished whole DispatchGroup.")
                 completion(UInt(unReadCount))
             }
         }
@@ -333,7 +333,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         if let participants = participants{
             for participant in participants{
                 if (participant.identity != self.identity){
-                    print(participant.identity as Any,self.identity as Any)
+//                    print(participant.identity as Any,self.identity as Any)
                     if let lastMessageIndex = participant.lastReadMessageIndex?.intValue{
                         lastReadMessageIndex = lastMessageIndex > lastReadMessageIndex ? lastMessageIndex : lastReadMessageIndex
                     }

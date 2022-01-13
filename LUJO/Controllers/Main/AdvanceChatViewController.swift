@@ -34,7 +34,7 @@ final class AdvanceChatViewController: ConversationViewController {
         
     let outgoingAvatarOverlap: CGFloat = 17.5
     var readConsumptionTimer = Timer()
-    let readConsumptionTimerInterval:TimeInterval = 2
+    let readConsumptionTimerInterval:TimeInterval = 5
     
     override func viewDidLoad() {
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: CustomMessagesFlowLayout())
@@ -436,10 +436,7 @@ extension AdvanceChatViewController: MessagesDisplayDelegate {
 extension AdvanceChatViewController: MessagesLayoutDelegate {
     //date under which all messages are grouped
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-//        if isTimeLabelVisible(at: indexPath) {
-//            return 18
-//        }
-//        return 0
+        
         if let firstItem = messageList[safe:indexPath.section - 1] , let secondItem = messageList[safe:indexPath.section]{
             if (firstItem.sentDate.stripTime() == secondItem.sentDate.stripTime()){ //if Dates are same
                 return 0  //no need to allot height to display message date
@@ -503,7 +500,7 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
             }
             inputBar.invalidatePlugins()
             myGroup.notify(queue: .main) {
-                print("Finished all requests.")
+                print("Twilio: didPressSendButtonWith attachments Finished whole DispatchGroup.")
                 self.hideNetworkActivity()
             }
         }
@@ -511,6 +508,7 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
     
     //This method checks that other user (not me) has read the message upto what point
     func checkConsumptionHorizon(){
+        print("Twilio: checkConsumption Horizon")
         let messageIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
         if messageIndex > self.lastReadMessageIndex{
             self.lastReadMessageIndex = messageIndex
@@ -551,6 +549,7 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
             //if conversation chat window is opened and recieved a new message then set its Consumed messages to all
             ConversationsManager.sharedConversationsManager.setAllMessagesRead(conversation) { (result, count) in
                 if let id = message.author, id == self.identity{ //if this message is from myself only then chek the reading receipt
+                    self.readConsumptionTimer.invalidate()
                     self.readConsumptionTimer = Timer.scheduledTimer(withTimeInterval: self.readConsumptionTimerInterval, repeats: true, block: { _ in
                         self.checkConsumptionHorizon()
                     })

@@ -101,6 +101,7 @@ class ConversationsViewController: UIViewController {
                 }
             }
             myGroup.notify(queue: .main) {
+                print("Twilio: getConversations Finished whole DispatchGroup.")
                 if showActivity {
                     self.hideNetworkActivity()
                 }else{
@@ -207,7 +208,8 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         }else if let dateFromServer = model.tchConversation.dateCreatedAsDate{  //this conversation has no last message hence showing the conversation created date
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
         }
-        cell.lblLastMessage.text = model.tchMessage?.body
+        
+        cell.lblLastMessage.text = model.tchMessage?.body?.isHtml() == true ? model.tchMessage?.body?.parseHTML().string : model.tchMessage?.body
         
         //number of un read messages of this conversation
         model.tchConversation.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in

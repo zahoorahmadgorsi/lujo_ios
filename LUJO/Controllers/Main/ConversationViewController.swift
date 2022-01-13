@@ -119,7 +119,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                     }
                 }
                 myGroup.notify(queue: .main) {
-                    print("Finished all requests.")
+                    print("Twilio: conversation viewDidLoad. Finished whole DispatchGroup.")
 //                    self.hideNetworkActivity()
                     tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
                     self.messageList.insert(contentsOf: tempMessages, at: 0)
@@ -215,21 +215,36 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                         }
                     }
                     myGroup.notify(queue: .main) {
-                        print("Finished all requests.")
+                        print("Twilio: loadMoreMessages Finished whole DispatchGroup.")
                         tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
                         self.messageList.insert(contentsOf: tempMessages, at: 0)
                         self.messagesCollectionView.reloadDataAndKeepOffset()
-                        self.refreshControl.endRefreshing()
+                        self.refreshControlEndRefreshing()
                     }
                 })
             }else{
-                self.refreshControl.endRefreshing()
+                refreshControlEndRefreshing()
             }
+        }else{
+            refreshControlEndRefreshing()
         }
     }
     
+    private func refreshControlEndRefreshing(){
+        self.refreshControl.endRefreshing()
+        //messagekit is already taking the collection view to the top,  but some times it fails. checking that failing moment
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
+            if (self.messagesCollectionView.contentOffset != CGPoint.zero){
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.messagesCollectionView.contentOffset = CGPoint.zero
+                })
+            }
+            timer.invalidate()
+        })
+
+    }
+    
     func configureMessageCollectionView() {
-        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         
@@ -268,6 +283,16 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             if self?.isLastSectionVisible() == true {
                 self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
+        })
+        
+        //within this 1.5 second interval, content offset get change meaning messagekit is doing some thing i.e. scrolling to the last message
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { timer in
+            if (self.messagesCollectionView.contentOffset == CGPoint.zero){
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.messagesCollectionView.contentOffset = CGPoint.init(x: 0, y: -120)
+                })
+            }
+            timer.invalidate()
         })
     }
     
