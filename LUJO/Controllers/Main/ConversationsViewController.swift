@@ -54,6 +54,8 @@ class ConversationsViewController: UIViewController {
         searchBarButton.addTarget(self, action: #selector(imgCrossTapped(_:)), for: .touchUpInside)
         searchBarButton.sizeToFit()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+        
+        loadFromUserDefaults()
     }
     
     @objc func imgCrossTapped(_ sender: Any) {
@@ -67,9 +69,8 @@ class ConversationsViewController: UIViewController {
         if (self.conversations.count == 0){
             self.getConversations(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
         }else{
-//            loadFromUserDefaults()
-//            self.tblView.reloadData()
-            self.getConversations(showActivity: false)
+            self.tblView.reloadData()
+            self.getConversations(showActivity: false)    //silently loading the conversations.
         }
     }
     
@@ -87,7 +88,7 @@ class ConversationsViewController: UIViewController {
         
         ConversationsManager.sharedConversationsManager.getConversations{conversations in
             let myGroup = DispatchGroup()
-            self.conversations = []     //clearing conversations
+            var tempConversations = [Conversation]()    //variable for this function only
             for conversation in conversations {
                 myGroup.enter()
                 //last message of the conversation as per design
@@ -95,8 +96,9 @@ class ConversationsViewController: UIViewController {
                     let tempConversation:Conversation = Conversation(conversation)
                     if  let msgs = messages , msgs.count > 0{
                         tempConversation.tchMessage = msgs[0]
+                        tempConversation.lastMessageBody = msgs[0].body
                     }
-                    self.conversations.append(tempConversation)
+                    tempConversations.append(tempConversation)
                     myGroup.leave()
                 }
             }
@@ -107,35 +109,36 @@ class ConversationsViewController: UIViewController {
                 }else{
                     self.refreshControl.endRefreshing()
                 }
-                self.conversations = self.conversations.sorted(by: { ($0.tchConversation.lastMessageDate ?? $0.tchConversation.dateCreatedAsDate) ?? Date() > ($1.tchConversation.lastMessageDate ?? $1.tchConversation.dateCreatedAsDate) ?? Date()})
+                tempConversations = tempConversations.sorted(by: { ($0.tchConversation?.lastMessageDate ?? $0.tchConversation?.dateCreatedAsDate) ?? Date() > ($1.tchConversation?.lastMessageDate ?? $1.tchConversation?.dateCreatedAsDate) ?? Date()})
                 //Storing into user defaults
-//                self.saveIntoUserDefaults()
+                self.saveIntoUserDefaults(tempConversations: tempConversations)
+                self.conversations = tempConversations  //assigning just loaded, sorted, cached conversation to self.conversations
                 self.tblView.reloadData()
             }
         }
     }
     
-//    private func saveIntoUserDefaults(){
-//        do{
-//            let conversationsData = try NSKeyedArchiver.archivedData(withRootObject: self.conversations, requiringSecureCoding: false)
-//            UserDefaults.standard.set(conversationsData, forKey: "conversationsData")
-//        }catch {
-//            print(error.localizedDescription)
-//        }
-//    }
-//
-//    private func loadFromUserDefaults(){
-//        guard let conversationsData = UserDefaults.standard.object(forKey: "conversationsData") as? NSData else {
-//            print("'conversationsData' not found in UserDefaults")
-//            return
-//        }
-//        do {
-//            guard let conversationsArray = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(conversationsData as Data) as? [Conversation] else { return }
-//            self.conversations = conversationsArray
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
+    private func saveIntoUserDefaults(tempConversations : [Conversation]){
+        do{
+            let conversationsData = try NSKeyedArchiver.archivedData(withRootObject: tempConversations, requiringSecureCoding: false)
+            UserDefaults.standard.set(conversationsData, forKey: "conversationsData")
+        }catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    private func loadFromUserDefaults(){
+        guard let conversationsData = UserDefaults.standard.object(forKey: "conversationsData") as? NSData else {
+            print("'conversationsData' not found in UserDefaults")
+            return
+        }
+        do {
+            guard let cachedConversations = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(conversationsData as Data) as? [Conversation] else { return }
+            self.conversations = cachedConversations
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
     func showError(_ error: Error , isInformation:Bool = false) {
         if (isInformation){
@@ -169,7 +172,6 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         }else{
             self.tblView.restore()
         }
-//        print("twilio: conversations.count: \(self.conversations.count)")
         return self.conversations.count
     }
 
@@ -177,7 +179,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
         let model = conversations[indexPath.row]
         
-        if let attributes = model.tchConversation.attributes()?.dictionary , let type = attributes["type"] as? String{
+        if let type = model.tchConversation?.attributes()?.dictionary?["type"] as? String ?? model.type{    //model.type is cached value
             if type == "event" || type  == "experience" || type  == "special-event" {
                 cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
             }else if type  == "villa"{
@@ -201,18 +203,23 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         
         cell.tag = indexPath.row
         //Title of the conversation
-        cell.lblChannelFriendlyName.text = model.tchConversation.friendlyName?.uppercased()
-        //date of the conversation
-        if let dateFromServer = model.tchConversation.lastMessageDate{
-            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
-        }else if let dateFromServer = model.tchConversation.dateCreatedAsDate{  //this conversation has no last message hence showing the conversation created date
-            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
+        if let friendlyName = model.tchConversation?.friendlyName ?? model.friendlyName{  //model.friendlyName contains cached value
+            cell.lblChannelFriendlyName.text = friendlyName.uppercased()
         }
         
-        cell.lblLastMessage.text = model.tchMessage?.body?.isHtml() == true ? model.tchMessage?.body?.parseHTML().string : model.tchMessage?.body
+        //date of the conversation
+        if let dateFromServer = model.tchConversation?.lastMessageDate ?? model.lastMessageDate{
+            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
+        }else if let dateFromServer = model.tchConversation?.dateCreatedAsDate ?? model.dateCreatedAsDate{  //this conversation has no last message hence showing the conversation created date
+            cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
+        }
+        if let message = model.tchMessage?.body ?? model.lastMessageBody{
+            cell.lblLastMessage.text = message.isHtml() == true ? message.parseHTML().string : message
+        }
+        
         
         //number of un read messages of this conversation
-        model.tchConversation.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in
+        model.tchConversation?.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in
             if result.isSuccessful ,let count = unReadMsgsCount{
                 if count.intValue > 0{
                     cell.lblUnConsumedMessagesCount.text = count.stringValue
@@ -230,18 +237,22 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conversation = self.conversations[indexPath.item].tchConversation
-        let viewController = AdvanceChatViewController()
-        viewController.conversation = conversation
-        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-        if #available(iOS 13.0, *) {
-            let controller = navViewController.topViewController
-            // Modal Dismiss iOS 13 onward
-            controller?.presentationController?.delegate = self
+        if let conversation = self.conversations[indexPath.item].tchConversation{
+            let viewController = AdvanceChatViewController()
+            viewController.conversation = conversation
+            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+            if #available(iOS 13.0, *) {
+                let controller = navViewController.topViewController
+                // Modal Dismiss iOS 13 onward
+                controller?.presentationController?.delegate = self
+            }
+            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+            navViewController.presentationController?.delegate = self
+            self.present(navViewController, animated: true, completion: nil)
+        }else{
+            print("Twilio: Conversations aren't loaded yet")
         }
-        //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
-        navViewController.presentationController?.delegate = self
-        self.present(navViewController, animated: true, completion: nil)
+        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -252,7 +263,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         if (editingStyle == .delete) {
             // handle delete (by removing the data from your array and updating the tableview)
             self.deleteIndexPath = indexPath
-            let itemToDelete = self.conversations[indexPath.row].tchConversation.friendlyName
+            let itemToDelete = self.conversations[indexPath.row].tchConversation?.friendlyName
             confirmDelete(name: itemToDelete ?? "*this conversation*")
         }
     }
@@ -271,18 +282,22 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func handleDeleteChannel(alertAction: UIAlertAction! ) -> Void {
         if let indexPath = self.deleteIndexPath {
-            let conversation = self.conversations[indexPath.row].tchConversation
-            conversation.destroy { (result) in
-                if (result.isSuccessful){
-                    self.conversations.remove(at: indexPath.row)
-                    // Note that indexPath is wrapped in an array:  [indexPath]
-                    self.tblView.deleteRows(at: [indexPath], with: .automatic)
-                    self.deleteIndexPath = nil
+            if let conversation = self.conversations[indexPath.row].tchConversation{
+                conversation.destroy { (result) in
+                    if (result.isSuccessful){
+                        self.conversations.remove(at: indexPath.row)
+                        // Note that indexPath is wrapped in an array:  [indexPath]
+                        self.tblView.deleteRows(at: [indexPath], with: .automatic)
+                        self.deleteIndexPath = nil
+                    }
+                    else{
+                        AlertService.showAlert(style: .actionSheet, title: nil, message: "You can not delete this conversation")
+                    }
                 }
-                else{
-                    AlertService.showAlert(style: .actionSheet, title: nil, message: "You can not delete this conversation")
-                }
+            }else{
+                print("Twilio: Conversations are not loaded yet")
             }
+            
         }
     }
     

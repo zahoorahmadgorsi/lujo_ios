@@ -254,6 +254,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         showMessageTimestampOnSwipeLeft = true // default false
         
         messagesCollectionView.refreshControl = refreshControl
+        
     }
     
     func configureMessageInputBar() {
@@ -289,7 +290,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { timer in
             if (self.messagesCollectionView.contentOffset == CGPoint.zero){
                 UIView.animate(withDuration: 0.5, animations: {
-                    self.messagesCollectionView.contentOffset = CGPoint.init(x: 0, y: -120)
+                    self.messagesCollectionView.contentOffset = CGPoint.init(x: 0, y: -110)
                 })
             }
             timer.invalidate()

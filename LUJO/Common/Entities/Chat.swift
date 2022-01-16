@@ -10,26 +10,43 @@ import Foundation
 import TwilioConversationsClient
 
 class Conversation: NSObject, NSCoding {  //conforming NSObject, NSCoding  to store in user defaults
-    var tchConversation: TCHConversation
+    var tchConversation: TCHConversation?
     var tchMessage: TCHMessage?
-    var unReadMessageCount: String?
+    //primitive data types to be used for storing in user defaults
+    //variables of tchConversation
+    var type: String?
+    var friendlyName: String?
+    var dateCreatedAsDate: Date?
+    var lastMessageDate: Date?
+    //variable of tchMessage
+    var lastMessageBody: String?
+//    var unReadMessagesCount: String?
     
-    init(_ tchConversation:TCHConversation ,_ tchMessage:TCHMessage? = nil,_ unReadMessageCount:String? = nil){
+    init(_ tchConversation:TCHConversation){
         self.tchConversation = tchConversation
-        self.tchMessage = tchMessage
-        self.unReadMessageCount = unReadMessageCount
+        //variables of tchConversation
+        self.type = tchConversation.attributes()?.dictionary?["type"] as? String
+        self.friendlyName = tchConversation.friendlyName
+        self.dateCreatedAsDate = tchConversation.dateCreatedAsDate
+        self.lastMessageDate = tchConversation.lastMessageDate
     }
     
     required init(coder aDecoder: NSCoder) {
-        self.tchConversation = aDecoder.decodeObject(forKey: "tchConversation") as! TCHConversation
-        self.tchMessage = aDecoder.decodeObject(forKey: "tchMessage") as? TCHMessage
-        self.unReadMessageCount = aDecoder.decodeObject(forKey: "unReadMessageCount") as? String ?? ""
+        self.type = aDecoder.decodeObject(forKey: "type") as? String
+        self.friendlyName = aDecoder.decodeObject(forKey: "friendlyName") as? String
+        self.dateCreatedAsDate = aDecoder.decodeObject(forKey: "dateCreatedAsDate") as? Date
+        self.lastMessageDate = aDecoder.decodeObject(forKey: "lastMessageDate") as? Date
+        self.lastMessageBody = aDecoder.decodeObject(forKey: "lastMessageBody") as? String
+//        self.unReadMessagesCount = aDecoder.decodeObject(forKey: "unReadMessagesCount") as? String
     }
 
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.tchConversation, forKey: "tchConversation")
-        aCoder.encode(self.tchMessage, forKey: "tchMessage")
-        aCoder.encode(self.unReadMessageCount, forKey: "unReadMessageCount")
+        aCoder.encode(self.type, forKey: "type")
+        aCoder.encode(self.friendlyName, forKey: "friendlyName")
+        aCoder.encode(self.dateCreatedAsDate, forKey: "dateCreatedAsDate")
+        aCoder.encode(self.lastMessageDate, forKey: "lastMessageDate")
+        aCoder.encode(self.lastMessageBody, forKey: "lastMessageBody")
+//        aCoder.encode(self.unReadMessagesCount, forKey: "unReadMessagesCount")
     }
     
 }
