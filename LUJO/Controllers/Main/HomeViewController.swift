@@ -494,6 +494,43 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 //        self.present(navViewController, animated: true, completion: nil)
         self.present(viewController, animated: true, completion: nil)
     }
+    //MARK:- Custom request actions
+    @IBAction func findTableButton_onClick(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 1
+    }
+    
+    @IBAction func getTicketsButton_onClick(_ sender: Any) {
+        let viewController = ProductsViewController.instantiate(category: .event)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
+        let viewController = ProductsViewController.instantiate(category: .gift)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func villaButton_onClick(_ sender: Any) {
+        let viewController = ProductsViewController.instantiate(category: .villa)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func findAYachtButton_onClick(_ sender: Any) {
+        let viewController = ProductsViewController.instantiate(category: .yacht)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func findAHotelButton_onClick(_ sender: Any) {
+        //Loading the preferences related to dining only very first time
+        if !UserDefaults.standard.bool(forKey: "isTravelPreferencesAlreadyShown")  {
+            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
+            self.navigationController?.pushViewController(viewController, animated: true)
+            UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
+        }else{
+            let viewController = HotelViewController.instantiate()
+            viewController.delegate = self
+            self.present(viewController, animated: true, completion: nil)
+        }
+    }
     
     @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {
         let viewController = ProductsViewController.instantiate(category: .event, dataSource: locationEvents)
@@ -506,28 +543,30 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @objc func btnGiftSeeAllTapped(_ sender: Any) {
-        let viewController = ProductsViewController.instantiate(category: .gift)
+        let viewController = PerCityViewController.instantiate(category: .gift)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func btnVillaSeeAllTapped(_ sender: Any) {
-        let viewController = ProductsViewController.instantiate(category: .villa)
+        let viewController = PerCityViewController.instantiate(category: .villa)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func btnEventSeeAllTapped(_ sender: Any) {
-        let viewController = ProductsViewController.instantiate(category: .event)
+        let viewController = PerCityViewController.instantiate(category: .event)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func btnYachtSeeAllTapped(_ sender: Any) {
-        let viewController = ProductsViewController.instantiate(category: .yacht)
+        let viewController = PerCityViewController.instantiate(category: .yacht)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func btnExperienceSeeAllTapped(_ sender: Any) {
-        let viewController = ProductsViewController.instantiate(category: .experience)
+        let viewController = PerCityViewController.instantiate(category: .experience)
         self.navigationController?.pushViewController(viewController, animated: true)
+//        let viewController = ProductsViewController.instantiate(category: .experience)
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func showEventDetail(_ sender: UITapGestureRecognizer) {
@@ -824,47 +863,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 //        }
     }
     
-    /// Mark - Custom request actions
-    @IBAction func findTableButton_onClick(_ sender: Any) {
-//        self.present(TableViewController.instantiate(), animated: true, completion: nil)
-        self.tabBarController?.selectedIndex = 1
-    }
-    
-    @IBAction func getTicketsButton_onClick(_ sender: Any) {
-        let viewController = PerCityViewController.instantiate(category: .event)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @IBAction func purchaseGoodsButton_onClick(_ sender: Any) {
-//        let viewController = ProductsViewController.instantiate(category: .gift)
-        let viewController = PerCityViewController.instantiate(category: .gift)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @IBAction func villaButton_onClick(_ sender: Any) {
-        let viewController = PerCityViewController.instantiate(category: .villa)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @IBAction func findAYachtButton_onClick(_ sender: Any) {
-        //self.present(YachtViewController.instantiate(), animated: true, completion: nil)
-        //let viewController = EventsViewController.instantiate(category: .yacht)
-        let viewController = PerCityViewController.instantiate(category: .yacht)
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @IBAction func findAHotelButton_onClick(_ sender: Any) {
-        //Loading the preferences related to dining only very first time
-        if !UserDefaults.standard.bool(forKey: "isTravelPreferencesAlreadyShown")  {
-            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
-            self.navigationController?.pushViewController(viewController, animated: true)
-            UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
-        }else{
-            let viewController = HotelViewController.instantiate()
-            viewController.delegate = self
-            self.present(viewController, animated: true, completion: nil)
-        }
-    }
+
     
     func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {

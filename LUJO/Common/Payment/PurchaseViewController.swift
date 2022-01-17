@@ -128,10 +128,10 @@ extension PurchaseViewController: PaymentControllerDelegate {
                     return
                 }
                 self.showSuccessPopup(with: paymentInfo)
-                //removing non member from user name
+                //appending new member with user name 
                 if let user = LujoSetup().getLujoUser(), user.id > 0 {
                     let userAttributes = ICMUserAttributes()
-                    userAttributes.name = "\(user.firstName) \(user.lastName)"
+                    userAttributes.name = "\(user.firstName) \(user.lastName)" + " (New Member)"
                     Intercom.updateUser(userAttributes)
                 }
                 
