@@ -27,7 +27,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     
 
     static let sharedConversationsManager = ConversationsManager()
-    static let sharedCache = NSCache<NSString, UIImage>()
+//    static let sharedCache = NSCache<NSString, UIImage>()
     
     // For the quickstart, this will be the view controller
     weak var delegate: ConversationsManagerDelegate?
@@ -396,7 +396,8 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             }) { (mediaSid) in
                 // Called when upload is completed, with the new mediaSid if successful.
                 // Full failure details will be provided through sendMessage's completion.
-                ConversationsManager.sharedCache.setObject(photo, forKey: mediaSid as NSString)
+//                ConversationsManager.sharedCache.setObject(photo, forKey: mediaSid as NSString)
+                UserDefaults.standard.set(data, forKey: mediaSid)
                 print("Twilio: Media uploaded and cached successfully")
             }
 

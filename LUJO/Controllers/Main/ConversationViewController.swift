@@ -102,9 +102,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 self.lastReadMessageIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
                 
                 var tempMessages:[ChatMessage] = []
-//              print(tchMessage.attributes()?.dictionary)
                 let myGroup = DispatchGroup()
-//                self.showNetworkActivity()
+                self.showNetworkActivity()
                 for msg in messages {
                     myGroup.enter()
                     if msg.hasMedia(){
@@ -120,7 +119,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 }
                 myGroup.notify(queue: .main) {
                     print("Twilio: conversation viewDidLoad. Finished whole DispatchGroup.")
-//                    self.hideNetworkActivity()
+                    self.hideNetworkActivity()
                     tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
                     self.messageList.insert(contentsOf: tempMessages, at: 0)
                     self.messagesCollectionView.reloadData()
@@ -575,8 +574,9 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                                                            , completion: @escaping (ChatMessage , _ isCached:Bool) -> Void){
         
         if let sid = message.mediaSid{
-//            print("Twilio: message.index:\(String(describing: message.index))")
-            if let cachedImage = ConversationsManager.sharedCache.object(forKey: sid as NSString) {
+            //if let cachedImage = ConversationsManager.sharedCache.object(forKey: sid as NSString) {
+            let imageData = UserDefaults.standard.object(forKey: sid) as? Data
+            if let imgData = imageData , let cachedImage = UIImage(data: imgData) {
                 print("Twilio: Image from cache")
                 if (identity == message.participant?.identity){ //its current user's message
                     if let chatUser:ChatUser = self.currentSender() as? ChatUser  {
@@ -584,7 +584,6 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                         completion(photoMessage, true)
                     }
                 }else{
-//                    let chatUser:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
                     let chatUser:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: "Customer Support")
                     let photoMessage = ChatMessage(image: cachedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     completion(photoMessage, true)
@@ -595,12 +594,12 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                         return
                     }
                     // Use this url to download an image or other media
-//                    print("Twilio: mediaContentUrl:\(mediaContentUrl)")
                     DispatchQueue.global().async {
                         if let data = try? Data( contentsOf:mediaContentUrl) , let loadedImage:UIImage = UIImage( data:data)
                         {
                             DispatchQueue.main.async {
-                                ConversationsManager.sharedCache.setObject(loadedImage, forKey: sid as NSString) //putting image into the cache
+//                                ConversationsManager.sharedCache.setObject(loadedImage, forKey: sid as NSString) //putting image into the cache
+                                UserDefaults.standard.set(loadedImage.pngData(), forKey: sid)
                                 if (self.identity == message.participant?.identity){ //its current user's message
                                     if let chatUser:ChatUser = self.currentSender() as? ChatUser  {
                                         let photoMessage = ChatMessage(image: loadedImage, user: chatUser, messageId: UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)

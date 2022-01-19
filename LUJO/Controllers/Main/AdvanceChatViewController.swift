@@ -43,6 +43,7 @@ final class AdvanceChatViewController: ConversationViewController {
         ConversationsManager.sharedConversationsManager.delegate = self
         
         updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: nil)    //extension 2 Online
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
