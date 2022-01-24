@@ -102,29 +102,34 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 self.lastReadMessageIndex = ConversationsManager.sharedConversationsManager.getOthersLastMessageRead()
                 
                 var tempMessages:[ChatMessage] = []
-                let myGroup = DispatchGroup()
+//                let myGroup = DispatchGroup()
                 self.showNetworkActivity()
                 for msg in messages {
-                    myGroup.enter()
+//                    myGroup.enter()
                     if msg.hasMedia(){
                         //this is an asynch call
                         self.getAndConvertTCHImageMessageToChatMessage(msg) { (chatImageMessage, isCached) in
                             tempMessages.append(chatImageMessage)
-                            myGroup.leave()
+                            tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
+                            self.messageList = []
+                            self.messageList.insert(contentsOf: tempMessages, at: 0)
+                            self.messagesCollectionView.reloadDataAndKeepOffset()
+//                            self.messagesCollectionView.scrollToLastItem(animated: true)
+//                            myGroup.leave()
                         }
                     }else if let message = self.convertTCHMessageToChatMessage(message: msg){   //its a synch call
                         tempMessages.append(message)
-                        myGroup.leave()
+//                        myGroup.leave()
                     }
                 }
-                myGroup.notify(queue: .main) {
+//                myGroup.notify(queue: .main) {
                     print("Twilio: conversation viewDidLoad. Finished whole DispatchGroup.")
                     self.hideNetworkActivity()
-                    tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
+                    tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order, so bringing them in order
                     self.messageList.insert(contentsOf: tempMessages, at: 0)
                     self.messagesCollectionView.reloadData()
                     self.messagesCollectionView.scrollToLastItem(animated: true)
-                }
+//                }
             })
         }else if let user = LujoSetup().getLujoUser(), user.id > 0 { //creating new conversation
             let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")

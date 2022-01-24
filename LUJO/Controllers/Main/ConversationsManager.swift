@@ -177,68 +177,26 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
                     }
-                    convers.addParticipant(byIdentity: "shujahm@gmail.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: shujahm@gmail.com could not added.")
-                        }
-                    })
-                    convers.addParticipant(byIdentity: "admin@gmail.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: admin@gmail.com could NOT added.")
-                        }
-                    })
-                    
-                    convers.addParticipant(byIdentity: "deseriejoy.cruz@baroqueaviation.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: deseriejoy.cruz@baroqueaviation.com could not added.")
-                        }
-                    })
-                    
-                    convers.addParticipant(byIdentity: "zairalujo@gmail.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: zairalujo@gmail.com could not added.")
-                        }
-                    })
-                    
-                    convers.addParticipant(byIdentity: "sahleg@golujo.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: sahleg@golujo.com could not added.")
-                        }
-                    })
-                    
-                    convers.addParticipant(byIdentity: "zahoor.ahmad@live.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: zahoor.ahmad@live.com could not added.")
-                        }
-                    })
-                    
-                    convers.addParticipant(byIdentity: "zahoor.gorsi@gmail.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: zahoor.gorsi@gmail.com could not added.")
-                        }
-                    })
-                    
-                    convers.addParticipant(byIdentity: "request@golujo.com", attributes: nil, completion: { (result) in
-                        if result.isSuccessful {
-                            print("Twilio: User added.")
-                        } else {
-                            print("Twilio: request@golujo.com could not added.")
-                        }
-                    })
+                    let particiapntsEmails:[String] = ["shujahm@gmail.com"
+                                                       ,"mark.anthony@baroque-group.com"
+                                                       ,"deseriejoy.cruz@baroqueaccess.com"
+                                                       ,"henry@baroqueaccess.com"
+                                                       ,"stuti-kesarwani@baroquetravel.com"
+                                                       ,"request@golujo.com"
+                                                       ,"shirley@baroquetravel.com"
+                                                       ,"clara.plebani@baroquetravel.com"
+                                                       ,"yanquiel@baroquetravel.com"
+                                                       ,"sylvia@baroquetravel.com"
+                                                       ,"ej.bobadilla@baroqueaccess.com"
+                                                       ,"zahoor.gorsi@gmail.com"
+                                                       ,"zahoor.ahmad@live.com"]
+                    for participantEmail in particiapntsEmails{
+                        convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
+                            if result.isSuccessful == false {
+                                print("Twilio: \(participantEmail) could not added.")
+                            }
+                        })
+                    }
                 }
             }else{
                 print("Twilio: Conversation could not created")
