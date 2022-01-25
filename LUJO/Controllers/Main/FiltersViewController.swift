@@ -10,8 +10,8 @@ import UIKit
 
 
 protocol FiltersVCProtocol:class {
-    func setFirstFilter(filter:String)
-    func setSecondFilter(filter:Taxonomy?)
+    func setFirstFilter(filter:String)      //name
+    func setSecondFilter(filter:Taxonomy?)  //daily or weekly charter
     func setThirdFilter(filter:String)
     func setFourthFilter(filter:Taxonomy?)
     func setFifthFilter(filter:Taxonomy?)
