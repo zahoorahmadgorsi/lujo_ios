@@ -565,8 +565,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @objc func btnExperienceSeeAllTapped(_ sender: Any) {
         let viewController = PerCityViewController.instantiate(category: .experience)
         self.navigationController?.pushViewController(viewController, animated: true)
-//        let viewController = ProductsViewController.instantiate(category: .experience)
-//        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func showEventDetail(_ sender: UITapGestureRecognizer) {
