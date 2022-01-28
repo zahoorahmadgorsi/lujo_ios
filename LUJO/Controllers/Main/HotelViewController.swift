@@ -156,9 +156,6 @@ class HotelViewController: UIViewController {
         
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
-        
-//        startChatWithInitialMessage(initialMessage)
-        
         showNetworkActivity()
         CustomRequestAPIManager.shared.findHotel(cityName: cityName, hotelName: hotelNameTextField.text, hotelRadius: String.localizedStringWithFormat("%.0f", distanceSlider.value), checkInDate: checkInDateString, checkOutDate: checkOutDateString, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: lastButton.tag, token: token) { error in
             DispatchQueue.main.async {
@@ -170,19 +167,9 @@ class HotelViewController: UIViewController {
                 }
 
                 print ("Success: custom request table.")
-//                self.dismiss(animated: true, completion: nil)
-                let viewController = BasicChatViewController()
-    //            viewController.chatManager = ChatManager(channelName: channelName)
-    //            ChatManager.sharedChatManager.uniqueChannelName = channelName
-                viewController.product = Product(id: -1, type: "travel" , name: "Hotel in " + cityName)
-                viewController.initialMessage = initialMessage
-                viewController.modalPresentationStyle = .overFullScreen
                 self.dismiss(animated: true, completion: {
                     self.startChatWithInitialMessage(initialMessage)
-//                    self.delegate?.tappedOnBookRequest(viewController: viewController)
                 })
-
-                //Zahoor end
                 /*
                 showCardAlertWith(title: "Info", body: "Your request is being processed. We will get back to you shortly. You can follow the status of your request in My bookings.", buttonTitle: "Ok", cancelButtonTitle: nil, buttonTapHandler: {
                     self.dismiss(animated: true, completion: nil)

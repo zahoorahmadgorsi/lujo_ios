@@ -899,11 +899,7 @@ extension ProductDetailsViewController {
         }
         else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-            //zahoor start
-            
-            
-            
-//            print(channelName)
+
             if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
                 initialMessage = """
                 Hi Concierge team,
@@ -912,7 +908,6 @@ extension ProductDetailsViewController {
 
                 \(userFirstName)
                 """
-//                Now we are calling this in chatViewControll
                 EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
@@ -932,18 +927,7 @@ extension ProductDetailsViewController {
                                                            ,"Product Type" : product.type
                                                            ,"ProductId" : product.id])
             }
-
-//            print(initialMessage)
-//            let viewController = BasicChatViewController()
-//            viewController.product = product
-//            viewController.initialMessage = initialMessage
-//            viewController.modalPresentationStyle = .overFullScreen
-//            self.dismiss(animated: true, completion: {
-//                self.delegate?.tappedOnBookRequest(viewController: viewController)
-//            })
-            
             self.startChatWithInitialMessage(initialMessage)
-            //Zahoor end
         }
         
     }

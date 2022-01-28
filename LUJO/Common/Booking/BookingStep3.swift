@@ -26,20 +26,7 @@ class BookingStep3: UIViewController {
     }
 
     @IBAction func chatButton_onClick(_ sender: UIButton) {
-            startChatWithInitialMessage()
-//            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-//            let initialMessage = """
-//            Hi Concierge team,
-//
-//            I want to authorize card and verify booking request, can you please assist me?
-//
-//            \(userFirstName)
-//            """
-//
-//            let viewController = BasicChatViewController()
-//            viewController.product = Product(id: -1 , type: "Booking Request" , name: "Authorize card and verify booking request")
-//            viewController.initialMessage = initialMessage
-//            self.navigationController?.pushViewController(viewController,animated: true)
+        startChatWithInitialMessage()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

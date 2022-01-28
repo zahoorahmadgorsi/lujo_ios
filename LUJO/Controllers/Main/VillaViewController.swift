@@ -10,7 +10,7 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
-import Intercom
+//import Intercom
 
 class VillaViewController: UIViewController {
     

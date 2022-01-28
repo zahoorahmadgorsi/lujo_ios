@@ -487,13 +487,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 
     }
     
-    @IBAction func btnChatTapped(_ sender: Any) {
-        Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
-        let viewController = ChatListViewController.instantiate()
-//        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-//        self.present(navViewController, animated: true, completion: nil)
-        self.present(viewController, animated: true, completion: nil)
-    }
+//    @IBAction func btnChatTapped(_ sender: Any) {
+//        Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
+//        let viewController = ChatListViewController.instantiate()
+////        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+////        self.present(navViewController, animated: true, completion: nil)
+//        self.present(viewController, animated: true, completion: nil)
+//    }
     //MARK:- Custom request actions
     @IBAction func findTableButton_onClick(_ sender: Any) {
         self.tabBarController?.selectedIndex = 1
