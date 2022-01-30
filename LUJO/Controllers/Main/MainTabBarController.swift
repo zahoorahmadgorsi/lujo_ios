@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Intercom
+import TwilioConversationsClient
 
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
@@ -51,53 +51,51 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.chatLog_onNewEvent()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(chatLog_onNewEvent),
-                                               name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
-                                               object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(openChatWindow),
                                                name: Notification.Name(rawValue: "openChatWindow"),
                                                object: nil)
+
+//        self.chatLog_onNewEvent() //it will not work here as it requires to login to twilio which takes some seconds
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    
+
     //MARK:- User Interaction
-    
-    
+
+
     //MARK:- Utilities
     
-    @objc func chatLog_onNewEvent() {
-        let count = Intercom.unreadConversationCount()
+@objc func showBadgeValue() {
+    ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
+        print("Twilio: Total UnRead messages count:\(count)")
         self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
-    }
-    
+    })
+}
+
     //MARK:- User Interaction
-    
-    
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController.restorationIdentifier == "ChatListNavigationController"{
-            //Zahoor start
+
+
+func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    if viewController.restorationIdentifier == "ChatListNavigationController" {
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            let viewController = ChatOptionsViewController.instantiate()
+            self.present(viewController, animated: true, completion: nil)
+        }else{
             openChatWindow()
-//            let viewController = ChatOptionsViewController.instantiate()
-//            self.present(viewController, animated: true, completion: nil)
-            return false
-            //Zahoor ends
         }
-        return true
+        return false
     }
-    
+    return true
+}
+
     @objc func openChatWindow(){
-        if let destNav = viewControllers?[2] as? UINavigationController {
-            if let destVC = destNav.children.first {
-                destVC.startChatWithInitialMessage()
-                //do stuff
-            }
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            //            Intercom.presentMessenger()
+        } else {
+            showInformationPopup()
         }
     }
-    //MARK:- Utilities
 }

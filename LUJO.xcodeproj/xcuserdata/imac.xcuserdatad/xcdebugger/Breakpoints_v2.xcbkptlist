@@ -816,7 +816,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "732"
             endingLineNumber = "732"
-            landmarkName = "updateContent()"
+            landmarkName = "tappedOnHeart(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -896,7 +896,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "644"
             endingLineNumber = "644"
-            landmarkName = "updateUI()"
+            landmarkName = "hideNetworkActivity()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1935,8 +1935,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "392"
             endingLineNumber = "392"
-            landmarkName = "HomeViewController"
-            landmarkType = "3">
+            landmarkName = "buyMembershipButton_onClick(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3801,7 +3801,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "872"
             endingLineNumber = "872"
-            landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
+            landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3897,8 +3897,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "863"
             endingLineNumber = "863"
-            landmarkName = "HomeViewController"
-            landmarkType = "3">
+            landmarkName = "startPauseAnimation(isPausing:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3913,7 +3913,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "875"
             endingLineNumber = "875"
-            landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
+            landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3993,7 +3993,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "867"
             endingLineNumber = "867"
-            landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
+            landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4041,7 +4041,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "866"
             endingLineNumber = "866"
-            landmarkName = "setUnSetFavourites(id:isUnSetFavourite:completion:)"
+            landmarkName = "startPauseAnimation(isPausing:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4057,8 +4057,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "623"
             endingLineNumber = "623"
-            landmarkName = "hideNetworkActivity()"
-            landmarkType = "7">
+            landmarkName = "HomeViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4073,8 +4073,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "974"
             endingLineNumber = "974"
-            landmarkName = "didTappedOnHeartAt(index:sender:)"
-            landmarkType = "7">
+            landmarkName = "HomeViewController"
+            landmarkType = "21">
             <Locations>
                <Location
                   uuid = "8E343A56-2AFB-4893-B5FF-3EB8A464AAAD - 33dfbd080e255509"
@@ -4121,7 +4121,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "813"
             endingLineNumber = "813"
-            landmarkName = "scrollViewDidEndScrollingAnimation(_:)"
+            landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4137,7 +4137,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "799"
             endingLineNumber = "799"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkName = "fetchAviationDataSource()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4345,8 +4345,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "290"
             endingLineNumber = "290"
-            landmarkName = "showRestaurantDetail(_:)"
-            landmarkType = "7">
+            landmarkName = "DiningViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4361,7 +4361,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "278"
             endingLineNumber = "278"
-            landmarkName = "setupTapGesturesForRestaurants()"
+            landmarkName = "updatePopularCities()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4409,8 +4409,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "512"
             endingLineNumber = "512"
-            landmarkName = "getDiningInformation(completion:)"
-            landmarkType = "7">
+            landmarkName = "DiningViewController"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4681,7 +4681,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "528"
             endingLineNumber = "528"
-            landmarkName = "seeAllRestaurantsForCity(city:view:)"
+            landmarkName = "getDiningInformation(completion:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -4825,8 +4825,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "472"
             endingLineNumber = "472"
-            landmarkName = "DiningViewController"
-            landmarkType = "21">
+            landmarkName = "didTappedOnHeartAt(index:sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5049,8 +5049,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "537"
             endingLineNumber = "537"
-            landmarkName = "didTappedOnRestaurantAt(index:restaurant:)"
-            landmarkType = "7">
+            landmarkName = "DiningViewController"
+            landmarkType = "21">
             <Locations>
                <Location
                   uuid = "F679F0A8-044E-4EA6-B30B-6D14B2835EA1 - 463d45189ad654ec"
@@ -5097,8 +5097,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "577"
             endingLineNumber = "577"
-            landmarkName = "showEventDetail(_:)"
-            landmarkType = "7">
+            landmarkName = "HomeViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5113,7 +5113,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "615"
             endingLineNumber = "615"
-            landmarkName = "showNetworkActivity()"
+            landmarkName = "showEventDetail(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6169,8 +6169,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "312"
             endingLineNumber = "312"
-            landmarkName = "DiningViewController"
-            landmarkType = "3">
+            landmarkName = "showRestaurantDetail(_:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "9A9A6CA0-84A8-4CDB-9010-7DF7A973B861 - 6704b4c6b986d751"
@@ -6233,8 +6233,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "325"
             endingLineNumber = "325"
-            landmarkName = "currentLocation"
-            landmarkType = "24">
+            landmarkName = "DiningViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8486,8 +8486,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
             endingLineNumber = "166"
-            landmarkName = "viewWillDisappear(_:)"
-            landmarkType = "7">
+            landmarkName = "DiningViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -11275,7 +11275,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "535"
             endingLineNumber = "535"
-            landmarkName = "btnLocationEventsSeeAllTapped(_:)"
+            landmarkName = "findAHotelButton_onClick(_:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -11338,7 +11338,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1142"
             endingLineNumber = "1142"
-            landmarkName = "getLocationPlaces(for:)"
+            landmarkName = "getCurrentEventInFeatured()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11386,7 +11386,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "540"
             endingLineNumber = "540"
-            landmarkName = "btnTopRatedSeeAllTapped(_:)"
+            landmarkName = "findAHotelButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11402,7 +11402,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "541"
             endingLineNumber = "541"
-            landmarkName = "btnTopRatedSeeAllTapped(_:)"
+            landmarkName = "findAHotelButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11418,7 +11418,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "545"
             endingLineNumber = "545"
-            landmarkName = "btnGiftSeeAllTapped(_:)"
+            landmarkName = "findAHotelButton_onClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11434,7 +11434,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "550"
             endingLineNumber = "550"
-            landmarkName = "btnVillaSeeAllTapped(_:)"
+            landmarkName = "btnLocationEventsSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11450,7 +11450,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "555"
             endingLineNumber = "555"
-            landmarkName = "btnEventSeeAllTapped(_:)"
+            landmarkName = "btnTopRatedSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11466,7 +11466,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "560"
             endingLineNumber = "560"
-            landmarkName = "btnYachtSeeAllTapped(_:)"
+            landmarkName = "btnGiftSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11482,7 +11482,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "565"
             endingLineNumber = "565"
-            landmarkName = "btnExperienceSeeAllTapped(_:)"
+            landmarkName = "btnVillaSeeAllTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -11560,8 +11560,8 @@
             filePath = "LUJO/Controllers/Main/ProductDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1074"
-            endingLineNumber = "1074"
+            startingLineNumber = "1064"
+            endingLineNumber = "1064"
             landmarkName = "panGestureAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11576,8 +11576,8 @@
             filePath = "LUJO/Controllers/Main/ProductDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1079"
-            endingLineNumber = "1079"
+            startingLineNumber = "1069"
+            endingLineNumber = "1069"
             landmarkName = "panGestureAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -11608,8 +11608,8 @@
             filePath = "LUJO/Controllers/Main/ProductDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1057"
-            endingLineNumber = "1057"
+            startingLineNumber = "1047"
+            endingLineNumber = "1047"
             landmarkName = "panGestureAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
