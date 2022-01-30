@@ -108,7 +108,7 @@ class ProductsViewController: UIViewController {
             case .villa:
                 //Loading the preferences related to dining only very first time
                 if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
+                    let viewController = PrefCollectionsViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
                     self.navigationController?.pushViewController(viewController, animated: true)
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
