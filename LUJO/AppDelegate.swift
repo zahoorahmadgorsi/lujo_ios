@@ -2,7 +2,6 @@ import FirebaseCrashlytics
 import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications
-import Intercom
 import Firebase
 import Mixpanel
 import OneSignal
@@ -16,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var isBackground: Bool!
 
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        
         isBackground = false
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -51,8 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         
         IQKeyboardManager.shared.enable = true
-
-        Intercom.setApiKey("ios_sdk-6458822f5722423dbb6aef0b2dd9b0f44a694fe3", forAppId:"vc290ayr")
         
         ChatStyling.appyStyling()
 
@@ -70,6 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         OneSignal.promptForPushNotifications(userResponse: { accepted in
         print("User accepted notifications: \(accepted)")
         })
+        
+        loginToTwilio()
         
         return true
     }
@@ -118,8 +119,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken tokenData: Data) {
         let tokenParts = tokenData.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-//        print("Device Token: \(token)")
-        Intercom.setDeviceToken(tokenData)
         registerForOurPushService(deviceToken: token)
     }
 
@@ -129,18 +128,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             setExternalUserId(externalUserId: user.phoneNumber.readableNumber)  //setting external User id as phone number at oneSignal
             
             Mixpanel.mainInstance().identify(distinctId: "\(user.id)")
-            
-            Intercom.registerUser(withUserId: "\(user.id)")
-            
-            let userAttributes = ICMUserAttributes()
-            userAttributes.name = "\(user.firstName) \(user.lastName)"
-            if LujoSetup().getLujoUser()?.membershipPlan == nil {
-                if let name = userAttributes.name{
-                    userAttributes.name = name + " (Non Member)" //appending non member with the user name if user is free
-                }
-            }
-            userAttributes.email = user.email
-            Intercom.updateUser(userAttributes)
         }
         
         UNUserNotificationCenter.current()
@@ -163,33 +150,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Push can be expected in almost every situation with a success status, but
         // as a pre-caution its good to verify it exists
         if let pushResults = results!["push"] {
-            print("Set external user id push status: ", pushResults)
+        print("Set external user id push status: ", pushResults)
         }
         if let emailResults = results!["email"] {
-            print("Set external user id email status: ", emailResults)
+          print("Set external user id email status: ", emailResults)
         }
         })
     }
 
-
-    
-    func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-        if let navController = base as? UINavigationController {
-            return getTopViewController(base: navController.visibleViewController)
-
-        } else if let tabController = base as? UITabBarController, let selected = tabController.selectedViewController {
-            return getTopViewController(base: selected)
-
-        } else if let presented = base?.presentedViewController {
-            return getTopViewController(base: presented)
-        }
-        return base
-    }
-
     func removePushToken(userId: Int) {
-        Intercom.logout()
+//        Intercom.logout()
         GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
-        ChatManager.sharedChatManager.shutdown()
+        ConversationsManager.sharedConversationsManager.shutdown()
     }
     
     func registerForOurPushService(deviceToken: String) {
@@ -199,5 +171,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
          GoLujoAPIManager().registerForOurPushService(userId: String(userId), deviceToken: deviceToken)
+    }
+    
+    //MARK:- loginToTwilio
+    
+    func loginToTwilio(){
+        //************
+        //Chat Manager
+        //************
+        ConversationsManager.sharedConversationsManager.login(LujoSetup().getLujoUser()?.email ?? ""){ (success) in
+            if success {
+                print("Twilio: Logged in as \"\(LujoSetup().getLujoUser()?.email ?? "")\"")
+            } else {
+                print("Twilio: Unable to login")
+            }
+        }
     }
 }
