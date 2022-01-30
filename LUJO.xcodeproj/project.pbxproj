@@ -103,8 +103,6 @@
 		8844D9B22563F712002FF846 /* FavouriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8844D9B02563F712002FF846 /* FavouriteCell.swift */; };
 		8844D9B32563F712002FF846 /* FavouriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8844D9B12563F712002FF846 /* FavouriteCell.xib */; };
 		886145D226AB70A30023E92E /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145D126AB70A30023E92E /* Chat.swift */; };
-		886145D826AB74960023E92E /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145D726AB74960023E92E /* ChatRouter.swift */; };
-		886145E026AB74AE0023E92E /* ChatAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145DF26AB74AE0023E92E /* ChatAPIManager.swift */; };
 		886145F526AC02090023E92E /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145F426AC02090023E92E /* ChatCell.swift */; };
 		886145FD26AC04610023E92E /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886145FC26AC04610023E92E /* UITableView.swift */; };
 		886FE4372722637A000B9530 /* TextFieldFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886FE4362722637A000B9530 /* TextFieldFilter.xib */; };
@@ -502,8 +500,6 @@
 		8844D9B02563F712002FF846 /* FavouriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCell.swift; sourceTree = "<group>"; };
 		8844D9B12563F712002FF846 /* FavouriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouriteCell.xib; sourceTree = "<group>"; };
 		886145D126AB70A30023E92E /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
-		886145D726AB74960023E92E /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
-		886145DF26AB74AE0023E92E /* ChatAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPIManager.swift; sourceTree = "<group>"; };
 		886145F426AC02090023E92E /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatCell.swift; path = "LUJO/Views/Reusable Views/Chat/ChatCell.swift"; sourceTree = SOURCE_ROOT; };
 		886145FC26AC04610023E92E /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		886FE4362722637A000B9530 /* TextFieldFilter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldFilter.xib; sourceTree = "<group>"; };
@@ -1163,15 +1159,6 @@
 			path = "Wish List View";
 			sourceTree = "<group>";
 		};
-		886145D626AB74820023E92E /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				886145D726AB74960023E92E /* ChatRouter.swift */,
-				886145DF26AB74AE0023E92E /* ChatAPIManager.swift */,
-			);
-			path = Chat;
-			sourceTree = "<group>";
-		};
 		886145F326AC01DE0023E92E /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -1754,7 +1741,6 @@
 		9AE0B2AB21232F9000E55E6C /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
-				886145D626AB74820023E92E /* Chat */,
 				9AE0B2B021233D7900E55E6C /* BackendError.swift */,
 				9A0DCC7C21F86F5D00CC9111 /* Baroque Aviation */,
 				1D618005238AAD7900F01199 /* Custom_Requests */,
@@ -2320,7 +2306,6 @@
 				553A8EE22303EBD90051006E /* PreloadDataManager.swift in Sources */,
 				91B4A39125FFB11600169A0C /* HomeSliderAnimator.swift in Sources */,
 				886145FD26AC04610023E92E /* UITableView.swift in Sources */,
-				886145D826AB74960023E92E /* ChatRouter.swift in Sources */,
 				9A5C5CBB222FDD8000B8239D /* PaymentSessionToken.swift in Sources */,
 				1D7819A622FCB8F30044C70B /* WelcomeView.swift in Sources */,
 				8894D0302562E61300BF84D8 /* WishListView.swift in Sources */,
@@ -2427,7 +2412,6 @@
 				9AD6EABE21E3BBAF00B695A3 /* CreditCardsDataSource.swift in Sources */,
 				88814DD82659B5360082AA2C /* DestinationSearchCell.swift in Sources */,
 				880B9B0D255845B10070D7CD /* Gift.swift in Sources */,
-				886145E026AB74AE0023E92E /* ChatAPIManager.swift in Sources */,
 				9AE0B2AF212330C700E55E6C /* GoLujoRouter.swift in Sources */,
 				1DEDB9ED22F2109600903CAC /* HomeSliderCell.swift in Sources */,
 				88E731AC256FFA7200BEDD00 /* ProductDetailView.swift in Sources */,
