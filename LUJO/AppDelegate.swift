@@ -54,10 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         
         IQKeyboardManager.shared.enable = true
-
-//        Intercom.setApiKey("ios_sdk-6458822f5722423dbb6aef0b2dd9b0f44a694fe3", forAppId:"vc290ayr")
-
-        //Fabric.with([Crashlytics.self])
         
         ChatStyling.appyStyling()
 
@@ -125,8 +121,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken tokenData: Data) {
         let tokenParts = tokenData.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-//        print("Device Token: \(token)")
-//        Intercom.setDeviceToken(tokenData)
         registerForOurPushService(deviceToken: token)
     }
 
@@ -136,12 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             setExternalUserId(externalUserId: user.phoneNumber.readableNumber)  //setting external User id as phone number at oneSignal
             
             Mixpanel.mainInstance().identify(distinctId: "\(user.id)")
-            
-//            Intercom.registerUser(withUserId: "\(user.id)")
-//            let userAttributes = ICMUserAttributes()
-//            userAttributes.name = "\(user.firstName) \(user.lastName)"
-//            userAttributes.email = user.email
-//            Intercom.updateUser(userAttributes)
         }
         
         UNUserNotificationCenter.current()
@@ -173,7 +161,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func removePushToken(userId: Int) {
-//        Intercom.logout()
         GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
         ConversationsManager.sharedConversationsManager.shutdown()
     }

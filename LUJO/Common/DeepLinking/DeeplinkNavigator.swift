@@ -33,9 +33,7 @@ class DeeplinkNavigator {
             
             if let id = Int(id){
                 let product = Product(id: id,type: type)
-               
                 viewController = ProductDetailsViewController.instantiate(product: product)
-                viewController.delegate = self
                 viewController.modalPresentationStyle = .overFullScreen
 
                 let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
@@ -65,25 +63,6 @@ class DeeplinkNavigator {
                 vc.present(alertController, animated: true, completion: nil)
             }
         }
-    }
-    
-
-}
-
-extension DeeplinkNavigator : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        
-        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-        if let tabBar = keyWindow?.rootViewController as? UITabBarController, let window = tabBar.selectedViewController as? UINavigationController {
-            //the property presentedViewController in UIViewController is described as "The view controller that is presented by this view controller, or one of its ancestors in the view controller hierarchy".
-            if window.presentedViewController != nil {
-                window.popToRootViewController(animated: true)
-                window.pushViewController(viewController, animated: true)
-            }else{// works fine if window has not presented any view controller
-                window.pushViewController(viewController, animated: true)
-            }
-        }
-
     }
 }
 

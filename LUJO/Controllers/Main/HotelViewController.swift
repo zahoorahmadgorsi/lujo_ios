@@ -57,7 +57,6 @@ class HotelViewController: UIViewController {
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-//    var delegate: ProductDetailDelegate?
     
     //MARK:- Life cicyle
 

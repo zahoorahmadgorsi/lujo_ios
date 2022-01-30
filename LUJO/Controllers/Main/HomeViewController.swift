@@ -10,7 +10,6 @@ import UIKit
 import JGProgressHUD
 import FirebaseCrashlytics
 import CoreLocation
-import Intercom
 import Kingfisher
 import Mixpanel
 import TwilioConversationsClient
@@ -611,8 +610,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
             viewController.transitioningDelegate = self
             viewController.modalPresentationStyle = .overFullScreen
-            viewController.delegate = self
-            
             present(viewController, animated: true)
 
     //        self.navigationController?.pushViewController(viewController, animated: true)
@@ -1118,19 +1115,9 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.modalPresentationStyle = .overFullScreen
-        viewController.delegate = self
-
         present(viewController, animated: true)
     }
     
-}
-
-extension HomeViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
 }
 
 // Helper functions

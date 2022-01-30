@@ -122,7 +122,6 @@ class PreferencesHomeViewController: UIViewController {
         return viewController
     }
     private let naHUD = JGProgressHUD(style: .dark)
-    var delegate: ProductDetailDelegate?
     
     //MARK:- Globals
     

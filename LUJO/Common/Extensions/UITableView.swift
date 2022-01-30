@@ -2,7 +2,6 @@ import IQKeyboardManagerSwift
 import SwiftEntryKit
 import UIKit
 import SwiftMessages
-import Intercom
 
 extension UITableView {
     func hideExtraCells(){

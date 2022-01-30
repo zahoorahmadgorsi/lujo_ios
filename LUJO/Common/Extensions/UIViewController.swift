@@ -2,7 +2,6 @@ import IQKeyboardManagerSwift
 import SwiftEntryKit
 import UIKit
 import SwiftMessages
-//import Intercom
 
 extension UIViewController {
     func canPerformSegue(withIdentifier identifier: String) -> Bool {
