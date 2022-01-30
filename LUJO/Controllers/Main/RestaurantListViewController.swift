@@ -180,7 +180,6 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewController = ProductDetailsViewController.instantiate(product: dataSource[indexPath.row])
-        viewController.delegate = self
         present(viewController, animated: true, completion: nil)
     }
     
@@ -227,13 +226,5 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
             }
             completion(strResponse, error)
         }
-    }
-}
-
-extension RestaurantListViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
     }
 }

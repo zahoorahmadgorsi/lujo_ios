@@ -12,10 +12,6 @@ import Mixpanel
 import Intercom
 import FirebaseCrashlytics
 
-protocol ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController)
-}
-
 class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     //MARK:- Init
@@ -100,7 +96,6 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     var pgrFullView: UIPanGestureRecognizer?
     var originalPosition: CGPoint?
     var currentPositionTouched: CGPoint?
-    var delegate: ProductDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

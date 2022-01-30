@@ -323,12 +323,10 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = dataSource[indexPath.row]
         let viewController = ProductDetailsViewController.instantiate(product: event)
-        viewController.delegate = self
         // B2 - 6
         selectedCell = collectionView.cellForItem(at: indexPath) as? HomeSliderCell
         // B2 - 7
         selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
-//        self.navigationController?.pushViewController(viewController, animated: true)
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
@@ -497,16 +495,8 @@ extension ProductsViewController: UIViewControllerTransitioningDelegate {
             else {
                 return nil
             }
-//        print(animationtype)
-//        if animationtype == .slider{
             eventsAnimator = EventsAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return eventsAnimator
-//        }else if animationtype == .featured{
-//            featuredToDetailAnimator = HomeFeaturedAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-//            return featuredToDetailAnimator
-//        }else {
-//            return nil
-//        }
     }
 
     // B1 - 3
@@ -519,37 +509,8 @@ extension ProductsViewController: UIViewControllerTransitioningDelegate {
             else {
                 return nil
             }
-//        if animationtype == .slider{
             eventsAnimator = EventsAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return eventsAnimator
-//        }else if animationtype == .featured{
-//            featuredToDetailAnimator = HomeFeaturedAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-//            return featuredToDetailAnimator
-//        }else {
-//            return nil
-//        }
+
     }
 }
-
-extension ProductsViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
-}
-
-//extension ProductsViewController: UINavigationControllerDelegate{
-//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
-//    {
-//        switch operation {
-//            case .push:
-//                return animationController(forPresented: toVC , presenting: fromVC, source: fromVC)
-//            case .pop:
-//                return animationController(forDismissed: fromVC)
-//            default:
-//                return nil
-//        }
-//
-//    }
-//}

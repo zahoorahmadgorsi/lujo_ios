@@ -527,7 +527,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
         }else{
             let viewController = HotelViewController.instantiate()
-            viewController.delegate = self
+//            viewController.delegate = self
             self.present(viewController, animated: true, completion: nil)
         }
     }
@@ -599,7 +599,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
             viewController.transitioningDelegate = self
             viewController.modalPresentationStyle = .overFullScreen
-            viewController.delegate = self
+//            viewController.delegate = self
             
             present(viewController, animated: true)
 
@@ -1106,19 +1106,10 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         // B1 - 4
         viewController.transitioningDelegate = self //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.modalPresentationStyle = .overFullScreen
-        viewController.delegate = self
 
         present(viewController, animated: true)
     }
     
-}
-
-extension HomeViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
-    }
 }
 
 // Helper functions

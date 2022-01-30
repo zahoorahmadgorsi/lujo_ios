@@ -311,9 +311,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     }
     
     fileprivate func presentRestaurantDetailViewController(restaurant: Product , presentationStyle : UIModalPresentationStyle) {
-//        let viewController = RestaurantDetailViewController.instantiate(restaurant: restaurant)
         let viewController = ProductDetailsViewController.instantiate(product: restaurant)
-        viewController.delegate = self
 //        // B1 - 4
         //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
         viewController.transitioningDelegate = self
@@ -663,20 +661,8 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
             featuredDiningToDetailAnimator = DiningFeaturedAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredDiningToDetailAnimator
         }
-//        else if animationtype == .specialEvent{
-//            diningCheffAnimator = DiningCheffAnimator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-//            return diningCheffAnimator
-//        }
         else{
             return nil
         }
-    }
-}
-
-extension DiningViewController : ProductDetailDelegate{
-    func tappedOnBookRequest(viewController:UIViewController) {
-        // Initialize a navigation controller, with your view controller as its root
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true, completion: nil)
     }
 }
