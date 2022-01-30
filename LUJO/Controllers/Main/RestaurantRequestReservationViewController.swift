@@ -91,12 +91,6 @@ class RestaurantRequestReservationViewController: UIViewController {
                     BackendError.parsing(reason: "Could not obtain the salesforce_id")
                     return
                 }
-//                //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-//                if let user = LujoSetup().getLujoUser(), user.id > 0 {
-//                    Intercom.logEvent(withName: "custom_request", metaData:[
-//                                        "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceID"
-//                                        ,"user_id":user.id])
-//                }
             }
             
             dateFormatter.dateFormat = "E, MMM d 'at' H:mm a"
