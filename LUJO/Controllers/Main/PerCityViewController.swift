@@ -140,7 +140,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
             case .yacht:
-                self.svFilters.isHidden = false
+                self.svFilters.isHidden = true
                 //Loading the preferences related to yacht only very first time
                 if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
@@ -159,8 +159,8 @@ class PerCityViewController: UIViewController {
                 print("No preferences to load")
        
         }
-        //get the quick filters
-        getFilters()
+        //get the quick filters (hiding it for now as shuja API isnt returning right results)
+//        getFilters()
     }
     
     //this method is mainly used when user is coming back from filters screen after picking some filters, this function first clears all quick filters selction, and then checks if user has picked some filter which also exists in quick filter then its highlighting that quick filter, then sorts the quick filters on the bases of selection and then fetches the data on the bases of filters
