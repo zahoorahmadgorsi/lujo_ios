@@ -9,7 +9,6 @@
 import UIKit
 import JGProgressHUD
 import Mixpanel
-import Intercom
 import FirebaseCrashlytics
 
 protocol ProductDetailDelegate{
@@ -899,45 +898,42 @@ extension ProductDetailsViewController {
         }
         else{
             guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
-            //zahoor start
-            
-            
-            
-//            print(channelName)
-            if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
-                initialMessage = """
-                Hi Concierge team,
+            if LujoSetup().getLujoUser()?.membershipPlan != nil {
+                guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+                if (initialMessage.count == 0){ //user is coming to book event, experience or gift else initial message would have something incase of yacht,villa and restaurant
+                    initialMessage = """
+                    Hi Concierge team,
 
-                I am interested in \(product.name), can you assist me?
+                    I am interested in \(product.name), can you assist me?
 
-                \(userFirstName)
-                """
-//                Now we are calling this in chatViewControll
-                EEAPIManager().sendRequestForSalesForce(itemId: product.id){ customBookingResponse, error in
-                    guard error == nil else {
-                        Crashlytics.crashlytics().record(error: error!)
-                        BackendError.parsing(reason: "Could not obtain the salesforce_id")
-                        return
-                    }
-                    https://developers.intercom.com/installing-intercom/docs/ios-configuration
-                    if let user = LujoSetup().getLujoUser(), user.id > 0 {
-                        Intercom.logEvent(withName: "custom_request", metaData:[
-                                            "sales_force_yacht_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-                                            ,"user_id":user.id])
-                    }
+                    \(userFirstName)
+                    """
+}
+
+                //            print(initialMessage)
+                let viewController = AdvanceChatViewController()
+                viewController.product = product
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                if #available(iOS 13.0, *) {
+                        let controller = navController.topViewController
+// Modal Dismiss iOS 13 onward
+//to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+                    controller?.presentationController?.delegate = self
                 }
 
-                Mixpanel.mainInstance().track(event: "Product Custom Request",
-                                              properties: ["Product Name" : product.name
-                                                           ,"Product Type" : product.type
-                                                           ,"ProductId" : product.id])
+                //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+                navController.presentationController?.delegate = self
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+                //Zahoor end
+
+            } else {
+                showInformationPopup()
             }
-            self.startChatWithInitialMessage(initialMessage)
-            //Zahoor end
         }
-        
+
     }
-    
+
     fileprivate func setRecentlyViewed() {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
@@ -1099,5 +1095,16 @@ extension ProductDetailsViewController: UIGestureRecognizerDelegate {
         }else{
             return false
         }
+    }
+}
+
+extension ProductDetailsViewController: UIAdaptivePresentationControllerDelegate {
+// Only called when the sheet is dismissed by DRAGGING as well as when tapped on cross button
+    public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        if #available(iOS 13, *) {
+            //Call viewWillAppear only in iOS 13
+            //so that receivedNewMessage should stop calling on AdvanceChatViewController
+            ConversationsManager.sharedConversationsManager.delegate = nil
+            }
     }
 }
