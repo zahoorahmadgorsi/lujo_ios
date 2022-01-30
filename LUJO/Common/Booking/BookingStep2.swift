@@ -124,7 +124,25 @@ class BookingStep2: UIViewController {
     }
 
     @IBAction func chatButton_onClick(_ sender: UIButton) {
-            startChatWithInitialMessage()
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            let initialMessage = """
+            Hi Concierge team,
+            
+            I want to choose one preferred payment method, can you please assist me?
+            
+            \(userFirstName)
+            """
+            
+            let viewController = AdvanceChatViewController()
+            viewController.product = Product(id: -1 , type: "aviation" , name: "Choose preferred payment method")
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+        } else {
+            showInformationPopup()
+        }
+            //startChatWithInitialMessage()
     }
 }
 
