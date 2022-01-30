@@ -57,7 +57,7 @@ class HotelViewController: UIViewController {
         formatter.dateFormat = "MM/dd/yyyy"
         return formatter
     }()
-    var delegate: ProductDetailDelegate?
+//    var delegate: ProductDetailDelegate?
     
     //MARK:- Life cicyle
 
@@ -157,8 +157,6 @@ class HotelViewController: UIViewController {
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
-//        startChatWithInitialMessage(initialMessage)
-        
         showNetworkActivity()
         CustomRequestAPIManager.shared.findHotel(cityName: cityName, hotelName: hotelNameTextField.text, hotelRadius: String.localizedStringWithFormat("%.0f", distanceSlider.value), checkInDate: checkInDateString, checkOutDate: checkOutDateString, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: lastButton.tag, token: token) { error in
             DispatchQueue.main.async {
@@ -169,19 +167,12 @@ class HotelViewController: UIViewController {
                     return
                 }
 
-                print ("Success: custom request table.")
-//                self.dismiss(animated: true, completion: nil)
-                let viewController = BasicChatViewController()
-    //            viewController.chatManager = ChatManager(channelName: channelName)
-    //            ChatManager.sharedChatManager.uniqueChannelName = channelName
+//                print ("Success: custom request table.")
+                let viewController = AdvanceChatViewController()
                 viewController.product = Product(id: -1, type: "travel" , name: "Hotel in " + cityName)
                 viewController.initialMessage = initialMessage
-                viewController.modalPresentationStyle = .overFullScreen
-                self.dismiss(animated: true, completion: {
-                    self.startChatWithInitialMessage(initialMessage)
-//                    self.delegate?.tappedOnBookRequest(viewController: viewController)
-                })
-
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
                 //Zahoor end
                 /*
                 showCardAlertWith(title: "Info", body: "Your request is being processed. We will get back to you shortly. You can follow the status of your request in My bookings.", buttonTitle: "Ok", cancelButtonTitle: nil, buttonTapHandler: {
