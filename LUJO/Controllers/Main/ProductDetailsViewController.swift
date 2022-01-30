@@ -932,16 +932,6 @@ extension ProductDetailsViewController {
                                                            ,"Product Type" : product.type
                                                            ,"ProductId" : product.id])
             }
-
-//            print(initialMessage)
-//            let viewController = BasicChatViewController()
-//            viewController.product = product
-//            viewController.initialMessage = initialMessage
-//            viewController.modalPresentationStyle = .overFullScreen
-//            self.dismiss(animated: true, completion: {
-//                self.delegate?.tappedOnBookRequest(viewController: viewController)
-//            })
-            
             self.startChatWithInitialMessage(initialMessage)
             //Zahoor end
         }
