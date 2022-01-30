@@ -26,7 +26,7 @@ class BookingStep3: UIViewController {
     }
 
     @IBAction func chatButton_onClick(_ sender: UIButton) {
-            startChatWithInitialMessage()
+            //startChatWithInitialMessage()
 //            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
 //            let initialMessage = """
 //            Hi Concierge team,
@@ -40,6 +40,24 @@ class BookingStep3: UIViewController {
 //            viewController.product = Product(id: -1 , type: "Booking Request" , name: "Authorize card and verify booking request")
 //            viewController.initialMessage = initialMessage
 //            self.navigationController?.pushViewController(viewController,animated: true)
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            let initialMessage = """
+            Hi Concierge team,
+
+            I want to authorize card and verify booking request, can you please assist me?
+
+            \(userFirstName)
+            """
+
+            let viewController = AdvanceChatViewController()
+            viewController.product = Product(id: -1 , type: "aviation" , name: "Authorize card and verify booking request")
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+        } else {
+            showInformationPopup()
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
