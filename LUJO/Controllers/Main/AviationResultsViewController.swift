@@ -204,8 +204,7 @@ extension AviationResultsViewController: LiftDetailDelegate {
         }
         
         self.dismiss(animated: true, completion: {
-            //this part isnt tested due to unavailability of CC
-            (viewController as? MainTabBarController)?.selectedIndex = 4
+            (viewController as? MainTabBarController)?.selectedIndex = 4    //it has been given to wishlist zahoor
         })
     }
 
@@ -218,6 +217,7 @@ extension AviationResultsViewController {
             completion(error)
         }
     }
+    
     func save(_ payment: PaymentResult, for aircraft: String, with method: Int, completion: @escaping (Error?) -> Void) {
         guard let currentUser = LujoSetup().getLujoUser() else { return }
         
