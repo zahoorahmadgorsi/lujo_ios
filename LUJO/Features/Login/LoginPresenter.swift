@@ -216,7 +216,8 @@ class LoginPresenter: Presentable, LoginViewResponder {
                                approved: "no",
                                referralCode: "",
                                points: 0,
-                               membershipPlan: nil)
+                               membershipPlan: nil,
+                               sfid: "")
 
         view.showNetworkActivity()
 

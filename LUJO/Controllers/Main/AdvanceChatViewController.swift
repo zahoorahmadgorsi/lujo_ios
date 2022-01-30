@@ -29,6 +29,7 @@ import InputBarAccessoryView
 import Kingfisher
 import TwilioConversationsClient
 import Mixpanel
+import FirebaseCrashlytics
 
 final class AdvanceChatViewController: ConversationViewController {
         
@@ -576,7 +577,7 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
         EEAPIManager().sendRequestForSalesForce(itemId: product.id, channelId: channel.sid ?? "NoChannel"){ customBookingResponse, error in
             self.hideNetworkActivity()
             guard error == nil else {
-                Crashlytics.sharedInstance().recordError(error!)
+                Crashlytics.crashlytics().record(error: error!)
                 BackendError.parsing(reason: "Could not obtain the salesforce_id")
                 return
             }

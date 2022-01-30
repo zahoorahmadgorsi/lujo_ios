@@ -256,7 +256,23 @@ class LiftDetailViewController: UIViewController {
 //    }
 
     @IBAction func showChat(_ sender: Any) {
-        startChatWithInitialMessage()
+        if LujoSetup().getLujoUser()?.membershipPlan != nil {
+            guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
+            let initialMessage = """
+            Hi Concierge team,
+
+            How can i book a flight, can you please assist me?
+
+            \(userFirstName)
+            """
+            let viewController = AdvanceChatViewController()
+            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+        } else {
+            showInformationPopup()
+        }
     }
 
     fileprivate func sendInitialInformation() {
@@ -305,7 +321,11 @@ class LiftDetailViewController: UIViewController {
             Hi there, I'm interested in doing \(returnTrip ? "a round trip" : "one way") flight from \(origin) to \(destination) on \(depart)\(back) with \(currentLift.paxCount) seats. Can we reserve \(currentLift.aircraft.name) for it?
             """
 
-            startChatWithInitialMessage()
+            let viewController = AdvanceChatViewController()
+            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         }
 
         initalMessageSent = true

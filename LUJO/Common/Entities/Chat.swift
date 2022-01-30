@@ -71,7 +71,6 @@ extension Meta {
             sfid = try values.decodeIfPresent(String.self, forKey: .sfid)
             avatar = try values.decodeIfPresent(String.self, forKey: .avatar)
         } catch {
-            Crashlytics.sharedInstance().recordError(error)
             throw error
         }
     }

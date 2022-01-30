@@ -108,6 +108,11 @@
 		8868751027A6A84600563CDC /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868750C27A6A84600563CDC /* ConversationViewController.swift */; };
 		8868751127A6A84600563CDC /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868750D27A6A84600563CDC /* ConversationsViewController.swift */; };
 		8868751227A6A84600563CDC /* AdvanceChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868750E27A6A84600563CDC /* AdvanceChatViewController.swift */; };
+		8868752C27A6BD9C00563CDC /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868752A27A6BD9C00563CDC /* UIBarButtonItem.swift */; };
+		8868752D27A6BD9C00563CDC /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868752B27A6BD9C00563CDC /* AlertService.swift */; };
+		8868754827A6CBCE00563CDC /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868754627A6CBCE00563CDC /* CustomCell.swift */; };
+		8868754927A6CBCE00563CDC /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868754727A6CBCE00563CDC /* CameraInputBarAccessoryView.swift */; };
+		8868754E27A6CC9300563CDC /* CustomMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8868754D27A6CC9300563CDC /* CustomMessagesFlowLayout.swift */; };
 		886FE4372722637A000B9530 /* TextFieldFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886FE4362722637A000B9530 /* TextFieldFilter.xib */; };
 		886FE43F272268E9000B9530 /* YachtLengthFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886FE43E272268E9000B9530 /* YachtLengthFilter.xib */; };
 		886FE44C27226DE4000B9530 /* TextFieldFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886FE44B27226DE4000B9530 /* TextFieldFilter.swift */; };
@@ -505,6 +510,11 @@
 		8868750C27A6A84600563CDC /* ConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		8868750D27A6A84600563CDC /* ConversationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsViewController.swift; sourceTree = "<group>"; };
 		8868750E27A6A84600563CDC /* AdvanceChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvanceChatViewController.swift; sourceTree = "<group>"; };
+		8868752A27A6BD9C00563CDC /* UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
+		8868752B27A6BD9C00563CDC /* AlertService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		8868754627A6CBCE00563CDC /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		8868754727A6CBCE00563CDC /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
+		8868754D27A6CC9300563CDC /* CustomMessagesFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMessagesFlowLayout.swift; sourceTree = "<group>"; };
 		886FE4362722637A000B9530 /* TextFieldFilter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldFilter.xib; sourceTree = "<group>"; };
 		886FE43E272268E9000B9530 /* YachtLengthFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YachtLengthFilter.xib; sourceTree = "<group>"; };
 		886FE44B27226DE4000B9530 /* TextFieldFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldFilter.swift; sourceTree = "<group>"; };
@@ -1167,6 +1177,15 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		8868754527A6CBCE00563CDC /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8868754627A6CBCE00563CDC /* CustomCell.swift */,
+				8868754727A6CBCE00563CDC /* CameraInputBarAccessoryView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		886FE43527226195000B9530 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
@@ -1435,6 +1454,8 @@
 		9A4313F521BFBBB5004F0AD4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8868754D27A6CC9300563CDC /* CustomMessagesFlowLayout.swift */,
+				8868754527A6CBCE00563CDC /* Chat */,
 				1D7819BA2301CED20044C70B /* Dining Collection */,
 				9A89D3E521C595E8002D249F /* LujoTextField.swift */,
 				9A38EF692253D01F0097BA0B /* DarkActionButton.swift */,
@@ -1511,6 +1532,8 @@
 		9A72C3BF213805FF009FE9E2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8868752B27A6BD9C00563CDC /* AlertService.swift */,
+				8868752A27A6BD9C00563CDC /* UIBarButtonItem.swift */,
 				9A72C3C021380617009FE9E2 /* UIViewController.swift */,
 				886145FC26AC04610023E92E /* UITableView.swift */,
 				9A53A69B2151F78F00AAE322 /* UIView.swift */,
@@ -2247,6 +2270,7 @@
 				9A9EC8AD2253BA2800098E7D /* AviationLegCell.swift in Sources */,
 				9A16408521FB22CA0041FFCE /* CCAPIManager.swift in Sources */,
 				5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */,
+				8868752D27A6BD9C00563CDC /* AlertService.swift in Sources */,
 				9AE0B2AD2123304B00E55E6C /* GoLujoAPIManager.swift in Sources */,
 				9A645BA3226492CD009BF14D /* BookingPriceSummaryView.swift in Sources */,
 				5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */,
@@ -2268,6 +2292,7 @@
 				9A194FEA22901C3300E3DBD1 /* HomeEventSummary.swift in Sources */,
 				9A0E58692260D96600F7848A /* BookingSegmentsSummaryView.swift in Sources */,
 				88988675272363F60030613A /* SingleLineCollectionFilter.swift in Sources */,
+				8868754827A6CBCE00563CDC /* CustomCell.swift in Sources */,
 				1D7819BD2301CF140044C70B /* DiningViewCell.swift in Sources */,
 				1D3E09D722D4C33E0051BDBC /* NoSelectTextView.swift in Sources */,
 				1D81515722DE442E00B203D8 /* HomeSpecialEventSummary.swift in Sources */,
@@ -2315,6 +2340,7 @@
 				9A091E0421EC458200B0B5E6 /* PaymentController.swift in Sources */,
 				9AD6EABA21E3B5C800B695A3 /* CreditCardCell.swift in Sources */,
 				9AF422692265EE62003CE562 /* LujoInsetLabel.swift in Sources */,
+				8868752C27A6BD9C00563CDC /* UIBarButtonItem.swift in Sources */,
 				9A40F62A218600FE0038D0C4 /* AviationEmptyResultsView.swift in Sources */,
 				9ABAAC9022560FF300C756A3 /* UIColor.swift in Sources */,
 				88C083C92635CCB400204475 /* WishListViewController.swift in Sources */,
@@ -2334,6 +2360,7 @@
 				8868751227A6A84600563CDC /* AdvanceChatViewController.swift in Sources */,
 				9A091E0021EC2CEA00B0B5E6 /* PaymentConfiguration.swift in Sources */,
 				9A64764621F9BF6100EB93C4 /* BAFlights.swift in Sources */,
+				8868754927A6CBCE00563CDC /* CameraInputBarAccessoryView.swift in Sources */,
 				9A762356212BB80300328F74 /* Trie.swift in Sources */,
 				9A53A6A52152085E00AAE322 /* AviationProtocols.swift in Sources */,
 				1DFE1AC92349FEFD0025410D /* RestaurantListViewController.swift in Sources */,
@@ -2455,6 +2482,7 @@
 				9A38EF6E2253D6820097BA0B /* ActionButton.swift in Sources */,
 				88C5EF1326CE01D400052CE5 /* DeeplinkNavigator.swift in Sources */,
 				557BB5EC231599F500744188 /* MainTabBarController.swift in Sources */,
+				8868754E27A6CC9300563CDC /* CustomMessagesFlowLayout.swift in Sources */,
 				888A307926461984008754AD /* PreferencesAPIManager.swift in Sources */,
 				880B9B0B255840C10070D7CD /* Villa.swift in Sources */,
 				1D88012C233E49630039DEA6 /* DiningCategorySlider.swift in Sources */,

@@ -116,8 +116,7 @@ class RestaurantRequestReservationViewController: UIViewController {
             
             if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
                 self.dismiss(animated: true) {
-                    presentingViewController.startChatWithInitialMessage(initialMessage)
-//                    presentingViewController.sendInitialInformation(initialMsg: initialMessage)
+                    presentingViewController.sendInitialInformation(initialMsg: initialMessage)
                 }
             }
             

@@ -16,6 +16,22 @@ extension String {
     mutating func capitalizeAllFirstLetters() {
         self = capitalizingAllFirstLetters()
     }
+    
+    func isHtml() -> Bool {
+        let validateTest = NSPredicate(format:"SELF MATCHES %@", "<[a-z][\\s\\S]*>")
+        return validateTest.evaluate(with: self)
+    }
+    
+    func parseHTML() -> NSAttributedString{
+        let data = self.data(using: .utf8)!
+        if let attributedString = try? NSAttributedString(
+            data: data,
+            options: [.documentType: NSAttributedString.DocumentType.html],
+            documentAttributes: nil){
+            return attributedString.trailingNewlineChopped
+        }
+        return NSMutableAttributedString()
+    }
 }
 
 extension String {
@@ -123,5 +139,16 @@ extension String {
         dateFormatter.dateFormat = "h:mm a"
         let Date12 = dateFormatter.string(from: date!)
         return Date12
+    }
+}
+
+extension NSAttributedString {
+    //truncating \n from the end
+    var trailingNewlineChopped: NSAttributedString {
+        if self.string.hasSuffix("\n") {
+            return self.attributedSubstring(from: NSMakeRange(0, self.length - 1))
+        } else {
+            return self
+        }
     }
 }

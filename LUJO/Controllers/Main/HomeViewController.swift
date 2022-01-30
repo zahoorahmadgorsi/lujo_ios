@@ -540,7 +540,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
         }else{
             let viewController = HotelViewController.instantiate()
-            viewController.delegate = self
             self.present(viewController, animated: true, completion: nil)
         }
     }

@@ -52,6 +52,7 @@ class LujoUser: Equatable, Codable {
     var referralCode: String
     var points: Int
     var membershipPlan: Membership?
+    var sfid: String
 
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
@@ -66,6 +67,7 @@ class LujoUser: Equatable, Codable {
         case referralCode = "referral_code"
         case points
         case membershipPlan = "membership_plan"
+        case sfid
     }
 
     func getLoginUser() -> LoginUser {
@@ -76,7 +78,7 @@ class LujoUser: Equatable, Codable {
                          approved: approved == "yes")
     }
     
-    init(id: Int, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: String, referralCode: String, points: Int, membershipPlan: Membership?) {
+    init(id: Int, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: String, referralCode: String, points: Int, membershipPlan: Membership?, sfid:String) {
         self.id = id
         self.title = title
         self.firstName = firstName
@@ -90,6 +92,7 @@ class LujoUser: Equatable, Codable {
         self.referralCode = referralCode
         self.points = points
         self.membershipPlan = membershipPlan
+        self.sfid = sfid
     }
     
     static func == (lhs: LujoUser, rhs: LujoUser) -> Bool {
@@ -111,7 +114,8 @@ struct LujoUserProfile: Codable {
     let referralCode: String
     let points: Int
     let membershipPlan: Membership?
-
+    var sfid: String
+    
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
         case baroque_id
@@ -125,6 +129,7 @@ struct LujoUserProfile: Codable {
         case referralCode = "referral_code"
         case points
         case membershipPlan = "membership_plan"
+        case sfid
     }
 }
 
