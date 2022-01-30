@@ -13,6 +13,7 @@ import CoreLocation
 import Intercom
 import Kingfisher
 import Mixpanel
+import TwilioConversationsClient
 
 enum HomeElementType: Int {
     case events, experiences
@@ -137,7 +138,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        ConversationsManager.sharedConversationsManager.delegate = self
 //        naHUD.textLabel.text = "Loading Information"
         featured.overlay = true
         featured.delegate = self
@@ -169,10 +171,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let imgChat  = UIImage(named: "chatList")!
         let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
         let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
-//        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
-//        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch ]
-        navigationItem.rightBarButtonItems = [btnCallToAction, btnSearch ]
-        
+        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
+        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]   //order is first second and third
+
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
         noNearbyEventsContainerView.isHidden = true
@@ -288,6 +289,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         startPauseAnimation(isPausing: true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showBadgeValue()
+    }
+
     //this method will fetch all user preferences from the server
     @objc func getAllUserPreferences() {
         self.showNetworkActivity()
@@ -489,11 +495,18 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBAction func btnChatTapped(_ sender: Any) {
         Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
-        let viewController = ChatListViewController.instantiate()
-//        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-//        self.present(navViewController, animated: true, completion: nil)
-        self.present(viewController, animated: true, completion: nil)
+        let viewController = ConversationsViewController.instantiate()
+        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+        if #available(iOS 13.0, *) {
+            let controller = navViewController.topViewController
+            // Modal Dismiss iOS 13 onward
+            controller?.presentationController?.delegate = self
+        }
+        //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+        navViewController.presentationController?.delegate = self
+        self.present(navViewController, animated: true, completion: nil)
     }
+
     //MARK:- Custom request actions
     @IBAction func findTableButton_onClick(_ sender: Any) {
         self.tabBarController?.selectedIndex = 1
@@ -1255,6 +1268,16 @@ extension HomeViewController {
         }
     }
 
+    @objc func showBadgeValue() {
+        ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
+        print("Twilio: showBadgeValue on homeview controller:\(count)")
+        //setting the badge value
+        let rightBarButtons = self.navigationItem.rightBarButtonItems
+        let lastBarButton = rightBarButtons?.first
+        lastBarButton?.setBadge(text: count == 0 ? "" : String(count))  //show empty string if count is zero
+        })
+    }
+
 }
 
 // B1 - 1
@@ -1289,6 +1312,10 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     // B1 - 3
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 //        return nil
+        //Assigning conversation manager to homeviewController so that now incase of new chat message homeview controller would be called and new message badge may show appropriately
+        ConversationsManager.sharedConversationsManager.delegate = self
+        showBadgeValue()
+
         // B2 - 17
 //        We are preparing the properties to initialize an instance of Animator. If it fails, return nil to use default animation. Then assign it to the animator instance that we just created.
         guard let secondViewController = dismissed as? ProductDetailsViewController,
@@ -1311,17 +1338,34 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-//extension HomeViewController: UINavigationControllerDelegate{
-//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
-//    {
-//        switch operation {
-//            case .push:
-//                return animationController(forPresented: toVC , presenting: fromVC, source: fromVC)
-//            case .pop:
-//                return animationController(forDismissed: fromVC)
-//            default:
-//                return nil
-//        }
-//        
-//    }
-//}
+extension HomeViewController: UIAdaptivePresentationControllerDelegate {
+    // Only called when the sheet is dismissed by DRAGGING as well as when tapped on cross button.
+    public func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+    if #available(iOS 13, *) {
+        //Call viewWillAppear only in iOS 13
+        ConversationsManager.sharedConversationsManager.delegate = self
+    }
+    showBadgeValue()
+    }
+}
+
+extension HomeViewController:ConversationsManagerDelegate{
+
+//    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) {}
+
+func reloadMessages() {
+print("Twilio: reloadMessages")
+}
+
+func receivedNewMessage(message: TCHMessage, conversation: TCHConversation){
+showBadgeValue()
+//        return nil
+}
+
+func channelJoined(channel: TCHConversation) {
+print("Twilio: channelJoined")
+}
+
+func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
+}
+}
