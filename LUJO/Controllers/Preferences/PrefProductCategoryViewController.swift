@@ -388,7 +388,7 @@ class PrefProductCategoryViewController: UIViewController {
                     GoLujoAPIManager().setYachtLength(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not set the yacht length preferences")
                             completion(nil, error)
                             return
                         }

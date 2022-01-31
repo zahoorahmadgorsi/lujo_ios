@@ -205,7 +205,7 @@ class TwoSliderPrefViewController: UIViewController {
                     }
                     self.navigateToNextVC()
                 } else {
-                    let error = BackendError.parsing(reason: "Could not set the Preferences")
+                    let error = BackendError.parsing(reason: "Could not set the frequency preferences")
                     self.showError(error)
                 }
             }
