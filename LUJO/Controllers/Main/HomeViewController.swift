@@ -33,7 +33,7 @@ struct AirportSuggestion {
     var destination: Airport
 }
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource {
 
     //MARK:- Init
     
@@ -98,6 +98,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                                             forCellWithReuseIdentifier: MainScreenAviationCell.identifier)
         }
     }
+
     
     @IBOutlet weak var currentAviationIndexLabel: UILabel!
     @IBOutlet weak var maxAviationIndexLabel: UILabel!
@@ -795,26 +796,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         aviationCollectionView.reloadData()
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return aviationDataSource.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenAviationCell.identifier, for: indexPath) as! MainScreenAviationCell
-        let model = aviationDataSource[indexPath.row]
-        cell.airportNameLabel.text = "Fly to \(model.destination.country.name)"
-        cell.airportShortTitleLabel.text = model.destination.city
-        cell.airportLongTitleLabel.text = model.destination.name
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = aviationDataSource[indexPath.row]
-        let navigationController = self.tabBarController!.viewControllers![3] as! UINavigationController
-        let aviationViewController = navigationController.viewControllers[0] as! AviationViewController
-        self.tabBarController?.selectedIndex = 3
-        aviationViewController.destinationAirport = model.destination
-    }
+
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == aviationCollectionView {
@@ -828,10 +810,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             let index = Int(scrollView.contentOffset.x / scrollView.frame.size.width) + 1
             currentAviationIndexLabel.text = String(index)
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width, height: 160)
     }
     
     private var currentLocation: CLLocation? {
@@ -1355,3 +1333,51 @@ print("Twilio: channelJoined")
 func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
 }
 }
+
+
+extension HomeViewController : UICollectionViewDelegateFlowLayout{
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)  //left inset mean left of very first item of the collection.
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        width = 414 - 32 (UIScreen.main.bounds.size.width - 32)
+        print("UIScreen.main.bounds.size.width:\(UIScreen.main.bounds.size.width)")
+        return CGSize(width: UIScreen.main.bounds.size.width - 32 , height: 210) //-32 is the left right margin of 16 + 16
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
+    }
+}
+
+
+extension HomeViewController : UICollectionViewDelegate{
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return aviationDataSource.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenAviationCell.identifier, for: indexPath) as! MainScreenAviationCell
+        let model = aviationDataSource[indexPath.row]
+        cell.airportNameLabel.text = "Fly to \(model.destination.country.name)"
+        cell.airportShortTitleLabel.text = model.destination.city
+        cell.airportLongTitleLabel.text = model.destination.name
+        cell.viewMain.clipsToBounds = true  //to make on next line round corner work
+        cell.viewMain.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: 12.0)
+        
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = aviationDataSource[indexPath.row]
+        let navigationController = self.tabBarController!.viewControllers![3] as! UINavigationController
+        let aviationViewController = navigationController.viewControllers[0] as! AviationViewController
+        self.tabBarController?.selectedIndex = 3
+        aviationViewController.destinationAirport = model.destination
+    }
+}
+
+

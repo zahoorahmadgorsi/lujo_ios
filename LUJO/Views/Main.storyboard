@@ -1540,10 +1540,10 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="1780"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQV-I8-dS9" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3207.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3257.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-94-B9B">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3207.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3257.5"/>
                                                 <subviews>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mL5-em-HIW">
                                                         <rect key="frame" x="0.0" y="-220" width="414" height="220"/>
@@ -2748,16 +2748,13 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-tC-X0r">
-                                                        <rect key="frame" x="0.0" y="2525.5" width="414" height="192"/>
+                                                        <rect key="frame" x="0.0" y="2525.5" width="414" height="242"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xce-M1-HfE">
-                                                                <rect key="frame" x="0.0" y="16" width="414" height="160"/>
+                                                                <rect key="frame" x="0.0" y="16" width="398" height="210"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_aviationSlider" translatesAutoresizingMaskIntoConstraints="NO" id="nBz-iZ-iWS">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
-                                                                    </imageView>
                                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O5m-3h-6V4">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="210"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="T04-yV-Ca7">
                                                                             <size key="itemSize" width="50" height="50"/>
@@ -2772,7 +2769,7 @@
                                                                         </connections>
                                                                     </collectionView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Wg-SB-BET">
-                                                                        <rect key="frame" x="278" y="74" width="120" height="12"/>
+                                                                        <rect key="frame" x="262" y="99" width="120" height="12"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESY-aJ-ylg">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="10" height="12"/>
@@ -2864,12 +2861,8 @@
                                                                     <constraint firstItem="0Wg-SB-BET" firstAttribute="centerY" secondItem="xce-M1-HfE" secondAttribute="centerY" id="5wx-s0-zsL"/>
                                                                     <constraint firstAttribute="bottom" secondItem="O5m-3h-6V4" secondAttribute="bottom" id="FtK-Dh-qe9"/>
                                                                     <constraint firstAttribute="trailing" secondItem="0Wg-SB-BET" secondAttribute="trailing" constant="16" id="FuZ-gt-Uku"/>
-                                                                    <constraint firstAttribute="height" constant="160" id="JbH-b5-gUz"/>
-                                                                    <constraint firstItem="nBz-iZ-iWS" firstAttribute="leading" secondItem="xce-M1-HfE" secondAttribute="leading" id="Ydl-DV-PcK"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="nBz-iZ-iWS" secondAttribute="bottom" id="iSj-vx-yAf"/>
+                                                                    <constraint firstAttribute="height" constant="210" id="JbH-b5-gUz"/>
                                                                     <constraint firstItem="O5m-3h-6V4" firstAttribute="leading" secondItem="xce-M1-HfE" secondAttribute="leading" id="lUz-kq-zK2"/>
-                                                                    <constraint firstItem="nBz-iZ-iWS" firstAttribute="top" secondItem="xce-M1-HfE" secondAttribute="top" id="njR-jK-U86"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="nBz-iZ-iWS" secondAttribute="trailing" id="uzQ-cl-Ysr"/>
                                                                     <constraint firstItem="O5m-3h-6V4" firstAttribute="top" secondItem="xce-M1-HfE" secondAttribute="top" id="xuH-Vs-PyD"/>
                                                                 </constraints>
                                                             </view>
@@ -2877,13 +2870,13 @@
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="xce-M1-HfE" secondAttribute="bottom" constant="16" id="8Lq-oa-Q1a"/>
-                                                            <constraint firstItem="xce-M1-HfE" firstAttribute="leading" secondItem="Ayy-tC-X0r" secondAttribute="leading" id="wFS-40-QTJ"/>
+                                                            <constraint firstItem="xce-M1-HfE" firstAttribute="leading" secondItem="Ayy-tC-X0r" secondAttribute="leading" id="cGI-2m-mud"/>
+                                                            <constraint firstAttribute="trailing" secondItem="xce-M1-HfE" secondAttribute="trailing" constant="16" id="mtf-bL-pHX"/>
                                                             <constraint firstItem="xce-M1-HfE" firstAttribute="top" secondItem="Ayy-tC-X0r" secondAttribute="top" constant="16" id="yhu-MC-npe"/>
-                                                            <constraint firstAttribute="trailing" secondItem="xce-M1-HfE" secondAttribute="trailing" id="zue-VL-1Ey"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpT-Py-B9W">
-                                                        <rect key="frame" x="0.0" y="2717.5" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="2767.5" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WVJ-2K-JM9">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2949,14 +2942,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rH6-PR-1o6" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="2781.5" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="2831.5" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="W4w-V0-fdT"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Bz-tS-yAL">
-                                                        <rect key="frame" x="0.0" y="2953.5" width="414" height="234"/>
+                                                        <rect key="frame" x="0.0" y="3003.5" width="414" height="234"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZBv-V4-hkh" customClass="HomeSpecialEventSummary" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="32" width="382" height="178"/>
@@ -2975,7 +2968,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eHi-xM-Dno">
-                                                        <rect key="frame" x="0.0" y="3187.5" width="414" height="20"/>
+                                                        <rect key="frame" x="0.0" y="3237.5" width="414" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="iKR-4l-RuN"/>
@@ -2993,7 +2986,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnF-XJ-t3F">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3207.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3257.5"/>
                                         <color key="backgroundColor" white="0.070000000000000007" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -8541,7 +8534,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="225.5" height="30"/>
+            <size key="intrinsicContentSize" width="253.5" height="30"/>
         </designable>
     </designables>
     <resources>
@@ -8576,7 +8569,6 @@ New York, NY 10011 USA</string>
         <image name="aviation_icon" width="68" height="68"/>
         <image name="aviation_selected" width="20" height="20"/>
         <image name="bathroom_icon" width="15.5" height="13.5"/>
-        <image name="bg_aviationSlider" width="414" height="150"/>
         <image name="bookings_placeholder" width="140" height="140"/>
         <image name="calendar_home" width="12" height="16"/>
         <image name="calendar_home_white" width="12" height="16"/>

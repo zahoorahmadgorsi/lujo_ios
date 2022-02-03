@@ -16,4 +16,7 @@ class MainScreenAviationCell: UICollectionViewCell {
     @IBOutlet weak var airportShortTitleLabel: UILabel!
     @IBOutlet weak var airportLongTitleLabel: UILabel!
     
+    @IBOutlet weak var viewMain: UIView!
+    @IBOutlet weak var imgMainView: UIImageView!
+    
 }
