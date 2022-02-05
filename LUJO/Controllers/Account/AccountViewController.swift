@@ -100,7 +100,8 @@ class AccountViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationItem.title = "My Account"
+//        navigationItem.title = "My Account"
+        self.navigationController?.isNavigationBarHidden = true
         lujoCreditsLabel.text = "\(user.points)"
         activateKeyboardManager()
         setupUserImage()

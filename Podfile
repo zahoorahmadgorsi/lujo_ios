@@ -15,4 +15,6 @@ target 'LUJO' do
   # For Analytics without IDFA collection capability, use this pod instead
   # pod ‘Firebase/AnalyticsWithoutAdIdSupport’
   pod 'Firebase/Crashlytics'
+  pod 'SideMenu'
+
 end

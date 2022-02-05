@@ -7,7 +7,6 @@ import UserNotifications
 import Firebase
 import Mixpanel
 import OneSignal
-//import Delighted
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -17,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var isBackground: Bool!
 
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        
         isBackground = false
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -41,11 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if let userId = LujoSetup().getLujoUser()?.id {
                     removePushToken(userId: userId)
                 }
-                
                 UserDefaults.standard.set(true, forKey: "isFirstTimeLoggedOut")
-                
                 windowRouter.navigate(from: "/", data: [:])
-                
             }
         }
         

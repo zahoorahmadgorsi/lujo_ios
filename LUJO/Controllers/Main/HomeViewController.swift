@@ -13,6 +13,8 @@ import CoreLocation
 import Kingfisher
 import Mixpanel
 import TwilioConversationsClient
+import SideMenu
+
 
 enum HomeElementType: Int {
     case events, experiences
@@ -773,8 +775,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     func presentAccountViewController(_ user: LujoUser) {
+        
         let viewController = AccountViewController.instantiate(user: user)
-        self.navigationController?.pushViewController(viewController, animated: true)
+//        self.navigationController?.pushViewController(viewController, animated: true)
+        let leftMenuNavigationController = SideMenuNavigationController(rootViewController: viewController)
+        leftMenuNavigationController.leftSide = true
+        leftMenuNavigationController.menuWidth = 300.0
+        leftMenuNavigationController.presentationStyle = .menuSlideIn
+        present(leftMenuNavigationController, animated: true, completion: nil)
     }
     
     private func fetchAviationDataSource() {
@@ -1379,5 +1387,3 @@ extension HomeViewController : UICollectionViewDelegate{
         aviationViewController.destinationAirport = model.destination
     }
 }
-
-
