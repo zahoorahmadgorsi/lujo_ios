@@ -2074,19 +2074,19 @@
                                                         <rect key="frame" x="0.0" y="244" width="414" height="64"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CZl-IA-1Nm">
-                                                                <rect key="frame" x="16" y="0.0" width="382" height="64"/>
+                                                                <rect key="frame" x="16" y="8" width="382" height="56"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bI4-yH-NH1">
-                                                                        <rect key="frame" x="16" y="8" width="350" height="48"/>
+                                                                        <rect key="frame" x="16" y="0.0" width="350" height="56"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unfortunately, we could not find any events in your current location. Please submit a custom request via chat." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcp-Kh-xFB">
-                                                                                <rect key="frame" x="0.0" y="4.5" width="277" height="39.5"/>
+                                                                                <rect key="frame" x="0.0" y="8.5" width="277" height="39.5"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dj-ab-h5l">
-                                                                                <rect key="frame" x="285" y="16" width="65" height="16"/>
+                                                                                <rect key="frame" x="285" y="20" width="65" height="16"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                                 <state key="normal" title="DISMISS " image="ic_close">
                                                                                     <color key="titleColor" name="White Text"/>
@@ -2100,9 +2100,9 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" red="0.1764705882352941" green="0.1764705882352941" blue="0.1764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
-                                                                    <constraint firstItem="bI4-yH-NH1" firstAttribute="top" secondItem="CZl-IA-1Nm" secondAttribute="top" constant="8" id="fh8-Gv-ZV3"/>
+                                                                    <constraint firstItem="bI4-yH-NH1" firstAttribute="top" secondItem="CZl-IA-1Nm" secondAttribute="top" id="fh8-Gv-ZV3"/>
                                                                     <constraint firstItem="bI4-yH-NH1" firstAttribute="leading" secondItem="CZl-IA-1Nm" secondAttribute="leading" constant="16" id="tqE-Xf-yG5"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="bI4-yH-NH1" secondAttribute="bottom" constant="8" id="tz1-WF-SoB"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="bI4-yH-NH1" secondAttribute="bottom" id="tz1-WF-SoB"/>
                                                                     <constraint firstAttribute="trailing" secondItem="bI4-yH-NH1" secondAttribute="trailing" constant="16" id="yEl-nl-XDZ"/>
                                                                 </constraints>
                                                                 <userDefinedRuntimeAttributes>
@@ -2114,11 +2114,11 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
+                                                            <constraint firstItem="CZl-IA-1Nm" firstAttribute="top" secondItem="lOI-Rc-Yfq" secondAttribute="top" constant="8" id="03H-C9-pyb"/>
                                                             <constraint firstAttribute="height" constant="64" id="E0r-bJ-DaR"/>
                                                             <constraint firstItem="CZl-IA-1Nm" firstAttribute="leading" secondItem="lOI-Rc-Yfq" secondAttribute="leading" constant="16" id="JUQ-ox-x1W"/>
                                                             <constraint firstAttribute="trailing" secondItem="CZl-IA-1Nm" secondAttribute="trailing" constant="16" id="WZp-Iz-voo"/>
                                                             <constraint firstAttribute="bottom" secondItem="CZl-IA-1Nm" secondAttribute="bottom" id="dig-Mn-FVb"/>
-                                                            <constraint firstItem="CZl-IA-1Nm" firstAttribute="top" secondItem="lOI-Rc-Yfq" secondAttribute="top" id="f21-lZ-y3E"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS8-a3-gbq">
@@ -8534,7 +8534,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

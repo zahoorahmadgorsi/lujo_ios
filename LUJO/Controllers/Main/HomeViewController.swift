@@ -321,7 +321,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 
         // Create left bar button
         let imgMenu = UIImage(named: "menu_image")
-        let btnMenu = UIBarButtonItem(image: imgMenu,  style: .plain, target: self, action: #selector(fetchAndPresentUserAccount))
+        let btnMenu = UIBarButtonItem(image: imgMenu,  style: .plain, target: self, action: #selector(presentAccountViewController))
         navigationItem.leftBarButtonItems = [btnMenu]
         
         // Create right bar buttons
@@ -738,7 +738,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
     }
     
-    func presentAccountViewController() {
+    @objc func presentAccountViewController() {
         let viewController = AccountViewController.instantiate()
         let leftMenuNavigationController = SideMenuNavigationController(rootViewController: viewController)
         leftMenuNavigationController.leftSide = true
@@ -866,7 +866,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                         UIView.animate(withDuration: animationDuration, animations: {
                             slideViewTo(x: 0)
                         },completion: {_ in
-                            self.fetchAndPresentUserAccount()  //open the profile screen
+                            self.presentAccountViewController()  //open the profile screen
                         })
                         
                     }else{  //swiped from right to left
@@ -1142,10 +1142,6 @@ extension HomeViewController {
                 }
             }
         }
-    }
-    
-    @objc func fetchAndPresentUserAccount() {
-        self.presentAccountViewController()
     }
     
     func loadUserProfile() {
