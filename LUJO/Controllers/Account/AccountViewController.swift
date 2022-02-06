@@ -20,9 +20,8 @@ class AccountViewController: UIViewController {
     class var identifier: String { return "AccountViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(user: LujoUser) -> AccountViewController {
+    class func instantiate() -> AccountViewController {
         let viewController = UIStoryboard.accountNEW.instantiate(identifier) as! AccountViewController
-        viewController.user = user
         return viewController
     }
     
@@ -32,6 +31,7 @@ class AccountViewController: UIViewController {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var userImageView: UIView!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var pictureUpdateLabel: UILabel!
     @IBOutlet weak var lblMyBookings: UILabel!
@@ -65,36 +65,7 @@ class AccountViewController: UIViewController {
         logoutLabel.addGestureRecognizer(logoutTapResponder)
         
         if let user = LujoSetup().getLujoUser(), user.id > 0 {
-//            let person = Person(
-//                name: user.firstName + " " + user.lastName,
-//                email: user.email,
-//                phoneNumber: user.phoneNumber.readableNumber
-//            )
-//
-//            let eligibilityOverrides = EligibilityOverrides(
-////                testMode: true
-//                testMode: false
-//                ,initialDelay: 86400
-//            )
-//
-//            Delighted.survey(delightedID: "mobile-sdk-RuEQ5n7SDsCU6roX", person: person, eligibilityOverrides: eligibilityOverrides , callback: { (status) in
-//                switch status {
-//                case let .failedClientEligibility(status):
-//                    print(status)
-//                    print("Eligibility check failed")
-//                    // Maybe log this?
-//                    // Do any view/screen changes that you need
-//                case let .error(status):
-//                    print(status)
-//                    print("An error occurred")
-//                    // Maybe log this?
-//                case let .surveyClosed(status):
-//                    print(status)
-//                    print("Survey closed")
-//                    // Re-register for keyboard notifications if unregistered
-//                    // Do any view/screen changes that you need
-//                }
-//            })
+            self.user = user
         }
 
     }
@@ -102,11 +73,12 @@ class AccountViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
 //        navigationItem.title = "My Account"
         self.navigationController?.isNavigationBarHidden = true
-        lujoCreditsLabel.text = "\(user.points)"
-        activateKeyboardManager()
-        setupUserImage()
-        setupWelcomeMessage()
         self.tabBarController?.tabBar.isHidden = true
+        if let user = self.user{
+            lujoCreditsLabel.text = "\(user.points)"
+            updateUIWithUserInformation()
+        }
+        getUserProfile()    //silently fetch latest user information
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -114,6 +86,37 @@ class AccountViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
 
+    //this method fetches the user information i.e. name, points, dp
+    func getUserProfile() {
+        guard let currentUserToken = LujoSetup().getCurrentUser()?.token else {
+            let error = LoginError.errorLogin(description: "No user is logged in.")
+            self.showError(error)
+            return
+        }
+        
+        GoLujoAPIManager().userProfile(for: currentUserToken) { user, error in
+            guard error == nil else {
+                return
+            }
+            
+            guard let user = user else {
+                let error = LoginError.errorLogin(description: "User information is missing")
+                self.showError(error)
+                return
+            }
+            
+            LujoSetup().store(userInfo: user)
+            self.updateUIWithUserInformation()
+        }
+    }
+
+    
+    func updateUIWithUserInformation(){
+        activateKeyboardManager()
+        setupUserImage()
+        setupWelcomeMessage()
+    }
+    
     fileprivate func setupUserImage() {
         if UIDevice.isiPhone5 || UIDevice.isIphone6Zoomed {
             stackView.spacing = 16
@@ -139,7 +142,7 @@ class AccountViewController: UIViewController {
                 }
             })
         }
-        
+        self.userImageView.addViewBorder(borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: self.userImageView.frame.height / 2)
         userImage.setRounded()
     }
     

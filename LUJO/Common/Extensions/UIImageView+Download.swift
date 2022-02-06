@@ -42,6 +42,7 @@ extension UIImageView {
 }
 
 extension UIImage {
+    
     public enum ImageFormat {
         case pngFormat
         case jpegFormat(CGFloat)

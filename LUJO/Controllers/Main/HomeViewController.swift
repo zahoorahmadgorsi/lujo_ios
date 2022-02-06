@@ -159,22 +159,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         setupNavigationBar()
         updateUI()
         setupTapGesturesForEventsAndExperiences()
+
         
-//        let searchBarButton = UIButton(type: .system)
-//        searchBarButton.setImage(UIImage(named: "Search Icon White"), for: .normal)
-//        searchBarButton.setTitle("  SEARCH", for: .normal)
-//        searchBarButton.addTarget(self, action: #selector(searchBarButton_onClick(_:)), for: .touchUpInside)
-//        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-//        searchBarButton.sizeToFit()
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
-        
-        let imgSearch    = UIImage(named: "Search Icon White")!
-        let imgCallToActions  = UIImage(named: "ctas")!
-        let imgChat  = UIImage(named: "chatList")!
-        let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
-        let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
-        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
-        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]   //order is first second and third
 
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
@@ -249,34 +235,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     override func viewWillAppear(_ animated: Bool) {
         activateKeyboardManager()
         
-        if let imageView = self.navigationItem.leftBarButtonItem?.customView as? UIImageView {
-            if
-                let avatarURLString = LujoSetup().getLujoUser()?.avatar,
-                let url = URL(string: avatarURLString)
-            {
-                print("URL:\(url)")
-                imageView.kf.setImage(with: url, placeholder: UIImage(named: "User Anonimous Image"), completionHandler: { result in
-                    switch result {
-                    case .success(_):
-                        break
-                    case .failure(_):
-                        DispatchQueue.main.async {
-                            imageView.image = UIImage(named: "User Anonimous Image")
-                            imageView.tintColor = UIColor.gray
-                        }
-                    }
-                })
-            } else {
-                imageView.image = UIImage(named: "User Anonimous Image")
-                imageView.tintColor = UIColor.gray
-            }
-        }
-        
         if !UserDefaults.standard.bool(forKey: "showWelcome") {
             dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             hideUnhideRightBarButtons()
-            
         }
         
         // Check for location permission.
@@ -356,18 +318,20 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
         navigationController?.navigationBar.isTranslucent = false
+
+        // Create left bar button
+        let imgMenu = UIImage(named: "menu_image")
+        let btnMenu = UIBarButtonItem(image: imgMenu,  style: .plain, target: self, action: #selector(fetchAndPresentUserAccount))
+        navigationItem.leftBarButtonItems = [btnMenu]
         
-        // Create right bar button
-        let profileImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.layer.cornerRadius = 18
-        profileImageView.layer.masksToBounds = true
-        profileImageView.isUserInteractionEnabled = true
-        profileImageView.clipsToBounds = true
-        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(fetchAndPresentUserAccount)))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
-        self.navigationItem.leftBarButtonItem?.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        self.navigationItem.leftBarButtonItem?.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        // Create right bar buttons
+        let imgSearch    = UIImage(named: "Search Icon White")!
+        let imgCallToActions  = UIImage(named: "ctas")!
+        let imgChat  = UIImage(named: "chatList")!
+        let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
+        let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
+        let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
+        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]   //order is first second and third
     }
     
     @IBAction func enableLocationButton_onClick(_ sender: Any) {
@@ -774,10 +738,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
     }
     
-    func presentAccountViewController(_ user: LujoUser) {
-        
-        let viewController = AccountViewController.instantiate(user: user)
-//        self.navigationController?.pushViewController(viewController, animated: true)
+    func presentAccountViewController() {
+        let viewController = AccountViewController.instantiate()
         let leftMenuNavigationController = SideMenuNavigationController(rootViewController: viewController)
         leftMenuNavigationController.leftSide = true
         leftMenuNavigationController.menuWidth = 300.0
@@ -1183,20 +1145,7 @@ extension HomeViewController {
     }
     
     @objc func fetchAndPresentUserAccount() {
-        showNetworkActivity()
-        self.navigationItem.leftBarButtonItem?.isEnabled = false
-        getUserProfile { user, error in
-            self.hideNetworkActivity()
-            self.navigationItem.leftBarButtonItem?.isEnabled = true
-            
-            if let error = error {
-                self.showError(error)
-            } else {
-                if let user = user {
-                    self.presentAccountViewController(user)
-                }
-            }
-        }
+        self.presentAccountViewController()
     }
     
     func loadUserProfile() {
