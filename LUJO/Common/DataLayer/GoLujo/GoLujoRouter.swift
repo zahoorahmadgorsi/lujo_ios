@@ -62,6 +62,7 @@ enum GoLujoRouter: URLRequestConvertible {
     }
 
     func asURLRequest() throws -> URLRequest {
+        
         var method: HTTPMethod {
             return getHTTPMethod()
         }
@@ -78,6 +79,9 @@ enum GoLujoRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        if let token = LujoSetup().getCurrentUser()?.token{
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         switch self {
         case .registerForPush: fallthrough
@@ -86,7 +90,7 @@ enum GoLujoRouter: URLRequestConvertible {
         default:
             break
         }
-        
+
         return urlRequest
     }
 

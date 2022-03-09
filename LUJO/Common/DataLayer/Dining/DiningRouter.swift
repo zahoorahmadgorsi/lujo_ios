@@ -36,8 +36,8 @@ enum DiningRouter: URLRequestConvertible {
 
     case home(String)
     case search(String, String?, Int?, Double?, Double?)
-    case events(String, Bool)
-    case experiences(String)
+//    case events(String, Bool)
+//    case experiences(String)
     case salesforce(Int, String, String, Int, String)
 
     func asURLRequest() throws -> URLRequest {
@@ -67,10 +67,10 @@ enum DiningRouter: URLRequestConvertible {
             return .get
         case .search:
             return .get
-        case .events:
-            return .get
-        case .experiences:
-            return .get
+//        case .events:
+//            return .get
+//        case .experiences:
+//            return .get
         case .salesforce:
             return .post
         }
@@ -106,19 +106,19 @@ enum DiningRouter: URLRequestConvertible {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "longitude", value: "\(longitude)"))
             }
 
-        case let .events(token, past):
-            newURLComponents.path.append("/events")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-            if past {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "show_past", value: "true"))
-            }
-        case let .experiences(token):
-            newURLComponents.path.append("/experiences")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
+//        case let .events(token, past):
+//            newURLComponents.path.append("/events")
+//            newURLComponents.queryItems = [
+//                URLQueryItem(name: "token", value: token),
+//            ]
+//            if past {
+//                newURLComponents.queryItems?.append(URLQueryItem(name: "show_past", value: "true"))
+//            }
+//        case let .experiences(token):
+//            newURLComponents.path.append("/experiences")
+//            newURLComponents.queryItems = [
+//                URLQueryItem(name: "token", value: token),
+//            ]
         case .salesforce:
             newURLComponents.path.append("/request")
         }
@@ -139,10 +139,10 @@ enum DiningRouter: URLRequestConvertible {
             return nil
         case .search:
             return nil
-        case .events:
-            return nil
-        case .experiences:
-            return nil
+//        case .events:
+//            return nil
+//        case .experiences:
+//            return nil
         case let .salesforce(itemId, date, time, persons, token):
             return getSalesforceDataAsJSONData(itemId: itemId, date: date, time: time, persons: persons, token: token)
         }
