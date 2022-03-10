@@ -96,40 +96,40 @@ class ProductsViewController: UIViewController {
         
         updateContentUI()
         
-        switch category {
-            case .event: fallthrough
-            case .experience:
-                //Loading the preferences related to dining only very first time
-                if !UserDefaults.standard.bool(forKey: "isEventPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
-                }
-            case .villa:
-                //Loading the preferences related to dining only very first time
-                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
-                }
-            case .yacht:
-                //Loading the preferences related to dining only very first time
-                if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isYachtPreferencesAlreadyShown")
-                }
-            case .gift:
-                //Loading the preferences related to dining only very first time
-                if !UserDefaults.standard.bool(forKey: "isGiftPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isGiftPreferencesAlreadyShown")
-                }
-            default:
-                print("No preferences to load")
-       
-        }
+//        switch category {
+//            case .event: fallthrough
+//            case .experience:
+//                //Loading the preferences related to dining only very first time
+//                if !UserDefaults.standard.bool(forKey: "isEventPreferencesAlreadyShown")  {
+//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
+//                }
+//            case .villa:
+//                //Loading the preferences related to dining only very first time
+//                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
+//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
+//                }
+//            case .yacht:
+//                //Loading the preferences related to dining only very first time
+//                if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
+//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isYachtPreferencesAlreadyShown")
+//                }
+//            case .gift:
+//                //Loading the preferences related to dining only very first time
+//                if !UserDefaults.standard.bool(forKey: "isGiftPreferencesAlreadyShown")  {
+//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isGiftPreferencesAlreadyShown")
+//                }
+//            default:
+//                print("No preferences to load")
+//       
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

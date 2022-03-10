@@ -80,11 +80,11 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
         showSearchOptions(for: .oneWay)
         
         //Loading the preferences related to dining only very first time
-        if !UserDefaults.standard.bool(forKey: "isAviationPreferencesAlreadyShown")  {
-            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
-            self.navigationController?.pushViewController(viewController, animated: true)
-            UserDefaults.standard.set(true, forKey: "isAviationPreferencesAlreadyShown")
-        }
+//        if !UserDefaults.standard.bool(forKey: "isAviationPreferencesAlreadyShown")  {
+//            let viewController = PrefCollectionsViewController.instantiate(prefType: .aviation, prefInformationType: .aviationHaveCharteredBefore)
+//            self.navigationController?.pushViewController(viewController, animated: true)
+//            UserDefaults.standard.set(true, forKey: "isAviationPreferencesAlreadyShown")
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

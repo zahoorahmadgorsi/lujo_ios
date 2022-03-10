@@ -44,7 +44,6 @@
 		1DBC9C02236567C200F0F133 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC9C01236567C100F0F133 /* Assets.xcassets */; };
 		1DBC9C042365B7CA00F0F133 /* PaymentAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC9C032365B7CA00F0F133 /* PaymentAPIManager.swift */; };
 		1DBC9C062365B97B00F0F133 /* PaymentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC9C052365B97A00F0F133 /* PaymentRouter.swift */; };
-		1DD5D00523996A310047D415 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DD5D00423996A310047D415 /* GoogleService-Info.plist */; };
 		1DD6AB05233CF923000A6131 /* ChatSyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6AB04233CF922000A6131 /* ChatSyling.swift */; };
 		1DD785B823749B27001A9CF9 /* PayAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD785B623749B27001A9CF9 /* PayAlertView.xib */; };
 		1DD785B923749B27001A9CF9 /* PayAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD785B723749B27001A9CF9 /* PayAlertView.swift */; };
@@ -1926,7 +1925,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Baroque Access";
 				TargetAttributes = {
 					88029BA02633BF42003F1E77 = {
@@ -2054,7 +2053,6 @@
 				5527644723195CF800380BEB /* AccountNEW.storyboard in Resources */,
 				9A53E35B2182065B00594AA6 /* AviationSearchingView.xib in Resources */,
 				888A30432644039D008754AD /* Preferences.storyboard in Resources */,
-				1DD5D00523996A310047D415 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2562,7 +2560,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
@@ -2588,7 +2586,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.5;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2613,7 +2611,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.5;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2785,7 +2783,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.5;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2838,7 +2836,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.5;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3010,8 +3008,8 @@
 				AVIATION_AUTHORISATION_TOKEN = "NzI0ZWM0YjBkOTRmYjNiN8_glYxP5P2QdQdXximXf9vqVOXcH-fgzn9zaksoJCJS3kNBoG3VvyyUcL4cbhMVQTpaUDiWZXVaph_BSWpAYgWod2ep6Fn125y56wCHMG4lPkDjn57-kDE_Xwfe43a5jw==";
 				AVIATION_PRODUCT_NAME = "baroqueaviation-software";
 				AVIATION_SERVER = sandbox.avinode.com;
-				BACKEND_CONNECTION_SCHEME = https;
-				BACKEND_SERVER = api.golujo.com;
+				BACKEND_CONNECTION_SCHEME = http;
+				BACKEND_SERVER = "api-stage.golujo.com";
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CARDCONNECT_API_PASSWORD = testing123;
 				CARDCONNECT_API_USERNAME = testing;
@@ -3039,7 +3037,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;

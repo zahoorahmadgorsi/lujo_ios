@@ -500,14 +500,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBAction func findAHotelButton_onClick(_ sender: Any) {
         //Loading the preferences related to dining only very first time
-        if !UserDefaults.standard.bool(forKey: "isTravelPreferencesAlreadyShown")  {
-            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
-            self.navigationController?.pushViewController(viewController, animated: true)
-            UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
-        }else{
+//        if !UserDefaults.standard.bool(forKey: "isTravelPreferencesAlreadyShown")  {
+//            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
+//            self.navigationController?.pushViewController(viewController, animated: true)
+//            UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
+//        }else{
             let viewController = HotelViewController.instantiate()
             self.present(viewController, animated: true, completion: nil)
-        }
+//        }
     }
     
     @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {
