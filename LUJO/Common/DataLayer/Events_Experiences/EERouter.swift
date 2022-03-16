@@ -59,7 +59,9 @@ enum EERouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-
+        if let token = LujoSetup().getCurrentUser()?.token{
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         return urlRequest
     }
 
@@ -158,24 +160,34 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
             case let .goods(token, term, category_term_id, productId):
                 if (category_term_id ?? 0 > 0){ //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
-                    newURLComponents.path.append("/gifts/per-category")
+                    //newURLComponents.path.append("/gifts/per-category")
+                    newURLComponents.path.append("/gifts")
+                    
+                    if let categoryTermId = category_term_id {
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
+                    }
+                    
+                    
                 }else{
                     newURLComponents.path.append("/gifts")        //its response format is [Product]
                     newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
+                    
+                    newURLComponents.queryItems = [
+                        URLQueryItem(name: "token", value: token),
+                    ]
+                    if let term = term {
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+                    }
+                    if let categoryTermId = category_term_id {
+                        //newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
+                    }
+                    if let id = productId {
+                        newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
+                    }
                 }
             
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token),
-                ]
-                if let term = term {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-                }
-                if let categoryTermId = category_term_id {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
-                }
-                if let id = productId {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
-                }
+                
             case let .yachts(token, term, cityId, productId):
                 newURLComponents.path.append("/yachts")
                 newURLComponents.queryItems = [
@@ -238,7 +250,8 @@ enum EERouter: URLRequestConvertible {
                 ]
                 
                 if (type.equals(rhs: "gift")){
-                    newURLComponents.path.append("/gifts/per-category")
+                    //newURLComponents.path.append("/gifts/per-category")
+                    newURLComponents.path.append("/gifts")
                 }else{
                     newURLComponents.path.append("/per-city")
                     newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))

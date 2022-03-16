@@ -1295,8 +1295,6 @@ extension HomeViewController : UICollectionViewDelegateFlowLayout{
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        width = 414 - 32 (UIScreen.main.bounds.size.width - 32)
-        print("UIScreen.main.bounds.size.width:\(UIScreen.main.bounds.size.width)")
         return CGSize(width: UIScreen.main.bounds.size.width - 32 , height: 210) //-32 is the left right margin of 16 + 16
     }
     

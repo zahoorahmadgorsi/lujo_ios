@@ -133,7 +133,9 @@ enum PreferencesRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-
+        if let token = LujoSetup().getCurrentUser()?.token{
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         return urlRequest
     }
 
@@ -238,15 +240,25 @@ enum PreferencesRouter: URLRequestConvertible {
             newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token),
             ]
-        case .getGiftHabits:        newURLComponents.path.append("/reference/gift-habits")
-        case .getGiftCategories:    newURLComponents.path.append("/reference/gift-categories")
-        case .getGiftPreferences:   newURLComponents.path.append("/reference/gift-preferences")
+        case .getGiftHabits:
+//            newURLComponents.path.append("/reference/gift-habits")
+            newURLComponents.path.append("/gifts/gift-habit")
+        case .getGiftCategories:
+//            newURLComponents.path.append("/reference/gift-categories")
+            newURLComponents.path.append("/reference/gift-categories")
+        case .getGiftPreferences:
+//            newURLComponents.path.append("/reference/gift-preferences")
+            newURLComponents.path.append("/gifts/gift-preference")
         case .setGiftHabits:        fallthrough
         case .setGiftCategories:    fallthrough
         case .setGiftPreferences:   newURLComponents.path.append("/preferences/gift")
-        case .getCuisines:  newURLComponents.path.append("/reference/cuisines")
+        case .getCuisines:
+//            newURLComponents.path.append("/reference/cuisines")
+            newURLComponents.path.append(" /restaurants/cuisine-category")
         case .getOtherInterests:  newURLComponents.path.append("/reference/interests")
-        case .getAviationBeverages:  newURLComponents.path.append("/reference/beverages")
+        case .getAviationBeverages:
+//            newURLComponents.path.append("/reference/beverages")
+            newURLComponents.path.append("/gifts/gift-category")
         case .setAviationHaveCharteredBefore:    fallthrough
         case .setAviationInterestedIn:         fallthrough
         case .setAviationPreferredDestinations: fallthrough
@@ -268,14 +280,26 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setYachtLength: fallthrough
         case .setYachtOtherInterests:   newURLComponents.path.append("/preferences/yacht")
         case .searchRegions:    newURLComponents.path.append("/reference/regions")
-        case .searchDestination:    newURLComponents.path.append("/reference/locations")
+        case .searchDestination:
+//            newURLComponents.path.append("/reference/locations")
+            newURLComponents.path.append("/restaurants/location")
             
-        case .getDiningCuisines:  newURLComponents.path.append("/reference/cuisines")
-        case .getDiningAllergies:  newURLComponents.path.append("/reference/allergies")
-        case .getDiningPreferences:  newURLComponents.path.append("/reference/dining-preferences")
-        case .getDiningTimings:  newURLComponents.path.append("/reference/dining-timings")
+        case .getDiningCuisines:
+//            newURLComponents.path.append("/reference/cuisines")
+            newURLComponents.path.append(" /restaurants/cuisine-category")
+        case .getDiningAllergies:
+            //newURLComponents.path.append("/reference/allergies")
+            newURLComponents.path.append("/restaurants/allergy")
+        case .getDiningPreferences:
+//            newURLComponents.path.append("/reference/dining-preferences")
+            newURLComponents.path.append("/restaurants/dining-preference")
+        case .getDiningTimings:
+            //newURLComponents.path.append("/reference/dining-timings")
+            newURLComponents.path.append("/restaurants/dining-time")
         case .getDiningBeverages:  newURLComponents.path.append("/reference/beverages")
-        case .getDiningSeatings:  newURLComponents.path.append("/reference/seating")
+        case .getDiningSeatings:
+            //newURLComponents.path.append("/reference/seating")
+            newURLComponents.path.append("/restaurants/seating")
         case .setDiningCuisines: fallthrough
         case .setDiningPreferences: fallthrough
         case .setDiningBeverages: fallthrough
@@ -283,8 +307,12 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setDiningTimings: fallthrough
         case .setDiningSeatings: newURLComponents.path.append("/preferences/restaurant")
             
-        case .getEventCategory: newURLComponents.path.append("/reference/event-categories")
-        case .getEventLocation: newURLComponents.path.append("/reference/event-continents")
+        case .getEventCategory:
+//            newURLComponents.path.append("/reference/event-categories")
+            newURLComponents.path.append("/events/event-category")
+        case .getEventLocation:
+//            newURLComponents.path.append("/reference/event-continents")
+            newURLComponents.path.append("/events/event-continent")
         case .setEventCategory: fallthrough
         case .setEventLocation: newURLComponents.path.append("/preferences/event")
             
@@ -308,7 +336,9 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setTravelAllergies: newURLComponents.path.append("/preferences/travel")
         case .setProfilePreferences: newURLComponents.path.append("/users/update-profile-preference")
             
-        case .getVillaDestinations: newURLComponents.path.append("/reference/locations")
+        case .getVillaDestinations:
+//            newURLComponents.path.append("/reference/locations")
+            newURLComponents.path.append("/restaurants/location")
         case .getVillaAmenities: newURLComponents.path.append("/reference/villa-amenities")
         case .getVillaAccomodation: newURLComponents.path.append("/reference/accommodations")
         case .setVillaDestinations: fallthrough

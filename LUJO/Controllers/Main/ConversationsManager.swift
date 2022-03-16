@@ -189,7 +189,8 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                                                        ,"sylvia@baroquetravel.com"
                                                        ,"ej.bobadilla@baroqueaccess.com"
                                                        ,"zahoor.gorsi@gmail.com"
-                                                       ,"zahoor.ahmad@live.com"]
+                                                       ,"zahoor.ahmad@live.com"
+                                                        ,"admin@gmail.com"]
                     for participantEmail in particiapntsEmails{
                         convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
                             if result.isSuccessful == false {

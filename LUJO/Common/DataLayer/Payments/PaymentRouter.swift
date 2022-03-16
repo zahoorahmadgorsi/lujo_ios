@@ -55,7 +55,9 @@ enum PaymentRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        
+        if let token = LujoSetup().getCurrentUser()?.token{
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         return urlRequest
     }
     

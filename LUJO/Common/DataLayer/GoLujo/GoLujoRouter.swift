@@ -192,7 +192,8 @@ enum GoLujoRouter: URLRequestConvertible {
         case .verify:
             newURLComponents.path.append("/users/verify")
         case .requestOTP:
-            newURLComponents.path.append("/users/verify-otp/")
+//            newURLComponents.path.append("/users/verify-otp/")
+            newURLComponents.path.append("/users/generate-otp/")
         case .updatePhoneNumber:
             newURLComponents.path.append("/users/change-phone")
         case .updateDefaults:
