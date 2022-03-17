@@ -203,7 +203,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             update(preloadData)
         } else {
             if LujoSetup().getCurrentUser()?.tokenExpiration ?? Date().timeIntervalSince1970 < Date().addingTimeInterval(5 * 24 * 60 * 60).timeIntervalSince1970 {
-                GoLujoAPIManager.shared.refreashToken { success in
+                GoLujoAPIManager.shared.refreshToken { success in
                     DispatchQueue.main.async {
                         if success {
                             self.loadUserProfile()

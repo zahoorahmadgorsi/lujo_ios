@@ -24,7 +24,7 @@ class GoLujoAPIManager {
 
 extension GoLujoAPIManager {
     
-    func refreashToken(completionHandler: @escaping (Bool) -> Void) {
+    func refreshToken(completionHandler: @escaping (Bool) -> Void) {
         guard let token = LujoSetup().getCurrentUser()?.token else {
             print("ERROR: there is no token")
             completionHandler(false)
