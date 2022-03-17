@@ -90,7 +90,7 @@ enum GoLujoRouter: URLRequestConvertible {
         default:
             break
         }
-
+        print("urlRequest:\(String(describing: urlRequest.url))")
         return urlRequest
     }
 
