@@ -216,7 +216,8 @@ extension GoLujoAPIManager {
                 case 200 ... 299: // Success
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<LUJOTokenReponse>.self, from: response.data!), var currentUser = LujoSetup().getCurrentUser()
                     else {
-                        let errorDescription = "Unable to verify user, plase try again"
+                        //User verification response format is invalid
+                        let errorDescription = "User verification failed, plase contact at support@golujo.com"
                         completionHandler("", LoginError.errorLogin(description: errorDescription))
                         return
                     }
