@@ -300,6 +300,8 @@ extension AdvanceChatViewController: MessagesDisplayDelegate {
             } else {
                 return [.foregroundColor: UIColor.blue]
             }
+//        case .url:
+//            return [.foregroundColor: UIColor.blue]
         default: return MessageLabel.defaultAttributes
         }
     }

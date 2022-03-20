@@ -30,6 +30,7 @@ import TwilioConversationsClient
 import Mixpanel
 import CoreLocation
 
+
 /// A base class for the example controllers
 class ConversationViewController: MessagesViewController, MessagesDataSource {
 
@@ -469,6 +470,9 @@ extension ConversationViewController: MessageLabelDelegate {
     
     func didSelectURL(_ url: URL) {
         print("URL Selected: \(url)")
+//        UIApplication.shared.open(url)    //it will open in phone browser i.e. safari
+        let viewController = WebViewVC.instantiate(url)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func didSelectTransitInformation(_ transitInformation: [String: String]) {
@@ -633,3 +637,6 @@ extension ConversationViewController:CLLocationManagerDelegate{
 //        print("Twilio: location updated = \(locValue.latitude) \(locValue.longitude)")
     }
 }
+
+
+

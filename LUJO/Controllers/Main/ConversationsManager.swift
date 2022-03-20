@@ -8,6 +8,7 @@
 
 import UIKit
 import TwilioConversationsClient
+import Alamofire
 
 protocol ConversationsManagerDelegate: AnyObject {
     func reloadMessages()
@@ -177,25 +178,37 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
                     }
-                    let particiapntsEmails:[String] = ["shujahm@gmail.com"
-                                                       ,"mark.anthony@baroque-group.com"
-                                                       ,"deseriejoy.cruz@baroqueaccess.com"
-                                                       ,"henry@baroqueaccess.com"
-                                                       ,"stuti-kesarwani@baroquetravel.com"
-                                                       ,"request@golujo.com"
-                                                       ,"shirley@baroquetravel.com"
-                                                       ,"clara.plebani@baroquetravel.com"
-                                                       ,"yanquiel@baroquetravel.com"
-                                                       ,"sylvia@baroquetravel.com"
-                                                       ,"ej.bobadilla@baroqueaccess.com"
-                                                       ,"zahoor.gorsi@gmail.com"
-                                                       ,"zahoor.ahmad@live.com"]
-                    for participantEmail in particiapntsEmails{
-                        convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
-                            if result.isSuccessful == false {
-                                print("Twilio: \(participantEmail) could not added.")
+                    if let type = customAttribute["type"] as? String{
+                        print("Twilio: Conversation Type:\(type)")
+                        Alamofire.request(GoLujoRouter.getTwilioParticipants(type))
+                            .responseJSON { response in
+                                guard response.result.error == nil else {
+                                    print("Twilio: Could not get any participant to add into the twilio conversation")
+                                    return
+                                }
+                                if let statusCode = response.response?.statusCode  {
+                                    switch statusCode {
+                                    case 200 ... 299: // Success
+                                        guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self, from: response.data!) else {
+                                            print("Twilio: Response format is different then the expected")
+                                            return
+                                        }
+                                        var participantEmails = result.content
+                                        participantEmails.append("zahoor.gorsi@gmail.com")
+                                        participantEmails.append("zahoor.ahmad@live.com")
+                                        for participantEmail in participantEmails{
+//                                            print(participantEmail)
+                                            convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
+                                                if result.isSuccessful == false {
+                                                    print("Twilio: \(participantEmail) could not added.")
+                                                }
+                                            })
+                                        }
+                                    default: // 500 or bigger, Server Error
+                                        print("Twilio: Received statusCode:\(statusCode)")
+                                    }
+                                }
                             }
-                        })
                     }
                 }
             }else{

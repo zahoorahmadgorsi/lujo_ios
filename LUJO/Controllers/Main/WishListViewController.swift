@@ -424,9 +424,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         }
         
     }
-    
-    
-    
+
     func showNetworkActivity() {
         // Safe guard to that won't display both loaders at same time.
         if !refreshControl.isRefreshing {

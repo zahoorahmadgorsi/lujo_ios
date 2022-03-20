@@ -47,14 +47,15 @@ enum GoLujoRouter: URLRequestConvertible {
     case approved(String)
     case registerForPush(String, String)
     case unregisterForPush(String)
-
+    case getTwilioParticipants(String)
+    
     private func getCategory() -> GoLujoRouterCategory {
         switch self {
         case .createUser, .verify, .requestOTP, .requestLoginOTP, .approved:
             return .creation
         case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword:
             return .update
-        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush:
+        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants:
             return .setup
         case .unregisterForPush:
             return .delete
@@ -115,6 +116,7 @@ enum GoLujoRouter: URLRequestConvertible {
             return .post
         case .approved:
             return .get
+        
         default:
             fatalError("Wrong method category called")
         }
@@ -150,6 +152,8 @@ enum GoLujoRouter: URLRequestConvertible {
         case .countryCodes:
             return .get
         case .registerForPush:
+            return .post
+        case .getTwilioParticipants:
             return .post
         default:
             fatalError("Wrong method category called")
@@ -229,8 +233,10 @@ enum GoLujoRouter: URLRequestConvertible {
             newURLComponents.host = urlData.url
             newURLComponents.path = urlData.scheme
             newURLComponents.path.append("/device-token/\(userId)")
+        case .getTwilioParticipants:
+            newURLComponents.path.append("/users/twilio")
         }
-
+        
         do {
             let callURL = try newURLComponents.asURL()
             return callURL
@@ -277,6 +283,8 @@ enum GoLujoRouter: URLRequestConvertible {
             return getDeviceTokenAsJSONData(userId, deviceToken)
         case .unregisterForPush:
             return nil
+        case let .getTwilioParticipants(productType):
+            return getTwilioParticipantsAsJSONData( productType)
         }
     }
 
@@ -396,5 +404,12 @@ enum GoLujoRouter: URLRequestConvertible {
         }
         
         return "81INxZA3bV43JEJersZaj9b3t5hFrGNm452JgsOL"
+    }
+    
+    fileprivate func getTwilioParticipantsAsJSONData(_ productType: String) -> Data? {
+        let data: [String: String] = [
+            "type": productType
+        ]
+        return try? JSONSerialization.data(withJSONObject: data, options: [])
     }
 }
