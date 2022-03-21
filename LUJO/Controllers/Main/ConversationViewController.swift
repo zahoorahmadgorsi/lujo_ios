@@ -405,16 +405,32 @@ extension ConversationViewController: MessageCellDelegate {
         print("Avatar tapped")
     }
     
+    //if there is a tap on message, and that message contains an attached/embedded image then we are making that image full screen
     func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
-        if let messageLabel = (cell as? TextMessageCell)?.messageLabel{
-            print(messageLabel.text)
+        if let messageLabel = (cell as? TextMessageCell)?.messageLabel, let attrString = messageLabel.attributedText{
+            print(attrString)
+            let range = NSRange(location: 0, length: attrString.length)
+            if (attrString.containsAttachments(in: range)) {
+                var location = 0
+                while location < range.length {
+                    var r = NSRange()
+                    let attrDictionary = attrString.attributes(at: location, effectiveRange: &r)
+                    if let attachment = attrDictionary[NSAttributedString.Key.attachment] as? NSTextAttachment{
+                        if let image = attachment.image ?? attachment.image(forBounds: (attachment.bounds), textContainer: nil, characterIndex: range.location){
+                            self.makeImageFullScreen(image)
+                            return  //no need to continue the loop
+                        }
+                    }
+                    location += r.length
+                }
+            }
         }
     }
     
     func didTapImage(in cell: MessageCollectionViewCell) {
         if let image = (cell as? MediaMessageCell)?.imageView.image {
-            self.imageTapped(image)
+            self.makeImageFullScreen(image)
         }
     }
     
@@ -450,7 +466,7 @@ extension ConversationViewController: MessageCellDelegate {
         print("Accessory view tapped")
     }
     
-    func imageTapped(_ image: UIImage){
+    func makeImageFullScreen(_ image: UIImage){
         let newImageView = UIImageView(image: image)
         newImageView.frame = UIScreen.main.bounds
         newImageView.backgroundColor = .black
@@ -587,6 +603,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
             if let messageBody = message.body {
                 if messageBody.isHtml(){
                     let attributedString = messageBody.parseHTML()
+//                    print(attributedString)
                     let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     return msg
                 }else{
