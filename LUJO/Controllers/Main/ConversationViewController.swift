@@ -386,19 +386,13 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     }
     
     func showNetworkActivity() {
-        // Safe guard to that won't display both loaders at same time.
-//        if !refreshControl.isRefreshing {
-            naHUD.show(in: view)
-//        messageInputBar.sendButton.isEnabled = false
+        naHUD.show(in: view)
         messageInputBar.isUserInteractionEnabled = false
-//        }
     }
     
     func hideNetworkActivity() {
-        // Safe guard that will call dismiss only if HUD is shown on screen.
         if naHUD.isVisible {
             naHUD.dismiss()
-//            messageInputBar.sendButton.isEnabled = true
             messageInputBar.isUserInteractionEnabled = true
         }
     }
@@ -413,10 +407,15 @@ extension ConversationViewController: MessageCellDelegate {
     
     func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
+        if let messageLabel = (cell as? TextMessageCell)?.messageLabel{
+            print(messageLabel.text)
+        }
     }
     
     func didTapImage(in cell: MessageCollectionViewCell) {
-        print("Image tapped")
+        if let image = (cell as? MediaMessageCell)?.imageView.image {
+            self.imageTapped(image)
+        }
     }
     
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {
@@ -449,6 +448,27 @@ extension ConversationViewController: MessageCellDelegate {
 
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
         print("Accessory view tapped")
+    }
+    
+    func imageTapped(_ image: UIImage){
+        let newImageView = UIImageView(image: image)
+        newImageView.frame = UIScreen.main.bounds
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        self.messageInputBar.isHidden = true
+    }
+
+    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        self.messageInputBar.isHidden = false
+        sender.view?.removeFromSuperview()
     }
 
 }
