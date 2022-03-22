@@ -100,7 +100,9 @@ class ConversationsViewController: UIViewController {
                     let tempConversation:Conversation = Conversation(conversation)
                     if  let msgs = messages , msgs.count > 0{
                         tempConversation.tchMessage = msgs[0]
-                        tempConversation.lastMessageBody = msgs[0].hasMedia() == true ? "PHOTO" : msgs[0].body  //if last message is media then show PHOTO
+                        if let message = msgs[0].body , message.count > 0{
+                            tempConversation.lastMessageBody = msgs[0].hasMedia() == true ? "PHOTO" : message  //if last message is media then show PHOTO
+                        }
                     }
                     tempConversations.append(tempConversation)
                     myGroup.leave()
