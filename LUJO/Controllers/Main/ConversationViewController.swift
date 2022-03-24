@@ -112,7 +112,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                         self.getAndConvertTCHImageMessageToChatMessage(msg) { (chatImageMessage, isCached) in
                             tempMessages.append(chatImageMessage)
                             tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order
-                            self.messageList = []
+                            self.messageList = []    //clearing existing array first
                             self.messageList.insert(contentsOf: tempMessages, at: 0)
                             self.messagesCollectionView.reloadDataAndKeepOffset()
 //                            self.messagesCollectionView.scrollToLastItem(animated: true)
@@ -124,12 +124,13 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                     }
                 }
 //                myGroup.notify(queue: .main) {
-                    print("Twilio: conversation viewDidLoad. Finished whole DispatchGroup.")
-                    self.hideNetworkActivity()
-                    tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order, so bringing them in order
-                    self.messageList.insert(contentsOf: tempMessages, at: 0)
-                    self.messagesCollectionView.reloadData()
-                    self.messagesCollectionView.scrollToLastItem(animated: true)
+                print("Twilio: conversation viewDidLoad. Finished whole DispatchGroup.")
+                self.hideNetworkActivity()
+                tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order, so bringing them in order
+                self.messageList = []   //clearing existing array first
+                self.messageList.insert(contentsOf: tempMessages, at: 0)
+                self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToLastItem(animated: true)
 //                }
             })
         }else if let user = LujoSetup().getLujoUser(), user.id > 0 { //creating new conversation
@@ -477,7 +478,9 @@ extension ConversationViewController: MessageCellDelegate {
         self.view.addSubview(newImageView)
         self.navigationController?.isNavigationBarHidden = true
         self.tabBarController?.tabBar.isHidden = true
+        self.messageInputBar.inputTextView.resignFirstResponder()//hiding the keypad if opened
         self.messageInputBar.isHidden = true
+        
     }
 
     @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {

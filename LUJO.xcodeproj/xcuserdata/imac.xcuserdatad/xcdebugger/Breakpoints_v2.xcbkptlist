@@ -3721,8 +3721,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "124"
             endingLineNumber = "124"
-            landmarkName = "getFavouritesAsJSONData(token:id:)"
-            landmarkType = "7">
+            landmarkName = "WishListRouter"
+            landmarkType = "13">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
