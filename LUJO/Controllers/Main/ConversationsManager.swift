@@ -84,14 +84,14 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
 //    }
     
     func conversationsClientTokenWillExpire(_ client: TwilioConversationsClient) {
-            print("Twilio: Access token will expire.")
-            refreshAccessToken()
-        }
-        
-        func conversationsClientTokenExpired(_ client: TwilioConversationsClient) {
-            print("Twilio: Access token expired.")
-            refreshAccessToken()
-        }
+        print("Twilio: Access token will expire.")
+        refreshAccessToken()
+    }
+    
+    func conversationsClientTokenExpired(_ client: TwilioConversationsClient) {
+        print("Twilio: Access token expired.")
+        refreshAccessToken()
+    }
     
     private func refreshAccessToken() {
         guard let identity = identity else {

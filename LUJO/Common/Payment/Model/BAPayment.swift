@@ -1,5 +1,5 @@
 struct PaymentInformation {
-    let customerId: Int
+    let customerId: String
     let token: String
     let profileId: String
     let aircraftId: String

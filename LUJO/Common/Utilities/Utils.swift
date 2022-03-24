@@ -68,7 +68,7 @@ struct Utility
     
     static func getAttributes(onlyRelatedToUser:Bool) -> Dictionary<String,Any>{
         var attribute = Dictionary<String,Any>()
-        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+        if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
             attribute["profile_picture"] = user.avatar
             attribute["customer_name"] = user.firstName + " " + user.lastName
             attribute["customer_email"] = user.email

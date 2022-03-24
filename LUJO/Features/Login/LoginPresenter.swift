@@ -204,7 +204,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
 
         guard isValid(email: email) else { throw LoginError.errorLogin(description: "Email is not valid") }
 
-        currentUser = LujoUser(id: 0,
+        currentUser = LujoUser(id: "0asdf1qwer2",
                                title: title,
                                firstName: firstName,
                                lastName: lastName,
@@ -213,7 +213,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
                                password: "",
                                avatar: "",
                                token: "",
-                               approved: "no",
+                               approved: false,
                                referralCode: "",
                                points: 0,
                                membershipPlan: nil,

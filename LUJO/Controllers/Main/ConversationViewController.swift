@@ -131,7 +131,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                     self.messagesCollectionView.scrollToLastItem(animated: true)
 //                }
             })
-        }else if let user = LujoSetup().getLujoUser(), user.id > 0 { //creating new conversation
+        }else if let user = LujoSetup().getLujoUser(), user.id.count > 0 { //creating new conversation
             let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
             //Creating channel if doesnt exist else joining
             let channelUniqueName = product.type + " " + user.firstName + " " + dateTime

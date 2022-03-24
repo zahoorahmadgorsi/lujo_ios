@@ -64,7 +64,7 @@ class AccountViewController: UIViewController {
         let logoutTapResponder = UITapGestureRecognizer(target: self, action: #selector(requestLogout))
         logoutLabel.addGestureRecognizer(logoutTapResponder)
         
-        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+        if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
             self.user = user
         }
 

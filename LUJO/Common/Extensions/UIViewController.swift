@@ -33,7 +33,7 @@ extension UIViewController {
     
     func showInformationPopup(){
         showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.", btnTitle: "Upgrade" , btnTapHandler: { () in
-            if let user = LujoSetup().getLujoUser(), user.id > 0 {
+            if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
                 let userFullname = "\(user.firstName) \(user.lastName)"
                 let hasMembership = LujoSetup().getLujoUser()?.membershipPlan ?? nil != nil
                 let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: hasMembership ? .viewMembership : .buyMembership, paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .dining : .all)

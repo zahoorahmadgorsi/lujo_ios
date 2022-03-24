@@ -403,11 +403,12 @@ extension GoLujoAPIManager {
                     }
                     do {
                         let resultResponse = try JSONDecoder().decode(UserProfileResponse.self, from: response.data!)
-                        guard !resultResponse.content.baroque_id.isEmpty else {
-                            let error = LoginError.errorLogin(description: "Missing baroque id")
-                            completion(nil, error)
-                            return
-                        }
+                        //in new backend baroque id would always be available
+//                        guard !resultResponse.content.baroque_id.isEmpty else {
+//                            let error = LoginError.errorLogin(description: "Missing baroque id")
+//                            completion(nil, error)
+//                            return
+//                        }
 
                         let user = LujoUser(id: resultResponse.content.id,
                                             title: UserTitle(rawValue: resultResponse.content.title ?? "Mr."),
@@ -539,14 +540,14 @@ extension GoLujoAPIManager {
                     return
                 }
 
-                guard let resultResponse = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                guard let resultResponse = try? JSONDecoder().decode(LujoServerResponse<Bool>.self,
                                                                      from: response.data!)
                 else {
                     completion(false, LoginError.errorLogin(description: "Error parsing server response"))
                     return
                 }
 
-                completion(resultResponse.content == "yes", nil)
+                completion(resultResponse.content, nil)
                 return
             case let .failure(error):
                 completion(false, error)

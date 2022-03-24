@@ -61,7 +61,8 @@ class LujoSetup: LoginDataStorable, AppDefaults {
     }
 
     func getCurrentUser() -> LoginUser? {
-        return defaults.get(for: .currentUser)
+        let user = defaults.get(for: .currentUser)
+        return user
     }
 
     func store(userInfo: LujoUser) {

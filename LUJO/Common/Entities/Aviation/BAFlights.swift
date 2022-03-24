@@ -119,7 +119,7 @@ extension BAAircraft {
 struct BAPaymentAutorization: Codable {
     let token: String
     let baToken: String
-    let customerId: Int
+    let customerId: String
     let aircraft: BAAircraft
     let searchId: Int
     let paymentMethod: Int

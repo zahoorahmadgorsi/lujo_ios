@@ -84,6 +84,7 @@ enum CCRouter: URLRequestConvertible {
         if let token = LujoSetup().getCurrentUser()?.token{
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
+        print("urlRequest:\(String(describing: urlRequest.url))")
         return urlRequest
     }
 }

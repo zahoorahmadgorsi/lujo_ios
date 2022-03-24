@@ -18,17 +18,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="52" translatesAutoresizingMaskIntoConstraints="NO" id="75O-Hh-PQV">
-                                <rect key="frame" x="75.5" y="261.5" width="224" height="144.5"/>
+                                <rect key="frame" x="77" y="261.5" width="221" height="144.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Lujo Logo" translatesAutoresizingMaskIntoConstraints="NO" id="f28-c2-Nhw">
-                                        <rect key="frame" x="76" y="0.0" width="72" height="72"/>
+                                        <rect key="frame" x="74.5" y="0.0" width="72" height="72"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="72" id="dkx-6g-35P"/>
                                             <constraint firstAttribute="width" constant="72" id="kT4-pI-SDb"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A World of Infinite Possibilities" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2N1-AU-mNu">
-                                        <rect key="frame" x="0.0" y="124" width="224" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A world of infinite possibilities" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2N1-AU-mNu">
+                                        <rect key="frame" x="0.0" y="124" width="221" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>

@@ -119,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func registerForPushNotifications() {
-        if let user = LujoSetup().getLujoUser(), user.id > 0 {
+        if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
             
             setExternalUserId(externalUserId: user.phoneNumber.readableNumber)  //setting external User id as phone number at oneSignal
             
@@ -154,7 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         })
     }
 
-    func removePushToken(userId: Int) {
+    func removePushToken(userId: String) {
         GoLujoAPIManager().unregisterForOurPushService(userId: String(userId))
         ConversationsManager.sharedConversationsManager.shutdown()
     }

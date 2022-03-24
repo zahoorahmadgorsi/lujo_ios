@@ -39,7 +39,8 @@ struct LoginUser: Equatable, Codable {
 }
 
 class LujoUser: Equatable, Codable {
-    var id: Int
+    //var id: Int
+    var id: String
     var title: UserTitle?
     var firstName: String
     var lastName: String
@@ -48,7 +49,8 @@ class LujoUser: Equatable, Codable {
     var password: String
     var avatar: String
     var token: String
-    var approved: String
+//    var approved: String
+    var approved: Bool
     var referralCode: String
     var points: Int
     var membershipPlan: Membership?
@@ -75,10 +77,10 @@ class LujoUser: Equatable, Codable {
                          phone: phoneNumber.number,
                          token: token,
                          tokenExpiration: LujoSetup().getCurrentUser()?.tokenExpiration,
-                         approved: approved == "yes")
+                         approved: approved == true)
     }
     
-    init(id: Int, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: String, referralCode: String, points: Int, membershipPlan: Membership?, sfid:String) {
+    init(id: String, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: Bool, referralCode: String, points: Int, membershipPlan: Membership?, sfid:String) {
         self.id = id
         self.title = title
         self.firstName = firstName
@@ -101,8 +103,8 @@ class LujoUser: Equatable, Codable {
 }
 
 struct LujoUserProfile: Codable {
-    let id: Int
-    let baroque_id: String
+    let id: String
+    let baroque_id: Int
     let title: String? = nil
     let firstname: String
     let lastname: String
@@ -110,7 +112,7 @@ struct LujoUserProfile: Codable {
     let phone_prefix: String
     let phone: String
     let avatar: String?
-    let approved: String
+    let approved: Bool
     let referralCode: String
     let points: Int
     let membershipPlan: Membership?
