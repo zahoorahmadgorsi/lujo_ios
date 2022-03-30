@@ -26,10 +26,10 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shl-p5-qIh">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="720"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="764"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="eYD-0b-QxR">
-                                                <rect key="frame" x="0.0" y="16" width="375" height="688"/>
+                                                <rect key="frame" x="0.0" y="16" width="375" height="732"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7z-J7-BPX">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
@@ -137,8 +137,8 @@
                                                             <constraint firstAttribute="height" constant="1" id="cLx-au-b9K"/>
                                                         </constraints>
                                                     </view>
-                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Co-Ts-3Ow">
-                                                        <rect key="frame" x="0.0" y="291" width="375" height="28"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Co-Ts-3Ow">
+                                                        <rect key="frame" x="0.0" y="299" width="375" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Preferences" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F99-hC-McA">
                                                                 <rect key="frame" x="24" y="0.0" width="327" height="28"/>
@@ -159,14 +159,14 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c8X-AK-AF0" userLabel="Separator 1">
-                                                        <rect key="frame" x="0.0" y="299" width="375" height="1"/>
+                                                        <rect key="frame" x="0.0" y="343" width="375" height="1"/>
                                                         <color key="backgroundColor" name="Navigation Bar"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="SjS-CK-rfZ"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vEo-Ue-E3R">
-                                                        <rect key="frame" x="0.0" y="316" width="375" height="50"/>
+                                                        <rect key="frame" x="0.0" y="360" width="375" height="50"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFx-yn-qqu">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -317,14 +317,14 @@
                                                         </variation>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNc-u7-RTy" userLabel="Separator 1">
-                                                        <rect key="frame" x="0.0" y="382" width="375" height="1"/>
+                                                        <rect key="frame" x="0.0" y="426" width="375" height="1"/>
                                                         <color key="backgroundColor" name="Navigation Bar"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="S9p-wi-Vj1"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4M-Qc-35x">
-                                                        <rect key="frame" x="0.0" y="399" width="375" height="118"/>
+                                                        <rect key="frame" x="0.0" y="443" width="375" height="118"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="QXK-Ny-Qea">
                                                                 <rect key="frame" x="32" y="0.0" width="311" height="50"/>
@@ -381,14 +381,14 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MsW-Ga-O4K" userLabel="Separator 1">
-                                                        <rect key="frame" x="0.0" y="533" width="375" height="1"/>
+                                                        <rect key="frame" x="0.0" y="577" width="375" height="1"/>
                                                         <color key="backgroundColor" name="Navigation Bar"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="BPP-R9-ZtW"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eLb-Zy-12q">
-                                                        <rect key="frame" x="0.0" y="550" width="375" height="28"/>
+                                                        <rect key="frame" x="0.0" y="594" width="375" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6E-fp-FvE">
                                                                 <rect key="frame" x="137.66666666666666" y="0.0" width="100" height="28"/>
@@ -409,7 +409,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cc-LS-Qia">
-                                                        <rect key="frame" x="0.0" y="594" width="375" height="28"/>
+                                                        <rect key="frame" x="0.0" y="638" width="375" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERl-yP-cD1">
                                                                 <rect key="frame" x="152.66666666666666" y="0.0" width="70" height="28"/>
@@ -430,7 +430,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mCR-dt-cpb">
-                                                        <rect key="frame" x="0.0" y="638" width="375" height="50"/>
+                                                        <rect key="frame" x="0.0" y="682" width="375" height="50"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                 </subviews>
