@@ -35,7 +35,7 @@ enum PaymentRouter: URLRequestConvertible {
     }()
     
     case validateReferralCode(String, String)
-    case confirmPayment(Int, String, Double, String?, String)
+    case confirmPayment(String, String, Double, String?, String)
     case confirmBookingPayment(String, String, Double, String)
     
     func asURLRequest() throws -> URLRequest {
@@ -114,7 +114,7 @@ enum PaymentRouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getConfirmPaymentDataAsJSONData(membershipId: Int,transactionId: String, amount: Double, referralCode: String?, token: String) -> Data? {
+    fileprivate func getConfirmPaymentDataAsJSONData(membershipId: String,transactionId: String, amount: Double, referralCode: String?, token: String) -> Data? {
         var body: [String: Any] = [
             "membership_id": membershipId,
             "transaction_id": transactionId,

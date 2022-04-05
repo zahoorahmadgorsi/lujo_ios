@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 protocol SingleLineCollectionFilterProtocol:class {
-    func didTappedOnFilterAt(tag: Int, termId: Int)
+    func didTappedOnFilterAt(tag: Int, termId: String)
 }
 
 class SingleLineCollectionFilter: UIView {

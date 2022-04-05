@@ -478,7 +478,7 @@ extension PerCityViewController: UICollectionViewDelegateFlowLayout {
 
 extension PerCityViewController: CityViewProtocol {
     func seeAllProductsForCity(city: Cities) {
-        let viewController = ProductsViewController.instantiate(category: self.category, city:DiningCity(termId: city.termId ?? -1, name: city.name ?? "" , restaurantsNum: -1, restaurants: []))
+        let viewController = ProductsViewController.instantiate(category: self.category, city:DiningCity(termId: city.termId ?? "asdf1234qwer", name: city.name ?? "" , restaurantsNum: -1, restaurants: []))
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

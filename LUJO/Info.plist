@@ -112,7 +112,7 @@
 				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
 				<true/>
 			</dict>
-			<key>cloudfront.net</key>
+			<key>amazonaws.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>

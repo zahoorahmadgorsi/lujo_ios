@@ -29,14 +29,14 @@ import Foundation
 //}
 
 struct Taxonomy: Codable {
-    let termId: Int
+    let termId: String
     let name: String
     var isSelected: Bool?
     var filterParameter: String?   //used in per city filters
 //    var taxonomyName: String?   //used in filters
     
     enum CodingKeys: String, CodingKey {
-        case termId = "term_id"
+        case termId = "_id"
         case name
         case isSelected
         case filterParameter = "per_city_input_param"
@@ -48,7 +48,7 @@ struct Taxonomy: Codable {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
             name = try values.decode(String.self, forKey: .name)
-            termId = try values.decode(Int.self, forKey: .termId)
+            termId = try values.decode(String.self, forKey: .termId)
             //isSelected would never be sent from API
             isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
             filterParameter = try values.decodeIfPresent(String.self, forKey: .filterParameter)
@@ -60,7 +60,7 @@ struct Taxonomy: Codable {
     }
     
     //This init is going to be used in preference for hardocoded values
-    init(termId:Int , name: String, isSelected:Bool? = false){
+    init(termId:String , name: String, isSelected:Bool? = false){
         self.termId = termId
         self.name = name
         self.isSelected = isSelected
@@ -555,7 +555,7 @@ struct HomeObjects: Codable {
 // it is used in /per-city
 struct Cities: Codable{
     var name: String?
-    var termId: Int?
+    var termId: String?
     var itemsNum : Int?
     var items:[Product]?
     
@@ -571,7 +571,7 @@ struct Cities: Codable{
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
             name = try values.decodeIfPresent(String.self, forKey: .name)
-            termId = try values.decodeIfPresent(Int.self, forKey: .termId)
+            termId = try values.decodeIfPresent(String.self, forKey: .termId)
             itemsNum = try values.decodeIfPresent(Int.self, forKey: .itemsNum)
             items = try values.decodeIfPresent([Product].self, forKey: .items)
             

@@ -47,7 +47,7 @@ class PaymentAPIManagerNEW {
         }
     }
     
-    func confirmMembershipPayment(membershipId: Int, transactionId: String, amount: Double, code: String?, token: String, completion: @escaping (Membership?, Error?) -> Void) {
+    func confirmMembershipPayment(membershipId: String, transactionId: String, amount: Double, code: String?, token: String, completion: @escaping (Membership?, Error?) -> Void) {
         
         Alamofire.request(PaymentRouter.confirmPayment(membershipId, transactionId, amount, code, token))
             .responseJSON { response in

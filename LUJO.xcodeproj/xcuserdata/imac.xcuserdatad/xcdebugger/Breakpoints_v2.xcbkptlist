@@ -9770,8 +9770,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9786,8 +9786,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9896,8 +9896,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9976,8 +9976,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10008,8 +10008,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10024,8 +10024,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10040,8 +10040,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10104,8 +10104,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10501,8 +10501,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10581,8 +10581,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10803,8 +10803,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10835,8 +10835,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -11020,22 +11020,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DE5ABD11-8A15-46B1-A775-F893418D75B5"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "getGoods(_:term:category_term_id:productId:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "FA86874B-EA2C-4B83-A62A-4838A61BC48C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -11045,8 +11029,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
             endingLineNumber = "31"
-            landmarkName = "init(type:firstViewController:secondViewController:selectedCellImageViewSnapshot:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

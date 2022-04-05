@@ -48,7 +48,7 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func search(_ token: String, term: String?, cityId: Int?, currentLocation: CLLocation?, completion: @escaping ([Product]?, Error?) -> Void) {
+    func search(_ token: String, term: String?, cityId: String?, currentLocation: CLLocation?, completion: @escaping ([Product]?, Error?) -> Void) {
         Alamofire.request(DiningRouter.search(token, term, cityId, currentLocation?.coordinate.latitude, currentLocation?.coordinate.longitude))
             .responseJSON { response in
                 guard response.result.error == nil else {

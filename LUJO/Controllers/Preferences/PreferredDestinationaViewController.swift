@@ -84,7 +84,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     if let destinations = self.userPreferences?.aviation.aviation_preferred_destinations{
                         var taxonomies = [Taxonomy]()
                         for item in  destinations {
-                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            let taxonomy = Taxonomy(termId: item ?? "asdf1234qwer" , name: item)
                             taxonomies.append(taxonomy)
                         }
                         previouslySelectedItems = taxonomies
@@ -96,7 +96,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     if let airports = self.userPreferences?.aviation.aviation_preferred_airports{
                         var taxonomies = [Taxonomy]()
                         for item in  airports {
-                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            let taxonomy = Taxonomy(termId: item ?? "asdf1234qwer" , name: item)
                             taxonomies.append(taxonomy)
                         }
                         previouslySelectedItems = taxonomies
@@ -116,7 +116,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     if let destinations = self.userPreferences?.yacht.yacht_preferred_destinations{
                         var taxonomies = [Taxonomy]()
                         for item in  destinations {
-                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            let taxonomy = Taxonomy(termId: item , name: item)
                             taxonomies.append(taxonomy)
                         }
                         previouslySelectedItems = taxonomies
@@ -136,7 +136,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     if let destinations = self.userPreferences?.travel.travel_preferred_destinations{
                         var taxonomies = [Taxonomy]()
                         for item in  destinations {
-                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            let taxonomy = Taxonomy(termId: item , name: item)
                             taxonomies.append(taxonomy)
                         }
                         previouslySelectedItems = taxonomies
@@ -155,7 +155,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     if let destinations = self.userPreferences?.villa.villa_preferred_destinations_id{
                         var taxonomies = [Taxonomy]()
                         for item in  destinations {
-                            let taxonomy = Taxonomy(termId: Int(item) ?? -1 , name: item)
+                            let taxonomy = Taxonomy(termId: item , name: item)
                             taxonomies.append(taxonomy)
                         }
                         previouslySelectedItems = taxonomies
@@ -543,8 +543,8 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     
     //WHen user has selected some destination airpot
     func select(_ airport: Airport, forOrigin: OriginAirport) {
-        let airportId = Int(airport.id.split(separator: "-")[1]) //BA is sending airport Id as a string in this format "id": "aport-26805"
-        let taxonomy = Taxonomy(termId: airportId ?? -1 , name: airport.name)
+        let airportId = airport.id.split(separator: "-")[1] //BA is sending airport Id as a string in this format "id": "aport-26805"
+        let taxonomy = Taxonomy(termId: String(airportId) , name: airport.name)
         if !itemsList.contains(where: {$0.name == taxonomy.name}){//only add if already not added
             itemsList.append(taxonomy)
             self.collectionView.reloadData()

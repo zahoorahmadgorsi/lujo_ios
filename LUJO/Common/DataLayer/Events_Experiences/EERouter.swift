@@ -27,15 +27,15 @@ enum EERouter: URLRequestConvertible {
     }()
 
     case home(String)
-    case events(String, Bool, String?, Int?, Int?)
-    case experiences(String, String?, Int?, Int?)
+    case events(String, Bool, String?, String?, Int?)
+    case experiences(String, String?, String?, Int?)
     case salesforce(Int, String, String?)
     case geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
-    case villas(String, String?, Int?, Int?)
-    case goods(String, String?, Int?, Int?)
-    case yachts(String, String?, Int?, Int?)
+    case villas(String, String?, String?, Int?)
+    case goods(String, String?, String?, Int?)
+    case yachts(String, String?, String?, Int?)
     case getYachtGallery(String, Int)
     case topRated(token: String, type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
@@ -160,7 +160,8 @@ enum EERouter: URLRequestConvertible {
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
             case let .goods(token, term, category_term_id, productId):
-                if (category_term_id ?? 0 > 0){ //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
+//                if (category_term_id?.count > 0){ //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
+                if category_term_id?.isEmpty ?? true {
                     //newURLComponents.path.append("/gifts/per-category")
                     newURLComponents.path.append("/gifts")
                     

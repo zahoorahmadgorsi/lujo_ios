@@ -162,7 +162,7 @@ extension GoLujoAPIManager {
                     if error._code == NSURLErrorTimedOut {
                         completionHandler("", nil)
                         return
-                    }
+            }
                     completionHandler("", LoginError.errorLogin(description: response.result.error!.localizedDescription))
                 }
             }

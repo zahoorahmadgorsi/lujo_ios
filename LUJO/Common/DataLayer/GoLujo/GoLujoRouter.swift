@@ -192,7 +192,6 @@ enum GoLujoRouter: URLRequestConvertible {
         case .verify:
             newURLComponents.path.append("/users/verify")
         case .requestOTP:
-//            newURLComponents.path.append("/users/verify-otp/")
             newURLComponents.path.append("/users/generate-otp/")
         case .updatePhoneNumber:
             newURLComponents.path.append("/users/change-phone")
@@ -295,8 +294,8 @@ enum GoLujoRouter: URLRequestConvertible {
     fileprivate func getUserImageAsJSONData(_ user: LujoUser, _ image: UIImage) -> Data? {
         guard let imageData = image.convertImageTobase64(format: .jpegFormat(0.4)) else { return nil }
         let userImageData: [String: String?] = [
-            "avatar": imageData,
-            "token": user.token,
+            "file": imageData
+//            ,"token": user.token,
         ]
         return try? JSONSerialization.data(withJSONObject: userImageData, options: [])
     }

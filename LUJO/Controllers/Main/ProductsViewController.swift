@@ -338,7 +338,7 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension ProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: Int?) {
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?) {
         showNetworkActivity()
         getList(for: category, past: past, term: term, cityId: cityId) { items, error in
             self.hideNetworkActivity()
@@ -352,7 +352,7 @@ extension ProductsViewController {
         }
     }
     
-    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, completion: @escaping ([Product], Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
             return

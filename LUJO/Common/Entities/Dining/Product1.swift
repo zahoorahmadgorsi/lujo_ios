@@ -66,7 +66,7 @@ extension Cuisine {
 }
 
 struct DiningCity: Codable {
-    var termId: Int
+    var termId: String
     var name: String
     let restaurantsNum: Int
     var restaurants: [Product]
@@ -84,7 +84,7 @@ extension DiningCity {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
-            termId = try values.decode(Int.self, forKey: .termId)
+            termId = try values.decode(String.self, forKey: .termId)
             name = try values.decode(String.self, forKey: .name)
             restaurantsNum = try values.decode(Int.self, forKey: .restaurantsNum)
             restaurants = try values.decode([Product].self, forKey: .restaurants)

@@ -255,7 +255,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setGiftPreferences:   newURLComponents.path.append("/preferences/gift")
         case .getCuisines:
 //            newURLComponents.path.append("/reference/cuisines")
-            newURLComponents.path.append(" /restaurants/cuisine-category")
+            newURLComponents.path.append("/restaurants/cuisine-category")
         case .getOtherInterests:  newURLComponents.path.append("/reference/interests")
         case .getAviationBeverages:
 //            newURLComponents.path.append("/reference/beverages")

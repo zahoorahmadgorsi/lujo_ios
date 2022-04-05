@@ -313,25 +313,25 @@ class PrefCollectionsViewController: UIViewController {
             case .aviation:
                 switch prefInformationType {
                 case .aviationHaveCharteredBefore:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Yes")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "No")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Yes")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "No")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
                     self.itemsList = taxonomies
                 case .aviationInterestedIn:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Charter")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Purchase")
-                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Charter")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "Purchase")
+                    let taxonomyObj3 = Taxonomy(termId:"asdf1234qwer" , name: "Both")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
                     taxonomies.append(taxonomyObj3)
                     self.itemsList = taxonomies
                 case .aviationPreferredCharter:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Short Range")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Long Range")
-                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Short Range")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "Long Range")
+                    let taxonomyObj3 = Taxonomy(termId:"asdf1234qwer" , name: "Both")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
@@ -351,34 +351,34 @@ class PrefCollectionsViewController: UIViewController {
             case .yachts:
                 switch prefInformationType {
                 case .yachtHaveCharteredBefore:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Yes")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "No")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Yes")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "No")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
                     self.itemsList = taxonomies
                 case .yachtInterestedIn:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Charter")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Purchase")
-                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Charter")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "Purchase")
+                    let taxonomyObj3 = Taxonomy(termId:"asdf1234qwer" , name: "Both")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
                     taxonomies.append(taxonomyObj3)
                     self.itemsList = taxonomies
                 case .yachtType:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Motor")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Sail")
-                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Motor")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "Sail")
+                    let taxonomyObj3 = Taxonomy(termId:"asdf1234qwer" , name: "Both")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
                     taxonomies.append(taxonomyObj3)
                     self.itemsList = taxonomies
                 case .yachtStyle:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Modern")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Classic")
-                    let taxonomyObj3 = Taxonomy(termId:-1 , name: "Both")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Modern")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "Classic")
+                    let taxonomyObj3 = Taxonomy(termId:"asdf1234qwer" , name: "Both")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
@@ -444,8 +444,8 @@ class PrefCollectionsViewController: UIViewController {
                         self.itemsList = cachedItems
                     }
                 case .travelAirplaneSeat:
-                    let taxonomyObj1 = Taxonomy(termId:-1 , name: "Aisle")
-                    let taxonomyObj2 = Taxonomy(termId:-1 , name: "Window")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Aisle")
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "Window")
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)

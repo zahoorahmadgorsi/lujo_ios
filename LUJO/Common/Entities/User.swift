@@ -166,17 +166,17 @@ struct PhoneCountryCode: Codable {
 }
 
 struct Membership: Codable {
-    let id: Int
+    let id: String
     let plan: String
-    let price: String
+    let price: Int
     let target: String
     let expiration: String?
     let discount: Int?
     
     init(data: [String : Any]) {
-        self.id = data["id"] as? Int ?? -1
-        self.plan = data["plan"] as? String ?? ""
-        self.price =  data["price"] as? String ?? ""
+        self.id = data["_id"] as? String ?? "-1"
+        self.plan = (data["plan"] as? String ?? "").lowercased()
+        self.price =  data["price"] as? Int ?? -1
         self.target =  data["target"] as? String ?? ""
         self.expiration = data["expiration"] as? String ?? ""
         self.discount = Int(data["discount"] as? String ?? "") ?? 0

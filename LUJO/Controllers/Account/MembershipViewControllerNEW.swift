@@ -163,7 +163,7 @@ class MembershipViewControllerNEW: UIViewController {
     private func updateUI() {
         currentMembership = LujoSetup().getLujoUser()?.membershipPlan
         selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == (paymentType == .all ? "all" : "dining")})
-        price = Int(selectedMembership?.price ?? "0") ?? 0
+        price = selectedMembership?.price ?? -1
         
         if screenType == .buyMembership {
             title = "Purchase membership"
@@ -237,7 +237,7 @@ class MembershipViewControllerNEW: UIViewController {
     private func updatePrice() {
         var oldPriceText = ""
         
-        let selectedPrice = Int(selectedMembership?.price ?? "0") ?? 0
+        let selectedPrice = selectedMembership?.price ?? -1
         let currentDiscount = selectedMembership?.discount ?? 0
         
         if hasValidCode {

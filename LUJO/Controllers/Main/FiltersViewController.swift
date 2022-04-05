@@ -152,9 +152,10 @@ class FiltersViewController: UIViewController {
                     if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter.count != 0{
                         //if user had selected *purchase* in interest in
                         let termID = viewController.ninthFilter[0].termId
-                        if (termID == 3023 || termID == 273 ){ //3023 = Sale on production and 273 = sale on staging
-                            view.isHidden = true    //Hide yacht charter view if user is interested in purchase
-                        }
+                        print("Apply the below check")
+//                        if (termID == 3023 || termID == 273 ){ //3023 = Sale on production and 273 = sale on staging
+//                            view.isHidden = true    //Hide yacht charter view if user is interested in purchase
+//                        }
                     }
                     stackView.addArrangedSubview(view)
                 }
@@ -363,15 +364,16 @@ class FiltersViewController: UIViewController {
 
 extension FiltersViewController:SingleLineCollectionFilterProtocol{
     
-    func didTappedOnFilterAt(tag: Int, termId: Int) {
+    func didTappedOnFilterAt(tag: Int, termId: String) {
         if (tag == 8){
             for view in stackView.subviews{
                 if view is SingleLineCollectionFilter, view.tag == 2{
-                    if termId == 272 || termId == 3022{         // 272 = rent on staging, 3022 = rent on production
-                        view.isHidden = false
-                    }else if termId == 273 || termId == 3023{   // 273 = sale on staging, 3023 = sale on production
-                        view.isHidden = true
-                    }
+                    print("add termid check commented below")
+//                    if termId == 272 || termId == 3022{         // 272 = rent on staging, 3022 = rent on production
+//                        view.isHidden = false
+//                    }else if termId == 273 || termId == 3023{   // 273 = sale on staging, 3023 = sale on production
+//                        view.isHidden = true
+//                    }
                 }
             }
         }

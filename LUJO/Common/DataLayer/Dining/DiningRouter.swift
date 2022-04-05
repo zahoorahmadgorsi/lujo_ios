@@ -35,7 +35,7 @@ enum DiningRouter: URLRequestConvertible {
     }()
 
     case home(String)
-    case search(String, String?, Int?, Double?, Double?)
+    case search(String, String?, String?, Double?, Double?)
 //    case events(String, Bool)
 //    case experiences(String)
     case salesforce(Int, String, String, Int, String)

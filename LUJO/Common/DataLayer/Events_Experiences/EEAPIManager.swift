@@ -76,7 +76,7 @@ class EEAPIManager {
             }
     }
 
-    func getEvents(_ token: String, past: Bool, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getEvents(_ token: String, past: Bool, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.events(token, past, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -112,7 +112,7 @@ class EEAPIManager {
     }
 
 
-    func getExperiences(_ token: String, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getExperiences(_ token: String, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.experiences(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -147,7 +147,7 @@ class EEAPIManager {
         }
     }
     
-    func getVillas(_ token: String, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getVillas(_ token: String, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.villas(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -182,7 +182,7 @@ class EEAPIManager {
         }
     }
     
-    func getGoods(_ token: String, term: String?, category_term_id: Int?, productId: Int? , completion: @escaping ([Product], Error?) -> Void) {
+    func getGoods(_ token: String, term: String?, category_term_id: String?, productId: Int? , completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.goods(token, term, category_term_id, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -199,7 +199,7 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion([], self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                if (category_term_id ?? 0 > 0){
+                if category_term_id?.isEmpty ?? false {
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<PerCityObjects>.self, from: response.data!)
                     else {
                         completion([], BackendError.parsing(reason: "Unable to parse response"))
@@ -226,7 +226,7 @@ class EEAPIManager {
         }
     }
     
-    func getYachts(_ token: String, term: String?, cityId: Int?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getYachts(_ token: String, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.yachts(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
