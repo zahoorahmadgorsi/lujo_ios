@@ -141,6 +141,19 @@ struct Gallery: Codable {
     }
 }
 
+struct Location: Codable {
+    let id: String
+    let type: String
+    let coordinates: [Double]
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case type
+        case coordinates
+    }
+}
+
+
 struct City: Codable {
     let cityName: String
     let placeId: String
@@ -207,7 +220,7 @@ struct EventExperienceCity: Codable {
 struct Product: Codable {
 //struct Product: Decodable {
     var type: String
-    var id: Int
+    var id: String
     var name: String
     var description: String
     var price: Double?
@@ -223,7 +236,7 @@ struct Product: Codable {
     var tags: [Taxonomy]?
     var eventVenue: [Taxonomy]?
     var priceRange: [Taxonomy]?
-    var location: [TaxonomyLocation]?
+    var locations: TaxonomyLocation?  //city country
     var isFavourite: Bool?
     //Gifts related
     var giftCategory: [Taxonomy]?
@@ -235,8 +248,9 @@ struct Product: Codable {
     var rentPricePerWeekLowSeason: String?
     var rentPricePerWeekHighSeason: String?
     var salePrice: String?
-    var latitude: String?
-    var longitude: String?
+//    var latitude: String?
+//    var longitude: String?
+    var location: Location?     //latitude longitude
     var villaAmenities: [Taxonomy]?
     var villaFacilities: [Taxonomy]?
     var villaStyle: [Taxonomy]?
@@ -270,14 +284,14 @@ struct Product: Codable {
     var zipCode: String?
     var email: String?
     var website: String?
-    var starChief: String?
+    var starChef: [StarChef]?
     var restaurantCategory: [Taxonomy]?
     var cuisineCategory: [Taxonomy]?
     var michelinStar: [Taxonomy]?
     
     enum CodingKeys: String, CodingKey {
         case type
-        case id
+        case id = "_id"
         case name
         case description
         case price
@@ -293,7 +307,7 @@ struct Product: Codable {
         case tags = "lujo_tag"
         case eventVenue = "event_venue"
         case priceRange = "price_range"
-        case location
+        case locations
         case isFavourite = "is_favorite"
         //Gifts related
         case giftCategory = "gift_category"
@@ -305,8 +319,9 @@ struct Product: Codable {
         case rentPricePerWeekLowSeason = "rent_price_per_week_low_season"
         case rentPricePerWeekHighSeason = "rent_price_per_week_high_season"
         case salePrice = "sale_price"
-        case latitude
-        case longitude = "longtitude"
+//        case latitude
+//        case longitude = "longtitude"
+        case location
         case villaAmenities = "villa_amenities"
         case villaFacilities = "villa_facilities"
         case villaStyle = "villa_style"
@@ -340,7 +355,7 @@ struct Product: Codable {
         case zipCode = "zip"
         case email
         case website
-        case starChief = "star-chef"
+        case starChef = "star-chef"
         case restaurantCategory = "restaurant_category"
         case cuisineCategory = "cuisine_category"
         case michelinStar = "michelin_star"
@@ -349,13 +364,22 @@ struct Product: Codable {
     func getGalleryImagesURL() -> [String] {
         return gallery?.filter({ $0.type == "image" }).map({ $0.mediaUrl }) ?? []
     }
+    
+    func getLocation() -> String{
+        var locationText = ""
+        if let cityName = locations?.city?.name {
+            locationText = "\(cityName), "
+        }
+        locationText += locations?.country.name ?? ""
+        return locationText 
+    }
 }
 
 
 
 extension Product {
     
-    init(id:Int, type:String, name:String = ""){
+    init(id:String, type:String, name:String = ""){
         self.id = id
         self.type = type
         self.name =  name
@@ -367,7 +391,7 @@ extension Product {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             type = try values.decode(String.self, forKey: .type)
-            id = try values.decode(Int.self, forKey: .id)
+            id = try values.decode(String.self, forKey: .id)
             
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
@@ -413,7 +437,7 @@ extension Product {
             tags = try values.decodeIfPresent([Taxonomy].self, forKey: .tags)
             eventVenue = try values.decodeIfPresent([Taxonomy].self, forKey: .eventVenue)
             priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
-            location = try values.decodeIfPresent([TaxonomyLocation].self, forKey: .location)
+            locations = try values.decodeIfPresent(TaxonomyLocation.self, forKey: .locations)
             isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
             //Villas related
             headline = try values.decodeIfPresent(String.self, forKey: .headline)
@@ -423,22 +447,23 @@ extension Product {
             rentPricePerWeekLowSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekLowSeason)
             rentPricePerWeekHighSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekHighSeason)
             salePrice = try values.decodeIfPresent(String.self, forKey: .salePrice)
-            // First check for a string
-            do {
-                latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
-            } catch {
-                // then second time assuming that its going to be a double
-                let lati:Double = try values.decodeIfPresent(Double.self, forKey: .latitude) ?? 0.0
-                latitude = String(format: "%f", lati)
-                print("id:\(id)","latitude:\(lati)"  )
-            }
-            do {
-                longitude = try values.decodeIfPresent(String.self, forKey: .longitude)
-            } catch {
-                let longi:Double = try values.decodeIfPresent(Double.self, forKey: .longitude) ?? 0.0
-                longitude = String(format: "%f", longi)
-                print("id:\(id)", "longitude:\(longi)"  )
-            }
+            location = try values.decodeIfPresent(Location.self, forKey: .location)
+//            // First check for a string
+//            do {
+//                latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
+//            } catch {
+//                // then second time assuming that its going to be a double
+//                let lati:Double = try values.decodeIfPresent(Double.self, forKey: .latitude) ?? 0.0
+//                latitude = String(format: "%f", lati)
+//                print("id:\(id)","latitude:\(lati)"  )
+//            }
+//            do {
+//                longitude = try values.decodeIfPresent(String.self, forKey: .longitude)
+//            } catch {
+//                let longi:Double = try values.decodeIfPresent(Double.self, forKey: .longitude) ?? 0.0
+//                longitude = String(format: "%f", longi)
+//                print("id:\(id)", "longitude:\(longi)"  )
+//            }
             
             villaAmenities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaAmenities)
             villaFacilities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaFacilities)
@@ -473,7 +498,7 @@ extension Product {
             zipCode = try values.decodeIfPresent(String.self, forKey: .zipCode)
             email = try values.decodeIfPresent(String.self, forKey: .email)
             website = try values.decodeIfPresent(String.self, forKey: .website)
-            starChief = try values.decodeIfPresent(String.self, forKey: .starChief)
+            starChef = try values.decodeIfPresent([StarChef].self, forKey: .starChef)
             restaurantCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .restaurantCategory)
             cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)
             michelinStar = try values.decodeIfPresent([Taxonomy].self, forKey: .michelinStar)

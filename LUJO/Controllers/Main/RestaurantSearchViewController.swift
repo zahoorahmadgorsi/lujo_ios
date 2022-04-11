@@ -115,7 +115,7 @@ class RestaurantSearchViewController: UIViewController {
         """
         
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: -1 , type: "restaurant" , name: "Restaurant Searched")
+        viewController.product = Product(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Searched")
         viewController.initialMessage = initialMessage
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
@@ -207,7 +207,7 @@ extension RestaurantSearchViewController: UICollectionViewDataSource, UICollecti
         
         cell.name.text = model.name
         
-        if let city = model.location?.first?.city {
+        if let city = model.locations?.city {
             cell.locationContainerView.isHidden = false
             cell.location.text = city.name.uppercased()
         } else {
@@ -308,7 +308,7 @@ extension RestaurantSearchViewController {
         }
     }
     
-    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return

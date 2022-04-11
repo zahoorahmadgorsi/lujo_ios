@@ -31,7 +31,7 @@ class DeeplinkNavigator {
             print("Product Type: \(type) and ProductID: \(id)")
 //            displayAlert(title: "Product Type: \(type) and ProductID: \(id)")
             
-            if let id = Int(id){
+            if !id.isEmpty{
                 let product = Product(id: id,type: type)
                 viewController = ProductDetailsViewController.instantiate(product: product)
                 viewController.modalPresentationStyle = .overFullScreen

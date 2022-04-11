@@ -63,7 +63,7 @@ class RestaurantListViewController: UIViewController {
     }
     
     fileprivate func updateContentUI() {
-        title = dataSource.count > 0 ? "\(dataSource[0].location?.first?.city?.name ?? "") dining spots" : "\(city?.name ?? "") dining spots"
+        title = dataSource.count > 0 ? "\(dataSource[0].locations?.city?.name ?? "") dining spots" : "\(city?.name ?? "") dining spots"
     }
     
     func showError(_ error: Error) {
@@ -161,7 +161,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
 
         
-        if let city = model.location?.first?.city {
+        if let city = model.locations?.city {
             cell.locationContainerView.isHidden = false
             cell.location.text = city.name.uppercased()
         } else {
@@ -211,7 +211,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         }
     }
 
-    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return

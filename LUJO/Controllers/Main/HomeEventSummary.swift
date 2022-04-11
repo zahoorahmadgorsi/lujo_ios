@@ -40,11 +40,7 @@ class HomeEventSummary: UIView {
             name.text = event.name
             priceRange.text = event.priceRange?.first?.name ?? "-"
 
-            var locationText = ""
-            if let cityName = event.location?.first?.city?.name {
-                locationText = "\(cityName), "
-            }
-            locationText += event.location?.first?.country.name ?? ""
+            let locationText = event.getLocation()
             location.text = locationText.uppercased()
 
             dateContainerView.isHidden = false
@@ -80,11 +76,7 @@ class HomeEventSummary: UIView {
             name.text = experience.name
             priceRange.text = experience.priceRange?.first?.name ?? "-"
 
-            var locationText = ""
-            if let cityName = experience.location?.first?.city?.name {
-                locationText = "\(cityName), "
-            }
-            locationText += experience.location?.first?.country.name ?? ""
+            let locationText = experience.getLocation()
             location.text = locationText.uppercased()
 
             dateContainerView.isHidden = true

@@ -102,7 +102,7 @@ class RestaurantRequestReservationViewController: UIViewController {
             let initialMessage = """
             Hi Concierge team,
             
-            I would like to book a table for \(peopleNumber.text!) \(Int(peopleNumber.text!) ?? 1 > 1 ? "people" : "person"), at \(restaurant.name), \(restaurant.location?.first?.city?.name ?? "No city") on \(dateFormatter.string(from: datePicker.date)).
+            I would like to book a table for \(peopleNumber.text!) \(Int(peopleNumber.text!) ?? 1 > 1 ? "people" : "person"), at \(restaurant.name), \(restaurant.locations?.city?.name ?? "No city") on \(dateFormatter.string(from: datePicker.date)).
             
             \(userFirstName)
             """

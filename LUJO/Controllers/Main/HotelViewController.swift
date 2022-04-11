@@ -168,7 +168,7 @@ class HotelViewController: UIViewController {
 
 //                print ("Success: custom request table.")
                 let viewController = AdvanceChatViewController()
-                viewController.product = Product(id: -1, type: "travel" , name: "Hotel in " + cityName)
+                viewController.product = Product(id: "-1234asdfqwer", type: "travel" , name: "Hotel in " + cityName)
                 viewController.initialMessage = initialMessage
                 let navController = UINavigationController(rootViewController:viewController)
                 UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

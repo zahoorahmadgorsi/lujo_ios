@@ -225,7 +225,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         locationRestaurants = restaurants
         myLocationCityView.isHidden = restaurants.count == 0
         noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
-        if let termId = restaurants.first?.location?.first?.city?.termId, let name = restaurants.first?.location?.first?.city?.name {
+        if let termId = restaurants.first?.locations?.city?.termId, let name = restaurants.first?.locations?.city?.name {
             myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: restaurants)
             myLocationCityView.delegate = self
             updatePopularCities()
@@ -242,13 +242,13 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             currentImageNum.text = "1"
         }
         
-        chiefContainerView.isHidden = diningInformations?.starChief == nil
-        if let starChielf = diningInformations?.starChief {
-            chiefNameLabel.text = starChielf.chiefName.uppercased()
-            chiefImageView.downloadImageFrom(link: starChielf.chiefImage ?? "", contentMode: .scaleAspectFill)
-            starsContainerView.isHidden = starChielf.chiefRestaurant.michelinStar?.first == nil
-            starsLabel.text = starChielf.chiefRestaurant.michelinStar?.first?.name.uppercased()
-            restaurantName.text = starChielf.chiefRestaurant.name
+        chiefContainerView.isHidden = diningInformations?.starChef == nil
+        if let starChielf = diningInformations?.starChef {
+            chiefNameLabel.text = starChielf.chefName.uppercased()
+            chiefImageView.downloadImageFrom(link: starChielf.chefImage ?? "", contentMode: .scaleAspectFill)
+            starsContainerView.isHidden = starChielf.chefRestaurant?.michelinStar?.first == nil
+            starsLabel.text = starChielf.chefRestaurant?.michelinStar?.first?.name.uppercased()
+            restaurantName.text = starChielf.chefRestaurant?.name
             
             let gradientColors = [UIColor.blackBackgorund.cgColor,
                                   UIColor(red: 13 / 255, green: 13 / 255, blue: 13 / 255, alpha: 0.01).cgColor]
@@ -265,10 +265,10 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     func updatePopularCities() {
         for city in diningInformations?.cities ?? [] {
             if let cityView = stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
-                if city.termId == locationRestaurants.first?.location?.first?.city?.termId {
+                if city.termId == locationRestaurants.first?.locations?.city?.termId {
                     cityView.removeFromSuperview()
                 }
-            } else if !(city.termId == locationRestaurants.first?.location?.first?.city?.termId) {
+            } else if !(city.termId == locationRestaurants.first?.locations?.city?.termId) {
                 let cityView = DiningCityView()
                 cityView.city = city
                 cityView.delegate = self
@@ -301,7 +301,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             
             presentRestaurantDetailViewController(restaurant: featuredItem, presentationStyle: .overFullScreen)
         } else if sender.view == chiefContainerView {
-            guard let restaurant = diningInformations?.starChief?.chiefRestaurant else { return } 
+            guard let restaurant = diningInformations?.starChef?.chefRestaurant else { return }
             
             // B2 - 6
 //            selectedCell = (cityView as? DiningCityView)?.restaurant1ImageView
@@ -423,7 +423,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
 //        }
     }
     
-    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -538,7 +538,7 @@ extension DiningViewController {
         // B2 - 6
         //Finding UIImageView of restaurant where user has tapped so that we can animate this image
         //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
-        if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.location?.first?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
+        if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.locations?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
             //Finding restaurant which user has just tapped
             if let tappedRestaurant = (cityView as? DiningCityView)?.city?.restaurants.enumerated().first(where: {$0.element.id == restaurant.id}) {
                 if (tappedRestaurant.offset == 0){
@@ -584,7 +584,7 @@ extension DiningViewController {
                                 self.diningInformations?.cities[i].restaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
                                 //finding current cityview from the stackview, to remove and then again adding updated by red/white heart
                                 if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
-                                    if let termId = sender.location?.first?.city?.termId, let name = sender.location?.first?.city?.name {
+                                    if let termId = sender.locations?.city?.termId, let name = sender.locations?.city?.name {
                                         (cityView as? DiningCityView)?.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: (self.diningInformations?.cities[i].restaurants)! )
                                     }
                                 }
@@ -599,7 +599,7 @@ extension DiningViewController {
                 if let itemRestaurant = self.locationRestaurants.enumerated().first(where: {$0.element.id == sender.id}) {
                     //toggling the isFavourite value
                     self.locationRestaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
-                    if let termId = sender.location?.first?.city?.termId, let name = sender.location?.first?.city?.name {
+                    if let termId = sender.locations?.city?.termId, let name = sender.locations?.city?.name {
                         self.myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: self.locationRestaurants)
                     }
                 }

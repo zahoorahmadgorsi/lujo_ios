@@ -36,8 +36,8 @@ enum WishListRouter: URLRequestConvertible {
     }()
 
     case getFavourites(String)
-    case setFavourites(String,Int)
-    case unSetFavourites(String,Int)
+    case setFavourites(String,String)
+    case unSetFavourites(String,String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -117,7 +117,7 @@ enum WishListRouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getFavouritesAsJSONData(token: String , id : Int) -> Data? {
+    fileprivate func getFavouritesAsJSONData(token: String , id : String) -> Data? {
         let body: [String: Any] = [
             "id": id,
             "token": token

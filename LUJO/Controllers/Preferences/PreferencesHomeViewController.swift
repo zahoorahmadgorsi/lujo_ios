@@ -237,7 +237,7 @@ class PreferencesHomeViewController: UIViewController {
             """
             
             let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "Preferences" , name: "Preferences Inquiry")
+            viewController.product = Product(id: "-1234asdfqwer" , type: "Preferences" , name: "Preferences Inquiry")
             viewController.initialMessage = initialMessage
             self.navigationController?.pushViewController(viewController,animated: true)
         } else {

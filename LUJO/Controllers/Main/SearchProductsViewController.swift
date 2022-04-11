@@ -204,11 +204,7 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
             cell.date.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
         }else { //showing location if available
             //cell.dateContainerView.isHidden = true
-            var locationText = ""
-            if let cityName = model.location?.first?.city?.name {
-                locationText = "\(cityName), "
-            }
-            locationText += model.location?.first?.country.name ?? ""
+            let locationText = model.getLocation()
             cell.date.text = locationText.uppercased()
             cell.dateContainerView.isHidden = locationText.isEmpty
             cell.imgDate.image = UIImage(named: "Location White")
@@ -388,7 +384,7 @@ extension SearchProductsViewController {
         }
     }
     
-    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return

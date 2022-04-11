@@ -173,6 +173,15 @@ struct Membership: Codable {
     let expiration: String?
     let discount: Int?
     
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case plan
+        case price
+        case target
+        case expiration
+        case discount
+    }
+    
     init(data: [String : Any]) {
         self.id = data["_id"] as? String ?? "-1"
         self.plan = (data["plan"] as? String ?? "").lowercased()

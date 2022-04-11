@@ -10,7 +10,7 @@ import FirebaseCrashlytics
 import UIKit
 
 struct Hotel: Codable {
-    let id: Int
+    let id: String
     let name: String
     let description: String
     let tripadvisor: String?
@@ -30,7 +30,7 @@ struct Hotel: Codable {
     let hotelFacilities: [Taxonomy]?
     let priceRange: [Taxonomy]?
     let hotelStar: [Taxonomy]?
-    let location: [TaxonomyLocation]
+    let locations: TaxonomyLocation
     var isFavourite: Bool?
     
     enum CodingKeys: String, CodingKey {
@@ -53,7 +53,7 @@ struct Hotel: Codable {
         case hotelFacilities = "hotel_facilities"
         case hotelStar = "hotel_star"
         case priceRange = "price_range"
-        case location
+        case locations
         case isFavourite = "is_favorite"
     }
 
@@ -65,7 +65,7 @@ extension Hotel {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
-            id = try values.decode(Int.self, forKey: .id)
+            id = try values.decode(String.self, forKey: .id)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
             tripadvisor = try values.decodeIfPresent(String.self, forKey: .tripadvisor)
@@ -87,7 +87,7 @@ extension Hotel {
             hotelFacilities = try values.decodeIfPresent([Taxonomy].self, forKey: .hotelFacilities)
             hotelStar = try values.decodeIfPresent([Taxonomy].self, forKey: .hotelStar)
             priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)
-            location = try values.decode([TaxonomyLocation].self, forKey: .location)
+            locations = try values.decode(TaxonomyLocation.self, forKey: .locations)
             isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
         } catch {
             Crashlytics.crashlytics().record(error: error)

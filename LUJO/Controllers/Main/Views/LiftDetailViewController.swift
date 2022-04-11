@@ -266,7 +266,7 @@ class LiftDetailViewController: UIViewController {
             \(userFirstName)
             """
             let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.product = Product(id: "-1234asdfqwer" , type: "aviation" , name: "Flight Booking Inquiry")
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
@@ -322,7 +322,7 @@ class LiftDetailViewController: UIViewController {
             """
 
             let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.product = Product(id: "-1234asdfqwer" , type: "aviation" , name: "Flight Booking Inquiry")
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

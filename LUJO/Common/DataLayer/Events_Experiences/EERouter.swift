@@ -27,16 +27,16 @@ enum EERouter: URLRequestConvertible {
     }()
 
     case home(String)
-    case events(String, Bool, String?, String?, Int?)
-    case experiences(String, String?, String?, Int?)
-    case salesforce(Int, String, String?)
+    case events(String, Bool, String?, String?, String?)
+    case experiences(String, String?, String?, String?)
+    case salesforce(String, String, String?)
     case geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
-    case villas(String, String?, String?, Int?)
-    case goods(String, String?, String?, Int?)
-    case yachts(String, String?, String?, Int?)
-    case getYachtGallery(String, Int)
+    case villas(String, String?, String?, String?)
+    case goods(String, String?, String?, String?)
+    case yachts(String, String?, String?, String?)
+    case getYachtGallery(String, String)
     case topRated(token: String, type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
     case perCity(String, String, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?)
@@ -368,7 +368,7 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getSalesforceDataAsJSONData(itemId: Int, token: String, channelId: String?) -> Data? {
+    fileprivate func getSalesforceDataAsJSONData(itemId: String, token: String, channelId: String?) -> Data? {
         var body: [String: Any] = [
             "item_id": itemId,
             "token": token

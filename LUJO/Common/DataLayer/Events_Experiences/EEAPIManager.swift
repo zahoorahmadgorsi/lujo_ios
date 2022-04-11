@@ -76,7 +76,7 @@ class EEAPIManager {
             }
     }
 
-    func getEvents(_ token: String, past: Bool, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getEvents(_ token: String, past: Bool, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.events(token, past, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -112,7 +112,7 @@ class EEAPIManager {
     }
 
 
-    func getExperiences(_ token: String, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getExperiences(_ token: String, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.experiences(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -147,7 +147,7 @@ class EEAPIManager {
         }
     }
     
-    func getVillas(_ token: String, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getVillas(_ token: String, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.villas(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -182,7 +182,7 @@ class EEAPIManager {
         }
     }
     
-    func getGoods(_ token: String, term: String?, category_term_id: String?, productId: Int? , completion: @escaping ([Product], Error?) -> Void) {
+    func getGoods(_ token: String, term: String?, category_term_id: String?, productId: String? , completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.goods(token, term, category_term_id, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -226,7 +226,7 @@ class EEAPIManager {
         }
     }
     
-    func getYachts(_ token: String, term: String?, cityId: String?, productId: Int?, completion: @escaping ([Product], Error?) -> Void) {
+    func getYachts(_ token: String, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.yachts(token, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -261,7 +261,7 @@ class EEAPIManager {
         }
     }
     
-    func getYachtGallery(_ token: String, postId: Int, completion: @escaping ([Gallery], Error?) -> Void) {
+    func getYachtGallery(_ token: String, postId: String, completion: @escaping ([Gallery], Error?) -> Void) {
         Alamofire.request(EERouter.getYachtGallery(token, postId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -460,7 +460,7 @@ class EEAPIManager {
         Crashlytics.crashlytics().record(error: error)
     }
     
-    func sendRequestForSalesForce(itemId: Int, channelId: String? = nil, completion: @escaping (CustomBookingResponse?, Error?) -> Void) {
+    func sendRequestForSalesForce(itemId: String, channelId: String? = nil, completion: @escaping (CustomBookingResponse?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             print("***ERROR***: User does not exist or is not verified - can't send data to salesforce")
             return

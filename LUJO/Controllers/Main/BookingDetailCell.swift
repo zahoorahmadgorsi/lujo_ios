@@ -56,7 +56,7 @@ class BookingDetailCell: UITableViewCell {
     }
     
     private func getImageForType() -> UIImage? {
-        print(bookingInfo?.bookingType)
+//        print(bookingInfo?.bookingType)
         if bookingInfo?.bookingType == "event" {
             return UIImage(named: "Event Icon White")
         } else if bookingInfo?.bookingType == "experience" {

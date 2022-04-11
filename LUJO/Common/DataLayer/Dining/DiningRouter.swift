@@ -35,10 +35,8 @@ enum DiningRouter: URLRequestConvertible {
     }()
 
     case home(String)
-    case search(String, String?, String?, Double?, Double?)
-//    case events(String, Bool)
-//    case experiences(String)
-    case salesforce(Int, String, String, Int, String)
+    case search(String?, String?, Double?, Double?)
+    case salesforce(String, String, String, Int, String)
 
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -68,12 +66,7 @@ enum DiningRouter: URLRequestConvertible {
         switch self {
         case .home:
             return .get
-        case .search:
-            return .get
-//        case .events:
-//            return .get
-//        case .experiences:
-//            return .get
+        case .search: fallthrough
         case .salesforce:
             return .post
         }
@@ -91,37 +84,8 @@ enum DiningRouter: URLRequestConvertible {
             newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token)
             ]
-        case let .search(token, term, cityId, latitude, longitude):
-            newURLComponents.path.append("/restaurants")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token)
-            ]
-            if let term = term {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-            }
-            if let cityId = cityId {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-            }
-            if let latitude = latitude {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "latitude", value: "\(latitude)"))
-            }
-            if let longitude = longitude {
-                newURLComponents.queryItems?.append(URLQueryItem(name: "longitude", value: "\(longitude)"))
-            }
-
-//        case let .events(token, past):
-//            newURLComponents.path.append("/events")
-//            newURLComponents.queryItems = [
-//                URLQueryItem(name: "token", value: token),
-//            ]
-//            if past {
-//                newURLComponents.queryItems?.append(URLQueryItem(name: "show_past", value: "true"))
-//            }
-//        case let .experiences(token):
-//            newURLComponents.path.append("/experiences")
-//            newURLComponents.queryItems = [
-//                URLQueryItem(name: "token", value: token),
-//            ]
+        case .search:
+            newURLComponents.path.append("/restaurants/search")
         case .salesforce:
             newURLComponents.path.append("/request")
         }
@@ -140,18 +104,28 @@ enum DiningRouter: URLRequestConvertible {
         switch self {
         case .home:
             return nil
-        case .search:
-            return nil
-//        case .events:
-//            return nil
-//        case .experiences:
-//            return nil
+        case let .search(search, location, latitude, longitude):
+            return getSearchDataAsJSONData(search,location, latitude, longitude)
         case let .salesforce(itemId, date, time, persons, token):
             return getSalesforceDataAsJSONData(itemId: itemId, date: date, time: time, persons: persons, token: token)
         }
     }
     
-    fileprivate func getSalesforceDataAsJSONData(itemId: Int, date:String, time:String, persons: Int, token: String) -> Data? {
+    fileprivate func getSearchDataAsJSONData(_ search: String?, _ location:String?, _ latitude:Double?, _ longitude: Double?) -> Data? {
+        var body: [String: Any] = [
+            "search": search ?? ""
+            ,"location": location ?? ""
+        ]
+        if let lat = latitude{
+            body["latitude"] = lat
+        }
+        if let long = longitude {
+            body["longitude"] = long
+        }
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func getSalesforceDataAsJSONData(itemId: String, date:String, time:String, persons: Int, token: String) -> Data? {
         let body: [String: Any] = [
             "item_id": itemId,
             "date": date,
@@ -159,8 +133,6 @@ enum DiningRouter: URLRequestConvertible {
             "persons": persons,
             "token": token
         ]
-        
         return try? JSONSerialization.data(withJSONObject: body, options: [])
-        
     }
 }

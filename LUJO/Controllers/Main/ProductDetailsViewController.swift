@@ -360,10 +360,7 @@ extension ProductDetailsViewController {
         }
         
         var locationText = product.address ?? ""  //in case of restaurant , it will have exact address
-        if let cityName = product.location?.first?.city?.name {
-            locationText += "\(cityName), "
-        }
-        locationText += product.location?.first?.country.name ?? ""
+        locationText += "," + product.getLocation()
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         
@@ -440,11 +437,7 @@ extension ProductDetailsViewController {
             self.imgHeart.image = UIImage(named: "heart_white")
         }
         
-        var locationText = ""
-        if let cityName = product.location?.first?.city?.name {
-            locationText = "\(cityName), "
-        }
-        locationText += product.location?.first?.country.name ?? ""
+        let locationText = product.getLocation()
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         
@@ -479,10 +472,10 @@ extension ProductDetailsViewController {
         }
         
         var locationText = ""
-        if let cityName = product.location?.first?.city?.name {
+        if let cityName = product.locations?.city?.name {
             locationText = "\(cityName), "
         }
-        locationText += product.location?.first?.country.name ?? ""
+        locationText += product.locations?.country.name ?? ""
         locationLabel.text = locationText.uppercased()
         
         dateContainerView.isHidden = true
@@ -614,11 +607,7 @@ extension ProductDetailsViewController {
         }else{
             self.imgHeart.image = UIImage(named: "heart_white")
         }
-        var locationText = ""
-        if let cityName = product.location?.first?.city?.name {
-            locationText = "\(cityName), "
-        }
-        locationText += product.location?.first?.country.name ?? ""
+        let locationText = product.getLocation()
         locationLabel.text = locationText.uppercased()
         
         dateContainerView.isHidden = true
@@ -992,7 +981,7 @@ extension ProductDetailsViewController {
         }
     }
         
-    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return

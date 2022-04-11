@@ -91,8 +91,8 @@ class DiningCityView: UIView {
             if index == 0 {
                 restaurant1ImageView.downloadImageFrom(link: restaurant.primaryMedia?.mediaUrl ?? "", contentMode: .scaleAspectFill)
                 restaurant1NameLabel.text = restaurant.name
-                restaurant1locationContainerView.isHidden = restaurant.location?.count == 0
-                restaurant1locationLabel.text = restaurant.location?.first?.city?.name.uppercased()
+                restaurant1locationContainerView.isHidden = restaurant.locations == nil
+                restaurant1locationLabel.text = restaurant.locations?.city?.name.uppercased()
                 restaurant1starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
                 restaurant1starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
                 //Zahoor
@@ -108,8 +108,8 @@ class DiningCityView: UIView {
                 
                 restaurant2ImageView.downloadImageFrom(link: restaurant.primaryMedia?.mediaUrl ?? "", contentMode: .scaleAspectFill)
                 restaurant2NameLabel.text = restaurant.name
-                restaurant2locationContainerView.isHidden = restaurant.location?.count == 0
-                restaurant2locationLabel.text = restaurant.location?.first?.city?.name.uppercased()
+                restaurant2locationContainerView.isHidden = restaurant.locations == nil
+                restaurant2locationLabel.text = restaurant.locations?.city?.name.uppercased()
                 restaurant2starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
                 restaurant2starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
                 //Zahoor

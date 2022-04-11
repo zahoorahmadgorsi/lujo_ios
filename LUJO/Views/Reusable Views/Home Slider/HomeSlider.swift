@@ -194,11 +194,7 @@ extension HomeSlider: UICollectionViewDataSource {
             cell.imgDate.image = UIImage(named: "calendar_home_white")
         } else { //showing location if available
             //cell.dateContainerView.isHidden = true
-            var locationText = ""
-            if let cityName = model.location?.first?.city?.name {
-                locationText = "\(cityName), "
-            }
-            locationText += model.location?.first?.country.name ?? ""
+            let locationText = model.getLocation()
             cell.date.text = locationText.uppercased()
             cell.dateContainerView.isHidden = locationText.isEmpty
             cell.imgDate.image = UIImage(named: "Location White")

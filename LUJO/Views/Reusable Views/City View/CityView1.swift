@@ -131,11 +131,7 @@ class CityView1: UIView {
                     lblProduct1Dates.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
                 }else { //showing location if available
                     //cell.dateContainerView.isHidden = true
-                    var locationText = ""
-                    if let cityName = product.location?.first?.city?.name {
-                        locationText = "\(cityName), "
-                    }
-                    locationText += product.location?.first?.country.name ?? ""
+                    var locationText = product.getLocation()
                     lblProduct1Dates.text = locationText.uppercased()
                     svProduct1Dates.isHidden = locationText.isEmpty
                     imgProduct1Date.image = UIImage(named: "Location White")

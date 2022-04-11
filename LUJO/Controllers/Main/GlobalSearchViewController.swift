@@ -199,7 +199,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     restaurant1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
                 
-                if let city = restaurant.location?.first?.city {
+                if let city = restaurant.locations?.city {
                     restaurant1locationContainerView.isHidden = false
                     restaurant1locationLabel.text = city.name.uppercased()
                 } else {
@@ -220,7 +220,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     restaurant2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
                 
-                if let city = restaurant.location?.first?.city {
+                if let city = restaurant.locations?.city {
                     restaurant2locationContainerView.isHidden = false
                     restaurant2locationLabel.text = city.name.uppercased()
                 } else {
@@ -311,20 +311,20 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func seeAllEventsButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.event.items.first?.location?.first?.city?.termId {
-            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .event, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.event.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.event.num ?? 0, restaurants: [])), animated: true)
+        if let termId = cityInformation?.event.items.first?.locations?.city?.termId {
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .event, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.event.items.first?.locations?.city?.name ?? "", restaurantsNum: cityInformation?.event.num ?? 0, restaurants: [])), animated: true)
         }
     }
     
     @IBAction func seeAllRestaurantsButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.restaurant.items.first?.location?.first?.city?.termId {
-            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.restaurant.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.restaurant.num ?? 0, restaurants: [])), animated: true)
+        if let termId = cityInformation?.restaurant.items.first?.locations?.city?.termId {
+            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.restaurant.items.first?.locations?.city?.name ?? "", restaurantsNum: cityInformation?.restaurant.num ?? 0, restaurants: [])), animated: true)
         }
     }
     
     @IBAction func seeAllExperiancesButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.experience.items.first?.location?.first?.city?.termId {
-            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .experience, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.experience.items.first?.location?.first?.city?.name ?? "", restaurantsNum: cityInformation?.experience.num ?? 0, restaurants: [])), animated: true)
+        if let termId = cityInformation?.experience.items.first?.locations?.city?.termId {
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .experience, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.experience.items.first?.locations?.city?.name ?? "", restaurantsNum: cityInformation?.experience.num ?? 0, restaurants: [])), animated: true)
         }
     }
     

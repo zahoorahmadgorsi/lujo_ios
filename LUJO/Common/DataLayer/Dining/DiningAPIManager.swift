@@ -49,7 +49,7 @@ extension GoLujoAPIManager  {
     }
 
     func search(_ token: String, term: String?, cityId: String?, currentLocation: CLLocation?, completion: @escaping ([Product]?, Error?) -> Void) {
-        Alamofire.request(DiningRouter.search(token, term, cityId, currentLocation?.coordinate.latitude, currentLocation?.coordinate.longitude))
+        Alamofire.request(DiningRouter.search(term, cityId, currentLocation?.coordinate.latitude, currentLocation?.coordinate.longitude))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -144,7 +144,7 @@ extension GoLujoAPIManager  {
         Crashlytics.crashlytics().record(error: error)
     }
     
-    func sendRequestForSalesForce(itemId: Int, date: String, time: String, persons: Int , completion: @escaping (CustomBookingResponse?, Error?) -> Void) {
+    func sendRequestForSalesForce(itemId: String, date: String, time: String, persons: Int , completion: @escaping (CustomBookingResponse?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             print("***ERROR***: User does not exist or is not verified - can't send data to salesforce")
             return

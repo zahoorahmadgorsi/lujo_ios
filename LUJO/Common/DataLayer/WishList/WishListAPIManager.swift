@@ -15,7 +15,7 @@ import Mixpanel
 
 extension GoLujoAPIManager  {
     
-    func setUnSetFavourites(token: String, id: Int, isUnSetFavourite: Bool, completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(token: String, id: String, isUnSetFavourite: Bool, completion: @escaping (String?, Error?) -> Void) {
         if (isUnSetFavourite){
             Mixpanel.mainInstance().track(event: "UnLiked",
                   properties: ["productId" : id])

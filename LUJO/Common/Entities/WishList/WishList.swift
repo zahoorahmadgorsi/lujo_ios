@@ -10,22 +10,22 @@ import Foundation
 import FirebaseCrashlytics
 
 class Favourite{
-    internal init(id: Int? = nil, name: String? = nil, description: String? = nil, primaryMedia: Gallery? = nil, location: [TaxonomyLocation]? = nil, isFavourite: Bool? = nil
+    internal init(id: String? = nil, name: String? = nil, description: String? = nil, primaryMedia: Gallery? = nil, locations: TaxonomyLocation? = nil, isFavourite: Bool? = nil
                   , gallery: [Gallery]? = nil) {
         self.id = id
         self.name = name
         self.description = description
         self.primaryMedia = primaryMedia
-        self.location = location
+        self.locations = locations
         self.isFavourite = isFavourite
         self.gallery = gallery
     }
     
-    var id: Int?
+    var id: String?
     var name: String?
     var description: String?
     var primaryMedia: Gallery?
-    var location: [TaxonomyLocation]?
+    var locations: TaxonomyLocation?
     var isFavourite: Bool?
     let gallery: [Gallery]?
  

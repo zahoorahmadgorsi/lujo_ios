@@ -9,26 +9,26 @@
 import FirebaseCrashlytics
 import UIKit
 
-struct StarChief: Codable {
-    let chiefName: String
-    let chiefImage: String?
-    let chiefRestaurant: Product
+struct StarChef: Codable {
+    let chefName: String
+    let chefImage: String?
+    let chefRestaurant: Product?
 
     enum CodingKeys: String, CodingKey {
-        case chiefName = "chef_name"
-        case chiefImage = "chef_image"
-        case chiefRestaurant = "chef_restaurant"
+        case chefName = "chef_name"
+        case chefImage = "chef_image"
+        case chefRestaurant = "chef_restaurant_id"  // actually it is "chef_restaurant"
     }
 }
 
-extension StarChief {
+extension StarChef {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
-            chiefName = try values.decode(String.self, forKey: .chiefName)
-            chiefImage = try values.decodeIfPresent(String.self, forKey: .chiefImage)
-            chiefRestaurant = try values.decode(Product.self, forKey: .chiefRestaurant)
+            chefName = try values.decode(String.self, forKey: .chefName)
+            chefImage = try values.decodeIfPresent(String.self, forKey: .chefImage)
+            chefRestaurant = try values.decodeIfPresent(Product.self, forKey: .chefRestaurant)
 
         } catch {
             Crashlytics.crashlytics().record(error: error)
@@ -98,14 +98,14 @@ extension DiningCity {
 
 struct DiningHomeObjects: Codable {
     let slider: [Product]?
-    let starChief: StarChief?
+    let starChef: StarChef?
     let cuisines: [Cuisine]
     var cities: [DiningCity]
 
     
     enum CodingKeys: String, CodingKey {
         case slider
-        case starChief = "star-chef"
+        case starChef = "star-chef"
         case cuisines
         case cities
     }
@@ -144,7 +144,7 @@ struct DiningHomeObjects: Codable {
     func getFeaturedLocations() -> [String] {
         var list = [String]()
         for feature in slider ?? [] {
-            list.append(feature.location?.first?.city?.name ?? "")
+            list.append(feature.locations?.city?.name ?? "")
         }
 
         return list
@@ -157,7 +157,7 @@ extension DiningHomeObjects {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             slider = try values.decodeIfPresent([Product].self, forKey: .slider)
-            starChief = try values.decodeIfPresent(StarChief.self, forKey: .starChief)
+            starChef = try values.decodeIfPresent(StarChef.self, forKey: .starChef)
             cuisines = try values.decode([Cuisine].self, forKey: .cuisines)
             cities = try values.decode([DiningCity].self, forKey: .cities)
 

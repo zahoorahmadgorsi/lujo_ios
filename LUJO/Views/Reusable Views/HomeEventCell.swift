@@ -21,11 +21,7 @@ class HomeEventCell: UICollectionViewCell {
             name.text = event.name
             priceLabel.text = event.priceRange?.first?.name ?? "-"
 
-            var locationText = ""
-            if let cityName = event.location?.first?.city?.name {
-                locationText = "\(cityName), "
-            }
-            locationText += event.location?.first?.country.name ?? ""
+            let locationText = event.getLocation()
             location.text = locationText.uppercased()
             dateContainerView.isHidden = false
 
@@ -66,11 +62,7 @@ class HomeEventCell: UICollectionViewCell {
             name.text = experience.name
             priceLabel.text = experience.priceRange?.first?.name ?? "-"
 
-            var locationText = ""
-            if let cityName = experience.location?.first?.city?.name {
-                locationText = "\(cityName), "
-            }
-            locationText += experience.location?.first?.country.name ?? ""
+            let locationText = experience.getLocation()
             location.text = locationText.uppercased()
 
             dateContainerView.isHidden = true
@@ -81,9 +73,6 @@ class HomeEventCell: UICollectionViewCell {
                 tagContainerView.isHidden = true
             }
 
-//            let city = experience.location.first?.city?.name.uppercased() ?? ""
-//            let country = experience.location.first?.country.name.uppercased() ?? ""
-//            location.text = "\(city) " + (!city.isEmpty && !country.isEmpty ? "|" : "") + " \(country)"
             self.item = item
             return
         }

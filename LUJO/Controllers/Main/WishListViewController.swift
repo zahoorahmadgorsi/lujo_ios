@@ -160,7 +160,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -191,7 +191,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -221,7 +221,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -251,7 +251,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -281,7 +281,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -311,7 +311,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -341,7 +341,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -371,7 +371,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     , name: item.name
                     , description: item.description
                     , primaryMedia:item.primaryMedia
-                    , location: item.location
+                    , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
             wishListView.itemsList = itemsList
@@ -540,7 +540,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
     
     func didTappedOnHeartAt(index: Int,itemType:FavouriteType, sender: WishListView){
-        var itemID: Int = 0
+        var itemID: String = ""
         var isFavourite:Bool = false
         switch itemType {
         case .event:
@@ -635,7 +635,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         }
     }
 
-    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return

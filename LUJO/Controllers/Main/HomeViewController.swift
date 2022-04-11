@@ -383,7 +383,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         noNearbyEventsContainerView?.isHidden = events.count > 0
 //        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? "your city")"
 //        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? (events.first?.location?.first?.country.name ?? "your city"))"
-        let location = "Upcoming in \(events.first?.location?.first?.city?.name ?? (events.first?.location?.first?.country.name ?? "your city"))"
+        let location = "Upcoming in \(events.first?.locations?.city?.name ?? (events.first?.locations?.country.name ?? "your city"))"
         locationEventTitleLabel.text = location
         print(location)
     }
@@ -820,7 +820,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
 
     
-    func setUnSetFavourites(id:Int, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
