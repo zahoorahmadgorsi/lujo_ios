@@ -143,7 +143,14 @@ enum PreferencesRouter: URLRequestConvertible {
     func getHTTPMethod() -> HTTPMethod {
         switch self {
         case .getAllPreferences:    fallthrough
-        case .getAviationCategories: return .get
+        case .getAviationCategories: fallthrough
+        case .getDiningCuisines: fallthrough
+        case .getDiningAllergies: fallthrough
+        case .getDiningPreferences: fallthrough
+        case .getDiningTimings: fallthrough
+        case .getDiningBeverages: fallthrough
+        case .getDiningSeatings:
+            return .get
         case .getGiftHabits:        fallthrough
         case .getGiftCategories:    fallthrough
         case .getGiftPreferences:   fallthrough
@@ -175,12 +182,6 @@ enum PreferencesRouter: URLRequestConvertible {
         case .searchDestination: fallthrough
         case .searchRegions:    fallthrough
             
-        case .getDiningCuisines: fallthrough
-        case .getDiningAllergies: fallthrough
-        case .getDiningPreferences: fallthrough
-        case .getDiningTimings: fallthrough
-        case .getDiningBeverages: fallthrough
-        case .getDiningSeatings: fallthrough
         case .setDiningCuisines: fallthrough
         case .setDiningPreferences: fallthrough
         case .setDiningBeverages: fallthrough
@@ -285,22 +286,12 @@ enum PreferencesRouter: URLRequestConvertible {
 //            newURLComponents.path.append("/reference/locations")
             newURLComponents.path.append("/restaurants/location")
             
-        case .getDiningCuisines:
-//            newURLComponents.path.append("/reference/cuisines")
-            newURLComponents.path.append(" /restaurants/cuisine-category")
-        case .getDiningAllergies:
-            //newURLComponents.path.append("/reference/allergies")
-            newURLComponents.path.append("/restaurants/allergy")
-        case .getDiningPreferences:
-//            newURLComponents.path.append("/reference/dining-preferences")
-            newURLComponents.path.append("/restaurants/dining-preference")
-        case .getDiningTimings:
-            //newURLComponents.path.append("/reference/dining-timings")
-            newURLComponents.path.append("/restaurants/dining-time")
-        case .getDiningBeverages:  newURLComponents.path.append("/reference/beverages")
-        case .getDiningSeatings:
-            //newURLComponents.path.append("/reference/seating")
-            newURLComponents.path.append("/restaurants/seating")
+        case .getDiningCuisines:    newURLComponents.path.append("/restaurants/cuisine-category")
+        case .getDiningAllergies:   newURLComponents.path.append("/restaurants/allergy")
+        case .getDiningPreferences: newURLComponents.path.append("/restaurants/dining-preference")
+        case .getDiningTimings:     newURLComponents.path.append("/restaurants/dining-time")
+        case .getDiningBeverages:   newURLComponents.path.append("/restaurants/beverage")
+        case .getDiningSeatings:    newURLComponents.path.append("/restaurants/seating")
         case .setDiningCuisines: fallthrough
         case .setDiningPreferences: fallthrough
         case .setDiningBeverages: fallthrough
@@ -363,8 +354,16 @@ enum PreferencesRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-        case .getAllPreferences:    return nil
-        case .getAviationCategories:    return nil
+        case .getAllPreferences:                fallthrough
+        case .getAviationCategories:            fallthrough
+        case .getDiningCuisines:     fallthrough
+        case .getDiningAllergies:    fallthrough
+        case .getDiningPreferences:  fallthrough
+        case .getDiningTimings:      fallthrough
+        case .getDiningBeverages:    fallthrough
+        case .getDiningSeatings:
+            return nil
+            
         case let .getGiftHabits(token):         fallthrough
         case let .getGiftCategories(token):     fallthrough
         case let .getGiftPreferences(token):    fallthrough
@@ -372,12 +371,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case let .getOtherInterests(token):    fallthrough
         case let .getAviationBeverages(token): fallthrough
             
-        case let .getDiningCuisines(token):    fallthrough
-        case let .getDiningAllergies(token):    fallthrough
-        case let .getDiningPreferences(token):    fallthrough
-        case let .getDiningTimings(token):    fallthrough
-        case let .getDiningBeverages(token):    fallthrough
-        case let .getDiningSeatings(token): fallthrough
+
         case let .getEventCategory(token): fallthrough
         case let .getEventLocation(token): fallthrough
         case let .getTravelHotelGroups(token): fallthrough
