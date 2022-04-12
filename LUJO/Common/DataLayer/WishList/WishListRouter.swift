@@ -119,8 +119,7 @@ enum WishListRouter: URLRequestConvertible {
     
     fileprivate func getFavouritesAsJSONData(token: String , id : String) -> Data? {
         let body: [String: Any] = [
-            "id": id,
-            "token": token
+            "id": id
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

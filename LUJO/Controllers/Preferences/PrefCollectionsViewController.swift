@@ -2271,7 +2271,6 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
                 print("yacht default")
             }
         case .dining:
-            
             switch prefInformationType {
             case .diningCuisines:
                 if let ids = userPreferences?.restaurant.restaurant_preferred_cuisine_id{

@@ -362,16 +362,14 @@ enum EERouter: URLRequestConvertible {
         let body: [String: Any] = [
             "type": type,
             "latitude": latitude,
-            "longitude": longitude,
-            "token": token
+            "longitude": longitude
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
     fileprivate func getSalesforceDataAsJSONData(itemId: String, token: String, channelId: String?) -> Data? {
         var body: [String: Any] = [
-            "item_id": itemId,
-            "token": token
+            "item_id": itemId
         ]
         if let channelId = channelId {
             body["channelId"] = channelId
@@ -381,8 +379,7 @@ enum EERouter: URLRequestConvertible {
     
     fileprivate func getFiltersDataAsJSONData(type: String, token: String) -> Data? {
         let body: [String: Any] = [
-            "type": type,
-            "token": token
+            "type": type
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

@@ -395,7 +395,7 @@ class PrefImagesCollViewController: UIViewController {
                 if let types = userPreferences?.profile{
                     for type in types {
                         if type.count > 0{ //to avoid empty string
-                            selectedArray.append(type) //making lowercased, Aviation to aviation
+                            selectedArray.append(type)//(type == "yachting" ? "yacht" : type) // yachting to yacht
                         }
                     }
                 }
@@ -768,7 +768,7 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
             cell.lblTitle.text = model.name.capitalizingFirstLetter()
             cell.lblTitle.textColor = .white
             if let ids = userPreferences?.profile{
-                if (ids.contains(model.name)){
+                if (ids.contains(model.name)){//(model.name == "yachting" ? "yacht" : model.name)){         //app is showing yachting but server is expecting yacht
                     cell.imgView.image = UIImage(named: model.name + " general selected")
                     cell.lblTitle.textColor = .rgMid
                 }
@@ -785,7 +785,7 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
 extension PrefImagesCollViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let termId = String(itemsList[indexPath.row].termId)
-        let name = String(itemsList[indexPath.row].name)
+        let name = String(itemsList[indexPath.row].name)// == "yachting" ? "yacht" : itemsList[indexPath.row].name)
         
         switch self.prefType {
         case .travel:

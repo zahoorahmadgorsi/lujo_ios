@@ -118,8 +118,7 @@ enum PaymentRouter: URLRequestConvertible {
         var body: [String: Any] = [
             "membership_id": membershipId,
             "transaction_id": transactionId,
-            "amount": amount,
-            "token": token
+            "amount": amount
         ]
         
         if let referralCode = referralCode {
@@ -133,8 +132,7 @@ enum PaymentRouter: URLRequestConvertible {
         let body: [String: Any] = [
             "salesforce_id": bookingId,
             "transaction_id": transactionId,
-            "amount": amount,
-            "token": token
+            "amount": amount
         ]
         
         return try? JSONSerialization.data(withJSONObject: body, options: [])

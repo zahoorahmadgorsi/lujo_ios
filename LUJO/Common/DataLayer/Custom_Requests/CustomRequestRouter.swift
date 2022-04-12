@@ -115,8 +115,7 @@ enum CustomRequestRouter: URLRequestConvertible {
             "yacht_date_from": dateFrom,
             "yacht_date_to": dateTo,
             "yacht_guests": guestsCount,
-            "token": token
-            ,"yacht_charter": yachtChareter
+            "yacht_charter": yachtChareter
             ,"yacht_budget" : "-123456"    //EmptyString
         ]
         
@@ -133,7 +132,7 @@ enum CustomRequestRouter: URLRequestConvertible {
             "villa_guests": guestsCount,
             "villa_name": villaName   //its villaname
             ,"villa_rooms": villaRooms
-            ,"token": token
+            
         ]
         
         return try? JSONSerialization.data(withJSONObject: body, options: [])
@@ -147,8 +146,7 @@ enum CustomRequestRouter: URLRequestConvertible {
             "hotel_guests": adultsCount,
             "hotel_rooms": roomsCount,
             "hotel_stars": hotelStars,
-            "hotel_radius": hotelRadius,
-            "token": token
+            "hotel_radius": hotelRadius
         ]
         
         if let hotelName = hotelName, !hotelName.isEmpty {

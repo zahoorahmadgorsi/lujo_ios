@@ -74,8 +74,7 @@ enum RecentlyViewedRouter: URLRequestConvertible {
     
     fileprivate func getSettingRecentlyViewedAsJSONData(token: String , id: String) -> Data? {
         let body: [String: Any] = [
-            "id": id,
-            "token": token
+            "id": id
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

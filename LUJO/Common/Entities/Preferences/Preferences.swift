@@ -50,30 +50,21 @@ struct Preferences: Codable {
 
 struct GiftPreferences : Codable {
     var gift_habit_id : [String]?
-    var gift_habit_id_other : String?
     var gift_category_id : [String]?
-    var gift_category_id_other : String?
     var gift_preferences_id : [String]?
-    var gift_preferences_id_other : String?
     
     enum CodingKeys: String, CodingKey {
-        case gift_habit_id = "gift_habit_id"
-        case gift_habit_id_other = "gift_habit_id_other"
-        case gift_category_id = "gift_category_id"
-        case gift_category_id_other = "gift_category_id_other"
-        case gift_preferences_id = "gift_preferences_id"
-        case gift_preferences_id_other = "gift_preferences_id_other"
+        case gift_habit_id = "gift_habit_ids"
+        case gift_category_id = "gift_category_ids"
+        case gift_preferences_id = "gift_preferences_ids"
     }
     
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             gift_habit_id = try values.decodeIfPresent([String].self, forKey: .gift_habit_id)
-            gift_habit_id_other = try values.decodeIfPresent(String.self, forKey: .gift_habit_id_other)
             gift_category_id = try values.decodeIfPresent([String].self, forKey: .gift_category_id)
-            gift_category_id_other = try values.decodeIfPresent(String.self, forKey: .gift_category_id_other)
             gift_preferences_id = try values.decodeIfPresent([String].self, forKey: .gift_preferences_id)
-            gift_preferences_id_other = try values.decodeIfPresent(String.self, forKey: .gift_preferences_id_other)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
@@ -123,9 +114,7 @@ struct AviationPreferences  : Codable {
     var aviation_preferred_airports : [String]?
     var aviation_preferred_charter_range : String?
     var aviation_preferred_cuisine_id : [String]?
-    var aviation_preferred_cuisine_id_other  : String?
     var aviation_preferred_beverage_id : [String]?
-    var aviation_preferred_beverage_id_other  : String?
     var aviation_aircraft_category_id : [String]?
 
     enum CodingKeys: String, CodingKey {
@@ -136,11 +125,9 @@ struct AviationPreferences  : Codable {
         case aviation_preferred_destinations = "aviation_preferred_destinations"
         case aviation_preferred_airports = "aviation_preferred_airports"
         case aviation_preferred_charter_range = "aviation_preferred_charter_range"
-        case aviation_preferred_cuisine_id = "aviation_preferred_cuisine_id"
-        case aviation_preferred_cuisine_id_other = "aviation_preferred_cuisine_id_other"
-        case aviation_preferred_beverage_id = "aviation_preferred_beverage_id"
-        case aviation_preferred_beverage_id_other = "aviation_preferred_beverage_id_other"
-        case aviation_aircraft_category_id = "aviation_aircraft_category_id"
+        case aviation_preferred_cuisine_id = "aviation_preferred_cuisine_ids"
+        case aviation_preferred_beverage_id = "aviation_preferred_beverage_ids"
+        case aviation_aircraft_category_id = "aviation_aircraft_category_ids"
     }
     
     init(from decoder: Decoder) throws {
@@ -154,9 +141,7 @@ struct AviationPreferences  : Codable {
             aviation_preferred_airports = try values.decodeIfPresent([String].self, forKey: .aviation_preferred_airports)
             aviation_preferred_charter_range = try values.decodeIfPresent(String.self, forKey: .aviation_preferred_charter_range)
             aviation_preferred_cuisine_id = try values.decodeIfPresent([String].self, forKey: .aviation_preferred_cuisine_id)
-            aviation_preferred_cuisine_id_other = try values.decodeIfPresent(String.self, forKey: .aviation_preferred_cuisine_id_other)
             aviation_preferred_beverage_id = try values.decodeIfPresent([String].self, forKey: .aviation_preferred_beverage_id)
-            aviation_preferred_beverage_id_other = try values.decodeIfPresent(String.self, forKey: .aviation_preferred_beverage_id_other)
             aviation_aircraft_category_id = try values.decodeIfPresent([String].self, forKey: .aviation_aircraft_category_id)
         } catch {
             Crashlytics.crashlytics().record(error: error)
@@ -187,9 +172,9 @@ struct YachtPreferences : Codable {
         case yacht_length = "yacht_length"
         case yacht_type = "yacht_type"
         case yacht_style = "yacht_style"
-        case yacht_preferred_cuisine_id = "yacht_preferred_cuisine_id"
+        case yacht_preferred_cuisine_id = "yacht_preferred_cuisine_ids"
         case yacht_preferred_cuisine_id_other = "yacht_preferred_cuisine_id_other"
-        case yacht_interests_id = "yacht_interests_id"
+        case yacht_interests_id = "yacht_interests_ids"
     }
     
     init(from decoder: Decoder) throws {
@@ -226,16 +211,16 @@ struct RestaurantPreferences : Codable {
     var restaurant_seating_id : [String]?
     
     enum CodingKeys: String, CodingKey {
-        case restaurant_preferred_cuisine_id = "restaurant_preferred_cuisine_id"
+        case restaurant_preferred_cuisine_id = "restaurant_preferred_cuisine_ids"
         case restaurant_preferred_cuisine_id_other = "restaurant_preferred_cuisine_id_other"
-        case restaurant_allergy_id = "restaurant_allergy_id"
+        case restaurant_allergy_id = "restaurant_allergy_ids"
 //        case restaurant_allergy_id_other = "restaurant_allergy_id_other"
-        case restaurant_dinning_id = "restaurant_dinning_id"
+        case restaurant_dinning_id = "restaurant_dinning_ids"
         case restaurant_dinning_id_other = "restaurant_dinning_id_other"
-        case restaurant_timing_id = "restaurant_timing_id"
-        case restaurant_beverage_id = "restaurant_beverage_id"
+        case restaurant_timing_id = "restaurant_timing_ids"
+        case restaurant_beverage_id = "restaurant_beverage_ids"
         case restaurant_beverage_id_other = "restaurant_beverage_id_other"
-        case restaurant_seating_id = "restaurant_seating_id"
+        case restaurant_seating_id = "restaurant_seating_ids"
     }
     
     init(from decoder: Decoder) throws {
@@ -265,9 +250,9 @@ struct EventPreferences : Codable {
     var event_location_id : [String]?
     
     enum CodingKeys: String, CodingKey {
-        case event_category_id = "event_category_id"
+        case event_category_id = "event_category_ids"
         case event_category_id_other = "event_category_id_other"
-        case event_location_id = "event_location_id"
+        case event_location_id = "event_location_ids"
     }
     
     init(from decoder: Decoder) throws {
@@ -314,10 +299,10 @@ struct TravelPreferences : Codable {
         case travel_rating_leisure_hotels = "travel_rating_leisure_hotels"
         case travel_destination_type = "travel_destination_type"
         case travel_hotel_group = "travel_hotel_group"
-        case travel_amenity_id = "travel_amenity_id"
+        case travel_amenity_id = "travel_amenity_ids"
         case travel_amenity_id_other = "travel_amenity_id_other"
-        case travel_activity_id = "travel_activity_id"
-        case travel_airline_id = "travel_airline_id"
+        case travel_activity_id = "travel_activity_ids"
+        case travel_airline_id = "travel_airline_ids"
         case travel_airplane_seat = "travel_airplane_seat"
 //            case travel_airplane_seat_other = "travel_airplane_seat_other"
         case travel_airplane_business_cabin_class = "travel_airplane_business_cabin_class"
@@ -326,7 +311,7 @@ struct TravelPreferences : Codable {
         case travel_medical_dietary_meal = "travel_media_dietary_meal"
         case travel_medical_dietary_meal_other = "travel_media_dietary_meal_other"
         case travel_hotel_styles = "travel_hotel_types"
-        case travel_allergy_id = "travel_allergy_id"
+        case travel_allergy_id = "travel_allergy_ids"
         case travel_allergy_id_other = "travel_allergy_id_other"
     }
     
@@ -369,10 +354,10 @@ struct VillaPreferences : Codable {
     var villa_preferred_accommodations_id_other : String?
 
     enum CodingKeys: String, CodingKey {
-        case villa_preferred_destinations_id = "villa_preferred_destinations_id"
-        case villa_preferred_amenities_id = "villa_preferred_amenities_id"
+        case villa_preferred_destinations_id = "villa_preferred_destinations_ids"
+        case villa_preferred_amenities_id = "villa_preferred_amenities_ids"
         case villa_preferred_amenities_id_other = "villa_preferred_amenities_id_other"
-        case villa_preferred_accommodations_id = "villa_preferred_accommodations_id"
+        case villa_preferred_accommodations_id = "villa_preferred_accommodations_ids"
         case villa_preferred_accommodations_id_other = "villa_preferred_accommodations_id_other"
     }
     

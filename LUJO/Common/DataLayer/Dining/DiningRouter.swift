@@ -130,8 +130,7 @@ enum DiningRouter: URLRequestConvertible {
             "item_id": itemId,
             "date": date,
             "time": time,
-            "persons": persons,
-            "token": token
+            "persons": persons
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

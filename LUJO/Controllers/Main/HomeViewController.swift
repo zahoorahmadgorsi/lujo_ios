@@ -160,8 +160,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         updateUI()
         setupTapGesturesForEventsAndExperiences()
 
-        
-
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
         noNearbyEventsContainerView.isHidden = true
