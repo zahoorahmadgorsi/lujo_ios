@@ -89,15 +89,12 @@ class PrefCollectionsViewController: UIViewController {
             switch prefInformationType {
             case .giftHabbits:
                 lblPrefQuestion.text = "Tell us about your gift giving habits:"
-                txtPleaseSpecify.text = self.userPreferences?.gift.gift_habit_id_other
                 previouslySelectedItems = self.userPreferences?.gift.gift_habit_id ?? []
             case .giftCategories:
                 lblPrefQuestion.text = "Preferred gift items:"
-                txtPleaseSpecify.text = self.userPreferences?.gift.gift_category_id_other
                 previouslySelectedItems = self.userPreferences?.gift.gift_category_id ?? []
             case .giftPreferences:
                 lblPrefQuestion.text = "Item Preferences:"
-                txtPleaseSpecify.text = self.userPreferences?.gift.gift_preferences_id_other
                 //removing the duplicates
                 previouslySelectedItems = Array(Set(self.userPreferences?.gift.gift_preferences_id ?? [])) //Order might change
                 btnNextStep.setTitle("F I N I S H", for: .normal)
@@ -128,11 +125,9 @@ class PrefCollectionsViewController: UIViewController {
                 }
             case .aviationPreferredCuisine:
                 lblPrefQuestion.text = "Preferred cuisine?"
-                txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_cuisine_id_other
                 previouslySelectedItems = self.userPreferences?.aviation.aviation_preferred_cuisine_id ?? []
             case .aviationPreferredBevereges:
                 lblPrefQuestion.text = "Preferred Beverages?"
-                txtPleaseSpecify.text = self.userPreferences?.aviation.aviation_preferred_beverage_id_other
                 previouslySelectedItems = self.userPreferences?.aviation.aviation_preferred_beverage_id ?? []
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
@@ -1167,19 +1162,16 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.gift.gift_habit_id = arr
                             }
-                            userPreferences.gift.gift_habit_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .giftCategories:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.gift.gift_category_id = arr
                             }
-                            userPreferences.gift.gift_category_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .giftPreferences:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.gift.gift_preferences_id = arr
                             }
-                            userPreferences.gift.gift_preferences_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         default:
                             print("gifts default")
@@ -1207,13 +1199,11 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.aviation.aviation_preferred_cuisine_id = arr
                             }
-                            userPreferences.aviation.aviation_preferred_cuisine_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .aviationPreferredBevereges:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.aviation.aviation_preferred_beverage_id = arr
                             }
-                            userPreferences.aviation.aviation_preferred_beverage_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         default:
                             print("aviation default")
@@ -1845,18 +1835,15 @@ class PrefCollectionsViewController: UIViewController {
                 case .giftHabbits:
                     let current = self.userPreferences?.gift.gift_habit_id ?? []
                     let previous = self.previouslySelectedItems
-                    let previouslyTypedStr = self.userPreferences?.gift.gift_habit_id_other ?? ""
-                    return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                    return !compare(current: current , previous: previous, previousTypedStr:"")
                 case .giftCategories:
                     let current = self.userPreferences?.gift.gift_category_id ?? []
                     let previous = self.previouslySelectedItems
-                    let previouslyTypedStr = self.userPreferences?.gift.gift_category_id_other ?? ""
-                    return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                    return !compare(current: current , previous: previous, previousTypedStr:"")
                 case .giftPreferences:
                     let current = self.userPreferences?.gift.gift_preferences_id ?? []
                     let previous = self.previouslySelectedItems
-                    let previouslyTypedStr = self.userPreferences?.gift.gift_preferences_id_other ?? ""
-                    return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                    return !compare(current: current , previous: previous, previousTypedStr:"")
                 default:
                     print("This line will never execute")
                     return true
@@ -1887,13 +1874,11 @@ class PrefCollectionsViewController: UIViewController {
             case .aviationPreferredCuisine:
                 let current = self.userPreferences?.aviation.aviation_preferred_cuisine_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.aviation.aviation_preferred_cuisine_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous, previousTypedStr:"")
             case .aviationPreferredBevereges:
                 let current = self.userPreferences?.aviation.aviation_preferred_beverage_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.aviation.aviation_preferred_beverage_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous, previousTypedStr:"")
             default:
                 print("This will not call")
             }
