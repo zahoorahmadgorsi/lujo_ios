@@ -4,7 +4,7 @@
 //
 //  Created by Iker Kristian on 8/30/19.
 //  Copyright © 2019 Baroque Access. All rights reserved.
-//  lujo_ios_master
+//  
 
 import UIKit
 import JGProgressHUD
