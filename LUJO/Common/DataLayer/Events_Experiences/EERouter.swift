@@ -27,14 +27,14 @@ enum EERouter: URLRequestConvertible {
     }()
 
     case home(String)
-    case events(String, Bool, String?, String?, String?)
-    case experiences(String, String?, String?, String?)
+    case events(Bool, String?, String?, String?)
+    case experiences( String?, String?, String?)
     case salesforce(String, String, String?)
     case geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
     case villas(String, String?, String?, String?)
-    case goods(String, String?, String?, String?)
+    case goods(String?, String?, String?)
     case yachts(String, String?, String?, String?)
     case getYachtGallery(String, String)
     case topRated(token: String, type: String?,term: String?)   //type is villa,event etc and term is search text
@@ -70,10 +70,9 @@ enum EERouter: URLRequestConvertible {
         switch self {
         case .home:
             return .get
-        case .events:
-            return .get
+        case .events:       fallthrough
         case .experiences:
-            return .get
+            return .post
         case .salesforce:
             return .post
         case .geopoint:
@@ -85,7 +84,7 @@ enum EERouter: URLRequestConvertible {
         case .villas:
             return .get
         case .goods:
-            return .get
+            return .post
         case .yachts:
             return .get
         case .getYachtGallery:
@@ -113,37 +112,10 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
-            case let .events(token, past, term, cityId, productId):
-                newURLComponents.path.append("/events")
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token),
-                ]
-                if past {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "show_past", value: "true"))
-                }
-                if let term = term {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-                }
-                if let cityId = cityId {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-                }
-                if let id = productId {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
-                }
-            case let .experiences(token, term, cityId, productId):
-                newURLComponents.path.append("/experiences")
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token),
-                ]
-                if let term = term {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-                }
-                if let cityId = cityId {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "location", value: "\(cityId)"))
-                }
-                if let id = productId {
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
-                }
+            case .events:
+                newURLComponents.path.append("/events/search")
+            case .experiences:
+                newURLComponents.path.append("/experiences/search")
             case let .villas(token, term, cityId, productId):
                 newURLComponents.path.append("/villas")
                 newURLComponents.queryItems = [
@@ -159,35 +131,36 @@ enum EERouter: URLRequestConvertible {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-            case let .goods(token, term, category_term_id, productId):
+            case .goods:
+                newURLComponents.path.append("/gifts/search")
 //                if (category_term_id?.count > 0){ //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
-                if category_term_id?.isEmpty ?? true {
-                    //newURLComponents.path.append("/gifts/per-category")
-                    newURLComponents.path.append("/gifts")
-                    
-                    if let categoryTermId = category_term_id {
-                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
-                    }
-                    
-                    
-                }else{
-                    newURLComponents.path.append("/gifts")        //its response format is [Product]
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-                    
-                    newURLComponents.queryItems = [
-                        URLQueryItem(name: "token", value: token),
-                    ]
-                    if let term = term {
-                        newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-                    }
-                    if let categoryTermId = category_term_id {
-                        //newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
-                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
-                    }
-                    if let id = productId {
-                        newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
-                    }
-                }
+//                if category_term_id?.isEmpty ?? true {
+//                    //newURLComponents.path.append("/gifts/per-category")
+//                    newURLComponents.path.append("/gifts")
+//
+//                    if let categoryTermId = category_term_id {
+//                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
+//                    }
+//
+//
+//                }else{
+//                    newURLComponents.path.append("/gifts")        //its response format is [Product]
+//                    newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
+//
+//                    newURLComponents.queryItems = [
+//                        URLQueryItem(name: "token", value: token),
+//                    ]
+//                    if let term = term {
+//                        newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
+//                    }
+//                    if let categoryTermId = category_term_id {
+//                        //newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
+//                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
+//                    }
+//                    if let id = productId {
+//                        newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
+//                    }
+//                }
             
                 
             case let .yachts(token, term, cityId, productId):
@@ -314,14 +287,14 @@ enum EERouter: URLRequestConvertible {
         switch self {
         case .home:
             return nil
-        case .events:
-            return nil
-        case .experiences:
-            return nil
+        case let .events(past, search, location, id):
+            return getEventsSearchDataAsJSONData(past, search, location, id)
+        case let .experiences(search, location, id):
+            return getExperiencesSearchDataAsJSONData(search, location, id)
         case .villas:
             return nil
-        case .goods:
-            return nil
+        case let .goods(search, giftCategory, id):
+            return getGoodsSearchDataAsJSONData(search, giftCategory, id)
         case .yachts:
             return nil
         case.getYachtGallery:
@@ -343,6 +316,42 @@ enum EERouter: URLRequestConvertible {
         case let .filters(token, type):
             return getFiltersDataAsJSONData(type: type, token: token)
         }
+    }
+    
+    fileprivate func getEventsSearchDataAsJSONData(_ past: Bool, _ search: String?, _ location:String?, _ id:String?) -> Data? {
+        var body: [String: Any] = [:]
+        if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
+            body["search"] = search
+        }
+        if let location = location, !location.isEmpty  {
+            body["location"] = location
+        }
+        if past{
+            body["show_past"] = true
+        }
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?, _ id:String?) -> Data? {
+        var body: [String: Any] = [:]
+        if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
+            body["search"] = search
+        }
+        if let location = location, !location.isEmpty  {
+            body["location"] = location
+        }
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func getGoodsSearchDataAsJSONData(_ search: String?, _ giftCategory:String?, _ id:String?) -> Data? {
+        var body: [String: Any] = [:]
+        if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
+            body["search"] = search
+        }
+        if let gift_category = giftCategory, !gift_category.isEmpty  {
+            body["gift_category"] = gift_category
+        }
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
     fileprivate func getTopRatedDataAsJSONData(token: String, type: String?, term:String? ) -> Data? {

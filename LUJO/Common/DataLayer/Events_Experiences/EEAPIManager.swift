@@ -76,8 +76,8 @@ class EEAPIManager {
             }
     }
 
-    func getEvents(_ token: String, past: Bool, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.events(token, past, term, cityId, productId)).responseJSON { response in
+    func getEvents( past: Bool, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.events(past, term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -112,8 +112,8 @@ class EEAPIManager {
     }
 
 
-    func getExperiences(_ token: String, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.experiences(token, term, cityId, productId)).responseJSON { response in
+    func getExperiences( term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.experiences( term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -182,8 +182,8 @@ class EEAPIManager {
         }
     }
     
-    func getGoods(_ token: String, term: String?, category_term_id: String?, productId: String? , completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.goods(token, term, category_term_id, productId)).responseJSON { response in
+    func getGoods(term: String?, category_term_id: String?, productId: String? , completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.goods(term, category_term_id, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

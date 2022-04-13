@@ -168,7 +168,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         }
         
         if (product.type == "event"){
-            EEAPIManager().getEvents(token, past: false, term: nil, cityId: nil, productId: product.id) { list, error in
+            EEAPIManager().getEvents(past: false, term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
@@ -178,7 +178,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                 completion(list[0], error)
             }
         }else if (product.type == "experience"){
-            EEAPIManager().getExperiences(token, term: nil, cityId: nil, productId: product.id) { list, error in
+            EEAPIManager().getExperiences( term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
@@ -198,7 +198,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                 completion(list[0], error)
             }
         }else if (product.type == "gift"){
-            EEAPIManager().getGoods(token, term: nil, category_term_id: nil, productId: product.id) { list, error in
+            EEAPIManager().getGoods( term: nil, category_term_id: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")

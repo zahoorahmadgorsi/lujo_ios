@@ -82,20 +82,17 @@ class SearchProductsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         IQKeyboardManager.shared.enable = false
         self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
         activateKeyboardManager()
     }
     
@@ -256,9 +253,8 @@ extension SearchProductsViewController {
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error)
-            } else {
-                self.update(listOf: items)
             }
+            self.update(listOf: items)  //incase of error items would have []
         }
     }
     
@@ -271,20 +267,19 @@ extension SearchProductsViewController {
         switch category {
             case .event:
                 Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getEvents(token, past: past, term: term, cityId: nil, productId: nil) { list, error in
+                EEAPIManager().getEvents(past: past, term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain events information")
                         completion([], error)
                         return
                     }
-                    
                     completion(list, error)
                 }
             case .experience:
                 Mixpanel.mainInstance().track(event: "ExperienceSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getExperiences(token, term: term, cityId: nil, productId: nil) { list, error in
+                EEAPIManager().getExperiences(term: term, cityId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experiences information")
@@ -308,7 +303,7 @@ extension SearchProductsViewController {
             case .gift:
                 Mixpanel.mainInstance().track(event: "GiftSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getGoods(token, term: term, category_term_id: nil, productId: nil) { list, error in
+                EEAPIManager().getGoods( term: term, category_term_id: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")

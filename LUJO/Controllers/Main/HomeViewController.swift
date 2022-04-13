@@ -234,7 +234,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         activateKeyboardManager()
         
         if !UserDefaults.standard.bool(forKey: "showWelcome") {
-            print(LujoSetup().getLujoUser()?.membershipPlan?.target as Any)
             dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
             hideUnhideRightBarButtons()
