@@ -6,10 +6,8 @@ github "Marxon13/M13Checkbox" == 3.2.2
 github "huri000/SwiftEntryKit" == 0.5.9
 github "JonasGessner/JGProgressHUD" ~> 2.0.3
 github "patchthecode/JTAppleCalendar" ~> 7.0
-github "hackiftekhar/IQKeyboardManager"
 github "onevcat/Kingfisher" ~> 5.0
 github "SwiftKickMobile/SwiftMessages" == 7.0.0
-github "mixpanel/mixpanel-swift"
 github "OneSignal/OneSignal-iOS-SDK"
 github "evgenyneu/Cosmos" ~> 23.0
 

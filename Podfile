@@ -16,5 +16,13 @@ target 'LUJO' do
   # pod ‘Firebase/AnalyticsWithoutAdIdSupport’
   pod 'Firebase/Crashlytics'
   pod 'SideMenu'
+  pod 'Mixpanel-swift'
+  pod 'IQKeyboardManagerSwift'
+  pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
+end
 
+target 'OneSignalNotificationServiceExtension' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+  pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
 end
