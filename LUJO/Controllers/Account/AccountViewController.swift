@@ -4,7 +4,7 @@
 //
 //  Created by Iker Kristian on 8/30/19.
 //  Copyright © 2019 Baroque Access. All rights reserved.
-//
+// Restart Xcode and make a commit (Just a comment or something )
 
 import UIKit
 import JGProgressHUD
