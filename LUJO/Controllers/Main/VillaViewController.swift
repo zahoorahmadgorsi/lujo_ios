@@ -221,38 +221,6 @@ class VillaViewController: UIViewController {
             return
         }
         
-        //Zahoor Start
-//                Now we are calling this in chatViewControll
-//        Mixpanel.mainInstance().track(event: "Villa Custom Request",
-//                                      properties: ["villa Name" : villaName
-//                                                   ,"Villa Check In Date" : dateString
-//                                                   ,"Villa Check Out Date" : returnDateString])
-        
-//        let initialMessage = """
-//        Hi Concierge team
-//
-//        I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me?
-//
-//        \(LujoSetup().getLujoUser()?.firstName ?? "User")
-//        """
-//
-////            print(initialMessage)
-        
-        //Now we are calling this in chatViewController
-//        EEAPIManager().sendRequestForSalesForce(itemId: product?.id ?? -1){ customBookingResponse, error in
-//            guard error == nil else {
-//                Crashlytics.sharedInstance().recordError(error!)
-//                BackendError.parsing(reason: "Could not obtain the salesforce_id")
-//                return
-//            }
-//            //https://developers.intercom.com/installing-intercom/docs/ios-configuration
-//            if let user = LujoSetup().getLujoUser(), user.id > 0 {
-//                Intercom.logEvent(withName: "custom_request", metaData:[
-//                                    "sales_force_villa_intent_id": customBookingResponse?.salesforceId ?? "NoSalesForceId"
-//                                    ,"user_id":user.id])
-//            }
-//        }
-        
         let initialMessage = """
         Hi Concierge team
 
@@ -260,9 +228,6 @@ class VillaViewController: UIViewController {
 
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
-    
-        //Zahoor end
-        
         showNetworkActivity()
         CustomRequestAPIManager.shared.requestVilla( villaName: villaName, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token, villaRooms: -1) { error in
             DispatchQueue.main.async {

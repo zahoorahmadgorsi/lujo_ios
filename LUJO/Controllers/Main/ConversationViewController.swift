@@ -159,9 +159,13 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     }
     
     @objc func imgCrossTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion:{
-            self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
-        })
+        if self.isModal{    //almost from all over the application
+            self.dismiss(animated: true, completion:{
+                self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
+            })
+        }else if let navController = self.navigationController { //from the preferences screen
+            navController.popViewController(animated: true)
+        }
     }
     
     func addDefaultMessage(type:String)->ChatMessage{
