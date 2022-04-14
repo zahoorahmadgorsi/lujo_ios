@@ -360,7 +360,7 @@ extension ProductDetailsViewController {
         }
         
         var locationText = product.address ?? ""  //in case of restaurant , it will have exact address
-        locationText += "," + product.getLocation()
+        locationText = locationText.count > 0 ? locationText + ", " + product.getLocation() : product.getLocation()
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         

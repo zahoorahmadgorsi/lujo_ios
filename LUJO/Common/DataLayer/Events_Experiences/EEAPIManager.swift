@@ -93,13 +93,24 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion([], self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
-                                                             from: response.data!)
-                else {
-                    completion([], BackendError.parsing(reason: "Unable to parse response"))
-                    return
+                if let id = productId , !id.isEmpty{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    var products = [Product]()
+                    products.append(result.content) //result.content would be an object, but completion is expecting an array
+                    completion(products, nil)
+                }else{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self, from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
                 }
-                completion(result.content, nil)
+                
                 return
             case 300 ... 399: // Redirection: Unexpected
                 completion([], self.handleError(response, statusCode))

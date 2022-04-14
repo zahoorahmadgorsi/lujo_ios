@@ -70,7 +70,12 @@ enum EERouter: URLRequestConvertible {
         switch self {
         case .home:
             return .get
-        case .events:       fallthrough
+        case let .events(_, _, _, id):
+            if let id = id , id.count > 0 {  //if event is search by id then user different API
+                return .get
+            }else{
+                return .post
+            }
         case .experiences:
             return .post
         case .salesforce:
@@ -112,8 +117,12 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
-            case .events:
-                newURLComponents.path.append("/events/search")
+        case let .events(_, _, _, id):
+            if let eventId = id , !eventId.isEmpty {  //if event is search by id then user different API
+                    newURLComponents.path.append("/events/detail/" + eventId)
+                }else{
+                    newURLComponents.path.append("/events/search")
+                }
             case .experiences:
                 newURLComponents.path.append("/experiences/search")
             case let .villas(token, term, cityId, productId):
@@ -288,7 +297,12 @@ enum EERouter: URLRequestConvertible {
         case .home:
             return nil
         case let .events(past, search, location, id):
-            return getEventsSearchDataAsJSONData(past, search, location, id)
+            if let id = id , id.count > 0 {  //if event is search by id then user different API
+                return nil
+            }else{
+                return getEventsSearchDataAsJSONData(past, search, location, id)
+            }
+            
         case let .experiences(search, location, id):
             return getExperiencesSearchDataAsJSONData(search, location, id)
         case .villas:
