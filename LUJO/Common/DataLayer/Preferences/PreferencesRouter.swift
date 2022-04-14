@@ -35,13 +35,15 @@ enum PreferencesRouter: URLRequestConvertible {
     }()
     
     case getAllPreferences(String)
-    case getGiftHabits(String)
-    case getGiftCategories(String)
-    case getGiftPreferences(String)
-    case setGiftHabits(String,String,String)
-    case setGiftCategories(String,String,String)
-    case setGiftPreferences(String,String,String)
+    case getGiftHabits
+    case getGiftCategories
+    case getGiftPreferences
+    case setGiftHabits(String)
+    case setGiftCategories(String)
+    case setGiftPreferences(String)
     case getCuisines(String)
+    case getEventCategory
+    case getEventLocation
     
     case getAviationBeverages(String)
     case getAviationCategories(String)
@@ -81,10 +83,9 @@ enum PreferencesRouter: URLRequestConvertible {
     case setDiningTimings(String, String)
     case setDiningSeatings(String, String)
     
-    case getEventCategory(String)
-    case getEventLocation(String)
-    case setEventCategory(String,String,String)
-    case setEventLocation(String,String)
+
+    case setEventCategory(String)
+    case setEventLocation(String)
     
     case getTravelHotelGroups(String)
     case getTravelMedicalMeals(String)
@@ -143,20 +144,27 @@ enum PreferencesRouter: URLRequestConvertible {
     func getHTTPMethod() -> HTTPMethod {
         switch self {
         case .getAllPreferences:    fallthrough
-        case .getAviationCategories: fallthrough
-        case .getDiningCuisines: fallthrough
-        case .getDiningAllergies: fallthrough
+        case .getAviationCategories:fallthrough
+        case .getDiningCuisines:    fallthrough
+        case .getDiningAllergies:   fallthrough
         case .getDiningPreferences: fallthrough
-        case .getDiningTimings: fallthrough
-        case .getDiningBeverages: fallthrough
-        case .getDiningSeatings:
-            return .get
+        case .getDiningTimings:     fallthrough
+        case .getDiningBeverages:   fallthrough
+        case .getDiningSeatings:    fallthrough
         case .getGiftHabits:        fallthrough
         case .getGiftCategories:    fallthrough
         case .getGiftPreferences:   fallthrough
+        case .getEventCategory:     fallthrough
+        case .getEventLocation:
+            return .get
+
         case .setGiftHabits:        fallthrough
         case .setGiftCategories:    fallthrough
         case .setGiftPreferences:   fallthrough
+            
+        case .setEventCategory: fallthrough
+        case .setEventLocation: fallthrough
+            
         case .getAviationBeverages: fallthrough
         case .getCuisines: fallthrough
         case .getOtherInterests: fallthrough
@@ -189,10 +197,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setDiningTimings: fallthrough
         case .setDiningSeatings: fallthrough
             
-        case .getEventCategory: fallthrough
-        case .getEventLocation: fallthrough
-        case .setEventCategory: fallthrough
-        case .setEventLocation: fallthrough
+
+
             
         case .getTravelHotelGroups: fallthrough
         case .getTravelMedicalMeals: fallthrough
@@ -232,16 +238,11 @@ enum PreferencesRouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
         
         switch self {
-        case let .getAllPreferences(token):
-            newURLComponents.path.append("/users/preferences")
-        case let .getAviationCategories(token):
-            newURLComponents.path.append("/baroque/aviation/categories")
-        case .getGiftHabits:
-            newURLComponents.path.append("/gifts/gift-habit")
-        case .getGiftCategories:
-            newURLComponents.path.append("/reference/gift-categories")
-        case .getGiftPreferences:
-            newURLComponents.path.append("/gifts/gift-preference")
+        case .getAllPreferences:        newURLComponents.path.append("/users/preferences")
+        case .getAviationCategories:    newURLComponents.path.append("/baroque/aviation/categories")
+        case .getGiftHabits:            newURLComponents.path.append("/gifts/gift-habit")
+        case .getGiftCategories:        newURLComponents.path.append("/gifts/gift-category")
+        case .getGiftPreferences:       newURLComponents.path.append("/gifts/gift-preference")
         case .setGiftHabits:        fallthrough
         case .setGiftCategories:    fallthrough
         case .setGiftPreferences:   newURLComponents.path.append("/preferences/gift")
@@ -249,7 +250,7 @@ enum PreferencesRouter: URLRequestConvertible {
             newURLComponents.path.append("/restaurants/cuisine-category")
         case .getOtherInterests:  newURLComponents.path.append("/reference/interests")
         case .getAviationBeverages:
-            newURLComponents.path.append("/gifts/gift-category")
+            newURLComponents.path.append("/reference/beverages")
         case .setAviationHaveCharteredBefore:    fallthrough
         case .setAviationInterestedIn:         fallthrough
         case .setAviationPreferredDestinations: fallthrough
@@ -288,12 +289,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setDiningTimings: fallthrough
         case .setDiningSeatings: newURLComponents.path.append("/preferences/restaurant")
             
-        case .getEventCategory:
-//            newURLComponents.path.append("/reference/event-categories")
-            newURLComponents.path.append("/events/event-category")
-        case .getEventLocation:
-//            newURLComponents.path.append("/reference/event-continents")
-            newURLComponents.path.append("/events/event-continent")
+        case .getEventCategory: newURLComponents.path.append("/events/event-category")
+        case .getEventLocation: newURLComponents.path.append("/events/event-continent")
         case .setEventCategory: fallthrough
         case .setEventLocation: newURLComponents.path.append("/preferences/event")
             
@@ -350,19 +347,19 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getDiningPreferences:  fallthrough
         case .getDiningTimings:      fallthrough
         case .getDiningBeverages:    fallthrough
-        case .getDiningSeatings:
+        case .getDiningSeatings:    fallthrough
+        case .getGiftHabits:        fallthrough
+        case .getGiftCategories:    fallthrough
+        case .getGiftPreferences:   fallthrough
+        case .getEventCategory: fallthrough
+        case .getEventLocation:
             return nil
-            
-        case let .getGiftHabits(token):         fallthrough
-        case let .getGiftCategories(token):     fallthrough
-        case let .getGiftPreferences(token):    fallthrough
         case let .getCuisines(token):    fallthrough
         case let .getOtherInterests(token):    fallthrough
         case let .getAviationBeverages(token): fallthrough
             
 
-        case let .getEventCategory(token): fallthrough
-        case let .getEventLocation(token): fallthrough
+        
         case let .getTravelHotelGroups(token): fallthrough
         case let .getTravelMedicalMeals(token): fallthrough
         case let .getTravelActivities(token): fallthrough
@@ -372,13 +369,18 @@ enum PreferencesRouter: URLRequestConvertible {
         case let .getVillaAccomodation(token):
             return getTaxonomiesAsJSONData(token: token)
             
-        case let .setGiftHabits(token,commaSeparatedString, typedPreference):
-            return setGiftHabbitsAsJSONData(token: token, commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .setGiftCategories(token, commaSeparatedString, typedPreference):
-            return setGiftCategoriesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .setGiftPreferences(token, commaSeparatedString, typedPreference):
-            return setGiftPreferencesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        
+        case let .setGiftHabits(commaSeparatedString):
+            return setGiftHabbitsAsJSONData(commaSeparatedString:commaSeparatedString)
+        case let .setGiftCategories(commaSeparatedString):
+            return setGiftCategoriesAsJSONData( commaSeparatedString:commaSeparatedString)
+        case let .setGiftPreferences(commaSeparatedString):
+            return setGiftPreferencesAsJSONData( commaSeparatedString:commaSeparatedString)
+            
+        case let .setEventCategory( commaSeparatedString):
+            return setEventCategoryAsJSONData( commaSeparatedString:commaSeparatedString)
+        case let .setEventLocation(commaSeparatedString):
+            return setEventLocationAsJSONData(commaSeparatedString:commaSeparatedString)
+            
         case let .setAviationHaveCharteredBefore(token, commaSeparatedString):
             return setAviationHaveCharteredBeforeAsJSONData(token: token , yesOrNoString:commaSeparatedString)
         case let .setAviationInterestedIn(token, commaSeparatedString):
@@ -434,10 +436,7 @@ enum PreferencesRouter: URLRequestConvertible {
             return setDiningSeatingsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
             
 
-        case let .setEventCategory(token, commaSeparatedString, typedPreference):
-            return setEventCategoryAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .setEventLocation(token, commaSeparatedString):
-            return setEventLocationAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+
         
 
         case let  .setTravelFrequency(token, businessFrequency, leisureFrequency):
@@ -487,26 +486,23 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setGiftHabbitsAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+    fileprivate func setGiftHabbitsAsJSONData(commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
-            "gift_habit_id_other" : typedPreference
-            ,"gift_habit_ids" : commaSeparatedString.components(separatedBy: ",")
+            "gift_habit_ids" : commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
      
-    fileprivate func setGiftCategoriesAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+    fileprivate func setGiftCategoriesAsJSONData( commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
-            "gift_category_id_other": typedPreference
-            ,"gift_category_ids" : commaSeparatedString.components(separatedBy: ",")
+            "gift_category_ids" : commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setGiftPreferencesAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+    fileprivate func setGiftPreferencesAsJSONData( commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
-            "gift_preferences_id_other": typedPreference
-            ,"gift_preferences_ids": commaSeparatedString.components(separatedBy: ",")
+            "gift_preferences_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -703,15 +699,14 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setEventCategoryAsJSONData(token: String , commaSeparatedString:String, typedPreference: String) -> Data?{
+    fileprivate func setEventCategoryAsJSONData(commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "event_category_id_other": typedPreference
-            ,"event_category_ids": commaSeparatedString.components(separatedBy: ",")
+            "event_category_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setEventLocationAsJSONData(token: String , commaSeparatedString:String) -> Data?{
+    fileprivate func setEventLocationAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
             "event_location_ids": commaSeparatedString.components(separatedBy: ",")
         ]

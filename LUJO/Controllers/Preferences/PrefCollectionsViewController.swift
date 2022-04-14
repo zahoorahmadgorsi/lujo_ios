@@ -506,7 +506,7 @@ class PrefCollectionsViewController: UIViewController {
         case .gifts:
             switch prefInformationType {
             case .giftHabbits:
-                GoLujoAPIManager().getGiftHabbits(token) { taxonomies, error in
+                GoLujoAPIManager().getGiftHabbits() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -536,7 +536,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
             case .giftPreferences:
-                GoLujoAPIManager().getGiftPreferences(token) { taxonomies, error in
+                GoLujoAPIManager().getGiftPreferences() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -724,7 +724,7 @@ class PrefCollectionsViewController: UIViewController {
         case .events:
             switch prefInformationType {
             case .eventCategory:
-                GoLujoAPIManager().getEventCategory(token) { taxonomies, error in
+                GoLujoAPIManager().getEventCategory() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain event category information")
@@ -739,7 +739,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
             case .eventLocation:
-                GoLujoAPIManager().getEventLocation(token) { taxonomies, error in
+                GoLujoAPIManager().getEventLocation() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain event location information")
@@ -1374,7 +1374,7 @@ class PrefCollectionsViewController: UIViewController {
             case .gifts:
                 switch prefInformationType {
                 case .giftHabbits:
-                    GoLujoAPIManager().setGiftHabbits(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setGiftHabbits( commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the gift habbits preferences")
@@ -1384,7 +1384,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .giftCategories:
-                    GoLujoAPIManager().setGiftCategories(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setGiftCategories(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the gift categories preferences")
@@ -1394,7 +1394,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .giftPreferences:
-                    GoLujoAPIManager().setGiftPreferences(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setGiftPreferences(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the gift preferences")
@@ -1600,7 +1600,7 @@ class PrefCollectionsViewController: UIViewController {
         case .events:
             switch prefInformationType {
             case .eventCategory:
-                GoLujoAPIManager().setEventCategory(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                GoLujoAPIManager().setEventCategory(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the event categories preferences")
@@ -1610,7 +1610,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .eventLocation:
-                GoLujoAPIManager().setEventLocation(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setEventLocation(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the event locations preferences")

@@ -1895,8 +1895,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "512"
-            endingLineNumber = "512"
+            startingLineNumber = "445"
+            endingLineNumber = "445"
             landmarkName = "HomeObjects"
             landmarkType = "14">
          </BreakpointContent>
@@ -1911,8 +1911,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "523"
-            endingLineNumber = "523"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -1927,8 +1927,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -1943,8 +1943,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
             landmarkName = "getFeaturedImages()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2007,8 +2007,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "510"
-            endingLineNumber = "510"
+            startingLineNumber = "443"
+            endingLineNumber = "443"
             landmarkName = "Product"
             landmarkType = "21">
          </BreakpointContent>
@@ -2023,8 +2023,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "550"
-            endingLineNumber = "550"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
             landmarkName = "getFeaturedTypes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3377,8 +3377,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -3825,8 +3825,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "427"
-            endingLineNumber = "427"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6655,8 +6655,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
             landmarkName = "CodingKeys"
             landmarkType = "13">
             <Locations>
@@ -6846,8 +6846,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -9944,8 +9944,8 @@
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10066,14 +10066,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "63B0AEF4-5492-4371-A6C7-E1412CB3DCDD"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LUJO/Common/Entities/EventsAndExperiences/EventsAndExperiences.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "596"
-            endingLineNumber = "596"
+            startingLineNumber = "529"
+            endingLineNumber = "529"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10094,14 +10094,14 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - 99301139ffa6b964"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getPerCity(_: Swift.String, type: Swift.String, yachtName: Swift.Optional&lt;Swift.String&gt;, yachtCharter: Swift.Optional&lt;Swift.String&gt;, yachtGuests: Swift.Optional&lt;Swift.String&gt;, yachtLengthFeet: Swift.Optional&lt;Swift.String&gt;, yachtLengthMeters: Swift.Optional&lt;Swift.String&gt;, yachtType: Swift.Optional&lt;Swift.String&gt;, yachtBuiltAfter: Swift.Optional&lt;Swift.String&gt;, yachtTag: Swift.Optional&lt;Swift.String&gt;, yachtStatus: Swift.Optional&lt;Swift.String&gt;, region: Swift.Optional&lt;Swift.String&gt;, minPrice: Swift.Optional&lt;Swift.String&gt;, maxPrice: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Optional&lt;LUJO.PerCityObjects&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "569"
@@ -10109,14 +10109,14 @@
                   offsetFromSymbolStart = "812">
                </Location>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - 99301139ffa6b964"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getPerCity(_: Swift.String, type: Swift.String, yachtName: Swift.Optional&lt;Swift.String&gt;, yachtCharter: Swift.Optional&lt;Swift.String&gt;, yachtGuests: Swift.Optional&lt;Swift.String&gt;, yachtLengthFeet: Swift.Optional&lt;Swift.String&gt;, yachtLengthMeters: Swift.Optional&lt;Swift.String&gt;, yachtType: Swift.Optional&lt;Swift.String&gt;, yachtBuiltAfter: Swift.Optional&lt;Swift.String&gt;, yachtTag: Swift.Optional&lt;Swift.String&gt;, yachtStatus: Swift.Optional&lt;Swift.String&gt;, region: Swift.Optional&lt;Swift.String&gt;, minPrice: Swift.Optional&lt;Swift.String&gt;, maxPrice: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Optional&lt;LUJO.PerCityObjects&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "569"
@@ -10124,14 +10124,14 @@
                   offsetFromSymbolStart = "1168">
                </Location>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - 99301139ffa6b964"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getPerCity(_: Swift.String, type: Swift.String, yachtName: Swift.Optional&lt;Swift.String&gt;, yachtCharter: Swift.Optional&lt;Swift.String&gt;, yachtGuests: Swift.Optional&lt;Swift.String&gt;, yachtLengthFeet: Swift.Optional&lt;Swift.String&gt;, yachtLengthMeters: Swift.Optional&lt;Swift.String&gt;, yachtType: Swift.Optional&lt;Swift.String&gt;, yachtBuiltAfter: Swift.Optional&lt;Swift.String&gt;, yachtTag: Swift.Optional&lt;Swift.String&gt;, yachtStatus: Swift.Optional&lt;Swift.String&gt;, region: Swift.Optional&lt;Swift.String&gt;, minPrice: Swift.Optional&lt;Swift.String&gt;, maxPrice: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Optional&lt;LUJO.PerCityObjects&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "569"
@@ -10139,14 +10139,14 @@
                   offsetFromSymbolStart = "2612">
                </Location>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - 99301139ffa6b964"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getPerCity(_: Swift.String, type: Swift.String, yachtName: Swift.Optional&lt;Swift.String&gt;, yachtCharter: Swift.Optional&lt;Swift.String&gt;, yachtGuests: Swift.Optional&lt;Swift.String&gt;, yachtLengthFeet: Swift.Optional&lt;Swift.String&gt;, yachtLengthMeters: Swift.Optional&lt;Swift.String&gt;, yachtType: Swift.Optional&lt;Swift.String&gt;, yachtBuiltAfter: Swift.Optional&lt;Swift.String&gt;, yachtTag: Swift.Optional&lt;Swift.String&gt;, yachtStatus: Swift.Optional&lt;Swift.String&gt;, region: Swift.Optional&lt;Swift.String&gt;, minPrice: Swift.Optional&lt;Swift.String&gt;, maxPrice: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Optional&lt;LUJO.PerCityObjects&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "569"

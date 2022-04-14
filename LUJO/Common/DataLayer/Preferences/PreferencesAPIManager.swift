@@ -49,8 +49,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getGiftHabbits(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.getGiftHabits(token))
+    func getGiftHabbits( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.getGiftHabits)
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -86,7 +86,7 @@ extension GoLujoAPIManager  {
     }
 
     func getGiftCategories(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.getGiftCategories(token))
+        Alamofire.request(PreferencesRouter.getGiftCategories)
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -121,8 +121,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getGiftPreferences(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.getGiftPreferences(token))
+    func getGiftPreferences( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.getGiftPreferences)
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -157,8 +157,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setGiftHabbits( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setGiftHabits(token, commaSeparatedString , typedPreference))
+    func setGiftHabbits(commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setGiftHabits(commaSeparatedString ))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -193,8 +193,8 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func setGiftCategories(token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setGiftCategories(token,commaSeparatedString, typedPreference))
+    func setGiftCategories(commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setGiftCategories(commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -229,8 +229,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setGiftPreferences(token: String, commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setGiftPreferences(token,commaSeparatedString, typedPreference))
+    func setGiftPreferences( commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setGiftPreferences(commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1562,8 +1562,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getEventCategory(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.getEventCategory(token))
+    func getEventCategory( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.getEventCategory)
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1598,8 +1598,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getEventLocation(_ token: String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.getEventLocation(token))
+    func getEventLocation( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.getEventLocation)
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1634,8 +1634,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setEventCategory( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setEventCategory(token, commaSeparatedString, typedPreference))
+    func setEventCategory( commaSeparatedString:String,  completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setEventCategory( commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1670,8 +1670,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setEventLocation(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setEventLocation(token,commaSeparatedString))
+    func setEventLocation( commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setEventLocation(commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

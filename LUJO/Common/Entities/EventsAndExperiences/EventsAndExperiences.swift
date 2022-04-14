@@ -1,33 +1,6 @@
 import FirebaseCrashlytics
 import Foundation
 
-//struct Taxonomy: Codable {
-//    let termId: Int
-//    let name: String
-//    var isSelected: Bool
-//
-//    enum CodingKeys: String, CodingKey {
-//        case termId = "term_id"
-//        case name
-//        case isSelected
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        do {
-//            let values = try decoder.container(keyedBy: CodingKeys.self)
-//
-//            name = try values.decode(String.self, forKey: .name)
-//            termId = try values.decode(Double.self, forKey: .termId)
-//            //isSelected would never be sent from API
-//            isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
-//
-//        } catch {
-//            Crashlytics.crashlytics().record(error: error)
-//            throw error
-//        }
-//    }
-//}
-
 struct Taxonomy: Codable {
     let termId: String
     let name: String
@@ -192,29 +165,6 @@ struct EventExperienceCity: Codable {
     let num: Int
     let items: [Product]
 }
-
-//enum QuantumValue: Decodable {
-//
-//    case int(Int), string(String)
-//
-//    init(from decoder: Decoder) throws {
-//        if let int = try? decoder.singleValueContainer().decode(Int.self) {
-//            self = .int(int)
-//            return
-//        }
-//
-//        if let string = try? decoder.singleValueContainer().decode(String.self) {
-//            self = .string(string)
-//            return
-//        }
-//
-//        throw QuantumError.missingValue
-//    }
-//
-//    enum QuantumError:Error {
-//        case missingValue
-//    }
-//}
 
 //it could be an event, experience, gift, villa or yacht
 struct Product: Codable {
@@ -392,7 +342,7 @@ extension Product {
 
             type = try values.decode(String.self, forKey: .type)
             id = try values.decode(String.self, forKey: .id)
-            
+            print(id)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
             let priceStr = try values.decodeIfPresent(String.self, forKey: .price)
@@ -448,23 +398,6 @@ extension Product {
             rentPricePerWeekHighSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekHighSeason)
             salePrice = try values.decodeIfPresent(String.self, forKey: .salePrice)
             location = try values.decodeIfPresent(Location.self, forKey: .location)
-//            // First check for a string
-//            do {
-//                latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
-//            } catch {
-//                // then second time assuming that its going to be a double
-//                let lati:Double = try values.decodeIfPresent(Double.self, forKey: .latitude) ?? 0.0
-//                latitude = String(format: "%f", lati)
-//                print("id:\(id)","latitude:\(lati)"  )
-//            }
-//            do {
-//                longitude = try values.decodeIfPresent(String.self, forKey: .longitude)
-//            } catch {
-//                let longi:Double = try values.decodeIfPresent(Double.self, forKey: .longitude) ?? 0.0
-//                longitude = String(format: "%f", longi)
-//                print("id:\(id)", "longitude:\(longi)"  )
-//            }
-            
             villaAmenities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaAmenities)
             villaFacilities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaFacilities)
             villaStyle = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStyle)
@@ -586,7 +519,7 @@ struct Cities: Codable{
     
     enum CodingKeys: String,CodingKey{
         case name
-        case termId = "term_id"
+        case termId = "_id"
         case itemsNum = "items_num"
         case items
     }
