@@ -140,13 +140,24 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion([], self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
-                                                             from: response.data!)
-                else {
-                    completion([], BackendError.parsing(reason: "Unable to parse response"))
-                    return
+                if let id = productId , !id.isEmpty{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    var products = [Product]()
+                    products.append(result.content) //result.content would be an object, but completion is expecting an array
+                    completion(products, nil)
+                }else{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self, from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                
                 }
-                completion(result.content, nil)
                 return
             case 300 ... 399: // Redirection: Unexpected
                 completion([], self.handleError(response, statusCode))
@@ -193,8 +204,8 @@ class EEAPIManager {
         }
     }
     
-    func getGoods(term: String?, category_term_id: String?, productId: String? , completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.goods(term, category_term_id, productId)).responseJSON { response in
+    func getGoods(term: String?, giftCategoryId: String?, productId: String? , completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.goods(term, giftCategoryId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -210,7 +221,16 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion([], self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                if category_term_id?.isEmpty ?? false {
+                if let id = productId , !id.isEmpty{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    var products = [Product]()
+                    products.append(result.content) //result.content would be an object, but completion is expecting an array
+                    completion(products, nil)
+                }else if let id = giftCategoryId , !id.isEmpty{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<PerCityObjects>.self, from: response.data!)
                     else {
                         completion([], BackendError.parsing(reason: "Unable to parse response"))
@@ -223,9 +243,9 @@ class EEAPIManager {
                         completion([], BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content , nil)
+                    completion(result.content, nil)
+                
                 }
-               
                 return
             case 300 ... 399: // Redirection: Unexpected
                 completion([], self.handleError(response, statusCode))
@@ -307,8 +327,8 @@ class EEAPIManager {
         }
     }
     
-    func getTopRated(_ token: String, type: String?, term: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.topRated(token: token, type: type,  term:term)).responseJSON { response in
+    func getTopRated(type: String?, term: String?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.topRated( type: type,  term:term)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

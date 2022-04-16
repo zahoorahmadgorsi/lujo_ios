@@ -708,7 +708,7 @@ enum PreferencesRouter: URLRequestConvertible {
     
     fileprivate func setEventLocationAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "event_location_ids": commaSeparatedString.components(separatedBy: ",")
+            "event_continent_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

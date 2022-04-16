@@ -37,7 +37,7 @@ enum EERouter: URLRequestConvertible {
     case goods(String?, String?, String?)
     case yachts(String, String?, String?, String?)
     case getYachtGallery(String, String)
-    case topRated(token: String, type: String?,term: String?)   //type is villa,event etc and term is search text
+    case topRated(type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
     case perCity(String, String, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?)
     case filters(String, String)
@@ -76,8 +76,12 @@ enum EERouter: URLRequestConvertible {
             }else{
                 return .post
             }
-        case .experiences:
-            return .post
+        case let .experiences(_, _, id):
+            if let id = id , id.count > 0 {  //if event is search by id then user different API
+                return .get
+            }else{
+                return .post
+            }
         case .salesforce:
             return .post
         case .geopoint:
@@ -88,8 +92,15 @@ enum EERouter: URLRequestConvertible {
             return .get
         case .villas:
             return .get
-        case .goods:
-            return .post
+        case let .goods(_, giftCategoryId, id):
+            if let id = id , id.count > 0 {  //if event is search by id then user different API
+                return .get
+            }else if let id = giftCategoryId , id.count > 0 {  //if event is search by id then user different API
+                return .get
+            }
+            else{
+                return .post
+            }
         case .yachts:
             return .get
         case .getYachtGallery:
@@ -117,14 +128,18 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.queryItems = [
                     URLQueryItem(name: "token", value: token),
                 ]
-        case let .events(_, _, _, id):
-            if let eventId = id , !eventId.isEmpty {  //if event is search by id then user different API
-                    newURLComponents.path.append("/events/detail/" + eventId)
+            case let .events(_, _, _, id):
+                if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
+                        newURLComponents.path.append("/events/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/events/search")
                 }
-            case .experiences:
-                newURLComponents.path.append("/experiences/search")
+            case let .experiences(_, _, id):
+                if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
+                        newURLComponents.path.append("/experiences/detail/" + productId)
+                    }else{
+                        newURLComponents.path.append("/experiences/search")
+                    }
             case let .villas(token, term, cityId, productId):
                 newURLComponents.path.append("/villas")
                 newURLComponents.queryItems = [
@@ -140,37 +155,17 @@ enum EERouter: URLRequestConvertible {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
                 }
                 newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-            case .goods:
-                newURLComponents.path.append("/gifts/search")
-//                if (category_term_id?.count > 0){ //because category_term_id isnt working on /gifts API and backend developer rather then fixing it created new API
-//                if category_term_id?.isEmpty ?? true {
-//                    //newURLComponents.path.append("/gifts/per-category")
-//                    newURLComponents.path.append("/gifts")
-//
-//                    if let categoryTermId = category_term_id {
-//                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
-//                    }
-//
-//
-//                }else{
-//                    newURLComponents.path.append("/gifts")        //its response format is [Product]
-//                    newURLComponents.queryItems?.append(URLQueryItem(name: "per_page", value: "\(20)"))
-//
-//                    newURLComponents.queryItems = [
-//                        URLQueryItem(name: "token", value: token),
-//                    ]
-//                    if let term = term {
-//                        newURLComponents.queryItems?.append(URLQueryItem(name: "search", value: term))
-//                    }
-//                    if let categoryTermId = category_term_id {
-//                        //newURLComponents.queryItems?.append(URLQueryItem(name: "category_term_id", value: "\(categoryTermId)"))
-//                        newURLComponents.queryItems?.append(URLQueryItem(name: "gift_category", value: "\(categoryTermId)"))
-//                    }
-//                    if let id = productId {
-//                        newURLComponents.queryItems?.append(URLQueryItem(name: "id", value: "\(id)"))
-//                    }
-//                }
-            
+            case let .goods( _, gift_category_id, id):
+                if let giftId = id , !giftId.isEmpty {  //if gift is search by giftId then user different API (called when push notificatino is receveid )
+                        newURLComponents.path.append("/gifts/detail/" + giftId)
+                }else if let giftCategoryId = gift_category_id , !giftCategoryId.isEmpty {  //if gift is search by categoryid, when user has tapped on seeAll button of a particular category on gifts by category view screen (percity)
+                    newURLComponents.path.append("/gifts/per-category")
+                    newURLComponents.queryItems = [
+                        URLQueryItem(name: "category_id", value: giftCategoryId),
+                    ]
+                }else{
+                    newURLComponents.path.append("/gifts/search")
+                }
                 
             case let .yachts(token, term, cityId, productId):
                 newURLComponents.path.append("/yachts")
@@ -229,16 +224,15 @@ enum EERouter: URLRequestConvertible {
                     URLQueryItem(name: "place_id", value: cityId)
                 ]
             case let .perCity(token, type, yachtName, yachtCharter, yachtGuests, yachtLengthFeet, yachtLengthMeters, yachtType, yachtBuiltAfter, yachtTag, yachtStatus, region, minPrice, MaxPrice):
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token),
-                ]
                 
                 if (type.equals(rhs: "gift")){
-                    //newURLComponents.path.append("/gifts/per-category")
-                    newURLComponents.path.append("/gifts")
+                    newURLComponents.path.append("/gifts/per-category")
+//                    newURLComponents.path.append("/gifts")
                 }else{
                     newURLComponents.path.append("/per-city")
-                    newURLComponents.queryItems?.append(URLQueryItem(name: "type", value: type))
+                    newURLComponents.queryItems = [
+                        URLQueryItem(name: "type", value: type),
+                    ]
                     if let filter = yachtName , filter.count > 0 {
                         newURLComponents.queryItems?.append(URLQueryItem(name: "yacht_name", value: filter))
                     }
@@ -300,21 +294,32 @@ enum EERouter: URLRequestConvertible {
             if let id = id , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getEventsSearchDataAsJSONData(past, search, location, id)
+                return getEventsSearchDataAsJSONData(past, search, location)
+            }
+        case let .experiences(search, location, id):
+            if let id = id , id.count > 0 {  //if event is search by id then user different API
+                return nil
+            }else{
+                return getExperiencesSearchDataAsJSONData(search, location)
             }
             
-        case let .experiences(search, location, id):
-            return getExperiencesSearchDataAsJSONData(search, location, id)
         case .villas:
             return nil
-        case let .goods(search, giftCategory, id):
-            return getGoodsSearchDataAsJSONData(search, giftCategory, id)
+        case let .goods(search, giftCategoryId, id):
+            if let id = id , id.count > 0 {  //if event is search by id then user different API
+                return nil
+            }else if let id = giftCategoryId , id.count > 0 {  //if event is search by id then user different API
+                return nil
+            }else{
+                return getGoodsSearchDataAsJSONData(search)
+            }
+            
         case .yachts:
             return nil
         case.getYachtGallery:
             return nil
-        case let .topRated(token,type,term):
-            return getTopRatedDataAsJSONData(token: token, type: type, term:term )
+        case let .topRated(type,term):
+            return getTopRatedDataAsJSONData( type: type, term:term )
         case .recents:
             return nil
         case let .salesforce(itemId, token, channelID):
@@ -332,7 +337,7 @@ enum EERouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getEventsSearchDataAsJSONData(_ past: Bool, _ search: String?, _ location:String?, _ id:String?) -> Data? {
+    fileprivate func getEventsSearchDataAsJSONData(_ past: Bool, _ search: String?, _ location:String?) -> Data? {
         var body: [String: Any] = [:]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
@@ -346,7 +351,7 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?, _ id:String?) -> Data? {
+    fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?) -> Data? {
         var body: [String: Any] = [:]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
@@ -357,21 +362,16 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getGoodsSearchDataAsJSONData(_ search: String?, _ giftCategory:String?, _ id:String?) -> Data? {
+    fileprivate func getGoodsSearchDataAsJSONData(_ search: String?) -> Data? {
         var body: [String: Any] = [:]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
         }
-        if let gift_category = giftCategory, !gift_category.isEmpty  {
-            body["gift_category"] = gift_category
-        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getTopRatedDataAsJSONData(token: String, type: String?, term:String? ) -> Data? {
-        var body: [String: Any] = [
-            "token": token
-        ]
+    fileprivate func getTopRatedDataAsJSONData( type: String?, term:String? ) -> Data? {
+        var body: [String: Any] = [:]
         if let type = type , !type.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["type"] = type
         }

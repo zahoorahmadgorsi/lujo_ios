@@ -212,12 +212,11 @@ class PrefCollectionsViewController: UIViewController {
             switch prefInformationType {
             case .eventCategory:
                 lblPrefQuestion.text = "Type of Event/Experience:"
-                txtPleaseSpecify.text = self.userPreferences?.event.event_category_id_other
                 previouslySelectedItems = self.userPreferences?.event.event_category_id ?? []
             case .eventLocation:
                 lblPrefQuestion.text = "Location"
                 txtPleaseSpecify.isHidden = true
-                previouslySelectedItems = self.userPreferences?.event.event_location_id ?? []
+                previouslySelectedItems = self.userPreferences?.event.event_continent_ids ?? []
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             
             default:
@@ -1046,7 +1045,7 @@ class PrefCollectionsViewController: UIViewController {
                         }
                     }
                 case .eventLocation:
-                    if let ids = userPreferences?.event.event_location_id{
+                    if let ids = userPreferences?.event.event_continent_ids{
                         for id in ids {
                             if id.count > 0{ //to avoid empty string
                                 selectedArray.append(id)
@@ -1290,11 +1289,11 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.event.event_category_id = arr
                             }
-                            userPreferences.event.event_category_id_other = self.txtPleaseSpecify.text
+                            
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .eventLocation:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
-                                userPreferences.event.event_location_id = arr
+                                userPreferences.event.event_continent_ids = arr
                             }
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
 
@@ -1961,10 +1960,9 @@ class PrefCollectionsViewController: UIViewController {
             case .eventCategory:
                 let current = self.userPreferences?.event.event_category_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.event.event_category_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous, previousTypedStr:"")
             case .eventLocation:
-                let current = self.userPreferences?.event.event_location_id ?? []
+                let current = self.userPreferences?.event.event_continent_ids ?? []
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
 
@@ -2334,7 +2332,7 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
                     }
                 }
             case .eventLocation:
-                if let ids = userPreferences?.event.event_location_id{
+                if let ids = userPreferences?.event.event_continent_ids{
                     if (ids.contains(String(model.termId))){
                         cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
@@ -2722,17 +2720,17 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
                     userPreferences?.event.event_category_id?.append(termId)
                 }
             case .eventLocation:
-                if var ids = userPreferences?.event.event_location_id{
+                if var ids = userPreferences?.event.event_continent_ids{
                     if ids.contains(termId){
                         //remove all occurances in case there is duplication i.e. dirty data
                         ids.removeAll{ value in return value == termId}
-                        userPreferences?.event.event_location_id = ids
+                        userPreferences?.event.event_continent_ids = ids
                     }else{
-                        userPreferences?.event.event_location_id?.append(termId)
+                        userPreferences?.event.event_continent_ids?.append(termId)
                     }
                 }else{
-                    userPreferences?.event.event_location_id = []    //initializing first
-                    userPreferences?.event.event_location_id?.append(termId)
+                    userPreferences?.event.event_continent_ids = []    //initializing first
+                    userPreferences?.event.event_continent_ids?.append(termId)
                 }
 
             default:

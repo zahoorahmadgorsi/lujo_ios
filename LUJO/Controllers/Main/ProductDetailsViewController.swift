@@ -198,7 +198,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                 completion(list[0], error)
             }
         }else if (product.type == "gift"){
-            EEAPIManager().getGoods( term: nil, category_term_id: nil, productId: product.id) { list, error in
+            EEAPIManager().getGoods( term: nil, giftCategoryId: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")

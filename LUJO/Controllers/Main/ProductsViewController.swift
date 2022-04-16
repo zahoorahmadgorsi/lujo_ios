@@ -159,7 +159,7 @@ class ProductsViewController: UIViewController {
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
-        navigationController?.pushViewController(SearchProductsViewController.instantiate(category: category), animated: true)
+        navigationController?.pushViewController(SearchProductsViewController.instantiate(category, subCategory), animated: true)
     }
     
     fileprivate func updateContentUI() {
@@ -387,7 +387,7 @@ extension ProductsViewController {
                 }
             case .gift:
                 //sending category_term_id in case of gifts in the paraeter cityid
-                EEAPIManager().getGoods( term: term, category_term_id: cityId, productId: nil) { list, error in
+                EEAPIManager().getGoods( term: term, giftCategoryId: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
@@ -407,8 +407,7 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .topRated:
-                print(self.subCategoryType) //subcategory is nill if view toprated frome home screen, but it will contain some value if viewing toprate yachts, event etc
-                EEAPIManager().getTopRated(token, type: self.subCategoryType, term: nil) { list, error in
+                EEAPIManager().getTopRated(type: self.subCategoryType, term: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain top rated items information")

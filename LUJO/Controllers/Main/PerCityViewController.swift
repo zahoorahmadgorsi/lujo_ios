@@ -251,7 +251,7 @@ class PerCityViewController: UIViewController {
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
-        navigationController?.pushViewController(SearchProductsViewController.instantiate(category: category), animated: true)
+        navigationController?.pushViewController(SearchProductsViewController.instantiate(category, nil), animated: true)
     }
     
     fileprivate func updateContentUI() {

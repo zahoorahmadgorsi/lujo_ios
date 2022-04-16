@@ -6257,8 +6257,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6273,8 +6273,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
             <Locations>
@@ -6417,8 +6417,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6433,8 +6433,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
             <Locations>
@@ -6543,8 +6543,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6559,8 +6559,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6575,8 +6575,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6591,8 +6591,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "getVillas(_:term:cityId:productId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6974,8 +6974,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8704,8 +8704,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "188"
             endingLineNumber = "188"
-            landmarkName = "updateContentUI()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8720,8 +8720,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "199"
             endingLineNumber = "199"
-            landmarkName = "ProductsViewController"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8752,8 +8752,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "193"
             endingLineNumber = "193"
-            landmarkName = "updateContentUI()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -9068,8 +9068,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
+            startingLineNumber = "514"
+            endingLineNumber = "514"
             landmarkName = "sendRequestForSalesForce(itemId:channelId:completion:)"
             landmarkType = "7">
             <Locations>
@@ -9658,8 +9658,8 @@
             filePath = "LUJO/Controllers/Main/SearchProductsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
             landmarkName = "getList(for:past:term:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -9674,10 +9674,10 @@
             filePath = "LUJO/Controllers/Main/ProductsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            startingLineNumber = "411"
+            endingLineNumber = "411"
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "B0B9EA39-C789-4906-B962-EE3B4E1E46A7 - 92ce62e94043a943"
@@ -9722,8 +9722,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9738,8 +9738,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9754,9 +9754,9 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
-            landmarkName = "getTopRated(_:type:term:completion:)"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
+            landmarkName = "getTopRated(type:term:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -9770,9 +9770,9 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
-            landmarkName = "getTopRated(_:type:term:completion:)"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "getTopRated(type:term:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -9848,8 +9848,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9864,9 +9864,9 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
-            landmarkName = "getTopRated(_:type:term:completion:)"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "getTopRated(type:term:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -9880,9 +9880,9 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
-            landmarkName = "getTopRated(_:type:term:completion:)"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "getTopRated(type:term:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -9928,8 +9928,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9960,8 +9960,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9976,8 +9976,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -9992,8 +9992,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10008,10 +10008,10 @@
             filePath = "LUJO/Controllers/Main/ProductsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "417"
-            endingLineNumber = "417"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            startingLineNumber = "416"
+            endingLineNumber = "416"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10024,8 +10024,8 @@
             filePath = "LUJO/Controllers/Main/SearchProductsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "getList(for:past:term:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10040,8 +10040,8 @@
             filePath = "LUJO/Controllers/Main/SearchProductsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "getList(for:past:term:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10056,8 +10056,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10088,13 +10088,13 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "580"
-            endingLineNumber = "580"
+            startingLineNumber = "600"
+            endingLineNumber = "600"
             landmarkName = "getPerCity(_:type:yachtName:yachtCharter:yachtGuests:yachtLengthFeet:yachtLengthMeters:yachtType:yachtBuiltAfter:yachtTag:yachtStatus:region:minPrice:maxPrice:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213a3df"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -10104,12 +10104,12 @@
                   urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "569"
-                  endingLineNumber = "569"
+                  startingLineNumber = "609"
+                  endingLineNumber = "609"
                   offsetFromSymbolStart = "812">
                </Location>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213a3df"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -10119,12 +10119,12 @@
                   urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "569"
-                  endingLineNumber = "569"
+                  startingLineNumber = "609"
+                  endingLineNumber = "609"
                   offsetFromSymbolStart = "1168">
                </Location>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213a3df"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -10134,12 +10134,12 @@
                   urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "569"
-                  endingLineNumber = "569"
+                  startingLineNumber = "609"
+                  endingLineNumber = "609"
                   offsetFromSymbolStart = "2612">
                </Location>
                <Location
-                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213ae37"
+                  uuid = "F57A6864-A602-4D13-8C2E-21F8E317AE73 - ca87ba82d213a3df"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -10149,8 +10149,8 @@
                   urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "569"
-                  endingLineNumber = "569"
+                  startingLineNumber = "609"
+                  endingLineNumber = "609"
                   offsetFromSymbolStart = "2912">
                </Location>
             </Locations>
@@ -10166,8 +10166,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "587"
-            endingLineNumber = "587"
+            startingLineNumber = "607"
+            endingLineNumber = "607"
             landmarkName = "getPerCity(_:type:yachtName:yachtCharter:yachtGuests:yachtLengthFeet:yachtLengthMeters:yachtType:yachtBuiltAfter:yachtTag:yachtStatus:region:minPrice:maxPrice:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10311,8 +10311,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "340"
             endingLineNumber = "340"
-            landmarkName = "getInformation(for:past:term:cityId:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "EB136F28-B8FC-4A05-AC9C-13860FE9013B - 115e757aed753166"
@@ -10375,8 +10375,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "401"
             endingLineNumber = "401"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "714052E8-CA39-4E3B-8DA1-6AE7C49532B0 - 92ce62e94043ab9d"
@@ -10423,8 +10423,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "358"
             endingLineNumber = "358"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10437,10 +10437,10 @@
             filePath = "LUJO/Controllers/Main/ProductsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "411"
-            endingLineNumber = "411"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            startingLineNumber = "410"
+            endingLineNumber = "410"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10453,8 +10453,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
             landmarkName = "getBodyData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10471,8 +10471,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "391"
             endingLineNumber = "391"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "42316E48-9CDD-4117-83E7-023C7AA05036 - 92ce62e94043aab4"
@@ -10519,24 +10519,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "184"
             endingLineNumber = "184"
-            landmarkName = "updateContentUI()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "704E7CF4-AFD9-4677-8E90-BF215DDC41AB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "getRequestURL()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10551,8 +10535,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "190"
             endingLineNumber = "190"
-            landmarkName = "updateContentUI()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10567,8 +10551,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "187"
             endingLineNumber = "187"
-            landmarkName = "updateContentUI()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10583,8 +10567,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
             endingLineNumber = "38"
-            landmarkName = "instantiate(category:subCategory:dataSource:city:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10599,8 +10583,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"
             endingLineNumber = "191"
-            landmarkName = "updateContentUI()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10615,8 +10599,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "195"
             endingLineNumber = "195"
-            landmarkName = "updateContentUI()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10631,8 +10615,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "398"
             endingLineNumber = "398"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10647,8 +10631,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "396"
             endingLineNumber = "396"
-            landmarkName = "getList(for:past:term:cityId:completion:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10661,70 +10645,70 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
-            landmarkName = "getGoods(term:category_term_id:productId:completion:)"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "getGoods(term:giftCategoryId:productId:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 73cdc3e55381d514"
+                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 2e6e670ef04e3ee8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(_: Swift.String, term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(term: Swift.Optional&lt;Swift.String&gt;, giftCategoryId: Swift.Optional&lt;Swift.String&gt;, productId: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "197"
-                  endingLineNumber = "197"
-                  offsetFromSymbolStart = "851">
+                  startingLineNumber = "220"
+                  endingLineNumber = "220"
+                  offsetFromSymbolStart = "1147">
                </Location>
                <Location
-                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 73cdc3e55381d514"
+                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 2e6e670ef04e3ee8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(_: Swift.String, term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(term: Swift.Optional&lt;Swift.String&gt;, giftCategoryId: Swift.Optional&lt;Swift.String&gt;, productId: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "197"
-                  endingLineNumber = "197"
-                  offsetFromSymbolStart = "1277">
+                  startingLineNumber = "220"
+                  endingLineNumber = "220"
+                  offsetFromSymbolStart = "1561">
                </Location>
                <Location
-                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 73cdc3e55381d514"
+                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 2e6e670ef04e3ee8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(_: Swift.String, term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(term: Swift.Optional&lt;Swift.String&gt;, giftCategoryId: Swift.Optional&lt;Swift.String&gt;, productId: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "197"
-                  endingLineNumber = "197"
-                  offsetFromSymbolStart = "2997">
+                  startingLineNumber = "220"
+                  endingLineNumber = "220"
+                  offsetFromSymbolStart = "5798">
                </Location>
                <Location
-                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 73cdc3e55381d514"
+                  uuid = "B2E66062-DC26-445A-A32C-3461133D50DA - 2e6e670ef04e3ee8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(_: Swift.String, term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(term: Swift.Optional&lt;Swift.String&gt;, giftCategoryId: Swift.Optional&lt;Swift.String&gt;, productId: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "197"
-                  endingLineNumber = "197"
-                  offsetFromSymbolStart = "3367">
+                  startingLineNumber = "220"
+                  endingLineNumber = "220"
+                  offsetFromSymbolStart = "6156">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -10755,8 +10739,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -10771,41 +10755,9 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "584"
-            endingLineNumber = "584"
+            startingLineNumber = "604"
+            endingLineNumber = "604"
             landmarkName = "getPerCity(_:type:yachtName:yachtCharter:yachtGuests:yachtLengthFeet:yachtLengthMeters:yachtType:yachtBuiltAfter:yachtTag:yachtStatus:region:minPrice:maxPrice:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D55B0753-E5D2-49D9-8C49-AA3DDCB91C50"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "getRequestURL()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "980A4403-6ED2-4E53-B26A-24A5B30D8FAA"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "getGoods(term:category_term_id:productId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -10819,40 +10771,40 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
-            landmarkName = "getGoods(term:category_term_id:productId:completion:)"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "getGoods(term:giftCategoryId:productId:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "1D06A38D-576A-47E2-A435-A927605508F4 - fccfc48abe9bd12e"
+                  uuid = "1D06A38D-576A-47E2-A435-A927605508F4 - cce4bb16b621c062"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "LUJO.EEAPIManager.getGoods(_: Swift.String, term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "LUJO.EEAPIManager.getGoods(term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.String&gt;, productId: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "185"
-                  endingLineNumber = "185"
-                  offsetFromSymbolStart = "109">
+                  startingLineNumber = "208"
+                  endingLineNumber = "208"
+                  offsetFromSymbolStart = "91">
                </Location>
                <Location
-                  uuid = "1D06A38D-576A-47E2-A435-A927605508F4 - 73cdc3e55381d7e1"
+                  uuid = "1D06A38D-576A-47E2-A435-A927605508F4 - 46439605f436b88b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(_: Swift.String, term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.Int&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in LUJO.EEAPIManager.getGoods(term: Swift.Optional&lt;Swift.String&gt;, category_term_id: Swift.Optional&lt;Swift.String&gt;, productId: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;LUJO.Product&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "LUJO"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/imac/Desktop/lujo_ios/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
+                  urlString = "file:///Users/imac/Desktop/lujo_ios_new_backend/LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "186"
-                  endingLineNumber = "186"
-                  offsetFromSymbolStart = "259">
+                  startingLineNumber = "209"
+                  endingLineNumber = "209"
+                  offsetFromSymbolStart = "370">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -10869,8 +10821,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "347"
             endingLineNumber = "347"
-            landmarkName = "getInformation(for:past:term:cityId:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10885,8 +10837,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "223"
             endingLineNumber = "223"
-            landmarkName = "update(listOf:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -10899,8 +10851,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EEAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "590"
-            endingLineNumber = "590"
+            startingLineNumber = "610"
+            endingLineNumber = "610"
             landmarkName = "getPerCity(_:type:yachtName:yachtCharter:yachtGuests:yachtLengthFeet:yachtLengthMeters:yachtType:yachtBuiltAfter:yachtTag:yachtStatus:region:minPrice:maxPrice:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -10915,8 +10867,8 @@
             filePath = "LUJO/Controllers/Main/SearchProductsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
             landmarkName = "getList(for:past:term:completion:)"
             landmarkType = "7">
             <Locations>
@@ -10963,8 +10915,8 @@
             filePath = "LUJO/Common/DataLayer/Events_Experiences/EERouter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "getRequestURL()"
             landmarkType = "7">
          </BreakpointContent>

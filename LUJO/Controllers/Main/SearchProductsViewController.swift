@@ -21,15 +21,17 @@ class SearchProductsViewController: UIViewController {
     class var identifier: String { return "SearchProductsViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(category: ProductCategory) -> SearchProductsViewController {
+    class func instantiate(_ category: ProductCategory, _ subCategory: ProductCategory?) -> SearchProductsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! SearchProductsViewController
-        viewController.category = category
+        viewController.category = category  //is there any chance that i
+        viewController.subCategory = subCategory
         return viewController
     }
     
     //MARK:- Globals
     
     private(set) var category: ProductCategory!
+    private(set) var subCategory: ProductCategory? //e.g. toprated event
     
     @IBOutlet var collectionView: UICollectionView!
     private var dataSource: [Product] = []
@@ -69,7 +71,11 @@ class SearchProductsViewController: UIViewController {
                 title = "Search yachts"
             case .topRated:
                 currentLayout?.setCustomCellHeight(170)
-                title = "Search top rated"
+                var str = "Search top rated"
+                if let subCat = subCategory{
+                    str += " " + subCat.rawValue.lowercased()
+                }
+                title = str
             case .recent:
                 currentLayout?.setCustomCellHeight(170)
                 title = "Search recenlty viewed"
@@ -303,7 +309,7 @@ extension SearchProductsViewController {
             case .gift:
                 Mixpanel.mainInstance().track(event: "GiftSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getGoods( term: term, category_term_id: nil, productId: nil) { list, error in
+                EEAPIManager().getGoods( term: term, giftCategoryId: nil, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
@@ -327,7 +333,22 @@ extension SearchProductsViewController {
             case .topRated:
                 Mixpanel.mainInstance().track(event: "TopRatedSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getTopRated(token, type: nil, term: term) { list, error in   //type nil mean bring all types(event, experience) of toprated
+                var subCatParam = ""
+                switch subCategory {
+                case .event:
+                    subCatParam = "event"
+                case .experience:
+                    subCatParam = "experience"
+                case .gift:
+                    subCatParam = "gift"
+                case .villa:
+                    subCatParam = "villa"
+                case .yacht:
+                    subCatParam = "yacht"
+                default:
+                    subCatParam = subCategory?.rawValue.lowercased() ?? ""
+                }
+                EEAPIManager().getTopRated( type: subCatParam, term: term) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain top rated information")

@@ -246,21 +246,18 @@ struct RestaurantPreferences : Codable {
 
 struct EventPreferences : Codable {
     var event_category_id : [String]?
-    var event_category_id_other : String?
-    var event_location_id : [String]?
+    var event_continent_ids : [String]?
     
     enum CodingKeys: String, CodingKey {
         case event_category_id = "event_category_ids"
-        case event_category_id_other = "event_category_id_other"
-        case event_location_id = "event_location_ids"
+        case event_continent_ids = "event_continent_ids"
     }
     
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             event_category_id = try values.decodeIfPresent([String].self, forKey: .event_category_id)
-            event_category_id_other = try values.decodeIfPresent(String.self, forKey: .event_category_id_other)
-            event_location_id = try values.decodeIfPresent([String].self, forKey: .event_location_id)
+            event_continent_ids = try values.decodeIfPresent([String].self, forKey: .event_continent_ids)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
