@@ -29,7 +29,7 @@ enum CollectionSize:Int{
 protocol WishListViewProtocol:class {
     func didTappedOnSeeAll(itemType:FavouriteType)
     func didTappedOnItem(indexPath: IndexPath,itemType:FavouriteType, sender: WishListView)
-    func didTappedOnHeartAt(index: Int,itemType:FavouriteType, sender: WishListView)
+    func didTappedOnHeartAt(index: Int,favouriteType:FavouriteType, sender: WishListView)
 }
 
 class WishListView: UIView {
@@ -229,7 +229,7 @@ extension WishListView: UICollectionViewDelegate {
     }
     
     @objc func tappedOnHeart(_ sender:AnyObject){
-        delegate?.didTappedOnHeartAt(index: sender.view.tag,itemType:self.itemType, sender: self)
+        delegate?.didTappedOnHeartAt(index: sender.view.tag,favouriteType:self.itemType, sender: self)
     }
 }
 

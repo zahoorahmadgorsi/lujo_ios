@@ -84,8 +84,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int, completion: @escaping ([Product]?, Error?) -> Void) {
-        Alamofire.request(EERouter.geopoint(token: token, type: type, latitude: latitude, longitude: longitude, radius: radius))
+    func geopoint(type: String, latitude: Float, longitude: Float, completion: @escaping ([Product]?, Error?) -> Void) {
+        Alamofire.request(EERouter.geopoint( type: type, latitude: latitude, longitude: longitude))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

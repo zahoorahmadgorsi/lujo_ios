@@ -11,8 +11,8 @@ import Foundation
 
 class RecentlyViewedAPIManager {
 
-    func setRecenltyViewed(token: String, id: String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request( RecentlyViewedRouter.setRecentlyViewed( token: token, id: id))
+    func setRecenltyViewed(type: String, id: String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request( RecentlyViewedRouter.setRecentlyViewed( type, id))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

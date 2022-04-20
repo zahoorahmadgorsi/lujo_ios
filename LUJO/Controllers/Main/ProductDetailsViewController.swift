@@ -927,7 +927,7 @@ extension ProductDetailsViewController {
         Mixpanel.mainInstance().track(event: "RecentlyViewed",
                   properties: ["RecentlyViewed ProductId" : product.id
                                 ,"RecentlyViewed ProductType" : product.type])
-        RecentlyViewedAPIManager().setRecenltyViewed(token: token, id: product.id){response, error in
+        RecentlyViewedAPIManager().setRecenltyViewed(type: product.type, id: product.id){response, error in
             if let error = error{
                 print(error.localizedDescription );
             }else{
@@ -956,7 +956,7 @@ extension ProductDetailsViewController {
     @objc func tappedOnHeart(_ sender:AnyObject) {
         //setting the favourite
         self.showNetworkActivity()
-        setUnSetFavourites(id: product.id ,isUnSetFavourite: product.isFavourite ?? false) {information, error in
+        setUnSetFavourites(type: product.type, id: product.id ,isUnSetFavourite: product.isFavourite ?? false) {information, error in
             self.hideNetworkActivity()
             
             if let error = error {
@@ -981,13 +981,13 @@ extension ProductDetailsViewController {
         }
     }
         
-    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(type:String,id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
         
-        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
+        GoLujoAPIManager().setUnSetFavourites(type, id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")

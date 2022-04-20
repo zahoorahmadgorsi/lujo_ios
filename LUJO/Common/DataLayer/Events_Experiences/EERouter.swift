@@ -30,7 +30,7 @@ enum EERouter: URLRequestConvertible {
     case events(Bool, String?, String?, String?)
     case experiences( String?, String?, String?)
     case salesforce(String, String, String?)
-    case geopoint(token: String, type: String, latitude: Float, longitude: Float, radius: Int)
+    case geopoint(type: String, latitude: Float, longitude: Float)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
     case villas(String, String?, String?, String?)
@@ -207,9 +207,12 @@ enum EERouter: URLRequestConvertible {
             case .salesforce:
                 newURLComponents.path.append("/request")
 
-            case .geopoint:
-                newURLComponents.path.append("/geopoint")
-            
+        case let .geopoint(type,_,_):
+            if type == "event"{
+                newURLComponents.path.append("/events/search")
+            }else if type == "restaurant"{
+                newURLComponents.path.append("/restaurants/search")
+            }
             case let .citySearch(token, searchTerm):
                 newURLComponents.path.append("/search-cities")
                 newURLComponents.queryItems = [
@@ -324,8 +327,8 @@ enum EERouter: URLRequestConvertible {
             return nil
         case let .salesforce(itemId, token, channelID):
             return getSalesforceDataAsJSONData(itemId: itemId, token: token, channelId: channelID)
-        case let .geopoint(token, type, latitude, longitude, _):
-            return getGeopointDataAsJSONData(type: type, latitude: latitude, longitude: longitude, token: token)
+        case let .geopoint(_, latitude, longitude):
+            return getGeopointDataAsJSONData(latitude: latitude, longitude: longitude)
         case .citySearch:
             return nil
         case .cityInfo:
@@ -381,9 +384,8 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getGeopointDataAsJSONData(type: String, latitude: Float, longitude: Float, token: String) -> Data? {
+    fileprivate func getGeopointDataAsJSONData( latitude: Float, longitude: Float) -> Data? {
         let body: [String: Any] = [
-            "type": type,
             "latitude": latitude,
             "longitude": longitude
         ]

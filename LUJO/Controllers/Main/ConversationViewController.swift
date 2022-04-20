@@ -153,6 +153,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                         attributes["type"] = self.product.type
                         ConversationsManager.sharedConversationsManager.updateConversationAttributes(customAttributes: attributes)
                     }
+                ConversationsManager.sharedConversationsManager.addParticipants(productType: self.product.type)
                 self.hideNetworkActivity()
             })
         }

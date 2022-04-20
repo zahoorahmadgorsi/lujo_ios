@@ -15,7 +15,7 @@ import Mixpanel
 
 extension GoLujoAPIManager  {
     
-    func setUnSetFavourites(token: String, id: String, isUnSetFavourite: Bool, completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(_ type: String, _ id: String, _ isUnSetFavourite: Bool, completion: @escaping (String?, Error?) -> Void) {
         if (isUnSetFavourite){
             Mixpanel.mainInstance().track(event: "UnLiked",
                   properties: ["productId" : id])
@@ -23,9 +23,9 @@ extension GoLujoAPIManager  {
             Mixpanel.mainInstance().track(event: "Liked",
                   properties: ["productId" : id])
         }
-        var wishListRouter = WishListRouter.setFavourites(token, id)
+        var wishListRouter = WishListRouter.setFavourites(type, id)
         if (isUnSetFavourite){
-            wishListRouter = WishListRouter.unSetFavourites(token, id)
+            wishListRouter = WishListRouter.unSetFavourites(type, id)
         }
         
         Alamofire.request( wishListRouter )
@@ -62,8 +62,8 @@ extension GoLujoAPIManager  {
         }
     }
     
-    func getFavourites(_ token: String, completion: @escaping (WishListObjects?, Error?) -> Void) {
-        Alamofire.request(WishListRouter.getFavourites(token))
+    func getFavourites( completion: @escaping (WishListObjects?, Error?) -> Void) {
+        Alamofire.request(WishListRouter.getFavourites)
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

@@ -676,7 +676,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         //setting the favourite
         if let item = item{
             self.showNetworkActivity()
-            setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
+            setUnSetFavourites(type: item.type, id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
                 self.hideNetworkActivity()
                 
                 if let error = error {
@@ -818,13 +818,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
 
     
-    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(type:String,id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
         
-        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
+        GoLujoAPIManager().setUnSetFavourites(type,id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not set/unset favorites")
@@ -892,7 +892,7 @@ extension HomeViewController: ImageCarouselDelegate {
         
         //setting the favourite
         self.showNetworkActivity()
-        setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
+        setUnSetFavourites(type: item.type, id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
             self.hideNetworkActivity()
             
             if let error = error {
@@ -947,7 +947,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         
         //setting the favourite
         self.showNetworkActivity()
-        setUnSetFavourites(id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
+        setUnSetFavourites(type: item.type,id: item.id ,isUnSetFavourite: item.isFavourite ?? false) {information, error in
             self.hideNetworkActivity()
             
             if let error = error {
@@ -1086,7 +1086,7 @@ extension HomeViewController {
             
             //25.2048,55.2708   //dubai lat, long
             print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
-            EEAPIManager().geopoint(token: token, type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), radius: 50) { information, error in
+            EEAPIManager().geopoint( type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude)) { information, error in
                 self.canSendRequest = true
                 
                 if let error = error {

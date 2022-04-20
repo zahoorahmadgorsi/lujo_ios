@@ -8,6 +8,7 @@
 
 import UIKit
 import TwilioConversationsClient
+import Alamofire
 
 protocol ConversationsManagerDelegate: AnyObject {
     func reloadMessages()
@@ -20,10 +21,8 @@ protocol ConversationsManagerDelegate: AnyObject {
 }
 
 class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
-    
-    //var serverURL = "https://seashell-snowshoe-5113.twil.io/send-notification"
-//    let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
-    let TOKEN_URL = "https://boysenberry-flamingo-2375.twil.io/chat-token"
+//    let TOKEN_URL = "https://seashell-snowshoe-5113.twil.io/chat-token"   (project go lujo SMS project)
+    let TOKEN_URL = "https://boysenberry-flamingo-2375.twil.io/chat-token"  //(project name baroque-group)
     
 
     static let sharedConversationsManager = ConversationsManager()
@@ -172,32 +171,32 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         client.createConversation(options: options) { (result, conversation: TCHConversation?) in
             if result.isSuccessful{
 //                self.conversation = conversation
-                print("Twilio: Conversation created")
+                print("Twilio: Conversation created \(String(describing: conversation?.sid))")
                 if let convers = conversation{
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
                     }
-                    let particiapntsEmails:[String] = ["shujahm@gmail.com"
-                                                       ,"mark.anthony@baroque-group.com"
-                                                       ,"deseriejoy.cruz@baroqueaccess.com"
-                                                       ,"henry@baroqueaccess.com"
-                                                       ,"stuti-kesarwani@baroquetravel.com"
-                                                       ,"request@golujo.com"
-                                                       ,"shirley@baroquetravel.com"
-                                                       ,"clara.plebani@baroquetravel.com"
-                                                       ,"yanquiel@baroquetravel.com"
-                                                       ,"sylvia@baroquetravel.com"
-                                                       ,"ej.bobadilla@baroqueaccess.com"
-                                                       ,"zahoor.gorsi@gmail.com"
-                                                       ,"zahoor.ahmad@live.com"
-                                                        ,"admin@gmail.com"]
-                    for participantEmail in particiapntsEmails{
-                        convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
-                            if result.isSuccessful == false {
-                                print("Twilio: \(participantEmail) could not added.")
-                            }
-                        })
-                    }
+//                    let particiapntsEmails:[String] = ["shujahm@gmail.com"
+//                                                       ,"mark.anthony@baroque-group.com"
+//                                                       ,"deseriejoy.cruz@baroqueaccess.com"
+//                                                       ,"henry@baroqueaccess.com"
+//                                                       ,"stuti-kesarwani@baroquetravel.com"
+//                                                       ,"request@golujo.com"
+//                                                       ,"shirley@baroquetravel.com"
+//                                                       ,"clara.plebani@baroquetravel.com"
+//                                                       ,"yanquiel@baroquetravel.com"
+//                                                       ,"sylvia@baroquetravel.com"
+//                                                       ,"ej.bobadilla@baroqueaccess.com"
+//                                                       ,"zahoor.gorsi@gmail.com"
+//                                                       ,"zahoor.ahmad@live.com"
+//                                                        ,"admin@gmail.com"]
+//                    for participantEmail in particiapntsEmails{
+//                        convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
+//                            if result.isSuccessful == false {
+//                                print("Twilio: \(participantEmail) could not added.")
+//                            }
+//                        })
+//                    }
                 }
             }else{
                 print("Twilio: Conversation could not created")
@@ -406,6 +405,43 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         }
     }
     
+    func addParticipants(productType:String){
+        if let convers = self.conversation{
+            Alamofire.request(GoLujoRouter.getTwilioParticipants(productType))
+                .responseJSON { response in
+                    guard response.result.error == nil else {
+                        print("Twilio: Could not get any participant to add into the twilio conversation")
+                        return
+                    }
+                    if let statusCode = response.response?.statusCode  {
+                        switch statusCode {
+                        case 200 ... 299: // Success
+                            guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self, from: response.data!) else {
+                                print("Twilio: Response format is different then the expected")
+                                return
+                            }
+                            var participantEmails = result.content
+    //                                        participantEmails = []
+                            participantEmails.append("zahoor.gorsi@gmail.com")
+                            participantEmails.append("zahoor.ahmad@live.com")
+                            for participantEmail in participantEmails{
+                                print("Twilio: Participant Email \(participantEmail)")
+                                convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
+                                    if result.isSuccessful == false {
+                                        print("Twilio: \(participantEmail) could not added.")
+                                    }
+//                                    else{
+//                                        print("Twilio: \(participantEmail) added successfully.")
+//                                    }
+                                })
+                            }
+                        default: // 500 or bigger, Server Error
+                            print("Twilio: Received statusCode:\(statusCode)")
+                        }
+                    }
+                }
+        }
+    }
 }
 
 

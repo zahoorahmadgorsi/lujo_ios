@@ -405,7 +405,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             return
         }
         
-        GoLujoAPIManager().getFavourites(token) { favourites, error in
+        GoLujoAPIManager().getFavourites() { favourites, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain the wish list information")
@@ -539,63 +539,64 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         
     }
     
-    func didTappedOnHeartAt(index: Int,itemType:FavouriteType, sender: WishListView){
+    func didTappedOnHeartAt(index: Int,favouriteType:FavouriteType, sender: WishListView){
         var itemID: String = ""
+        var itemType:String = ""
         var isFavourite:Bool = false
-        switch itemType {
+        
+        switch favouriteType {
         case .event:
-            //if let id = wishListInformations?.events?[index].product?.id,
-            if let id = wishListInformations?.events?[index].id,
-                let isFav = wishListInformations?.events?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.events?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "event"
             }
         case .specialEvent:
-            if let id = wishListInformations?.specialEvents?[index].id,
-                let isFav = wishListInformations?.specialEvents?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.specialEvents?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "event"
             }
         case .experience:
-            if let id = wishListInformations?.experiences?[index].id,
-                let isFav = wishListInformations?.experiences?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.experiences?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "experience"
             }
         case .restaurant:
-            if let id = wishListInformations?.restaurants?[index].id,
-                let isFav = wishListInformations?.restaurants?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.restaurants?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "restaurant"
             }
         case .hotel:
-            if let id = wishListInformations?.hotels?[index].id,
-                let isFav = wishListInformations?.hotels?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.hotels?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "hotel"
             }
         case .villa:
-            if let id = wishListInformations?.villas?[index].id,
-                let isFav = wishListInformations?.villas?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.villas?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "villa"
             }
         case .gift:
-            if let id = wishListInformations?.gifts?[index].id,
-                let isFav = wishListInformations?.gifts?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.gifts?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "gift"
             }
         case .yacht:
-            if let id = wishListInformations?.yachts?[index].id,
-                let isFav = wishListInformations?.yachts?[index].isFavourite{
-                    itemID = id
-                    isFavourite = isFav
+            if let item = wishListInformations?.yachts?[index]{
+                itemID = item.id
+                isFavourite = item.isFavourite ?? false
+                itemType = "yacht"
             }
         }
         //setting the favourite
         self.showNetworkActivity()
-        setUnSetFavourites(id: itemID ,isUnSetFavourite: isFavourite ) {information, error in
+        setUnSetFavourites(type: itemType, id: itemID ,isUnSetFavourite: isFavourite ) {information, error in
             self.hideNetworkActivity()
             
             if let error = error {
@@ -605,10 +606,9 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             
             if let informations = information {
                 // data re-fetch.
-//                self.getWishListInformation(showActivity: true)
-                print("ItemID: \(itemID)" + ", ServerResponse: " + informations)
+//                print("ItemID: \(itemID)" + ", ServerResponse: " + informations)
                 //removing item from the list
-                    switch itemType {
+                    switch favouriteType {
                     case .event:
                         self.wishListInformations?.events?.remove(at: index)
                     case .specialEvent:
@@ -635,13 +635,13 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         }
     }
 
-    func setUnSetFavourites(id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
+    func setUnSetFavourites(type:String,id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
         
-        GoLujoAPIManager().setUnSetFavourites(token: token,id: id, isUnSetFavourite: isUnSetFavourite) { strResponse, error in
+        GoLujoAPIManager().setUnSetFavourites(type, id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain wish list information")

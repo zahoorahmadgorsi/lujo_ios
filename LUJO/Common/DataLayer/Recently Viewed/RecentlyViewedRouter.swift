@@ -13,7 +13,7 @@ import UIKit
 
 enum RecentlyViewedRouter: URLRequestConvertible {    
 
-    case setRecentlyViewed(token :String,id:String)
+    case setRecentlyViewed(String,String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -67,14 +67,15 @@ enum RecentlyViewedRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-            case .setRecentlyViewed(token: let token, id: let id):
-               return getSettingRecentlyViewedAsJSONData(token: token , id:id)
+            case let .setRecentlyViewed(type, id):
+               return getSettingRecentlyViewedAsJSONData(type: type , id:id)
         }
     }
     
-    fileprivate func getSettingRecentlyViewedAsJSONData(token: String , id: String) -> Data? {
+    fileprivate func getSettingRecentlyViewedAsJSONData(type: String , id: String) -> Data? {
         let body: [String: Any] = [
-            "id": id
+            "type" : type,
+            "itemId": id
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

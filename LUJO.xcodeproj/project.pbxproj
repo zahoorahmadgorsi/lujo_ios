@@ -115,7 +115,6 @@
 		886FE46127227AD8000B9530 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886FE46027227AD8000B9530 /* Filters.swift */; };
 		886FE46927228E8E000B9530 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886FE46827228E8E000B9530 /* FiltersViewController.swift */; };
 		887492422807138400AB6134 /* OneSignal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887492412807138400AB6134 /* OneSignal.xcframework */; };
-		887492432807138400AB6134 /* OneSignal.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 887492412807138400AB6134 /* OneSignal.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		887E27B32748E099000A93B8 /* MinMaxFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 887E27B22748E099000A93B8 /* MinMaxFilter.xib */; };
 		887E27B82748E0B2000A93B8 /* MinMaxFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */; };
 		88814DBA2656A20C0082AA2C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88814DB92656A20C0082AA2C /* Preferences.swift */; };
@@ -381,17 +380,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		887492442807138400AB6134 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				887492432807138400AB6134 /* OneSignal.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1860,7 +1848,6 @@
 				88029B9D2633BF42003F1E77 /* Sources */,
 				88029B9E2633BF42003F1E77 /* Frameworks */,
 				88029B9F2633BF42003F1E77 /* Resources */,
-				887492442807138400AB6134 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2590,7 +2577,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2617,7 +2604,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2643,7 +2630,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2807,7 +2794,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2861,7 +2848,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3061,7 +3048,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

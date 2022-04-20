@@ -35,7 +35,7 @@ enum WishListRouter: URLRequestConvertible {
         return scheme
     }()
 
-    case getFavourites(String)
+    case getFavourites
     case setFavourites(String,String)
     case unSetFavourites(String,String)
     
@@ -81,11 +81,8 @@ enum WishListRouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
 
         switch self {
-            case let .getFavourites(token):
+            case .getFavourites:
                 newURLComponents.path.append("/favorites")
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token)
-                ]
             case .setFavourites:
                 newURLComponents.path.append("/favorites/set")
             case .unSetFavourites:
@@ -110,16 +107,16 @@ enum WishListRouter: URLRequestConvertible {
         switch self {
             case .getFavourites:
                 return nil
-            case let .setFavourites(token, id):
-                return getFavouritesAsJSONData(token: token , id : id)
-            case let .unSetFavourites(token, id):
-                return getFavouritesAsJSONData(token: token , id : id)
+            case let .setFavourites(type, id):  fallthrough
+            case let .unSetFavourites(type, id):
+                return getFavouritesAsJSONData(type , id )
         }
     }
     
-    fileprivate func getFavouritesAsJSONData(token: String , id : String) -> Data? {
+    fileprivate func getFavouritesAsJSONData(_ type: String , _ id : String) -> Data? {
         let body: [String: Any] = [
-            "id": id
+            "itemId": id,
+            "type" : type
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
