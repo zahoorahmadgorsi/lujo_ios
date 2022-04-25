@@ -1,32 +1,44 @@
 import FirebaseCrashlytics
 import Foundation
 
-//struct Taxonomy: Codable {
-//    let termId: Int
-//    let name: String
-//    var isSelected: Bool
-//
-//    enum CodingKeys: String, CodingKey {
-//        case termId = "term_id"
-//        case name
-//        case isSelected
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        do {
-//            let values = try decoder.container(keyedBy: CodingKeys.self)
-//
-//            name = try values.decode(String.self, forKey: .name)
-//            termId = try values.decode(Double.self, forKey: .termId)
-//            //isSelected would never be sent from API
-//            isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
-//
-//        } catch {
-//            Crashlytics.crashlytics().record(error: error)
-//            throw error
-//        }
-//    }
-//}
+struct ReferralType: Codable {
+    let title: String
+    var discountPercentage: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case discountPercentage = "discount_percentage"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            title = try values.decode(String.self, forKey: .title)
+            discountPercentage = try values.decode(Int.self, forKey: .discountPercentage)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+}
+
+struct ReferralCode: Codable {
+    let referralCode: String
+    
+    enum CodingKeys: String, CodingKey {
+        case referralCode = "referral_code"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            referralCode = try values.decode(String.self, forKey: .referralCode)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+}
 
 struct Taxonomy: Codable {
     let termId: Int
@@ -179,29 +191,6 @@ struct EventExperienceCity: Codable {
     let num: Int
     let items: [Product]
 }
-
-//enum QuantumValue: Decodable {
-//
-//    case int(Int), string(String)
-//
-//    init(from decoder: Decoder) throws {
-//        if let int = try? decoder.singleValueContainer().decode(Int.self) {
-//            self = .int(int)
-//            return
-//        }
-//
-//        if let string = try? decoder.singleValueContainer().decode(String.self) {
-//            self = .string(string)
-//            return
-//        }
-//
-//        throw QuantumError.missingValue
-//    }
-//
-//    enum QuantumError:Error {
-//        case missingValue
-//    }
-//}
 
 //it could be an event, experience, gift, villa or yacht
 struct Product: Codable {

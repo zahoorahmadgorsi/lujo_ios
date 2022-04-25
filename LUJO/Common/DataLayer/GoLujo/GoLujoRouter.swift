@@ -29,7 +29,8 @@ enum GoLujoRouter: URLRequestConvertible {
         }
         return scheme
     }()
-
+    case getReferralTypes(String)
+    case getReferralCodeAgainstType(String,Int)
     case refreshToken(String)
     case login(String, String)
     case loginWithOTP(String, String, String)
@@ -55,7 +56,7 @@ enum GoLujoRouter: URLRequestConvertible {
             return .creation
         case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword:
             return .update
-        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants:
+        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType:
             return .setup
         case .unregisterForPush:
             return .delete
@@ -106,17 +107,15 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getHTTPMethodCreation() -> HTTPMethod {
         switch self {
-        case .createUser:
-            return .post
-        case .verify:
-            return .post
-        case .requestOTP:
-            return .post
+        case .createUser:   fallthrough
+        case .verify:       fallthrough
+        case .requestOTP:   fallthrough
         case .requestLoginOTP:
             return .post
-        case .approved:
+        case .approved: fallthrough
+        case .getReferralTypes: fallthrough
+        case .getReferralCodeAgainstType:
             return .get
-        
         default:
             fatalError("Wrong method category called")
         }
@@ -134,6 +133,7 @@ enum GoLujoRouter: URLRequestConvertible {
             return .post
         case .refreshToken:
             return .post
+        
         default:
             fatalError("Wrong method category called")
         }
@@ -141,20 +141,17 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getHTTPMethodSetup() -> HTTPMethod {
         switch self {
-        case .login:
-            return .post
-        case .loginWithOTP:
-            return .post
-        case .updateDefaults:
-            return .get
-        case .userProfile:
-            return .get
-        case .countryCodes:
-            return .get
-        case .registerForPush:
-            return .post
+        case .login:        fallthrough
+        case .loginWithOTP: fallthrough
+        case .registerForPush:  fallthrough
         case .getTwilioParticipants:
             return .post
+        case .updateDefaults: fallthrough
+        case .userProfile: fallthrough
+        case .countryCodes: fallthrough
+        case .getReferralTypes: fallthrough
+        case .getReferralCodeAgainstType:
+            return .get
         default:
             fatalError("Wrong method category called")
         }
@@ -179,6 +176,17 @@ enum GoLujoRouter: URLRequestConvertible {
         let urlData = getUrlDataForPushService(isStaging: false)
 
         switch self {
+        case let .getReferralCodeAgainstType(token, discountPercentage):
+            newURLComponents.path.append("/users/get-referral-code")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+                URLQueryItem(name: "discount_percentage", value: "\(discountPercentage)"),
+            ]
+        case let .getReferralTypes(token):
+            newURLComponents.path.append("/list-referral")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+            ]
         case .refreshToken:
             newURLComponents.path.append("/users/new-token")
         case .login:
@@ -249,6 +257,8 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getBodyData() -> Data? {
         switch self {
+        case .getReferralCodeAgainstType: fallthrough
+        case .getReferralTypes: return nil
         case let .refreshToken(token):
             return getUserTokenAsJSONData(token)
         case let .login(username, password):

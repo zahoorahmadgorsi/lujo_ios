@@ -1,6 +1,4 @@
 import FirebaseCrashlytics
-//import Crashlytics
-//import Fabric
 import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications

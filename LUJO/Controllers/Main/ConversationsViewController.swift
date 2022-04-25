@@ -47,25 +47,9 @@ class ConversationsViewController: UIViewController {
         
         self.title = "Conversations"
         
-        let searchBarButton = UIButton(type: .system)
-        searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
-//        searchBarButton.setTitle("Cancel", for: .normal)
-        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-        searchBarButton.addTarget(self, action: #selector(imgCrossTapped(_:)), for: .touchUpInside)
-        searchBarButton.sizeToFit()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+        createRightBarButtons()
         
         loadFromUserDefaults()
-    }
-    
-    @objc func imgCrossTapped(_ sender: Any) {
-        if self.isModal{    //almost from all over the application
-            self.dismiss(animated: true, completion:{
-                self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
-            })
-        }else if let navController = self.navigationController { //from the preferences screen
-            navController.popViewController(animated: true)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +59,25 @@ class ConversationsViewController: UIViewController {
         }else{
             self.tblView.reloadData()
             self.getConversations(showActivity: false)    //silently loading the conversations.
+        }
+    }
+    
+    
+    //this method creates the cross and edit button, on tap of this button, UIViewcontroller is closed
+    private func createRightBarButtons(){
+        let imgCross    = UIImage(named: "cross")!
+        let btnCross   = UIBarButtonItem(image: imgCross,  style: .plain, target: self, action: #selector(imgCrossTapped(_:)))
+        navigationItem.rightBarButtonItems = [btnCross]   //order is first and second (right to left)
+
+    }
+    
+    @objc func imgCrossTapped(_ sender: Any) {
+        if self.isModal{    //almost from all over the application
+            self.dismiss(animated: true, completion:{
+                self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
+            })
+        }else if let navController = self.navigationController { //from the preferences screen
+            navController.popViewController(animated: true)
         }
     }
     
@@ -343,30 +346,8 @@ extension ConversationsViewController: ConversationsManagerDelegate {
     //if index is visible then reload that cell with text "Typing..."
     // incase of multithreading this code might fail
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
-//        if let typingOnIndex = self.conversations.firstIndex(where: {$0.sid == conversation.sid})
-//            ,let indices = self.tblView.indexPathsForVisibleRows {
-//            for index in indices {
-//                if index.row == typingOnIndex {
-////                    var attribute = Dictionary<String,Bool>()
-//                    if var attribute = conversation.attributes()?.dictionary as? Dictionary<String,Any>{
-//                        attribute["isTyping"] = isTyping
-//                        let attributes:TCHJsonAttributes = .init(dictionary: attribute)
-//                        self.conversations[typingOnIndex].setAttributes(attributes) { (result) in
-//                            if result.isSuccessful{
-//                                // index could have been changed by now, incase self.conversations data got changed due to sorting
-//                                self.tblView.reloadRows(at: [index], with: UITableView.RowAnimation.none)
-//                            }else{
-//                                print("Twilio: isTypingOnOff setAttributes not working")
-//                            }
-//                        }
-//                    }
-//
-//                }
-//            }
+//        if let friendlyName = conversation.friendlyName, let identity = participant.identity{
+//            print("Twilio: typingOn : \(friendlyName) by \(identity) is \(isTyping)")
 //        }
-        if let friendlyName = conversation.friendlyName, let identity = participant.identity{
-            print("Twilio: typingOn : \(friendlyName) by \(identity) is \(isTyping)")
-        }
-       
     }
 }

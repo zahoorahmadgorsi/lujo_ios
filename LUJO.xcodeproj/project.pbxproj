@@ -143,6 +143,8 @@
 		88988675272363F60030613A /* SingleLineCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88988674272363F60030613A /* SingleLineCollectionFilter.swift */; };
 		8898867A2723DF6A0030613A /* SingleLineFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889886792723DF6A0030613A /* SingleLineFilterCell.xib */; };
 		8898867F2723E2450030613A /* SingleLineFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898867E2723E2450030613A /* SingleLineFilterCell.swift */; };
+		889CF3A028171EAE004481B1 /* GenerateReferralCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CF39F28171EAE004481B1 /* GenerateReferralCodeViewController.swift */; };
+		889CF3A628171FB6004481B1 /* ShareReferralCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889CF3A528171FB6004481B1 /* ShareReferralCodeViewController.swift */; };
 		889D6321276CEBAD005C3363 /* logo animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 889D6320276CEBAD005C3363 /* logo animation.gif */; };
 		88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; };
 		88B30C792670234C0090B3B5 /* ActiveLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44CDE62130753100699E1A /* ActiveLabel.framework */; };
@@ -537,6 +539,8 @@
 		88988674272363F60030613A /* SingleLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineCollectionFilter.swift; sourceTree = "<group>"; };
 		889886792723DF6A0030613A /* SingleLineFilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLineFilterCell.xib; sourceTree = "<group>"; };
 		8898867E2723E2450030613A /* SingleLineFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineFilterCell.swift; sourceTree = "<group>"; };
+		889CF39F28171EAE004481B1 /* GenerateReferralCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateReferralCodeViewController.swift; sourceTree = "<group>"; };
+		889CF3A528171FB6004481B1 /* ShareReferralCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareReferralCodeViewController.swift; sourceTree = "<group>"; };
 		889D6320276CEBAD005C3363 /* logo animation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "logo animation.gif"; sourceTree = "<group>"; };
 		88B57274256AC32000FF9E4C /* DiningViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiningViewCell.xib; sourceTree = "<group>"; };
 		88B90AA02634389700DE2089 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
@@ -850,16 +854,6 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		1D3A71E2233919560037AE81 /* API Managers */ = {
-			isa = PBXGroup;
-			children = (
-				1D3A71E3233919840037AE81 /* AviationAPIManager.swift */,
-				1D618008238AAF0000F01199 /* CustomRequestAPIManager.swift */,
-				1DBC9C032365B7CA00F0F133 /* PaymentAPIManager.swift */,
-			);
-			path = "API Managers";
-			sourceTree = "<group>";
-		};
 		1D618005238AAD7900F01199 /* Custom_Requests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1070,6 +1064,8 @@
 				5527644823195D3700380BEB /* AccountViewController.swift */,
 				5527644A23195D4300380BEB /* UserProfileViewController.swift */,
 				5527644C23195D5600380BEB /* MembershipViewControllerNEW.swift */,
+				889CF39F28171EAE004481B1 /* GenerateReferralCodeViewController.swift */,
+				889CF3A528171FB6004481B1 /* ShareReferralCodeViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -1354,6 +1350,7 @@
 		9A0DCC7C21F86F5D00CC9111 /* Baroque Aviation */ = {
 			isa = PBXGroup;
 			children = (
+				1D3A71E3233919840037AE81 /* AviationAPIManager.swift */,
 				9A0DCC7D21F86F7D00CC9111 /* BARouter.swift */,
 			);
 			path = "Baroque Aviation";
@@ -1381,6 +1378,7 @@
 		9A16408121FB1A720041FFCE /* Payments */ = {
 			isa = PBXGroup;
 			children = (
+				1DBC9C032365B7CA00F0F133 /* PaymentAPIManager.swift */,
 				9A16408221FB1A960041FFCE /* CCRouter.swift */,
 				9A16408421FB22CA0041FFCE /* CCAPIManager.swift */,
 				1DBC9C052365B97A00F0F133 /* PaymentRouter.swift */,
@@ -1603,7 +1601,6 @@
 				164332F8BAB671B1881F0BAB /* Router.swift */,
 				1D61800E238C3BB100F01199 /* 3rd Party */,
 				91B4A3AA260264A300169A0C /* Animators */,
-				1D3A71E2233919560037AE81 /* API Managers */,
 				9AE0B2AA21232F7F00E55E6C /* Common */,
 				557BB5DD23158F8900744188 /* Controllers */,
 				9ADE2DE8211316D900D7293C /* Features */,
@@ -1753,6 +1750,7 @@
 		9AE0B2AB21232F9000E55E6C /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				1D618008238AAF0000F01199 /* CustomRequestAPIManager.swift */,
 				9AE0B2B021233D7900E55E6C /* BackendError.swift */,
 				9A0DCC7C21F86F5D00CC9111 /* Baroque Aviation */,
 				1D618005238AAD7900F01199 /* Custom_Requests */,
@@ -2283,6 +2281,7 @@
 				9A9EC8AD2253BA2800098E7D /* AviationLegCell.swift in Sources */,
 				9A16408521FB22CA0041FFCE /* CCAPIManager.swift in Sources */,
 				5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */,
+				889CF3A628171FB6004481B1 /* ShareReferralCodeViewController.swift in Sources */,
 				8868752D27A6BD9C00563CDC /* AlertService.swift in Sources */,
 				9AE0B2AD2123304B00E55E6C /* GoLujoAPIManager.swift in Sources */,
 				9A645BA3226492CD009BF14D /* BookingPriceSummaryView.swift in Sources */,
@@ -2487,6 +2486,7 @@
 				9AF561E921833D5800B7BD1A /* UIImageView+Download.swift in Sources */,
 				9A194FF022945A5E00E3DBD1 /* HomeEventCell.swift in Sources */,
 				888A306426460C9D008754AD /* PrefCollViewCell.swift in Sources */,
+				889CF3A028171EAE004481B1 /* GenerateReferralCodeViewController.swift in Sources */,
 				9156B7692614AD9900404E1D /* SpecialEventAnimator.swift in Sources */,
 				9AF8DC222200C519003D0519 /* UIButton.swift in Sources */,
 				9A5C5CB9222FD99000B8239D /* PaymentSession.swift in Sources */,
@@ -2568,7 +2568,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2595,7 +2595,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2621,7 +2621,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2785,7 +2785,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2839,7 +2839,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3027,8 +3027,8 @@
 				AVIATION_AUTHORISATION_TOKEN = "NzI0ZWM0YjBkOTRmYjNiN8_glYxP5P2QdQdXximXf9vqVOXcH-fgzn9zaksoJCJS3kNBoG3VvyyUcL4cbhMVQTpaUDiWZXVaph_BSWpAYgWod2ep6Fn125y56wCHMG4lPkDjn57-kDE_Xwfe43a5jw==";
 				AVIATION_PRODUCT_NAME = "baroqueaviation-software";
 				AVIATION_SERVER = sandbox.avinode.com;
-				BACKEND_CONNECTION_SCHEME = http;
-				BACKEND_SERVER = "api-stage.golujo.com";
+				BACKEND_CONNECTION_SCHEME = https;
+				BACKEND_SERVER = api.golujo.com;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CARDCONNECT_API_PASSWORD = testing123;
 				CARDCONNECT_API_USERNAME = testing;
@@ -3039,7 +3039,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

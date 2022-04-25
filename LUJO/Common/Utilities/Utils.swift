@@ -73,7 +73,6 @@ struct Utility
             attribute["customer_name"] = user.firstName + " " + user.lastName
             attribute["customer_email"] = user.email
             attribute["customer_phone"] = user.phoneNumber.readableNumber
-            attribute["customer_email"] = user.email
             attribute["customer_sfid"] = user.sfid
             if let plan = user.membershipPlan?.plan{
                 attribute["customer_membership"] = plan
@@ -100,5 +99,15 @@ struct Utility
             }
         }
         return attribute
+    }
+    
+    static func inviteFriend(_ referralCode : String){
+        let activityViewController = UIActivityViewController(
+            activityItems: ["""
+            It's my pleasure to invite you to join Lujo our new ultimate lifestyle management platform filled with curated content that brings the world's best experiences to your fingertips. Download Lujo for iPhone https://apps.apple.com/us/app/lujo/id1233843327 and become a member to enjoy the finest that the world has to offer. Mmbership awaits you with a unique code \(referralCode).
+            """],
+            applicationActivities: nil
+        )
+        UIApplication.topViewController()?.present(activityViewController, animated: true, completion: nil)
     }
 }

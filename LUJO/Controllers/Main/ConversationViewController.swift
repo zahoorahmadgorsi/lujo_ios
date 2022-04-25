@@ -70,6 +70,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //Need to send LAT/LONG with each message to the server
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -80,13 +81,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         configureMessageInputBar()
 //        title = "LUJO"  //this name would be override with conversation friendly name
         overrideUserInterfaceStyle = .dark  //showing chat window in dark mode
-        let searchBarButton = UIButton(type: .system)
-        searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
-//        searchBarButton.setTitle("Cancel", for: .normal)
-        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-        searchBarButton.addTarget(self, action: #selector(imgCrossTapped(_:)), for: .touchUpInside)
-        searchBarButton.sizeToFit()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+       
+        createRightBarButtons()
         
         identity = LujoSetup().getLujoUser()?.email ?? identity //current logged in user
         
@@ -155,8 +151,26 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                         attributes["type"] = self.product.type
                         ConversationsManager.sharedConversationsManager.updateConversationAttributes(customAttributes: attributes)
                     }
+                ConversationsManager.sharedConversationsManager.addParticipants(productType: self.product.type)
                 self.hideNetworkActivity()
             })
+        }
+    }
+    
+    //this method creates the cross and edit button, on tap of this button, UIViewcontroller is closed
+    private func createRightBarButtons(){
+        let imgCross    = UIImage(named: "cross")!
+        let imgEdit  = UIImage(named: "Edit")!
+    
+        let btnCross   = UIBarButtonItem(image: imgCross,  style: .plain, target: self, action: #selector(imgCrossTapped(_:)))
+        let btnEdit = UIBarButtonItem(image: imgEdit,  style: .plain, target: self, action: #selector(imgEditTapped(_:)))
+        
+//        print(LujoSetup().getLujoUser()?.email as Any,self.conversation?.createdBy as Any)
+        //edit option is only possible if you are the creater of the conversation, so applying this check
+        if let userEmail = LujoSetup().getLujoUser()?.email, let conversationCreaterEmail = self.conversation?.createdBy, userEmail == conversationCreaterEmail{
+            navigationItem.rightBarButtonItems = [btnCross , btnEdit]   //order is first and second (right to left)
+        }else{
+            navigationItem.rightBarButtonItems = [btnCross ]
         }
     }
     
@@ -165,6 +179,32 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
         })
     }
+    
+    @objc func imgEditTapped(_ sender: Any) {
+        showInputDialog(title: "Conversation Title",
+                        subtitle: "Please edit the conversation title to the new one.",
+                        actionTitle: "Update",
+                        cancelTitle: "Cancel",
+                        inputText: self.conversation?.friendlyName,
+                        inputPlaceholder: "Please enter conversation title",
+                        inputKeyboardType: .default
+                        ,actionHandler:
+                            { (input:String?) in
+                                if let userInput = input{
+                                    self.showNetworkActivity()
+                                    ConversationsManager.sharedConversationsManager.setFriendlyName(friendlyName: userInput) { (result) in
+                                        self.hideNetworkActivity()
+                                        if result{
+                                            self.updateTitleView(title: userInput , subtitle: nil)
+                                        }else{
+                                            print("Twilio: Conversation title could not updated.")
+                                        }
+                                    }
+                                }
+                            })
+    }
+    
+
     
     func addDefaultMessage(type:String)->ChatMessage{
          //if default avatar isnt available then just display the app logo
@@ -436,35 +476,35 @@ extension ConversationViewController: MessageCellDelegate {
     }
     
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {
-        print("Top cell label tapped")
+        print("Messagekit: Top cell label tapped")
     }
     
     func didTapCellBottomLabel(in cell: MessageCollectionViewCell) {
-        print("Bottom cell label tapped")
+        print("Messagekit: Bottom cell label tapped")
     }
     
     func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {
-        print("Top message label tapped")
+        print("Messagekit: Top message label tapped")
     }
     
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
-        print("Bottom label tapped")
+        print("Messagekit: Bottom label tapped")
     }
 
     func didStartAudio(in cell: AudioMessageCell) {
-        print("Did start playing audio sound")
+        print("Messagekit: Did start playing audio sound")
     }
 
     func didPauseAudio(in cell: AudioMessageCell) {
-        print("Did pause audio sound")
+        print("Messagekit: Did pause audio sound")
     }
 
     func didStopAudio(in cell: AudioMessageCell) {
-        print("Did stop audio sound")
+        print("Messagekit: Did stop audio sound")
     }
 
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
-        print("Accessory view tapped")
+        print("Messagekit: Accessory view tapped")
     }
     
     func makeImageFullScreen(_ image: UIImage){
@@ -564,7 +604,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending..."
         // Resign first responder for iPad split view
-        inputBar.inputTextView.resignFirstResponder()
+//        inputBar.inputTextView.resignFirstResponder() //zahoor
     
         for component in components {
             if let str = component as? String  {
@@ -572,7 +612,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                     inputBar.sendButton.stopAnimating()
                     if result.isSuccessful {
                         inputBar.inputTextView.placeholder = "Aa"
-                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
+//                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type zahoor
                     } else {
 //                        self.displayErrorMessage("Unable to send message")
                         let error = BackendError.parsing(reason: "Unable to send message")
@@ -601,7 +641,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                 }
             }
         }else{
-            //let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
+            //let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: "Customer Support")
             let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: "Customer Support")
             if let messageBody = message.body {
                 if messageBody.isHtml(){

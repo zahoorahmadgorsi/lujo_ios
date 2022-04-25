@@ -21,11 +21,8 @@ protocol ConversationsManagerDelegate: AnyObject {
 }
 
 class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
-    
-    //var serverURL = "https://seashell-snowshoe-5113.twil.io/send-notification"
-//    let TOKEN_URL =   "https://seashell-snowshoe-5113.twil.io/chat-token"
-    let TOKEN_URL = "https://boysenberry-flamingo-2375.twil.io/chat-token"
-    
+//    let TOKEN_URL = "https://seashell-snowshoe-5113.twil.io/chat-token" (project go lujo SMS project)
+    let TOKEN_URL = "https://boysenberry-flamingo-2375.twil.io/chat-token"  //(project name baroque-group)
 
     static let sharedConversationsManager = ConversationsManager()
 //    static let sharedCache = NSCache<NSString, UIImage>()
@@ -173,42 +170,10 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         client.createConversation(options: options) { (result, conversation: TCHConversation?) in
             if result.isSuccessful{
 //                self.conversation = conversation
-                print("Twilio: Conversation created")
+                print("Twilio: Conversation created sID: \(String(describing: conversation?.sid))")
                 if let convers = conversation{
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
-                    }
-                    if let type = customAttribute["type"] as? String{
-                        print("Twilio: Conversation Type:\(type)")
-                        Alamofire.request(GoLujoRouter.getTwilioParticipants(type))
-                            .responseJSON { response in
-                                guard response.result.error == nil else {
-                                    print("Twilio: Could not get any participant to add into the twilio conversation")
-                                    return
-                                }
-                                if let statusCode = response.response?.statusCode  {
-                                    switch statusCode {
-                                    case 200 ... 299: // Success
-                                        guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self, from: response.data!) else {
-                                            print("Twilio: Response format is different then the expected")
-                                            return
-                                        }
-                                        var participantEmails = result.content
-                                        participantEmails.append("zahoor.gorsi@gmail.com")
-                                        participantEmails.append("zahoor.ahmad@live.com")
-                                        for participantEmail in participantEmails{
-//                                            print(participantEmail)
-                                            convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
-                                                if result.isSuccessful == false {
-                                                    print("Twilio: \(participantEmail) could not added.")
-                                                }
-                                            })
-                                        }
-                                    default: // 500 or bigger, Server Error
-                                        print("Twilio: Received statusCode:\(statusCode)")
-                                    }
-                                }
-                            }
                     }
                 }
             }else{
@@ -394,15 +359,6 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             conversation?.typing()
         }
     }
-    
-    
-//    func updateUser(customAttributes: Dictionary<String,Any>){
-//        //updating user
-//        let attributes:TCHJsonAttributes = .init(dictionary: customAttributes)
-//        self.client?.user?.setAttributes(attributes, completion: { (result) in
-//            print("Twilio: User attributes are updated?: \(result.isSuccessful)")
-//        })
-//    }
 
     func updateConversationAttributes(customAttributes: Dictionary<String,Any>){
         //updating user
@@ -414,6 +370,55 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             })
         }else{
 //            completion(false)
+            print("Twilio: conversation not available to update")
+        }
+    }
+    
+    func addParticipants(productType:String){
+        if let convers = self.conversation{
+            Alamofire.request(GoLujoRouter.getTwilioParticipants(productType))
+                .responseJSON { response in
+                    guard response.result.error == nil else {
+                        print("Twilio: Could not get any participant to add into the twilio conversation")
+                        return
+                    }
+                    if let statusCode = response.response?.statusCode  {
+                        switch statusCode {
+                        case 200 ... 299: // Success
+                            guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self, from: response.data!) else {
+                                print("Twilio: Response format is different then the expected")
+                                return
+                            }
+                            let participantEmails = result.content
+//                            participantEmails.append("zahoor.gorsi@gmail.com")
+//                            participantEmails.append("zahoor.ahmad@live.com")
+                            for participantEmail in participantEmails{
+                                print("Twilio: Participant Email \(participantEmail)")
+                                convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
+                                    if result.isSuccessful == false {
+                                        print("Twilio: \(participantEmail) could not added.")
+                                    }
+//                                    else{
+//                                        print("Twilio: \(participantEmail) added successfully.")
+//                                    }
+                                })
+                            }
+                        default: // 500 or bigger, Server Error
+                            print("Twilio: Received statusCode:\(statusCode)")
+                        }
+                    }
+                }
+        }
+    }
+    
+    func setFriendlyName(friendlyName:String
+                         , completion: @escaping (Bool) -> Void){
+        if let conversation = self.conversation{
+            conversation.setFriendlyName(friendlyName, completion: { (result) in
+                completion(result.isSuccessful)
+            })
+        }else{
+            completion(false)
             print("Twilio: conversation not available to update")
         }
     }

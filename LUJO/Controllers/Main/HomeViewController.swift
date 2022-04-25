@@ -160,8 +160,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         updateUI()
         setupTapGesturesForEventsAndExperiences()
 
-        
-
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
         noNearbyEventsContainerView.isHidden = true
@@ -230,6 +228,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                                                name: Notification.Name(rawValue: "getAllUserPreferences"),
                                                object: nil)
         getAllUserPreferences() //fetching all user preferenes from the server
+        updateCustomerAtTwilio()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -256,6 +255,38 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showBadgeValue()
+    }
+    
+    private func updateCustomerAtTwilio(){
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
+            return
+        }
+        
+        let attribute = Utility.getAttributes(onlyRelatedToUser: true)
+        if let email = attribute["customer_email"] as? String , !email.isEmpty
+           , let phone = attribute["customer_phone"] as? String, !phone.isEmpty
+           , let name = attribute["customer_name"] as? String, !name.isEmpty
+           , let sfid = attribute["customer_sfid"] as? String
+           , let dp = attribute["profile_picture"] as? String
+           {
+            var latitude = ""
+            var longitude = ""
+            if let currentLoc = currentLocation{
+                latitude = String(currentLoc.coordinate.latitude)
+                longitude = String(currentLoc.coordinate.longitude)
+            }
+            GoLujoAPIManager().updateCustomerAtTwilio(token,email,phone,name,sfid,dp,latitude,longitude) { updateCustomerResponse, error in
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    print("Could not update customer at twilio")
+//                    let error = BackendError.parsing(reason: "Could not update customer at twilio")
+//                    self.showError(error)
+                    return
+                }
+            }
+        }
+        
     }
 
     //this method will fetch all user preferences from the server
@@ -301,7 +332,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let status = CLLocationManager.authorizationStatus()
         return (status == .authorizedAlways || status == .authorizedWhenInUse)
     }
-    
     
     private let locationManager = CLLocationManager()
     
@@ -428,7 +458,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Events Error", error: error)
+        showErrorPopup(withTitle: "Home Error", error: error)
     }
     
     func showFeedback(_ message: String) {
@@ -598,8 +628,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
         
         let initialLoad = UserDefaults.standard.bool(forKey: "showWelcome")
+        DispatchQueue.main.async {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
         UserDefaults.standard.set(false, forKey: "showWelcome")
         tabBarController?.tabBar.isHidden = false
         splashView.isHidden = true
@@ -786,6 +818,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         didSet {
             if let location = currentLocation {
                 getLocationPlaces(for: location)
+                updateCustomerAtTwilio()
             }
         }
     }

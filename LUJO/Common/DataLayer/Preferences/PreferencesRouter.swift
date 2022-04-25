@@ -34,6 +34,8 @@ enum PreferencesRouter: URLRequestConvertible {
         return scheme
     }()
     
+    
+    case updateCustomerAtTwilio(String,String,String,String,String?,String?,String?,String?) //token,customerEmail,customerPhone,name,sfid,dp,latitude,longitude
     case getAllPreferences(String)
     case getGiftHabits(String)
     case getGiftCategories(String)
@@ -141,6 +143,7 @@ enum PreferencesRouter: URLRequestConvertible {
         switch self {
         case .getAllPreferences:    fallthrough
         case .getAviationCategories: return .get
+        case .updateCustomerAtTwilio: fallthrough
         case .getGiftHabits:        fallthrough
         case .getGiftCategories:    fallthrough
         case .getGiftPreferences:   fallthrough
@@ -238,6 +241,7 @@ enum PreferencesRouter: URLRequestConvertible {
             newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token),
             ]
+        case .updateCustomerAtTwilio:   newURLComponents.path.append("/users/post-twilio-customer")
         case .getGiftHabits:        newURLComponents.path.append("/reference/gift-habits")
         case .getGiftCategories:    newURLComponents.path.append("/reference/gift-categories")
         case .getGiftPreferences:   newURLComponents.path.append("/reference/gift-preferences")
@@ -332,8 +336,10 @@ enum PreferencesRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-        case .getAllPreferences:    return nil
+        
+        case .getAllPreferences:    fallthrough
         case .getAviationCategories:    return nil
+        
         case let .getGiftHabits(token):         fallthrough
         case let .getGiftCategories(token):     fallthrough
         case let .getGiftPreferences(token):    fallthrough
@@ -357,7 +363,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case let .getVillaAmenities(token): fallthrough
         case let .getVillaAccomodation(token):
             return getTaxonomiesAsJSONData(token: token)
-            
+        case let .updateCustomerAtTwilio(token,customerEmail, customerPhone, customerSfid, customerDp, customerName,latitude,longitude):
+            return updateCustomerAtTwilioAsJSONData(token,customerEmail, customerPhone, customerSfid, customerDp, customerName,latitude,longitude)
         case let .setGiftHabits(token,commaSeparatedString, typedPreference):
             return setGiftHabbitsAsJSONData(token: token, commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
         case let .setGiftCategories(token, commaSeparatedString, typedPreference):
@@ -473,6 +480,29 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
+    
+    fileprivate func updateCustomerAtTwilioAsJSONData(_ token: String,_ customerEmail: String,_ customerPhone:String,_ customerName:String ,_ customerSfid: String?,_ customerDp:String?,_ latitude:String?, _ longitude:String? ) -> Data? {
+        var body: [String: Any] = [
+            "token": token,
+            "customer_email" : customerEmail
+            ,"customer_phone" : customerPhone
+            ,"customer_name" : customerName
+            
+        ]
+        if let sfid = customerSfid, !sfid.isEmpty {
+            body["customer_saleforce_id"] = sfid
+        }
+        if let dp = customerDp, !dp.isEmpty {
+            body["customer_profile_pic"] = dp
+        }
+        if let lat = latitude, !lat.isEmpty {
+            body["last_latitude"] = lat
+        }
+        if let long = longitude, !long.isEmpty {
+            body["last_longitude"] = long
+        }
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
     fileprivate func setGiftHabbitsAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
         let body: [String: Any] = [
             "token": token
