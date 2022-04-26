@@ -30,7 +30,7 @@ enum GoLujoRouter: URLRequestConvertible {
         return scheme
     }()
     case getReferralTypes(String)
-    case getReferralCodeAgainstType(String,Int)
+    case getReferralCodeAgainstType(String,String)
     case refreshToken(String)
     case login(String, String)
     case loginWithOTP(String, String, String)
@@ -176,11 +176,11 @@ enum GoLujoRouter: URLRequestConvertible {
         let urlData = getUrlDataForPushService(isStaging: false)
 
         switch self {
-        case let .getReferralCodeAgainstType(token, discountPercentage):
+        case let .getReferralCodeAgainstType(token, discountPercentageEnum):
             newURLComponents.path.append("/users/get-referral-code")
             newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token),
-                URLQueryItem(name: "discount_percentage", value: "\(discountPercentage)"),
+                URLQueryItem(name: "discount_percentage", value: discountPercentageEnum),
             ]
         case let .getReferralTypes(token):
             newURLComponents.path.append("/list-referral")

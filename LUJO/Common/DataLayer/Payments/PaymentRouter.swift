@@ -34,8 +34,8 @@ enum PaymentRouter: URLRequestConvertible {
         return scheme
     }()
     
-    case validateReferralCode(String, String)
-    case confirmPayment(Int, String, Double, String?, String)
+    case validateReferralCode(String, String, Int)
+    case confirmPayment(Int, String?, Double?, String?, String)
     case confirmBookingPayment(String, String, Double, String)
     
     func asURLRequest() throws -> URLRequest {
@@ -77,11 +77,12 @@ enum PaymentRouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
         
         switch self {
-        case let .validateReferralCode(token, code):
+        case let .validateReferralCode(token, code,membershipPlanId):
             newURLComponents.path.append("/validate-referral")
             newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token),
-                URLQueryItem(name: "referral_code", value: code)
+                URLQueryItem(name: "referral_code", value: code),
+                URLQueryItem(name: "membership_plan_id", value: "\(membershipPlanId)")
             ]
         case .confirmPayment:
             newURLComponents.path.append("/purchase/membership")
@@ -111,14 +112,17 @@ enum PaymentRouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getConfirmPaymentDataAsJSONData(membershipId: Int,transactionId: String, amount: Double, referralCode: String?, token: String) -> Data? {
+    fileprivate func getConfirmPaymentDataAsJSONData(membershipId: Int,transactionId: String?, amount: Double?, referralCode: String?, token: String) -> Data? {
         var body: [String: Any] = [
             "membership_id": membershipId,
-            "transaction_id": transactionId,
-            "amount": amount,
             "token": token
         ]
-        
+        if let transactionId = transactionId {
+            body["transaction_id"] = transactionId
+        }
+        if let amount = amount {
+            body["amount"] = amount
+        }
         if let referralCode = referralCode {
             body["referral_code"] = referralCode
         }

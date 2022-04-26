@@ -9,6 +9,7 @@
 import UIKit
 import JGProgressHUD
 import Foundation
+import FirebaseCrashlytics
 
 enum MembershipScreenType {
     case buyMembership
@@ -71,6 +72,7 @@ class MembershipViewControllerNEW: UIViewController {
         }
     }
     private var price: Int = 0
+    private var currentDiscount: Int = 0
     private var hasValidCode: Bool = false {
         didSet {
             updatePrice()
@@ -115,9 +117,26 @@ class MembershipViewControllerNEW: UIViewController {
         if screenType == .viewMembership {
             self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: .upgradeMembership, paymentType: .all), animated: true)
         } else {
-            let viewController = PurchaseViewController.instantiate(amount: Double(price), screenType: .membership)
-            viewController.paymentDelegate = self
-            self.present(viewController, animated: true, completion: nil)
+            if price > 0{
+                let viewController = PurchaseViewController.instantiate(amount: Double(price), screenType: .membership)
+                viewController.paymentDelegate = self
+                self.present(viewController, animated: true, completion: nil)
+            }else{
+                guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty, let membershipPlan = selectedMembership else {
+                    LoginError.errorLogin(description: "User does not exist or is not verified or there is no valid membeship plan")
+                    return
+                }
+                showNetworkActivity()
+                confirmMembershipPayment(membershipPlan.id,nil,nil,hasValidCode ? referralTextField.text! : nil,token){ error in
+                    self.hideNetworkActivity()
+                    if error == nil{
+                        self.navigationController?.popViewController(animated: true)
+                    }else{
+                        print(error?.localizedDescription as Any)
+                    }
+                }
+            }
+            
         }
     }
     
@@ -238,7 +257,7 @@ class MembershipViewControllerNEW: UIViewController {
         var oldPriceText = ""
         
         let selectedPrice = Int(selectedMembership?.price ?? "0") ?? 0
-        let currentDiscount = selectedMembership?.discount ?? 0
+//        let currentDiscount = selectedMembership?.discount ?? 0
         
         if hasValidCode {
             price = selectedPrice - selectedPrice * currentDiscount/100
@@ -254,6 +273,11 @@ class MembershipViewControllerNEW: UIViewController {
         self.oldPriceLabel.attributedText = attributeString
         
         priceLabel.text = formatPrice(amount: price)
+        if price <= 0{
+            payNowButton.setTitle("A V A I L   N O W", for: .normal)
+        }else{
+            payNowButton.setTitle("P A Y   N O W", for: .normal)
+        }
     }
     
     func showError(_ error: Error) {
@@ -291,16 +315,26 @@ extension MembershipViewControllerNEW: UITextFieldDelegate {
                 }
                 
                 showNetworkActivity()
-                
-                PaymentAPIManagerNEW.shared.validateReferralCode(token: token, code: updatedText) { error in
-                    self.hideNetworkActivity()
-                    if error != nil {
-                        self.hasValidCode = false
-                        self.showError(LoginError.errorLogin(description: "Referral code is not valid."))
-                    } else {
-                        self.hasValidCode = true
+                if let membershipId = selectedMembership?.id{
+                    PaymentAPIManagerNEW.shared.validateReferralCode(token,updatedText,membershipId) { referralValidation, error in
+                        self.hideNetworkActivity()
+                        guard error == nil  else {
+                            Crashlytics.crashlytics().record(error: error!)
+                            BackendError.parsing(reason: "Referral code is not valid.")
+                            return
+                        }
+                        
+                        if referralValidation?.status == true {
+                            self.currentDiscount = referralValidation?.discountPercentage ?? 0
+                            self.hasValidCode = true
+                        } else {
+                            self.currentDiscount = 0
+                            self.hasValidCode = false
+                            self.showError(LoginError.errorLogin(description: "Referral code is not valid."))
+                        }
                     }
                 }
+
                 
                 return false
             } else if updatedText.count > 6 {
@@ -309,6 +343,19 @@ extension MembershipViewControllerNEW: UITextFieldDelegate {
         }
         
         return true
+    }
+    
+    private func confirmMembershipPayment(_ membershipId: Int,_ transactionId:String?, _ amount:Double?, _ code: String?, _ token:String, completion: @escaping (Error?) -> Void ){
+        
+        PaymentAPIManagerNEW.shared.confirmMembershipPayment(membershipId, transactionId, amount, code , token) { membership, error in
+            if let membership = membership {
+                let user = LujoSetup().getLujoUser()
+                user?.membershipPlan = membership
+                LujoSetup().store(userInfo: user!)
+            }
+            
+            completion(error)
+        }
     }
 }
 
@@ -323,15 +370,19 @@ extension MembershipViewControllerNEW: PurchasePaymentDelegate {
             return completion(LoginError.errorLogin(description: "User does not exist or is not verified or there is no valid membeship plan"))
         }
         
-        PaymentAPIManagerNEW.shared.confirmMembershipPayment(membershipId: membershipPlan.id, transactionId: result.reference, amount: result.amount, code: hasValidCode ? referralTextField.text! : nil, token: token) { membership, error in
-            
-            if let membership = membership {
-                let user = LujoSetup().getLujoUser()
-                user?.membershipPlan = membership
-                LujoSetup().store(userInfo: user!)
-            }
-            
+        confirmMembershipPayment(membershipPlan.id,result.reference,result.amount, hasValidCode ? referralTextField.text! : nil,token){ error in
             completion(error)
         }
+        
+//        PaymentAPIManagerNEW.shared.confirmMembershipPayment(membershipId: membershipPlan.id, transactionId: result.reference, amount: result.amount, code: hasValidCode ? referralTextField.text! : nil, token: token) { membership, error in
+//
+//            if let membership = membership {
+//                let user = LujoSetup().getLujoUser()
+//                user?.membershipPlan = membership
+//                LujoSetup().store(userInfo: user!)
+//            }
+//
+//            completion(error)
+//        }
     }
 }

@@ -124,7 +124,7 @@ class GenerateReferralCodeViewController: UIViewController {
                 return
             }
             showNetworkActivity()
-            GoLujoAPIManager().getReferralCodeAgainstType(token,selected.discountPercentage) { ReferralCode, error in
+            GoLujoAPIManager().getReferralCodeAgainstType(token,selected.discountPercentageEnum) { ReferralCode, error in
                 self.hideNetworkActivity()
                 guard error == nil , let code = ReferralCode?.referralCode else {
                     Crashlytics.crashlytics().record(error: error!)

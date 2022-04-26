@@ -2676,8 +2676,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getReferralCodeAgainstType(_ token: String, _ discountPercentage: Int, completion: @escaping (ReferralCode?, Error?) -> Void) {
-        Alamofire.request(GoLujoRouter.getReferralCodeAgainstType(token,discountPercentage))
+    func getReferralCodeAgainstType(_ token: String, _ discountPercentageEnum: String, completion: @escaping (ReferralCode?, Error?) -> Void) {
+        Alamofire.request(GoLujoRouter.getReferralCodeAgainstType(token,discountPercentageEnum))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

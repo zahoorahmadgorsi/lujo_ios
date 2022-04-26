@@ -1,20 +1,45 @@
 import FirebaseCrashlytics
 import Foundation
 
-struct ReferralType: Codable {
-    let title: String
+
+struct ReferralValidation: Codable {
+    let status: Bool
+    var discountEnum: String
     var discountPercentage: Int
     
     enum CodingKeys: String, CodingKey {
-        case title
+        case status
+        case discountEnum = "discount_enum"
         case discountPercentage = "discount_percentage"
     }
     
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-            title = try values.decode(String.self, forKey: .title)
+            status = try values.decode(Bool.self, forKey: .status)
+            discountEnum = try values.decode(String.self, forKey: .discountEnum)
             discountPercentage = try values.decode(Int.self, forKey: .discountPercentage)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+}
+
+struct ReferralType: Codable {
+    let title: String
+    var discountPercentageEnum: String
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case discountPercentageEnum = "discount_percentage"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            title = try values.decode(String.self, forKey: .title)
+            discountPercentageEnum = try values.decode(String.self, forKey: .discountPercentageEnum)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
