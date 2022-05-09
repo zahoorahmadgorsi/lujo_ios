@@ -127,7 +127,7 @@ class MembershipViewControllerNEW: UIViewController {
                     return
                 }
                 showNetworkActivity()
-                confirmMembershipPayment(membershipPlan.id,nil,nil,hasValidCode ? referralTextField.text! : nil,token){ error in
+                confirmMembershipPayment(membershipPlan.id,nil,Double(price),hasValidCode ? referralTextField.text! : nil,token){ error in
                     self.hideNetworkActivity()
                     if error == nil{
                         self.navigationController?.popViewController(animated: true)

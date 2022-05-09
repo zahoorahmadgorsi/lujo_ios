@@ -197,7 +197,7 @@ class TwoSliderPrefViewController: UIViewController {
                     self.showError(error)
                     return
                 }
-                if let informations = information {
+                if let informations = information {                                 
                     if var userPreferences = self.userPreferences{
                         userPreferences.aviation.aviation_times_charter_corporate_jet = corporateFrequency
                         userPreferences.aviation.aviation_times_charter_leisure_jet = leisureFrequency
