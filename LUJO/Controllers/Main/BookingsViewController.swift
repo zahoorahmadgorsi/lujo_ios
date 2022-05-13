@@ -159,7 +159,7 @@ class BookingsViewController: UIViewController {
             """
             
             let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: "-1234asdfqwer" , type: "My Bookings" , name: "Booking Inquiry")
+            viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer" , type: "My Bookings" , name: "Booking Inquiry")
             viewController.initialMessage = initialMessage
             self.navigationController?.pushViewController(viewController,animated: true)
         } else {

@@ -574,7 +574,7 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
     func channelJoined(channel: TCHConversation){
         self.conversation = channel
         self.showNetworkActivity()
-        EEAPIManager().sendRequestForSalesForce(itemId: product.id, channelId: channel.sid ?? "NoChannel"){ customBookingResponse, error in
+        EEAPIManager().sendRequestForSalesForce(salesforceRequest: salesforceRequest, channelId: channel.sid ?? "NoChannel", type: salesforceRequest.productType){ customBookingResponse, error in
             self.hideNetworkActivity()
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
@@ -582,9 +582,9 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
                 return
             }
             Mixpanel.mainInstance().track(event: "Product Custom Request",
-                                          properties: ["Product Name" : self.product.name
-                                                       ,"Product Type" : self.product.type
-                                                       ,"ProductId" : self.product.id])
+                                          properties: ["Product Name" : self.salesforceRequest.productName
+                                                       ,"Product Type" : self.salesforceRequest.productType
+                                                       ,"ProductId" : self.salesforceRequest.productId])
             print("Twilio: Channel created, joined, channelID been sent to salesforce successfully")
         }
     }

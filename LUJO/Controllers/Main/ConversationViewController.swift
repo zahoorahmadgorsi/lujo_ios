@@ -59,7 +59,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
 
 //  Important - this identity would be assigned by your app, for instance after a user logs in
     var identity = "USER_IDENTITY"
-    var product:Product!
+    var salesforceRequest:SalesforceRequest!
     var initialMessage:String?
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -134,14 +134,14 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         }else if let user = LujoSetup().getLujoUser(), user.id.count > 0 { //creating new conversation
             let dateTime = Date.dateToString(date: Date(),format: "yyyy-MM-dd-HH-mm-ss")
             //Creating channel if doesnt exist else joining
-            let channelUniqueName = product.type + " " + user.firstName + " " + dateTime
-            let channelFriendlyName = product.name
+            let channelUniqueName = salesforceRequest.productType + " " + user.firstName + " " + dateTime
+            let channelFriendlyName = salesforceRequest.productName
 
             var attribute = Utility.getAttributes(onlyRelatedToUser: false)
-            attribute["type"] = product.type
+            attribute["type"] = salesforceRequest.productType
 
             if (initialMessage == nil ){    //user is coming for some general inquiry thats why initial message is nil
-                let chatMessage:ChatMessage = addDefaultMessage(type:product.type)
+                let chatMessage:ChatMessage = addDefaultMessage(type:salesforceRequest.productType)
                 self.messageList.append(chatMessage)
             }
             showNetworkActivity()
@@ -150,10 +150,10 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                         var attributes = Utility.getAttributes(onlyRelatedToUser: false)
                         attributes["device_latitude"] = String(location.coordinate.latitude)
                         attributes["device_longitude"] = String(location.coordinate.longitude)
-                        attributes["type"] = self.product.type
+                        attributes["type"] = self.salesforceRequest.productType
                         ConversationsManager.sharedConversationsManager.updateConversationAttributes(customAttributes: attributes)
                     }
-                ConversationsManager.sharedConversationsManager.addParticipants(productType: self.product.type)
+                ConversationsManager.sharedConversationsManager.addParticipants(productType: self.salesforceRequest.productType)
                 self.hideNetworkActivity()
             })
         }

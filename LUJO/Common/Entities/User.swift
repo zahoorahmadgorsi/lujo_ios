@@ -170,7 +170,7 @@ struct Membership: Codable {
     let plan: String
     let price: Int
     let target: String
-    let expiration: String?
+    let expiration: Int?
     let discount: Int?
     
     enum CodingKeys: String, CodingKey {
@@ -187,7 +187,7 @@ struct Membership: Codable {
         self.plan = (data["plan"] as? String ?? "").lowercased()
         self.price =  data["price"] as? Int ?? -1
         self.target =  data["target"] as? String ?? ""
-        self.expiration = data["expiration"] as? String ?? ""
+        self.expiration = Int(data["expiration"] as? String ?? "") ?? 0
         self.discount = Int(data["discount"] as? String ?? "") ?? 0
     }
 }

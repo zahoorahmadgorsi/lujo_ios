@@ -39,7 +39,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnFindATableTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController
@@ -54,7 +54,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnEventTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: "-1asdf1234qwer" , type: "event" , name: "Event Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "event" , name: "Event Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController
@@ -69,7 +69,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnAviationTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: "-1asdf1234qwer" , type: "aviation" , name: "Aviation Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "aviation" , name: "Aviation Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController
@@ -84,7 +84,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnCharterAYachtTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: "-1asdf1234qwer" , type: "yacht" , name: "Yacht Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "yacht" , name: "Yacht Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController
@@ -99,7 +99,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnVillaTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: "-1asdf1234qwer" , type: "villa" , name: "Villa Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "villa" , name: "Villa Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController
@@ -114,7 +114,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnTravelTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: "-1asdf1234qwer" , type: "travel" , name: "Hotel Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "travel" , name: "Hotel Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController

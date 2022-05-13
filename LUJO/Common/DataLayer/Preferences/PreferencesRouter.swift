@@ -106,7 +106,7 @@ enum PreferencesRouter: URLRequestConvertible {
     case setTravelHotelStyles(String, String)
     case setTravelAllergies(String, String,String)
     
-    case setProfilePreferences(String, String)
+    case setProfilePreferences(String)
     
     case getVillaDestinations(String)
     case getVillaAmenities(String)
@@ -474,8 +474,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case let  .setVillaAccomodation(token, commaSeparatedString, typedPreference):
             return setVillaAccomodationAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
             
-        case let.setProfilePreferences(token, commaSeparatedString):
-            return setProfilePreferencesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let.setProfilePreferences(commaSeparatedString):
+            return setProfilePreferencesAsJSONData(commaSeparatedString:commaSeparatedString)
         }
     }
     
@@ -841,7 +841,7 @@ enum PreferencesRouter: URLRequestConvertible {
     }
 
     
-    fileprivate func setProfilePreferencesAsJSONData(token: String , commaSeparatedString:String) -> Data?{
+    fileprivate func setProfilePreferencesAsJSONData(commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
             "type": commaSeparatedString.components(separatedBy: ",")
         ]

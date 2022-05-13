@@ -10,13 +10,15 @@ import FirebaseCrashlytics
 import UIKit
 
 struct StarChef: Codable {
+    let id: String
     let chefName: String
     let chefImage: String?
     let chefRestaurant: Product?
 
     enum CodingKeys: String, CodingKey {
+        case id = "_id"
         case chefName = "chef_name"
-        case chefImage = "chef_image"
+        case chefImage = "chef_imageasdf"
         case chefRestaurant = "chef_restaurant_id"  // actually it is "chef_restaurant"
     }
 }
@@ -25,7 +27,8 @@ extension StarChef {
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-
+            id = try values.decode(String.self, forKey: .id)
+//            print(id)
             chefName = try values.decode(String.self, forKey: .chefName)
             chefImage = try values.decodeIfPresent(String.self, forKey: .chefImage)
             chefRestaurant = try values.decodeIfPresent(Product.self, forKey: .chefRestaurant)
@@ -38,14 +41,14 @@ extension StarChef {
 }
 
 struct Cuisine: Codable {
-    let termId: Int
+    let termId: String
     let name: String
     let iconUrl: String?
     
     enum CodingKeys: String, CodingKey {
-        case termId = "term_id"
+        case termId = "_id"
         case name
-        case iconUrl = "icon"
+        case iconUrl = "image"
     }
 }
 
@@ -54,7 +57,8 @@ extension Cuisine {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
-            termId = try values.decode(Int.self, forKey: .termId)
+            termId = try values.decode(String.self, forKey: .termId)
+//            print(termId)
             name = try values.decode(String.self, forKey: .name)
             iconUrl = try values.decodeIfPresent(String.self, forKey: .iconUrl)
             
@@ -72,10 +76,10 @@ struct DiningCity: Codable {
     var restaurants: [Product]
     
     enum CodingKeys: String, CodingKey {
-        case termId = "term_id"
+        case termId = "_id"
         case name
-        case restaurantsNum = "restaurants_num"
-        case restaurants
+        case restaurantsNum = "items_num"
+        case restaurants    = "items"
     }
 }
 
@@ -85,6 +89,7 @@ extension DiningCity {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
             termId = try values.decode(String.self, forKey: .termId)
+//            print(termId)
             name = try values.decode(String.self, forKey: .name)
             restaurantsNum = try values.decode(Int.self, forKey: .restaurantsNum)
             restaurants = try values.decode([Product].self, forKey: .restaurants)
@@ -110,6 +115,21 @@ struct DiningHomeObjects: Codable {
         case cities
     }
 
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+
+            slider = try values.decodeIfPresent([Product].self, forKey: .slider)
+            starChef = try values.decodeIfPresent(StarChef.self, forKey: .starChef)
+            cuisines = try values.decode([Cuisine].self, forKey: .cuisines)
+            cities = try values.decode([DiningCity].self, forKey: .cities)
+
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+    
     func getFeaturedImages() -> [String] {
         var urlList = [String]()
         for feature in slider ?? [] {
@@ -148,22 +168,5 @@ struct DiningHomeObjects: Codable {
         }
 
         return list
-    }
-}
-
-extension DiningHomeObjects {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-
-            slider = try values.decodeIfPresent([Product].self, forKey: .slider)
-            starChef = try values.decodeIfPresent(StarChef.self, forKey: .starChef)
-            cuisines = try values.decode([Cuisine].self, forKey: .cuisines)
-            cities = try values.decode([DiningCity].self, forKey: .cities)
-
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-            throw error
-        }
     }
 }

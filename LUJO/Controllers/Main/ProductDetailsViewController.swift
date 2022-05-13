@@ -867,7 +867,7 @@ extension ProductDetailsViewController {
 // Chat functionality
 extension ProductDetailsViewController {
 
-    func sendInitialInformation(initialMsg:String = "") {//if initialMessage is empty then user is coming to fill the booking details of yacht,villa and restaurnat
+    func sendInitialInformation(initialMsg:String = "" ,_ salesForceRequest:SalesforceRequest? = nil) {//if initialMessage is empty then user is coming to fill the booking details of yacht,villa and restaurnat
         var initialMessage = initialMsg
 //        print(product.type)
         if (product.type == "yacht" && initialMessage.count == 0){
@@ -896,7 +896,8 @@ extension ProductDetailsViewController {
 
                 //            print(initialMessage)
                 let viewController = AdvanceChatViewController()
-                viewController.product = product
+                let salesForceRequest = SalesforceRequest(id: product.id , type: product.type, name: product.name, date: salesForceRequest?.dingingRequestDate, time: salesForceRequest?.dingingRequestTime, persons: salesForceRequest?.dingingRequestPersons)
+                viewController.salesforceRequest = salesForceRequest
                 viewController.initialMessage = initialMessage
                 let navController = UINavigationController(rootViewController:viewController)
                 if #available(iOS 13.0, *) {

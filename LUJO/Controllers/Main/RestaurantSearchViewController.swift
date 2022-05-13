@@ -108,14 +108,14 @@ class RestaurantSearchViewController: UIViewController {
     @IBAction func actionButton_onClick(_ sender: UIButton) {
         guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
         let initialMessage = """
-        "Hi Concierge team,
+        Hi Concierge team,
         I could not find any restaurants when I typed '\(keyword)'. Can you assist?"
         
         \(userFirstName)
         """
         
         let viewController = AdvanceChatViewController()
-        viewController.product = Product(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Searched")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Searched")
         viewController.initialMessage = initialMessage
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

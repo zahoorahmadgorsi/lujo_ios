@@ -135,7 +135,7 @@ class BookingStep2: UIViewController {
             """
             
             let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: "-1234asdfqwer" , type: "aviation" , name: "Choose preferred payment method")
+            viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer" , type: "aviation" , name: "Choose preferred payment method")
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

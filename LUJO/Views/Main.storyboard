@@ -182,7 +182,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="1829"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="JyT-3i-xEo">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="1175.5"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="1498"/>
                                         <subviews>
                                             <view tag="999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gxa-c2-SUj" customClass="DiningCityView" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="260"/>
@@ -461,8 +461,8 @@
                                                     <constraint firstAttribute="bottom" secondItem="XXW-Gl-IpF" secondAttribute="bottom" constant="16" id="hpV-yX-QNE"/>
                                                 </constraints>
                                             </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nbe-1L-T5g">
-                                                <rect key="frame" x="0.0" y="1099.5" width="414" height="310.5"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nbe-1L-T5g">
+                                                <rect key="frame" x="0.0" y="1105.5" width="414" height="310.5"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="PXi-sY-E6e">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="310.5"/>
@@ -577,10 +577,12 @@
                                                     <constraint firstItem="CU9-u5-Fkt" firstAttribute="top" secondItem="Nbe-1L-T5g" secondAttribute="top" constant="16" id="JpZ-TB-PBd"/>
                                                     <constraint firstItem="PXi-sY-E6e" firstAttribute="leading" secondItem="Nbe-1L-T5g" secondAttribute="leading" id="N1a-a1-rzn"/>
                                                     <constraint firstItem="Ydn-DI-XQd" firstAttribute="leading" secondItem="Nbe-1L-T5g" secondAttribute="leading" constant="16" id="OxD-Xe-jdT"/>
+                                                    <constraint firstAttribute="height" constant="310.5" id="Sdi-5d-sCa"/>
                                                     <constraint firstAttribute="trailing" secondItem="PXi-sY-E6e" secondAttribute="trailing" id="Y8c-Ce-Mdp"/>
                                                     <constraint firstAttribute="trailing" secondItem="fPW-my-3dG" secondAttribute="trailing" id="ZNO-gn-POl"/>
                                                     <constraint firstAttribute="bottom" secondItem="Ydn-DI-XQd" secondAttribute="bottom" constant="14" id="fpH-do-aow"/>
                                                     <constraint firstItem="fPW-my-3dG" firstAttribute="height" secondItem="PXi-sY-E6e" secondAttribute="height" multiplier="0.35" id="jJD-8U-XeS"/>
+                                                    <constraint firstAttribute="width" constant="414" id="kDh-1y-qFG"/>
                                                     <constraint firstAttribute="trailing" secondItem="0Es-Gf-kNJ" secondAttribute="trailing" constant="16" id="naA-Cm-SC5"/>
                                                     <constraint firstAttribute="bottom" secondItem="PXi-sY-E6e" secondAttribute="bottom" id="pOp-VK-hbY"/>
                                                     <constraint firstItem="0Es-Gf-kNJ" firstAttribute="leading" secondItem="Nbe-1L-T5g" secondAttribute="leading" constant="16" id="pYb-oV-LNO"/>
@@ -588,7 +590,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Up3-m4-bTY">
-                                                <rect key="frame" x="0.0" y="1105.5" width="414" height="70"/>
+                                                <rect key="frame" x="0.0" y="1428" width="414" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Popular cities" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIR-ve-B42">
                                                         <rect key="frame" x="16" y="16" width="382" height="38"/>
@@ -608,7 +610,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yiY-VX-tpA">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1191.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1514"/>
                                         <color key="backgroundColor" white="0.070000000000000007" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>

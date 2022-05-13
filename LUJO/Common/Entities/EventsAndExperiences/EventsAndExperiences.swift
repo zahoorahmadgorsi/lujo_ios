@@ -1,6 +1,89 @@
 import FirebaseCrashlytics
 import Foundation
 
+
+struct SalesforceRequest {
+    var productId: String
+    var productType: String
+    var productName: String
+    var dingingRequestDate: String?
+    var dingingRequestTime: String?
+    var dingingRequestPersons: Int?
+    
+    init(id:String, type:String, name:String = "", date:String? = nil , time:String? = nil , persons:Int? = nil){
+        self.productId = id
+        self.productType = type
+        self.productName =  name
+        //below params are only going to use for dining request
+        self.dingingRequestDate = date
+        self.dingingRequestTime = time
+        self.dingingRequestPersons =  persons
+    }
+}
+
+struct ReferralValidation: Codable {
+    let status: Bool
+    var discountEnum: String
+    var discountPercentage: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case status
+        case discountEnum = "discount_enum"
+        case discountPercentage = "discount_percentage"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            status = try values.decode(Bool.self, forKey: .status)
+            discountEnum = try values.decode(String.self, forKey: .discountEnum)
+            discountPercentage = try values.decode(Int.self, forKey: .discountPercentage)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+}
+
+struct ReferralType: Codable {
+    let title: String
+    var discountPercentageEnum: String
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case discountPercentageEnum = "discount_percentage"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            title = try values.decode(String.self, forKey: .title)
+            discountPercentageEnum = try values.decode(String.self, forKey: .discountPercentageEnum)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+}
+
+struct ReferralCode: Codable {
+    let referralCode: String
+    
+    enum CodingKeys: String, CodingKey {
+        case referralCode = "referral_code"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            referralCode = try values.decode(String.self, forKey: .referralCode)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+}
+
 struct Taxonomy: Codable {
     let termId: String
     let name: String
@@ -340,9 +423,9 @@ extension Product {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
-            type = try values.decode(String.self, forKey: .type)
             id = try values.decode(String.self, forKey: .id)
-            print(id)
+            print(id)   //6255578f2fe413001b9c8fe1
+            type = try values.decode(String.self, forKey: .type)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
             let priceStr = try values.decodeIfPresent(String.self, forKey: .price)
@@ -377,7 +460,7 @@ extension Product {
             } catch {
                 endDate = nil
             }
-            
+
             timezone = try values.decodeIfPresent(String.self, forKey: .timezone)
             primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)

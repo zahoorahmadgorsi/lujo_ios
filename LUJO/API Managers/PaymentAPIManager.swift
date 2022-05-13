@@ -16,40 +16,46 @@ class PaymentAPIManagerNEW {
     
     private init() { }
     
-    func validateReferralCode(token: String, code: String, completion: @escaping (Error?) -> Void) {
+    func validateReferralCode(_ code: String,_ membershipPlanId: String, completion: @escaping (ReferralValidation?, Error?) -> Void) {
         
-        Alamofire.request(PaymentRouter.validateReferralCode(token, code))
+        Alamofire.request(PaymentRouter.validateReferralCode(code, membershipPlanId))
             .responseJSON { response in
                 guard response.result.error == nil else {
-                    completion(response.result.error!)
+                    completion(nil,response.result.error!)
                     return
                 }
                 
                 // Special case where status code is not received, should never happen
                 guard let statusCode = response.response?.statusCode else {
-                    completion(BackendError.unhandledStatus)
+                    completion(nil,BackendError.unhandledStatus)
                     return
                 }
                 
                 switch statusCode {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
-                    completion(self.handleError(response, statusCode))
+                    completion(nil,self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    completion(nil)
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<ReferralValidation>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
                     return
                 case 300 ... 399: // Redirection: Unexpected
-                    completion(self.handleError(response, statusCode))
+                    completion(nil,self.handleError(response, statusCode))
                 case 400 ... 499: // Client Error
-                    completion(self.handleError(response, statusCode))
+                    completion(nil,self.handleError(response, statusCode))
                 default: // 500 or bigger, Server Error
-                    completion(self.handleError(response, statusCode))
+                    completion(nil,self.handleError(response, statusCode))
                 }
         }
     }
     
-    func confirmMembershipPayment(membershipId: String, transactionId: String, amount: Double, code: String?, token: String, completion: @escaping (Membership?, Error?) -> Void) {
-        
-        Alamofire.request(PaymentRouter.confirmPayment(membershipId, transactionId, amount, code, token))
+        func confirmMembershipPayment(_ membershipId: String,_ transactionId: String?,_ amount: Double?,_ code: String?, completion: @escaping (Membership?, Error?) -> Void) {
+            
+        Alamofire.request(PaymentRouter.confirmPayment(membershipId, transactionId, amount, code))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

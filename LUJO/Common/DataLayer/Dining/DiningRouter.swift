@@ -34,9 +34,8 @@ enum DiningRouter: URLRequestConvertible {
         return scheme
     }()
 
-    case home(String)
+    case home
     case search(String?, String?, Double?, Double?)
-    case salesforce(String, String, String, Int, String)
 
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -66,9 +65,7 @@ enum DiningRouter: URLRequestConvertible {
         switch self {
         case .home:
             return .get
-        case .search: fallthrough
-        case .salesforce:
-            return .post
+        case .search: return .post
         }
     }
 
@@ -79,15 +76,10 @@ enum DiningRouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
 
         switch self {
-        case let .home(token):
+        case .home:
             newURLComponents.path.append("/dining")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token)
-            ]
         case .search:
             newURLComponents.path.append("/restaurants/search")
-        case .salesforce:
-            newURLComponents.path.append("/request")
         }
 
         do {
@@ -106,8 +98,6 @@ enum DiningRouter: URLRequestConvertible {
             return nil
         case let .search(search, location, latitude, longitude):
             return getSearchDataAsJSONData(search,location, latitude, longitude)
-        case let .salesforce(itemId, date, time, persons, token):
-            return getSalesforceDataAsJSONData(itemId: itemId, date: date, time: time, persons: persons, token: token)
         }
     }
     
@@ -124,14 +114,5 @@ enum DiningRouter: URLRequestConvertible {
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
-    
-    fileprivate func getSalesforceDataAsJSONData(itemId: String, date:String, time:String, persons: Int, token: String) -> Data? {
-        let body: [String: Any] = [
-            "item_id": itemId,
-            "date": date,
-            "time": time,
-            "persons": persons
-        ]
-        return try? JSONSerialization.data(withJSONObject: body, options: [])
-    }
+
 }

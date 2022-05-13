@@ -37,7 +37,7 @@ class BookingStep3: UIViewController {
             """
 
             let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: "-1234asdfqwer" , type: "aviation" , name: "Authorize card and verify booking request")
+            viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer" , type: "aviation" , name: "Authorize card and verify booking request")
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

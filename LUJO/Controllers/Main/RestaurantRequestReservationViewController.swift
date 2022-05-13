@@ -86,13 +86,8 @@ class RestaurantRequestReservationViewController: UIViewController {
             dateFormatter.dateFormat = "H:mm"
             let timeStr = dateFormatter.string(from: datePicker.date)
             
-            GoLujoAPIManager.shared.sendRequestForSalesForce(itemId: restaurant.id, date: dateStr, time: timeStr, persons: Int(peopleNumber.text!) ?? 1){ customBookingResponse, error in
-                guard error == nil else {
-                    Crashlytics.crashlytics().record(error: error!)
-                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
-                    return
-                }
-            }
+            let salesForceRequest = SalesforceRequest(id:restaurant.id, type:restaurant.type, name: restaurant.name, date:dateStr , time: timeStr , persons: Int(peopleNumber.text!) ?? 1)
+            // sales force request is being done from the advanceChatViewController
             
             dateFormatter.dateFormat = "E, MMM d 'at' H:mm a"
             
@@ -109,7 +104,7 @@ class RestaurantRequestReservationViewController: UIViewController {
             
             if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
                 self.dismiss(animated: true) {
-                    presentingViewController.sendInitialInformation(initialMsg: initialMessage)
+                    presentingViewController.sendInitialInformation(initialMsg: initialMessage, salesForceRequest)
                 }
             }
             

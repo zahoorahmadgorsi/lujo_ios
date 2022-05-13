@@ -491,13 +491,13 @@ class EEAPIManager {
         Crashlytics.crashlytics().record(error: error)
     }
     
-    func sendRequestForSalesForce(itemId: String, channelId: String? = nil, completion: @escaping (CustomBookingResponse?, Error?) -> Void) {
+    func sendRequestForSalesForce(salesforceRequest: SalesforceRequest, channelId: String? = nil, type: String, completion: @escaping (CustomBookingResponse?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             print("***ERROR***: User does not exist or is not verified - can't send data to salesforce")
             return
         }
         
-        Alamofire.request(EERouter.salesforce(itemId, token, channelId)).responseJSON { response in
+        Alamofire.request(EERouter.salesforce(salesforceRequest.productId, token, channelId,type,salesforceRequest.dingingRequestDate, salesforceRequest.dingingRequestTime,salesforceRequest.dingingRequestPersons)).responseJSON { response in
             guard response.result.error == nil else {
                 print("***ERROR***: \(response.result.error?.localizedDescription ?? "UNKNOW ERROR")")
                 return

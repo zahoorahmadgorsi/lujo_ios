@@ -2570,8 +2570,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setProfilePreferences(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setProfilePreferences(token,commaSeparatedString))
+    func setProfilePreferences(commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setProfilePreferences(commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

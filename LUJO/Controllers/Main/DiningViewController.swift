@@ -514,7 +514,7 @@ extension DiningViewController {
             return
         }
         
-        GoLujoAPIManager().home(token) { restaurants, error in
+        GoLujoAPIManager().home() { restaurants, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain Dining information")

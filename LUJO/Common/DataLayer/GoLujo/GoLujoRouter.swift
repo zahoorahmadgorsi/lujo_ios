@@ -29,7 +29,8 @@ enum GoLujoRouter: URLRequestConvertible {
         }
         return scheme
     }()
-
+    case getReferralTypes(String)
+    case getReferralCodeAgainstType(String,String)
     case refreshToken(String)
     case login(String, String)
     case loginWithOTP(String, String, String)
@@ -55,7 +56,7 @@ enum GoLujoRouter: URLRequestConvertible {
             return .creation
         case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword:
             return .update
-        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants:
+        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType:
             return .setup
         case .unregisterForPush:
             return .delete
@@ -119,7 +120,9 @@ enum GoLujoRouter: URLRequestConvertible {
             return .post
         case .requestLoginOTP:
             return .post
-        case .approved:
+        case .approved: fallthrough
+        case .getReferralTypes: fallthrough
+        case .getReferralCodeAgainstType:
             return .get
         default:
             fatalError("Wrong method category called")
@@ -159,6 +162,9 @@ enum GoLujoRouter: URLRequestConvertible {
             return .post
         case .getTwilioParticipants:
             return .post
+        case .getReferralTypes: fallthrough
+        case .getReferralCodeAgainstType:
+            return .get
         default:
             fatalError("Wrong method category called")
         }
@@ -183,6 +189,17 @@ enum GoLujoRouter: URLRequestConvertible {
         let urlData = getUrlDataForPushService(isStaging: false)
 
         switch self {
+        case let .getReferralCodeAgainstType(token, discountPercentageEnum):
+            newURLComponents.path.append("/users/get-referral-code")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+                URLQueryItem(name: "discount_percentage", value: discountPercentageEnum),
+            ]
+        case let .getReferralTypes(token):
+            newURLComponents.path.append("/list-referral")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: token),
+            ]
         case .refreshToken:
             newURLComponents.path.append("/users/new-token")
         case .login:
@@ -253,6 +270,8 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getBodyData() -> Data? {
         switch self {
+        case .getReferralCodeAgainstType: fallthrough
+        case .getReferralTypes: return nil
         case let .refreshToken(token):
             return getUserTokenAsJSONData(token)
         case let .login(username, password):

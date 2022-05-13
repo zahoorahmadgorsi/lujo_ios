@@ -1131,7 +1131,7 @@ extension HomeViewController {
             
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)
-                self.showError(BackendError.parsing(reason: "Could not obtain Home Events information"))
+                self.showError(BackendError.parsing(reason: "Could not obtain Home information"))
             } else {
                 if let information = information {
                     self.update(information)

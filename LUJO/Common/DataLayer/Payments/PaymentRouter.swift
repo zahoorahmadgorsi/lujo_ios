@@ -34,8 +34,8 @@ enum PaymentRouter: URLRequestConvertible {
         return scheme
     }()
     
-    case validateReferralCode(String, String)
-    case confirmPayment(String, String, Double, String?, String)
+    case validateReferralCode(String,String)
+    case confirmPayment(String, String?, Double?, String?)
     case confirmBookingPayment(String, String, Double, String)
     
     func asURLRequest() throws -> URLRequest {
@@ -65,7 +65,7 @@ enum PaymentRouter: URLRequestConvertible {
     func getHTTPMethod() -> HTTPMethod {
         switch self {
         case .validateReferralCode:
-            return .get
+            return .post
         case .confirmPayment:
             return .post
         case .confirmBookingPayment:
@@ -80,12 +80,8 @@ enum PaymentRouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
         
         switch self {
-        case let .validateReferralCode(token, code):
+        case .validateReferralCode:
             newURLComponents.path.append("/validate-referral")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-                URLQueryItem(name: "referral_code", value: code)
-            ]
         case .confirmPayment:
             newURLComponents.path.append("/purchase/membership")
         case .confirmBookingPayment:
@@ -104,23 +100,35 @@ enum PaymentRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-        case .validateReferralCode:
-            return nil
-        case let .confirmPayment(membershipId, transactionId, amount, referralCode, token):
-            return getConfirmPaymentDataAsJSONData(membershipId: membershipId, transactionId: transactionId, amount: amount, referralCode: referralCode, token: token)
+        case let .validateReferralCode(referralCode,membershipPlanId):
+            return validateReferralCodeDataAsJSONData(referralCode,membershipPlanId)
+        case let .confirmPayment(membershipId, transactionId, amount, referralCode):
+            return getConfirmPaymentDataAsJSONData(membershipId: membershipId, transactionId: transactionId, amount: amount, referralCode: referralCode)
         case let .confirmBookingPayment(bookingId, transactionId, amount, token):
             return getConfirmBookingPaymentDataAsJSONData(bookingId: bookingId, transactionId: transactionId, amount: amount, token: token)
             
         }
     }
     
-    fileprivate func getConfirmPaymentDataAsJSONData(membershipId: String,transactionId: String, amount: Double, referralCode: String?, token: String) -> Data? {
-        var body: [String: Any] = [
-            "membership_id": membershipId,
-            "transaction_id": transactionId,
-            "amount": amount
+    fileprivate func validateReferralCodeDataAsJSONData(_ referralCode: String, _ membershipPlanId: String) -> Data? {
+        let body: [String: Any] = [
+            "referral_code": referralCode,
+            "membership_plan_id": membershipPlanId
         ]
         
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func getConfirmPaymentDataAsJSONData(membershipId: String,transactionId: String?, amount: Double?, referralCode: String?) -> Data? {
+        var body: [String: Any] = [
+            "membership_id": membershipId
+        ]
+        if let transactionId = transactionId {
+            body["transaction_id"] = transactionId
+        }
+        if let amount = amount {
+            body["amount"] = amount
+        }
         if let referralCode = referralCode {
             body["referral_code"] = referralCode
         }

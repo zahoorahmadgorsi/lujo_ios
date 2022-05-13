@@ -29,7 +29,7 @@ enum EERouter: URLRequestConvertible {
     case home(String)
     case events(Bool, String?, String?, String?)
     case experiences( String?, String?, String?)
-    case salesforce(String, String, String?)
+    case salesforce(String, String, String?,String, String?, String?, Int?)
     case geopoint(type: String, latitude: Float, longitude: Float)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
@@ -325,8 +325,8 @@ enum EERouter: URLRequestConvertible {
             return getTopRatedDataAsJSONData( type: type, term:term )
         case .recents:
             return nil
-        case let .salesforce(itemId, token, channelID):
-            return getSalesforceDataAsJSONData(itemId: itemId, token: token, channelId: channelID)
+        case let .salesforce(itemId, token, channelID, type, date, time, persons):
+            return getSalesforceDataAsJSONData(itemId, token, channelID , type, date, time, persons)
         case let .geopoint(_, latitude, longitude):
             return getGeopointDataAsJSONData(latitude: latitude, longitude: longitude)
         case .citySearch:
@@ -392,12 +392,22 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getSalesforceDataAsJSONData(itemId: String, token: String, channelId: String?) -> Data? {
+    fileprivate func getSalesforceDataAsJSONData(_ itemId: String, _ token: String,_ channelId: String? , _ itemType:String, _ date:String?,_ time:String?,_ persons:Int?) -> Data? {
         var body: [String: Any] = [
-            "item_id": itemId
+            "item" : [
+                "itemId": itemId,
+                "type": itemType
+            ]
         ]
         if let channelId = channelId {
-            body["channelId"] = channelId
+            body["channel_id"] = channelId
+        }
+        if let date = date , let time = time{
+            body["date_time"] = date + ":" + time
+        }
+
+        if let persons = persons {
+            body["persons"] = persons
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
