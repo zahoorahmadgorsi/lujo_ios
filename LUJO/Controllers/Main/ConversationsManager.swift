@@ -13,7 +13,7 @@ import Alamofire
 protocol ConversationsManagerDelegate: AnyObject {
     func reloadMessages()
     func receivedNewMessage(message: TCHMessage , conversation: TCHConversation )
-    func channelJoined(channel: TCHConversation)
+    func sendSalesForceRequest(conversation: TCHConversation?)
     func showNetworkActivity()
     func hideNetworkActivity()
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool)
@@ -37,7 +37,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     private(set) var messages: [TCHMessage] = []
     private var identity: String?
     
-    func setConversation (conversation: TCHConversation){
+    func setConversation (conversation: TCHConversation?){
         self.conversation = conversation
     }
     
@@ -169,6 +169,9 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             ]
         
         client.createConversation(options: options) { (result, conversation: TCHConversation?) in
+            self.setConversation(conversation: conversation)
+            //logging this request with/without conversation ID to salesforce
+            self.delegate?.sendSalesForceRequest(conversation: conversation)
             if result.isSuccessful{
 //                self.conversation = conversation
                 print("Twilio: Conversation created \(String(describing: conversation?.sid))")
@@ -205,8 +208,6 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
 
     private func joinConversation(_ conversation: TCHConversation, completion: @escaping (Bool) -> Void) {
-        setConversation(conversation: conversation)
-        delegate?.channelJoined(channel: conversation)
         if conversation.status == .joined {
             print("Twilio: Current user already exists in conversation")
             completion(true)

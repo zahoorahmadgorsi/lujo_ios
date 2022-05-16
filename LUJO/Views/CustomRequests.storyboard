@@ -1677,6 +1677,7 @@
                         <outlet property="distanceSlider" destination="G18-pS-4D6" id="u3R-OT-Jc1"/>
                         <outlet property="hotelNameTextField" destination="dMm-Tw-F0c" id="1FW-KI-Npn"/>
                         <outlet property="roomsLabel" destination="CgE-8T-ghc" id="ScX-Hr-4Fa"/>
+                        <outlet property="txtHotelNeighbourhood" destination="GW8-Sf-boo" id="HFd-YX-JvM"/>
                         <outletCollection property="starButtons" destination="EG2-XS-sah" collectionClass="NSMutableArray" id="I1J-Wd-wvg"/>
                         <outletCollection property="starButtons" destination="lxe-Vo-Z17" collectionClass="NSMutableArray" id="Q1c-33-E5E"/>
                         <outletCollection property="starButtons" destination="977-vh-7Ig" collectionClass="NSMutableArray" id="VBm-AI-qSN"/>

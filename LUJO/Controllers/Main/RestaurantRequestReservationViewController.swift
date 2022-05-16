@@ -83,7 +83,7 @@ class RestaurantRequestReservationViewController: UIViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let dateStr = dateFormatter.string(from: datePicker.date)
-            dateFormatter.dateFormat = "H:mm"
+            dateFormatter.dateFormat = "HH:mm:ss"
             let timeStr = dateFormatter.string(from: datePicker.date)
             
             let salesForceRequest = SalesforceRequest(id:restaurant.id, type:restaurant.type, name: restaurant.name, date:dateStr , time: timeStr , persons: Int(peopleNumber.text!) ?? 1)

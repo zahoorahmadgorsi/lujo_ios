@@ -52,7 +52,7 @@ extension UIViewController {
     
     func updateTitleView(title: String, subtitle: String?, baseColor: UIColor = .white) {
         
-        let titleLength = 50
+        let titleLength = 35
         let titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: 0, height: 0))
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textColor = baseColor

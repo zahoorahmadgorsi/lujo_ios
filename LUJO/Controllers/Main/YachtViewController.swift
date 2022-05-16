@@ -247,26 +247,23 @@ class YachtViewController: UIViewController {
 
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
-        showNetworkActivity()
-        CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtCharter: yachtCharter, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
-            DispatchQueue.main.async {
-                self.hideNetworkActivity()
-                if let error = error {
-                    print ("ERROR: \(error.localizedDescription)")
-                    //self.showErrorPopup(withTitle: "Error", error:error)
-                    return
-                }
-
-                print ("Success: custom request yacht.")
-//                self.dismiss(animated: true, completion: nil)
-                //this VC is always get called from ProductDetailsViewController only
-                if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
-                    self.dismiss(animated: true) {
-                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
-                    }
-                }
-            }
+        
+        self.dismiss(animated: true) {
+            let viewController = AdvanceChatViewController()
+            let sfRequest = SalesforceRequest(id: self.product.id
+                                              , type: self.product.type
+                                              ,yacht_charter: yachtCharter
+                                              ,yacht_destination: destination
+                                              ,yacht_date_from: dateString
+                                              ,yacht_date_to: returnDateString
+                                              ,yacht_guests: self.guestsCount
+                                              )
+            viewController.salesforceRequest = sfRequest
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         }
+
     }
     
     //MARK: - Logic

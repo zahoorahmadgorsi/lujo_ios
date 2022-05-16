@@ -24,6 +24,7 @@ class HotelViewController: UIViewController {
     
     //MARK:- Globals
     @IBOutlet weak var hotelNameTextField: UITextField!
+    @IBOutlet weak var txtHotelNeighbourhood: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var distanceSlider: UISlider!
@@ -156,30 +157,32 @@ class HotelViewController: UIViewController {
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
-        showNetworkActivity()
-        CustomRequestAPIManager.shared.findHotel(cityName: cityName, hotelName: hotelNameTextField.text, hotelRadius: String.localizedStringWithFormat("%.0f", distanceSlider.value), checkInDate: checkInDateString, checkOutDate: checkOutDateString, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: lastButton.tag, token: token) { error in
-            DispatchQueue.main.async {
-                self.hideNetworkActivity()
-                if let error = error {
-                    print ("ERROR: \(error.localizedDescription)")
-                    //self.showErrorPopup(withTitle: "Error", error:error)
-                    return
-                }
-
-//                print ("Success: custom request table.")
-                let viewController = AdvanceChatViewController()
-                viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer", type: "travel" , name: "Hotel in " + cityName)
-                viewController.initialMessage = initialMessage
-                let navController = UINavigationController(rootViewController:viewController)
-                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
-                //Zahoor end
-                /*
-                showCardAlertWith(title: "Info", body: "Your request is being processed. We will get back to you shortly. You can follow the status of your request in My bookings.", buttonTitle: "Ok", cancelButtonTitle: nil, buttonTapHandler: {
-                    self.dismiss(animated: true, completion: nil)
-                })
-                */
-            }
-        }
+        let viewController = AdvanceChatViewController()
+        let sfRequest = SalesforceRequest(id: "-1234asdfqwer", type: "travel"
+                                          ,hotel_name: self.hotelNameTextField.text
+                                          ,hotel_neighborhood: self.txtHotelNeighbourhood.text
+                                          ,hotel_radius:Int(self.distanceSlider.value)
+                                          ,hotel_check_in_date:checkInDateString
+                                          ,hotel_check_out_date:checkOutDateString
+                                          ,hotel_guests:self.adultsCount
+                                          ,hotel_rooms:self.roomsCount
+                                          ,hotel_stars:lastButton.tag)
+        viewController.salesforceRequest = sfRequest
+        viewController.initialMessage = initialMessage
+        let navController = UINavigationController(rootViewController:viewController)
+        UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+        
+//        showNetworkActivity()
+//        CustomRequestAPIManager.shared.findHotel(cityName: cityName, hotelName: hotelNameTextField.text, hotelRadius: String.localizedStringWithFormat("%.0f", distanceSlider.value), checkInDate: checkInDateString, checkOutDate: checkOutDateString, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: lastButton.tag, token: token) { error in
+//            DispatchQueue.main.async {
+//                self.hideNetworkActivity()
+//                if let error = error {
+//                    print ("ERROR: \(error.localizedDescription)")
+//                    //self.showErrorPopup(withTitle: "Error", error:error)
+//                }
+//
+//            }
+//        }
     }
     
     //MARK: - Logic

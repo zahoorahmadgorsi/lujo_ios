@@ -275,7 +275,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func confirmDelete(name: String) {
-        let alert = UIAlertController(title: "Delete Conversation \(name)", message: "Are you sure you want to permanently delete this conversation?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Delete \(name)", message: "Are you sure you want to permanently delete this conversation?", preferredStyle: .actionSheet)
 
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteChannel)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: handleCancelChannel)
@@ -334,34 +334,11 @@ extension ConversationsViewController: ConversationsManagerDelegate {
         self.getConversations(showActivity: false)    //New message is recived on chatlistViewController time to update the last message body, time and unconsumed index
     }
     
-    func channelJoined(channel: TCHConversation) {
-        print("Twilio: channelJoined")
+    func sendSalesForceRequest(conversation: TCHConversation?) {
+        print("only used in advance chat view controller")
     }
     
-    //if index is visible then reload that cell with text "Typing..."
-    // incase of multithreading this code might fail
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
-//        if let typingOnIndex = self.conversations.firstIndex(where: {$0.sid == conversation.sid})
-//            ,let indices = self.tblView.indexPathsForVisibleRows {
-//            for index in indices {
-//                if index.row == typingOnIndex {
-////                    var attribute = Dictionary<String,Bool>()
-//                    if var attribute = conversation.attributes()?.dictionary as? Dictionary<String,Any>{
-//                        attribute["isTyping"] = isTyping
-//                        let attributes:TCHJsonAttributes = .init(dictionary: attribute)
-//                        self.conversations[typingOnIndex].setAttributes(attributes) { (result) in
-//                            if result.isSuccessful{
-//                                // index could have been changed by now, incase self.conversations data got changed due to sorting
-//                                self.tblView.reloadRows(at: [index], with: UITableView.RowAnimation.none)
-//                            }else{
-//                                print("Twilio: isTypingOnOff setAttributes not working")
-//                            }
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
         if let friendlyName = conversation.friendlyName, let identity = participant.identity{
             print("Twilio: typingOn : \(friendlyName) by \(identity) is \(isTyping)")
         }

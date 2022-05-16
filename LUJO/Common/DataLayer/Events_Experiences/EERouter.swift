@@ -29,7 +29,7 @@ enum EERouter: URLRequestConvertible {
     case home(String)
     case events(Bool, String?, String?, String?)
     case experiences( String?, String?, String?)
-    case salesforce(String, String, String?,String, String?, String?, Int?)
+    case salesforce(SalesforceRequest, String?)
     case geopoint(type: String, latitude: Float, longitude: Float)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
@@ -325,8 +325,8 @@ enum EERouter: URLRequestConvertible {
             return getTopRatedDataAsJSONData( type: type, term:term )
         case .recents:
             return nil
-        case let .salesforce(itemId, token, channelID, type, date, time, persons):
-            return getSalesforceDataAsJSONData(itemId, token, channelID , type, date, time, persons)
+        case let .salesforce(salesforceRequest, conversationId):
+            return getSalesforceDataAsJSONData(salesforceRequest,conversationId)
         case let .geopoint(_, latitude, longitude):
             return getGeopointDataAsJSONData(latitude: latitude, longitude: longitude)
         case .citySearch:
@@ -392,23 +392,80 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getSalesforceDataAsJSONData(_ itemId: String, _ token: String,_ channelId: String? , _ itemType:String, _ date:String?,_ time:String?,_ persons:Int?) -> Data? {
+    fileprivate func getSalesforceDataAsJSONData(_ salesforceRequest: SalesforceRequest,_ conversationId: String?) -> Data? {
+        
         var body: [String: Any] = [
             "item" : [
-                "itemId": itemId,
-                "type": itemType
+                "itemId": salesforceRequest.productId,
+                "type": salesforceRequest.productType
             ]
         ]
-        if let channelId = channelId {
+        if let channelId = conversationId {
             body["channel_id"] = channelId
         }
-        if let date = date , let time = time{
-            body["date_time"] = date + ":" + time
+        //Dining
+        if let date = salesforceRequest.dingingRequestDate , let time = salesforceRequest.dingingRequestTime{
+            body["date_time"] = date + " " + time
         }
-
-        if let persons = persons {
+        if let persons = salesforceRequest.dingingRequestPersons {
             body["persons"] = persons
         }
+        //yacht
+        if let yacht_charter = salesforceRequest.yacht_charter {
+            body["yacht_charter"] = yacht_charter
+        }
+        
+        if let yacht_destination = salesforceRequest.yacht_destination {
+            body["yacht_destination"] = yacht_destination
+        }
+        
+        if let yacht_date_from = salesforceRequest.yacht_date_from {
+            body["yacht_date_from"] = yacht_date_from
+        }
+        
+        if let yacht_date_to = salesforceRequest.yacht_date_to {
+            body["yacht_date_to"] = yacht_date_to
+        }
+        
+        if let yacht_guests = salesforceRequest.yacht_guests {
+            body["yacht_guests"] = yacht_guests
+        }
+//        villa
+        if let villa_check_in = salesforceRequest.villa_check_in {
+            body["villa_check_in"] = villa_check_in
+        }
+        if let villa_check_out = salesforceRequest.villa_check_out {
+            body["villa_check_out"] = villa_check_out
+        }
+        if let villa_guests = salesforceRequest.villa_guests {
+            body["villa_guests"] = villa_guests
+        }
+//        hotel
+        if let hotel_name = salesforceRequest.hotel_name {
+            body["hotel_name"] = hotel_name
+        }
+        if let hotel_neighborhood = salesforceRequest.hotel_neighborhood {
+            body["hotel_neighborhood"] = hotel_neighborhood
+        }
+        if let hotel_radius = salesforceRequest.hotel_radius {
+            body["hotel_radius"] = hotel_radius
+        }
+        if let hotel_check_in_date = salesforceRequest.hotel_check_in_date {
+            body["hotel_check_in_date"] = hotel_check_in_date
+        }
+        if let hotel_check_out_date = salesforceRequest.hotel_check_out_date {
+            body["hotel_check_out_date"] = hotel_check_out_date
+        }
+        if let hotel_guests = salesforceRequest.hotel_guests {
+            body["hotel_guests"] = hotel_guests
+        }
+        if let hotel_rooms = salesforceRequest.hotel_rooms {
+            body["hotel_rooms"] = hotel_rooms
+        }
+        if let hotel_stars = salesforceRequest.hotel_stars {
+            body["hotel_stars"] = hotel_stars
+        }
+        
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     

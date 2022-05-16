@@ -523,21 +523,12 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
 }
 
 extension AdvanceChatViewController: ConversationsManagerDelegate {
-    
-//    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) {
-//        if(conversation == self.conversation && updated == .lastReadMessageIndex){
-//            checkConsumptionHorizon()
-//        }
-//    }
-    
-    
-    
+
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
         print("Twilio: typingOn : \(String(describing: conversation.friendlyName)) by \(String(describing: participant.identity)) is \(isTyping)")
         if(conversation.sid == self.conversation?.sid){
             self.setTypingIndicatorViewHidden(!isTyping , participant)
         }
-        
     }
     
     
@@ -571,25 +562,23 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
         }
     }
     
-    func channelJoined(channel: TCHConversation){
-        self.conversation = channel
-        self.showNetworkActivity()
-        EEAPIManager().sendRequestForSalesForce(salesforceRequest: salesforceRequest, channelId: channel.sid ?? "NoChannel", type: salesforceRequest.productType){ customBookingResponse, error in
-            self.hideNetworkActivity()
+    func sendSalesForceRequest(conversation: TCHConversation?){
+        self.conversation = conversation
+        //logging this request to the sales force as well
+        Mixpanel.mainInstance().track(event: "Product Request",
+                                      properties: ["Product Name" : self.salesforceRequest.productName
+                                                   ,"Product Type" : self.salesforceRequest.productType
+                                                   ,"ProductId" : self.salesforceRequest.productId])
+//        self.showNetworkActivity()
+        EEAPIManager().sendSalesForceRequest(salesforceRequest: salesforceRequest, conversationId: conversation?.sid ?? "NoChannel", type: salesforceRequest.productType){ customBookingResponse, error in
+//            self.hideNetworkActivity()
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 BackendError.parsing(reason: "Could not obtain the salesforce_id")
                 return
             }
-            Mixpanel.mainInstance().track(event: "Product Custom Request",
-                                          properties: ["Product Name" : self.salesforceRequest.productName
-                                                       ,"Product Type" : self.salesforceRequest.productType
-                                                       ,"ProductId" : self.salesforceRequest.productId])
-            print("Twilio: Channel created, joined, channelID been sent to salesforce successfully")
         }
     }
-    
-    
 }
 
 extension AdvanceChatViewController: UITextViewDelegate{

@@ -6,10 +6,38 @@ struct SalesforceRequest {
     var productId: String
     var productType: String
     var productName: String
+    //dining
     var dingingRequestDate: String?
     var dingingRequestTime: String?
     var dingingRequestPersons: Int?
+    //yacht
+    var yacht_charter: String?
+    var yacht_destination: String?
+    var yacht_date_from: String?
+    var yacht_date_to: String?
+    var yacht_guests: Int?
+    // villa
+    var villa_check_in: String?
+    var villa_check_out: String?
+    var villa_guests: Int?
+    //hotel
+    var hotel_name: String?
+    var hotel_neighborhood: String?
+    var hotel_radius: Int?
+    var hotel_check_in_date: String?
+    var hotel_check_out_date: String?
+    var hotel_guests: Int?
+    var hotel_rooms: Int?
+    var hotel_stars: Int?
     
+    //event, experience and gift
+    init(id:String, type:String, name:String = ""){
+        self.productId = id
+        self.productType = type
+        self.productName =  name
+    }
+    
+    //dining
     init(id:String, type:String, name:String = "", date:String? = nil , time:String? = nil , persons:Int? = nil){
         self.productId = id
         self.productType = type
@@ -18,6 +46,46 @@ struct SalesforceRequest {
         self.dingingRequestDate = date
         self.dingingRequestTime = time
         self.dingingRequestPersons =  persons
+    }
+    
+    //yacht
+    init(id:String, type:String, name:String = "", yacht_charter:String? = nil , yacht_destination:String? = nil , yacht_date_from:String? = nil, yacht_date_to:String? = nil, yacht_guests:Int? = nil){
+        self.productId = id
+        self.productType = type
+        self.productName =  name
+        //below params are only going to use for dining request
+        self.yacht_charter = yacht_charter
+        self.yacht_destination = yacht_destination
+        self.yacht_date_from =  yacht_date_from
+        self.yacht_date_to = yacht_date_to
+        self.yacht_guests = yacht_guests
+    }
+    
+    //villa
+    init(id:String, type:String, name:String = "", villa_check_in:String? = nil , villa_check_out:String? = nil , villa_guests:Int? = nil){
+        self.productId = id
+        self.productType = type
+        self.productName =  name
+        //below params are only going to use for dining request
+        self.villa_check_in = villa_check_in
+        self.villa_check_out = villa_check_out
+        self.villa_guests =  villa_guests
+    }
+    
+    //hotel
+    init(id:String, type:String, name:String = "", hotel_name:String? = nil , hotel_neighborhood:String? = nil , hotel_radius:Int? = nil, hotel_check_in_date:String? = nil,hotel_check_out_date:String? = nil, hotel_guests:Int? = nil, hotel_rooms:Int? = nil , hotel_stars:Int? = nil){
+        self.productId = id
+        self.productType = type
+        self.productName =  name
+        //below params are only going to use for dining request
+        self.hotel_name = hotel_name
+        self.hotel_neighborhood = hotel_neighborhood
+        self.hotel_radius =  hotel_radius
+        self.hotel_check_in_date = hotel_check_in_date
+        self.hotel_check_out_date = hotel_check_out_date
+        self.hotel_guests = hotel_guests
+        self.hotel_rooms = hotel_rooms
+        self.hotel_stars = hotel_stars
     }
 }
 

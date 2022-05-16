@@ -178,13 +178,13 @@ class VillaViewController: UIViewController {
     
     @IBAction func requestButton_onClick(_ sender: Any) {
         
-        guard let villaName = villaNameTextField.text, villaNameTextField.text?.count ?? 0 > 0 else {
-            showInformationPopup(withTitle: "Info", message:"Please enter villa name.")
+        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+            showInformationPopup(withTitle: "Info", message:"User does not exist or is not verified.")
             return
         }
         
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            showInformationPopup(withTitle: "Info", message:"User does not exist or is not verified.")
+        guard let villaName = villaNameTextField.text, villaNameTextField.text?.count ?? 0 > 0 else {
+            showInformationPopup(withTitle: "Info", message:"Please enter villa name.")
             return
         }
         
@@ -218,23 +218,18 @@ class VillaViewController: UIViewController {
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
         
-        showNetworkActivity()
-        CustomRequestAPIManager.shared.requestVilla( villaName: villaName, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token, villaRooms: -1) { error in
-            DispatchQueue.main.async {
-                self.hideNetworkActivity()
-                if let error = error {
-                    print ("ERROR: \(error.localizedDescription)")
-                    //self.showErrorPopup(withTitle: "Error", error:error)
-//                    return
-                }
-                print ("Success: custom request villa.")
-                //this VC is always get called from ProductDetailsViewController only
-                if let presentingViewController = self.presentingViewController as? ProductDetailsViewController {
-                    self.dismiss(animated: true) {
-                        presentingViewController.sendInitialInformation(initialMsg: initialMessage)
-                    }
-                }
-            }
+        self.dismiss(animated: true) {
+            let viewController = AdvanceChatViewController()
+            let sfRequest = SalesforceRequest(id: self.product.id
+                                              ,type: self.product.type
+                                              ,villa_check_in: dateString
+                                              ,villa_check_out: returnDateString
+                                              ,villa_guests: self.guestsCount
+                                              )
+            viewController.salesforceRequest = sfRequest
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         }
     }
     
