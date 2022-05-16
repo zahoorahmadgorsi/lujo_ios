@@ -299,10 +299,10 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         
-        scrollsToLastItemOnKeyboardBeginsEditing = true // default false
-        maintainPositionOnKeyboardFrameChanged = true // default false
+        scrollsToLastItemOnKeyboardBeginsEditing = false // default false
+        maintainPositionOnKeyboardFrameChanged = false // default false
 
-        showMessageTimestampOnSwipeLeft = true // default false
+        showMessageTimestampOnSwipeLeft = false // default false
         
         messagesCollectionView.refreshControl = refreshControl
         
@@ -611,7 +611,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending..."
         // Resign first responder for iPad split view
-//        inputBar.inputTextView.resignFirstResponder() //zahoor
+        inputBar.inputTextView.resignFirstResponder()
     
         for component in components {
             if let str = component as? String  {
@@ -619,7 +619,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                     inputBar.sendButton.stopAnimating()
                     if result.isSuccessful {
                         inputBar.inputTextView.placeholder = "Aa"
-//                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type zahoor
+                        inputBar.inputTextView.becomeFirstResponder()   
                     } else {
 //                        self.displayErrorMessage("Unable to send message")
                         let error = BackendError.parsing(reason: "Unable to send message")

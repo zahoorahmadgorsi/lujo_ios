@@ -425,6 +425,7 @@ class PrefImagesCollViewController: UIViewController {
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error)
+                self.navigateToNextVC() // error is shown but still move to next preferences
                 return
             }
             if let informations = information {
@@ -471,11 +472,11 @@ class PrefImagesCollViewController: UIViewController {
                         print("Default of main switch")
                     }
                 }
-                self.navigateToNextVC()
             } else {
                 let error = BackendError.parsing(reason: "Could not set the Preferences")
                 self.showError(error)
             }
+            self.navigateToNextVC() // Incase of error or success still move to next preferences
         }
     }
     

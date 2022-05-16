@@ -554,6 +554,78 @@ extension GoLujoAPIManager {
         }
     }
 
+    func getReferralTypes(_ token: String, completion: @escaping ([ReferralType]?, Error?) -> Void) {
+        Alamofire.request(GoLujoRouter.getReferralTypes(token))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[ReferralType]>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func getReferralCodeAgainstType(_ token: String, _ discountPercentageEnum: String, completion: @escaping (ReferralCode?, Error?) -> Void) {
+        Alamofire.request(GoLujoRouter.getReferralCodeAgainstType(token,discountPercentageEnum))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<ReferralCode>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
     // MARK: Helper methods
 
     fileprivate func handleSuccess(_ json: [String: Any],
@@ -586,6 +658,19 @@ extension GoLujoAPIManager {
         completionHandler(result, nil)
     }
 
+    fileprivate func handleError(_ response: DataResponse<Any>,
+                                 _ statusCode: Int) -> Error {
+        var serverError: String!
+        do {
+            let errorResult = try JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+            serverError = errorResult.content
+        } catch {
+            serverError = "Unknown server error"
+        }
+        reportError(statusCode, response)
+        return BackendError.unexpectedCode(description: serverError)
+    }
+    
     fileprivate func handleError(_ response: DataResponse<Any>,
                                  _ statusCode: Int,
                                  completion completionHandler: @escaping DataLayerCallback) {
