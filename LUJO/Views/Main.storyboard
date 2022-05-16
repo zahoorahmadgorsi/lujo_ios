@@ -1349,7 +1349,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fX7-9z-j7b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5799" y="44"/>
+            <point key="canvasLocation" x="5798.5507246376819" y="43.526785714285715"/>
         </scene>
         <!--Restaurant List View Controller-->
         <scene sceneID="Fys-Xf-2d5">
