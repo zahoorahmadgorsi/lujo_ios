@@ -443,6 +443,18 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                 }
         }
     }
+    
+    func setFriendlyName(friendlyName:String
+                         , completion: @escaping (Bool) -> Void){
+        if let conversation = self.conversation{
+            conversation.setFriendlyName(friendlyName, completion: { (result) in
+                completion(result.isSuccessful)
+            })
+        }else{
+            completion(false)
+            print("Twilio: conversation not available to update")
+        }
+    }
 }
 
 

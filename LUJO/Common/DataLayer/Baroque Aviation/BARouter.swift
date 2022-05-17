@@ -3,9 +3,11 @@ import FirebaseCrashlytics
 import Foundation
 
 enum BARouter: URLRequestConvertible {
+
+    // Obtain backend URL from configuration
     static let baseURLString: String = {
         guard let urlString = Bundle.main.object(forInfoDictionaryKey: "BACKEND_URL") as? String else {
-            return "https://"
+            return ""
         }
         return urlString
     }()
@@ -23,19 +25,20 @@ enum BARouter: URLRequestConvertible {
         }
         return scheme
     }()
-
-    case searchAirport(String, String)
+    
+    case searchAirport(String)
     case search(AviationSearch, String)
     case authorize(BAPaymentAutorization)
     case bookings(BookingType, String)
     case allBookings(String)
 
-    func asURLRequest() throws -> URLRequest {
-        let method: HTTPMethod = {
-            getHTTPMethod()
-        }()
 
-        let requestURL: URL = {
+    func asURLRequest() throws -> URLRequest {
+        var method: HTTPMethod {
+            return getHTTPMethod()
+        }
+
+        let requestUrl: URL = {
             getRequestURL()
         }()
 
@@ -43,7 +46,7 @@ enum BARouter: URLRequestConvertible {
             getBodyData()
         }()
 
-        var urlRequest = URLRequest(url: requestURL)
+        var urlRequest = URLRequest(url: requestUrl)
         urlRequest.httpMethod = method.rawValue
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -76,44 +79,40 @@ extension BARouter {
         newURLComponents.scheme = BARouter.scheme
         newURLComponents.host = BARouter.baseURLString
         newURLComponents.path = BARouter.apiVersion
-
-        addQueryItems(to: &newURLComponents)
-
-        do {
-            print(try newURLComponents.asURL())
-            return try newURLComponents.asURL()
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-        }
-//        print("https://\(BARouter.baseURLString)")a
-        return URL(string: "https://\(BARouter.baseURLString)")!
-    }
-
-    fileprivate func addQueryItems(to components: inout URLComponents) {
+        
         switch self {
-        case let .searchAirport(filter, token):
-            components.path = "/baroque/aviation/airport-search"
-            components.queryItems = [
-                URLQueryItem(name: "filter", value: filter),
-                URLQueryItem(name: "token", value: token),
+        case let .searchAirport(filter):
+            newURLComponents.path.append ("/baroque/aviation/airport-search")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "filter", value: filter)
             ]
         case .search:
-            components.path = "/baroque/aviation/search"    //this API isnt working often on staging and many times on production
+            newURLComponents.path.append("/baroque/aviation/search")    //this API isnt working often on staging and many times on production
         case .authorize:
-            components.path = "/baroque/credit-cards/authorize"
+            newURLComponents.path.append("/baroque/credit-cards/authorize")
         case let .bookings(type, token):
-            components.path = "/baroque/aviation"
-            if type != .trip { components.path.append("/booking-requests") }
-            components.path.append("/\(type.rawValue)")
-            components.queryItems = [
+            newURLComponents.path.append("/baroque/aviation")
+            if type != .trip { newURLComponents.path.append("/booking-requests") }
+            newURLComponents.path.append("/\(type.rawValue)")
+            newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token),
             ]
         case let .allBookings(token):
-            components.path = "/bookings"
-            components.queryItems = [
+            newURLComponents.path.append ("/bookings")
+            newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token)
             ]
         }
+
+        do {
+            let callURL = try newURLComponents.asURL()
+//            print (callURL)
+            return callURL
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+//        print("https://\(BARouter.baseURLString)")
+        return URL(string: "https://\(BARouter.baseURLString)")!
     }
 
     fileprivate func getBodyData() -> Data? {

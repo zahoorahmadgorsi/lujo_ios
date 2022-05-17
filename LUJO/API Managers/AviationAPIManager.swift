@@ -146,8 +146,8 @@ class AviationAPIManagerNEW {
     }
     
     func searchAirports(matching pattern: String, completionHandler: @escaping ([Airport]?, Error?) -> Void) {
-        guard let token = authorisationToken else { return }
-        Alamofire.request(BARouter.searchAirport(pattern, token)).responseJSON { response in
+//        guard let token = authorisationToken else { return }
+        Alamofire.request(BARouter.searchAirport(pattern)).responseJSON { response in
             guard response.result.error == nil else {
                 completionHandler([], LoginError.errorLogin(description: response.result.error!.localizedDescription))
                 return
@@ -161,9 +161,11 @@ class AviationAPIManagerNEW {
             var airportList = [Airport]()
             
             do {
-                let airportResponse = try JSONDecoder().decode(LujoServerResponse<BAAirportResponse>.self,
+                let airportResponse = try JSONDecoder().decode(LujoServerResponse<[BAAirport]>.self,
                                                                from: response.data!)
-                airportList = airportResponse.content.data.map { $0.toAirport() }
+                airportList = airportResponse.content.map { $0.toAirport() }
+                
+    
             } catch {
                 Crashlytics.crashlytics().record(error: error)
             }

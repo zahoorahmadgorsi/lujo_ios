@@ -79,13 +79,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         configureMessageInputBar()
 //        title = "LUJO"  //this name would be override with conversation friendly name
         overrideUserInterfaceStyle = .dark  //showing chat window in dark mode
-        let searchBarButton = UIButton(type: .system)
-        searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
-//        searchBarButton.setTitle("Cancel", for: .normal)
-        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-        searchBarButton.addTarget(self, action: #selector(imgCrossTapped(_:)), for: .touchUpInside)
-        searchBarButton.sizeToFit()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+        
+        createRightBarButtons()
         
         identity = LujoSetup().getLujoUser()?.email ?? identity //current logged in user
         
@@ -126,6 +121,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                     print("Twilio: conversation viewDidLoad. Finished whole DispatchGroup.")
                     self.hideNetworkActivity()
                     tempMessages = tempMessages.sorted(by: { $0.sentDate < $1.sentDate }) //due to asynch calls, messages might be out of order, so bringing them in order
+                    self.messageList = []   //clearing existing array first
                     self.messageList.insert(contentsOf: tempMessages, at: 0)
                     self.messagesCollectionView.reloadData()
                     self.messagesCollectionView.scrollToLastItem(animated: true)
@@ -159,10 +155,51 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         }
     }
     
+    //this method creates the cross and edit button, on tap of this button, UIViewcontroller is closed
+    private func createRightBarButtons(){
+        let imgCross    = UIImage(named: "cross")!
+        let imgEdit  = UIImage(named: "Edit")!
+    
+        let btnCross   = UIBarButtonItem(image: imgCross,  style: .plain, target: self, action: #selector(imgCrossTapped(_:)))
+        let btnEdit = UIBarButtonItem(image: imgEdit,  style: .plain, target: self, action: #selector(imgEditTapped(_:)))
+        
+//        print(LujoSetup().getLujoUser()?.email as Any,self.conversation?.createdBy as Any)
+        //edit option is only possible if you are the creater of the conversation, so applying this check
+        if let userEmail = LujoSetup().getLujoUser()?.email, let conversationCreaterEmail = self.conversation?.createdBy, userEmail == conversationCreaterEmail{
+            navigationItem.rightBarButtonItems = [btnCross , btnEdit]   //order is first and second (right to left)
+        }else{
+            navigationItem.rightBarButtonItems = [btnCross ]
+        }
+    }
+    
     @objc func imgCrossTapped(_ sender: Any) {
         self.dismiss(animated: true, completion:{
             self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
         })
+    }
+    
+    @objc func imgEditTapped(_ sender: Any) {
+        showInputDialog(title: "Conversation Title",
+                        subtitle: "Please edit the conversation title to the new one.",
+                        actionTitle: "Update",
+                        cancelTitle: "Cancel",
+                        inputText: self.conversation?.friendlyName,
+                        inputPlaceholder: "Please enter conversation title",
+                        inputKeyboardType: .default
+                        ,actionHandler:
+                            { (input:String?) in
+                                if let userInput = input{
+                                    self.showNetworkActivity()
+                                    ConversationsManager.sharedConversationsManager.setFriendlyName(friendlyName: userInput) { (result) in
+                                        self.hideNetworkActivity()
+                                        if result{
+                                            self.updateTitleView(title: userInput , subtitle: nil)
+                                        }else{
+                                            print("Twilio: Conversation title could not updated.")
+                                        }
+                                    }
+                                }
+                            })
     }
     
     func addDefaultMessage(type:String)->ChatMessage{

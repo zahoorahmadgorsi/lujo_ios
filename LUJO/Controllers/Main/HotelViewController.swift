@@ -172,17 +172,6 @@ class HotelViewController: UIViewController {
         let navController = UINavigationController(rootViewController:viewController)
         UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         
-//        showNetworkActivity()
-//        CustomRequestAPIManager.shared.findHotel(cityName: cityName, hotelName: hotelNameTextField.text, hotelRadius: String.localizedStringWithFormat("%.0f", distanceSlider.value), checkInDate: checkInDateString, checkOutDate: checkOutDateString, adultsCount: adultsCount, roomsCount: roomsCount, hotelStars: lastButton.tag, token: token) { error in
-//            DispatchQueue.main.async {
-//                self.hideNetworkActivity()
-//                if let error = error {
-//                    print ("ERROR: \(error.localizedDescription)")
-//                    //self.showErrorPopup(withTitle: "Error", error:error)
-//                }
-//
-//            }
-//        }
     }
     
     //MARK: - Logic
