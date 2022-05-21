@@ -19,6 +19,18 @@ target 'LUJO' do
   pod 'Mixpanel-swift'
   pod 'IQKeyboardManagerSwift'
   pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
+  pod 'Kingfisher', '~> 7.0'
+  pod 'SwiftMessages'
+  pod 'M13Checkbox'
+  pod 'ActiveLabel'
+  pod 'Alamofire', '~> 4.7'
+  pod 'ObjectMapper'
+  pod 'DefaultsKit'
+  pod 'SwiftEntryKit', '2.0.0'
+  pod 'JGProgressHUD'
+  pod 'JTAppleCalendar', '~> 7.1'
+  pod 'Cosmos', '~> 23.0'
+  pod 'QuickLayout', '3.0.2'
 end
 
 target 'OneSignalNotificationServiceExtension' do

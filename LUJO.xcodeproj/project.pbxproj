@@ -145,8 +145,6 @@
 		889D6321276CEBAD005C3363 /* logo animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 889D6320276CEBAD005C3363 /* logo animation.gif */; };
 		88A2F463282BB97B00918948 /* GenerateReferralCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A2F461282BB97B00918948 /* GenerateReferralCodeViewController.swift */; };
 		88A2F464282BB97B00918948 /* ShareReferralCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A2F462282BB97B00918948 /* ShareReferralCodeViewController.swift */; };
-		88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8881B1D1266EC93F00CF049D /* Cosmos.framework */; };
-		88B30C792670234C0090B3B5 /* ActiveLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A44CDE62130753100699E1A /* ActiveLabel.framework */; };
 		88B57275256AC32000FF9E4C /* DiningViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B57274256AC32000FF9E4C /* DiningViewCell.xib */; };
 		88C083C92635CCB400204475 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C083C82635CCB400204475 /* WishListViewController.swift */; };
 		88C5EEE726C5D61E00052CE5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C5EEE626C5D61E00052CE5 /* Utils.swift */; };
@@ -260,10 +258,7 @@
 		9A6583C5221C4EC900EB8EEA /* CountryCodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6583C4221C4EC900EB8EEA /* CountryCodeCell.swift */; };
 		9A67F20A22566AE800E06F1D /* LujoIconLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67F20922566AE800E06F1D /* LujoIconLabel.swift */; };
 		9A72C3C121380617009FE9E2 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A72C3C021380617009FE9E2 /* UIViewController.swift */; };
-		9A72C3C3213831ED009FE9E2 /* SwiftEntryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A72C3C2213831ED009FE9E2 /* SwiftEntryKit.framework */; };
-		9A72C3C521383CC3009FE9E2 /* QuickLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A72C3C421383CC3009FE9E2 /* QuickLayout.framework */; };
 		9A72C3C72138456D009FE9E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A72C3C62138456D009FE9E2 /* Localizable.strings */; };
-		9A72C3C92138D9A6009FE9E2 /* JGProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A72C3C82138D9A6009FE9E2 /* JGProgressHUD.framework */; };
 		9A74716E2244D8A60047F4AE /* ImageCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A74716D2244D8A60047F4AE /* ImageCarousel.swift */; };
 		9A762356212BB80300328F74 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A762355212BB80300328F74 /* Trie.swift */; };
 		9A762358212BB84C00328F74 /* TrieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A762357212BB84C00328F74 /* TrieTests.swift */; };
@@ -300,7 +295,6 @@
 		9AC4FE0D225F4E550031E57E /* BookingRequestSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AC4FE0B225F4E550031E57E /* BookingRequestSummaryView.xib */; };
 		9AC6DA6D217D8F700098B016 /* Lift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6DA6C217D8F700098B016 /* Lift.swift */; };
 		9AC9542221A7055A00C7A119 /* UpdatePhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC9542121A7055A00C7A119 /* UpdatePhoneNumberView.swift */; };
-		9ACE52BD212D1F3F00BB287A /* M13Checkbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE52BC212D1F3F00BB287A /* M13Checkbox.framework */; };
 		9AD1CE0022817F48007A0D63 /* BookingPaymentSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AD1CDFF22817F48007A0D63 /* BookingPaymentSummaryView.xib */; };
 		9AD1CE02228182B2007A0D63 /* BookingPaymentSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD1CE01228182B2007A0D63 /* BookingPaymentSummaryView.swift */; };
 		9AD6EAB821E3621400B695A3 /* Payment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AD6EAB721E3621400B695A3 /* Payment.storyboard */; };
@@ -320,9 +314,6 @@
 		9AE0B2AF212330C700E55E6C /* GoLujoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE0B2AE212330C700E55E6C /* GoLujoRouter.swift */; };
 		9AE0B2B121233D7900E55E6C /* BackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE0B2B021233D7900E55E6C /* BackendError.swift */; };
 		9AEBA3FA2209B4A50010A25B /* BAPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEBA3F92209B4A50010A25B /* BAPayment.swift */; };
-		9AECC1432111CBD700C00C07 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AECC13C2111CBD700C00C07 /* ObjectMapper.framework */; };
-		9AECC1442111CBD700C00C07 /* DefaultsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AECC13D2111CBD700C00C07 /* DefaultsKit.framework */; };
-		9AECC1462111CBD700C00C07 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AECC13F2111CBD700C00C07 /* Alamofire.framework */; };
 		9AF1A0D22248EFD500E0680B /* AviationSearchOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF1A0D12248EFD500E0680B /* AviationSearchOptions.xib */; };
 		9AF1A0D42249072B00E0680B /* AviationSingleLegSearchOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF1A0D32249072B00E0680B /* AviationSingleLegSearchOptionsView.swift */; };
 		9AF1A0D62249073C00E0680B /* AviationMultiLegSearchOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF1A0D52249073C00E0680B /* AviationMultiLegSearchOptionsView.swift */; };
@@ -332,7 +323,6 @@
 		9AF4226B2266026F003CE562 /* BookingStep3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4226A2266026F003CE562 /* BookingStep3.swift */; };
 		9AF561E52183311100B7BD1A /* LiftCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF561E42183311100B7BD1A /* LiftCollectionViewCell.swift */; };
 		9AF561E921833D5800B7BD1A /* UIImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF561E821833D5800B7BD1A /* UIImageView+Download.swift */; };
-		9AF569C52175EDBA005B031D /* JTAppleCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF569C42175EDBA005B031D /* JTAppleCalendar.framework */; };
 		9AF569C72175F07B005B031D /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF569C62175F07B005B031D /* CalendarCell.swift */; };
 		9AF8DC222200C519003D0519 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8DC212200C519003D0519 /* UIButton.swift */; };
 		A0424EB2C4B3542C1078AA07 /* Pods_LUJO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E862A6F8362BC2A026001E1 /* Pods_LUJO.framework */; };
@@ -769,17 +759,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88B30C792670234C0090B3B5 /* ActiveLabel.framework in Frameworks */,
 				1D60067023994B9300B9BA2A /* libc++abi.tbd in Frameworks */,
-				9A72C3C3213831ED009FE9E2 /* SwiftEntryKit.framework in Frameworks */,
-				9A72C3C92138D9A6009FE9E2 /* JGProgressHUD.framework in Frameworks */,
-				9AECC1432111CBD700C00C07 /* ObjectMapper.framework in Frameworks */,
-				88B30C37266FE69A0090B3B5 /* Cosmos.framework in Frameworks */,
-				9AECC1442111CBD700C00C07 /* DefaultsKit.framework in Frameworks */,
-				9ACE52BD212D1F3F00BB287A /* M13Checkbox.framework in Frameworks */,
-				9AF569C52175EDBA005B031D /* JTAppleCalendar.framework in Frameworks */,
-				9AECC1462111CBD700C00C07 /* Alamofire.framework in Frameworks */,
-				9A72C3C521383CC3009FE9E2 /* QuickLayout.framework in Frameworks */,
 				A0424EB2C4B3542C1078AA07 /* Pods_LUJO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1860,12 +1840,10 @@
 				9A818F4320EE74CA005B6455 /* Sources */,
 				9A818F4420EE74CA005B6455 /* Frameworks */,
 				9A818F4520EE74CA005B6455 /* Resources */,
-				9AECC1492111CC0100C00C07 /* Carthage Copy Frameworks */,
 				9ACE52BE212D306F00BB287A /* Fabric */,
 				88029BAD2633BF42003F1E77 /* Embed App Extensions */,
 				88310E002635FF3900301667 /* Embed Frameworks */,
 				2E461DCF362ECED2DF565CE5 /* [CP] Embed Pods Frameworks */,
-				88B30C3A266FE7600090B3B5 /* ShellScript */,
 				88E4A6C12759A67B00081270 /* ShellScript */,
 			);
 			buildRules = (
@@ -2132,24 +2110,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		88B30C3A266FE7600090B3B5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/ActiveLabel.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
-		};
 		88E4A6C12759A67B00081270 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2215,42 +2175,6 @@
 			shellPath = /bin/sh;
 			shellScript = "
 ";
-		};
-		9AECC1492111CC0100C00C07 /* Carthage Copy Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/DefaultsKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ObjectMapper.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/M13Checkbox.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ActiveLabel.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftEntryKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/QuickLayout.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/JGProgressHUD.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/JTAppleCalendar.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftMessages.framework",
-			);
-			name = "Carthage Copy Frameworks";
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DefaultsKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ObjectMapper.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/M13Checkbox.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ActiveLabel.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftEntryKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/QuickLayout.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JGProgressHUD.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JTAppleCalendar.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftMessages.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
