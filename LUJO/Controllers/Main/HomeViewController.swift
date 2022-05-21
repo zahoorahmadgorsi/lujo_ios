@@ -637,11 +637,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         splashView.isHidden = true
         
         //Loading the preferences related to users profile only for the very first time
-//        if !UserDefaults.standard.bool(forKey: "isProfilePreferencesAlreadyShown")  {
+        if !UserDefaults.standard.bool(forKey: "isProfilePreferencesAlreadyShown")  {
             let viewController = PrefImagesCollViewController.instantiate(prefType: .profile, prefInformationType: .profile)
             self.navigationController?.pushViewController(viewController, animated: true)
             UserDefaults.standard.set(true, forKey: "isProfilePreferencesAlreadyShown")
-//        }
+        }
         
         if initialLoad {
             tabBarController?.selectedIndex = LujoSetup().getLujoUser()?.membershipPlan != nil ? LujoSetup().getLujoUser()?.membershipPlan?.target ?? "" == "all" ? 0 : 1 : 3
