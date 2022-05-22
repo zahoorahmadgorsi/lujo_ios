@@ -49,7 +49,7 @@ struct WishListObjects: Codable {
         case events = "event"
         case specialEvents = "special_event"
         case experiences = "experience"
-        case hotels = "hotel"
+//        case hotels = "hotel"
         case villas = "villa"
         case gifts = "gift"
         case yachts = "yacht"
@@ -72,7 +72,7 @@ extension WishListObjects {
             events = try values.decodeIfPresent([Product].self, forKey: .events)
             specialEvents = try values.decodeIfPresent([Product].self, forKey: .specialEvents)
             experiences = try values.decodeIfPresent([Product].self, forKey: .experiences)
-            hotels = try values.decodeIfPresent([Hotel].self, forKey: .hotels)
+//            hotels = try values.decodeIfPresent([Hotel].self, forKey: .hotels)
             villas = try values.decodeIfPresent([Product].self, forKey: .villas)
             gifts = try values.decodeIfPresent([Product].self, forKey: .gifts)
             yachts = try values.decodeIfPresent([Product].self, forKey: .yachts)

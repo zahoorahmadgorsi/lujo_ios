@@ -46,7 +46,7 @@ class AviationEmptyResultsView: UIView {
                     """
 
                     let viewController = AdvanceChatViewController()
-                    viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer" , type: "aviation" , name: "Flight Booking Inquiry")
+                    viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "aviation" , name: "Flight Booking Inquiry")
                     viewController.initialMessage = initialMessage
                     self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
                     

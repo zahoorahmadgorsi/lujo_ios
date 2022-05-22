@@ -259,36 +259,36 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
         }
-        //******************
-        // Hotel
-        //******************
-        count = (wishListInformations?.hotels?.count ?? 0)
-        if count > 0 , let items = wishListInformations?.hotels{
-            let wishListView: WishListView = {
-                let tv = WishListView()
-                tv.translatesAutoresizingMaskIntoConstraints = false
-                return tv
-            }()
-            
-            wishListView.delegate = self
-            wishListView.itemType = .hotel
-            wishListView.imgTitle.image = UIImage(named: "travel grey icon")
-            wishListView.lblTitle.text = "Hotel"
-            //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.primaryMedia
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
-            stackView.addArrangedSubview(wishListView)
-            //applying constraints on wishListView
-            setupWishListLayout(wishListView: wishListView)
-        }
+//        //******************
+//        // Hotel
+//        //******************
+//        count = (wishListInformations?.hotels?.count ?? 0)
+//        if count > 0 , let items = wishListInformations?.hotels{
+//            let wishListView: WishListView = {
+//                let tv = WishListView()
+//                tv.translatesAutoresizingMaskIntoConstraints = false
+//                return tv
+//            }()
+//
+//            wishListView.delegate = self
+//            wishListView.itemType = .hotel
+//            wishListView.imgTitle.image = UIImage(named: "travel grey icon")
+//            wishListView.lblTitle.text = "Hotel"
+//            //preparing data of collection view
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                    , name: item.name
+//                    , description: item.description
+//                    , primaryMedia:item.primaryMedia
+//                    , locations: item.locations
+//                    , isFavourite: item.isFavourite))
+//            }
+//            wishListView.itemsList = itemsList
+//            stackView.addArrangedSubview(wishListView)
+//            //applying constraints on wishListView
+//            setupWishListLayout(wishListView: wishListView)
+//        }
         //******************
         // Villa
         //******************
@@ -569,12 +569,12 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 isFavourite = item.isFavourite ?? false
                 itemType = "restaurant"
             }
-        case .hotel:
-            if let item = wishListInformations?.hotels?[index]{
-                itemID = item.id
-                isFavourite = item.isFavourite ?? false
-                itemType = "hotel"
-            }
+//        case .hotel:
+//            if let item = wishListInformations?.hotels?[index]{
+//                itemID = item.id
+//                isFavourite = item.isFavourite ?? false
+//                itemType = "hotel"
+//            }
         case .villa:
             if let item = wishListInformations?.villas?[index]{
                 itemID = item.id
@@ -617,8 +617,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                         self.wishListInformations?.experiences?.remove(at: index)
                     case .restaurant:
                         self.wishListInformations?.restaurants?.remove(at: index)
-                    case .hotel:
-                        self.wishListInformations?.hotels?.remove(at: index)
+//                    case .hotel:
+//                        self.wishListInformations?.hotels?.remove(at: index)
                     case .villa:
                         self.wishListInformations?.villas?.remove(at: index)
                     case .gift:

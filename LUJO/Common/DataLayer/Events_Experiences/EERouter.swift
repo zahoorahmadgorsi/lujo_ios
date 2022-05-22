@@ -393,76 +393,76 @@ enum EERouter: URLRequestConvertible {
     }
     
     fileprivate func getSalesforceDataAsJSONData(_ salesforceRequest: SalesforceRequest,_ conversationId: String?) -> Data? {
-        
+            
         var body: [String: Any] = [
             "item" : [
                 "itemId": salesforceRequest.productId,
                 "type": salesforceRequest.productType
             ]
         ]
-        if let channelId = conversationId {
+        if let channelId = conversationId, !channelId.isEmpty {
             body["channel_id"] = channelId
         }
         //Dining
-        if let date = salesforceRequest.dingingRequestDate , let time = salesforceRequest.dingingRequestTime{
+        if let date = salesforceRequest.dingingRequestDate , let time = salesforceRequest.dingingRequestTime, !date.isEmpty{
             body["date_time"] = date + " " + time
         }
-        if let persons = salesforceRequest.dingingRequestPersons {
+        if let persons = salesforceRequest.dingingRequestPersons{
             body["persons"] = persons
         }
         //yacht
-        if let yacht_charter = salesforceRequest.yacht_charter {
+        if let yacht_charter = salesforceRequest.yacht_charter , !yacht_charter.isEmpty{
             body["yacht_charter"] = yacht_charter
         }
         
-        if let yacht_destination = salesforceRequest.yacht_destination {
+        if let yacht_destination = salesforceRequest.yacht_destination , !yacht_destination.isEmpty{
             body["yacht_destination"] = yacht_destination
         }
         
-        if let yacht_date_from = salesforceRequest.yacht_date_from {
+        if let yacht_date_from = salesforceRequest.yacht_date_from , !yacht_date_from.isEmpty{
             body["yacht_date_from"] = yacht_date_from
         }
         
-        if let yacht_date_to = salesforceRequest.yacht_date_to {
+        if let yacht_date_to = salesforceRequest.yacht_date_to , !yacht_date_to.isEmpty{
             body["yacht_date_to"] = yacht_date_to
         }
         
-        if let yacht_guests = salesforceRequest.yacht_guests {
+        if let yacht_guests = salesforceRequest.yacht_guests{
             body["yacht_guests"] = yacht_guests
         }
 //        villa
-        if let villa_check_in = salesforceRequest.villa_check_in {
+        if let villa_check_in = salesforceRequest.villa_check_in , !villa_check_in.isEmpty{
             body["villa_check_in"] = villa_check_in
         }
-        if let villa_check_out = salesforceRequest.villa_check_out {
+        if let villa_check_out = salesforceRequest.villa_check_out , !villa_check_out.isEmpty{
             body["villa_check_out"] = villa_check_out
         }
-        if let villa_guests = salesforceRequest.villa_guests {
+        if let villa_guests = salesforceRequest.villa_guests{
             body["villa_guests"] = villa_guests
         }
 //        hotel
-        if let hotel_name = salesforceRequest.hotel_name {
+        if let hotel_name = salesforceRequest.hotel_name , !hotel_name.isEmpty{
             body["hotel_name"] = hotel_name
         }
-        if let hotel_neighborhood = salesforceRequest.hotel_neighborhood {
+        if let hotel_neighborhood = salesforceRequest.hotel_neighborhood , !hotel_neighborhood.isEmpty{     //it cant be empty as there is a check on front end
             body["hotel_neighborhood"] = hotel_neighborhood
         }
-        if let hotel_radius = salesforceRequest.hotel_radius {
+        if let hotel_radius = salesforceRequest.hotel_radius{
             body["hotel_radius"] = hotel_radius
         }
-        if let hotel_check_in_date = salesforceRequest.hotel_check_in_date {
+        if let hotel_check_in_date = salesforceRequest.hotel_check_in_date , !hotel_check_in_date.isEmpty{  //it cant be empty as there is a check on front end
             body["hotel_check_in_date"] = hotel_check_in_date
         }
-        if let hotel_check_out_date = salesforceRequest.hotel_check_out_date {
+        if let hotel_check_out_date = salesforceRequest.hotel_check_out_date , !hotel_check_out_date.isEmpty{   //it cant be empty as there is a check on front end
             body["hotel_check_out_date"] = hotel_check_out_date
         }
-        if let hotel_guests = salesforceRequest.hotel_guests {
+        if let hotel_guests = salesforceRequest.hotel_guests{
             body["hotel_guests"] = hotel_guests
         }
-        if let hotel_rooms = salesforceRequest.hotel_rooms {
+        if let hotel_rooms = salesforceRequest.hotel_rooms{
             body["hotel_rooms"] = hotel_rooms
         }
-        if let hotel_stars = salesforceRequest.hotel_stars {
+        if let hotel_stars = salesforceRequest.hotel_stars{
             body["hotel_stars"] = hotel_stars
         }
         

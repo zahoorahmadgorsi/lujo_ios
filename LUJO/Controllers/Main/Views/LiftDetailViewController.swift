@@ -266,7 +266,7 @@ class LiftDetailViewController: UIViewController {
             \(userFirstName)
             """
             let viewController = AdvanceChatViewController()
-            viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer" , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "aviation" , name: "Flight Booking Inquiry")
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
@@ -322,7 +322,7 @@ class LiftDetailViewController: UIViewController {
             """
 
             let viewController = AdvanceChatViewController()
-            viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer" , type: "aviation" , name: "Flight Booking Inquiry")
+            viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "aviation" , name: "Flight Booking Inquiry")
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

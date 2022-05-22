@@ -237,7 +237,7 @@ class PreferencesHomeViewController: UIViewController {
             """
             
             let viewController = AdvanceChatViewController()
-            viewController.salesforceRequest = SalesforceRequest(id: "-1234asdfqwer" , type: "Preferences" , name: "Preferences Inquiry")
+            viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "Preferences" , name: "Preferences Inquiry")
             viewController.initialMessage = initialMessage
             self.navigationController?.pushViewController(viewController,animated: true)
         } else {

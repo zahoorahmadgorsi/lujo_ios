@@ -40,7 +40,7 @@ class GenerateReferralCodeViewController: UIViewController {
     }
     
     private let naHUD = JGProgressHUD(style: .dark)
-    var cellWidth : Int = 350
+    var cellWidth : Int = 325
     
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {

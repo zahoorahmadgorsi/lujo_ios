@@ -14,7 +14,7 @@ enum FavouriteType {
     case specialEvent
     case experience
     case restaurant
-    case hotel
+//    case hotel
     case villa
     case gift
     case yacht

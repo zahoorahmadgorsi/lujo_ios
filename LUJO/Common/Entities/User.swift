@@ -182,12 +182,28 @@ struct Membership: Codable {
         case discount
     }
     
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            id = try values.decode(String.self, forKey: .id)
+            plan = try values.decode(String.self, forKey: .plan)
+            price = try values.decode(Int.self, forKey: .price)
+            target = try values.decode(String.self, forKey: .target)
+//            expiration = try values.decodeIfPresent(Int.self, forKey: .expiration)    //int throwing error
+            expiration = 123456
+            discount = try values.decodeIfPresent(Int.self, forKey: .discount)
+            
+        } catch {
+            throw error
+        }
+    }
+    
     init(data: [String : Any]) {
         self.id = data["_id"] as? String ?? "-1"
         self.plan = (data["plan"] as? String ?? "").lowercased()
         self.price =  data["price"] as? Int ?? -1
         self.target =  data["target"] as? String ?? ""
-        self.expiration = Int(data["expiration"] as? String ?? "") ?? 0
-        self.discount = Int(data["discount"] as? String ?? "") ?? 0
+        self.expiration = data["expiration"] as? Int ?? -1
+        self.discount = data["discount"] as? Int ?? -1
     }
 }
