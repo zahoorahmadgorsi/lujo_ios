@@ -602,7 +602,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         tabBarController?.tabBar.isHidden = false
         splashView.isHidden = true
         
-        //Loading the preferences related to users profile only for the very first time
+        //Loading the preferences related to users profile only for the very first time, zahoor
         if !UserDefaults.standard.bool(forKey: "isProfilePreferencesAlreadyShown")  {
             let viewController = PrefImagesCollViewController.instantiate(prefType: .profile, prefInformationType: .profile)
             self.navigationController?.pushViewController(viewController, animated: true)
