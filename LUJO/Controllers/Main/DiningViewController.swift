@@ -156,9 +156,12 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     override func viewWillAppear(_ animated: Bool) {
         activateKeyboardManager()
         
-        dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan != nil
-        membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan != nil
-        searchBarButton.isEnabled = LujoSetup().getLujoUser()?.membershipPlan != nil
+        if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
+            let isMember = target == "all" || target == "dining"
+            dimView.isHidden = isMember
+            membershipView.isHidden = isMember
+            searchBarButton.isEnabled = isMember
+        }
         
         checkLocationAuthorizationStatus()
         startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
