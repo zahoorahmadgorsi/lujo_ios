@@ -84,7 +84,7 @@ class PrefProductCategoryViewController: UIViewController {
             case .aviationAircraftCategory:
                 lblPrefQuestion.text = "Preferred aircraft category?"
                 if let array = self.userPreferences?.aviation.aviation_aircraft_category_id{
-                    previouslySelectedItems = array
+                    previouslySelectedItems = array.map({String($0)})
                 }
                 default:
                     print("Others")
@@ -228,7 +228,7 @@ class PrefProductCategoryViewController: UIViewController {
             case .aviation:
             switch prefInformationType {
                 case .aviationAircraftCategory:
-                GoLujoAPIManager().getAviationCategories(token) { taxonomies, error in
+                GoLujoAPIManager().getAviationCategories() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -277,7 +277,7 @@ class PrefProductCategoryViewController: UIViewController {
                 case .aviationAircraftCategory:
                     if let ids = userPreferences?.aviation.aviation_aircraft_category_id{
                         for id in ids {
-                            selectedArray.append(id)
+                            selectedArray.append(String(id))
                         }
                     }
                 default:
@@ -330,9 +330,10 @@ class PrefProductCategoryViewController: UIViewController {
                     case .aviation:
                         switch self.prefInformationType {
                             case .aviationAircraftCategory:
-                                let arr = commaSeparatedString.components(separatedBy: ",")
-                                userPreferences.aviation.aviation_aircraft_category_id = arr
+                            let arr = commaSeparatedString.components(separatedBy: ",")
+                            userPreferences.aviation.aviation_aircraft_category_id = arr.map{Int($0) ?? -1}
                                 LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
+                            
                             default:
                                 print("Not yet required")
                         }
@@ -368,7 +369,7 @@ class PrefProductCategoryViewController: UIViewController {
         case .aviation:
             switch prefInformationType {
                 case .aviationAircraftCategory:
-                    GoLujoAPIManager().setAviationAircraftCategory(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationAircraftCategory(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -385,7 +386,7 @@ class PrefProductCategoryViewController: UIViewController {
         case .yachts:
             switch prefInformationType {
                 case .yachtPreferredLength:
-                    GoLujoAPIManager().setYachtLength(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtLength(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht length preferences")
@@ -446,7 +447,7 @@ class PrefProductCategoryViewController: UIViewController {
             case .aviationAircraftCategory:
                 let current = self.userPreferences?.aviation.aviation_aircraft_category_id ?? []
                 let previous = self.previouslySelectedItems
-                return !compare(current: current , previous: previous)
+                return !compare(current: current.map({String($0)}) , previous: previous)
             default:
                 print("This will not call")
             }
@@ -532,7 +533,7 @@ extension PrefProductCategoryViewController: UICollectionViewDataSource {
             switch self.prefInformationType {
             case .aviationAircraftCategory:
                 if let ids = userPreferences?.aviation.aviation_aircraft_category_id{
-                    if (ids.contains(String(model.id))){
+                    if (ids.contains(Int(model.id))){
                         cell.lblTitle.textColor = UIColor.rgMid
                         cell.imgProduct.image = UIImage(named: model.name + " selected")
                     }
@@ -569,17 +570,18 @@ extension PrefProductCategoryViewController: UICollectionViewDelegate {
         case .aviation:
             switch self.prefInformationType {
             case .aviationAircraftCategory:
-                if var ids = userPreferences?.aviation.aviation_aircraft_category_id{
-                    if ids.contains(termId){
+                let id = Int(termId) ?? -1
+                if var ids = userPreferences?.aviation.aviation_aircraft_category_id , id >= 0{
+                    if ids.contains(id){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
+                        ids.removeAll{ value in return value == id}
                         userPreferences?.aviation.aviation_aircraft_category_id = ids
                     }else{
-                        userPreferences?.aviation.aviation_aircraft_category_id?.append(termId)
+                        userPreferences?.aviation.aviation_aircraft_category_id?.append(id)
                     }
                 }else{
                     userPreferences?.aviation.aviation_aircraft_category_id = []    //initializing first
-                    userPreferences?.aviation.aviation_aircraft_category_id?.append(termId)
+                    userPreferences?.aviation.aviation_aircraft_category_id?.append(id)
                 }
                 isSelectionChanged()
                 self.collectionView.reloadItems(at: [indexPath])

@@ -115,7 +115,7 @@ struct AviationPreferences  : Codable {
     var aviation_preferred_charter_range : String?
     var aviation_preferred_cuisine_id : [String]?
     var aviation_preferred_beverage_id : [String]?
-    var aviation_aircraft_category_id : [String]?
+    var aviation_aircraft_category_id : [Int]?
 
     enum CodingKeys: String, CodingKey {
         case aviation_chartered_before = "aviation_chartered_before"
@@ -142,7 +142,7 @@ struct AviationPreferences  : Codable {
             aviation_preferred_charter_range = try values.decodeIfPresent(String.self, forKey: .aviation_preferred_charter_range)
             aviation_preferred_cuisine_id = try values.decodeIfPresent([String].self, forKey: .aviation_preferred_cuisine_id)
             aviation_preferred_beverage_id = try values.decodeIfPresent([String].self, forKey: .aviation_preferred_beverage_id)
-            aviation_aircraft_category_id = try values.decodeIfPresent([String].self, forKey: .aviation_aircraft_category_id)
+            aviation_aircraft_category_id = try values.decodeIfPresent([Int].self, forKey: .aviation_aircraft_category_id)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error

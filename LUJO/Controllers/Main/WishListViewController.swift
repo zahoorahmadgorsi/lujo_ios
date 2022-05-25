@@ -27,6 +27,8 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     class var identifier: String { return "WishListViewController" }
     
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var dimView: UIView!
+    @IBOutlet weak var membershipView: UIView!
     
     /// Init method that will init and return view controller.
     class func instantiate() -> WishListViewController {
@@ -65,6 +67,11 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
+            let isMember = target == "all" || target == "dining"
+            dimView.isHidden = isMember
+            membershipView.isHidden = isMember
+        }
         //refetch data IF ANd ONLY IF no data is there else back animation will not work properly
         if ((wishListInformations?.isEmpty()) != nil){
             getWishListInformation(showActivity: true)
@@ -650,6 +657,17 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             }
             completion(strResponse, error)
         }
+    }
+    
+    @IBAction func buyMembershipButton_onClick(_ sender: Any) {
+        var fullName = ""
+        if let firstName = LujoSetup().getLujoUser()?.firstName {
+            fullName += "\(firstName) "
+        }
+        if let lastName = LujoSetup().getLujoUser()?.lastName {
+            fullName += "\(lastName)"
+        }
+        self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: .buyMembership, paymentType: .dining), animated: true)
     }
 }
 

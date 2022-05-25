@@ -295,34 +295,6 @@ extension BookingsViewController {
             }
         }
     }
-    
-    func getMyBookings() {
-        showNetworkActivity()
-        
-        AviationAPIManagerNEW.shared.authorisationToken = LujoSetup().getCurrentUser()?.token
-        AviationAPIManagerNEW.shared.getBookings(type: .active) { bookings, error in
-            self.hideNetworkActivity()
-            if let error = error {
-                self.showError(error)
-            } else {
-                self.update(bookings: bookings)
-            }
-        }
-    }
-    
-    func getMyTrips() {
-        showNetworkActivity()
-        
-        AviationAPIManagerNEW.shared.authorisationToken = LujoSetup().getCurrentUser()?.token
-        AviationAPIManagerNEW.shared.getBookings(type: .trip) { trips, error in
-            self.hideNetworkActivity()
-            if let error = error {
-                self.showError(error)
-            } else {
-                self.update(trips: trips)
-            }
-        }
-    }
 }
 
 extension BookingsViewController: PurchasePaymentDelegate {

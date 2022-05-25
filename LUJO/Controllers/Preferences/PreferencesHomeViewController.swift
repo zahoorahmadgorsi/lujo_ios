@@ -163,7 +163,7 @@ class PreferencesHomeViewController: UIViewController {
         if (user?.membershipPlan?.plan == "All" ){ //free
             print("All preferences are visible to those who has full membership")
         }else if (user?.membershipPlan?.plan == "Dining" ){ //dining
-            //hide all except aviation
+            //hide all except dining and aviation
             viewGifts.isUserInteractionEnabled = false
             viewGifts.alpha = CGFloat(opacity)
             
@@ -181,7 +181,6 @@ class PreferencesHomeViewController: UIViewController {
         }else{//all user?.membershipPlan = nil
             //hide all except aviation
             viewGifts.isUserInteractionEnabled = false
-//            viewGifts.backgroundColor = UIColor.black.withAlphaComponent(0.5)
             viewGifts.alpha = CGFloat(opacity)
             
             viewDining.isUserInteractionEnabled = false

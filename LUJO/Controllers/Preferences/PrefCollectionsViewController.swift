@@ -520,7 +520,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
             case .giftCategories:
-                GoLujoAPIManager().getGiftCategories(token) { taxonomies, error in
+                GoLujoAPIManager().getGiftCategories() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -556,7 +556,7 @@ class PrefCollectionsViewController: UIViewController {
         case .aviation:
             switch prefInformationType {
             case .aviationPreferredCuisine:
-                GoLujoAPIManager().getCuisines(token) { taxonomies, error in
+                GoLujoAPIManager().getCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain aviation information")
@@ -571,7 +571,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
             case .aviationPreferredBevereges:
-                GoLujoAPIManager().getAviationBeverages(token) { taxonomies, error in
+                GoLujoAPIManager().getAviationBeverages() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -592,7 +592,7 @@ class PrefCollectionsViewController: UIViewController {
         case .yachts:
             switch prefInformationType {
             case .yachtPreferredCuisines:
-                GoLujoAPIManager().getCuisines(token) { taxonomies, error in
+                GoLujoAPIManager().getCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yacht information")
@@ -607,7 +607,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
             case .yachtOtherInterests:
-                GoLujoAPIManager().getOtherInterests(token) { taxonomies, error in
+                GoLujoAPIManager().getOtherInterests() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
@@ -628,7 +628,7 @@ class PrefCollectionsViewController: UIViewController {
         case .dining:
            switch prefInformationType {
            case .diningCuisines:
-                GoLujoAPIManager().getDiningCuisines(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Dining information")
@@ -643,7 +643,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
            case .diningAllergies:
-                GoLujoAPIManager().getDiningAllergies(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningAllergies() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Dining information")
@@ -658,7 +658,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
            case .diningPreferences:
-                GoLujoAPIManager().getDiningPreferences(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningPreferences() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Dining information")
@@ -673,7 +673,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
            case .diningTimings:
-                GoLujoAPIManager().getDiningTimings(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningTimings() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Dining information")
@@ -688,7 +688,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
            case .diningBeverages:
-                GoLujoAPIManager().getDiningBeverages(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningBeverages() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Dining information")
@@ -703,7 +703,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
            case .diningSeatings:
-                GoLujoAPIManager().getDiningSeatings(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningSeatings() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Dining information")
@@ -758,7 +758,7 @@ class PrefCollectionsViewController: UIViewController {
         case .travel:
             switch prefInformationType {
             case .travelAmenities:
-                GoLujoAPIManager().getTravelAmenities(token) { taxonomies, error in
+                GoLujoAPIManager().getTravelAmenities() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain amenities information")
@@ -774,7 +774,7 @@ class PrefCollectionsViewController: UIViewController {
                 }
             case .travelMeals:
                 //dining preferences and travel meals are same thing
-                GoLujoAPIManager().getDiningPreferences(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningPreferences() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain airline meals information")
@@ -789,7 +789,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(taxonomies, error)
                 }
             case .travelMedicalMeals:
-                GoLujoAPIManager().getTravelMedicalMeals(token) { taxonomies, error in
+                GoLujoAPIManager().getTravelMedicalMeals() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain airline medical meals information")
@@ -805,7 +805,7 @@ class PrefCollectionsViewController: UIViewController {
                 }
             case .travelAllergies:
                 //trave and dinnig
-                GoLujoAPIManager().getDiningAllergies(token) { taxonomies, error in
+                GoLujoAPIManager().getDiningAllergies() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain airline allergies information")
@@ -825,7 +825,7 @@ class PrefCollectionsViewController: UIViewController {
         case .villas:
             switch self.prefInformationType {
                 case .villaAmenities:
-                    GoLujoAPIManager().getVillaAmenities(token) { taxonomies, error in
+                    GoLujoAPIManager().getVillaAmenities() { taxonomies, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain villa amenities information")
@@ -840,7 +840,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(taxonomies, error)
                     }
                 case .villaAccomodation:
-                    GoLujoAPIManager().getVillaAccomodation(token) { taxonomies, error in
+                    GoLujoAPIManager().getVillaAccomodation() { taxonomies, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain villa accomodation information")

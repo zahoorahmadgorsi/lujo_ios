@@ -34,30 +34,30 @@ enum PreferencesRouter: URLRequestConvertible {
         return scheme
     }()
     
-    case getAllPreferences(String)
+    case getAllPreferences
     case getGiftHabits
     case getGiftCategories
     case getGiftPreferences
     case setGiftHabits(String)
     case setGiftCategories(String)
     case setGiftPreferences(String)
-    case getCuisines(String)
+    case getCuisines
     case getEventCategory
     case getEventLocation
     
-    case getAviationBeverages(String)
-    case getAviationCategories(String)
+    case getAviationBeverages
+    case getAviationCategories
     case setAviationHaveCharteredBefore(String,String)
     case setAviationPreferredDestinations(String,String)
     case setAviationPreferredAirports(String,String)
-    case setAviationAircraftCategory(String,String)
+    case setAviationAircraftCategory(String)
     case setAviationCharterFrequency(String,Int,Int)
     case setAviationInterestedIn(String,String)
     case setAviationPreferredCharter(String,String)
     case setAviationPreferredCuisines(String,String,String)
     case setAviationPreferredBevereges(String,String,String)
-    case searchDestination(String, String)
-    case getOtherInterests(String)
+    case searchDestination(String)
+    case getOtherInterests
     
     case setYachtHaveCharteredBefore(String,String)
     case setYachtInterestedIn(String,String)
@@ -67,15 +67,15 @@ enum PreferencesRouter: URLRequestConvertible {
     case setYachtOtherInterests(String,String)
     case setYachtCharterFrequency(String,Int,Int)
     case setYachtPreferredRegions(String,String)
-    case setYachtLength(String,String)
+    case setYachtLength(String)
     case searchRegions(String, String)
     
-    case getDiningCuisines(String)
-    case getDiningAllergies(String)
-    case getDiningPreferences(String)
-    case getDiningTimings(String)
-    case getDiningBeverages(String)
-    case getDiningSeatings(String)
+    case getDiningCuisines
+    case getDiningAllergies
+    case getDiningPreferences
+    case getDiningTimings
+    case getDiningBeverages
+    case getDiningSeatings
     case setDiningCuisines (String,String,String)
     case setDiningPreferences(String,String,String)
     case setDiningBeverages(String,String,String)
@@ -87,10 +87,10 @@ enum PreferencesRouter: URLRequestConvertible {
     case setEventCategory(String)
     case setEventLocation(String)
     
-    case getTravelHotelGroups(String)
-    case getTravelMedicalMeals(String)
-    case getTravelActivities(String)
-    case getTravelAmenities(String)
+    case getTravelHotelGroups
+    case getTravelMedicalMeals
+    case getTravelActivities
+    case getTravelAmenities
     case setTravelFrequency(String,Int,Int)
     case setTravelDestinations(String,String)
     case setTravelHotelRating(String,Int,Int)
@@ -107,10 +107,8 @@ enum PreferencesRouter: URLRequestConvertible {
     case setTravelAllergies(String, String,String)
     
     case setProfilePreferences(String)
-    
-    case getVillaDestinations(String)
-    case getVillaAmenities(String)
-    case getVillaAccomodation(String)
+    case getVillaAmenities
+    case getVillaAccomodation
     case setVillaDestinations(String,String)
     case setVillaAmenities(String, String,String)
     case setVillaAccomodation(String, String,String)
@@ -155,7 +153,10 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getGiftCategories:    fallthrough
         case .getGiftPreferences:   fallthrough
         case .getEventCategory:     fallthrough
-        case .getEventLocation:
+        case .getEventLocation:     fallthrough
+        case .getCuisines:          fallthrough
+        case .getAviationBeverages: fallthrough
+        case .searchDestination:
             return .get
 
         case .setGiftHabits:        fallthrough
@@ -165,8 +166,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setEventCategory: fallthrough
         case .setEventLocation: fallthrough
             
-        case .getAviationBeverages: fallthrough
-        case .getCuisines: fallthrough
+        
+        
         case .getOtherInterests: fallthrough
         case .setAviationHaveCharteredBefore:    fallthrough
         case .setAviationInterestedIn:         fallthrough
@@ -187,7 +188,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setYachtCharterFrequency: fallthrough
         case .setYachtPreferredRegions: fallthrough
         case .setYachtLength: fallthrough
-        case .searchDestination: fallthrough
+        
         case .searchRegions:    fallthrough
             
         case .setDiningCuisines: fallthrough
@@ -220,8 +221,6 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setTravelAllergies: fallthrough
             
         case .setProfilePreferences: fallthrough
-            
-        case .getVillaDestinations: fallthrough
         case .getVillaAmenities: fallthrough
         case .getVillaAccomodation: fallthrough
         case .setVillaDestinations: fallthrough
@@ -250,7 +249,7 @@ enum PreferencesRouter: URLRequestConvertible {
             newURLComponents.path.append("/restaurants/cuisine-category")
         case .getOtherInterests:  newURLComponents.path.append("/reference/interests")
         case .getAviationBeverages:
-            newURLComponents.path.append("/reference/beverages")
+            newURLComponents.path.append("/restaurants/beverage")
         case .setAviationHaveCharteredBefore:    fallthrough
         case .setAviationInterestedIn:         fallthrough
         case .setAviationPreferredDestinations: fallthrough
@@ -272,10 +271,11 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setYachtLength: fallthrough
         case .setYachtOtherInterests:   newURLComponents.path.append("/preferences/yacht")
         case .searchRegions:    newURLComponents.path.append("/reference/regions")
-        case .searchDestination:
-//            newURLComponents.path.append("/reference/locations")
+        case let .searchDestination(pattern):
             newURLComponents.path.append("/restaurants/location")
-            
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "token", value: pattern),
+            ]
         case .getDiningCuisines:    newURLComponents.path.append("/restaurants/cuisine-category")
         case .getDiningAllergies:   newURLComponents.path.append("/restaurants/allergy")
         case .getDiningPreferences: newURLComponents.path.append("/restaurants/dining-preference")
@@ -313,10 +313,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setTravelHotelStyles: fallthrough
         case .setTravelAllergies: newURLComponents.path.append("/preferences/travel")
         case .setProfilePreferences: newURLComponents.path.append("/users/update-profile-preference")
-            
-        case .getVillaDestinations:
-//            newURLComponents.path.append("/reference/locations")
-            newURLComponents.path.append("/restaurants/location")
+        
         case .getVillaAmenities: newURLComponents.path.append("/reference/villa-amenities")
         case .getVillaAccomodation: newURLComponents.path.append("/reference/accommodations")
         case .setVillaDestinations: fallthrough
@@ -352,23 +349,22 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getGiftCategories:    fallthrough
         case .getGiftPreferences:   fallthrough
         case .getEventCategory: fallthrough
-        case .getEventLocation:
-            return nil
-        case let .getCuisines(token):    fallthrough
-        case let .getOtherInterests(token):    fallthrough
-        case let .getAviationBeverages(token): fallthrough
+        case .getEventLocation: fallthrough
+//            return nil
+        case .getCuisines:    fallthrough
+        case .getOtherInterests:    fallthrough
+        case .getAviationBeverages: fallthrough
             
 
         
-        case let .getTravelHotelGroups(token): fallthrough
-        case let .getTravelMedicalMeals(token): fallthrough
-        case let .getTravelActivities(token): fallthrough
-        case let .getTravelAmenities(token): fallthrough
-        case let .getVillaDestinations(token): fallthrough
-        case let .getVillaAmenities(token): fallthrough
-        case let .getVillaAccomodation(token):
-            return getTaxonomiesAsJSONData(token: token)
-            
+        case .getTravelHotelGroups: fallthrough
+        case .getTravelMedicalMeals: fallthrough
+        case .getTravelActivities: fallthrough
+        case .getTravelAmenities: fallthrough
+        case .getVillaAmenities: fallthrough
+        case .getVillaAccomodation: fallthrough
+        case .searchDestination:
+            return nil
         case let .setGiftHabits(commaSeparatedString):
             return setGiftHabbitsAsJSONData(commaSeparatedString:commaSeparatedString)
         case let .setGiftCategories(commaSeparatedString):
@@ -389,8 +385,8 @@ enum PreferencesRouter: URLRequestConvertible {
             return setAviationPreferredDestinationsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let .setAviationPreferredAirports(token, commaSeparatedString):
             return setAviationPreferredAirportsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let .setAviationAircraftCategory(token, commaSeparatedString):
-            return setAviationAircraftCategoryAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let .setAviationAircraftCategory(commaSeparatedString):
+            return setAviationAircraftCategoryAsJSONData(commaSeparatedString:commaSeparatedString)
         case let .setAviationCharterFrequency(token, corporateFrequency, leisureFrequency):
             return setAviationCharterFrequencyAsJSONData(token: token , corporateFrequency:corporateFrequency, leisureFrequency: leisureFrequency)
         case let .setAviationPreferredCharter(token, commaSeparatedString):
@@ -399,8 +395,6 @@ enum PreferencesRouter: URLRequestConvertible {
             return setAviationPreferredCuisineAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
         case let .setAviationPreferredBevereges(token, commaSeparatedString, typedPreference):
             return setAviationPreferredBeveragesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .searchDestination(token , strToSearch):
-            return setSearchDestinationAsJSONData(token: token , strToSearch:strToSearch)
             
         case let .setYachtHaveCharteredBefore(token, commaSeparatedString):
             return setYachtHaveCharteredBeforeAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
@@ -418,8 +412,8 @@ enum PreferencesRouter: URLRequestConvertible {
             return setYachtCharterFrequencyAsJSONData(token: token , corporateFrequency:corporateFrequency, leisureFrequency: leisureFrequency)
         case let .setYachtPreferredRegions(token, commaSeparatedString):
             return setYachtPreferredRegionsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let .setYachtLength(token, commaSeparatedString):
-            return setYachtLengthAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let .setYachtLength( commaSeparatedString):
+            return setYachtLengthAsJSONData(commaSeparatedString:commaSeparatedString)
         case let .searchRegions(token , strToSearch):
             return setSearchRegionsAsJSONData(token: token , strToSearch:strToSearch)
         case let .setDiningCuisines(token, commaSeparatedString, typedPreference):
@@ -479,12 +473,10 @@ enum PreferencesRouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getTaxonomiesAsJSONData(token: String) -> Data? {
-        let body: [String: Any] = [
-            "token": token
-        ]
-        return try? JSONSerialization.data(withJSONObject: body, options: [])
-    }
+//    fileprivate func getTaxonomiesAsJSONData() -> Data? {
+//        let body: [String: Any] = [:]
+//        return try? JSONSerialization.data(withJSONObject: body, options: [])
+//    }
     
     fileprivate func setGiftHabbitsAsJSONData(commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
@@ -535,9 +527,9 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationAircraftCategoryAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setAviationAircraftCategoryAsJSONData(commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
-            "aviation_aircraft_category_ids": commaSeparatedString.components(separatedBy: ",")
+            "aviation_aircraft_category_ids": commaSeparatedString.components(separatedBy: ",").map{Int($0)}
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -573,12 +565,12 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setSearchDestinationAsJSONData(token: String, strToSearch: String) -> Data? {
-        let body: [String: Any] = [
-            "search" : strToSearch
-        ]
-        return try? JSONSerialization.data(withJSONObject: body, options: [])
-    }
+//    fileprivate func setSearchDestinationAsJSONData( strToSearch: String) -> Data? {
+//        let body: [String: Any] = [
+//            "search" : strToSearch
+//        ]
+//        return try? JSONSerialization.data(withJSONObject: body, options: [])
+//    }
     
     fileprivate func setYachtHaveCharteredBeforeAsJSONData(token: String, commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
@@ -640,7 +632,7 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtLengthAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setYachtLengthAsJSONData(commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
             "yacht_length": commaSeparatedString.components(separatedBy: ",")
         ]

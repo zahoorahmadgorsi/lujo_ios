@@ -283,7 +283,7 @@ class PrefImagesCollViewController: UIViewController {
                 print("Not required for hard coded data")
                 completion(self.itemsList, nil)
             case .travelHotelGroups:
-                GoLujoAPIManager().getTravelHotelGroups(token) { taxonomies, error in
+                GoLujoAPIManager().getTravelHotelGroups() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain travel information")
@@ -299,7 +299,7 @@ class PrefImagesCollViewController: UIViewController {
                     completion(taxonomies, error)
                 }
             case .travelActivities:
-                GoLujoAPIManager().getTravelActivities(token) { taxonomies, error in
+                GoLujoAPIManager().getTravelActivities() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain travel information")

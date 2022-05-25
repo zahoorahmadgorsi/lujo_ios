@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sri-oa-nUS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sri-oa-nUS">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -140,6 +140,11 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ing-it-lhS">
+                                        <rect key="frame" x="0.0" y="-397" width="414" height="1514"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.070000000000000007" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -150,11 +155,69 @@
                                     <constraint firstItem="yE1-vX-uSi" firstAttribute="leading" secondItem="jsM-8U-o9H" secondAttribute="leading" id="t2a-zD-bsz"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QAB-jL-mw4">
+                                <rect key="frame" x="72" y="395.5" width="270" height="105.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="REn-e7-b4b">
+                                        <rect key="frame" x="16" y="16" width="238" height="73.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please purchase a membership to get full access" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HEM-ER-ihR">
+                                                <rect key="frame" x="0.0" y="0.0" width="238" height="33.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <color key="textColor" name="White Text"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aaa-OU-ztK">
+                                                <rect key="frame" x="0.0" y="45.5" width="238" height="28"/>
+                                                <subviews>
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwh-hw-d61" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                                        <rect key="frame" x="24" y="0.0" width="190" height="28"/>
+                                                        <color key="backgroundColor" name="Action Button"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="28" id="OL2-2B-r7x"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <state key="normal" title="MEMBERSHIP">
+                                                            <color key="titleColor" name="Navigation Bar"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <integer key="value" value="2"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="buyMembershipButton_onClick:" destination="gai-EP-fT3" eventType="touchUpInside" id="PLz-8k-oF3"/>
+                                                            <action selector="buyMembershipButton_onClick:" destination="vdk-aC-30x" eventType="touchUpInside" id="daf-WM-0i0"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="iwh-hw-d61" secondAttribute="bottom" id="SGT-eP-CQK"/>
+                                                    <constraint firstAttribute="trailing" secondItem="iwh-hw-d61" secondAttribute="trailing" constant="24" id="WGp-EF-8mv"/>
+                                                    <constraint firstItem="iwh-hw-d61" firstAttribute="leading" secondItem="Aaa-OU-ztK" secondAttribute="leading" constant="24" id="eb8-RL-m16"/>
+                                                    <constraint firstItem="iwh-hw-d61" firstAttribute="top" secondItem="Aaa-OU-ztK" secondAttribute="top" id="qTG-Cp-XIU"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="REn-e7-b4b" firstAttribute="top" secondItem="QAB-jL-mw4" secondAttribute="top" constant="16" id="4VN-gW-09b"/>
+                                    <constraint firstAttribute="bottom" secondItem="REn-e7-b4b" secondAttribute="bottom" constant="16" id="7Mq-DX-j97"/>
+                                    <constraint firstAttribute="width" constant="270" id="Cjv-UQ-8rW"/>
+                                    <constraint firstItem="REn-e7-b4b" firstAttribute="leading" secondItem="QAB-jL-mw4" secondAttribute="leading" constant="16" id="IeC-Yc-NHr"/>
+                                    <constraint firstAttribute="trailing" secondItem="REn-e7-b4b" secondAttribute="trailing" constant="16" id="z3N-UB-jzp"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k6j-xL-gEF"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="bottom" secondItem="qKz-bb-43x" secondAttribute="bottom" id="C03-wK-WSY"/>
+                            <constraint firstItem="QAB-jL-mw4" firstAttribute="centerY" secondItem="qKz-bb-43x" secondAttribute="centerY" id="KUh-O4-EiN"/>
+                            <constraint firstItem="QAB-jL-mw4" firstAttribute="centerX" secondItem="qKz-bb-43x" secondAttribute="centerX" id="dSs-RA-VkE"/>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="top" secondItem="qKz-bb-43x" secondAttribute="top" id="lf3-12-zI2"/>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="leading" secondItem="qKz-bb-43x" secondAttribute="leading" id="nOG-Na-Bmg"/>
                             <constraint firstItem="jsM-8U-o9H" firstAttribute="trailing" secondItem="qKz-bb-43x" secondAttribute="trailing" id="qRb-WJ-mOx"/>
@@ -162,6 +225,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Wishlist" id="acG-HO-gBl"/>
                     <connections>
+                        <outlet property="dimView" destination="Ing-it-lhS" id="K1V-Wy-6t2"/>
+                        <outlet property="membershipView" destination="QAB-jL-mw4" id="Xxj-i1-8y3"/>
                         <outlet property="scrollView" destination="jsM-8U-o9H" id="2jV-kH-8Ip"/>
                         <outlet property="stackView" destination="yE1-vX-uSi" id="QeY-2n-77l"/>
                     </connections>
@@ -3226,7 +3291,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CityCell" id="hvq-o7-wth" customClass="CityCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="382" height="66"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="382" height="66"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hvq-o7-wth" id="7gB-s5-Mtr">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="66"/>
@@ -4078,7 +4143,7 @@
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Experiences" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fD-6P-WlO">
-                                                                                <rect key="frame" x="32" y="16" width="105.5" height="32"/>
+                                                                                <rect key="frame" x="32" y="16" width="106" height="32"/>
                                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                                                 <color key="textColor" name="White Text"/>
                                                                                 <nil key="highlightedColor"/>
@@ -5717,7 +5782,7 @@
                                         <color key="backgroundColor" name="Black Backgorund"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myBookingCellID" rowHeight="499" id="LWY-QP-DC1" customClass="MyBookingsCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="382" height="499"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="382" height="499"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LWY-QP-DC1" id="uGP-rb-rTt">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="499"/>
@@ -6168,7 +6233,7 @@ New York, NY 10011 USA</string>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From Airport" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1G-4q-b61">
-                                                <rect key="frame" x="159" y="12" width="96.5" height="20.5"/>
+                                                <rect key="frame" x="159" y="12" width="96" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -6220,7 +6285,7 @@ New York, NY 10011 USA</string>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchAirportCell" rowHeight="57" id="wyE-8r-3fl" customClass="AirportSearchCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="57"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="414" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wyE-8r-3fl" id="UtN-7j-QOA">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
@@ -6957,7 +7022,7 @@ New York, NY 10011 USA</string>
                                         <rect key="frame" x="32" y="32" width="350" height="353"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plane types" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awL-xW-G4t">
-                                                <rect key="frame" x="0.0" y="0.0" width="100" height="24"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="100.5" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                 <color key="textColor" name="White Text"/>
                                                 <nil key="highlightedColor"/>
@@ -8411,7 +8476,7 @@ New York, NY 10011 USA</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="chatCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="chatCell" id="KWF-B6-dAP" customClass="ChatCell" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="66.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="66.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KWF-B6-dAP" id="8kR-Gr-NRg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="66.5"/>
@@ -8536,7 +8601,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

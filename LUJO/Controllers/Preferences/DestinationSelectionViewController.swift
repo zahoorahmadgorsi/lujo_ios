@@ -146,7 +146,7 @@ extension DestinationSelectionViewController {
         case .aviationPreferredDestination: fallthrough
         case .travelDestinations: fallthrough
         case .villaDestinations:
-            GoLujoAPIManager().searchDestination(token: token, strToSearch: pattern) { taxonomies, error in
+            GoLujoAPIManager().searchDestination( strToSearch: pattern) { taxonomies, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain preferred destinations")

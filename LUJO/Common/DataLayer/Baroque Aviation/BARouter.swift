@@ -29,8 +29,7 @@ enum BARouter: URLRequestConvertible {
     case searchAirport(String)
     case search(AviationSearch, String)
     case authorize(BAPaymentAutorization)
-    case bookings(BookingType, String)
-    case allBookings(String)
+    case allBookings
 
 
     func asURLRequest() throws -> URLRequest {
@@ -67,8 +66,6 @@ extension BARouter {
             return .post
         case .authorize:
             return .post
-        case .bookings:
-            return .get
         case .allBookings:
             return .get
         }
@@ -90,18 +87,8 @@ extension BARouter {
             newURLComponents.path.append("/baroque/aviation/search")    //this API isnt working often on staging and many times on production
         case .authorize:
             newURLComponents.path.append("/baroque/credit-cards/authorize")
-        case let .bookings(type, token):
-            newURLComponents.path.append("/baroque/aviation")
-            if type != .trip { newURLComponents.path.append("/booking-requests") }
-            newURLComponents.path.append("/\(type.rawValue)")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
-        case let .allBookings(token):
+        case .allBookings:
             newURLComponents.path.append ("/bookings")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token)
-            ]
         }
 
         do {
@@ -142,8 +129,6 @@ extension BARouter {
             } catch {
                 print(error)
             }
-        case .bookings:
-            break
         case .allBookings:
             break
         }

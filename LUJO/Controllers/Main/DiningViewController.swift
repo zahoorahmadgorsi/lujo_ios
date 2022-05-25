@@ -161,6 +161,8 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             dimView.isHidden = isMember
             membershipView.isHidden = isMember
             searchBarButton.isEnabled = isMember
+        }else{
+            searchBarButton.isEnabled = false   //incase of no membership plan just hide the search button
         }
         
         checkLocationAuthorizationStatus()

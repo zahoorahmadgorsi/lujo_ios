@@ -196,38 +196,9 @@ struct TaxonomyLocation: Codable {
     let country: Taxonomy
 }
 
-struct TaxonomyBaroqueAviation: Codable {
-    let message: String
-    let title: String
-    let state: String
-    let data: [BaroqueAviationCategory]
-
-    enum CodingKeys: String, CodingKey {
-        case message
-        case title
-        case state
-        case data
-    }
-    
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            
-            message = try values.decode(String.self, forKey: .message)
-            title = try values.decode(String.self, forKey: .title)
-            state = try values.decode(String.self, forKey: .state)
-            data = try values.decode([BaroqueAviationCategory].self, forKey: .data)
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-            throw error
-        }
-    }
-}
-
 struct BaroqueAviationCategory: Codable {
     let id: Int
     var name: String
-
 
     enum CodingKeys: String, CodingKey {
         case id

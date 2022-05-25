@@ -282,7 +282,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        GoLujoAPIManager().getAllPreferences(token) { Preferences, error in
+        GoLujoAPIManager().getAllPreferences() { Preferences, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not fetch user preferences")
@@ -597,10 +597,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         let initialLoad = UserDefaults.standard.bool(forKey: "showWelcome")
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        DispatchQueue.main.async {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
         UserDefaults.standard.set(false, forKey: "showWelcome")
-        tabBarController?.tabBar.isHidden = false
-        splashView.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
+        self.splashView.isHidden = true
         
         //Loading the preferences related to users profile only for the very first time, zahoor
         if !UserDefaults.standard.bool(forKey: "isProfilePreferencesAlreadyShown")  {
@@ -610,7 +612,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
         
         if initialLoad {
-            tabBarController?.selectedIndex = LujoSetup().getLujoUser()?.membershipPlan != nil ? LujoSetup().getLujoUser()?.membershipPlan?.target ?? "" == "all" ? 0 : 1 : 3
+            if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
+                if target == "all"{
+                    self.tabBarController?.selectedIndex = 0
+                }else if target == "dining"{
+                    self.tabBarController?.selectedIndex = 1
+                }else{
+                    self.tabBarController?.selectedIndex = 3
+                }
+            }
         }
     }
     
@@ -1153,9 +1163,17 @@ extension HomeViewController {
     
     func hideUnhideRightBarButtons(){
         if let rightBarButtonItems = navigationItem.rightBarButtonItems{
-            rightBarButtonItems[0].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all" //!= nil     //chat is only visible to paid users
-            rightBarButtonItems[1].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //CTA is only visible to users having membership plan all
-//            rightBarButtonItems[2].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //search only visible to users having membership plan all
+            if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
+                if target == "all"{ //chat, CTA and search buttons are only enabled to fully paid member
+                    rightBarButtonItems[0].isEnabled = true //chat
+                    rightBarButtonItems[1].isEnabled = true //CTA
+                    rightBarButtonItems[2].isEnabled = true //Search
+                    return
+                }
+            }
+            rightBarButtonItems[0].isEnabled = false //chat
+            rightBarButtonItems[1].isEnabled = false //CTA
+            rightBarButtonItems[2].isEnabled = false //Search
         }
     }
     

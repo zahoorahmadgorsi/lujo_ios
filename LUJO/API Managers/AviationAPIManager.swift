@@ -241,34 +241,9 @@ class AviationAPIManagerNEW {
         }
     }
     
-    func getBookings(type: BookingType, completion: @escaping ([AviationBooking], Error?) -> Void) {
-        guard let token = authorisationToken else { return }
-        
-        Alamofire.request(BARouter.bookings(type, token)).responseJSON { response in
-            guard response.result.error == nil else {
-                completion([], LoginError.errorLogin(description: response.result.error!.localizedDescription))
-                return
-            }
-            
-            guard (200 ... 299).contains(response.response!.statusCode) else {
-                completion([], BackendError.parsing(reason: "Error from server \(response.response!.statusCode)"))
-                return
-            }
-            
-            guard let resultResponse = try? JSONDecoder().decode(LujoServerResponse<[AviationBooking]>.self,
-                                                                 from: response.data!) else {
-                                                                    completion([], BackendError.parsing(reason: "Error from parsing server response"))
-                                                                    return
-            }
-            
-            completion(resultResponse.content, nil)
-        }
-    }
-    
     func getAllBookings(completion: @escaping ([Booking], Error?) -> Void) {
-        guard let token = authorisationToken else { return }
         
-        Alamofire.request(BARouter.allBookings(token)).responseJSON { response in
+        Alamofire.request(BARouter.allBookings).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], LoginError.errorLogin(description: response.result.error!.localizedDescription))
                 return
