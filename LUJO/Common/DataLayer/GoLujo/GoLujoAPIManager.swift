@@ -389,7 +389,7 @@ extension GoLujoAPIManager {
     }
 
     func userProfile(for token: String, completion: @escaping (LujoUser?, Error?) -> Void) {
-        Alamofire.request(GoLujoRouter.userProfile(token))
+        Alamofire.request(GoLujoRouter.userProfile)
             .responseJSON { response in
                 switch response.result {
                 case .success:
@@ -403,12 +403,6 @@ extension GoLujoAPIManager {
                     }
                     do {
                         let resultResponse = try JSONDecoder().decode(UserProfileResponse.self, from: response.data!)
-                        //in new backend baroque id would always be available
-//                        guard !resultResponse.content.baroque_id.isEmpty else {
-//                            let error = LoginError.errorLogin(description: "Missing baroque id")
-//                            completion(nil, error)
-//                            return
-//                        }
 
                         let user = LujoUser(id: resultResponse.content.id,
                                             title: UserTitle(rawValue: resultResponse.content.title ?? "Mr."),

@@ -57,11 +57,11 @@ protocol AppDefaults {
 protocol AppDefaultsDataLayer {
     func getDefaults(completion: @escaping ([String: Any], Error?) -> Void)
     func getCountryCodes(completion: @escaping ([PhoneCountryCode], Error?) -> Void)
-    func userProfile(for token: String, completion: @escaping (LujoUser?, Error?) -> Void)
+    func userProfile(completion: @escaping (LujoUser?, Error?) -> Void)
     func update(user: LujoUser, image: UIImage, completion: @escaping (Error?) -> Void)
 }
 
 // Calendar selection
-protocol DateSelectorDelegate: class {
+protocol DateSelectorDelegate: AnyObject {
     func selectDates()
 }

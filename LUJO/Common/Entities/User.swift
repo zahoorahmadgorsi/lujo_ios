@@ -189,8 +189,9 @@ struct Membership: Codable {
             plan = try values.decode(String.self, forKey: .plan)
             price = try values.decode(Int.self, forKey: .price)
             target = try values.decode(String.self, forKey: .target)
-//            expiration = try values.decodeIfPresent(Int.self, forKey: .expiration)    //int throwing error
-            expiration = 123456
+            //expiration will throw an error if member_ship plan has been updated using dummy api /users/membership_plan, please use * /purchase/membership to update the membership, only then expiration would have a valid value
+            expiration = try values.decodeIfPresent(Int.self, forKey: .expiration)
+//            expiration = 123456
             discount = try values.decodeIfPresent(Int.self, forKey: .discount)
             
         } catch {

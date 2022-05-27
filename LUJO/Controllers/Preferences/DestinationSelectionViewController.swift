@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseCrashlytics
 
-protocol DestinationSearchViewDelegate: class {
+protocol DestinationSearchViewDelegate: AnyObject {
     func select(_ destination: Taxonomy)
 }
 

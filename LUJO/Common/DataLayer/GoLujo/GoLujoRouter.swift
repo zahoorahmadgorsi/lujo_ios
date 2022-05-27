@@ -42,7 +42,7 @@ enum GoLujoRouter: URLRequestConvertible {
     case updateDefaults
     case countryCodes
     case forgotPassword(String)
-    case userProfile(String)
+    case userProfile
     case updateProfile(LujoUser)
     case updateUserImage(LujoUser, UIImage)
     case approved(String)
@@ -228,11 +228,8 @@ enum GoLujoRouter: URLRequestConvertible {
             ]
         case .forgotPassword:
             newURLComponents.path.append("/users/forgot")
-        case let .userProfile(token):
+        case .userProfile:
             newURLComponents.path.append("/users/profile")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
         case .updateProfile:
             newURLComponents.path.append("/users/update")
         case .updateUserImage:

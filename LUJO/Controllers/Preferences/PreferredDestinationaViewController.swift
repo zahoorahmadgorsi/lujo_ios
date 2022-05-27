@@ -282,7 +282,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 GoLujoAPIManager().setAviationPreferredDestinations(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not save the preferences information")
                         completion(nil, error)
                         return
                     }
@@ -292,7 +292,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             GoLujoAPIManager().setAviationPreferredAirports(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                    let error = BackendError.parsing(reason: "Could not save the Preferences information")
                     completion(nil, error)
                     return
                 }
@@ -308,7 +308,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 GoLujoAPIManager().setYachtPreferredRegions(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not save the Preferences information")
                         completion(nil, error)
                         return
                     }
@@ -324,7 +324,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 GoLujoAPIManager().setTravelDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not save the Preferences information")
                         completion(nil, error)
                         return
                     }
@@ -340,7 +340,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     GoLujoAPIManager().setVillaDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            let error = BackendError.parsing(reason: "Could not save the Preferences information")
                             completion(nil, error)
                             return
                         }

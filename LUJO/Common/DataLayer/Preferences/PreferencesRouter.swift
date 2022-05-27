@@ -272,9 +272,9 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setYachtOtherInterests:   newURLComponents.path.append("/preferences/yacht")
         case .searchRegions:    newURLComponents.path.append("/reference/regions")
         case let .searchDestination(pattern):
-            newURLComponents.path.append("/restaurants/location")
+            newURLComponents.path.append("/restaurants/preferred_location/search")
             newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: pattern),
+                URLQueryItem(name: "search", value: pattern),
             ]
         case .getDiningCuisines:    newURLComponents.path.append("/restaurants/cuisine-category")
         case .getDiningAllergies:   newURLComponents.path.append("/restaurants/allergy")
@@ -350,7 +350,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getGiftPreferences:   fallthrough
         case .getEventCategory: fallthrough
         case .getEventLocation: fallthrough
-//            return nil
+
         case .getCuisines:    fallthrough
         case .getOtherInterests:    fallthrough
         case .getAviationBeverages: fallthrough
@@ -515,7 +515,7 @@ enum PreferencesRouter: URLRequestConvertible {
     
     fileprivate func setAviationPreferredDestinationsAsJSONData(token: String, commaSeparatedString: String) -> Data? {
         let body: [String: Any] = [
-            "aviation_preferred_destinations":commaSeparatedString
+            "aviation_preferred_destinations":commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

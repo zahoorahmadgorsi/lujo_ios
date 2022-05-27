@@ -92,18 +92,19 @@ class AviationAirportSelectionViewController: UIViewController, UITableViewDeleg
         // swiftlint:disable force_cast
         let cell = airportsTableView.dequeueReusableCell(withIdentifier: "searchAirportCell",
                                                          for: indexPath) as! AirportSearchCell
-        let airportData = AirportCellData.from(airport: airportsList[indexPath.row])
-        
-        cell.faaIdentifier.text = airportData.iata
-        cell.airportName.text = airportData.name
-        cell.airportProvince.text = airportData.city.uppercased()
-        if !airportData.city.isEmpty {
-            cell.airportProvince.text?.append(" ,")
+        if (indexPath.row <= airportsList.count){
+            let airportData = AirportCellData.from(airport: airportsList[indexPath.row])
+            
+            cell.faaIdentifier.text = airportData.iata
+            cell.airportName.text = airportData.name
+            cell.airportProvince.text = airportData.city.uppercased()
+            if !airportData.city.isEmpty {
+                cell.airportProvince.text?.append(" ,")
+            }
+            cell.airportProvince.text?.append(airportData.country.uppercased())
+            
+            cell.separatorView.backgroundColor = (indexPath.row + 1) == airportsList.count ? UIColor.clear : UIColor.actionButton
         }
-        cell.airportProvince.text?.append(airportData.country.uppercased())
-        
-        cell.separatorView.backgroundColor = (indexPath.row + 1) == airportsList.count ? UIColor.clear : UIColor.actionButton
-        
         return cell
     }
     

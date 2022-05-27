@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1304,6 +1304,7 @@
         <!--Destination Selection View Controller-->
         <scene sceneID="lFT-4k-0R0">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RWC-oN-q6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="DestinationSelectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UOO-Q4-49n" customClass="DestinationSelectionViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y2i-dd-ixf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -1378,7 +1379,7 @@
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="destinationSearchCell" rowHeight="57" id="IcQ-Gh-AS1" customClass="DestinationSearchCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="57"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="414" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IcQ-Gh-AS1" id="7VM-bE-6WO">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
@@ -1417,6 +1418,7 @@
                                                         <constraint firstItem="Hob-ab-hca" firstAttribute="top" secondItem="7VM-bE-6WO" secondAttribute="top" id="HxY-rp-3jj"/>
                                                         <constraint firstItem="O8D-OH-BiM" firstAttribute="leading" secondItem="Hob-ab-hca" secondAttribute="trailing" constant="16" id="Kax-fD-qcl"/>
                                                         <constraint firstAttribute="trailing" secondItem="O8D-OH-BiM" secondAttribute="trailing" constant="16" id="KcX-Lz-9wo"/>
+                                                        <constraint firstItem="ARH-xc-qvq" firstAttribute="width" secondItem="7VM-bE-6WO" secondAttribute="width" multiplier="0.658213" id="N8J-JW-U5Q"/>
                                                         <constraint firstAttribute="bottom" secondItem="O8D-OH-BiM" secondAttribute="bottom" id="krV-DL-udu"/>
                                                         <constraint firstItem="Hob-ab-hca" firstAttribute="leading" secondItem="7VM-bE-6WO" secondAttribute="leading" constant="16" id="yZp-ev-H29"/>
                                                     </constraints>
@@ -1465,7 +1467,6 @@
                         <outlet property="titleLabel" destination="PZ9-gj-nhF" id="FdV-x9-W6D"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RWC-oN-q6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-384" y="735"/>
         </scene>
@@ -1844,13 +1845,7 @@
     </scenes>
     <designables>
         <designable name="DAm-LO-PBR">
-            <size key="intrinsicContentSize" width="196.5" height="30"/>
-        </designable>
-        <designable name="H6d-H3-dAy">
-            <size key="intrinsicContentSize" width="264" height="40"/>
-        </designable>
-        <designable name="TnP-BM-Kig">
-            <size key="intrinsicContentSize" width="264" height="40"/>
+            <size key="intrinsicContentSize" width="168.5" height="30"/>
         </designable>
     </designables>
     <resources>

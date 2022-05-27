@@ -2,6 +2,7 @@ import UIKit
 
 @IBDesignable
 class DesignableUITextField: UITextField {
+    
     // Provides left padding for images
     override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
         var textRect = super.leftViewRect(forBounds: bounds)
