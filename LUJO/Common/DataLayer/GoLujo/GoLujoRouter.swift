@@ -360,10 +360,9 @@ enum GoLujoRouter: URLRequestConvertible {
     // TODO: Added plus sign before phone prefix until it's taken from list
     fileprivate func getUserAsJSONData(_ user: LujoUser) -> Data? {
         let profileData: [String: String] = [
-//            "title": user.title.rawValue,
             "firstname": user.firstName,
             "lastname": user.lastName,
-            "email": user.email,
+            "email": user.email.lowercased(),
             "phone_prefix": String(user.phoneNumber.countryCode),
             "phone": user.phoneNumber.number,
         ]
@@ -399,10 +398,9 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getProfileAsJSONData(_ profile: LujoUser) -> Data? {
         let profileData: [String: String] = [
-//            "title": profile.title.rawValue,
             "firstname": profile.firstName,
             "lastname": profile.lastName,
-            "email": profile.email,
+            "email": profile.email.lowercased(),
             "phone_prefix": String(profile.phoneNumber.countryCode),
             "phone": profile.phoneNumber.number,
             "token": profile.token,

@@ -100,7 +100,7 @@ class ConversationsViewController: UIViewController {
                     let tempConversation:Conversation = Conversation(conversation)
                     if  let msgs = messages , msgs.count > 0{
                         tempConversation.tchMessage = msgs[0]
-                        tempConversation.lastMessageBody = msgs[0].hasMedia() == true ? "PHOTO" : msgs[0].body  //if last message is media then show PHOTO
+                        tempConversation.lastMessageBody = msgs[0].attachedMedia.count > 0 ? "PHOTO" : msgs[0].body  //if last message is media then show PHOTO
                     }
                     tempConversations.append(tempConversation)
                     myGroup.leave()
@@ -217,7 +217,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         }else if let dateFromServer = model.tchConversation?.dateCreatedAsDate ?? model.dateCreatedAsDate{  //this conversation has no last message hence showing the conversation created date
             cell.lblCreatedAt.text = dateFromServer.whatsAppTimeFormat()
         }
-        if let message = model.tchMessage, message.hasMedia(){
+        if let message = model.tchMessage, message.attachedMedia.count > 0{
             cell.lblLastMessage.text = "PHOTO"
         }else if let message = model.tchMessage?.body ?? model.lastMessageBody{
             cell.lblLastMessage.text = message.isHtml() == true ? message.parseHTML().string : message

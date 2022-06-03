@@ -93,8 +93,8 @@ struct PrefMasterData : Codable {
     var travelActivities : [Taxonomy]?
     var travelMedicalMeals : [Taxonomy]?
     var travelAllergies : [Taxonomy]?
-    var villaAmenities : [Taxonomy]?
-    var villaAccomodation : [Taxonomy]?
+    var villaAmenities : [String]?
+    var villaAccomodation : [String]?
     var profilePreferences : [String]?
     
     init(giftHabits:[Taxonomy]? = [] ,giftCategories : [Taxonomy]? = [], giftPreferences : [Taxonomy]? = []){
@@ -160,7 +160,6 @@ struct YachtPreferences : Codable {
     var yacht_type : String?
     var yacht_style : String?
     var yacht_preferred_cuisine_id : [String]?
-    var yacht_preferred_cuisine_id_other : String?
     var yacht_interests_id : [String]?
     
     enum CodingKeys: String, CodingKey {
@@ -173,7 +172,6 @@ struct YachtPreferences : Codable {
         case yacht_type = "yacht_type"
         case yacht_style = "yacht_style"
         case yacht_preferred_cuisine_id = "yacht_preferred_cuisine_ids"
-        case yacht_preferred_cuisine_id_other = "yacht_preferred_cuisine_id_other"
         case yacht_interests_id = "yacht_interests_ids"
     }
     
@@ -189,7 +187,6 @@ struct YachtPreferences : Codable {
             yacht_type = try values.decodeIfPresent(String.self, forKey: .yacht_type)
             yacht_style = try values.decodeIfPresent(String.self, forKey: .yacht_style)
             yacht_preferred_cuisine_id = try values.decodeIfPresent([String].self, forKey: .yacht_preferred_cuisine_id)
-            yacht_preferred_cuisine_id_other = try values.decodeIfPresent(String.self, forKey: .yacht_preferred_cuisine_id_other)
             yacht_interests_id = try values.decodeIfPresent([String].self, forKey: .yacht_interests_id)
         } catch {
             Crashlytics.crashlytics().record(error: error)
@@ -200,26 +197,18 @@ struct YachtPreferences : Codable {
 
 struct RestaurantPreferences : Codable {
     var restaurant_preferred_cuisine_id : [String]?
-    var restaurant_preferred_cuisine_id_other : String?
     var restaurant_allergy_id : [String]?
-//    var restaurant_allergy_id_other : String?
     var restaurant_dinning_id : [String]?
-    var restaurant_dinning_id_other : String?
     var restaurant_timing_id : [String]?
     var restaurant_beverage_id : [String]?
-    var restaurant_beverage_id_other : String?
     var restaurant_seating_id : [String]?
     
     enum CodingKeys: String, CodingKey {
         case restaurant_preferred_cuisine_id = "restaurant_preferred_cuisine_ids"
-        case restaurant_preferred_cuisine_id_other = "restaurant_preferred_cuisine_id_other"
         case restaurant_allergy_id = "restaurant_allergy_ids"
-//        case restaurant_allergy_id_other = "restaurant_allergy_id_other"
         case restaurant_dinning_id = "restaurant_dinning_ids"
-        case restaurant_dinning_id_other = "restaurant_dinning_id_other"
         case restaurant_timing_id = "restaurant_timing_ids"
         case restaurant_beverage_id = "restaurant_beverage_ids"
-        case restaurant_beverage_id_other = "restaurant_beverage_id_other"
         case restaurant_seating_id = "restaurant_seating_ids"
     }
     
@@ -227,14 +216,10 @@ struct RestaurantPreferences : Codable {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             restaurant_preferred_cuisine_id = try values.decodeIfPresent([String].self, forKey: .restaurant_preferred_cuisine_id)
-            restaurant_preferred_cuisine_id_other  = try values.decodeIfPresent(String.self, forKey: .restaurant_preferred_cuisine_id_other)
             restaurant_allergy_id = try values.decodeIfPresent([String].self, forKey: .restaurant_allergy_id)
-//            restaurant_allergy_id_other = try values.decodeIfPresent(String.self, forKey: .restaurant_allergy_id_other)
             restaurant_dinning_id = try values.decodeIfPresent([String].self, forKey: .restaurant_dinning_id)
-            restaurant_dinning_id_other = try values.decodeIfPresent(String.self, forKey: .restaurant_dinning_id_other)
             restaurant_timing_id = try values.decodeIfPresent([String].self, forKey: .restaurant_timing_id)
             restaurant_beverage_id = try values.decodeIfPresent([String].self, forKey: .restaurant_beverage_id)
-            restaurant_beverage_id_other = try values.decodeIfPresent(String.self, forKey: .restaurant_beverage_id_other)
             restaurant_seating_id = try values.decodeIfPresent([String].self, forKey: .restaurant_seating_id)
         } catch {
             Crashlytics.crashlytics().record(error: error)
@@ -274,19 +259,15 @@ struct TravelPreferences : Codable {
     var travel_destination_type : [String]?
     var travel_hotel_group : [String]?
     var travel_amenity_id : [String]?
-    var travel_amenity_id_other : String?
     var travel_activity_id : [String]?
     var travel_airline_id: [String]?
     var travel_airplane_seat : [String]?
-//    travel_airplane_seat_other
     var travel_airplane_business_cabin_class : [String]?
     var travel_airplane_leisure_cabin_class : [String]?
     var travel_airplane_meals : [String]?
     var travel_medical_dietary_meal : [String]?
-    var travel_medical_dietary_meal_other: String?
     var travel_hotel_styles : [String]?
     var travel_allergy_id : [String]?
-    var travel_allergy_id_other : String?
 
     enum CodingKeys: String, CodingKey {
         case travel_times_business = "travel_times_business"
@@ -297,19 +278,15 @@ struct TravelPreferences : Codable {
         case travel_destination_type = "travel_destination_type"
         case travel_hotel_group = "travel_hotel_group"
         case travel_amenity_id = "travel_amenity_ids"
-        case travel_amenity_id_other = "travel_amenity_id_other"
         case travel_activity_id = "travel_activity_ids"
         case travel_airline_id = "travel_airline_ids"
         case travel_airplane_seat = "travel_airplane_seat"
-//            case travel_airplane_seat_other = "travel_airplane_seat_other"
         case travel_airplane_business_cabin_class = "travel_airplane_business_cabin_class"
         case travel_airplane_leisure_cabin_class = "travel_airplane_leisure_cabin_class"
         case travel_airplane_meals = "travel_airplane_meals"
         case travel_medical_dietary_meal = "travel_media_dietary_meal"
-        case travel_medical_dietary_meal_other = "travel_media_dietary_meal_other"
         case travel_hotel_styles = "travel_hotel_types"
         case travel_allergy_id = "travel_allergy_ids"
-        case travel_allergy_id_other = "travel_allergy_id_other"
     }
     
     init(from decoder: Decoder) throws {
@@ -323,19 +300,15 @@ struct TravelPreferences : Codable {
             travel_destination_type = try values.decodeIfPresent([String].self, forKey: .travel_destination_type)
             travel_hotel_group = try values.decodeIfPresent([String].self, forKey: .travel_hotel_group)
             travel_amenity_id = try values.decodeIfPresent([String].self, forKey: .travel_amenity_id)
-            travel_amenity_id_other = try values.decodeIfPresent(String.self, forKey: .travel_amenity_id_other)
             travel_activity_id = try values.decodeIfPresent([String].self, forKey: .travel_activity_id)
             travel_airline_id = try values.decodeIfPresent([String].self, forKey: .travel_airline_id)
             travel_airplane_seat = try values.decodeIfPresent([String].self, forKey: .travel_airplane_seat)
-        //    travel_airplane_seat_other = try values.decodeIfPresent([String].self, forKey: .travel_airplane_seat_other)
             travel_airplane_business_cabin_class = try values.decodeIfPresent([String].self, forKey: .travel_airplane_business_cabin_class)
             travel_airplane_leisure_cabin_class = try values.decodeIfPresent([String].self, forKey: .travel_airplane_leisure_cabin_class)
             travel_airplane_meals = try values.decodeIfPresent([String].self, forKey: .travel_airplane_meals)
             travel_medical_dietary_meal = try values.decodeIfPresent([String].self, forKey: .travel_medical_dietary_meal)
-            travel_medical_dietary_meal_other = try values.decodeIfPresent(String.self, forKey: .travel_medical_dietary_meal_other)
             travel_hotel_styles = try values.decodeIfPresent([String].self, forKey: .travel_hotel_styles)
             travel_allergy_id = try values.decodeIfPresent([String].self, forKey: .travel_allergy_id)
-            travel_allergy_id_other = try values.decodeIfPresent(String.self, forKey: .travel_allergy_id_other)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
@@ -344,28 +317,22 @@ struct TravelPreferences : Codable {
 }
 
 struct VillaPreferences : Codable {
-    var villa_preferred_destinations_id : [String]?
-    var villa_preferred_amenities_id : [String]?
-    var villa_preferred_amenities_id_other : String?
-    var villa_preferred_accommodations_id : [String]?
-    var villa_preferred_accommodations_id_other : String?
+    var villa_preferred_destinations : [String]?
+    var villa_preferred_amenities : [String]?
+    var villa_preferred_accommodations : [String]?
 
     enum CodingKeys: String, CodingKey {
-        case villa_preferred_destinations_id = "villa_preferred_destinations_ids"
-        case villa_preferred_amenities_id = "villa_preferred_amenities_ids"
-        case villa_preferred_amenities_id_other = "villa_preferred_amenities_id_other"
-        case villa_preferred_accommodations_id = "villa_preferred_accommodations_ids"
-        case villa_preferred_accommodations_id_other = "villa_preferred_accommodations_id_other"
+        case villa_preferred_destinations = "villa_preferred_destinations"
+        case villa_preferred_amenities = "villa_preferred_amenities"
+        case villa_preferred_accommodations = "villa_preferred_accommodations"
     }
     
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-            villa_preferred_destinations_id = try values.decodeIfPresent([String].self, forKey: .villa_preferred_destinations_id)
-            villa_preferred_amenities_id = try values.decodeIfPresent([String].self, forKey: .villa_preferred_amenities_id)
-            villa_preferred_amenities_id_other = try values.decodeIfPresent(String.self, forKey: .villa_preferred_amenities_id_other)
-            villa_preferred_accommodations_id = try values.decodeIfPresent([String].self, forKey: .villa_preferred_accommodations_id)
-            villa_preferred_accommodations_id_other = try values.decodeIfPresent(String.self, forKey: .villa_preferred_accommodations_id_other)
+            villa_preferred_destinations = try values.decodeIfPresent([String].self, forKey: .villa_preferred_destinations)
+            villa_preferred_amenities = try values.decodeIfPresent([String].self, forKey: .villa_preferred_amenities)
+            villa_preferred_accommodations = try values.decodeIfPresent([String].self, forKey: .villa_preferred_accommodations)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error

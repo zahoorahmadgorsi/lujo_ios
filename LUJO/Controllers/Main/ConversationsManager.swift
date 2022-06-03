@@ -179,27 +179,6 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
                     }
-//                    let particiapntsEmails:[String] = ["shujahm@gmail.com"
-//                                                       ,"mark.anthony@baroque-group.com"
-//                                                       ,"deseriejoy.cruz@baroqueaccess.com"
-//                                                       ,"henry@baroqueaccess.com"
-//                                                       ,"stuti-kesarwani@baroquetravel.com"
-//                                                       ,"request@golujo.com"
-//                                                       ,"shirley@baroquetravel.com"
-//                                                       ,"clara.plebani@baroquetravel.com"
-//                                                       ,"yanquiel@baroquetravel.com"
-//                                                       ,"sylvia@baroquetravel.com"
-//                                                       ,"ej.bobadilla@baroqueaccess.com"
-//                                                       ,"zahoor.gorsi@gmail.com"
-//                                                       ,"zahoor.ahmad@live.com"
-//                                                        ,"admin@gmail.com"]
-//                    for participantEmail in particiapntsEmails{
-//                        convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
-//                            if result.isSuccessful == false {
-//                                print("Twilio: \(participantEmail) could not added.")
-//                            }
-//                        })
-//                    }
                 }
             }else{
                 print("Twilio: Conversation could not created")

@@ -66,6 +66,19 @@ class EEAPIManager {
                     }
                     completion(result.content, nil)
                     return
+//                    //DON'T DELETE THE BELOW BLOCK, IT WILL HELP IN DEBUGGING, JUST UNCOMMENT AND COMMENT THE ABOVE CODE AND SEE THE ERROR
+//                    do {
+//                        let result = try JSONDecoder().decode(LujoServerResponse<HomeObjects>.self,
+//                                                                     from: response.data!)
+//                        completion(result.content, nil)
+//                        return
+//                    }catch {
+//                        print(error)
+//                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+//                        return
+//                      }
+                    
+                    
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 400 ... 499: // Client Error

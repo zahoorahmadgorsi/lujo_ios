@@ -290,7 +290,6 @@ struct EventExperienceCity: Codable {
 
 //it could be an event, experience, gift, villa or yacht
 struct Product: Codable {
-//struct Product: Decodable {
     var type: String
     var id: String
     var name: String
@@ -314,14 +313,12 @@ struct Product: Codable {
     var giftCategory: [Taxonomy]?
     //Villas related
     var headline: String?
-    var numberOfBedrooms: String?
-    var numberOfBathrooms: String?
+    var numberOfBedrooms: Int?
+    var numberOfBathrooms: Int?
     var numberOfGuests: String?
     var rentPricePerWeekLowSeason: String?
     var rentPricePerWeekHighSeason: String?
     var salePrice: String?
-//    var latitude: String?
-//    var longitude: String?
     var location: Location?     //latitude longitude
     var villaAmenities: [Taxonomy]?
     var villaFacilities: [Taxonomy]?
@@ -385,14 +382,12 @@ struct Product: Codable {
         case giftCategory = "gift_category"
         //Villas related
         case headline
-        case numberOfBedrooms = "number_of_bedrooms"
-        case numberOfBathrooms = "number_of_bathrooms"
+        case numberOfBedrooms = "no_of_bedrooms"
+        case numberOfBathrooms = "no_of_bathrooms"
         case numberOfGuests = "number_of_guests"
         case rentPricePerWeekLowSeason = "rent_price_per_week_low_season"
         case rentPricePerWeekHighSeason = "rent_price_per_week_high_season"
         case salePrice = "sale_price"
-//        case latitude
-//        case longitude = "longtitude"
         case location
         case villaAmenities = "villa_amenities"
         case villaFacilities = "villa_facilities"
@@ -463,12 +458,15 @@ extension Product {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             id = try values.decode(String.self, forKey: .id)
-            print(id)   //6255578f2fe413001b9c8fe1
+            print(id)   //625557492fe413001b9c8d0d, 627a5e69d340c1001b0ac816, 627a0018d340c1001b0a717e
+            if id == "625557492fe413001b9c8d0d"{
+                print("crashing")
+            }
             type = try values.decode(String.self, forKey: .type)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
-            let priceStr = try values.decodeIfPresent(String.self, forKey: .price)
-            price = Double(priceStr ?? "0") ?? 0.0
+            let priceStr = try values.decodeIfPresent(Int.self, forKey: .price)
+            price = Double(priceStr ?? Int(0.0)) 
             link = try values.decodeIfPresent(String.self, forKey: .link)
             isFeatured = try values.decodeIfPresent(Bool.self, forKey: .isFeatured)
 
@@ -513,8 +511,8 @@ extension Product {
             isFavourite = try values.decodeIfPresent(Bool.self, forKey: .isFavourite)
             //Villas related
             headline = try values.decodeIfPresent(String.self, forKey: .headline)
-            numberOfBedrooms = try values.decodeIfPresent(String.self, forKey: .numberOfBedrooms)
-            numberOfBathrooms = try values.decodeIfPresent(String.self, forKey: .numberOfBathrooms)
+            numberOfBedrooms = try values.decodeIfPresent(Int.self, forKey: .numberOfBedrooms)
+            numberOfBathrooms = try values.decodeIfPresent(Int.self, forKey: .numberOfBathrooms)
             numberOfGuests = try values.decodeIfPresent(String.self, forKey: .numberOfGuests)
             rentPricePerWeekLowSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekLowSeason)
             rentPricePerWeekHighSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekHighSeason)
@@ -557,7 +555,8 @@ extension Product {
             restaurantCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .restaurantCategory)
             cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)
             michelinStar = try values.decodeIfPresent([Taxonomy].self, forKey: .michelinStar)
-        } catch {
+        }catch {
+            print(error)
             Crashlytics.crashlytics().record(error: error)
             throw error
         }

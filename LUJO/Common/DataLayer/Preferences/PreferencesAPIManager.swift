@@ -733,8 +733,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationPreferredCuisines( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationPreferredCuisines(token, commaSeparatedString, typedPreference))
+    func setAviationPreferredCuisines( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setAviationPreferredCuisines(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -769,8 +769,8 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func setYachtPreferredCuisines( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setYachtPreferredCuisines(token, commaSeparatedString, typedPreference))
+    func setYachtPreferredCuisines( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setYachtPreferredCuisines(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -805,8 +805,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setAviationPreferredBeverages( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setAviationPreferredBevereges(token, commaSeparatedString, typedPreference))
+    func setAviationPreferredBeverages( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setAviationPreferredBevereges(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -950,8 +950,8 @@ extension GoLujoAPIManager  {
     }
     
     
-    func setYachtHaveCharteredBefore(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setYachtHaveCharteredBefore(token,commaSeparatedString))
+    func setYachtHaveCharteredBefore(token: String, yesOrNo:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtHaveCharteredBefore(token,yesOrNo))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -986,44 +986,8 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func setYachtInterestedIn(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setYachtInterestedIn(token,commaSeparatedString))
-            .responseJSON { response in
-                guard response.result.error == nil else {
-                    completion(nil, response.result.error!)
-                    return
-                }
-
-                // Special case where status code is not received, should never happen
-                guard let statusCode = response.response?.statusCode else {
-                    completion(nil, BackendError.unhandledStatus)
-                    return
-                }
-
-                switch statusCode {
-                case 1 ... 199: // Transfer protoco-level information: Unexpected
-                    completion(nil, self.handleError(response, statusCode))
-                case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
-                                                                 from: response.data!)
-                    else {
-                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
-                        return
-                    }
-                    completion(result.content, nil)
-                    return
-                case 300 ... 399: // Redirection: Unexpected
-                    completion(nil, self.handleError(response, statusCode))
-                case 400 ... 499: // Client Error
-                    completion(nil, self.handleError(response, statusCode))
-                default: // 500 or bigger, Server Error
-                    completion(nil, self.handleError(response, statusCode))
-                }
-            }
-    }
-    
-    func setYachtType(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setYachtType(token,commaSeparatedString))
+    func setYachtInterestedIn(token: String, charterPurchaseOrBoth:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtInterestedIn(token,charterPurchaseOrBoth))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1058,8 +1022,44 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setYachtStyle(token: String, commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(PreferencesRouter.setYachtStyle(token,commaSeparatedString))
+    func setYachtType(token: String, motorSailOrBoth:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtType(token,motorSailOrBoth))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<String>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
+    func setYachtStyle(token: String, modernClassicOrBoth:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.setYachtStyle(token,modernClassicOrBoth))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1346,8 +1346,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setDiningCuisines( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setDiningCuisines(token, commaSeparatedString, typedPreference))
+    func setDiningCuisines( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setDiningCuisines(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1382,8 +1382,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setDiningPreferences( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setDiningPreferences(token, commaSeparatedString, typedPreference))
+    func setDiningPreferences( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setDiningPreferences(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1418,8 +1418,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setDiningBeverages( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setDiningBeverages(token, commaSeparatedString, typedPreference))
+    func setDiningBeverages( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setDiningBeverages(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -1886,8 +1886,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setTravelAmenities( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setTravelAmenities(token, commaSeparatedString, typedPreference))
+    func setTravelAmenities( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setTravelAmenities(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -2102,8 +2102,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setTravelMedicalMeals( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setTravelMedicalMeals(token, commaSeparatedString, typedPreference))
+    func setTravelMedicalMeals( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setTravelMedicalMeals(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -2174,8 +2174,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setTravelAllergies( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setTravelAllergies(token, commaSeparatedString, typedPreference))
+    func setTravelAllergies( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setTravelAllergies(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -2390,7 +2390,7 @@ extension GoLujoAPIManager  {
 //            }
 //    }
     
-    func getVillaAmenities( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+    func getVillaAmenities( completion: @escaping ([String]?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.getVillaAmenities)
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -2408,7 +2408,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Taxonomy]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
@@ -2426,7 +2426,7 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getVillaAccomodation( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+    func getVillaAccomodation( completion: @escaping ([String]?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.getVillaAccomodation)
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -2444,7 +2444,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Taxonomy]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
@@ -2498,8 +2498,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setVillaAmenities( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setVillaAmenities(token, commaSeparatedString, typedPreference))
+    func setVillaAmenities( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setVillaAmenities(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -2534,8 +2534,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setVillaAccomodation( token: String,commaSeparatedString:String, typedPreference:String, completion: @escaping (String?, Error?) -> Void){
-        Alamofire.request(PreferencesRouter.setVillaAccomodation(token, commaSeparatedString, typedPreference))
+    func setVillaAccomodation( token: String,commaSeparatedString:String, completion: @escaping (String?, Error?) -> Void){
+        Alamofire.request(PreferencesRouter.setVillaAccomodation(token, commaSeparatedString))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

@@ -23,7 +23,6 @@ class PrefCollectionsViewController: UIViewController {
     @IBOutlet weak var lblPrefLabel: UILabel!
     @IBOutlet weak var lblPrefQuestion: UILabel!
     @IBOutlet weak var collContainerView: UIView!
-    @IBOutlet weak var txtPleaseSpecify: UITextField!
     @IBOutlet weak var btnNextStep: UIButton!
     
     
@@ -41,6 +40,12 @@ class PrefCollectionsViewController: UIViewController {
     }()
     
     var itemsList: [Taxonomy] = [] {
+        didSet {
+            collectionView.reloadData()
+            collectionView.layoutIfNeeded() //forces the reload to happen immediately instead of on the next runloop cycle.
+        }
+    }
+    var items: [String] = [] {
         didSet {
             collectionView.reloadData()
             collectionView.layoutIfNeeded() //forces the reload to happen immediately instead of on the next runloop cycle.
@@ -78,10 +83,6 @@ class PrefCollectionsViewController: UIViewController {
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
         
-        txtPleaseSpecify.addTarget(self,
-                             action: #selector(isSelectionChanged),
-                             for: .editingChanged)
-        
         switch prefType {
         case .gifts:
             imgPreference.image = UIImage(named: "Purchase Goods Icon")
@@ -107,19 +108,16 @@ class PrefCollectionsViewController: UIViewController {
             switch prefInformationType {
             case .aviationHaveCharteredBefore:
                 lblPrefQuestion.text = "Have you chartered before?"
-                txtPleaseSpecify.isHidden = true
                 if let value = self.userPreferences?.aviation.aviation_chartered_before{
                     previouslySelectedItems.append(value)
                 }
             case .aviationInterestedIn:
                 lblPrefQuestion.text = "Interested in?"
-                txtPleaseSpecify.isHidden = true
                 if let value = self.userPreferences?.aviation.aviation_interested_in{
                     previouslySelectedItems.append(value)
                 }
             case .aviationPreferredCharter:
                 lblPrefQuestion.text = "Preferred charter?"
-                txtPleaseSpecify.isHidden = true
                 if let value = self.userPreferences?.aviation.aviation_preferred_charter_range{
                     previouslySelectedItems.append(value)
                 }
@@ -139,35 +137,29 @@ class PrefCollectionsViewController: UIViewController {
             switch prefInformationType {
             case .yachtHaveCharteredBefore:
                 lblPrefQuestion.text = "Have you chartered a yacht before?"
-                txtPleaseSpecify.isHidden = true
                 if let value = self.userPreferences?.yacht.yacht_chartered_before{
                     previouslySelectedItems.append(value)
                 }
             case .yachtInterestedIn:
                 lblPrefQuestion.text = "Interested in?"
-                txtPleaseSpecify.isHidden = true
                 if let value = self.userPreferences?.yacht.yacht_interested_in{
                     previouslySelectedItems.append(value)
                 }
             case .yachtType:
                 lblPrefQuestion.text = "Preferred type of cruising/sailing:"
-                txtPleaseSpecify.isHidden = true
                 if let value = self.userPreferences?.yacht.yacht_type{
                     previouslySelectedItems.append(value)
                 }
             case .yachtStyle:
                 lblPrefQuestion.text = "Preferred style of yacht:"
-                txtPleaseSpecify.isHidden = true
                 if let value = self.userPreferences?.yacht.yacht_style{
                     previouslySelectedItems.append(value)
                 }
             case .yachtPreferredCuisines:
                 lblPrefQuestion.text = "Preferred cuisine?"
-                txtPleaseSpecify.text = self.userPreferences?.yacht.yacht_preferred_cuisine_id_other
                 previouslySelectedItems = self.userPreferences?.yacht.yacht_preferred_cuisine_id ?? []
             case .yachtOtherInterests:
                 lblPrefQuestion.text = "For better experience tell us about your other interests?"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.yacht.yacht_interests_id ?? []
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
@@ -179,27 +171,21 @@ class PrefCollectionsViewController: UIViewController {
             switch prefInformationType {
             case .diningCuisines:
                 lblPrefQuestion.text = "What is your preferred cuisine type?"
-                txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id_other
                 previouslySelectedItems = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id ?? []
             case .diningAllergies:
                 lblPrefQuestion.text = "Allergies"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.restaurant.restaurant_allergy_id ?? []
             case .diningPreferences:
                 lblPrefQuestion.text = "Your dining preferences:"
-                txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_dinning_id_other
                 previouslySelectedItems = self.userPreferences?.restaurant.restaurant_dinning_id ?? []
             case .diningTimings:
                 lblPrefQuestion.text = "Preferred time of dining:"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.restaurant.restaurant_timing_id ?? []
             case .diningBeverages:
                 lblPrefQuestion.text = "Preferred Beverages while dining:"
-                txtPleaseSpecify.text = self.userPreferences?.restaurant.restaurant_beverage_id_other
                 previouslySelectedItems = self.userPreferences?.restaurant.restaurant_beverage_id ?? []
             case .diningSeatings:
                 lblPrefQuestion.text = "Preferred Seating:"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.restaurant.restaurant_seating_id ?? []
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             
@@ -215,7 +201,6 @@ class PrefCollectionsViewController: UIViewController {
                 previouslySelectedItems = self.userPreferences?.event.event_category_id ?? []
             case .eventLocation:
                 lblPrefQuestion.text = "Location"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.event.event_continent_ids ?? []
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             
@@ -228,23 +213,18 @@ class PrefCollectionsViewController: UIViewController {
             switch prefInformationType {
             case .travelAmenities:
                 lblPrefQuestion.text = "Preferred Amenities"
-                txtPleaseSpecify.text = self.userPreferences?.travel.travel_amenity_id_other
                 previouslySelectedItems = self.userPreferences?.travel.travel_amenity_id ?? []
             case .travelAirplaneSeat:
                 lblPrefQuestion.text = "Which seat do you prefer on a airplane?"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.travel.travel_airplane_seat ?? []
             case .travelMeals:
                 lblPrefQuestion.text = "Preferred Meals"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.travel.travel_airplane_meals ?? []
             case .travelMedicalMeals:
                 lblPrefQuestion.text = "Medical and Dietary Meals"
-                txtPleaseSpecify.text = self.userPreferences?.travel.travel_medical_dietary_meal_other
                 previouslySelectedItems = self.userPreferences?.travel.travel_medical_dietary_meal ?? []
             case .travelAllergies:
                 lblPrefQuestion.text = "Allergies"
-                txtPleaseSpecify.text = self.userPreferences?.travel.travel_allergy_id_other
                 previouslySelectedItems = self.userPreferences?.travel.travel_allergy_id ?? []
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
@@ -256,12 +236,10 @@ class PrefCollectionsViewController: UIViewController {
             switch prefInformationType {
             case .villaAmenities:
                 lblPrefQuestion.text = "Preferred Amenities"
-                txtPleaseSpecify.text = self.userPreferences?.villa.villa_preferred_amenities_id_other
-                previouslySelectedItems = self.userPreferences?.villa.villa_preferred_amenities_id ?? []
+                previouslySelectedItems = self.userPreferences?.villa.villa_preferred_amenities ?? []
             case .villaAccomodation:
                 lblPrefQuestion.text = "Choice of Accomodation"
-                txtPleaseSpecify.text = self.userPreferences?.villa.villa_preferred_accommodations_id_other
-                previouslySelectedItems = self.userPreferences?.villa.villa_preferred_accommodations_id ?? []
+                previouslySelectedItems = self.userPreferences?.villa.villa_preferred_accommodations ?? []
                 btnNextStep.setTitle("F I N I S H", for: .normal)
             default:
                 print("default of villa")
@@ -463,11 +441,11 @@ class PrefCollectionsViewController: UIViewController {
                 switch prefInformationType {
                 case .villaAmenities:
                     if let cachedItems = preferencesMasterData.villaAmenities , cachedItems.count > 0{  //if data is already cached or not
-                        self.itemsList = cachedItems
+                        self.items = cachedItems
                     }
                 case .villaAccomodation:
                     if let cachedItems = preferencesMasterData.villaAccomodation , cachedItems.count > 0{  //if data is already cached or not
-                        self.itemsList = cachedItems
+                        self.items = cachedItems
                     }
                 default:
                     print("default of villa")
@@ -825,7 +803,7 @@ class PrefCollectionsViewController: UIViewController {
         case .villas:
             switch self.prefInformationType {
                 case .villaAmenities:
-                    GoLujoAPIManager().getVillaAmenities() { taxonomies, error in
+                    GoLujoAPIManager().getVillaAmenities() { stringArray, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain villa amenities information")
@@ -833,14 +811,19 @@ class PrefCollectionsViewController: UIViewController {
                             return
                         }
                         //caching master data into userdefaults
-                        if taxonomies?.count ?? 0 > 0{
-                            self.preferencesMasterData.villaAmenities = taxonomies
+                        if stringArray?.count ?? 0 > 0{
+                            self.preferencesMasterData.villaAmenities = stringArray
                             LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                         }
-                        completion(taxonomies, error)
+                        //converting, returned string array to required [taxonomy]
+                        var amenities:[Taxonomy] = []
+                        for item in stringArray ?? []{
+                            amenities.append(Taxonomy(termId: "-1234asdf5678" , name: item))
+                        }
+                        completion(amenities, error)
                     }
                 case .villaAccomodation:
-                    GoLujoAPIManager().getVillaAccomodation() { taxonomies, error in
+                    GoLujoAPIManager().getVillaAccomodation() { stringArray, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not obtain villa accomodation information")
@@ -848,11 +831,16 @@ class PrefCollectionsViewController: UIViewController {
                             return
                         }
                         //caching master data into userdefaults
-                        if taxonomies?.count ?? 0 > 0{
-                            self.preferencesMasterData.villaAccomodation = taxonomies
+                        if stringArray?.count ?? 0 > 0{
+                            self.preferencesMasterData.villaAccomodation = stringArray
                             LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                         }
-                        completion(taxonomies, error)
+                        //converting, returned string array to required [taxonomy]
+                        var accomodations:[Taxonomy] = []
+                        for item in stringArray ?? []{
+                            accomodations.append(Taxonomy(termId: "-1234asdf5678" , name: item))
+                        }
+                        completion(accomodations, error)
                     }
                 default:
                     print("Not yet required")
@@ -865,17 +853,7 @@ class PrefCollectionsViewController: UIViewController {
     //when user will click on the next button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
         if (isSelectionChanged()){
-            let valueSpecified:Int? = Int(txtPleaseSpecify.text ?? "") // firstText is UITextField
-//            print(valueSpecified as Any)
-            if (valueSpecified != nil) { //!= nill mean value has been typecasted hence its a numeric value
-                // number is not allowed but alphanumeric
-                let error = PreferenceError.onlyAlphaNumeric(reason: "Please specify a valid value")
-                self.showError(error)
-                return
-            }
-            
             var selectedArray = [String]()
-            
             switch self.prefType {
                 case .gifts:
                     switch self.prefInformationType {
@@ -1104,7 +1082,7 @@ class PrefCollectionsViewController: UIViewController {
             case .villas:
                 switch self.prefInformationType {
                     case .villaAmenities:
-                        if let ids = userPreferences?.villa.villa_preferred_amenities_id{
+                        if let ids = userPreferences?.villa.villa_preferred_amenities{
                             for id in ids {
                                 if id.count > 0{ //to avoid empty string
                                     selectedArray.append(id)
@@ -1112,7 +1090,7 @@ class PrefCollectionsViewController: UIViewController {
                             }
                         }
                     case .villaAccomodation:
-                        if let ids = userPreferences?.villa.villa_preferred_accommodations_id{
+                        if let ids = userPreferences?.villa.villa_preferred_accommodations{
                             for id in ids {
                                 if id.count > 0{ //to avoid empty string
                                     selectedArray.append(id)
@@ -1125,7 +1103,7 @@ class PrefCollectionsViewController: UIViewController {
             default:
                 print("Default of main switch")
             }
-            if (selectedArray.count > 0 || txtPleaseSpecify.text?.count ?? 0 > 0) {   //something is there, so convert array to comma sepeated string
+            if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
                 let commaSeparatedString = selectedArray.map{String($0)}.joined(separator: ",")
                 Mixpanel.mainInstance().track(event: "preferences_submitted",
                                               properties: ["Submitting" : prefInformationType.rawValue
@@ -1233,7 +1211,6 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.yacht.yacht_preferred_cuisine_id = arr
                             }
-                            userPreferences.yacht.yacht_preferred_cuisine_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .yachtOtherInterests:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
@@ -1249,7 +1226,6 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.restaurant.restaurant_preferred_cuisine_id = arr
                             }
-                            userPreferences.restaurant.restaurant_preferred_cuisine_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .diningAllergies:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
@@ -1260,7 +1236,6 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.restaurant.restaurant_dinning_id = arr
                             }
-                            userPreferences.restaurant.restaurant_dinning_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .diningTimings:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
@@ -1271,7 +1246,6 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.restaurant.restaurant_beverage_id = arr
                             }
-                            userPreferences.restaurant.restaurant_beverage_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                             break
                         case .diningSeatings:
@@ -1306,7 +1280,6 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.travel.travel_amenity_id = arr
                             }
-                            userPreferences.travel.travel_amenity_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .travelAirplaneSeat:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
@@ -1322,13 +1295,11 @@ class PrefCollectionsViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.travel.travel_medical_dietary_meal = arr
                             }
-                            userPreferences.travel.travel_medical_dietary_meal_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .travelAllergies:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.travel.travel_allergy_id = arr
                             }
-                            userPreferences.travel.travel_allergy_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         default:
                             print("default of travel")
@@ -1337,15 +1308,13 @@ class PrefCollectionsViewController: UIViewController {
                         switch self.prefInformationType {
                             case .villaAmenities:
                                 if arr.count > 0 && arr[0].count > 0{   //avoid empty string
-                                    userPreferences.villa.villa_preferred_amenities_id = arr
+                                    userPreferences.villa.villa_preferred_amenities = arr
                                 }
-                                userPreferences.villa.villa_preferred_amenities_id_other = self.txtPleaseSpecify.text
                                 LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                             case .villaAccomodation:
                                 if arr.count > 0 && arr[0].count > 0{   //avoid empty string
-                                    userPreferences.villa.villa_preferred_accommodations_id = arr
+                                    userPreferences.villa.villa_preferred_accommodations = arr
                                 }
-                                userPreferences.villa.villa_preferred_accommodations_id_other = self.txtPleaseSpecify.text
                                 LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                             default:
                                 print("Not yet required")
@@ -1439,7 +1408,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationPreferredCuisine:
-                    GoLujoAPIManager().setAviationPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the aviation cuisine preferences")
@@ -1450,7 +1419,7 @@ class PrefCollectionsViewController: UIViewController {
                     }
 
                 case .aviationPreferredBevereges:
-                    GoLujoAPIManager().setAviationPreferredBeverages(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredBeverages(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the aviation bevereges preferences")
@@ -1466,7 +1435,7 @@ class PrefCollectionsViewController: UIViewController {
         case .yachts:
             switch prefInformationType {
                 case .yachtHaveCharteredBefore:
-                    GoLujoAPIManager().setYachtHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtHaveCharteredBefore(token: token,yesOrNo: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht charter before information")
@@ -1476,7 +1445,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtInterestedIn:
-                    GoLujoAPIManager().setYachtInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtInterestedIn(token: token,charterPurchaseOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht interest information")
@@ -1486,7 +1455,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtType:
-                    GoLujoAPIManager().setYachtType(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setYachtType(token: token,motorSailOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht type preferences")
@@ -1496,7 +1465,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtStyle:
-                    GoLujoAPIManager().setYachtStyle(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setYachtStyle(token: token,modernClassicOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht style preferences")
@@ -1506,7 +1475,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtPreferredCuisines:
-                    GoLujoAPIManager().setYachtPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                    GoLujoAPIManager().setYachtPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the preferred yacht cuisines")
@@ -1533,7 +1502,7 @@ class PrefCollectionsViewController: UIViewController {
         case .dining:
             switch prefInformationType {
             case .diningCuisines:
-                GoLujoAPIManager().setDiningCuisines(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                GoLujoAPIManager().setDiningCuisines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining cuisines preferences")
@@ -1553,7 +1522,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .diningPreferences:
-                GoLujoAPIManager().setDiningPreferences(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                GoLujoAPIManager().setDiningPreferences(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining preferences")
@@ -1573,7 +1542,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .diningBeverages:
-                GoLujoAPIManager().setDiningBeverages(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                GoLujoAPIManager().setDiningBeverages(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining bevereges preferences")
@@ -1625,7 +1594,7 @@ class PrefCollectionsViewController: UIViewController {
         case .travel:
             switch prefInformationType {
             case .travelAmenities:
-                GoLujoAPIManager().setTravelAmenities(token: token,commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { contentString, error in
+                GoLujoAPIManager().setTravelAmenities(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel/hotel amenities preferences")
@@ -1655,7 +1624,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelMedicalMeals:
-                GoLujoAPIManager().setTravelMedicalMeals(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
+                GoLujoAPIManager().setTravelMedicalMeals(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel medical meal preferences")
@@ -1665,7 +1634,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelAllergies:
-                GoLujoAPIManager().setTravelAllergies(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
+                GoLujoAPIManager().setTravelAllergies(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel allergies preferences")
@@ -1680,7 +1649,7 @@ class PrefCollectionsViewController: UIViewController {
         case .villas:
             switch self.prefInformationType {
                 case .villaAmenities:
-                    GoLujoAPIManager().setVillaAmenities(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
+                    GoLujoAPIManager().setVillaAmenities(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the villa amenities preferences")
@@ -1690,7 +1659,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .villaAccomodation:
-                    GoLujoAPIManager().setVillaAccomodation(token: token, commaSeparatedString: commaSeparatedString, typedPreference: txtPleaseSpecify.text ?? "") { (contentString, error) in
+                    GoLujoAPIManager().setVillaAccomodation(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the villa accomodation preferences")
@@ -1834,15 +1803,15 @@ class PrefCollectionsViewController: UIViewController {
                 case .giftHabbits:
                     let current = self.userPreferences?.gift.gift_habit_id ?? []
                     let previous = self.previouslySelectedItems
-                    return !compare(current: current , previous: previous, previousTypedStr:"")
+                    return !compare(current: current , previous: previous)
                 case .giftCategories:
                     let current = self.userPreferences?.gift.gift_category_id ?? []
                     let previous = self.previouslySelectedItems
-                    return !compare(current: current , previous: previous, previousTypedStr:"")
+                    return !compare(current: current , previous: previous)
                 case .giftPreferences:
                     let current = self.userPreferences?.gift.gift_preferences_id ?? []
                     let previous = self.previouslySelectedItems
-                    return !compare(current: current , previous: previous, previousTypedStr:"")
+                    return !compare(current: current , previous: previous)
                 default:
                     print("This line will never execute")
                     return true
@@ -1873,11 +1842,11 @@ class PrefCollectionsViewController: UIViewController {
             case .aviationPreferredCuisine:
                 let current = self.userPreferences?.aviation.aviation_preferred_cuisine_id ?? []
                 let previous = self.previouslySelectedItems
-                return !compare(current: current , previous: previous, previousTypedStr:"")
+                return !compare(current: current , previous: previous)
             case .aviationPreferredBevereges:
                 let current = self.userPreferences?.aviation.aviation_preferred_beverage_id ?? []
                 let previous = self.previouslySelectedItems
-                return !compare(current: current , previous: previous, previousTypedStr:"")
+                return !compare(current: current , previous: previous)
             default:
                 print("This will not call")
             }
@@ -1914,8 +1883,7 @@ class PrefCollectionsViewController: UIViewController {
             case .yachtPreferredCuisines:
                 let current = self.userPreferences?.yacht.yacht_preferred_cuisine_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.yacht.yacht_preferred_cuisine_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
             case .yachtOtherInterests:
                 let current = self.userPreferences?.yacht.yacht_interests_id ?? []
                 let previous = self.previouslySelectedItems
@@ -1928,8 +1896,7 @@ class PrefCollectionsViewController: UIViewController {
            case .diningCuisines:
                 let current = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.restaurant.restaurant_preferred_cuisine_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
            case .diningAllergies:
                 let current = self.userPreferences?.restaurant.restaurant_allergy_id ?? []
                 let previous = self.previouslySelectedItems
@@ -1937,8 +1904,7 @@ class PrefCollectionsViewController: UIViewController {
            case .diningPreferences:
                 let current = self.userPreferences?.restaurant.restaurant_dinning_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.restaurant.restaurant_dinning_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
            case .diningTimings:
                 let current = self.userPreferences?.restaurant.restaurant_timing_id ?? []
                 let previous = self.previouslySelectedItems
@@ -1946,8 +1912,7 @@ class PrefCollectionsViewController: UIViewController {
            case .diningBeverages:
                 let current = self.userPreferences?.restaurant.restaurant_beverage_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.restaurant.restaurant_beverage_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
            case .diningSeatings:
                 let current = self.userPreferences?.restaurant.restaurant_seating_id ?? []
                 let previous = self.previouslySelectedItems
@@ -1960,7 +1925,7 @@ class PrefCollectionsViewController: UIViewController {
             case .eventCategory:
                 let current = self.userPreferences?.event.event_category_id ?? []
                 let previous = self.previouslySelectedItems
-                return !compare(current: current , previous: previous, previousTypedStr:"")
+                return !compare(current: current , previous: previous)
             case .eventLocation:
                 let current = self.userPreferences?.event.event_continent_ids ?? []
                 let previous = self.previouslySelectedItems
@@ -1974,8 +1939,7 @@ class PrefCollectionsViewController: UIViewController {
             case .travelAmenities:
                 let current = self.userPreferences?.travel.travel_amenity_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.travel.travel_amenity_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
             case .travelAirplaneSeat:
                 let current = self.userPreferences?.travel.travel_airplane_seat ?? []
                 let previous = self.previouslySelectedItems
@@ -1991,23 +1955,20 @@ class PrefCollectionsViewController: UIViewController {
             case .travelAllergies:
                 let current = self.userPreferences?.travel.travel_allergy_id ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.travel.travel_allergy_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
             default:
                 print("default of travel")
          }
         case .villas:
             switch self.prefInformationType {
             case .villaAmenities:
-                let current = self.userPreferences?.villa.villa_preferred_amenities_id ?? []
+                let current = self.userPreferences?.villa.villa_preferred_amenities ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.villa.villa_preferred_amenities_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
             case .villaAccomodation:
-                let current = self.userPreferences?.villa.villa_preferred_accommodations_id ?? []
+                let current = self.userPreferences?.villa.villa_preferred_accommodations ?? []
                 let previous = self.previouslySelectedItems
-                let previouslyTypedStr = self.userPreferences?.villa.villa_preferred_accommodations_id_other ?? ""
-                return !compare(current: current , previous: previous, previousTypedStr:previouslyTypedStr)
+                return !compare(current: current , previous: previous)
             default:
                 print("Not yet required")
             }
@@ -2028,9 +1989,8 @@ class PrefCollectionsViewController: UIViewController {
         }
     }
     
-    func compare(current:[String] , previous:[String] , previousTypedStr:String? = nil) -> Bool{
-        let currentTypedStr = self.txtPleaseSpecify.text
-        if (Set(previous ) == Set(current) && (previousTypedStr ?? currentTypedStr == self.txtPleaseSpecify.text)){
+    func compare(current:[String] , previous:[String]) -> Bool{
+        if (Set(previous ) == Set(current) ){
 //            btnNextStep.setTitle("S K I P", for: .normal)
             btnNextStep.setTitle("N E X T", for: .normal)
             return true
@@ -2403,8 +2363,8 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
         case .villas:
             switch self.prefInformationType {
             case .villaAmenities:
-                if let str = userPreferences?.villa.villa_preferred_amenities_id{
-                    if(str.contains(String(model.termId)) ){
+                if let str = userPreferences?.villa.villa_preferred_amenities{
+                    if(str.contains(String(model.name)) ){
                         cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
@@ -2413,8 +2373,8 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
                     }
                 }
             case .villaAccomodation:
-                if let str = userPreferences?.villa.villa_preferred_accommodations_id{
-                    if(str.contains(String(model.termId)) ){
+                if let str = userPreferences?.villa.villa_preferred_accommodations{
+                    if(str.contains(String(model.name)) ){
                         cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
@@ -2437,6 +2397,7 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
 extension PrefCollectionsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let termId = String(itemsList[indexPath.row].termId)
+        let name = String(itemsList[indexPath.row].name)
         switch self.prefType {
         case .gifts:
             switch self.prefInformationType {
@@ -2806,30 +2767,30 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
         case .villas:
             switch self.prefInformationType {
             case .villaAmenities:
-                if var ids = userPreferences?.villa.villa_preferred_amenities_id{
-                    if ids.contains(termId){
+                if var ids = userPreferences?.villa.villa_preferred_amenities{
+                    if ids.contains(name){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
-                        userPreferences?.villa.villa_preferred_amenities_id = ids
+                        ids.removeAll{ value in return value == name}
+                        userPreferences?.villa.villa_preferred_amenities = ids
                     }else{
-                        userPreferences?.villa.villa_preferred_amenities_id?.append(termId)
+                        userPreferences?.villa.villa_preferred_amenities?.append(name)
                     }
                 }else{
-                    userPreferences?.villa.villa_preferred_amenities_id = []    //initializing first
-                    userPreferences?.villa.villa_preferred_amenities_id?.append(termId)
+                    userPreferences?.villa.villa_preferred_amenities = []    //initializing first
+                    userPreferences?.villa.villa_preferred_amenities?.append(name)
                 }
             case .villaAccomodation:
-                if var ids = userPreferences?.villa.villa_preferred_accommodations_id{
-                    if ids.contains(termId){
+                if var ids = userPreferences?.villa.villa_preferred_accommodations{
+                    if ids.contains(name){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
-                        userPreferences?.villa.villa_preferred_accommodations_id = ids
+                        ids.removeAll{ value in return value == name}
+                        userPreferences?.villa.villa_preferred_accommodations = ids
                     }else{
-                        userPreferences?.villa.villa_preferred_accommodations_id?.append(termId)
+                        userPreferences?.villa.villa_preferred_accommodations?.append(name)
                     }
                 }else{
-                    userPreferences?.villa.villa_preferred_accommodations_id = []    //initializing first
-                    userPreferences?.villa.villa_preferred_accommodations_id?.append(termId)
+                    userPreferences?.villa.villa_preferred_accommodations = []    //initializing first
+                    userPreferences?.villa.villa_preferred_accommodations?.append(name)
                 }
             default:
                 print("Not yet required")

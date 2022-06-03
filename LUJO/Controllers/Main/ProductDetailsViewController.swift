@@ -489,10 +489,10 @@ extension ProductDetailsViewController {
         if let val = product.headline , val.count > 0{
             itemsList.append(ProductDetail(key: "Headline",value: val,isHighSeason: nil))
         }
-        if let val = product.numberOfBedrooms, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Bedrooms",value: val,isHighSeason: nil))
+        if let val = product.numberOfBedrooms, val > 0{
+            itemsList.append(ProductDetail(key: "Number Of Bedrooms",value: String(val),isHighSeason: nil))
 //            itemsList.append(ProductDetail(key: "No. Of Bedrooms",value: val,isHighSeason: nil))
-            lblYachtCabins.text = val
+            lblYachtCabins.text = String(val)
         }else{
             viewYachtCabins.isHidden = true
         }
@@ -504,10 +504,10 @@ extension ProductDetailsViewController {
         }else{
             viewYachtPassengers.isHidden = true
         }
-        if let val = product.numberOfBathrooms, val.count > 0{
-            itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: val,isHighSeason: nil))
+        if let val = product.numberOfBathrooms, val > 0{
+            itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: String(val),isHighSeason: nil))
 //            itemsList.append(ProductDetail(key: "No. Of Bathrooms",value: val,isHighSeason: nil))
-            lblBathrooms.text = val
+            lblBathrooms.text = String(val)
         }else{
             viewBathrooms.isHidden = true
         }

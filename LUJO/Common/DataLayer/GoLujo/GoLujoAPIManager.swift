@@ -408,7 +408,7 @@ extension GoLujoAPIManager {
                                             title: UserTitle(rawValue: resultResponse.content.title ?? "Mr."),
                                             firstName: resultResponse.content.firstname,
                                             lastName: resultResponse.content.lastname,
-                                            email: resultResponse.content.email,
+                                            email: resultResponse.content.email.lowercased(),
                                             phoneNumber: PhoneNumber(countryCode: resultResponse.content.phone_prefix,
                                                                      number: resultResponse.content.phone),
                                             password: "",

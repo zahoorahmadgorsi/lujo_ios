@@ -23,7 +23,6 @@ class PrefImagesCollViewController: UIViewController {
     @IBOutlet weak var lblPrefLabel: UILabel!
     @IBOutlet weak var lblPrefQuestion: UILabel!
     @IBOutlet weak var collContainerView: UIView!
-    @IBOutlet weak var txtPleaseSpecify: UITextField!
     @IBOutlet weak var btnNextStep: UIButton!
     
     
@@ -80,10 +79,6 @@ class PrefImagesCollViewController: UIViewController {
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
         
-        txtPleaseSpecify.addTarget(self,
-                             action: #selector(isSelectionChanged),
-                             for: .editingChanged)
-        
         switch prefType {
             case .travel:
                 imgPreference.image = UIImage(named: "Find Hotel Icon")
@@ -91,24 +86,18 @@ class PrefImagesCollViewController: UIViewController {
                 switch prefInformationType {
                 case .travelDestinationType:
                     lblPrefQuestion.text = "Destination type preferences:"
-                    txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.travel.travel_destination_type ?? []
                 case .travelHotelGroups:
                     lblPrefQuestion.text = "Are there hotels or hotel groups do you prefer?"
-                    txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.travel.travel_hotel_group ?? []
                 case .travelActivities:
                     lblPrefQuestion.text = "Which activities do you enjoy when traveling somewhere?"
-                    txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.travel.travel_activity_id ?? []
                 case .travelAirlines:
                     lblPrefQuestion.text = "Are there any airlines you prefer?"
-                    txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.travel.travel_airline_id ?? []
                 case .travelHotelStyles:
                     lblPrefQuestion.text = "What style of hotels do you like?"
-//                    txtPleaseSpecify.text = self.userPreferences?.travel.event_category_id_other
-                    txtPleaseSpecify.isHidden = true
                     previouslySelectedItems = self.userPreferences?.travel.travel_hotel_styles ?? []
                 default:
                     print("default of travel")
@@ -122,7 +111,6 @@ class PrefImagesCollViewController: UIViewController {
                 btnNextStep.setTitle("S U B M I T", for: .normal)
                 
                 lblPrefQuestion.text = "Interested In"
-                txtPleaseSpecify.isHidden = true
                 previouslySelectedItems = self.userPreferences?.profile ?? []
                 if let bgImage = UIImage(named: "general_preference_bg"){   //setting background image on profile preference
                     self.view.backgroundColor = UIColor(patternImage:  bgImage)
@@ -334,14 +322,6 @@ class PrefImagesCollViewController: UIViewController {
     //when user will click on the next button at the bottom
     @IBAction func btnNextTapped(_ sender: Any) {
         if (isSelectionChanged()){
-            let valueSpecified:Int? = Int(txtPleaseSpecify.text ?? "") // firstText is UITextField
-//            print(valueSpecified as Any)
-            if (valueSpecified != nil) { //!= nill mean value has been typecasted hence its a numeric value
-                // number is not allowed but alphanumeric
-                let error = PreferenceError.onlyAlphaNumeric(reason: "Please specify a valid value")
-                self.showError(error)
-                return
-            }
             
             var selectedArray = [String]()
             
@@ -402,7 +382,7 @@ class PrefImagesCollViewController: UIViewController {
             default:
                 print("Default of main switch")
             }
-            if (selectedArray.count > 0 || txtPleaseSpecify.text?.count ?? 0 > 0) {   //something is there, so convert array to comma sepeated string
+            if (selectedArray.count > 0) {   //something is there, so convert array to comma sepeated string
                 let commaSeparatedString = selectedArray.map{String($0)}.joined(separator: ",")
                 Mixpanel.mainInstance().track(event: "preferences_submitted",
                                               properties: ["Submitting" : prefInformationType.rawValue
@@ -448,7 +428,6 @@ class PrefImagesCollViewController: UIViewController {
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
                                 userPreferences.travel.travel_activity_id = arr
                             }
-//                            userPreferences.travel.event_category_id_other = self.txtPleaseSpecify.text
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .travelAirlines:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
@@ -639,8 +618,7 @@ class PrefImagesCollViewController: UIViewController {
     }
     
     func compare(current:[String] , previous:[String] , previousTypedStr:String? = nil) -> Bool{
-        let currentTypedStr = self.txtPleaseSpecify.text
-        if (Set(previous ) == Set(current) && (previousTypedStr ?? currentTypedStr == self.txtPleaseSpecify.text)){
+        if (Set(previous ) == Set(current) ){
 //            btnNextStep.setTitle("S K I P", for: .normal)
 //            btnNextStep.setTitle("N E X T", for: .normal)
             return true

@@ -550,7 +550,7 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
                 print("Twilio: set conversation's consumption horizon to last message")
             }
 //            print(message.mediaFilename,message.mediaSid)
-            if message.hasMedia(){
+            if message.attachedMedia.count > 0{
                 getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
                     self.insertMessage(chatImageMessage)
                 }

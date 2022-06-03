@@ -59,15 +59,6 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="474"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="If other, please specify." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vXW-QZ-Y5I" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="DXc-Eu-bWe"/>
-                                                </constraints>
-                                                <color key="textColor" name="Black Backgorund"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTg-Mu-muO">
@@ -161,7 +152,6 @@
                         <outlet property="imgPreference" destination="tjd-Ub-4F8" id="aqB-2P-RZU"/>
                         <outlet property="lblPrefLabel" destination="3Kx-gZ-qpw" id="qNs-Vd-9zJ"/>
                         <outlet property="lblPrefQuestion" destination="vt7-r8-biA" id="qsg-Vc-fhL"/>
-                        <outlet property="txtPleaseSpecify" destination="vXW-QZ-Y5I" id="i4d-G1-lar"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ipC-AY-JRn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1304,7 +1294,6 @@
         <!--Destination Selection View Controller-->
         <scene sceneID="lFT-4k-0R0">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RWC-oN-q6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="DestinationSelectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UOO-Q4-49n" customClass="DestinationSelectionViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y2i-dd-ixf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -1467,6 +1456,7 @@
                         <outlet property="titleLabel" destination="PZ9-gj-nhF" id="FdV-x9-W6D"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RWC-oN-q6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-384" y="735"/>
         </scene>
@@ -1711,37 +1701,28 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJs-wh-cGM">
-                                        <rect key="frame" x="0.0" y="118" width="382" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="118" width="382" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvz-5F-Cjo">
-                                        <rect key="frame" x="0.0" y="118" width="382" height="62"/>
+                                        <rect key="frame" x="0.0" y="137.5" width="382" height="62"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwJ-86-HXh">
-                                        <rect key="frame" x="0.0" y="180" width="382" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="199.5" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="mrs-fP-QxB">
-                                        <rect key="frame" x="8" y="196" width="366" height="514"/>
+                                        <rect key="frame" x="8" y="236" width="366" height="474"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="H4m-QJ-1Mb">
-                                                <rect key="frame" x="0.0" y="0.0" width="366" height="456"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="366" height="474"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="If other, please specify." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ilq-bR-lu3" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="480" width="366" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="b4P-MI-BcL"/>
-                                                </constraints>
-                                                <color key="textColor" name="Black Backgorund"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lh2-ax-XQg">
@@ -1835,7 +1816,6 @@
                         <outlet property="imgPreference" destination="c7U-3J-ymc" id="Mdg-qq-kim"/>
                         <outlet property="lblPrefLabel" destination="ZJs-wh-cGM" id="WYO-lv-7As"/>
                         <outlet property="lblPrefQuestion" destination="MwJ-86-HXh" id="N6W-pg-g7R"/>
-                        <outlet property="txtPleaseSpecify" destination="ilq-bR-lu3" id="JQN-vm-yDI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ck0-ED-cbt" userLabel="First Responder" sceneMemberID="firstResponder"/>

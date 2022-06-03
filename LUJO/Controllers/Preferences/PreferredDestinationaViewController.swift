@@ -152,7 +152,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 case .villaDestinations:
                     lblPrefQuestion.text = "What are your top preferred destinations?"
                     txtPreferredDestination.text = "Any"
-                    if let destinations = self.userPreferences?.villa.villa_preferred_destinations_id{
+                    if let destinations = self.userPreferences?.villa.villa_preferred_destinations{
                         var taxonomies = [Taxonomy]()
                         for item in  destinations {
                             let taxonomy = Taxonomy(termId: item , name: item)
@@ -253,7 +253,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                         switch self.prefInformationType {
                             case .villaDestinations:
                                 let arr = commaSeparatedString.components(separatedBy: ",")
-                                userPreferences.villa.villa_preferred_destinations_id = arr
+                                userPreferences.villa.villa_preferred_destinations = arr
                                 LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                             default:
                                 print("Not yet required")

@@ -54,8 +54,8 @@ enum PreferencesRouter: URLRequestConvertible {
     case setAviationCharterFrequency(String,Int,Int)
     case setAviationInterestedIn(String,String)
     case setAviationPreferredCharter(String,String)
-    case setAviationPreferredCuisines(String,String,String)
-    case setAviationPreferredBevereges(String,String,String)
+    case setAviationPreferredCuisines(String,String)
+    case setAviationPreferredBevereges(String,String)
     case searchDestination(String)
     case getOtherInterests
     
@@ -63,7 +63,7 @@ enum PreferencesRouter: URLRequestConvertible {
     case setYachtInterestedIn(String,String)
     case setYachtType(String,String)
     case setYachtStyle(String,String)
-    case setYachtPreferredCuisines(String,String,String)
+    case setYachtPreferredCuisines(String,String)
     case setYachtOtherInterests(String,String)
     case setYachtCharterFrequency(String,Int,Int)
     case setYachtPreferredRegions(String,String)
@@ -76,9 +76,9 @@ enum PreferencesRouter: URLRequestConvertible {
     case getDiningTimings
     case getDiningBeverages
     case getDiningSeatings
-    case setDiningCuisines (String,String,String)
-    case setDiningPreferences(String,String,String)
-    case setDiningBeverages(String,String,String)
+    case setDiningCuisines (String,String)
+    case setDiningPreferences(String,String)
+    case setDiningBeverages(String,String)
     case setDiningAllergies(String, String)
     case setDiningTimings(String, String)
     case setDiningSeatings(String, String)
@@ -96,22 +96,22 @@ enum PreferencesRouter: URLRequestConvertible {
     case setTravelHotelRating(String,Int,Int)
     case setTravelDestinationType(String, String)
     case setTravelHotelGroups(String, String)
-    case setTravelAmenities(String, String,String)
+    case setTravelAmenities(String,String)
     case setTravelActivities(String, String)
     case setTravelAirlines(String, String)
     case setTravelAirplaneSeat(String, String)
-    case setTravelCabinClass(String, String,String)
+    case setTravelCabinClass(String, String, String)
     case setTravelMeals(String, String)
-    case setTravelMedicalMeals(String, String,String)
+    case setTravelMedicalMeals(String, String)
     case setTravelHotelStyles(String, String)
-    case setTravelAllergies(String, String,String)
+    case setTravelAllergies(String, String)
     
     case setProfilePreferences(String)
     case getVillaAmenities
     case getVillaAccomodation
     case setVillaDestinations(String,String)
-    case setVillaAmenities(String, String,String)
-    case setVillaAccomodation(String, String,String)
+    case setVillaAmenities(String, String)
+    case setVillaAccomodation(String, String)
     
     
     
@@ -156,7 +156,11 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getEventLocation:     fallthrough
         case .getCuisines:          fallthrough
         case .getAviationBeverages: fallthrough
-        case .searchDestination:
+        case .searchDestination:    fallthrough
+            
+        case .getVillaAmenities: fallthrough
+        case .getVillaAccomodation: fallthrough
+        case .getOtherInterests:
             return .get
 
         case .setGiftHabits:        fallthrough
@@ -165,10 +169,7 @@ enum PreferencesRouter: URLRequestConvertible {
             
         case .setEventCategory: fallthrough
         case .setEventLocation: fallthrough
-            
-        
-        
-        case .getOtherInterests: fallthrough
+                    
         case .setAviationHaveCharteredBefore:    fallthrough
         case .setAviationInterestedIn:         fallthrough
         case .setAviationPreferredDestinations: fallthrough
@@ -221,8 +222,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setTravelAllergies: fallthrough
             
         case .setProfilePreferences: fallthrough
-        case .getVillaAmenities: fallthrough
-        case .getVillaAccomodation: fallthrough
+        
         case .setVillaDestinations: fallthrough
         case .setVillaAmenities: fallthrough
         case .setVillaAccomodation:
@@ -244,10 +244,9 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getGiftPreferences:       newURLComponents.path.append("/gifts/gift-preference")
         case .setGiftHabits:        fallthrough
         case .setGiftCategories:    fallthrough
-        case .setGiftPreferences:   newURLComponents.path.append("/preferences/gift")
-        case .getCuisines:
-            newURLComponents.path.append("/restaurants/cuisine-category")
-        case .getOtherInterests:  newURLComponents.path.append("/reference/interests")
+        case .setGiftPreferences:       newURLComponents.path.append("/preferences/gift")
+        case .getCuisines:              newURLComponents.path.append("/restaurants/cuisine-category")
+        case .getOtherInterests:        newURLComponents.path.append("/reference/interests")
         case .getAviationBeverages:
             newURLComponents.path.append("/restaurants/beverage")
         case .setAviationHaveCharteredBefore:    fallthrough
@@ -391,21 +390,21 @@ enum PreferencesRouter: URLRequestConvertible {
             return setAviationCharterFrequencyAsJSONData(token: token , corporateFrequency:corporateFrequency, leisureFrequency: leisureFrequency)
         case let .setAviationPreferredCharter(token, commaSeparatedString):
             return setAviationPreferredCharterAsJSONData(token: token , shortOrLong:commaSeparatedString)
-        case let .setAviationPreferredCuisines(token, commaSeparatedString, typedPreference):
-            return setAviationPreferredCuisineAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .setAviationPreferredBevereges(token, commaSeparatedString, typedPreference):
-            return setAviationPreferredBeveragesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+        case let .setAviationPreferredCuisines(token, commaSeparatedString):
+            return setAviationPreferredCuisineAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let .setAviationPreferredBevereges(token, commaSeparatedString):
+            return setAviationPreferredBeveragesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
             
         case let .setYachtHaveCharteredBefore(token, commaSeparatedString):
-            return setYachtHaveCharteredBeforeAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let .setYachtInterestedIn(token, commaSeparatedString):
-            return setYachtInterestedInAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let .setYachtType(token, commaSeparatedString):
-            return setYachtTypeAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+            return setYachtHaveCharteredBeforeAsJSONData(token: token , yesOrNo:commaSeparatedString)
+        case let .setYachtInterestedIn(token, charterPurchaseOrBoth):
+            return setYachtInterestedInAsJSONData(token: token , charterPurchaseOrBoth:charterPurchaseOrBoth)
+        case let .setYachtType(token, motorSailOrBoth):
+            return setYachtTypeAsJSONData(token: token , string:motorSailOrBoth)
         case let .setYachtStyle(token, commaSeparatedString):
-            return setYachtStyleAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let .setYachtPreferredCuisines(token, commaSeparatedString, typedPreference):
-            return setYachtPreferredCuisineAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+            return setYachtStyleAsJSONData(token: token , modernClassicOrBoth:commaSeparatedString)
+        case let .setYachtPreferredCuisines(token, commaSeparatedString):
+            return setYachtPreferredCuisineAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let .setYachtOtherInterests(token, commaSeparatedString ):
             return setYachtOtherInterestsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let .setYachtCharterFrequency(token, corporateFrequency, leisureFrequency):
@@ -416,12 +415,12 @@ enum PreferencesRouter: URLRequestConvertible {
             return setYachtLengthAsJSONData(commaSeparatedString:commaSeparatedString)
         case let .searchRegions(token , strToSearch):
             return setSearchRegionsAsJSONData(token: token , strToSearch:strToSearch)
-        case let .setDiningCuisines(token, commaSeparatedString, typedPreference):
-            return setDiningCuisinesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .setDiningPreferences(token, commaSeparatedString, typedPreference):
-            return setDiningPreferencesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let .setDiningBeverages(token, commaSeparatedString, typedPreference):
-            return setDiningBeveragesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+        case let .setDiningCuisines(token, commaSeparatedString):
+            return setDiningCuisinesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let .setDiningPreferences(token, commaSeparatedString):
+            return setDiningPreferencesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let .setDiningBeverages(token, commaSeparatedString):
+            return setDiningBeveragesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let .setDiningAllergies(token, commaSeparatedString):
             return setDiningAllergiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let .setDiningTimings(token, commaSeparatedString):
@@ -443,8 +442,8 @@ enum PreferencesRouter: URLRequestConvertible {
             return setTravelDestinationTypeAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let  .setTravelHotelGroups(token, commaSeparatedString):
             return setTravelHotelGroupsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let  .setTravelAmenities(token, commaSeparatedString, typedPreference):
-            return setTravelAmenitiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+        case let  .setTravelAmenities(token, commaSeparatedString):
+            return setTravelAmenitiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let  .setTravelActivities(token, commaSeparatedString):
             return setTravelActivitiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let  .setTravelAirlines(token, commaSeparatedString):
@@ -455,18 +454,18 @@ enum PreferencesRouter: URLRequestConvertible {
             return setTravelCabinClassAsJSONData(token: token , businessCabin:businessCabin, leisureCabin: leisureCabin)
         case let  .setTravelMeals(token, commaSeparatedString):
             return setTravelMealsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let  .setTravelMedicalMeals(token, commaSeparatedString, typedPreference):
-            return setTravelMedicalMealsAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+        case let  .setTravelMedicalMeals(token, commaSeparatedString):
+            return setTravelMedicalMealsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let  .setTravelHotelStyles(token, commaSeparatedString):
             return setTravelHotelStylesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let  .setTravelAllergies(token, commaSeparatedString, typedPreference):
-            return setTravelAllergiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+        case let  .setTravelAllergies(token, commaSeparatedString):
+            return setTravelAllergiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
         case let  .setVillaDestinations(token, commaSeparatedString):
             return setVillaDestinationsAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
-        case let  .setVillaAmenities(token, commaSeparatedString, typedPreference):
-            return setVillaAmenitiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
-        case let  .setVillaAccomodation(token, commaSeparatedString, typedPreference):
-            return setVillaAccomodationAsJSONData(token: token , commaSeparatedString:commaSeparatedString, typedPreference: typedPreference)
+        case let  .setVillaAmenities(token, commaSeparatedString):
+            return setVillaAmenitiesAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
+        case let  .setVillaAccomodation(token, commaSeparatedString):
+            return setVillaAccomodationAsJSONData(token: token , commaSeparatedString:commaSeparatedString)
             
         case let.setProfilePreferences(commaSeparatedString):
             return setProfilePreferencesAsJSONData(commaSeparatedString:commaSeparatedString)
@@ -478,28 +477,28 @@ enum PreferencesRouter: URLRequestConvertible {
 //        return try? JSONSerialization.data(withJSONObject: body, options: [])
 //    }
     
-    fileprivate func setGiftHabbitsAsJSONData(commaSeparatedString: String) -> Data? {
+    fileprivate func setGiftHabbitsAsJSONData(commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "gift_habit_ids" : commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
      
-    fileprivate func setGiftCategoriesAsJSONData( commaSeparatedString: String) -> Data? {
+    fileprivate func setGiftCategoriesAsJSONData( commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "gift_category_ids" : commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setGiftPreferencesAsJSONData( commaSeparatedString: String) -> Data? {
+    fileprivate func setGiftPreferencesAsJSONData( commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "gift_preferences_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationHaveCharteredBeforeAsJSONData(token: String, yesOrNoString: String) -> Data? {
+    fileprivate func setAviationHaveCharteredBeforeAsJSONData(token: String, yesOrNoString:String) -> Data? {
         let body: [String: Any] = [
             "aviation_chartered_before" : yesOrNoString
         ]
@@ -513,21 +512,21 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredDestinationsAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setAviationPreferredDestinationsAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "aviation_preferred_destinations":commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredAirportsAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setAviationPreferredAirportsAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "aviation_preferred_airports": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationAircraftCategoryAsJSONData(commaSeparatedString: String) -> Data? {
+    fileprivate func setAviationAircraftCategoryAsJSONData(commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "aviation_aircraft_category_ids": commaSeparatedString.components(separatedBy: ",").map{Int($0)}
         ]
@@ -549,71 +548,59 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredCuisineAsJSONData(token: String, commaSeparatedString: String , typedPreference:String) -> Data? {
+    fileprivate func setAviationPreferredCuisineAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
-            "aviation_preferred_cuisine_id_other": typedPreference
-            ,"aviation_preferred_cuisine_ids": commaSeparatedString.components(separatedBy: ",")
+            "aviation_preferred_cuisine_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setAviationPreferredBeveragesAsJSONData(token: String, commaSeparatedString: String, typedPreference:String) -> Data? {
+    fileprivate func setAviationPreferredBeveragesAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
-            "aviation_preferred_beverage_id_other": typedPreference
-            ,"aviation_preferred_beverage_ids" : commaSeparatedString.components(separatedBy: ",")
+            "aviation_preferred_beverage_ids" : commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-//    fileprivate func setSearchDestinationAsJSONData( strToSearch: String) -> Data? {
-//        let body: [String: Any] = [
-//            "search" : strToSearch
-//        ]
-//        return try? JSONSerialization.data(withJSONObject: body, options: [])
-//    }
-    
-    fileprivate func setYachtHaveCharteredBeforeAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setYachtHaveCharteredBeforeAsJSONData(token: String, yesOrNo:String) -> Data? {
         let body: [String: Any] = [
-            "yacht_chartered_before": commaSeparatedString.components(separatedBy: ",")
-        ]
-
-        return try? JSONSerialization.data(withJSONObject: body, options: [])
-    }
-    
-    fileprivate func setYachtInterestedInAsJSONData(token: String, commaSeparatedString: String) -> Data? {
-        let body: [String: Any] = [
-            "yacht_interested_in" : commaSeparatedString.components(separatedBy: ",")
+            "yacht_chartered_before": yesOrNo
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtTypeAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setYachtInterestedInAsJSONData(token: String, charterPurchaseOrBoth:String) -> Data? {
         let body: [String: Any] = [
-            "yacht_type": commaSeparatedString.components(separatedBy: ",")
+            "yacht_interested_in" : charterPurchaseOrBoth
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtStyleAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setYachtTypeAsJSONData(token: String, string:String) -> Data? {
         let body: [String: Any] = [
-            "yacht_style" : commaSeparatedString.components(separatedBy: ",")
+            "yacht_type": string    //motorSailOrBoth
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtPreferredCuisineAsJSONData(token: String, commaSeparatedString: String , typedPreference:String) -> Data? {
+    fileprivate func setYachtStyleAsJSONData(token: String, modernClassicOrBoth:String) -> Data? {
         let body: [String: Any] = [
-            "yacht_preferred_cuisine_id_other": typedPreference
-            ,"yacht_preferred_cuisine_ids": commaSeparatedString.components(separatedBy: ",")
+            "yacht_style" : modernClassicOrBoth
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtOtherInterestsAsJSONData(token: String, commaSeparatedString: String ) -> Data? {
+    fileprivate func setYachtPreferredCuisineAsJSONData(token: String, commaSeparatedString:String) -> Data? {
+        let body: [String: Any] = [
+            "yacht_preferred_cuisine_ids": commaSeparatedString.components(separatedBy: ",")
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func setYachtOtherInterestsAsJSONData(token: String, commaSeparatedString:String ) -> Data? {
         let body: [String: Any] = [
             "yacht_interests_ids": commaSeparatedString.components(separatedBy: ",")
         ]
-
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
@@ -625,14 +612,14 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtPreferredRegionsAsJSONData(token: String, commaSeparatedString: String) -> Data? {
+    fileprivate func setYachtPreferredRegionsAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "yacht_preferred_destinations": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setYachtLengthAsJSONData(commaSeparatedString: String) -> Data? {
+    fileprivate func setYachtLengthAsJSONData(commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
             "yacht_length": commaSeparatedString.components(separatedBy: ",")
         ]
@@ -646,45 +633,42 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setDiningCuisinesAsJSONData(token: String, commaSeparatedString: String , typedPreference:String) -> Data? {
+    fileprivate func setDiningCuisinesAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
-            "restaurant_preferred_cuisine_id_other": typedPreference
-            ,"restaurant_preferred_cuisine_ids": commaSeparatedString.components(separatedBy: ",")
+            "restaurant_preferred_cuisine_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setDiningPreferencesAsJSONData(token: String, commaSeparatedString: String , typedPreference:String) -> Data? {
+    fileprivate func setDiningPreferencesAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
-            "restaurant_dinning_id_other": typedPreference
-            ,"restaurant_dinning_ids": commaSeparatedString.components(separatedBy: ",")
+            "restaurant_dinning_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setDiningBeveragesAsJSONData(token: String, commaSeparatedString: String , typedPreference:String) -> Data? {
+    fileprivate func setDiningBeveragesAsJSONData(token: String, commaSeparatedString:String) -> Data? {
         let body: [String: Any] = [
-            "restaurant_beverage_id_other": typedPreference
-            ,"restaurant_beverage_ids": commaSeparatedString.components(separatedBy: ",")
+            "restaurant_beverage_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setDiningAllergiesAsJSONData(token: String, commaSeparatedString: String ) -> Data? {
+    fileprivate func setDiningAllergiesAsJSONData(token: String, commaSeparatedString:String ) -> Data? {
         let body: [String: Any] = [
             "restaurant_allergy_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setDiningTimingsAsJSONData(token: String, commaSeparatedString: String ) -> Data? {
+    fileprivate func setDiningTimingsAsJSONData(token: String, commaSeparatedString:String ) -> Data? {
         let body: [String: Any] = [
             "restaurant_timing_ids": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func setDiningSeatingsAsJSONData(token: String, commaSeparatedString: String ) -> Data? {
+    fileprivate func setDiningSeatingsAsJSONData(token: String, commaSeparatedString:String ) -> Data? {
         let body: [String: Any] = [
             "restaurant_seating_ids": commaSeparatedString.components(separatedBy: ",")
         ]
@@ -742,10 +726,9 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
-    fileprivate func setTravelAmenitiesAsJSONData(token: String , commaSeparatedString:String, typedPreference: String) -> Data?{
+    fileprivate func setTravelAmenitiesAsJSONData(token: String , commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
             "travel_amenity_ids": commaSeparatedString.components(separatedBy: ",")
-            ,"travel_amenity_id_other": typedPreference
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -786,10 +769,9 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
-    fileprivate func setTravelMedicalMealsAsJSONData(token: String , commaSeparatedString:String, typedPreference: String) -> Data?{
+    fileprivate func setTravelMedicalMealsAsJSONData(token: String , commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
             "travel_media_dietary_meal": commaSeparatedString.components(separatedBy: ",")
-            ,"travel_media_dietary_meal_other": typedPreference
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -801,33 +783,30 @@ enum PreferencesRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
-    fileprivate func setTravelAllergiesAsJSONData(token: String , commaSeparatedString:String, typedPreference: String) -> Data?{
+    fileprivate func setTravelAllergiesAsJSONData(token: String , commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
             "travel_allergy_ids": commaSeparatedString.components(separatedBy: ",")
-            ,"travel_allergy_id_other": typedPreference
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
     fileprivate func  setVillaDestinationsAsJSONData(token: String , commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "villa_preferred_destinations_ids": commaSeparatedString.components(separatedBy: ",")
+            "villa_preferred_destinations": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func  setVillaAmenitiesAsJSONData(token: String , commaSeparatedString:String, typedPreference: String) -> Data?{
+    fileprivate func  setVillaAmenitiesAsJSONData(token: String , commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "villa_preferred_amenities_ids": commaSeparatedString.components(separatedBy: ",")
-            ,"villa_preferred_amenities_id_other": typedPreference
+            "villa_preferred_amenities": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func  setVillaAccomodationAsJSONData(token: String , commaSeparatedString:String, typedPreference: String) -> Data?{
+    fileprivate func  setVillaAccomodationAsJSONData(token: String , commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "villa_preferred_accommodations_ids": commaSeparatedString.components(separatedBy: ",")
-            ,"villa_preferred_accommodations_id_other": typedPreference
+            "villa_preferred_accommodations": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
