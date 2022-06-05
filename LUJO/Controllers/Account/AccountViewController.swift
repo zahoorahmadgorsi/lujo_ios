@@ -217,7 +217,7 @@ class AccountViewController: UIViewController {
     }
     
     func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Events Error", error: error)
+        showErrorPopup(withTitle: "Account Error", error: error)
     }
     
     func showFeedback(_ message: String) {

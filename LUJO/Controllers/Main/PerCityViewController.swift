@@ -230,7 +230,7 @@ class PerCityViewController: UIViewController {
         self.getFilters(for: category) { (filters, filterError) in
             self.hideNetworkActivity()
             if let error = filterError {
-                self.showError(error)
+                self.showError(error, "Filters")
             } else {
                 self.filters = filters
                 self.quickFilters = filters?.quickFilters ?? []
@@ -263,8 +263,8 @@ class PerCityViewController: UIViewController {
 //        naHUD.textLabel.text = "Loading " + category.rawValue
     }
     
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Events Error", error: error)
+    func showError(_ error: Error, _ errorTitle:String) {
+        showErrorPopup(withTitle: errorTitle, error: error)
     }
     
     func showFeedback(_ message: String) {
@@ -371,7 +371,7 @@ class PerCityViewController: UIViewController {
             self.navigationController?.pushViewController(viewController, animated: false)
         }else{
             let error = BackendError.parsing(reason: "No filters are available")
-            self.showError(error)
+            self.showError(error, "Filter")
         }
     }
     
@@ -578,7 +578,7 @@ extension PerCityViewController: CityViewProtocol {
                 self.hideNetworkActivity()
 
                 if let error = error {
-                    self.showError(error)
+                    self.showError(error, "Favorites")
                     return
                 }
 
@@ -595,7 +595,7 @@ extension PerCityViewController: CityViewProtocol {
                     print("ItemID:\(product.id)" + ", ItemType:" + product.type  + ", ServerResponse:" + informations)
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
-                    self.showError(error)
+                    self.showError(error, "Favorites")
                 }
             }
         }
@@ -606,7 +606,7 @@ extension PerCityViewController: CityViewProtocol {
         getList(for: category) { items, error in
             self.hideNetworkActivity()
             if let error = error {
-                self.showError(error)
+                self.showError(error,self.category.rawValue)
             } else {
                 self.update(listOf: items ?? nil)
             }
@@ -792,7 +792,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
             self.hideNetworkActivity()
             
             if let error = error {
-                self.showError(error)
+                self.showError(error, "Favorites")
                 return
             }
             
@@ -808,7 +808,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
                 print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain wishlist information")
-                self.showError(error)
+                self.showError(error, "Favorites")
             }
         }
         

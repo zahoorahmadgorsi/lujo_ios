@@ -123,6 +123,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
         
+        //zahoor uncomment below line after successfully testing with harshal... this is commented to test loading the product details via push notificatino
 //        if (product.name.count == 0 ){  //detail is going to open due to some push notification
             //showig animation
             let jeremyGif = UIImage.gifImageWithName("logo animation")

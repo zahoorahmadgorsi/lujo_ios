@@ -386,7 +386,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     }
     
     func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Events Error", error: error)
+        showErrorPopup(withTitle: "Dining Error", error: error)
     }
     
     func showNetworkActivity() {

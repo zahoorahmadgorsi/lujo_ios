@@ -117,8 +117,8 @@ class SearchProductsViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Events Error", error: error)
+    func showError(_ error: Error, _ errorTitle:String) {
+        showErrorPopup(withTitle: errorTitle, error: error)
     }
     
     func showFeedback(_ message: String) {
@@ -258,7 +258,7 @@ extension SearchProductsViewController {
         getList(for: category, past: past, term: term) { items, error in
             self.hideNetworkActivity()
             if let error = error {
-                self.showError(error)
+                self.showError(error, category.rawValue)
             }
             self.update(listOf: items)  //incase of error items would have []
         }
@@ -382,7 +382,7 @@ extension SearchProductsViewController {
                 self.hideNetworkActivity()
                 
                 if let error = error {
-                    self.showError(error)
+                    self.showError(error, "Favorite")
                     return
                 }
                 
@@ -394,7 +394,7 @@ extension SearchProductsViewController {
                     print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
-                    self.showError(error)
+                    self.showError(error, "Favorite")
                 }
             }
         }

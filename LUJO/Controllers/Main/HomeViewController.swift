@@ -265,14 +265,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 self.naHUD.dismiss()
             }
             if let error = error {
-                self.showError(error)
+                self.showError(error, "Preferences")
                 return
             }
             if let userPreferences = information {
                 LujoSetup().store(userPreferences: userPreferences)
             } else {
                 let error = BackendError.parsing(reason: "Could not fetch the user preferences")
-                self.showError(error)
+                self.showError(error, "Preferences")
             }
         }
     }
@@ -425,8 +425,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         // -------------------------------------------------------------------------------------
     }
     
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Events Error", error: error)
+    func showError(_ error: Error, _ errorTitle:String) {
+        showErrorPopup(withTitle: errorTitle, error: error)
     }
     
     func showFeedback(_ message: String) {
@@ -690,7 +690,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 self.hideNetworkActivity()
                 
                 if let error = error {
-                    self.showError(error)
+                    self.showError(error, "Favorite")
                     return
                 }
                 
@@ -704,7 +704,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                     print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
-                    self.showError(error)
+                    self.showError(error, "Favorite")
                 }
             }
         }
@@ -906,7 +906,7 @@ extension HomeViewController: ImageCarouselDelegate {
             self.hideNetworkActivity()
             
             if let error = error {
-                self.showError(error)
+                self.showError(error, "Favorites")
                 return
             }
             
@@ -919,7 +919,7 @@ extension HomeViewController: ImageCarouselDelegate {
                 print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
-                self.showError(error)
+                self.showError(error, "Favorites")
             }
         }
     }
@@ -961,7 +961,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
             self.hideNetworkActivity()
             
             if let error = error {
-                self.showError(error)
+                self.showError(error, "Favorites")
                 return
             }
             
@@ -1032,7 +1032,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                 print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain wishlist information")
-                self.showError(error)
+                self.showError(error, "Favorites")
             }
         }
         
@@ -1090,7 +1090,7 @@ extension HomeViewController {
         if canSendRequest {
             canSendRequest = false
             guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-                self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
+                self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"), "Verification")
                 return
             }
             
@@ -1104,7 +1104,7 @@ extension HomeViewController {
                     // NEED TO BE REPLACED WITH UI VIEW
                     self.locationEventContainerView.isHidden = true
                     self.noNearbyEventsContainerView?.isHidden = false
-                    self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"))
+                    self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"), "Location")
                 } else {
                     if let info = information , info.count > 0{
                         // NEED TO BE REPLACED WITH UI VIEW
@@ -1132,7 +1132,7 @@ extension HomeViewController {
         }
         
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
+            self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"), "Verification")
             return
         }
         
@@ -1141,7 +1141,7 @@ extension HomeViewController {
             
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)
-                self.showError(BackendError.parsing(reason: "Could not obtain Home information"))
+                self.showError(BackendError.parsing(reason: "Could not obtain Home information"), "Home")
             } else {
                 if let information = information {
                     self.update(information)

@@ -197,8 +197,8 @@ class ProductsViewController: UIViewController {
 //        naHUD.textLabel.text = "Loading " + category.rawValue
     }
     
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Events Error", error: error)
+    func showError(_ error: Error, _ errorTitle:String) {
+        showErrorPopup(withTitle: errorTitle, error: error)
     }
     
     func showFeedback(_ message: String) {
@@ -341,7 +341,7 @@ extension ProductsViewController {
             // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
             self.refreshControl.endRefreshing()
             if let error = error {
-                self.showError(error)
+                self.showError(error, category.rawValue)
             } else {
                 self.update(listOf: items)
             }
@@ -440,7 +440,7 @@ extension ProductsViewController {
                 self.hideNetworkActivity()
                 
                 if let error = error {
-                    self.showError(error)
+                    self.showError(error, "Favorites")
                     return
                 }
                 
@@ -452,7 +452,7 @@ extension ProductsViewController {
                     print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
-                    self.showError(error)
+                    self.showError(error, "Favorites")
                 }
             }
         }
