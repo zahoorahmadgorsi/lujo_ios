@@ -63,7 +63,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //data is loading in viewWillAppear
         //if data is already loaded then re-load silently
 //        let isAlreadyLoaded:Bool = (wishListInformations == nil) ? false : true
-        getWishListInformation(showActivity: true)
+//        getWishListInformation(showActivity: true)    commenting it as its being loaded in view will appear
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +73,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             membershipView.isHidden = isMember
         }
         //refetch data IF ANd ONLY IF no data is there else back animation will not work properly
-        if ((wishListInformations?.isEmpty()) != nil){
+        if (wishListInformations == nil){
             getWishListInformation(showActivity: true)
         }
         startPauseAnimation(isPausing: false)

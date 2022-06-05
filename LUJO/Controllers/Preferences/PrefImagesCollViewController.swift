@@ -470,7 +470,7 @@ class PrefImagesCollViewController: UIViewController {
         case .travel:
             switch prefInformationType {
             case .travelDestinationType:
-                GoLujoAPIManager().setTravelDestinationType(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setTravelDestinationType(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel destination types preferences")
@@ -480,7 +480,7 @@ class PrefImagesCollViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelHotelGroups:
-                GoLujoAPIManager().setTravelHotelGroups(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setTravelHotelGroups(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the hotel groups preferences")
@@ -490,7 +490,7 @@ class PrefImagesCollViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelActivities:
-                GoLujoAPIManager().setTravelActivities(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setTravelActivities(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel activities preferences")
@@ -500,7 +500,7 @@ class PrefImagesCollViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelAirlines:
-                GoLujoAPIManager().setTravelAirlines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setTravelAirlines(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the traveling airlines preferences")
@@ -510,7 +510,7 @@ class PrefImagesCollViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelHotelStyles:
-                GoLujoAPIManager().setTravelHotelStyles(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setTravelHotelStyles(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the hotel styles preferences")

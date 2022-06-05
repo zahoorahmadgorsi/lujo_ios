@@ -156,7 +156,7 @@ extension DestinationSelectionViewController {
                 self.showDestinationsList(taxonomies ?? [])
             }
         case .yachtPreferredRegions:
-            GoLujoAPIManager().searchRegions(token: token, strToSearch: pattern) { taxonomies, error in
+            GoLujoAPIManager().searchRegions( strToSearch: pattern) { taxonomies, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain preferred regions")

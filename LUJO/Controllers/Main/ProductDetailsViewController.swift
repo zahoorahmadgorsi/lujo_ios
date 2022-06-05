@@ -123,7 +123,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         pgrFullView  = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
         
-        if (product.name.count == 0 ){  //detail is going to open due to some push notification
+//        if (product.name.count == 0 ){  //detail is going to open due to some push notification
             //showig animation
             let jeremyGif = UIImage.gifImageWithName("logo animation")
             let imageView = UIImageView(image: jeremyGif)
@@ -135,7 +135,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
 //                self.hideNetworkActivity()
                 imageView.removeFromSuperview()
                 if let error = error {
-                    self.showError(error)
+                    self.showError(error, "Product Detail")
                     return
                 }
                 if let info = information {
@@ -143,12 +143,12 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     self.setUpUi()
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain product details")
-                    self.showError(error)
+                    self.showError(error, "Product Detail")
                 }
             }
-        }else{
-            setUpUi()
-        }
+//        }else{
+//            setUpUi()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,17 +181,17 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getExperiences( term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    let error = BackendError.parsing(reason: "Experience could not be loaded")
                     completion(nil, error)
                     return
                 }
                 completion(list[0], error)
             }
         }else if (product.type == "villa"){
-            EEAPIManager().getVillas(token, term: nil, cityId: nil, productId: product.id) { list, error in
+            EEAPIManager().getVillas(term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    let error = BackendError.parsing(reason: "Villa could not be loaded")
                     completion(nil, error)
                     return
                 }
@@ -201,17 +201,17 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getGoods( term: nil, giftCategoryId: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    let error = BackendError.parsing(reason: "Gift could not be loaded")
                     completion(nil, error)
                     return
                 }
                 completion(list[0], error)
             }
         }else if (product.type == "yacht"){
-            EEAPIManager().getYachts(token, term: nil, cityId: nil, productId: product.id) { list, error in
+            EEAPIManager().getYachts( term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Events information")
+                    let error = BackendError.parsing(reason: "Yacht could not be loaded")
                     completion(nil, error)
                     return
                 }
@@ -560,7 +560,7 @@ extension ProductDetailsViewController {
         var count = (product.villaAmenities?.count ?? 0)
         if count > 0 , let items = product.villaAmenities{
             for item in items{
-                itemsList.append(ProductDetail(key: "name",value: item.name,isHighSeason: nil))
+                itemsList.append(ProductDetail(key: "name",value: item,isHighSeason: nil))
             }
         }
         //preparing facilites data of collection view
@@ -647,8 +647,8 @@ extension ProductDetailsViewController {
         if let val = product.exteriorDesigner , val.count > 0{
             itemsList.append(ProductDetail(key: "Exterior Designer",value: val,isHighSeason: nil))
         }
-        if let val = product.buildYear, val.count > 0{
-            itemsList.append(ProductDetail(key: "Build Year",value: val,isHighSeason: nil))
+        if let val = product.buildYear, val > 0{
+            itemsList.append(ProductDetail(key: "Build Year",value: String(val),isHighSeason: nil))
         }
         if let val = product.refitYear, val.count > 0{
             itemsList.append(ProductDetail(key: "Refit Year",value: val,isHighSeason: nil))
@@ -921,7 +921,7 @@ extension ProductDetailsViewController {
 
     fileprivate func setRecentlyViewed() {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"))
+            self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"), "Verification")
             return
         }
 //        print(event.id)
@@ -937,8 +937,8 @@ extension ProductDetailsViewController {
         }
     }
     
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Recently Viewed Error", error: error)
+    func showError(_ error: Error, _ errorTitle:String) {
+        showErrorPopup(withTitle: errorTitle, error: error)
     }
     
     func showNetworkActivity() {
@@ -961,7 +961,7 @@ extension ProductDetailsViewController {
             self.hideNetworkActivity()
             
             if let error = error {
-                self.showError(error)
+                self.showError(error, "Favorite")
                 return
             }
             
@@ -977,7 +977,7 @@ extension ProductDetailsViewController {
 //                print("ItemID:\(self.product.id)" + ", ItemType:" + self.product.type  + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
-                self.showError(error)
+                self.showError(error, "Favorite")
             }
         }
     }

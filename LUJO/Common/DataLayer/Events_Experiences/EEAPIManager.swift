@@ -182,8 +182,8 @@ class EEAPIManager {
         }
     }
     
-    func getVillas(_ token: String, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.villas(token, term, cityId, productId)).responseJSON { response in
+    func getVillas(term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.villas( term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -199,13 +199,24 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion([], self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
-                                                             from: response.data!)
-                else {
-                    completion([], BackendError.parsing(reason: "Unable to parse response"))
-                    return
+                if let id = productId , !id.isEmpty{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    var products = [Product]()
+                    products.append(result.content) //result.content would be an object, but completion is expecting an array
+                    completion(products, nil)
+                }else{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse the response"))
+                        return
+                    }
+                    completion(result.content, nil)
                 }
-                completion(result.content, nil)
                 return
             case 300 ... 399: // Redirection: Unexpected
                 completion([], self.handleError(response, statusCode))
@@ -270,8 +281,8 @@ class EEAPIManager {
         }
     }
     
-    func getYachts(_ token: String, term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.yachts(token, term, cityId, productId)).responseJSON { response in
+    func getYachts(term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.yachts(term, cityId, productId)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -287,13 +298,24 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion([], self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
-                                                             from: response.data!)
-                else {
-                    completion([], BackendError.parsing(reason: "Unable to parse response"))
-                    return
+                if let id = productId , !id.isEmpty{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    var products = [Product]()
+                    products.append(result.content) //result.content would be an object, but completion is expecting an array
+                    completion(products, nil)
+                }else{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content, nil)
                 }
-                completion(result.content, nil)
                 return
             case 300 ... 399: // Redirection: Unexpected
                 completion([], self.handleError(response, statusCode))

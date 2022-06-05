@@ -156,7 +156,7 @@ class StarRatingViewController: UIViewController {
         case .travel:
             switch self.prefInformationType {
             case .travelHotelRating:
-                GoLujoAPIManager().setTravelHotelRating(token: token, businessStarRating: businessRating , leisureStarRating: leisureRating) { contentString, error in
+                GoLujoAPIManager().setTravelHotelRating( businessStarRating: businessRating , leisureStarRating: leisureRating) { contentString, error in
                     guard error == nil else {
                         
                         Crashlytics.crashlytics().record(error: error!)

@@ -320,7 +320,7 @@ struct Product: Codable {
     var rentPricePerWeekHighSeason: String?
     var salePrice: String?
     var location: Location?     //latitude longitude
-    var villaAmenities: [Taxonomy]?
+    var villaAmenities: [String]?
     var villaFacilities: [Taxonomy]?
     var villaStyle: [Taxonomy]?
     var villaStatus: [Taxonomy]?
@@ -331,7 +331,7 @@ struct Product: Codable {
     var builderName: String?
     var interiorDesigner: String?
     var exteriorDesigner: String?
-    var buildYear: String?
+    var buildYear: Int?
     var refitYear: String?
     var lengthM: String?
     var beamM: String?
@@ -389,7 +389,7 @@ struct Product: Codable {
         case rentPricePerWeekHighSeason = "rent_price_per_week_high_season"
         case salePrice = "sale_price"
         case location
-        case villaAmenities = "villa_amenities"
+        case villaAmenities = "amenities"
         case villaFacilities = "villa_facilities"
         case villaStyle = "villa_style"
         case villaStatus = "villa_status"
@@ -458,10 +458,10 @@ extension Product {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             id = try values.decode(String.self, forKey: .id)
-            print(id)   //625557492fe413001b9c8d0d, 627a5e69d340c1001b0ac816, 627a0018d340c1001b0a717e
-            if id == "625557492fe413001b9c8d0d"{
-                print("crashing")
-            }
+            print(id)   // 627b518f4ae3b8001d834048, 627a0018d340c1001b0a717e
+//            if id == "627b518f4ae3b8001d834048"{
+//                print("crashing")
+//            }
             type = try values.decode(String.self, forKey: .type)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
@@ -518,7 +518,7 @@ extension Product {
             rentPricePerWeekHighSeason = try values.decodeIfPresent(String.self, forKey: .rentPricePerWeekHighSeason)
             salePrice = try values.decodeIfPresent(String.self, forKey: .salePrice)
             location = try values.decodeIfPresent(Location.self, forKey: .location)
-            villaAmenities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaAmenities)
+            villaAmenities = try values.decodeIfPresent([String].self, forKey: .villaAmenities)
             villaFacilities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaFacilities)
             villaStyle = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStyle)
             villaStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .villaStatus)
@@ -529,7 +529,7 @@ extension Product {
             builderName = try values.decodeIfPresent(String.self, forKey: .builderName)
             interiorDesigner = try values.decodeIfPresent(String.self, forKey: .interiorDesigner)
             exteriorDesigner = try values.decodeIfPresent(String.self, forKey: .exteriorDesigner)
-            buildYear = try values.decodeIfPresent(String.self, forKey: .buildYear)
+            buildYear = try values.decodeIfPresent(Int.self, forKey: .buildYear)
             refitYear = try values.decodeIfPresent(String.self, forKey: .refitYear)
             lengthM = try values.decodeIfPresent(String.self, forKey: .lengthM)
             beamM = try values.decodeIfPresent(String.self, forKey: .beamM)

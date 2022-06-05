@@ -1378,7 +1378,7 @@ class PrefCollectionsViewController: UIViewController {
         case .aviation:
             switch prefInformationType {
                 case .aviationHaveCharteredBefore:
-                    GoLujoAPIManager().setAviationHaveCharteredBefore(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationHaveCharteredBefore(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the aviation charter preferences")
@@ -1388,7 +1388,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationInterestedIn:
-                    GoLujoAPIManager().setAviationInterestedIn(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationInterestedIn(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the aviation interest preferences")
@@ -1398,7 +1398,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationPreferredCharter:
-                    GoLujoAPIManager().setAviationPreferredCharter(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredCharter(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the aviation preferred charter preferences")
@@ -1408,7 +1408,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .aviationPreferredCuisine:
-                    GoLujoAPIManager().setAviationPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredCuisines(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the aviation cuisine preferences")
@@ -1419,7 +1419,7 @@ class PrefCollectionsViewController: UIViewController {
                     }
 
                 case .aviationPreferredBevereges:
-                    GoLujoAPIManager().setAviationPreferredBeverages(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setAviationPreferredBeverages(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the aviation bevereges preferences")
@@ -1435,7 +1435,7 @@ class PrefCollectionsViewController: UIViewController {
         case .yachts:
             switch prefInformationType {
                 case .yachtHaveCharteredBefore:
-                    GoLujoAPIManager().setYachtHaveCharteredBefore(token: token,yesOrNo: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtHaveCharteredBefore(yesOrNo: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht charter before information")
@@ -1445,7 +1445,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtInterestedIn:
-                    GoLujoAPIManager().setYachtInterestedIn(token: token,charterPurchaseOrBoth: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtInterestedIn(charterPurchaseOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht interest information")
@@ -1455,7 +1455,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtType:
-                GoLujoAPIManager().setYachtType(token: token,motorSailOrBoth: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setYachtType(motorSailOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht type preferences")
@@ -1465,7 +1465,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtStyle:
-                GoLujoAPIManager().setYachtStyle(token: token,modernClassicOrBoth: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setYachtStyle(modernClassicOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht style preferences")
@@ -1475,7 +1475,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .yachtPreferredCuisines:
-                    GoLujoAPIManager().setYachtPreferredCuisines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtPreferredCuisines(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the preferred yacht cuisines")
@@ -1486,7 +1486,7 @@ class PrefCollectionsViewController: UIViewController {
                     }
 
                 case .yachtOtherInterests:
-                    GoLujoAPIManager().setYachtOtherInterests(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setYachtOtherInterests(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the yacht others interest information")
@@ -1502,7 +1502,7 @@ class PrefCollectionsViewController: UIViewController {
         case .dining:
             switch prefInformationType {
             case .diningCuisines:
-                GoLujoAPIManager().setDiningCuisines(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setDiningCuisines(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining cuisines preferences")
@@ -1512,7 +1512,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .diningAllergies:
-                GoLujoAPIManager().setDiningAllergies(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setDiningAllergies(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining allergies preferences")
@@ -1522,7 +1522,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .diningPreferences:
-                GoLujoAPIManager().setDiningPreferences(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setDiningPreferences(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining preferences")
@@ -1532,7 +1532,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .diningTimings:
-                GoLujoAPIManager().setDiningTimings(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setDiningTimings(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining timing preferences")
@@ -1542,7 +1542,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .diningBeverages:
-                GoLujoAPIManager().setDiningBeverages(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setDiningBeverages(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining bevereges preferences")
@@ -1552,7 +1552,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .diningSeatings:
-                GoLujoAPIManager().setDiningSeatings(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setDiningSeatings(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the dining seating preferences")
@@ -1594,7 +1594,7 @@ class PrefCollectionsViewController: UIViewController {
         case .travel:
             switch prefInformationType {
             case .travelAmenities:
-                GoLujoAPIManager().setTravelAmenities(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setTravelAmenities(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel/hotel amenities preferences")
@@ -1604,7 +1604,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelAirplaneSeat:
-                GoLujoAPIManager().setTravelAirplaneSeat(token: token, airplaneSeat: commaSeparatedString) { (contentString, error) in
+                GoLujoAPIManager().setTravelAirplaneSeat( airplaneSeat: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the airplan seating preferences")
@@ -1614,7 +1614,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelMeals:
-                GoLujoAPIManager().setTravelMeals(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
+                GoLujoAPIManager().setTravelMeals( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel meals preferences")
@@ -1624,7 +1624,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelMedicalMeals:
-                GoLujoAPIManager().setTravelMedicalMeals(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
+                GoLujoAPIManager().setTravelMedicalMeals( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel medical meal preferences")
@@ -1634,7 +1634,7 @@ class PrefCollectionsViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelAllergies:
-                GoLujoAPIManager().setTravelAllergies(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
+                GoLujoAPIManager().setTravelAllergies( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not set the travel allergies preferences")
@@ -1649,7 +1649,7 @@ class PrefCollectionsViewController: UIViewController {
         case .villas:
             switch self.prefInformationType {
                 case .villaAmenities:
-                    GoLujoAPIManager().setVillaAmenities(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
+                    GoLujoAPIManager().setVillaAmenities( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the villa amenities preferences")
@@ -1659,7 +1659,7 @@ class PrefCollectionsViewController: UIViewController {
                         completion(contentString, error)
                     }
                 case .villaAccomodation:
-                    GoLujoAPIManager().setVillaAccomodation(token: token, commaSeparatedString: commaSeparatedString) { (contentString, error) in
+                    GoLujoAPIManager().setVillaAccomodation( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not set the villa accomodation preferences")

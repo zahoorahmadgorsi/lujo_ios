@@ -376,7 +376,7 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .villa:
-                EEAPIManager().getVillas(token, term: term, cityId: cityId, productId: nil) { list, error in
+                EEAPIManager().getVillas(term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")
@@ -397,7 +397,7 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .yacht:
-                EEAPIManager().getYachts(token, term: term, cityId: cityId, productId: nil) { list, error in
+                EEAPIManager().getYachts( term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")

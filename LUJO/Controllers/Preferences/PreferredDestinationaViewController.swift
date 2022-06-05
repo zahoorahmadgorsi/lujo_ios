@@ -279,7 +279,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         case .aviation:
             switch prefInformationType {
             case .aviationPreferredDestination:
-                GoLujoAPIManager().setAviationPreferredDestinations(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setAviationPreferredDestinations(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not save the preferences information")
@@ -289,7 +289,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     completion(contentString, error)
                 }
             case .aviationPreferredAirport:
-            GoLujoAPIManager().setAviationPreferredAirports(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+            GoLujoAPIManager().setAviationPreferredAirports(commaSeparatedString: commaSeparatedString) { contentString, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not save the Preferences information")
@@ -305,7 +305,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         case .yachts:
             switch prefInformationType {
             case .yachtPreferredRegions:
-                GoLujoAPIManager().setYachtPreferredRegions(token: token,commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setYachtPreferredRegions(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not save the Preferences information")
@@ -321,7 +321,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         case .travel:
             switch prefInformationType {
             case .travelDestinations:
-                GoLujoAPIManager().setTravelDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
+                GoLujoAPIManager().setTravelDestinations( commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not save the Preferences information")
@@ -337,7 +337,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         case .villas:
             switch self.prefInformationType {
                 case .villaDestinations:
-                    GoLujoAPIManager().setVillaDestinations(token: token, commaSeparatedString: commaSeparatedString) { contentString, error in
+                    GoLujoAPIManager().setVillaDestinations( commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
                             let error = BackendError.parsing(reason: "Could not save the Preferences information")
