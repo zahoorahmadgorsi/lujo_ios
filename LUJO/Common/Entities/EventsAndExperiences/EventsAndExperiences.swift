@@ -294,7 +294,7 @@ struct Product: Codable {
     var id: String
     var name: String
     var description: String
-    var price: Double?
+    var price: String?
     var link: String?
     var isFeatured: Bool?
     var startDate: Date?
@@ -459,14 +459,15 @@ extension Product {
 
             id = try values.decode(String.self, forKey: .id)
             print(id)   // 627b518f4ae3b8001d834048, 627a0018d340c1001b0a717e
-//            if id == "627b518f4ae3b8001d834048"{
-//                print("crashing")
-//            }
+            if id == "62555e2d5ae5e1001bbca1ff"{
+                print("crashing")
+            }
             type = try values.decode(String.self, forKey: .type)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
-            let priceStr = try values.decodeIfPresent(Int.self, forKey: .price)
-            price = Double(priceStr ?? Int(0.0)) 
+            price = try values.decodeIfPresent(String.self, forKey: .price)
+//            let priceStr = try values.decodeIfPresent(String.self, forKey: .price)
+//            price = Double(priceStr ?? Int(0.0))
             link = try values.decodeIfPresent(String.self, forKey: .link)
             isFeatured = try values.decodeIfPresent(Bool.self, forKey: .isFeatured)
 

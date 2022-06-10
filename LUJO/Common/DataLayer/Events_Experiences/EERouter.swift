@@ -36,7 +36,7 @@ enum EERouter: URLRequestConvertible {
     case villas(String?, String?, String?)
     case goods(String?, String?, String?)
     case yachts( String?, String?, String?)
-    case getYachtGallery(String, String)
+//    case getYachtGallery(String, String)
     case topRated(type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
     case perCity(String, String, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?)
@@ -96,9 +96,6 @@ enum EERouter: URLRequestConvertible {
             else{
                 return .post
             }
-
-        case .getYachtGallery:
-            return .get
         case .topRated:
             return .post
         case .recents:
@@ -136,7 +133,7 @@ enum EERouter: URLRequestConvertible {
                     }
             case let .villas(_, _, id):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
-                        newURLComponents.path.append("/villas/" + productId)
+                        newURLComponents.path.append("/villas/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/villas/search")
                 }
@@ -158,12 +155,6 @@ enum EERouter: URLRequestConvertible {
                 }else{
                     newURLComponents.path.append("/yachts/search")
                 }
-            case let .getYachtGallery(token, postId):
-                newURLComponents.path.append("/yachts/photos")
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token),
-                    URLQueryItem(name: "post_id", value: "\(postId)")
-                ]
             case let .recents(token, limit, type):
                 newURLComponents.path.append("/recent")
                 
@@ -302,8 +293,6 @@ enum EERouter: URLRequestConvertible {
             }else{
                 return getYachtsDataAsJSONData(search: term,location: cityId,id: productId)
             }
-        case.getYachtGallery:
-            return nil
         case let .topRated(type,term):
             return getTopRatedDataAsJSONData( type: type, term:term )
         case .recents:
@@ -359,6 +348,7 @@ enum EERouter: URLRequestConvertible {
     
     fileprivate func getVillasDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
         var body: [String: Any] = [:]
+        body["page"] = 1
         body["per_page"] = 20
         if let search = search , !search.isEmpty {
             body["search"] = search
@@ -375,7 +365,7 @@ enum EERouter: URLRequestConvertible {
     
     fileprivate func getYachtsDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
         var body: [String: Any] = [:]
-//        body["page"] = 1
+        body["page"] = 1    //else this API might fail as there are thousands of yachts data is available
         body["per_page"] = 20
         if let search = search , !search.isEmpty {
             body["search"] = search

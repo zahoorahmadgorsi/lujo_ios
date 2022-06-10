@@ -124,7 +124,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         self.view.addGestureRecognizer(pgrFullView!)        //applying pan gesture on full main view
         
         //zahoor uncomment below line after successfully testing with harshal... this is commented to test loading the product details via push notificatino
-//        if (product.name.count == 0 ){  //detail is going to open due to some push notification
+        if (product.name.count == 0 ){  //detail is going to open due to some push notification
             //showig animation
             let jeremyGif = UIImage.gifImageWithName("logo animation")
             let imageView = UIImageView(image: jeremyGif)
@@ -147,9 +147,9 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     self.showError(error, "Product Detail")
                 }
             }
-//        }else{
-//            setUpUi()
-//        }
+        }else{
+            setUpUi()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -229,7 +229,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             case "experience":      setupExperience(product)
             case "yacht":
                 setupYacht(product)
-                getYachtGallery(product: product)
+//                getYachtGallery(product: product)
             case "villa":           setupVilla(product)
             default:
                 setupEvents(product)//("It could be restaurant")
@@ -254,24 +254,24 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     }
     
     
-    func getYachtGallery(product: Product){
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            LoginError.errorLogin(description: "User does not exist or is not verified")
-            return
-        }
-        
-        EEAPIManager().getYachtGallery(token, postId: product.id) { gallery, error in
-            guard error == nil else {
-                Crashlytics.crashlytics().record(error: error!)
-                _ = BackendError.parsing(reason: "Could not get yacht's gallery")
-                return
-            }
-            if (gallery.count > 0){
-                self.product.gallery = gallery
-                self.setUpGallery(self.product)
-            }
-        }
-    }
+//    func getYachtGallery(product: Product){
+//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+//            LoginError.errorLogin(description: "User does not exist or is not verified")
+//            return
+//        }
+//        
+//        EEAPIManager().getYachtGallery(token, postId: product.id) { gallery, error in
+//            guard error == nil else {
+//                Crashlytics.crashlytics().record(error: error!)
+//                _ = BackendError.parsing(reason: "Could not get yacht's gallery")
+//                return
+//            }
+//            if (gallery.count > 0){
+//                self.product.gallery = gallery
+//                self.setUpGallery(self.product)
+//            }
+//        }
+//    }
     
     @IBAction func requestBooking(_ sender: Any) {
         sendInitialInformation()

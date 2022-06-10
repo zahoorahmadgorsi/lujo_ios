@@ -716,7 +716,7 @@ extension PerCityViewController: CityViewProtocol {
                                   , maxPrice: twelvethFilter) { list, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain per city objects information")
+                let error = BackendError.parsing(reason: category.rawValue + " could not be obtained" )
                 completion(nil, error)
                 return
             }

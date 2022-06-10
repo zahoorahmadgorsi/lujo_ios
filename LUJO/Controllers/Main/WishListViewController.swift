@@ -73,8 +73,10 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             membershipView.isHidden = isMember
         }
         //refetch data IF ANd ONLY IF no data is there else back animation will not work properly
-        if (wishListInformations == nil){
-            getWishListInformation(showActivity: true)
+        if (wishListInformations?.isEmpty() == true){
+            getWishListInformation(showActivity: true)  //fetching openly
+        }else{  //this silent fetch will make the back animation behave improperly, but if we will not fetch silently then latest data would not be available
+            getWishListInformation(showActivity: false) //fetching silently
         }
         startPauseAnimation(isPausing: false)
     }
