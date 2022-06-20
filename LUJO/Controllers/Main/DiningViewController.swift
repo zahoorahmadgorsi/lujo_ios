@@ -107,11 +107,11 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         locationManager.delegate = self
         
         //Loading the preferences related to dining only very first time if and only if user is paid
-        if LujoSetup().getLujoUser()?.membershipPlan != nil && !UserDefaults.standard.bool(forKey: "isDiningPreferencesAlreadyShown")  {
-            let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
-            self.navigationController?.pushViewController(viewController, animated: true)
-            UserDefaults.standard.set(true, forKey: "isDiningPreferencesAlreadyShown")
-        }
+//        if LujoSetup().getLujoUser()?.membershipPlan != nil && !UserDefaults.standard.bool(forKey: "isDiningPreferencesAlreadyShown")  {
+//            let viewController = PrefCollectionsViewController.instantiate(prefType: .dining, prefInformationType: .diningCuisines)
+//            self.navigationController?.pushViewController(viewController, animated: true)
+//            UserDefaults.standard.set(true, forKey: "isDiningPreferencesAlreadyShown")
+//        }
     }
     
     @IBAction func noNearbyRestaurantsDismissButton_onClick(_ sender: Any) {

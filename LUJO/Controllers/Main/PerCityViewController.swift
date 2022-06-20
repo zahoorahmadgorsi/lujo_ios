@@ -121,44 +121,44 @@ class PerCityViewController: UIViewController {
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
         //showing preferences and get the quick filters (hiding it for now as shuja API isnt returning right results)
-        switch category {
-            case .event: fallthrough
-            case .experience:
-                self.svFilters.isHidden = true
-                //Loading the preferences related to events and experience only very first time
-                if !UserDefaults.standard.bool(forKey: "isEventPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
-                }
-            case .villa:
-                self.svFilters.isHidden = true
-                //Loading the preferences related to villa only very first time
-                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
-                    let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
-                }
-            case .yacht:
-                self.svFilters.isHidden = true
-                //Loading the preferences related to yacht only very first time
-                if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isYachtPreferencesAlreadyShown")
-                }
-            case .gift:
-                self.svFilters.isHidden = true
-                //Loading the preferences related to gift only very first time
-                if !UserDefaults.standard.bool(forKey: "isGiftPreferencesAlreadyShown")  {
-                    let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                    UserDefaults.standard.set(true, forKey: "isGiftPreferencesAlreadyShown")
-                }
-            default:
-                print("No preferences to load")
-
-        }
+//        switch category {
+//            case .event: fallthrough
+//            case .experience:
+//                self.svFilters.isHidden = true
+//                //Loading the preferences related to events and experience only very first time
+//                if !UserDefaults.standard.bool(forKey: "isEventPreferencesAlreadyShown")  {
+//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
+//                }
+//            case .villa:
+//                self.svFilters.isHidden = true
+//                //Loading the preferences related to villa only very first time
+//                if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
+//                    let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
+//                }
+//            case .yacht:
+//                self.svFilters.isHidden = true
+//                //Loading the preferences related to yacht only very first time
+//                if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
+//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isYachtPreferencesAlreadyShown")
+//                }
+//            case .gift:
+//                self.svFilters.isHidden = true
+//                //Loading the preferences related to gift only very first time
+//                if !UserDefaults.standard.bool(forKey: "isGiftPreferencesAlreadyShown")  {
+//                    let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                    UserDefaults.standard.set(true, forKey: "isGiftPreferencesAlreadyShown")
+//                }
+//            default:
+//                print("No preferences to load")
+//
+//        }
         getFilters()
     }
     

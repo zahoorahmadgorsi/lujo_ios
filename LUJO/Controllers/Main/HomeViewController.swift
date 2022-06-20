@@ -530,14 +530,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @IBAction func findAHotelButton_onClick(_ sender: Any) {
         //Loading the preferences related to dining only very first time
-        if !UserDefaults.standard.bool(forKey: "isTravelPreferencesAlreadyShown")  {
-            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
-            self.navigationController?.pushViewController(viewController, animated: true)
-            UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
-        }else{
+//        if !UserDefaults.standard.bool(forKey: "isTravelPreferencesAlreadyShown")  {
+//            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
+//            self.navigationController?.pushViewController(viewController, animated: true)
+//            UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
+//        }else{
             let viewController = HotelViewController.instantiate()
             self.present(viewController, animated: true, completion: nil)
-        }
+//        }
     }
     
     @objc func btnLocationEventsSeeAllTapped(_ sender: Any) {
@@ -628,20 +628,20 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
         
         let initialLoad = UserDefaults.standard.bool(forKey: "showWelcome")
+        
         DispatchQueue.main.async {
             self.navigationController?.setNavigationBarHidden(false, animated: false)
         }
-        
         UserDefaults.standard.set(false, forKey: "showWelcome")
-        tabBarController?.tabBar.isHidden = false
-        splashView.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
+        self.splashView.isHidden = true
         
         //Loading the preferences related to users profile only for the very first time
-        if !UserDefaults.standard.bool(forKey: "isProfilePreferencesAlreadyShown")  {
-            let viewController = PrefImagesCollViewController.instantiate(prefType: .profile, prefInformationType: .profile)
-            self.navigationController?.pushViewController(viewController, animated: true)
-            UserDefaults.standard.set(true, forKey: "isProfilePreferencesAlreadyShown")
-        }
+//        if !UserDefaults.standard.bool(forKey: "isProfilePreferencesAlreadyShown")  {
+//            let viewController = PrefImagesCollViewController.instantiate(prefType: .profile, prefInformationType: .profile)
+//            self.navigationController?.pushViewController(viewController, animated: true)
+//            UserDefaults.standard.set(true, forKey: "isProfilePreferencesAlreadyShown")
+//        }
         
         if initialLoad {
             tabBarController?.selectedIndex = LujoSetup().getLujoUser()?.membershipPlan != nil ? LujoSetup().getLujoUser()?.membershipPlan?.target ?? "" == "all" ? 0 : 1 : 3

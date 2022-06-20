@@ -626,6 +626,36 @@ extension GoLujoAPIManager {
             }
     }
     
+    func unSubscribe(_ token: String, _ email:String, completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(GoLujoRouter.unSubscribe(token,email))
+            .responseJSON { response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {
+                        completion(nil, LoginError.errorLogin(description: "Unhandled response from server"))
+                        return
+                    }
+                    guard (200 ... 299).contains(statusCode) else {
+                        completion(nil, LoginError.errorLogin(description: "Server error \(statusCode)"))
+                        return
+                    }
+                    guard let data = response.data else {
+                        completion(nil, LoginError.errorLogin(description: "There is no data returned from the server"))
+                        return
+                    }
+                    let unSubscribeResponse = try! JSONDecoder().decode(LujoServerResponse<String>.self, from: data)
+                    completion(unSubscribeResponse.content, nil)
+                    
+                case let .failure(error):
+                    if error._code == NSURLErrorTimedOut {
+                        completion(nil, nil)
+                        return
+                    }
+                    completion(nil, LoginError.errorLogin(description: response.result.error!.localizedDescription))
+                }
+            }
+    }
+    
     // MARK: Helper methods
 
     fileprivate func handleSuccess(_ json: [String: Any],

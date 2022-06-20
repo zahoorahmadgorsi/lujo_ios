@@ -44,6 +44,7 @@ class ConversationsViewController: UIViewController {
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
         self.tblView.refreshControl = refreshControl
+//        self.tblView.isEditing = true
         
         self.title = "Conversations"
         
