@@ -719,12 +719,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 }
                 
                 if let informations = information {
-                    self.homeObjects?.specialEvents[index].isFavourite = !(item.isFavourite ?? false)
-                    if (index == 0){
-                        self.specialEventView1.updateInformation(with: self.homeObjects?.specialEvents[index])
-                    }else if (index == 1){
-                        self.specialEventView2.updateInformation(with: self.homeObjects?.specialEvents[index])
-                    }
+                    self.changeHeartForAllProducts(item.id)
                     print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
                 } else {
                     let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
@@ -936,11 +931,7 @@ extension HomeViewController: ImageCarouselDelegate {
             }
             
             if let informations = information {
-                var featuredExperiences = self.featured.itemsList //events in locationEventSlider
-                featuredExperiences[index].isFavourite = !(featuredExperiences[index].isFavourite ?? false)
-                sender.itemsList = featuredExperiences
-                // Store data for later use inside preload reference.
-//                        PreloadDataManager.HomeScreen.scrollViewData = information
+                self.changeHeartForAllProducts(item.id)
                 print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
@@ -954,6 +945,82 @@ extension HomeViewController: ImageCarouselDelegate {
         currentImageNum.text = "\(position + 1)"
     }
     
+    //this method checks if an item is liked in locationSlider then check the presence of this product in all other categories i.e. top rated, recently viewed, yacht, villas, events, and if found then change heart icon every wehre
+    func changeHeartForAllProducts(_ itemId:Int){
+        var items = self.homeRecentSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.recent = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeRecentSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+
+        items = self.homeTopRatedSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.topRated = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeTopRatedSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+
+        items = self.homeGiftsSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.gifts = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeGiftsSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+
+        items = self.homeVillasSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.villas = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeVillasSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+
+        items = self.homeYachtsSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.yachts = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeYachtsSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+  
+        items = self.homeEventSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.events = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeEventSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+  
+        items = self.homeExperienceSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.experiences = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeExperienceSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+  
+        items = self.locationEventSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.events = items    // so that updated value can be loaded next time e.g. event detail
+            self.locationEventSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+
+        items = self.featured.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.featured.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+        // Special Event
+        items = self.homeObjects?.specialEvents ?? []
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.specialEvents = items   //re-assigning as it will automatically reload the collection
+            if index == 0{
+                self.specialEventView1.updateInformation(with: items[index])
+            }else if index == 1{
+                self.specialEventView2.updateInformation(with: items[index])
+            }
+        }
+
+    }
 }
 
 extension HomeViewController: DidSelectSliderItemProtocol {
@@ -991,69 +1058,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
             }
             
             if let informations = information {                
-                switch sender {
-                case self.homeRecentSlider:
-                    var items = self.homeRecentSlider.itemsList
-                    items[index].isFavourite = !(items[index].isFavourite ?? false)
-                    self.homeObjects?.recent = items    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
-                case self.homeTopRatedSlider:
-                    var items = self.homeTopRatedSlider.itemsList
-                    items[index].isFavourite = !(items[index].isFavourite ?? false)
-                    self.homeObjects?.topRated = items    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
-                case self.homeGiftsSlider:
-                    var items = self.homeGiftsSlider.itemsList
-                    items[index].isFavourite = !(items[index].isFavourite ?? false)
-                    self.homeObjects?.gifts = items    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
-                case self.homeVillasSlider:
-                    var items = self.homeVillasSlider.itemsList
-                    items[index].isFavourite = !(items[index].isFavourite ?? false)
-                    self.homeObjects?.villas = items    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
-                case self.homeYachtsSlider:
-                    var items = self.homeYachtsSlider.itemsList
-                    items[index].isFavourite = !(items[index].isFavourite ?? false)
-                    self.homeObjects?.yachts = items    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = items   //re-assigning as it will automatically reload the collection
-                case self.homeEventSlider:
-                    var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
-                    var homeEvents = self.homeEventSlider.itemsList     //events in homeEventSlider
-                    
-                    //Event updated in homeEventList , might also be present in locationlist
-                    //Get the element and its offset
-                    if let item = locationEvents.enumerated().first(where: {$0.element.id == homeEvents[index].id}) {
-//                        print("HomeEventIndex:\(index) , : LocationEventIndex:\(item.offset) ")
-                        locationEvents[item.offset].isFavourite = !(locationEvents[item.offset].isFavourite ?? false)  //update location events list as well
-                        self.locationEventSlider.itemsList = locationEvents //re-assigning as it will automatically reload the collection
-                    }
-                    homeEvents[index].isFavourite = !(homeEvents[index].isFavourite ?? false)
-                    self.homeObjects?.events = homeEvents    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = homeEvents   //re-assigning as it will automatically reload the collection
-                case self.homeExperienceSlider:
-                    var homeExperiences = self.homeExperienceSlider.itemsList //events in locationEventSlider
-                    homeExperiences[index].isFavourite = !(homeExperiences[index].isFavourite ?? false)
-                    self.homeObjects?.experiences = homeExperiences    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = homeExperiences   //re-assigning as it will automatically reload the collection
-                case self.locationEventSlider:
-                    var locationEvents = self.locationEventSlider.itemsList //events in locationEventSlider
-                    var homeEvents = self.homeEventSlider.itemsList     //events in homeEventSlider
-                    
-                    //Event updated in locationlist, might also be present in home event list,
-                    //Get the element and its offset
-                    if let item = homeEvents.enumerated().first(where: {$0.element.id == locationEvents[index].id}) {
-//                        print("LocationEventIndex:\(index) , HomeEventIndex: \(item.offset) ")
-                        homeEvents[item.offset].isFavourite = !(homeEvents[item.offset].isFavourite ?? false)    //update home events list as well
-                        self.homeEventSlider.itemsList = homeEvents //re-assigning as it will automatically reload the collection
-                    }
-                    locationEvents[index].isFavourite = !(locationEvents[index].isFavourite ?? false)
-                    self.homeObjects?.events = locationEvents    // so that updated value can be loaded next time e.g. event detail
-                    sender.itemsList = locationEvents   //re-assigning as it will automatically reload the collection
-                    // Store data for later use inside preload reference.
-//                        PreloadDataManager.HomeScreen.scrollViewData = information
-                default: return
-                }
+                self.changeHeartForAllProducts(item.id)
                 print("ItemID:\(item.id)" + ", ItemType:" + item.type  + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain wishlist information")
