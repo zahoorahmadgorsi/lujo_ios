@@ -208,3 +208,27 @@ struct Membership: Codable {
         self.discount = data["discount"] as? Int ?? -1
     }
 }
+
+struct Participant: Codable {
+    let id: String
+    let username: String
+    let email: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case username
+        case email
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            id = try values.decode(String.self, forKey: .id)
+            username = try values.decode(String.self, forKey: .username)
+            email = try values.decode(String.self, forKey: .email)
+        } catch {
+            throw error
+        }
+    }
+
+}

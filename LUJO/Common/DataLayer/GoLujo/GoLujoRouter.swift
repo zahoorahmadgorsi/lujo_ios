@@ -161,10 +161,9 @@ enum GoLujoRouter: URLRequestConvertible {
             return .get
         case .registerForPush:
             return .post
-        case .getTwilioParticipants:
-            return .post
         case .getReferralTypes: fallthrough
-        case .getReferralCodeAgainstType:
+        case .getReferralCodeAgainstType: fallthrough
+        case .getTwilioParticipants:
             return .get
         default:
             fatalError("Wrong method category called")
@@ -253,8 +252,11 @@ enum GoLujoRouter: URLRequestConvertible {
             newURLComponents.host = urlData.url
             newURLComponents.path = urlData.scheme
             newURLComponents.path.append("/device-token/\(userId)")
-        case .getTwilioParticipants:
+        case let .getTwilioParticipants(type):
             newURLComponents.path.append("/users/twilio")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "type", value: type)
+            ]
         case .unSubscribe:
             newURLComponents.path.append("/users/delete")
         }
@@ -305,14 +307,10 @@ enum GoLujoRouter: URLRequestConvertible {
             return nil // getUserTokenAsJSONData(token)
         case let .registerForPush(userId, deviceToken):
             return getDeviceTokenAsJSONData(userId, deviceToken)
-        case .unregisterForPush:
-            return nil
-        case let .getTwilioParticipants(productType):
-            return getTwilioParticipantsAsJSONData( productType)
+        case .unregisterForPush:        fallthrough
+        case .getTwilioParticipants:    fallthrough
         case .unSubscribe:
             return nil
-//        case let .unSubscribe:
-//            return getUnsubscribeAsJSONData()
         }
     }
 
@@ -429,17 +427,5 @@ enum GoLujoRouter: URLRequestConvertible {
         }
         return "81INxZA3bV43JEJersZaj9b3t5hFrGNm452JgsOL"
     }
-    
-    fileprivate func getTwilioParticipantsAsJSONData(_ productType: String) -> Data? {
-        let data: [String: String] = [
-            "type": productType
-        ]
-        return try? JSONSerialization.data(withJSONObject: data, options: [])
-    }
-    
-//    fileprivate func getUnsubscribeAsJSONData() -> Data? {
-//        let data: [String: String] = [:]
-//        return try? JSONSerialization.data(withJSONObject: data, options: [])
-//    }
-    
+
 }

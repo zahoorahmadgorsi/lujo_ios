@@ -395,11 +395,11 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                     if let statusCode = response.response?.statusCode  {
                         switch statusCode {
                         case 200 ... 299: // Success
-                            guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self, from: response.data!) else {
+                            guard let result = try? JSONDecoder().decode(LujoServerResponse<[Participant]>.self, from: response.data!) else {
                                 print("Twilio: Response format is different then the expected")
                                 return
                             }
-                            var participantEmails = result.content
+                            var participantEmails = result.content.map({$0.email})
     //                                        participantEmails = []
                             participantEmails.append("zahoor.gorsi@gmail.com")
                             participantEmails.append("zahoor.ahmad@live.com")

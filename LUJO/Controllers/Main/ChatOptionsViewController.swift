@@ -84,7 +84,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnCharterAYachtTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "yacht" , name: "Yacht Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "yachts" , name: "Yacht Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController
@@ -99,7 +99,7 @@ class ChatOptionsViewController: UIViewController {
     
     @IBAction func btnVillaTapped(_ sender: Any) {
         let viewController = AdvanceChatViewController()
-        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "villa" , name: "Villa Inquiry")
+        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "villas" , name: "Villa Inquiry")
         let navController = UINavigationController(rootViewController:viewController)
         if #available(iOS 13.0, *) {
             let controller = navController.topViewController
