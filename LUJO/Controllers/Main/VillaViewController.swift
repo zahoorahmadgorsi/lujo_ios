@@ -222,6 +222,7 @@ class VillaViewController: UIViewController {
             let viewController = AdvanceChatViewController()
             let sfRequest = SalesforceRequest(id: self.product.id
                                               ,type: self.product.type
+                                              ,name: self.product.name
                                               ,villa_check_in: dateString
                                               ,villa_check_out: returnDateString
                                               ,villa_guests: self.guestsCount

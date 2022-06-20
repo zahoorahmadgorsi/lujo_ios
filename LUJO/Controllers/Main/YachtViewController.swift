@@ -251,7 +251,8 @@ class YachtViewController: UIViewController {
         self.dismiss(animated: true) {
             let viewController = AdvanceChatViewController()
             let sfRequest = SalesforceRequest(id: self.product.id
-                                              , type: self.product.type
+                                              ,type: self.product.type
+                                              ,name: self.product.name
                                               ,yacht_charter: yachtCharter
                                               ,yacht_destination: destination
                                               ,yacht_date_from: dateString

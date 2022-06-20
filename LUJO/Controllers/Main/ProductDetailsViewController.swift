@@ -897,6 +897,7 @@ extension ProductDetailsViewController {
 
                 //            print(initialMessage)
                 let viewController = AdvanceChatViewController()
+                
                 let salesForceRequest = SalesforceRequest(id: product.id , type: product.type, name: product.name, date: salesForceRequest?.dingingRequestDate, time: salesForceRequest?.dingingRequestTime, persons: salesForceRequest?.dingingRequestPersons)
                 viewController.salesforceRequest = salesForceRequest
                 viewController.initialMessage = initialMessage
