@@ -74,6 +74,11 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
         }
+        //Setting up navigation bar
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
+        navigationController?.navigationBar.isTranslucent = false
         
         configureMessageCollectionView()
         configureMessageInputBar()
@@ -174,7 +179,12 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     
     @objc func imgCrossTapped(_ sender: Any) {
         self.dismiss(animated: true, completion:{
-            self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
+            if let vc = self.presentationController, let delegate = vc.delegate{
+                delegate.presentationControllerDidDismiss?(vc)
+            }else{  //user has come to chat from mybookings, preferences, custom aviation request
+                self.navigationController?.popViewController(animated: true)
+            }
+            
         })
     }
     

@@ -291,7 +291,9 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func handleDeleteChannel(alertAction: UIAlertAction! ) -> Void {
         if let indexPath = self.deleteIndexPath {
             if let conversation = self.conversations[indexPath.row].tchConversation{
+                self.showNetworkActivity()
                 conversation.destroy { (result) in
+                    self.hideNetworkActivity()
                     if (result.isSuccessful){
                         self.conversations.remove(at: indexPath.row)
                         // Note that indexPath is wrapped in an array:  [indexPath]
