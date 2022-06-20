@@ -176,7 +176,11 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     
     @objc func imgCrossTapped(_ sender: Any) {
         self.dismiss(animated: true, completion:{
-            self.presentationController?.delegate?.presentationControllerDidDismiss?(self.presentationController!)
+            if let vc = self.presentationController, let delegate = vc.delegate{
+                delegate.presentationControllerDidDismiss?(vc)
+            }else{  //user has come to chat from mybookings, preferences, custom aviation request
+                self.navigationController?.popViewController(animated: true)
+            }
         })
     }
     
