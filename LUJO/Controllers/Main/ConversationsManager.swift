@@ -376,7 +376,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     
     func addParticipants(productType:String){
         if let convers = self.conversation{
-            Alamofire.request(GoLujoRouter.getTwilioParticipants(productType))
+            Alamofire.request(GoLujoRouter.getTwilioParticipants(Utility.getVerticalType(productType)))
                 .responseJSON { response in
                     guard response.result.error == nil else {
                         print("Twilio: Could not get any participant to add into the twilio conversation")
@@ -389,9 +389,9 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                                 print("Twilio: Response format is different then the expected")
                                 return
                             }
-                            let participantEmails = result.content
-//                            participantEmails.append("zahoor.gorsi@gmail.com")
-//                            participantEmails.append("zahoor.ahmad@live.com")
+                            var participantEmails = result.content
+                            participantEmails.append("zahoor.gorsi@gmail.com")
+                            participantEmails.append("zahoor.ahmad@live.com")
                             for participantEmail in participantEmails{
 //                                print("Twilio: Participant Email \(participantEmail)")
                                 convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in

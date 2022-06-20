@@ -110,4 +110,16 @@ struct Utility
         )
         UIApplication.topViewController()?.present(activityViewController, animated: true, completion: nil)
     }
+    
+    static func getVerticalType(_ productType : String ) -> String{
+        var verticalType = "access"
+        if productType == "aviation"{
+            verticalType = "aviation"
+        }else if productType == "yacht"{
+            verticalType = "yachts"
+        }else if productType == "villa"{
+            verticalType = "villas"
+        }
+        return verticalType
+    }
 }

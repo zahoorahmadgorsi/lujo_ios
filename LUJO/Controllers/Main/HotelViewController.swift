@@ -163,7 +163,7 @@ class HotelViewController: UIViewController {
                 if let error = error {
                     print ("ERROR: \(error.localizedDescription)")
                     //self.showErrorPopup(withTitle: "Error", error:error)
-                    return
+//                    return
                 }
 
 //                print ("Success: custom request table.")

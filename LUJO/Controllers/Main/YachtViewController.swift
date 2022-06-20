@@ -252,6 +252,7 @@ class YachtViewController: UIViewController {
 
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
+        
         showNetworkActivity()
         CustomRequestAPIManager.shared.requestYacht(destination: destination, yachtName: yachtNameTextField.text, yachtCharter: yachtCharter, dateFrom: dateString, dateTo: returnDateString, guestsCount: guestsCount, token: token) { error in
             DispatchQueue.main.async {
@@ -259,7 +260,7 @@ class YachtViewController: UIViewController {
                 if let error = error {
                     print ("ERROR: \(error.localizedDescription)")
                     //self.showErrorPopup(withTitle: "Error", error:error)
-                    return
+//                    return
                 }
 
                 print ("Success: custom request yacht.")
