@@ -47,13 +47,7 @@ class ConversationsViewController: UIViewController {
         
         self.title = "Conversations"
         
-        let searchBarButton = UIButton(type: .system)
-        searchBarButton.setImage(UIImage(named: "cross"), for: .normal)
-//        searchBarButton.setTitle("Cancel", for: .normal)
-        searchBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-        searchBarButton.addTarget(self, action: #selector(imgCrossTapped(_:)), for: .touchUpInside)
-        searchBarButton.sizeToFit()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBarButton)
+        createRightBarButtons()
         
         loadFromUserDefaults()
     }
@@ -76,6 +70,14 @@ class ConversationsViewController: UIViewController {
             self.tblView.reloadData()
             self.getConversations(showActivity: false)    //silently loading the conversations.
         }
+    }
+    
+    //this method creates the cross and edit button, on tap of this button, UIViewcontroller is closed
+    private func createRightBarButtons(){
+        let imgCross    = UIImage(named: "cross")!
+        let btnCross   = UIBarButtonItem(image: imgCross,  style: .plain, target: self, action: #selector(imgCrossTapped(_:)))
+        navigationItem.rightBarButtonItems = [btnCross]   //order is first and second (right to left)
+
     }
     
     @objc func refreshConversations() {

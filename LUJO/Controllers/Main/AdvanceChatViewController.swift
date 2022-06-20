@@ -265,10 +265,10 @@ final class AdvanceChatViewController: ConversationViewController {
 //    }
     
     override func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        if !isPreviousMessageSameSender(at: indexPath) {
-            let name = message.sender.displayName
-            return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
-        }
+//        if !isPreviousMessageSameSender(at: indexPath) {
+//            let name = message.sender.displayName
+//            return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+//        }
         return nil
     }
 
@@ -565,18 +565,21 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
     func sendSalesForceRequest(conversation: TCHConversation?){
         self.conversation = conversation
         //logging this request to the sales force as well
-        Mixpanel.mainInstance().track(event: "Product Request",
-                                      properties: ["Product Name" : self.salesforceRequest.productName
-                                                   ,"Product Type" : self.salesforceRequest.productType
-                                                   ,"ProductId" : self.salesforceRequest.productId])
-//        self.showNetworkActivity()
+        
+        self.showNetworkActivity()
         EEAPIManager().sendSalesForceRequest(salesforceRequest: salesforceRequest, conversationId: conversation?.sid ?? "NoChannel", type: salesforceRequest.productType){ customBookingResponse, error in
-//            self.hideNetworkActivity()
+            self.hideNetworkActivity()
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 BackendError.parsing(reason: "Could not obtain the salesforce_id")
                 return
             }
+            Mixpanel.mainInstance().track(event: "Product Request",
+                                          properties: ["Product Name" : self.salesforceRequest.productName
+                                                       ,"Product Type" : self.salesforceRequest.productType
+                                                       ,"ProductId" : self.salesforceRequest.productId])
+            print("Twilio: conversation created, joined, channelID been sent to salesforce successfully")
+
         }
     }
 }

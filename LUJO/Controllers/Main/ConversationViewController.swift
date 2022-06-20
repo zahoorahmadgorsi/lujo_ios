@@ -207,25 +207,28 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         let chatUser:ChatUser = ChatUser(senderId:"0000" , displayName:"LUJO", avatar: displayPicture)
         var defaultMessage:String = "Please include all the important details such as "
         if (type == "event" || type == "experience" || type == "special-event"){
-            defaultMessage += "number of guests, location, date, time, budget "
+            defaultMessage = "Please let us know your preferred event name including the location, date, number of tickets, budget for each ticket "
         }else
         if(type == "gift"){
             defaultMessage += "name, brand, color, model etc "
         }else if(type == "yacht"){
-            defaultMessage += "yacht charter type, yacht name, yacht type & cruising speed, number of guests, number of cabins, number of crews, builder name & year, refit year, yacht length, style, region, preferred cuisines, embarkation date and disembarkation date etc "
+            defaultMessage = "Please advise the destination, dates, number of guests, budget for your upcoming "
         }else if(type == "villa"){
-            defaultMessage += "villa location, amenities, number of guests, number of rooms and number of washrooms, check in date and check out date etc "
+            defaultMessage += "location, amenities, number of guests, number of rooms, check in date and check out date etc "
         }else if(type == "travel"){
-            defaultMessage += "travel destinations, travel activities, hotel star ratings, hotel groups & styles, amenities,  airlines, cabin class, seating in the airplane, meals, any allergies? etc "
+            defaultMessage = "Kindly advise the destination, duration of trip, number of guests "
         }else if(type == "restaurant"){
-            defaultMessage += "restaurant name, date and time, preferred cuisines, beverages & seatings, any allergies, dining preference, dining time etc "
+            defaultMessage += "restaurant name, date and time, number of guests, preferred cuisines "
         }else if(type == "aviation"){
-            defaultMessage += "one way or round trip, destination city & airport, aircraft category, charter date & time, cuisines & beverages, smoking? etc "
+            defaultMessage = "Kindly let us know your departure/arrival cities, dates, number of passengers "
         }else{
             defaultMessage += "number of guests, locations, date, time, budget "
         }
         defaultMessage +=  "and any other preferences we should note."
-        let chatMessage:ChatMessage = ChatMessage(text: defaultMessage, user: chatUser, messageId: UUID().uuidString, date: Date(), messageIndex: 0)
+        let stringWithAttribute = NSAttributedString(string: defaultMessage,
+                                                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0)
+                                                                  ,NSAttributedString.Key.foregroundColor: UIColor.black])
+        let chatMessage = ChatMessage(attributedText: stringWithAttribute, user: chatUser, messageId: UUID().uuidString, date: Date() , messageIndex: 0)
         return chatMessage
     }
 
@@ -396,14 +399,16 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         return NSAttributedString(string: "Read", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     }
 
+    //User name, not shown in the design
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+//        let name = message.sender.displayName
+//        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        return nil
     }
 
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if let time24hours = message.sentDate.asDateAndTime()["time"]{
-            return NSAttributedString(string: time24hours.time24To12() , attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+            return NSAttributedString(string: time24hours.time24To12() , attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10)])
         }else{
             return nil
         }
@@ -448,12 +453,33 @@ extension ConversationViewController: MessageCellDelegate {
         print("Avatar tapped")
     }
     
+    //if there is a tap on message, and that message contains an attached/embedded image then we are making that image full screen
     func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
+        if let messageLabel = (cell as? TextMessageCell)?.messageLabel, let attrString = messageLabel.attributedText{
+            print(attrString)
+            let range = NSRange(location: 0, length: attrString.length)
+            if (attrString.containsAttachments(in: range)) {
+                var location = 0
+                while location < range.length {
+                    var r = NSRange()
+                    let attrDictionary = attrString.attributes(at: location, effectiveRange: &r)
+                    if let attachment = attrDictionary[NSAttributedString.Key.attachment] as? NSTextAttachment{
+                        if let image = attachment.image ?? attachment.image(forBounds: (attachment.bounds), textContainer: nil, characterIndex: range.location){
+                            self.makeImageFullScreen(image)
+                            return  //no need to continue the loop
+                        }
+                    }
+                    location += r.length
+                }
+            }
+        }
     }
     
     func didTapImage(in cell: MessageCollectionViewCell) {
-        print("Image tapped")
+        if let image = (cell as? MediaMessageCell)?.imageView.image {
+            self.makeImageFullScreen(image)
+        }
     }
     
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {
@@ -488,6 +514,28 @@ extension ConversationViewController: MessageCellDelegate {
         print("Accessory view tapped")
     }
 
+    func makeImageFullScreen(_ image: UIImage){
+        let newImageView = UIImageView(image: image)
+        newImageView.frame = UIScreen.main.bounds
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        self.messageInputBar.inputTextView.resignFirstResponder()//hiding the keypad if opened
+        self.messageInputBar.isHidden = true
+        
+    }
+
+    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        self.messageInputBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
 }
 
 // MARK: - MessageLabelDelegate
@@ -507,6 +555,9 @@ extension ConversationViewController: MessageLabelDelegate {
     
     func didSelectURL(_ url: URL) {
         print("URL Selected: \(url)")
+//        UIApplication.shared.open(url)    //it will open in phone browser i.e. safari
+        let viewController = WebViewVC.instantiate(url)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func didSelectTransitInformation(_ transitInformation: [String: String]) {
@@ -590,21 +641,29 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                         let msg = ChatMessage(attributedText: attributedString, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                         return msg
                     }else{
-                        let msg = ChatMessage(text: messageBody, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
+//                        let msg = ChatMessage(text: messageBody, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
+//                        return msg
+                        let stringWithAttribute = NSAttributedString(string: messageBody,
+                                                                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0)
+                                                                                  ,NSAttributedString.Key.foregroundColor: UIColor.white])
+                        let msg = ChatMessage(attributedText: stringWithAttribute, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
                         return msg
                     }
                 }
             }
         }else{
-            //let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: message.author ?? "Author name")
             let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: "Customer Support")
             if let messageBody = message.body {
                 if messageBody.isHtml(){
                     let attributedString = messageBody.parseHTML()
+//                    print(attributedString)
                     let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     return msg
                 }else{
-                    let msg = ChatMessage(text: messageBody, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
+                    let stringWithAttribute = NSAttributedString(string: messageBody,
+                                                                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0)
+                                                                              ,NSAttributedString.Key.foregroundColor: UIColor.black])
+                    let msg = ChatMessage(attributedText: stringWithAttribute, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
                     return msg
                 }
             }

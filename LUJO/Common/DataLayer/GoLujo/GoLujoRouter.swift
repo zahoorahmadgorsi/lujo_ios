@@ -49,6 +49,7 @@ enum GoLujoRouter: URLRequestConvertible {
     case registerForPush(String, String)
     case unregisterForPush(String)
     case getTwilioParticipants(String)
+    case unSubscribe
     
     private func getCategory() -> GoLujoRouterCategory {
         switch self {
@@ -58,7 +59,7 @@ enum GoLujoRouter: URLRequestConvertible {
             return .update
         case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType:
             return .setup
-        case .unregisterForPush:
+        case .unregisterForPush, .unSubscribe:
             return .delete
         }
     }
@@ -172,7 +173,8 @@ enum GoLujoRouter: URLRequestConvertible {
     
     fileprivate func getHTTPMethodDelete() -> HTTPMethod {
         switch self {
-        case .unregisterForPush:
+        case .unregisterForPush: fallthrough
+        case .unSubscribe:
             return .delete
         default:
             fatalError("Wrong method category called")
@@ -253,6 +255,8 @@ enum GoLujoRouter: URLRequestConvertible {
             newURLComponents.path.append("/device-token/\(userId)")
         case .getTwilioParticipants:
             newURLComponents.path.append("/users/twilio")
+        case .unSubscribe:
+            newURLComponents.path.append("/users/delete")
         }
 
         do {
@@ -305,6 +309,10 @@ enum GoLujoRouter: URLRequestConvertible {
             return nil
         case let .getTwilioParticipants(productType):
             return getTwilioParticipantsAsJSONData( productType)
+        case .unSubscribe:
+            return nil
+//        case let .unSubscribe:
+//            return getUnsubscribeAsJSONData()
         }
     }
 
@@ -428,4 +436,10 @@ enum GoLujoRouter: URLRequestConvertible {
         ]
         return try? JSONSerialization.data(withJSONObject: data, options: [])
     }
+    
+//    fileprivate func getUnsubscribeAsJSONData() -> Data? {
+//        let data: [String: String] = [:]
+//        return try? JSONSerialization.data(withJSONObject: data, options: [])
+//    }
+    
 }

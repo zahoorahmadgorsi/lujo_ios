@@ -169,12 +169,9 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             ]
         
         client.createConversation(options: options) { (result, conversation: TCHConversation?) in
-            self.setConversation(conversation: conversation)
-            //logging this request with/without conversation ID to salesforce
-            self.delegate?.sendSalesForceRequest(conversation: conversation)
             if result.isSuccessful{
 //                self.conversation = conversation
-                print("Twilio: Conversation created \(String(describing: conversation?.sid))")
+                print("Twilio: Conversation created sID: \(String(describing: conversation?.sid))")
                 if let convers = conversation{
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
@@ -187,6 +184,8 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
 
     private func joinConversation(_ conversation: TCHConversation, completion: @escaping (Bool) -> Void) {
+        setConversation(conversation: conversation)
+        delegate?.sendSalesForceRequest(conversation: conversation)
         if conversation.status == .joined {
             print("Twilio: Current user already exists in conversation")
             completion(true)
