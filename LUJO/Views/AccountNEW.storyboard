@@ -1846,6 +1846,9 @@
                                                                 <state key="normal" title="UPGRADE TO DINING ACCESS">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="btnPurchaseTapped:" destination="kU6-1j-o4p" eventType="touchUpInside" id="KHb-IB-G9m"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -1932,6 +1935,9 @@
                                                                 <state key="normal" title="UPGRADE TO ALL ACCESS">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="btnPurchaseTapped:" destination="kU6-1j-o4p" eventType="touchUpInside" id="hVE-aT-BWH"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>

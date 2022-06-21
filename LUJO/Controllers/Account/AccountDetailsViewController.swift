@@ -23,14 +23,6 @@ class AccountDetailsViewController: UIViewController {
         let viewController = UIStoryboard.accountNEW.instantiate(identifier) as! AccountDetailsViewController
         viewController.user = user
         viewController.userFullname = user.firstName + " " + user.lastName
-        viewController.paymentType = .dining//user.membershipPlan?.target == "dining" ? .dining : .all
-        let hasMembership = user.membershipPlan ?? nil != nil
-        if hasMembership{   //if user has some membership, if dining then give option to upgrade else view
-            viewController.screenType = (viewController.paymentType == .dining ? .upgradeMembership : .viewMembership)
-        }else{
-            viewController.screenType = .buyMembership  //no option to upgrade but buy
-        }
-        
         return viewController
     }
     
@@ -62,25 +54,28 @@ class AccountDetailsViewController: UIViewController {
     
     
     private(set) var userFullname: String = ""
-    private var screenType: MembershipScreenType = .buyMembership
-    private var paymentType: MembershipType! {
-        didSet {
-            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == (paymentType == .all ? "all" : "dining")})
-        }
-    }
+    //which screen to show for current user's membership type. e.g. for "none" membership we will show screen of "dining" and "all", for "dining" membership we will show "dining" and "all" screen, for all membershiptype we will show "all" screen
+//    private var screenForCurrentMembershipType: MembershipScreenType = .buyMembership
+//    private var membershipType: MembershipType! {
+//        didSet {
+//            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == (membershipType == .all ? "all" : "dining")})
+//        }
+//    }
 
-    private var currentMembership: Membership?
-    private var selectedMembership: Membership?
+//    private var currentMembership: Membership?
+//    private var selectedMembership: Membership?
     
     private let naHUD = JGProgressHUD(style: .dark)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if self.isModal{
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "X", style: .plain, target: self, action: #selector(cancelTapped))
-        }
-        
+        let gestureViewPersonalDetails = UITapGestureRecognizer(target: self, action:  #selector (self.viewPersonalDetailsTapped (_:)))
+        self.viewPersonalDetails.addGestureRecognizer(gestureViewPersonalDetails)
+        let gestureViewCreditDebitCards = UITapGestureRecognizer(target: self, action:  #selector (self.viewCreditDebitCardsTapped (_:)))
+        self.viewCreditDebit.addGestureRecognizer(gestureViewCreditDebitCards)
+        let gestureViewAddressBook = UITapGestureRecognizer(target: self, action:  #selector (self.viewAddressBookTapped (_:)))
+        self.viewAddressBook.addGestureRecognizer(gestureViewAddressBook)
     }
     
     private var navigationBarBackgroundColor: UIColor?
@@ -104,32 +99,7 @@ class AccountDetailsViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    @IBAction func payNowButton_onClick(_ sender: Any) {
-//        if screenType == .viewMembership {
-//            self.navigationController?.pushViewController(AccountDetailsViewController.instantiate(userFullname: userFullname, screenType: .upgradeMembership, paymentType: .all), animated: true)
-//        } else {
-//            if price > 0{
-//                let viewController = PurchaseViewController.instantiate(amount: Double(price), screenType: .membership)
-//                viewController.paymentDelegate = self
-//                self.present(viewController, animated: true, completion: nil)
-//            }else{
-//                guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty, let membershipPlan = selectedMembership else {
-//                    LoginError.errorLogin(description: "User does not exist or is not verified or there is no valid membeship plan")
-//                    return
-//                }
-//                showNetworkActivity()
-//                confirmMembershipPayment(membershipPlan.id,nil,Double(price),hasValidCode ? referralTextField.text! : nil){ error in
-//                    self.hideNetworkActivity()
-//                    if error == nil{
-//                        self.navigationController?.popViewController(animated: true)
-//                    }else{
-//                        print(error?.localizedDescription as Any)
-//                    }
-//                }
-//            }
-//        }
-    }
+
     
     @objc private func handleGesture(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .right {
@@ -155,19 +125,23 @@ class AccountDetailsViewController: UIViewController {
     }
     
     private func updateUI() {
-        //updatig dining and full membership price
-        if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "dining"}){
-            self.lblDiningFourthMessage.text = "$" + String(diningMembership.price)
-        }
-        if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "all"}){
-            self.lblAllFourthMessage.text = "$" + String(fullMembership.price)
-        }
+        // Update name on the card
+        userNameAllLabel.text = userFullname
+        userNameDiningLabel.text = userFullname
         
-        currentMembership = LujoSetup().getLujoUser()?.membershipPlan
-        selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == (paymentType == .all ? "all" : "dining")})
+        //creating gestures here but adding laters, in if else statements
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeLeft.direction = .left
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeRight.direction = .right
 
         
-        if screenType == .buyMembership {
+        let currentMembership = LujoSetup().getLujoUser()?.membershipPlan
+        let membershipPlan = user.membershipPlan?.target
+//        let membershipPlan = "none"   //test case for none
+//        let membershipPlan = "dining"   //test case for dining
+//        let membershipPlan = "all"   //test case for all
+        if membershipPlan != "dining" && membershipPlan != "all" {    //user has no membership plan
             title = "Purchase membership"
             //hiding first and second labels
             self.lblDiningFirstMessage.isHidden = true
@@ -177,17 +151,12 @@ class AccountDetailsViewController: UIViewController {
             //Updating the content of third labels
             self.lblDiningThirdMessage.text = "Purchase dining membership at"
             self.lblAllThirdMessage.text = "Purchase full membership at"
-
-            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-            swipeLeft.direction = .left
-            
-            let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-            swipeRight.direction = .right
-            
+            //adding gestures, when both dining and all cards are visible
             cardsContainerView.addGestureRecognizer(swipeLeft)
             cardsContainerView.addGestureRecognizer(swipeRight)
+            
 
-        } else if screenType == .upgradeMembership {
+        } else if membershipPlan == "dining" {  //user has dining plan hence upgrade able
             title = "Membership upgrade"
 
             //hiding first and second message of all access, but not related to dining
@@ -205,20 +174,14 @@ class AccountDetailsViewController: UIViewController {
             //since user already has dining so upgrading button title to upgrdae to full access
 //            self.btnPurchaseDining.setTitle("Upgrade to all access", for: .normal)
             self.btnPurchaseDining.isHidden = true //hiding this button as user already has purchased dining
-            //adding swiping gestures
-            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-            swipeLeft.direction = .left
-            
-            let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-            swipeRight.direction = .right
-            
+            //adding gestures, when both dining and all cards are visible
             cardsContainerView.addGestureRecognizer(swipeLeft)
             cardsContainerView.addGestureRecognizer(swipeRight)
         } else {
             title = "Membership overview"
             
             diningContainerView.isHidden = currentMembership?.target == "all"
-            allAccessContainerView.isHidden = currentMembership?.target == "dining"
+//            allAccessContainerView.isHidden = currentMembership?.target == "dining"
             //brining relevant card in the centre
             if diningContainerView.isHidden{//if dining is hidden then disable its constraint, which will automatically enable lower priority constraint allAccessCardCentre
                 diningAccessCardCenter.isActive = false
@@ -237,23 +200,14 @@ class AccountDetailsViewController: UIViewController {
             self.lblDiningThirdMessage.text = "for another one year at a cost of"
             self.lblAllThirdMessage.text = "for another one year at a cost of"
         }
-        
-        // Update UI.
-        userNameAllLabel.text = userFullname
-        userNameDiningLabel.text = userFullname
-//        referralTextField?.font = UIFont.systemFont(ofSize: 15, weight: .light)
+        //updatig dining and full membership price
+        if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "dining"}){
+            self.lblDiningFourthMessage.text = "$" + String(diningMembership.price)
+        }
+        if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "all"}){
+            self.lblAllFourthMessage.text = "$" + String(fullMembership.price)
+        }
     }
-    
-    private func formatPrice(amount: Int) -> String? {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.usesSignificantDigits = true
-        
-        return formatter.string(for: amount)
-    }
-    
-
     
     func showError(_ error: Error) {
         showErrorPopup(withTitle: "Error", error: error)
@@ -270,42 +224,25 @@ class AccountDetailsViewController: UIViewController {
     func hideNetworkActivity() {
         naHUD.dismiss()
     }
-    
-    private func confirmMembershipPayment(_ membershipId: String,_ transactionId:String?, _ amount:Double?, _ code: String?, completion: @escaping (Error?) -> Void ){
-        
-        PaymentAPIManagerNEW.shared.confirmMembershipPayment(membershipId, transactionId, amount, code) { membership, error in
-            if let membership = membership {
-                let user = LujoSetup().getLujoUser()
-                user?.membershipPlan = membership
-                LujoSetup().store(userInfo: user!)
-            }
-            
-            completion(error)
-        }
-    }
-}
 
-extension AccountDetailsViewController: PurchasePaymentDelegate {
-
-    func paymentCompleted() {
-        self.navigationController?.popViewController(animated: true)
+    @IBAction func btnPurchaseTapped(_ sender: Any) {
+        let userFullname = "\(user.firstName) \(user.lastName)"
+        let hasMembership = user.membershipPlan ?? nil != nil
+        let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: hasMembership ? .viewMembership : .buyMembership, paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .dining : .all)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func paymentFished(with result: PaymentResult, at session: PaymentSession?, completion: @escaping (Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty, let membershipPlan = selectedMembership else {
-            return completion(LoginError.errorLogin(description: "User does not exist or is not verified or there is no valid membeship plan"))
-        }
-        
-//        PaymentAPIManagerNEW.shared.confirmMembershipPayment(membershipPlan.id, result.reference, result.amount, hasValidCode ? referralTextField.text! : nil) { membership, error in
-//
-//            if let membership = membership {
-//                let user = LujoSetup().getLujoUser()
-//                user?.membershipPlan = membership
-//                LujoSetup().store(userInfo: user!)
-//            }
-//
-//            completion(error)
-//        }
+    @objc func viewPersonalDetailsTapped(_ sender:UITapGestureRecognizer){
+        let viewController = UserProfileViewController.instantiate(user: user)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc func viewCreditDebitCardsTapped(_ sender:UITapGestureRecognizer){
+        print("Allah")
+    }
+    
+    @objc func viewAddressBookTapped(_ sender:UITapGestureRecognizer){
+        print("Allah ho akbar")
     }
 }
 
