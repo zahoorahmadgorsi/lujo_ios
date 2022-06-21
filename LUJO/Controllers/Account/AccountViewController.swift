@@ -210,7 +210,8 @@ class AccountViewController: UIViewController {
     }
     
     @objc func presentUserProfileViewController() {
-        let viewController = UserProfileViewController.instantiate(user: user)
+        //let viewController = UserProfileViewController.instantiate(user: user)
+        let viewController = AccountDetailsViewController.instantiate(user: user)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
