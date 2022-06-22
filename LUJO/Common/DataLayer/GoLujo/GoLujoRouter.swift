@@ -29,8 +29,14 @@ enum GoLujoRouter: URLRequestConvertible {
         }
         return scheme
     }()
-    case getReferralTypes(String)
-    case getReferralCodeAgainstType(String,String)
+    
+    case getAddresses
+    case cardDelete(Card)
+    case cardUpdate(Card)
+    case cardAdd(Card)
+    case getCards
+    case getReferralTypes
+    case getReferralCodeAgainstType(String)
     case refreshToken(String)
     case login(String, String)
     case loginWithOTP(String, String, String)
@@ -53,13 +59,13 @@ enum GoLujoRouter: URLRequestConvertible {
     
     private func getCategory() -> GoLujoRouterCategory {
         switch self {
-        case .createUser, .verify, .requestOTP, .requestLoginOTP, .approved:
+        case .createUser, .verify, .requestOTP, .requestLoginOTP, .approved, .cardAdd:
             return .creation
-        case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword:
+        case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword, .cardUpdate:
             return .update
-        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType:
+        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType, .getCards, .getAddresses:
             return .setup
-        case .unregisterForPush, .unSubscribe:
+        case .unregisterForPush, .unSubscribe,.cardDelete:
             return .delete
         }
     }
@@ -113,17 +119,17 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getHTTPMethodCreation() -> HTTPMethod {
         switch self {
-        case .createUser:
-            return .post
-        case .verify:
-            return .post
-        case .requestOTP:
-            return .post
-        case .requestLoginOTP:
+        case .createUser:       fallthrough
+        case .verify:           fallthrough
+        case .requestOTP:       fallthrough
+        case .requestLoginOTP:  fallthrough
+        case .cardAdd:
             return .post
         case .approved: fallthrough
         case .getReferralTypes: fallthrough
-        case .getReferralCodeAgainstType:
+        case .getReferralCodeAgainstType: fallthrough
+        case .getCards: fallthrough
+        case .getAddresses:
             return .get
         default:
             fatalError("Wrong method category called")
@@ -142,6 +148,8 @@ enum GoLujoRouter: URLRequestConvertible {
             return .post
         case .refreshToken:
             return .post
+        case .cardUpdate:
+            return .put
         default:
             fatalError("Wrong method category called")
         }
@@ -163,7 +171,9 @@ enum GoLujoRouter: URLRequestConvertible {
             return .post
         case .getReferralTypes: fallthrough
         case .getReferralCodeAgainstType: fallthrough
-        case .getTwilioParticipants:
+        case .getTwilioParticipants: fallthrough
+        case .getCards: fallthrough
+        case .getAddresses:
             return .get
         default:
             fatalError("Wrong method category called")
@@ -173,7 +183,8 @@ enum GoLujoRouter: URLRequestConvertible {
     fileprivate func getHTTPMethodDelete() -> HTTPMethod {
         switch self {
         case .unregisterForPush: fallthrough
-        case .unSubscribe:
+        case .unSubscribe:  fallthrough
+        case .cardDelete:
             return .delete
         default:
             fatalError("Wrong method category called")
@@ -190,17 +201,18 @@ enum GoLujoRouter: URLRequestConvertible {
         let urlData = getUrlDataForPushService(isStaging: false)
 
         switch self {
-        case let .getReferralCodeAgainstType(token, discountPercentageEnum):
+        case .getAddresses:         newURLComponents.path.append("/users/user-address")
+        case let .cardDelete(card): newURLComponents.path.append("/users/user-card/delete/" + card.id)
+        case let .cardUpdate(card): newURLComponents.path.append("/users/user-card/update/" + card.id)
+        case .cardAdd:              newURLComponents.path.append("/users/user-card")
+        case .getCards:             newURLComponents.path.append("/users/user-card")
+        case let .getReferralCodeAgainstType(discountPercentageEnum):
             newURLComponents.path.append("/users/get-referral-code")
             newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-                URLQueryItem(name: "discount_percentage", value: discountPercentageEnum),
+                URLQueryItem(name: "discount_percentage", value: discountPercentageEnum)
             ]
-        case let .getReferralTypes(token):
-            newURLComponents.path.append("/list-referral")
-            newURLComponents.queryItems = [
-                URLQueryItem(name: "token", value: token),
-            ]
+        case .getReferralTypes:     newURLComponents.path.append("/list-referral")
+
         case .refreshToken:
             newURLComponents.path.append("/users/new-token")
         case .login:
@@ -273,8 +285,17 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getBodyData() -> Data? {
         switch self {
+        case .getAddresses: fallthrough
+        case .getCards: fallthrough
         case .getReferralCodeAgainstType: fallthrough
-        case .getReferralTypes: return nil
+        case .getReferralTypes: fallthrough
+        case .cardDelete:
+            return nil
+            
+        case let .cardUpdate(card):
+            return getCardUpdateAsJSONData(card)
+        case let .cardAdd(card):
+            return getCardAddAsJSONData(card)
         case let .refreshToken(token):
             return getUserTokenAsJSONData(token)
         case let .login(username, password):
@@ -428,4 +449,24 @@ enum GoLujoRouter: URLRequestConvertible {
         return "81INxZA3bV43JEJersZaj9b3t5hFrGNm452JgsOL"
     }
 
+    fileprivate func getCardUpdateAsJSONData (_ card: Card) -> Data? {
+        let profileData: [String: String] = [
+            "default_card": card.default_card == true ? "true" : "false"
+        ]
+        return try? JSONSerialization.data(withJSONObject: profileData, options: [])
+    }
+    
+    fileprivate func getCardAddAsJSONData(_ card: Card) -> Data? {
+        let data: [String: Any] = [
+            "card_number" : card.card_token,
+            "card_first_name": card.card_first_name,
+            "card_last_name": card.card_last_name,
+            "card_expiry": [
+                "month": card.card_expiry.month,
+                "year": card.card_expiry.year
+            ],
+            "default_card": card.default_card
+        ]
+        return try? JSONSerialization.data(withJSONObject: data, options: [])
+    }
 }

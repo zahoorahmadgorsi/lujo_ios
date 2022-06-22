@@ -99,12 +99,7 @@ class GenerateReferralCodeViewController: UIViewController {
     }
     
     func getReferralTypes(completion: @escaping ([ReferralType]?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
-        
-        GoLujoAPIManager().getReferralTypes(token) { referralCodes, error in
+        GoLujoAPIManager().getReferralTypes() { referralCodes, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain the list of referral options")
@@ -113,18 +108,13 @@ class GenerateReferralCodeViewController: UIViewController {
             }
             completion(referralCodes, error)
         }
-        
     }
     
     
     @IBAction func generateCodeTapped(_ sender: Any) {
         if let selected = selectedItem{
-            guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-                LoginError.errorLogin(description: "User does not exist or is not verified")
-                return
-            }
             showNetworkActivity()
-            GoLujoAPIManager().getReferralCodeAgainstType(token,selected.discountPercentageEnum) { ReferralCode, error in
+            GoLujoAPIManager().getReferralCodeAgainstType(selected.discountPercentageEnum) { ReferralCode, error in
                 self.hideNetworkActivity()
                 guard error == nil , let code = ReferralCode?.referralCode else {
                     Crashlytics.crashlytics().record(error: error!)

@@ -2149,6 +2149,262 @@
             </objects>
             <point key="canvasLocation" x="5012" y="105"/>
         </scene>
+        <!--Card-->
+        <scene sceneID="rX9-qE-crE">
+            <objects>
+                <viewController storyboardIdentifier="CardsViewController" id="N1Q-ze-8ha" customClass="CardsViewController" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hcf-AE-nQ7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WRb-kL-d7w">
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="m4P-32-ykQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="685"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="cardCell" id="74d-nD-s6V" customClass="CardCell" customModule="LUJO" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="44.666666030883789" width="375" height="186.33332824707031"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="74d-nD-s6V" id="LS3-Lh-eWA">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="186.33332824707031"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nzb-Gn-7xB">
+                                                            <rect key="frame" x="16" y="15" width="344" height="156.33333333333334"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bja-Ss-f8d">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="344" height="33"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ZAHOOR AHMAD GORSI" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRQ-st-82C">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="344" height="33"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                            <color key="textColor" name="White Text"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                                            </variation>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RLv-lT-mDC">
+                                                                    <rect key="frame" x="0.0" y="41" width="344" height="33.333333333333343"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="**** **** **** 1234" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeE-0b-QOD">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="121" height="33.333333333333336"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <color key="textColor" name="White Text"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                                            </variation>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-Rx-ENy">
+                                                                            <rect key="frame" x="129" y="0.0" width="6.6666666666666572" height="33.333333333333336"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <color key="textColor" name="White Text"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                                            </variation>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="04/25" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydc-SO-cqB">
+                                                                            <rect key="frame" x="143.66666666666663" y="0.0" width="200.33333333333337" height="33.333333333333336"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <color key="textColor" name="White Text"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                                            </variation>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dL5-lY-rIR" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="82.333333333333329" width="344" height="33"/>
+                                                                    <color key="backgroundColor" name="Action Button"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="33" id="EiF-ih-9RQ"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="10"/>
+                                                                    <state key="normal" title="S E T   A S   D E F A U L T">
+                                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="btnPurchaseTapped:" destination="kU6-1j-o4p" eventType="touchUpInside" id="O7N-Yy-25Y"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CyW-TC-lK8" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="123.33333333333334" width="344" height="33"/>
+                                                                    <color key="backgroundColor" name="Action Button"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="33" id="bQs-1g-10w"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="10"/>
+                                                                    <state key="normal" title="R E M O V E   C A R D">
+                                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="btnPurchaseTapped:" destination="kU6-1j-o4p" eventType="touchUpInside" id="4zo-9B-MIR"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" name="Navigation Bar"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Nzb-Gn-7xB" firstAttribute="leading" secondItem="LS3-Lh-eWA" secondAttribute="leading" constant="16" id="5YP-Pr-UlE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Nzb-Gn-7xB" secondAttribute="bottom" constant="15" id="GJI-hV-DQn"/>
+                                                        <constraint firstItem="Nzb-Gn-7xB" firstAttribute="top" secondItem="LS3-Lh-eWA" secondAttribute="top" constant="15" id="kRI-Lh-ddX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Nzb-Gn-7xB" secondAttribute="trailing" constant="15" id="zJ3-oH-W9e"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="cardCell"/>
+                                                <connections>
+                                                    <outlet property="btnRemoveCard" destination="CyW-TC-lK8" id="xfJ-0m-pNe"/>
+                                                    <outlet property="btnSetAsDefault" destination="dL5-lY-rIR" id="fRL-mO-SyS"/>
+                                                    <outlet property="lblCardExpiry" destination="ydc-SO-cqB" id="ttZ-C1-qbx"/>
+                                                    <outlet property="lblCardNumber" destination="eeE-0b-QOD" id="4ga-Bv-JeZ"/>
+                                                    <outlet property="lblOwnerName" destination="xRQ-st-82C" id="ihl-ce-C9X"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c3E-s7-Zy8">
+                                        <rect key="frame" x="0.0" y="693" width="375" height="56"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Hjt-jA-pWP">
+                                                <rect key="frame" x="16" y="16" width="343" height="24"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ZAHOOR AHMAD GORSI" borderStyle="roundedRect" placeholder="Name On Card" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="59i-hb-a2x" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="343" height="0.0"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" name="White Text"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="4917484589897107" borderStyle="roundedRect" placeholder="Card Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tr9-MC-RKy" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="8" width="343" height="0.0"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    </textField>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qWr-OH-B1j">
+                                                        <rect key="frame" x="0.0" y="16" width="343" height="0.0"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" placeholder="CVV" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oXI-n5-Vpr" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="0.0"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="100" id="TmV-VC-AGe"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="04" borderStyle="roundedRect" placeholder="MM" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rsc-dP-c7S" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                                                                <rect key="frame" x="108" y="0.0" width="70" height="0.0"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="70" id="hGg-LR-702"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                            </textField>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBA-ah-Hlb">
+                                                                <rect key="frame" x="186" y="0.0" width="5" height="0.0"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <color key="textColor" name="White Text"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="25" borderStyle="roundedRect" placeholder="YY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xPx-Tf-RuN" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                                                                <rect key="frame" x="199" y="0.0" width="70" height="0.0"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="70" id="Dk1-jE-ueE"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                            </textField>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qf8-DF-nJ7">
+                                                                <rect key="frame" x="277" y="0.0" width="66" height="0.0"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hi6-7Q-trO">
+                                                        <rect key="frame" x="0.0" y="24" width="343" height="0.0"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S E T   A S   D E F A U L T" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6o-fZ-tjI">
+                                                                <rect key="frame" x="95" y="-7.6666666666666288" width="153" height="15.666666666666666"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                <color key="textColor" name="White Text"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="h6o-fZ-tjI" firstAttribute="centerX" secondItem="hi6-7Q-trO" secondAttribute="centerX" id="30V-7d-XPY"/>
+                                                            <constraint firstItem="h6o-fZ-tjI" firstAttribute="centerY" secondItem="hi6-7Q-trO" secondAttribute="centerY" id="B92-uG-gwG"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" name="Navigation Bar"/>
+                                        <constraints>
+                                            <constraint firstItem="Hjt-jA-pWP" firstAttribute="top" secondItem="c3E-s7-Zy8" secondAttribute="top" constant="16" id="60L-QT-DzF"/>
+                                            <constraint firstAttribute="bottom" secondItem="Hjt-jA-pWP" secondAttribute="bottom" constant="16" id="g3b-b0-SuV"/>
+                                            <constraint firstAttribute="trailing" secondItem="Hjt-jA-pWP" secondAttribute="trailing" constant="16" id="sX3-IR-B1s"/>
+                                            <constraint firstItem="Hjt-jA-pWP" firstAttribute="leading" secondItem="c3E-s7-Zy8" secondAttribute="leading" constant="16" id="zJd-NX-0uO"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4W-HG-C4M" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="701" width="375" height="33"/>
+                                        <color key="backgroundColor" name="Action Button"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="pZt-7F-O1f"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="10"/>
+                                        <state key="normal" title="A D D   A   N E W   C A R D">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnAddANewCardTapped:" destination="N1Q-ze-8ha" eventType="touchUpInside" id="FRz-KJ-0Aq"/>
+                                            <action selector="btnPurchaseTapped:" destination="kU6-1j-o4p" eventType="touchUpInside" id="JH7-Ns-eOd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2Hc-Uh-gE1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="WRb-kL-d7w" firstAttribute="leading" secondItem="2Hc-Uh-gE1" secondAttribute="leading" id="15C-1X-apJ"/>
+                            <constraint firstItem="WRb-kL-d7w" firstAttribute="top" secondItem="2Hc-Uh-gE1" secondAttribute="top" id="Bu4-4X-4bL"/>
+                            <constraint firstItem="2Hc-Uh-gE1" firstAttribute="bottom" secondItem="WRb-kL-d7w" secondAttribute="bottom" id="Udj-1V-jvx"/>
+                            <constraint firstItem="WRb-kL-d7w" firstAttribute="trailing" secondItem="2Hc-Uh-gE1" secondAttribute="trailing" id="z4R-VW-q17"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Card" id="02B-Wt-uPM"/>
+                    <connections>
+                        <outlet property="btnAddANewCard" destination="v4W-HG-C4M" id="2yh-Rl-5cP"/>
+                        <outlet property="lblSetAsDefault" destination="h6o-fZ-tjI" id="mkc-cd-9VW"/>
+                        <outlet property="tblView" destination="m4P-32-ykQ" id="f9q-KI-XgN"/>
+                        <outlet property="txtCVV" destination="oXI-n5-Vpr" id="eAZ-AQ-0Ke"/>
+                        <outlet property="txtCardNumber" destination="tr9-MC-RKy" id="5yd-R8-bEz"/>
+                        <outlet property="txtMM" destination="rsc-dP-c7S" id="s2h-oe-4LV"/>
+                        <outlet property="txtNameOnCard" destination="59i-hb-a2x" id="3vf-yG-VXE"/>
+                        <outlet property="txtYY" destination="xPx-Tf-RuN" id="eWP-6T-S9d"/>
+                        <outlet property="viewAddANewCard" destination="c3E-s7-Zy8" id="UIa-qk-IuI"/>
+                        <outlet property="viewSetAsDefault" destination="hi6-7Q-trO" id="Yma-Ff-ApR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fwQ-7K-dYG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2625" y="875"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Checked Icon" width="24" height="24"/>

@@ -64,6 +64,10 @@
 		30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */; };
 		422AB17B2859C39C00BEDCC3 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB17A2859C39C00BEDCC3 /* WebViewVC.swift */; };
 		422AB17D286229DC00BEDCC3 /* AccountDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB17C286229DC00BEDCC3 /* AccountDetailsViewController.swift */; };
+		422AB17F286345A000BEDCC3 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB17E286345A000BEDCC3 /* CardsViewController.swift */; };
+		422AB1822863467100BEDCC3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB1812863467100BEDCC3 /* Card.swift */; };
+		422AB1842863486900BEDCC3 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB1832863486900BEDCC3 /* Address.swift */; };
+		422AB18D286352A400BEDCC3 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18C286352A400BEDCC3 /* CardCell.swift */; };
 		5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527641E23165CFE00380BEB /* HomeViewController.swift */; };
 		5527642123165D1800380BEB /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* ProductsViewController.swift */; };
 		5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642223165D2500380BEB /* SearchProductsViewController.swift */; };
@@ -452,6 +456,10 @@
 		30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenAviationCell.xib; sourceTree = "<group>"; };
 		422AB17A2859C39C00BEDCC3 /* WebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		422AB17C286229DC00BEDCC3 /* AccountDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsViewController.swift; sourceTree = "<group>"; };
+		422AB17E286345A000BEDCC3 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		422AB1812863467100BEDCC3 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		422AB1832863486900BEDCC3 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		422AB18C286352A400BEDCC3 /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardCell.swift; path = "LUJO/Views/Reusable Views/Account/CardCell.swift"; sourceTree = SOURCE_ROOT; };
 		5527641E23165CFE00380BEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5527642023165D1800380BEB /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		5527642223165D2500380BEB /* SearchProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductsViewController.swift; sourceTree = "<group>"; };
@@ -795,6 +803,7 @@
 		164334DAF647504829A1A768 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				422AB1802863463600BEDCC3 /* Account */,
 				886145D126AB70A30023E92E /* Chat.swift */,
 				9ABCF5C12163E55500D062C9 /* EntityProtocols.swift */,
 				880B9B0C255845B10070D7CD /* Gift.swift */,
@@ -961,6 +970,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				422AB18B2863529100BEDCC3 /* Account */,
 				886FE43527226195000B9530 /* Filters */,
 				886145F326AC01DE0023E92E /* Chat */,
 				9A194FEF22945A5D00E3DBD1 /* HomeEventCell.swift */,
@@ -1000,6 +1010,22 @@
 				9A818F5620EE74CC005B6455 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		422AB1802863463600BEDCC3 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				422AB1812863467100BEDCC3 /* Card.swift */,
+				422AB1832863486900BEDCC3 /* Address.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		422AB18B2863529100BEDCC3 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		5527641C23165A8800380BEB /* Dining */ = {
@@ -1058,6 +1084,7 @@
 				5527644A23195D4300380BEB /* UserProfileViewController.swift */,
 				5527644C23195D5600380BEB /* MembershipViewControllerNEW.swift */,
 				422AB17C286229DC00BEDCC3 /* AccountDetailsViewController.swift */,
+				422AB17E286345A000BEDCC3 /* CardsViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -1149,6 +1176,7 @@
 			isa = PBXGroup;
 			children = (
 				886145F426AC02090023E92E /* ChatCell.swift */,
+				422AB18C286352A400BEDCC3 /* CardCell.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -2204,6 +2232,7 @@
 				9183E84825EBEF3C00656B48 /* GalleryView2.swift in Sources */,
 				9AD6EAC221E49F0B00B695A3 /* Payment Type DataSource.swift in Sources */,
 				9ADC468621590AA600D96C95 /* AviationEntitities.swift in Sources */,
+				422AB18D286352A400BEDCC3 /* CardCell.swift in Sources */,
 				88CEBCEE2652FCA700360CB6 /* TwoSliderPrefViewController.swift in Sources */,
 				88C5EF0526CDFBF400052CE5 /* NotificationParser.swift in Sources */,
 				91FF68DF25E2519300B1761E /* VillaViewController.swift in Sources */,
@@ -2257,6 +2286,7 @@
 				3005D47E23202BFC00401243 /* AviationLuggageSelectionViewController.swift in Sources */,
 				88CEBD0C26546D2D00360CB6 /* AirportCollViewCell.swift in Sources */,
 				1DFE1AC7234772E60025410D /* DiningCityView.swift in Sources */,
+				422AB17F286345A000BEDCC3 /* CardsViewController.swift in Sources */,
 				9ADB1D1E21EE041F00FAB2E9 /* AddCreditCardView.swift in Sources */,
 				9AA95FDE2189BE6F00156AB6 /* LiftDetailViewController.swift in Sources */,
 				918BA99625BDFAD2007B4D43 /* PerCityViewController.swift in Sources */,
@@ -2323,6 +2353,7 @@
 				888B00EF26AF51EE004FA1B5 /* ChatUser.swift in Sources */,
 				1DBC9BF8235F4FB200F0F133 /* Bookings.swift in Sources */,
 				9AC9542221A7055A00C7A119 /* UpdatePhoneNumberView.swift in Sources */,
+				422AB1822863467100BEDCC3 /* Card.swift in Sources */,
 				9A86F07B2189F23400495E4D /* LiftRouteSubView.swift in Sources */,
 				1DBC9BFC235F6BCA00F0F133 /* BookingDetailCell.swift in Sources */,
 				9AD6EABC21E3B78300B695A3 /* PaymentSelectionView.swift in Sources */,
@@ -2415,6 +2446,7 @@
 				3005D47C23202BAC00401243 /* AviationAirportSelectionViewController.swift in Sources */,
 				9A16408321FB1A960041FFCE /* CCRouter.swift in Sources */,
 				3005D47A23202B7D00401243 /* AviationViewController.swift in Sources */,
+				422AB1842863486900BEDCC3 /* Address.swift in Sources */,
 				9183E84325EBEF2400656B48 /* GalleryView1.swift in Sources */,
 				16433521006C0083D625164C /* LujoSetup.swift in Sources */,
 				9AF561E921833D5800B7BD1A /* UIImageView+Download.swift in Sources */,

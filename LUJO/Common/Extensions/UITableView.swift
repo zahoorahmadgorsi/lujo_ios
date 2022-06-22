@@ -8,10 +8,10 @@ extension UITableView {
         self.tableFooterView = UIView(frame: CGRect.zero)
     }
     //Showing a message when no record is available
-    func setEmptyMessage(_ message: String) {
+    func setEmptyMessage(_ message: String, txtColor:UIColor? = .black) {
         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
         messageLabel.text = message
-        messageLabel.textColor = .black
+        messageLabel.textColor = txtColor
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = .center;
         messageLabel.font = UIFont(name: "TrebuchetMS", size: 15)
