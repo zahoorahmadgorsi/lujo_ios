@@ -20,5 +20,7 @@ extension UIColor {
     static let whiteText = UIColor(named: "White Text")!
     static let error = UIColor(named: "Error")!
     static let grayButton = UIColor(named: "Grey Button")!
+    static let lightGrey = UIColor(named: "Light Grey")!
+    
 
 }

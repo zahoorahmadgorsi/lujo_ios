@@ -74,7 +74,6 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBar()
         setupSubviews()
         
         showSearchOptions(for: .oneWay)
@@ -111,14 +110,6 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
         if let airport = destinationAirport {
             self.select(airport, forOrigin: .returnAirport)
         }
-    }
-    
-    func setupNavigationBar() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
-        navigationItem.backBarButtonItem?.title = ""
     }
     
     fileprivate func setupWaitingSearchVIew() {

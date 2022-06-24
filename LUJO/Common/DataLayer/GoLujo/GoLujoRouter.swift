@@ -212,43 +212,27 @@ enum GoLujoRouter: URLRequestConvertible {
                 URLQueryItem(name: "discount_percentage", value: discountPercentageEnum)
             ]
         case .getReferralTypes:     newURLComponents.path.append("/list-referral")
-
-        case .refreshToken:
-            newURLComponents.path.append("/users/new-token")
-        case .login:
-            newURLComponents.path.append("/users/login")
-        case .loginWithOTP:
-            newURLComponents.path.append("/users/login")
-        case .requestLoginOTP:
-            newURLComponents.path.append("/users/login-otp/")
-        case .createUser:
-            newURLComponents.path.append("/users")
-        case .verify:
-            newURLComponents.path.append("/users/verify")
-        case .requestOTP:
-            newURLComponents.path.append("/users/generate-otp/")
-        case .updatePhoneNumber:
-            newURLComponents.path.append("/users/change-phone")
-        case .updateDefaults:
-            newURLComponents.path.append("/setup")
+        case .refreshToken:         newURLComponents.path.append("/users/new-token")
+        case .login:                newURLComponents.path.append("/users/login")
+        case .loginWithOTP:         newURLComponents.path.append("/users/login")
+        case .requestLoginOTP:      newURLComponents.path.append("/users/login-otp/")
+        case .createUser:           newURLComponents.path.append("/users")
+        case .verify:               newURLComponents.path.append("/users/verify")
+        case .requestOTP:           newURLComponents.path.append("/users/generate-otp/")
+        case .updatePhoneNumber:    newURLComponents.path.append("/users/change-phone")
+        case .updateDefaults:       newURLComponents.path.append("/setup")
             newURLComponents.queryItems = [
                 URLQueryItem(name: "type", value: "all"),
             ]
-        case .countryCodes:
-            newURLComponents.path.append("/phone-prefix")
+        case .countryCodes:         newURLComponents.path.append("/phone-prefix")
             newURLComponents.queryItems = [
                 URLQueryItem(name: "id", value: "all"),
             ]
-        case .forgotPassword:
-            newURLComponents.path.append("/users/forgot")
-        case .userProfile:
-            newURLComponents.path.append("/users/profile")
-        case .updateProfile:
-            newURLComponents.path.append("/users/update")
-        case .updateUserImage:
-            newURLComponents.path.append("/users/avatar")
-        case let .approved(token):
-            newURLComponents.path.append("/users/approved")
+        case .forgotPassword:       newURLComponents.path.append("/users/forgot")
+        case .userProfile:          newURLComponents.path.append("/users/profile")
+        case .updateProfile:        newURLComponents.path.append("/users/update")
+        case .updateUserImage:      newURLComponents.path.append("/users/avatar")
+        case let .approved(token):  newURLComponents.path.append("/users/approved")
             newURLComponents.queryItems = [
                 URLQueryItem(name: "token", value: token),
             ]
@@ -459,8 +443,7 @@ enum GoLujoRouter: URLRequestConvertible {
     fileprivate func getCardAddAsJSONData(_ card: Card) -> Data? {
         let data: [String: Any] = [
             "card_number" : card.card_token,
-            "card_first_name": card.card_first_name,
-            "card_last_name": card.card_last_name,
+            "card_holder_name": card.card_holder_name,
             "card_expiry": [
                 "month": card.card_expiry.month,
                 "year": card.card_expiry.year

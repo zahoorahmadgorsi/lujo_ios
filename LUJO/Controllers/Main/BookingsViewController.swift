@@ -58,7 +58,6 @@ class BookingsViewController: UIViewController {
         tableView.register(UINib(nibName: "BookingDetailCell", bundle: nil),
                            forCellReuseIdentifier: BookingDetailCell.cellID)
 //        naHUD.textLabel.text = "Retrieving information ..."
-        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,14 +73,6 @@ class BookingsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
-    }
-    
-    func setupNavigationBar() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
-        navigationItem.backBarButtonItem?.title = ""
     }
     
     func update(bookings list: [AviationBooking]) {

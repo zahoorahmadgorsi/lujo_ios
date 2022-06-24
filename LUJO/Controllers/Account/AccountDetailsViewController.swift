@@ -37,13 +37,9 @@ class AccountDetailsViewController: UIViewController {
     
     @IBOutlet weak var lblDiningFirstMessage: UILabel!
     @IBOutlet weak var lblDiningSecondMessage: UILabel!
-    @IBOutlet weak var lblDiningThirdMessage: UILabel!
-    @IBOutlet weak var lblDiningFourthMessage: UILabel!
 
     @IBOutlet weak var lblAllFirstMessage: UILabel!
     @IBOutlet weak var lblAllSecondMessage: UILabel!
-    @IBOutlet weak var lblAllThirdMessage: UILabel!
-    @IBOutlet weak var lblAllFourthMessage: UILabel!
 
     @IBOutlet weak var btnPurchaseDining: ActionButton!
     @IBOutlet weak var btnPurchaseAll: ActionButton!
@@ -54,17 +50,6 @@ class AccountDetailsViewController: UIViewController {
     
     
     private(set) var userFullname: String = ""
-    //which screen to show for current user's membership type. e.g. for "none" membership we will show screen of "dining" and "all", for "dining" membership we will show "dining" and "all" screen, for all membershiptype we will show "all" screen
-//    private var screenForCurrentMembershipType: MembershipScreenType = .buyMembership
-//    private var membershipType: MembershipType! {
-//        didSet {
-//            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == (membershipType == .all ? "all" : "dining")})
-//        }
-//    }
-
-//    private var currentMembership: Membership?
-//    private var selectedMembership: Membership?
-    
     private let naHUD = JGProgressHUD(style: .dark)
     
     override func viewDidLoad() {
@@ -137,20 +122,21 @@ class AccountDetailsViewController: UIViewController {
 
         
         let currentMembership = LujoSetup().getLujoUser()?.membershipPlan
-        let membershipPlan = user.membershipPlan?.target
-//        let membershipPlan = "none"   //test case for none
-//        let membershipPlan = "dining"   //test case for dining
-//        let membershipPlan = "all"   //test case for all
+        var membershipPlan = user.membershipPlan?.target
+//         membershipPlan = "none"   //test case for none
+//         membershipPlan = "dining"   //test case for dining
+//         membershipPlan = "all"   //test case for all
         if membershipPlan != "dining" && membershipPlan != "all" {    //user has no membership plan
             title = "Purchase membership"
-            //hiding first and second labels
-            self.lblDiningFirstMessage.isHidden = true
-            self.lblDiningSecondMessage.isHidden = true
-            self.lblAllFirstMessage.isHidden = true
-            self.lblAllSecondMessage.isHidden = true
-            //Updating the content of third labels
-            self.lblDiningThirdMessage.text = "Purchase dining membership at"
-            self.lblAllThirdMessage.text = "Purchase full membership at"
+            self.lblDiningFirstMessage.text = "Purchase dining membership at"
+            self.lblAllFirstMessage.text = "Purchase full membership at"
+            //updatig dining and full membership price
+            if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "dining"}){
+                self.lblDiningSecondMessage.text = "$" + String(diningMembership.price)
+            }
+            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "all"}){
+                self.lblAllSecondMessage.text = "$" + String(fullMembership.price)
+            }
             //adding gestures, when both dining and all cards are visible
             cardsContainerView.addGestureRecognizer(swipeLeft)
             cardsContainerView.addGestureRecognizer(swipeRight)
@@ -159,18 +145,18 @@ class AccountDetailsViewController: UIViewController {
         } else if membershipPlan == "dining" {  //user has dining plan hence upgrade able
             title = "Membership upgrade"
 
-            //hiding first and second message of all access, but not related to dining
-            self.lblAllFirstMessage.isHidden = true
-            self.lblAllSecondMessage.isHidden = true
             if let dateTime = currentMembership?.expiration {
                 let date = Date(timeIntervalSince1970: TimeInterval(dateTime))
                 //updating second label's message for both dining only
                 self.lblDiningSecondMessage.text = date.stripTime().whatsAppTimeFormat()
             }
             
-            //Updating the content of third label of all accesss
-            self.lblAllThirdMessage.text = "Purchase full membership at"
-            //price has already been updated at the top of this method
+
+            self.lblAllFirstMessage.text = "Purchase full membership at"
+            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "all"}){
+                self.lblAllSecondMessage.text = "$" + String(fullMembership.price)
+            }
+
             //since user already has dining so upgrading button title to upgrdae to full access
 //            self.btnPurchaseDining.setTitle("Upgrade to all access", for: .normal)
             self.btnPurchaseDining.isHidden = true //hiding this button as user already has purchased dining
@@ -188,8 +174,8 @@ class AccountDetailsViewController: UIViewController {
                 self.btnPurchaseAll.isHidden = true //becuase user is already having all access
             }
             //updating first label's message for both dining and all access, at one time either dining or all access one label would be hidden
-            self.lblDiningFirstMessage.text = "Membership will automatically renew on"
-            self.lblAllFirstMessage.text = "Membership will automatically renew on"
+            self.lblDiningFirstMessage.text = "Membership will expire on"
+            self.lblAllFirstMessage.text = "Membership will expire on"
 
             if let dateTime = currentMembership?.expiration {
                 let date = Date(timeIntervalSince1970: TimeInterval(dateTime))
@@ -197,16 +183,8 @@ class AccountDetailsViewController: UIViewController {
                 self.lblDiningSecondMessage.text = date.stripTime().whatsAppTimeFormat()
                 self.lblAllSecondMessage.text = date.stripTime().whatsAppTimeFormat()
             }
-            self.lblDiningThirdMessage.text = "for another one year at a cost of"
-            self.lblAllThirdMessage.text = "for another one year at a cost of"
         }
-        //updatig dining and full membership price
-        if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "dining"}){
-            self.lblDiningFourthMessage.text = "$" + String(diningMembership.price)
-        }
-        if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "all"}){
-            self.lblAllFourthMessage.text = "$" + String(fullMembership.price)
-        }
+
     }
     
     func showError(_ error: Error) {

@@ -74,11 +74,6 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
         }
-        //Setting up navigation bar
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
         
         configureMessageCollectionView()
         configureMessageInputBar()

@@ -107,9 +107,11 @@ extension UIView {
         }
         return nil
     }
-}
-
-extension UIView {
+    
+    static func instantiateFromNib<T: UIView>() -> T? {
+        return UINib(nibName: "\(self)", bundle: nil).instantiate(withOwner: nil, options: nil).first as? T
+    }
+    
     static func createVerticalSeparator(size: CGSize) -> UIView {
         let separator = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let verticalBar = UIView()
@@ -154,10 +156,13 @@ extension UIView {
             self.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
     }
-}
-
-extension UIView {
-    static func instantiateFromNib<T: UIView>() -> T? {
-        return UINib(nibName: "\(self)", bundle: nil).instantiate(withOwner: nil, options: nil).first as? T
+    
+    func addBackGroundImage(imageName:String){
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: imageName)
+        backgroundImage.contentMode = .scaleAspectFill
+        self.clipsToBounds = true
+        self.insertSubview(backgroundImage, at: 0)
     }
 }
+

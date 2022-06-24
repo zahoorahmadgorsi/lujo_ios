@@ -18,7 +18,7 @@ struct StarChef: Codable {
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case chefName = "chef_name"
-        case chefImage = "chef_imageasdf"
+        case chefImage = "chef_image"
         case chefRestaurant = "chef_restaurant_id"  // actually it is "chef_restaurant"
     }
 }

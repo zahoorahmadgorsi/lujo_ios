@@ -312,10 +312,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     func setupNavigationBar() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
 
         // Create left bar button
         let imgMenu = UIImage(named: "menu_image")

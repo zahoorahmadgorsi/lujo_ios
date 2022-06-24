@@ -21,6 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window = UIWindow(frame: UIScreen.main.bounds)
         windowRouter = Router(mainVC: window!)
         
+//        //navigatino bar non trasparent
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+//        UINavigationBar.appearance().barTintColor = UIColor(named: "Navigation Bar")
+        UINavigationBar.appearance().backgroundColor = .black
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().backItem?.title = ""
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         UIApplication.shared.registerForRemoteNotifications()
         
         LujoSetup().getSetup()

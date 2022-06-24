@@ -29,11 +29,13 @@ class CardsViewController: UIViewController {
     @IBOutlet weak var txtNameOnCard: LujoTextField!
     @IBOutlet weak var txtCardNumber: LujoTextField!
     @IBOutlet weak var txtCVV: LujoTextField!
-    @IBOutlet weak var txtYY: LujoTextField!
     @IBOutlet weak var txtMM: LujoTextField!
-    @IBOutlet weak var viewSetAsDefault: UIView!
+    @IBOutlet weak var txtYY: LujoTextField!
     
+    @IBOutlet weak var viewCross: UIView!
+    @IBOutlet weak var viewSetAsDefault: UIView!
     @IBOutlet weak var lblSetAsDefault: UILabel!
+    
     @IBOutlet weak var btnAddANewCard: ActionButton!
     
     /// Init method that will init and return view controller.
@@ -51,11 +53,17 @@ class CardsViewController: UIViewController {
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
         self.title = "Cards"
-        
-        //adding tap gesture and border around "set as default"
+    
+        //adding tap gesture and border around "set as default" which is inside viewAddANewCard
         let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.tappedOnViewSetAsDefault (_:)))
         self.viewSetAsDefault.addGestureRecognizer(gesture)
         viewSetAsDefault.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: 0.0)
+        //adding background image to viewAddANewCard
+        self.viewAddANewCard.addBackGroundImage(imageName: "card_background")
+        self.viewAddANewCard.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: 12.0)
+        //adding gesture on cross in subuiview viewAddANewCard
+        let gestureCross = UITapGestureRecognizer(target: self, action:  #selector (self.tappedOnViewCross (_:)))
+        self.viewCross.addGestureRecognizer(gestureCross)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +74,6 @@ class CardsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -81,8 +88,8 @@ class CardsViewController: UIViewController {
         }
     }
     
-    func getCards() {
-        if (self.cards.count == 0){
+    func getCards(showActivity: Bool = true) {
+        if (showActivity){
             self.showNetworkActivity()  //if no data is cached then fetch openly else silently
         }
         getCards() {cards, error in
@@ -93,6 +100,7 @@ class CardsViewController: UIViewController {
             }
             if let informations = cards {
                 if informations.count > 0{  //it will contain zero in case of hard coded values
+                    self.cards.removeAll()
                     self.cards = informations
                     self.tblView.reloadData()
                 }
@@ -107,7 +115,8 @@ class CardsViewController: UIViewController {
         GoLujoAPIManager().getCards() { cards, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain the list of cards")
+                let description = error?.localizedDescription ?? "Could not obtain the list of cards"
+                let error = BackendError.parsing(reason: description)
                 completion(nil, error)
                 return
             }
@@ -137,98 +146,140 @@ class CardsViewController: UIViewController {
     }
     
     @IBAction func btnAddANewCardTapped(_ sender: Any) {
-        
         if self.viewAddANewCard.isHidden{
-            btnAddANewCard.setTitle("S A V E   N E W   C A R D", for: .normal)
+            btnAddANewCard.setTitle("S A V E   C A R D", for: .normal)
         }else{
             if let nameOnCard = txtNameOnCard.text, let cardNumber = txtCardNumber.text, let cvv = txtCVV.text, let mm = Int(txtMM.text!), let yy = Int(txtYY.text!){
-                var card = Card("",nameOnCard, cardNumber, cvv, mm, yy, boolSetAsDefault)
+                let card = Card("",nameOnCard, cardNumber, cvv, mm, yy, boolSetAsDefault)
                 showNetworkActivity()
                 GoLujoAPIManager().cardAdd(card) { cardResponse, error in
                     self.hideNetworkActivity()
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        _ = BackendError.parsing(reason: "Could not save the card")
+                        let description = error?.localizedDescription ?? "Card could not be added."
+                        let error = BackendError.parsing(reason: description)
+                        self.showError(error)
                         return
                     }
-                    if let item = cardResponse{
-                        card.id = item.id
-                        self.cards.append(card)
-                        self.tblView.reloadData()
-                    }
+                    //refreshing the data, not doing locally because backend has some processing on this
+                    self.getCards(showActivity: false)
+//                    if let item = cardResponse{
+//                        card.id = item.id
+//                        self.cards.append(card)
+//                        self.tblView.reloadData()
+//                    }
                 }
                 btnAddANewCard.setTitle("A D D   A   N E W   C A R D", for: .normal)
             }
             
         }
-        UIView.transition(with: view, duration: 0.5, options: .curveEaseInOut, animations: {
-            self.viewAddANewCard.isHidden = !self.viewAddANewCard.isHidden
-            })
-        
-        
+        hideUnhideWithAnimation()
     }
     
+    @objc func tappedOnViewCross(_ sender:UITapGestureRecognizer){
+        btnAddANewCard.setTitle("A D D   A   N E W   C A R D", for: .normal)
+        hideUnhideWithAnimation()
+    }
+    
+    func hideUnhideWithAnimation(){
+        UIView.transition(with: view, duration: 0.5, options: .curveEaseInOut, animations: {
+            self.viewAddANewCard.isHidden = !self.viewAddANewCard.isHidden
+        })
+    }
 }
 
 extension CardsViewController: UITableViewDelegate, UITableViewDataSource{
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    //The basic idea is to create a new section (rather than a new row) for each array item. The sections can then be spaced using the section header height.
+    func numberOfSections(in tableView: UITableView) -> Int {
         if self.cards.count == 0 {
             self.tblView.setEmptyMessage("No card(s) are available", txtColor: .white)
         }else{
             self.tblView.restore()
         }
         return self.cards.count
-    }
+        }
+        
+    
+        // There is just one row in every section
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return 1
+        }
+        
+        // Set the spacing between sections
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            return 1
+        }
+        
+        // Make the background color show through
+        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+            let headerView = UIView()
+            headerView.backgroundColor = UIColor.clear
+            return headerView
+        }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cardCell") as! CardCell
-        let model = cards[indexPath.row]
-        
-        
+        let index = indexPath.section
+        let model = cards[index]
+
         //Title of the card
-        cell.lblOwnerName.text = model.ownerName
+        cell.lblCardHolderName.text = model.card_holder_name
         cell.lblCardNumber.text = model.card_token
         cell.lblCardExpiry.text = model.expiryDate
+        
         if(model.default_card){ //if default is true then update button title
-            cell.btnSetAsDefault.setTitle("D E F A U L T", for: .normal)
+            cell.lblCardSetAsDefault.text =  "D E F A U L T"
+            cell.viewSetAsDefault.backgroundColor = UIColor.lightGrey
+            cell.lblCardSetAsDefault.textColor = UIColor.white
         }else{
-            cell.btnSetAsDefault.tag = indexPath.row
-            cell.btnSetAsDefault.addTarget(self, action: #selector(btnSetAsDefaultTapped(sender:)), for: .touchUpInside)
+            cell.viewSetAsDefault.tag = indexPath.section
+            cell.lblCardSetAsDefault.text =  "S E T   A S   D E F A U L T"
+            cell.viewSetAsDefault.backgroundColor = UIColor.rgMid
+            cell.lblCardSetAsDefault.textColor = UIColor.white
+            let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.tappedOnLblSetAsDefault (_:)))
+            cell.viewSetAsDefault.addGestureRecognizer(gesture)
         }
         
-
-        
         //settings tags on cell and both buttons so that i can catch the tapp
-        cell.tag = indexPath.row
-        cell.btnRemoveCard.tag = indexPath.row
+        cell.tag = index
+        cell.viewRemoveCard.tag = index
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.tappedOnRemoveCard (_:)))
+        cell.viewRemoveCard.addGestureRecognizer(gesture)
         
-        cell.btnRemoveCard.addTarget(self, action: #selector(btnRemoveCardTapped(sender:)), for: .touchUpInside)
-        
+        cell.contentView.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: 12.0)
+
         
         return cell
     }
     
-    @objc func btnRemoveCardTapped(sender: UIButton){
-        let card = cards[sender.tag]
-        self.deleteIndexPath = IndexPath(row: sender.tag, section: 0)
-        confirmDelete(card)
+    @objc func tappedOnRemoveCard(_ sender:UITapGestureRecognizer){
+        if let tag = sender.view?.tag{
+            let card = cards[tag]
+            self.deleteIndexPath = IndexPath(row:0, section: tag)
+            confirmDelete(card)
+        }
+        
     }
     
-    @objc func btnSetAsDefaultTapped(sender: UIButton){
-        var card = cards[sender.tag]
-        card.default_card = true
-        showNetworkActivity()
-        GoLujoAPIManager().cardUpdate(card) { stringResponse, error in
-            self.hideNetworkActivity()
-            guard error == nil else {
-                Crashlytics.crashlytics().record(error: error!)
-                _ = BackendError.parsing(reason: "Could not obtain the list of cards")
-                return
+    @objc func tappedOnLblSetAsDefault(_ sender:UITapGestureRecognizer){
+        if let tag = sender.view?.tag{
+            var card = cards[tag]
+            card.default_card = true
+            showNetworkActivity()
+            GoLujoAPIManager().cardUpdate(card) { stringResponse, error in
+                self.hideNetworkActivity()
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    let description = error?.localizedDescription ?? "Card could not be updated."
+                    let error = BackendError.parsing(reason: description)
+                    self.showError(error)
+                    return
+                }
+                self.getCards(showActivity: false)
             }
-            self.cards[sender.tag] = card    //updating the array
-            self.tblView.reloadData()
         }
+
     }
     
     func confirmDelete(_ card: Card) {
@@ -245,20 +296,21 @@ extension CardsViewController: UITableViewDelegate, UITableViewDataSource{
     
     func handleDeleteCard(alertAction: UIAlertAction! ) -> Void {
         if let indexPath = self.deleteIndexPath {
-            let card = cards[indexPath.row]
+            let index = indexPath.section
+            let card = cards[index]
             showNetworkActivity()
             GoLujoAPIManager().cardDelete(card) { stringResponse, error in
                 self.hideNetworkActivity()
                 guard error == nil else {
-                    AlertService.showAlert(style: .actionSheet, title: nil, message: "You can not delete this card.")
+                    let description = error?.localizedDescription ?? "Card can not be deleted."
+                    AlertService.showAlert(style: .actionSheet, title: nil, message: description)
                     return
                 }
-                
-                // Note that indexPath is wrapped in an array:  [indexPath]
-                self.cards.remove(at: indexPath.row)
-//                self.tblView.deleteRows(at: [indexPath], with: .automatic)
+//                // Note that indexPath is wrapped in an array:  [indexPath]
+                self.cards.remove(at: index)
                 self.tblView.reloadData()
                 self.deleteIndexPath = nil
+//                self.getCards(showActivity: false)
             }
         }
     }
@@ -267,5 +319,5 @@ extension CardsViewController: UITableViewDelegate, UITableViewDataSource{
         deleteIndexPath = nil       //re setting the index
     }
     
-    
+
 }

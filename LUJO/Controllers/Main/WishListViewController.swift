@@ -60,17 +60,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //Setting up navigation bar
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
-        
-        //data is loading in viewWillAppear
-        //if data is already loaded then re-load silently
-//        let isAlreadyLoaded:Bool = (wishListInformations == nil) ? false : true
-//        getWishListInformation(showActivity: true)    commenting it as its being loaded in view will appear
     }
     
     override func viewWillAppear(_ animated: Bool) {

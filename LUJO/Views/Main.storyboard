@@ -529,7 +529,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nbe-1L-T5g">
                                                 <rect key="frame" x="0.0" y="1105.5" width="414" height="310.5"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="PXi-sY-E6e">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="PXi-sY-E6e">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="310.5"/>
                                                     </imageView>
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fPW-my-3dG">
@@ -770,9 +770,9 @@
                     <connections>
                         <outlet property="allImagesNum" destination="rSG-k5-iI7" id="FdZ-xQ-Ygs"/>
                         <outlet property="categorySlider" destination="H0u-Hj-ETq" id="yYL-Bp-egg"/>
-                        <outlet property="chiefContainerView" destination="Nbe-1L-T5g" id="3a1-PI-Jiy"/>
-                        <outlet property="chiefImageView" destination="PXi-sY-E6e" id="YQB-FY-Who"/>
-                        <outlet property="chiefNameLabel" destination="zfq-Qb-Nwv" id="Plv-Ki-7i1"/>
+                        <outlet property="chefContainerView" destination="Nbe-1L-T5g" id="3a1-PI-Jiy"/>
+                        <outlet property="chefImageView" destination="PXi-sY-E6e" id="YQB-FY-Who"/>
+                        <outlet property="chefNameLabel" destination="zfq-Qb-Nwv" id="Plv-Ki-7i1"/>
                         <outlet property="currentImageNum" destination="5Xk-fs-6Ul" id="qdf-F4-cZA"/>
                         <outlet property="dimView" destination="yiY-VX-tpA" id="ceE-bg-IZX"/>
                         <outlet property="featured" destination="XXW-Gl-IpF" id="IKw-Kt-amZ"/>

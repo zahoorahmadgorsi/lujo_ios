@@ -46,13 +46,13 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     @IBOutlet var currentImageNum: UILabel!
     @IBOutlet var allImagesNum: UILabel!
     
-    @IBOutlet var chiefContainerView: UIView!
+    @IBOutlet var chefContainerView: UIView!
     @IBOutlet var gradientView: UIView!
-    @IBOutlet var chiefImageView: UIImageView!
+    @IBOutlet var chefImageView: UIImageView!
     @IBOutlet var restaurantName: UILabel!
     @IBOutlet var starsContainerView: UIView!
     @IBOutlet var starsLabel: UILabel!
-    @IBOutlet var chiefNameLabel: UILabel!
+    @IBOutlet var chefNameLabel: UILabel!
     
     var locationRestaurants: [Product] = []
     private var canSendRequest: Bool = true
@@ -88,8 +88,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNavigationBar()
         
         featured.overlay = true
         featured.delegate = self
@@ -174,14 +172,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         startPauseAnimation(isPausing: true)
     }
     
-    func setupNavigationBar() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
-        navigationItem.backBarButtonItem?.title = ""
-    }
-    
     private let locationManager = CLLocationManager()
     
     var isLocationEnabled: Bool {
@@ -247,10 +237,10 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             currentImageNum.text = "1"
         }
         
-        chiefContainerView.isHidden = diningInformations?.starChef == nil
+        chefContainerView.isHidden = diningInformations?.starChef == nil
         if let starChielf = diningInformations?.starChef {
-            chiefNameLabel.text = starChielf.chefName.uppercased()
-            chiefImageView.downloadImageFrom(link: starChielf.chefImage ?? "", contentMode: .scaleAspectFill)
+            chefNameLabel.text = starChielf.chefName.uppercased()
+            chefImageView.downloadImageFrom(link: starChielf.chefImage ?? "", contentMode: .scaleAspectFill)
             starsContainerView.isHidden = starChielf.chefRestaurant?.michelinStar?.first == nil
             starsLabel.text = starChielf.chefRestaurant?.michelinStar?.first?.name.uppercased()
             restaurantName.text = starChielf.chefRestaurant?.name
@@ -283,7 +273,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     }
     
     fileprivate func setupTapGesturesForRestaurants() {
-        addTapRecognizer(to: chiefContainerView)
+        addTapRecognizer(to: chefContainerView)
         addTapRecognizer(to: featured)
     }
     
@@ -305,7 +295,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             
             presentRestaurantDetailViewController(restaurant: featuredItem, presentationStyle: .overFullScreen)
-        } else if sender.view == chiefContainerView {
+        } else if sender.view == chefContainerView {
             guard let restaurant = diningInformations?.starChef?.chefRestaurant else { return }
             
             // B2 - 6
