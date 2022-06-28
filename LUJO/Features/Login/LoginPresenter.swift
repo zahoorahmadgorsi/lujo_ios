@@ -331,7 +331,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
     }
 
     func logoutUser() {
-        presenterView.showNetworkActivity()
+//        presenterView.showNetworkActivity()
         presenterInteractor.logoutUser()
     }
 

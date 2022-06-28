@@ -62,6 +62,11 @@
 		3005D48623202CDA00401243 /* AviationResultsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3005D48523202CDA00401243 /* AviationResultsFilterViewController.swift */; };
 		30368DD72339200D00EDF549 /* MainScreenAviationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */; };
 		30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */; };
+		421E0DB828696DB500B32451 /* AddressesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DB728696DB500B32451 /* AddressesViewController.swift */; };
+		421E0DBA2869766300B32451 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DB92869766300B32451 /* AddressCell.swift */; };
+		421E0DBC2869957400B32451 /* CityCountrySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DBB2869957400B32451 /* CityCountrySelectionViewController.swift */; };
+		421E0DBE2869983200B32451 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DBD2869983200B32451 /* AddressViewController.swift */; };
+		421E0DC02869B0DA00B32451 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DBF2869B0DA00B32451 /* SearchCell.swift */; };
 		422AB17B2859C39C00BEDCC3 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB17A2859C39C00BEDCC3 /* WebViewVC.swift */; };
 		422AB17D286229DC00BEDCC3 /* AccountDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB17C286229DC00BEDCC3 /* AccountDetailsViewController.swift */; };
 		422AB1822863467100BEDCC3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB1812863467100BEDCC3 /* Card.swift */; };
@@ -454,6 +459,11 @@
 		3005D48523202CDA00401243 /* AviationResultsFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationResultsFilterViewController.swift; sourceTree = "<group>"; };
 		30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAviationCell.swift; sourceTree = "<group>"; };
 		30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenAviationCell.xib; sourceTree = "<group>"; };
+		421E0DB728696DB500B32451 /* AddressesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesViewController.swift; sourceTree = "<group>"; };
+		421E0DB92869766300B32451 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
+		421E0DBB2869957400B32451 /* CityCountrySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityCountrySelectionViewController.swift; path = LUJO/Controllers/Account/CityCountrySelectionViewController.swift; sourceTree = SOURCE_ROOT; };
+		421E0DBD2869983200B32451 /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
+		421E0DBF2869B0DA00B32451 /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		422AB17A2859C39C00BEDCC3 /* WebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		422AB17C286229DC00BEDCC3 /* AccountDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsViewController.swift; sourceTree = "<group>"; };
 		422AB1812863467100BEDCC3 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -1025,6 +1035,8 @@
 			isa = PBXGroup;
 			children = (
 				422AB18C286352A400BEDCC3 /* CardCell.swift */,
+				421E0DB92869766300B32451 /* AddressCell.swift */,
+				421E0DBF2869B0DA00B32451 /* SearchCell.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -1079,13 +1091,16 @@
 		5527644523195CEC00380BEB /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */,
-				88A2F461282BB97B00918948 /* GenerateReferralCodeViewController.swift */,
-				88A2F462282BB97B00918948 /* ShareReferralCodeViewController.swift */,
-				5527644823195D3700380BEB /* AccountViewController.swift */,
-				5527644A23195D4300380BEB /* UserProfileViewController.swift */,
-				5527644C23195D5600380BEB /* MembershipViewControllerNEW.swift */,
 				422AB17C286229DC00BEDCC3 /* AccountDetailsViewController.swift */,
+				5527644823195D3700380BEB /* AccountViewController.swift */,
+				421E0DB728696DB500B32451 /* AddressesViewController.swift */,
+				421E0DBD2869983200B32451 /* AddressViewController.swift */,
+				422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */,
+				421E0DBB2869957400B32451 /* CityCountrySelectionViewController.swift */,
+				88A2F461282BB97B00918948 /* GenerateReferralCodeViewController.swift */,
+				5527644C23195D5600380BEB /* MembershipViewControllerNEW.swift */,
+				88A2F462282BB97B00918948 /* ShareReferralCodeViewController.swift */,
+				5527644A23195D4300380BEB /* UserProfileViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -1103,6 +1118,7 @@
 		557BB5DE23158F9000744188 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9A2F0C3321250C7200C52BE3 /* Login.storyboard */,
 				5527644623195CF800380BEB /* AccountNEW.storyboard */,
 				1D618003238A56C600F01199 /* CustomRequests.storyboard */,
 				557BB5E2231592F100744188 /* Main.storyboard */,
@@ -1441,7 +1457,6 @@
 		9A229E812134757E007F1F7A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9A2F0C3321250C7200C52BE3 /* Login.storyboard */,
 				16433F301118F589A55481D6 /* LoginView.swift */,
 				9A4ED2FF212D110200CCD53B /* RegisterView.swift */,
 				9A229E7F21347574007F1F7A /* ConfirmationView.swift */,
@@ -2335,6 +2350,7 @@
 				8868751227A6A84600563CDC /* AdvanceChatViewController.swift in Sources */,
 				9A091E0021EC2CEA00B0B5E6 /* PaymentConfiguration.swift in Sources */,
 				9A64764621F9BF6100EB93C4 /* BAFlights.swift in Sources */,
+				421E0DBC2869957400B32451 /* CityCountrySelectionViewController.swift in Sources */,
 				8868754927A6CBCE00563CDC /* CameraInputBarAccessoryView.swift in Sources */,
 				9A762356212BB80300328F74 /* Trie.swift in Sources */,
 				9A53A6A52152085E00AAE322 /* AviationProtocols.swift in Sources */,
@@ -2380,6 +2396,7 @@
 				9A2AEBC321626A0300F92FB3 /* AirportSearchCell.swift in Sources */,
 				9183E85225EBEF6100656B48 /* GalleryView4.swift in Sources */,
 				1D88012F233E4AB30039DEA6 /* DiningCategorySliderCell.swift in Sources */,
+				421E0DC02869B0DA00B32451 /* SearchCell.swift in Sources */,
 				557BB5EE2315A3F200744188 /* RestaurantSearchViewController.swift in Sources */,
 				918BA9A825BF481A007B4D43 /* CityView3.swift in Sources */,
 				9A8E93E9212BDC1700059DD8 /* LoginPresenter.swift in Sources */,
@@ -2403,8 +2420,11 @@
 				1643375A4FDC11CBEE93371A /* LoginInteractor.swift in Sources */,
 				5527642723165D4400380BEB /* GalleryViewControllerNEW.swift in Sources */,
 				9A229E8021347574007F1F7A /* ConfirmationView.swift in Sources */,
+				421E0DBA2869766300B32451 /* AddressCell.swift in Sources */,
+				421E0DB828696DB500B32451 /* AddressesViewController.swift in Sources */,
 				9183E84D25EBEF4E00656B48 /* GalleryView3.swift in Sources */,
 				1D44A6FA2356250F0073C682 /* GlobalSearchViewController.swift in Sources */,
+				421E0DBE2869983200B32451 /* AddressViewController.swift in Sources */,
 				886145D226AB70A30023E92E /* Chat.swift in Sources */,
 				8868751027A6A84600563CDC /* ConversationViewController.swift in Sources */,
 				5527642C2317F76000380BEB /* BookingsPaymentInstructionsViewController.swift in Sources */,
@@ -2533,7 +2553,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2542,7 +2562,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.8;
+				MARKETING_VERSION = 5.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
@@ -2560,7 +2580,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2569,7 +2589,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.8;
+				MARKETING_VERSION = 5.9;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2586,7 +2606,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2595,7 +2615,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.8;
+				MARKETING_VERSION = 5.9;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2750,7 +2770,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2767,7 +2787,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.8;
+				MARKETING_VERSION = 5.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2804,7 +2824,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2820,7 +2840,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.8;
+				MARKETING_VERSION = 5.9;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3004,7 +3024,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3021,7 +3041,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 5.8;
+				MARKETING_VERSION = 5.9;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;

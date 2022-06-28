@@ -44,11 +44,19 @@ class AviationEmptyResultsView: UIView {
 
                     \(userFirstName)
                     """
-
-                    let viewController = AdvanceChatViewController()
-                    viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "aviation" , name: "Flight Booking Inquiry")
-                    viewController.initialMessage = initialMessage
-                    self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
+                    //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+                    if ConversationsManager.sharedConversationsManager.getClient() != nil
+                    {
+                        let viewController = AdvanceChatViewController()
+                        viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "aviation" , name: "Flight Booking Inquiry")
+                        viewController.initialMessage = initialMessage
+                        self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
+                        
+                    }else{
+                        let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                        self?.parentViewController?.showErrorPopup(withTitle: "Error", error: error)
+                        print("Twilio: Not logged in")
+                    }
                     
                     self?.isHidden = true
                 } else {
@@ -61,4 +69,6 @@ class AviationEmptyResultsView: UIView {
     @IBAction func requestNewSearch(_ sender: Any) {
         isHidden = true
     }
+    
+
 }

@@ -11,6 +11,7 @@ extension DefaultsKey {
     static let countryCodes = Key<[PhoneCountryCode]>("countryCodes")
     static let userPreferences = Key<Preferences>("userPreferences")
     static let preferencesMasterData = Key<PrefMasterData>("preferencesMasterData")
+
 }
 
 extension Notification.Name {

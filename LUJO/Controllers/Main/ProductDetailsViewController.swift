@@ -894,33 +894,40 @@ extension ProductDetailsViewController {
                     \(userFirstName)
                     """
 }
+                //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+                if ConversationsManager.sharedConversationsManager.getClient() != nil
+                {
+                    //            print(initialMessage)
+                    let viewController = AdvanceChatViewController()
+                    
+                    let salesForceRequest = SalesforceRequest(id: product.id , type: product.type, name: product.name, date: salesForceRequest?.dingingRequestDate, time: salesForceRequest?.dingingRequestTime, persons: salesForceRequest?.dingingRequestPersons)
+                    viewController.salesforceRequest = salesForceRequest
+                    viewController.initialMessage = initialMessage
+                    let navController = UINavigationController(rootViewController:viewController)
+                    if #available(iOS 13.0, *) {
+                            let controller = navController.topViewController
+    // Modal Dismiss iOS 13 onward
+    //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+                        controller?.presentationController?.delegate = self
+                    }
 
-                //            print(initialMessage)
-                let viewController = AdvanceChatViewController()
-                
-                let salesForceRequest = SalesforceRequest(id: product.id , type: product.type, name: product.name, date: salesForceRequest?.dingingRequestDate, time: salesForceRequest?.dingingRequestTime, persons: salesForceRequest?.dingingRequestPersons)
-                viewController.salesforceRequest = salesForceRequest
-                viewController.initialMessage = initialMessage
-                let navController = UINavigationController(rootViewController:viewController)
-                if #available(iOS 13.0, *) {
-                        let controller = navController.topViewController
-// Modal Dismiss iOS 13 onward
-//to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
-                    controller?.presentationController?.delegate = self
+                    //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+                    navController.presentationController?.delegate = self
+                    UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+                    //Zahoor end
+                }else{
+                    let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                    self.showError(error)
+                    print("Twilio: Not logged in")
                 }
-
-                //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
-                navController.presentationController?.delegate = self
-                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
-                //Zahoor end
+                
 
             } else {
                 showInformationPopup()
             }
         }
-
     }
-
+    
     fileprivate func setRecentlyViewed() {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"), "Verification")
@@ -937,6 +944,10 @@ extension ProductDetailsViewController {
                 print(response ?? "Error setting recent value");
             }
         }
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     func showError(_ error: Error, _ errorTitle:String) {

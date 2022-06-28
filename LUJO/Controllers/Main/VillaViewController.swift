@@ -219,19 +219,32 @@ class VillaViewController: UIViewController {
         """
         
         self.dismiss(animated: true) {
-            let viewController = AdvanceChatViewController()
-            let sfRequest = SalesforceRequest(id: self.product.id
-                                              ,type: self.product.type
-                                              ,name: self.product.name
-                                              ,villa_check_in: dateString
-                                              ,villa_check_out: returnDateString
-                                              ,villa_guests: self.guestsCount
-                                              )
-            viewController.salesforceRequest = sfRequest
-            viewController.initialMessage = initialMessage
-            let navController = UINavigationController(rootViewController:viewController)
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                let sfRequest = SalesforceRequest(id: self.product.id
+                                                  ,type: self.product.type
+                                                  ,name: self.product.name
+                                                  ,villa_check_in: dateString
+                                                  ,villa_check_out: returnDateString
+                                                  ,villa_guests: self.guestsCount
+                                                  )
+                viewController.salesforceRequest = sfRequest
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
+            
         }
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     //MARK: - Logic

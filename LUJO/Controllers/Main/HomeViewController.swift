@@ -454,19 +454,31 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func btnChatTapped(_ sender: Any) {
-        Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
-        let viewController = ConversationsViewController.instantiate()
-        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-        if #available(iOS 13.0, *) {
-            let controller = navViewController.topViewController
-            // Modal Dismiss iOS 13 onward
-            controller?.presentationController?.delegate = self
+        //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+        if ConversationsManager.sharedConversationsManager.getClient() != nil
+        {
+            Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
+            let viewController = ConversationsViewController.instantiate()
+            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+            if #available(iOS 13.0, *) {
+                let controller = navViewController.topViewController
+                // Modal Dismiss iOS 13 onward
+                controller?.presentationController?.delegate = self
+            }
+            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+            navViewController.presentationController?.delegate = self
+            self.present(navViewController, animated: true, completion: nil)
+        }else{
+            let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+            self.showError(error)
+            print("Twilio: Not logged in")
         }
-        //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
-        navViewController.presentationController?.delegate = self
-        self.present(navViewController, animated: true, completion: nil)
     }
 
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Home Error", error: error)
+    }
+    
     //MARK:- Custom request actions
     @IBAction func findTableButton_onClick(_ sender: Any) {
         self.tabBarController?.selectedIndex = 1

@@ -234,15 +234,26 @@ class PreferencesHomeViewController: UIViewController {
             
             \(userFirstName)
             """
+            //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "access" , name: "Preferences Inquiry")
+                viewController.initialMessage = initialMessage
+                self.navigationController?.pushViewController(viewController,animated: true)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
             
-            let viewController = AdvanceChatViewController()
-            viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "access" , name: "Preferences Inquiry")
-            viewController.initialMessage = initialMessage
-            self.navigationController?.pushViewController(viewController,animated: true)
         } else {
             showInformationPopup()
         }
-        
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     @objc func tappedOnView(_ sender:AnyObject){

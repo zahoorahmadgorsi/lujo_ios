@@ -37,6 +37,15 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     private(set) var messages: [TCHMessage] = []
     private var identity: String?
     
+    func getClient()->TwilioConversationsClient?{
+        if client == nil{
+            // get a reference to the app delegate
+            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.loginToTwilio()
+        }
+        return client
+    }
+    
     func setConversation (conversation: TCHConversation?){
         self.conversation = conversation
     }
@@ -118,29 +127,21 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         // calling a Twilio function, as described in the Quickstart docs
         let urlString = "\(TOKEN_URL)?identity=\(identity)"
         self.identity = identity
-        delegate?.showNetworkActivity()
+//        delegate?.showNetworkActivity()
         TokenUtils.retrieveToken(url: urlString) { (token, _, error) in
             guard let token = token else {
                 print("Twilio: Error retrieving token: \(error.debugDescription)")
                 completion(false)
-                self.delegate?.hideNetworkActivity()
+//                self.delegate?.hideNetworkActivity()
                 return
             }
-            
+//            completion(false)// for login failure testing
             // Set up Twilio Chat client
             TwilioConversationsClient.conversationsClient(withToken: token, properties: nil,
                                         delegate: self) { (result, chatClient) in
                 self.client = chatClient
-                
-                //no need as shuja cant access user level info
-//                //updating user, right after login
-//                let attributes = Utility.getAttributes(onlyRelatedToUser: false)
-//                self.updateUser(customAttributes: attributes)
-                
                 completion(result.isSuccessful)
-                
             }
-            
         }
     }
 

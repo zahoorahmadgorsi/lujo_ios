@@ -133,16 +133,28 @@ class BookingStep2: UIViewController {
             
             \(userFirstName)
             """
+            //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "aviation" , name: "Choose preferred payment method")
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
             
-            let viewController = AdvanceChatViewController()
-            viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "aviation" , name: "Choose preferred payment method")
-            viewController.initialMessage = initialMessage
-            let navController = UINavigationController(rootViewController:viewController)
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         } else {
             showInformationPopup()
         }
             //startChatWithInitialMessage()
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
     }
 }
 

@@ -156,23 +156,35 @@ class HotelViewController: UIViewController {
         
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
+        //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+        if ConversationsManager.sharedConversationsManager.getClient() != nil
+        {
+            let viewController = AdvanceChatViewController()
+            let sfRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43"
+                                              , type: "travel"
+                                              ,hotel_name: self.hotelNameTextField.text
+                                              ,hotel_neighborhood: self.txtHotelNeighbourhood.text
+                                              ,hotel_radius:Int(self.distanceSlider.value)
+                                              ,hotel_check_in_date:checkInDateString
+                                              ,hotel_check_out_date:checkOutDateString
+                                              ,hotel_guests:self.adultsCount
+                                              ,hotel_rooms:self.roomsCount
+                                              ,hotel_stars:lastButton.tag)
+            viewController.salesforceRequest = sfRequest
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+        }else{
+            let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+            self.showError(error)
+            print("Twilio: Not logged in")
+        }
         
-        let viewController = AdvanceChatViewController()
-        let sfRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43"
-                                          , type: "travel"
-                                          ,hotel_name: self.hotelNameTextField.text
-                                          ,hotel_neighborhood: self.txtHotelNeighbourhood.text
-                                          ,hotel_radius:Int(self.distanceSlider.value)
-                                          ,hotel_check_in_date:checkInDateString
-                                          ,hotel_check_out_date:checkOutDateString
-                                          ,hotel_guests:self.adultsCount
-                                          ,hotel_rooms:self.roomsCount
-                                          ,hotel_stars:lastButton.tag)
-        viewController.salesforceRequest = sfRequest
-        viewController.initialMessage = initialMessage
-        let navController = UINavigationController(rootViewController:viewController)
-        UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     //MARK: - Logic

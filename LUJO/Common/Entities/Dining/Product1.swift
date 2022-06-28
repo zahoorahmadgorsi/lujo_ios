@@ -48,7 +48,7 @@ struct Cuisine: Codable {
     enum CodingKeys: String, CodingKey {
         case termId = "_id"
         case name
-        case iconUrl = "image"
+        case iconUrl = "icon"
     }
 }
 

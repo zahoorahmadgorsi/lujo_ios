@@ -523,6 +523,7 @@ extension AdvanceChatViewController: CameraInputBarAccessoryViewDelegate {
 }
 
 extension AdvanceChatViewController: ConversationsManagerDelegate {
+    
 
     func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
         print("Twilio: typingOn : \(String(describing: conversation.friendlyName)) by \(String(describing: participant.identity)) is \(isTyping)")

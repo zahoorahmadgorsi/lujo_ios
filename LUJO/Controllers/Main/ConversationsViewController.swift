@@ -246,17 +246,26 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let conversation = self.conversations[indexPath.item].tchConversation{
-            let viewController = AdvanceChatViewController()
-            viewController.conversation = conversation
-            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-            if #available(iOS 13.0, *) {
-                let controller = navViewController.topViewController
-                // Modal Dismiss iOS 13 onward
-                controller?.presentationController?.delegate = self
+            //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.conversation = conversation
+                let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+                if #available(iOS 13.0, *) {
+                    let controller = navViewController.topViewController
+                    // Modal Dismiss iOS 13 onward
+                    controller?.presentationController?.delegate = self
+                }
+                //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+                navViewController.presentationController?.delegate = self
+                self.present(navViewController, animated: true, completion: nil)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
             }
-            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
-            navViewController.presentationController?.delegate = self
-            self.present(navViewController, animated: true, completion: nil)
+            
         }else{
             print("Twilio: Conversations aren't loaded yet")
         }

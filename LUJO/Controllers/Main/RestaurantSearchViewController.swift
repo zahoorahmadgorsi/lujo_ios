@@ -113,12 +113,24 @@ class RestaurantSearchViewController: UIViewController {
         
         \(userFirstName)
         """
+        //Checking if user is able to logged in to Twilio or not, if not then getClient will login
+        if ConversationsManager.sharedConversationsManager.getClient() != nil
+        {
+            let viewController = AdvanceChatViewController()
+            viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Searched")
+            viewController.initialMessage = initialMessage
+            let navController = UINavigationController(rootViewController:viewController)
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+        }else{
+            let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+            self.showError(error)
+            print("Twilio: Not logged in")
+        }
         
-        let viewController = AdvanceChatViewController()
-        viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Searched")
-        viewController.initialMessage = initialMessage
-        let navController = UINavigationController(rootViewController:viewController)
-        UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     fileprivate func presentRestaurantDetailViewController(restaurant: Product) {
@@ -141,10 +153,6 @@ class RestaurantSearchViewController: UIViewController {
         currentLayout?.clearCache()
         collectionView.reloadData()
         noResultsContainerView.isHidden = !dataSource.isEmpty
-    }
-    
-    func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Dining Error", error: error)
     }
     
     func showNetworkActivity() {

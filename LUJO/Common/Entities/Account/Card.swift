@@ -11,9 +11,9 @@ import Foundation
 struct Card: Codable {
     var id: String
     let card_holder_name: String
-    let card_token: String
+    let masked_card_number: String
     let card_expiry: CardExpiry
-    let cvv: String?
+    let cvv: Int?
     var default_card: Bool
     
     var expiryDate: String {
@@ -23,17 +23,17 @@ struct Card: Codable {
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case card_holder_name
-        case card_token
+        case masked_card_number
         case card_expiry
         case cvv
         case default_card
     }
     
-    init(_ id:String? ,_ nameOnCard:String,_ card_token:String , _ cvv:String, _ month:Int,_ year:Int,_ default_card:Bool){
+    init(_ id:String? ,_ nameOnCard:String,_ card_number:String ,_ cvv:Int,_ month:Int,_ year:Int,_ default_card:Bool){
         self.id = id ?? ""
         self.card_holder_name = nameOnCard
-        self.card_token = card_token
-        self.card_expiry = CardExpiry("",month,year)
+        self.masked_card_number = card_number
+        self.card_expiry = CardExpiry("", month, year)
         self.cvv = cvv
         self.default_card = default_card
     }
@@ -44,9 +44,9 @@ struct Card: Codable {
             id = try values.decode(String.self, forKey: .id)
 //            print(id)
             card_holder_name = try values.decode(String.self, forKey: .card_holder_name)
-            card_token = try values.decode(String.self, forKey: .card_token)
+            masked_card_number = try values.decode(String.self, forKey: .masked_card_number)
             card_expiry = try values.decode(CardExpiry.self, forKey: .card_expiry)
-            cvv = try values.decodeIfPresent(String.self, forKey: .cvv)
+            cvv = try values.decodeIfPresent(Int.self, forKey: .cvv)
             default_card = try values.decode(Bool.self, forKey: .default_card)
 
         } catch {

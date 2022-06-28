@@ -221,9 +221,8 @@ class AccountDetailsViewController: UIViewController {
     }
     
     @objc func viewAddressBookTapped(_ sender:UITapGestureRecognizer){
-        print("Allah ho akbar")
-//        let viewController = AddressesViewController.instantiate()
-//        self.navigationController?.pushViewController(viewController, animated: true)
+        let viewController = AddressesViewController.instantiate()
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

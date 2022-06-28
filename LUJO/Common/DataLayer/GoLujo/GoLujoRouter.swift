@@ -29,7 +29,11 @@ enum GoLujoRouter: URLRequestConvertible {
         }
         return scheme
     }()
-    
+    case getCities(Taxonomy)
+    case getCountries
+    case addressDelete(Address)
+    case addressUpdate(Address)
+    case addressAdd(Address)
     case getAddresses
     case cardDelete(Card)
     case cardUpdate(Card)
@@ -59,13 +63,13 @@ enum GoLujoRouter: URLRequestConvertible {
     
     private func getCategory() -> GoLujoRouterCategory {
         switch self {
-        case .createUser, .verify, .requestOTP, .requestLoginOTP, .approved, .cardAdd:
+        case .createUser, .verify, .requestOTP, .requestLoginOTP, .approved, .cardAdd, .addressAdd:
             return .creation
-        case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword, .cardUpdate:
+        case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword, .cardUpdate, .addressUpdate:
             return .update
-        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType, .getCards, .getAddresses:
+        case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType, .getCards, .getAddresses, .getCountries, .getCities:
             return .setup
-        case .unregisterForPush, .unSubscribe,.cardDelete:
+        case .unregisterForPush, .unSubscribe,.cardDelete,.addressDelete:
             return .delete
         }
     }
@@ -123,13 +127,16 @@ enum GoLujoRouter: URLRequestConvertible {
         case .verify:           fallthrough
         case .requestOTP:       fallthrough
         case .requestLoginOTP:  fallthrough
-        case .cardAdd:
+        case .cardAdd:          fallthrough
+        case .addressAdd:
             return .post
         case .approved: fallthrough
         case .getReferralTypes: fallthrough
         case .getReferralCodeAgainstType: fallthrough
         case .getCards: fallthrough
-        case .getAddresses:
+        case .getAddresses: fallthrough
+        case .getCountries: fallthrough
+        case .getCities:
             return .get
         default:
             fatalError("Wrong method category called")
@@ -148,7 +155,8 @@ enum GoLujoRouter: URLRequestConvertible {
             return .post
         case .refreshToken:
             return .post
-        case .cardUpdate:
+        case .cardUpdate: fallthrough
+        case .addressUpdate:
             return .put
         default:
             fatalError("Wrong method category called")
@@ -173,7 +181,9 @@ enum GoLujoRouter: URLRequestConvertible {
         case .getReferralCodeAgainstType: fallthrough
         case .getTwilioParticipants: fallthrough
         case .getCards: fallthrough
-        case .getAddresses:
+        case .getAddresses: fallthrough
+        case .getCountries: fallthrough
+        case .getCities:
             return .get
         default:
             fatalError("Wrong method category called")
@@ -184,7 +194,8 @@ enum GoLujoRouter: URLRequestConvertible {
         switch self {
         case .unregisterForPush: fallthrough
         case .unSubscribe:  fallthrough
-        case .cardDelete:
+        case .cardDelete:   fallthrough
+        case .addressDelete:
             return .delete
         default:
             fatalError("Wrong method category called")
@@ -201,6 +212,15 @@ enum GoLujoRouter: URLRequestConvertible {
         let urlData = getUrlDataForPushService(isStaging: false)
 
         switch self {
+        case let .getCities(country):
+            newURLComponents.path.append("/restaurants/city/search")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "country", value: country.termId)
+            ]
+        case .getCountries:         newURLComponents.path.append("/restaurants/country/search")
+        case let .addressDelete(address): newURLComponents.path.append("/users/user-address/delete/" + address.id)
+        case let .addressUpdate(address): newURLComponents.path.append("/users/user-address/update/" + address.id)
+        case .addressAdd:              newURLComponents.path.append("/users/user-address")
         case .getAddresses:         newURLComponents.path.append("/users/user-address")
         case let .cardDelete(card): newURLComponents.path.append("/users/user-card/delete/" + card.id)
         case let .cardUpdate(card): newURLComponents.path.append("/users/user-card/update/" + card.id)
@@ -269,13 +289,20 @@ enum GoLujoRouter: URLRequestConvertible {
 
     fileprivate func getBodyData() -> Data? {
         switch self {
+        case .getCities: fallthrough
+        case .getCountries: fallthrough
         case .getAddresses: fallthrough
         case .getCards: fallthrough
         case .getReferralCodeAgainstType: fallthrough
         case .getReferralTypes: fallthrough
-        case .cardDelete:
+        case .cardDelete:   fallthrough
+        case .addressDelete:
             return nil
             
+        case let .addressUpdate(address):
+            return getAddressAsJSONData(address)
+        case let .addressAdd(address):
+            return getAddressAsJSONData(address)
         case let .cardUpdate(card):
             return getCardUpdateAsJSONData(card)
         case let .cardAdd(card):
@@ -441,8 +468,8 @@ enum GoLujoRouter: URLRequestConvertible {
     }
     
     fileprivate func getCardAddAsJSONData(_ card: Card) -> Data? {
-        let data: [String: Any] = [
-            "card_number" : card.card_token,
+        var data: [String: Any] = [
+            "card_number" : card.masked_card_number,
             "card_holder_name": card.card_holder_name,
             "card_expiry": [
                 "month": card.card_expiry.month,
@@ -450,6 +477,23 @@ enum GoLujoRouter: URLRequestConvertible {
             ],
             "default_card": card.default_card
         ]
+        if let cvv =  card.cvv{
+            data["card_cvv"] = cvv
+        }
+        return try? JSONSerialization.data(withJSONObject: data, options: [])
+    }
+    //this method is used for both add and update
+    fileprivate func getAddressAsJSONData(_ address: Address) -> Data? {
+        var data: [String: Any] = [
+            "address" : address.address,
+            "apartment": address.apartment,
+            "zip_code": address.zip_code,
+            "address_type": address.address_type,
+            "city": address.city.termId,
+            "country": address.country.termId,
+            "default_address": address.default_address
+        ]
+        
         return try? JSONSerialization.data(withJSONObject: data, options: [])
     }
 }
