@@ -331,7 +331,8 @@ class LoginPresenter: Presentable, LoginViewResponder {
     }
 
     func logoutUser() {
-        presenterView.showNetworkActivity()
+        //commenting this because if user will tap on "already have the code", would go to next screen and without entering the OTP, come back to login screen then this below line will run the busy cursor. And after this line there is no code to stop the busy cursor
+//        presenterView.showNetworkActivity()
         presenterInteractor.logoutUser()
     }
 

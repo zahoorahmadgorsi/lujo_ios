@@ -903,30 +903,35 @@ extension ProductDetailsViewController {
 
                     \(userFirstName)
                     """
-}
-
-                //            print(initialMessage)
-                let viewController = AdvanceChatViewController()
-                viewController.product = product
-                viewController.initialMessage = initialMessage
-                let navController = UINavigationController(rootViewController:viewController)
-                if #available(iOS 13.0, *) {
-                        let controller = navController.topViewController
-// Modal Dismiss iOS 13 onward
-//to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
-                    controller?.presentationController?.delegate = self
                 }
+                
+                if ConversationsManager.sharedConversationsManager.getClient() != nil
+                {
+                    //            print(initialMessage)
+                    let viewController = AdvanceChatViewController()
+                    viewController.product = product
+                    viewController.initialMessage = initialMessage
+                    let navController = UINavigationController(rootViewController:viewController)
+                    if #available(iOS 13.0, *) {
+                            let controller = navController.topViewController
+    // Modal Dismiss iOS 13 onward
+    //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by pressing cross button
+                        controller?.presentationController?.delegate = self
+                    }
 
-                //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
-                navController.presentationController?.delegate = self
-                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
-                //Zahoor end
-
+                    //to call UIAdaptivePresentationControllerDelegate.presentationControllerDidDismiss at dismiss by dragging
+                    navController.presentationController?.delegate = self
+                    UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+                    //Zahoor end
+                }else{
+                    let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                    self.showError(error)
+                    print("Twilio: Not logged in")
+                }
             } else {
                 showInformationPopup()
             }
         }
-
     }
 
     fileprivate func setRecentlyViewed() {
@@ -948,7 +953,7 @@ extension ProductDetailsViewController {
     }
     
     func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Recently Viewed Error", error: error)
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     func showNetworkActivity() {

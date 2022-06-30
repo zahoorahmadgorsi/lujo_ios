@@ -41,11 +41,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         for viewController in viewControllers! {
             viewController.loadViewIfNeeded()
         }
-        
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -133,16 +133,27 @@ class BookingStep2: UIViewController {
             
             \(userFirstName)
             """
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.product = Product(id: -1 , type: "aviation" , name: "Choose preferred payment method")
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
             
-            let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "aviation" , name: "Choose preferred payment method")
-            viewController.initialMessage = initialMessage
-            let navController = UINavigationController(rootViewController:viewController)
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         } else {
             showInformationPopup()
         }
             //startChatWithInitialMessage()
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Chat Error", error: error)
     }
 }
 

@@ -344,11 +344,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     func setupNavigationBar() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
-
         // Create left bar button
         let imgMenu = UIImage(named: "menu_image")
         let btnMenu = UIBarButtonItem(image: imgMenu,  style: .plain, target: self, action: #selector(presentAccountViewController))
@@ -490,17 +485,26 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     }
     
     @IBAction func btnChatTapped(_ sender: Any) {
-        Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
-        let viewController = ConversationsViewController.instantiate()
-        let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-        if #available(iOS 13.0, *) {
-            let controller = navViewController.topViewController
-            // Modal Dismiss iOS 13 onward
-            controller?.presentationController?.delegate = self
+        if ConversationsManager.sharedConversationsManager.getClient() != nil
+        {
+            Mixpanel.mainInstance().track(event: "btnChatTappedAtHome")
+            let viewController = ConversationsViewController.instantiate()
+            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+            if #available(iOS 13.0, *) {
+                let controller = navViewController.topViewController
+                // Modal Dismiss iOS 13 onward
+                controller?.presentationController?.delegate = self
+            }
+            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+            navViewController.presentationController?.delegate = self
+            self.present(navViewController, animated: true, completion: nil)
+        }else{
+            let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+            self.showError(error)
+            print("Twilio: Not logged in")
         }
-        //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
-        navViewController.presentationController?.delegate = self
-        self.present(navViewController, animated: true, completion: nil)
+        
+        
     }
 
     //MARK:- Custom request actions

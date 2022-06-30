@@ -265,16 +265,28 @@ class LiftDetailViewController: UIViewController {
 
             \(userFirstName)
             """
-            let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
-            viewController.initialMessage = initialMessage
-            let navController = UINavigationController(rootViewController:viewController)
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
+            
         } else {
             showInformationPopup()
         }
     }
 
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
+    }
+    
     fileprivate func sendInitialInformation() {
 //        ZDCChatAPI.instance()?.setNote("---------------------")
 //        if let currentUser = LujoSetup().getUserInformation() {
@@ -320,12 +332,19 @@ class LiftDetailViewController: UIViewController {
             let initialMessage = """
             Hi there, I'm interested in doing \(returnTrip ? "a round trip" : "one way") flight from \(origin) to \(destination) on \(depart)\(back) with \(currentLift.paxCount) seats. Can we reserve \(currentLift.aircraft.name) for it?
             """
-
-            let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
-            viewController.initialMessage = initialMessage
-            let navController = UINavigationController(rootViewController:viewController)
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
+            
         }
 
         initalMessageSent = true

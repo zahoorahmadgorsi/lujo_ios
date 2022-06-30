@@ -311,24 +311,26 @@ extension AccountViewController: UINavigationControllerDelegate, UIImagePickerCo
 extension AccountViewController {
     
     func logoutUser() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //deleting every thing from user defaults
+        let appDomain = Bundle.main.bundleIdentifier!
+        //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
+        UserDefaults.standard.removePersistentDomain(forName: appDomain)
+        
         guard let userId = LujoSetup().getLujoUser()?.id else {
 //            print("NO USER ID ERROR!!!")
+            // Present login view controller using VIPER.
+            appDelegate.windowRouter.navigate(from: "/", data: [:])
             return
         }
         
         showNetworkActivity()
         logoutUser { _ in
             self.hideNetworkActivity()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.removePushToken(userId: userId)
-          
             // Present login view controller using VIPER.
             appDelegate.windowRouter.navigate(from: "/", data: [:])
         }
-        //deleting every thing from user defaults
-        let appDomain = Bundle.main.bundleIdentifier!
-        //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
-        UserDefaults.standard.removePersistentDomain(forName: appDomain)
     }
     
     func logoutUser(completion: @escaping (Error?) -> Void) {

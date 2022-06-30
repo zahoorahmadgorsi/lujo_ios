@@ -165,13 +165,20 @@ class HotelViewController: UIViewController {
                     //self.showErrorPopup(withTitle: "Error", error:error)
 //                    return
                 }
-
+                if ConversationsManager.sharedConversationsManager.getClient() != nil
+                {
+                    let viewController = AdvanceChatViewController()
+                    viewController.product = Product(id: -1, type: "travel" , name: "Hotel in " + cityName)
+                    viewController.initialMessage = initialMessage
+                    let navController = UINavigationController(rootViewController:viewController)
+                    UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+                }else{
+                    let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                    self.showError(error)
+                    print("Twilio: Not logged in")
+                }
 //                print ("Success: custom request table.")
-                let viewController = AdvanceChatViewController()
-                viewController.product = Product(id: -1, type: "travel" , name: "Hotel in " + cityName)
-                viewController.initialMessage = initialMessage
-                let navController = UINavigationController(rootViewController:viewController)
-                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+                
                 //Zahoor end
                 /*
                 showCardAlertWith(title: "Info", body: "Your request is being processed. We will get back to you shortly. You can follow the status of your request in My bookings.", buttonTitle: "Ok", cancelButtonTitle: nil, buttonTapHandler: {
@@ -182,6 +189,9 @@ class HotelViewController: UIViewController {
         }
     }
     
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
+    }
     //MARK: - Logic
     
     private func addGestureRecognizers() {

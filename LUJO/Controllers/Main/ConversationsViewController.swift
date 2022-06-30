@@ -262,7 +262,9 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
             navViewController.presentationController?.delegate = self
             self.present(navViewController, animated: true, completion: nil)
         }else{
-            print("Twilio: Conversations aren't loaded yet")
+            let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+            self.showError(error)
+            print("Twilio: Not logged in")
         }
         
     }

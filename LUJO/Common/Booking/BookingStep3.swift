@@ -35,17 +35,27 @@ class BookingStep3: UIViewController {
 
             \(userFirstName)
             """
-
-            let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "aviation" , name: "Authorize card and verify booking request")
-            viewController.initialMessage = initialMessage
-            let navController = UINavigationController(rootViewController:viewController)
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.product = Product(id: -1 , type: "aviation" , name: "Authorize card and verify booking request")
+                viewController.initialMessage = initialMessage
+                let navController = UINavigationController(rootViewController:viewController)
+                UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
         } else {
             showInformationPopup()
         }
     }
 
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Chat Error", error: error)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addCreditCard" {
             guard let addCreditCard = segue.destination as? AddCreditCardView else { return }

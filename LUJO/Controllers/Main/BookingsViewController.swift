@@ -57,8 +57,7 @@ class BookingsViewController: UIViewController {
         
         tableView.register(UINib(nibName: "BookingDetailCell", bundle: nil),
                            forCellReuseIdentifier: BookingDetailCell.cellID)
-//        naHUD.textLabel.text = "Retrieving information ..."
-        setupNavigationBar()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,14 +73,6 @@ class BookingsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
-    }
-    
-    func setupNavigationBar() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
-        navigationItem.backBarButtonItem?.title = ""
     }
     
     func update(bookings list: [AviationBooking]) {
@@ -157,11 +148,18 @@ class BookingsViewController: UIViewController {
             
             \(userFirstName)
             """
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.product = Product(id: -1 , type: "My Bookings" , name: "Booking Inquiry")
+                viewController.initialMessage = initialMessage
+                self.navigationController?.pushViewController(viewController,animated: true)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
             
-            let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "My Bookings" , name: "Booking Inquiry")
-            viewController.initialMessage = initialMessage
-            self.navigationController?.pushViewController(viewController,animated: true)
         } else {
             showInformationPopup()
         }
@@ -186,7 +184,7 @@ class BookingsViewController: UIViewController {
     }
     
     func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Booking Error", error: error)
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     private func pushPaymentInstructionsViewController(booking: Booking, showAdditionalInfo: Bool) {

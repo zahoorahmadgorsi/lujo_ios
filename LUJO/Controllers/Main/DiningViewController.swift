@@ -89,8 +89,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBar()
-        
         featured.overlay = true
         featured.delegate = self
         
@@ -166,14 +164,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         startPauseAnimation(isPausing: true)
-    }
-    
-    func setupNavigationBar() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.barTintColor = UIColor(named: "Navigation Bar")
-        navigationController?.navigationBar.isTranslucent = false
-        navigationItem.backBarButtonItem?.title = ""
     }
     
     private let locationManager = CLLocationManager()

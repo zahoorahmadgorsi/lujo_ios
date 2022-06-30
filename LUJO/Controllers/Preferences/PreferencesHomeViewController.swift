@@ -235,15 +235,24 @@ class PreferencesHomeViewController: UIViewController {
             
             \(userFirstName)
             """
-            
-            let viewController = AdvanceChatViewController()
-            viewController.product = Product(id: -1 , type: "Preferences" , name: "Preferences Inquiry")
-            viewController.initialMessage = initialMessage
-            self.navigationController?.pushViewController(viewController,animated: true)
+            if ConversationsManager.sharedConversationsManager.getClient() != nil
+            {
+                let viewController = AdvanceChatViewController()
+                viewController.product = Product(id: -1 , type: "Preferences" , name: "Preferences Inquiry")
+                viewController.initialMessage = initialMessage
+                self.navigationController?.pushViewController(viewController,animated: true)
+            }else{
+                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
         } else {
             showInformationPopup()
         }
-        
+    }
+    
+    func showError(_ error: Error) {
+        showErrorPopup(withTitle: "Error", error: error)
     }
     
     @objc func tappedOnView(_ sender:AnyObject){

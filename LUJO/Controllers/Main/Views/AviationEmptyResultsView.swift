@@ -44,12 +44,17 @@ class AviationEmptyResultsView: UIView {
 
                     \(userFirstName)
                     """
-
-                    let viewController = AdvanceChatViewController()
-                    viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
-                    viewController.initialMessage = initialMessage
-                    self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
-                    
+                    if ConversationsManager.sharedConversationsManager.getClient() != nil
+                    {
+                        let viewController = AdvanceChatViewController()
+                        viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
+                        viewController.initialMessage = initialMessage
+                        self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
+                    }else{
+                        let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
+                        self?.parentViewController?.showErrorPopup(withTitle: "Error", error: error)
+                        print("Twilio: Not logged in")
+                    }
                     self?.isHidden = true
                 } else {
                     self?.parentViewController?.showInformationPopup()

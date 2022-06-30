@@ -36,6 +36,15 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     private(set) var messages: [TCHMessage] = []
     private var identity: String?
     
+    func getClient()->TwilioConversationsClient?{
+        if client == nil{
+            // get a reference to the app delegate
+            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.loginToTwilio()
+        }
+        return client
+    }
+    
     func setConversation (conversation: TCHConversation){
         self.conversation = conversation
     }
@@ -112,34 +121,27 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
         }
     }
 
+    //this login is only called from the appDelegate
     func login(_ identity: String, completion: @escaping (Bool) -> Void) {
         // Fetch Access Token from the server and initialize Chat Client - this assumes you are
         // calling a Twilio function, as described in the Quickstart docs
         let urlString = "\(TOKEN_URL)?identity=\(identity)"
         self.identity = identity
-        delegate?.showNetworkActivity()
+//        delegate?.showNetworkActivity()
         TokenUtils.retrieveToken(url: urlString) { (token, _, error) in
             guard let token = token else {
                 print("Twilio: Error retrieving token: \(error.debugDescription)")
                 completion(false)
-                self.delegate?.hideNetworkActivity()
+//                self.delegate?.hideNetworkActivity()
                 return
             }
-            
-            // Set up Twilio Chat client
+//            completion(false)// for login failure testing
+            // Set up Twilio Chat client zahoor
             TwilioConversationsClient.conversationsClient(withToken: token, properties: nil,
                                         delegate: self) { (result, chatClient) in
                 self.client = chatClient
-                
-                //no need as shuja cant access user level info
-//                //updating user, right after login
-//                let attributes = Utility.getAttributes(onlyRelatedToUser: false)
-//                self.updateUser(customAttributes: attributes)
-                
                 completion(result.isSuccessful)
-                
             }
-            
         }
     }
 
@@ -155,9 +157,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     
     public func createConversation(uniqueChannelName: String, friendlyName: String, customAttribute: Dictionary<String,Any>,_ completion: @escaping (Bool, TCHConversation?) -> Void) {
         guard let client = self.client else {
-            // get a reference to the app delegate
-            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-            appDelegate?.loginToTwilio()
+            completion(false,nil)
             return
         }
         // Create a conversation if it hasn't been created yet
@@ -175,9 +175,13 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                     self.joinConversation(convers) { (channelResult) in
                         completion(channelResult, conversation)
                     }
+                }else{
+                    print("Twilio: this must not execute")
+                    completion(result.isSuccessful, conversation)
                 }
             }else{
                 print("Twilio: Conversation could not created")
+                completion(result.isSuccessful, conversation)
             }
         }
     }
@@ -202,12 +206,6 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
             if let conversations = client.myConversations(){
                 completion(conversations)
             }
-        }else{
-            //client is nill so try to login again
-            // get a reference to the app delegate
-            let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-            appDelegate?.loginToTwilio()
-            completion([])
         }
     }
     
@@ -424,5 +422,3 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
     }
     
 }
-
-

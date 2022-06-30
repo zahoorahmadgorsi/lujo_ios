@@ -144,6 +144,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             }
             showNetworkActivity()
             ConversationsManager.sharedConversationsManager.createConversation(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
+                if(channelResult){  //conversation has been created successfully
                     if let location = self.currentLocation { //updating location (if user has enabled) and other attributes
                         var attributes = Utility.getAttributes(onlyRelatedToUser: false)
                         attributes["device_latitude"] = String(location.coordinate.latitude)
@@ -152,6 +153,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                         ConversationsManager.sharedConversationsManager.updateConversationAttributes(customAttributes: attributes)
                     }
                 ConversationsManager.sharedConversationsManager.addParticipants(productType: self.product.type)
+                }
                 self.hideNetworkActivity()
             })
         }
