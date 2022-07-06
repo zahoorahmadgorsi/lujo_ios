@@ -316,7 +316,7 @@ extension AccountViewController {
         let appDomain = Bundle.main.bundleIdentifier!
         //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
         UserDefaults.standard.removePersistentDomain(forName: appDomain)
-        
+
         guard let userId = LujoSetup().getLujoUser()?.id else {
 //            print("NO USER ID ERROR!!!")
             // Present login view controller using VIPER.

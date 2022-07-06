@@ -103,7 +103,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 self.showNetworkActivity()
                 for msg in messages {
 //                    myGroup.enter()
-                    if msg.hasMedia(){
+                    if msg.attachedMedia.count > 0{
                         //this is an asynch call
                         self.getAndConvertTCHImageMessageToChatMessage(msg) { (chatImageMessage, isCached) in
                             tempMessages.append(chatImageMessage)
@@ -260,7 +260,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                     let myGroup = DispatchGroup()
                     for message in messages {
                         myGroup.enter()
-                        if message.hasMedia(){
+                        if message.attachedMedia.count > 0{
                             //this is an asynch call
                             self.getAndConvertTCHImageMessageToChatMessage(message) { (chatImageMessage, isCached) in
                                 tempMessages.append(chatImageMessage)

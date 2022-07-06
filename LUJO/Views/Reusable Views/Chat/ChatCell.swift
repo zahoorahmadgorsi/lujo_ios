@@ -14,7 +14,6 @@ class ChatCell: UITableViewCell {
     @IBOutlet weak var lblChannelFriendlyName: UILabel!
     @IBOutlet weak var lblLastMessage: UILabel!
     @IBOutlet weak var lblCreatedAt: UILabel!
-    @IBOutlet weak var lblCreatedAtTime: UILabel!
     @IBOutlet weak var lblUnConsumedMessagesCount: UILabel!
     @IBOutlet weak var viewUnConsumedMessagesCount: UIView!
     //    var customer_id: String
@@ -34,7 +33,8 @@ class ChatCell: UITableViewCell {
         lblChannelFriendlyName.text = ""
         lblLastMessage.text = ""
         lblCreatedAt.text = ""
-
+        lblUnConsumedMessagesCount.text = ""
+        viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: viewUnConsumedMessagesCount.frame.height/2)
     }
     
 }

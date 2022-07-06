@@ -444,14 +444,14 @@ extension Product {
                 // then second time assuming that its going to be a double
                 let lati:Double = try values.decodeIfPresent(Double.self, forKey: .latitude) ?? 0.0
                 latitude = String(format: "%f", lati)
-                print("id:\(id)","latitude:\(lati)"  )
+//                print("id:\(id)","latitude:\(lati)"  )
             }
             do {
                 longitude = try values.decodeIfPresent(String.self, forKey: .longitude)
             } catch {
                 let longi:Double = try values.decodeIfPresent(Double.self, forKey: .longitude) ?? 0.0
                 longitude = String(format: "%f", longi)
-                print("id:\(id)", "longitude:\(longi)"  )
+//                print("id:\(id)", "longitude:\(longi)"  )
             }
             
             villaAmenities = try values.decodeIfPresent([Taxonomy].self, forKey: .villaAmenities)

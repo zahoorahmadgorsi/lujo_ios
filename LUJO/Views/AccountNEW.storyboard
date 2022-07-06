@@ -727,7 +727,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IRl-lC-gGU" userLabel="BLACK_SCROLL_BACKGROUND_HELPER_VIEW">
                                 <rect key="frame" x="0.0" y="44" width="375" height="954"/>
-                                <color key="backgroundColor" name="Black Backgorund"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twh-Fh-j94">
                                 <rect key="frame" x="0.0" y="44" width="375" height="864"/>
@@ -1359,6 +1359,7 @@
                                         </variation>
                                     </stackView>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="8CI-Bp-ac9" firstAttribute="leading" secondItem="Twh-Fh-j94" secondAttribute="leading" id="AEp-wS-X3H"/>
                                     <constraint firstItem="8CI-Bp-ac9" firstAttribute="top" secondItem="Twh-Fh-j94" secondAttribute="top" id="WTj-Zs-4cZ"/>
@@ -1467,7 +1468,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IX4-0N-Sxd"/>
-                        <color key="backgroundColor" name="Navigation Bar"/>
+                        <color key="backgroundColor" name="Black Backgorund"/>
                         <constraints>
                             <constraint firstItem="Twh-Fh-j94" firstAttribute="top" secondItem="IX4-0N-Sxd" secondAttribute="top" id="393-RN-MBJ"/>
                             <constraint firstItem="Twh-Fh-j94" firstAttribute="leading" secondItem="IX4-0N-Sxd" secondAttribute="leading" id="56G-gG-LKK"/>

@@ -2698,7 +2698,7 @@
 				AVIATION_PRODUCT_NAME = "baroqueaviation-software";
 				AVIATION_SERVER = sandbox.avinode.com;
 				BACKEND_CONNECTION_SCHEME = http;
-				BACKEND_SERVER = api.golujo.com;
+				BACKEND_SERVER = "api-stage.golujo.com";
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CARDCONNECT_API_PASSWORD = testing123;
 				CARDCONNECT_API_USERNAME = testing;

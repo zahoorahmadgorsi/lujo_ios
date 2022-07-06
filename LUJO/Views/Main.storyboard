@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sri-oa-nUS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sri-oa-nUS">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -353,7 +353,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="310.5"/>
                                                             </imageView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="C38-2g-V3O" secondAttribute="bottom" id="Gwk-LM-N3A"/>
                                                             <constraint firstItem="C38-2g-V3O" firstAttribute="leading" secondItem="XXW-Gl-IpF" secondAttribute="leading" id="Q9Y-xB-tDZ"/>
@@ -3224,7 +3224,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CityCell" id="hvq-o7-wth" customClass="CityCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="382" height="66"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="382" height="66"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hvq-o7-wth" id="7gB-s5-Mtr">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="66"/>
@@ -4076,7 +4076,7 @@
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Experiences" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fD-6P-WlO">
-                                                                                <rect key="frame" x="32" y="16" width="105.5" height="32"/>
+                                                                                <rect key="frame" x="32" y="16" width="106" height="32"/>
                                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                                                 <color key="textColor" name="White Text"/>
                                                                                 <nil key="highlightedColor"/>
@@ -5715,7 +5715,7 @@
                                         <color key="backgroundColor" name="Black Backgorund"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myBookingCellID" rowHeight="499" id="LWY-QP-DC1" customClass="MyBookingsCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="382" height="499"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="382" height="499"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LWY-QP-DC1" id="uGP-rb-rTt">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="499"/>
@@ -6166,7 +6166,7 @@ New York, NY 10011 USA</string>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From Airport" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1G-4q-b61">
-                                                <rect key="frame" x="159" y="12" width="96.5" height="20.5"/>
+                                                <rect key="frame" x="159" y="12" width="96" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -6218,7 +6218,7 @@ New York, NY 10011 USA</string>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchAirportCell" rowHeight="57" id="wyE-8r-3fl" customClass="AirportSearchCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="57"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="414" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wyE-8r-3fl" id="UtN-7j-QOA">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
@@ -6955,7 +6955,7 @@ New York, NY 10011 USA</string>
                                         <rect key="frame" x="32" y="32" width="350" height="353"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plane types" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awL-xW-G4t">
-                                                <rect key="frame" x="0.0" y="0.0" width="100" height="24"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="100.5" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                 <color key="textColor" name="White Text"/>
                                                 <nil key="highlightedColor"/>
@@ -8404,12 +8404,18 @@ New York, NY 10011 USA</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" placeholder="Search conversation by title" translatesAutoresizingMaskIntoConstraints="NO" id="Zs7-8h-BXB">
+                                <rect key="frame" x="0.0" y="44" width="414" height="51"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IJi-ox-2S1">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="95" width="414" height="801"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="chatCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="chatCell" id="KWF-B6-dAP" customClass="ChatCell" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="66.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="66.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KWF-B6-dAP" id="8kR-Gr-NRg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="66.5"/>
@@ -8518,12 +8524,16 @@ New York, NY 10011 USA</string>
                         <constraints>
                             <constraint firstItem="IJi-ox-2S1" firstAttribute="leading" secondItem="QfW-uR-70y" secondAttribute="leading" id="OKd-n3-SD7"/>
                             <constraint firstAttribute="bottom" secondItem="IJi-ox-2S1" secondAttribute="bottom" id="X1d-e3-CfB"/>
-                            <constraint firstItem="IJi-ox-2S1" firstAttribute="top" secondItem="QfW-uR-70y" secondAttribute="top" id="oRM-aI-3iz"/>
+                            <constraint firstItem="Zs7-8h-BXB" firstAttribute="leading" secondItem="QfW-uR-70y" secondAttribute="leading" id="i4T-iP-qcV"/>
+                            <constraint firstItem="Zs7-8h-BXB" firstAttribute="top" secondItem="QfW-uR-70y" secondAttribute="top" id="nua-xm-vLn"/>
+                            <constraint firstItem="IJi-ox-2S1" firstAttribute="top" secondItem="Zs7-8h-BXB" secondAttribute="bottom" id="qbx-m4-xDb"/>
                             <constraint firstItem="QfW-uR-70y" firstAttribute="trailing" secondItem="IJi-ox-2S1" secondAttribute="trailing" id="uR8-Mh-B7R"/>
+                            <constraint firstItem="Zs7-8h-BXB" firstAttribute="trailing" secondItem="QfW-uR-70y" secondAttribute="trailing" id="zfD-FB-9Rq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="sl9-dL-Syo"/>
                     <connections>
+                        <outlet property="searchBar" destination="Zs7-8h-BXB" id="tCI-Tm-goa"/>
                         <outlet property="tblView" destination="IJi-ox-2S1" id="Egd-NL-NXE"/>
                     </connections>
                 </viewController>
@@ -8549,7 +8559,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

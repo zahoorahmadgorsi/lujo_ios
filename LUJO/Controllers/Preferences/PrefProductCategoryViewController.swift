@@ -174,16 +174,16 @@ class PrefProductCategoryViewController: UIViewController {
                 if let found = jets.first(where: {$0.name == "Super light jet"}) {  //6 "Super light jet"
                     self.itemsList.append(found)
                 }
-                if let found = jets.first(where: {$0.name == "Light jet"}) {    //4     "Light jet"
+                if let found = jets.first(where: {$0.name == "Light jet"}) {        //4     "Light jet"
                     self.itemsList.append(found)
                 }
                 if let found = jets.first(where: {$0.name == "Super midsize jet"}) {    //7 "Super midsize jet"
                     self.itemsList.append(found)
                 }
-                if let found = jets.first(where: {$0.name == "Midsize jet"}) {  //11    "Midsize jet"
+                if let found = jets.first(where: {$0.name == "Midsize jet"}) {      //11    "Midsize jet"
                     self.itemsList.append(found)
                 }
-                if let found = jets.first(where: {$0.name == "Heavy jet"}) {    //10    "Heavy jet"
+                if let found = jets.first(where: {$0.name == "Heavy jet"}) {        //10    "Heavy jet"
                     self.itemsList.append(found)
                 }
                 if var found = jets.first(where: {$0.name == "Ultra long range"}) { //1 "Ultra long range"
