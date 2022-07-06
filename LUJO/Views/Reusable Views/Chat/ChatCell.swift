@@ -34,7 +34,8 @@ class ChatCell: UITableViewCell {
         lblChannelFriendlyName.text = ""
         lblLastMessage.text = ""
         lblCreatedAt.text = ""
-
+        lblUnConsumedMessagesCount.text = ""
+        viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: viewUnConsumedMessagesCount.frame.height/2)
     }
     
 }

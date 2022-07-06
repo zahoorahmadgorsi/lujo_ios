@@ -17,9 +17,12 @@ class ConversationsViewController: UIViewController {
     class var identifier: String { return "ChatListViewController" }
     private let naHUD = JGProgressHUD(style: .dark)
     var conversations = [Conversation]()
+    var searchedConversations = [Conversation]()
     
     @IBOutlet weak var imgCross: UIImageView!
     @IBOutlet weak var tblView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    var searching = false
     
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -39,7 +42,7 @@ class ConversationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupSearchBar()
         self.view.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: 24.0)
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
@@ -70,6 +73,20 @@ class ConversationsViewController: UIViewController {
             self.tblView.reloadData()
             self.getConversations(showActivity: false)    //silently loading the conversations.
         }
+    }
+    
+    private func setupSearchBar(){
+        self.searchBar.delegate = self
+        //Change the color of the glass icon
+        let glassIconView = self.searchBar.searchTextField.leftView as! UIImageView
+        glassIconView.image = glassIconView.image?.withRenderingMode(.alwaysTemplate)
+        glassIconView.tintColor = UIColor.rgMid
+//        Change the color of the text field inside the search bar:
+        let searchTextField = self.searchBar.searchTextField
+        searchTextField.textColor = UIColor.white
+//        searchTextField.clearButtonMode = .never
+//        Hide or show the Cancel button on the right side of search bar:
+//        self.searchBar.showsCancelButton = true
     }
     
     //this method creates the cross and edit button, on tap of this button, UIViewcontroller is closed
@@ -173,18 +190,29 @@ class ConversationsViewController: UIViewController {
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.conversations.count == 0 {
-            self.tblView.setEmptyMessage("No conversation(s) are available")
-        }else{
-            self.tblView.restore()
+        if searching {
+            if self.searchedConversations.count == 0 {
+                self.tblView.setEmptyMessage("No conversation is available having this title.")
+            }else{
+                self.tblView.restore()
+            }
+            return self.searchedConversations.count
+        } else {
+            if self.conversations.count == 0 {
+                self.tblView.setEmptyMessage("No conversation(s) are available")
+            }else{
+                self.tblView.restore()
+            }
+            return self.conversations.count
         }
-        return self.conversations.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
-        let model = conversations[indexPath.row]
-        
+        var model = conversations[indexPath.row]
+        if searching {
+            model = searchedConversations[indexPath.row]
+        }
         if let type = model.tchConversation?.attributes()?.dictionary?["type"] as? String ?? model.type{    //model.type is cached value
             if type == "event" || type  == "experience" || type  == "special-event" {
                 cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
@@ -225,17 +253,11 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
             cell.lblLastMessage.text = message.isHtml() == true ? message.parseHTML().string : message
         }
         
-        
         //number of un read messages of this conversation
         model.tchConversation?.getUnreadMessagesCount { (result, unReadMsgsCount: NSNumber?) in
-            if result.isSuccessful ,let count = unReadMsgsCount{
-                if count.intValue > 0{
-                    cell.lblUnConsumedMessagesCount.text = count.stringValue
-                    cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
-                }else{
-                    cell.lblUnConsumedMessagesCount.text = ""
-                    cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
-                }
+            if result.isSuccessful ,let count = unReadMsgsCount, count.intValue > 0, cell.tag == indexPath.row{
+                cell.lblUnConsumedMessagesCount.text = count.stringValue
+                cell.viewUnConsumedMessagesCount.addViewBorder(borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cell.viewUnConsumedMessagesCount.frame.height/2)
             }
         }
         self.tblView.separatorStyle = .singleLine
@@ -245,29 +267,28 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let conversation = self.conversations[indexPath.item].tchConversation{
-            //Checking if user is able to logged in to Twilio or not, if not then getClient will login
-            if ConversationsManager.sharedConversationsManager.getClient() != nil
-            {
-                let viewController = AdvanceChatViewController()
-                viewController.conversation = conversation
-                let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-                if #available(iOS 13.0, *) {
-                    let controller = navViewController.topViewController
-                    // Modal Dismiss iOS 13 onward
-                    controller?.presentationController?.delegate = self
-                }
-                //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
-                navViewController.presentationController?.delegate = self
-                self.present(navViewController, animated: true, completion: nil)
-            }else{
-                let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
-                self.showError(error)
-                print("Twilio: Not logged in")
+        var conversation = self.conversations[indexPath.item].tchConversation
+        if searching {
+            conversation = self.searchedConversations[indexPath.item].tchConversation
+        }
+        if let convers = conversation{
+            let viewController = AdvanceChatViewController()
+            viewController.conversation = convers
+            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+            if #available(iOS 13.0, *) {
+                let controller = navViewController.topViewController
+                // Modal Dismiss iOS 13 onward
+                controller?.presentationController?.delegate = self
             }
-            
+            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+            navViewController.presentationController?.delegate = self
+            self.present(navViewController, animated: true, completion: nil)
+            // Close keyboard when you select cell
+            self.searchBar.searchTextField.endEditing(true)
         }else{
-            print("Twilio: Conversations aren't loaded yet")
+            let error = BackendError.parsing(reason: "Could not load this conversation")
+            self.showError(error)
+            print("Twilio: Not logged in")
         }
         
     }
@@ -356,5 +377,21 @@ extension ConversationsViewController: ConversationsManagerDelegate {
             print("Twilio: typingOn : \(friendlyName) by \(identity) is \(isTyping)")
         }
        
+    }
+}
+
+extension ConversationsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchedConversations = conversations.filter {
+            $0.friendlyName?.range(of: searchText , options: .caseInsensitive) != nil
+        }
+        searching = searchText.count > 0 ? true : false
+        self.tblView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        self.tblView.reloadData()
     }
 }

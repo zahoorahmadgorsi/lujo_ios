@@ -8471,8 +8471,14 @@ New York, NY 10011 USA</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" placeholder="Search by title" translatesAutoresizingMaskIntoConstraints="NO" id="2Hb-iS-Zi2">
+                                <rect key="frame" x="0.0" y="44" width="414" height="51"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IJi-ox-2S1">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="95" width="414" height="801"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="chatCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="chatCell" id="KWF-B6-dAP" customClass="ChatCell" customModule="LUJO" customModuleProvider="target">
@@ -8583,14 +8589,18 @@ New York, NY 10011 USA</string>
                         <viewLayoutGuide key="safeArea" id="QfW-uR-70y"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="2Hb-iS-Zi2" firstAttribute="top" secondItem="QfW-uR-70y" secondAttribute="top" id="BeZ-be-xv3"/>
+                            <constraint firstItem="2Hb-iS-Zi2" firstAttribute="trailing" secondItem="QfW-uR-70y" secondAttribute="trailing" id="EBI-Tl-d4H"/>
                             <constraint firstItem="IJi-ox-2S1" firstAttribute="leading" secondItem="QfW-uR-70y" secondAttribute="leading" id="OKd-n3-SD7"/>
                             <constraint firstAttribute="bottom" secondItem="IJi-ox-2S1" secondAttribute="bottom" id="X1d-e3-CfB"/>
-                            <constraint firstItem="IJi-ox-2S1" firstAttribute="top" secondItem="QfW-uR-70y" secondAttribute="top" id="oRM-aI-3iz"/>
+                            <constraint firstItem="IJi-ox-2S1" firstAttribute="top" secondItem="2Hb-iS-Zi2" secondAttribute="bottom" id="YA8-qq-KoD"/>
                             <constraint firstItem="QfW-uR-70y" firstAttribute="trailing" secondItem="IJi-ox-2S1" secondAttribute="trailing" id="uR8-Mh-B7R"/>
+                            <constraint firstItem="2Hb-iS-Zi2" firstAttribute="leading" secondItem="QfW-uR-70y" secondAttribute="leading" id="yi0-r4-irR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="sl9-dL-Syo"/>
                     <connections>
+                        <outlet property="searchBar" destination="2Hb-iS-Zi2" id="Uaj-z1-3LL"/>
                         <outlet property="tblView" destination="IJi-ox-2S1" id="Egd-NL-NXE"/>
                     </connections>
                 </viewController>

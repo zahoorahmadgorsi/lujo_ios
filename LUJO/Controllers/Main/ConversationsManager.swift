@@ -402,8 +402,8 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                             }
                             var participantEmails = result.content.map({$0.email})
     //                                        participantEmails = []
-                            participantEmails.append("zahoor.gorsi@gmail.com")
-                            participantEmails.append("zahoor.ahmad@live.com")
+//                            participantEmails.append("zahoor.gorsi@gmail.com")
+//                            participantEmails.append("zahoor.ahmad@live.com")
                             for participantEmail in participantEmails{
                                 print("Twilio: Participant Email \(participantEmail)")
                                 convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
