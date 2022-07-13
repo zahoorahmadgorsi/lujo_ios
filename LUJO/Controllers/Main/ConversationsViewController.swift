@@ -395,3 +395,4 @@ extension ConversationsViewController: UISearchBarDelegate {
         self.tblView.reloadData()
     }
 }
+

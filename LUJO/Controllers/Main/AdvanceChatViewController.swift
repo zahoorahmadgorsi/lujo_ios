@@ -38,6 +38,7 @@ final class AdvanceChatViewController: ConversationViewController {
     let readConsumptionTimerInterval:TimeInterval = 5
     
     override func viewDidLoad() {
+        //keep it above super.viewdidLoad
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: CustomMessagesFlowLayout())
         messagesCollectionView.register(CustomCell.self)
         super.viewDidLoad()

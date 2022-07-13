@@ -68,6 +68,9 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
+        //keep it above super.viewDidLoad
+        //to hide keypad when tapped on uicollectionview https://github.com/MessageKit/MessageKit/issues/1491
+        self.messagesCollectionView = ChatMessagesCollectionView()
         super.viewDidLoad()
         //Need to send LAT/LONG with each message to the server
         if CLLocationManager.locationServicesEnabled() {
@@ -615,7 +618,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending..."
         // Resign first responder for iPad split view
-        inputBar.inputTextView.resignFirstResponder()
+//        inputBar.inputTextView.resignFirstResponder()
     
         for component in components {
             if let str = component as? String  {
@@ -623,7 +626,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                     inputBar.sendButton.stopAnimating()
                     if result.isSuccessful {
                         inputBar.inputTextView.placeholder = "Aa"
-                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
+//                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
                     } else {
 //                        self.displayErrorMessage("Unable to send message")
                         let error = BackendError.parsing(reason: "Unable to send message")
@@ -733,5 +736,25 @@ extension ConversationViewController:CLLocationManagerDelegate{
         //for printing
 //        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
 //        print("Twilio: location updated = \(locValue.latitude) \(locValue.longitude)")
+    }
+}
+
+extension ConversationViewController: MessagesCollectionViewDelegate {
+    func didTap() {
+        self.messageInputBar.inputTextView.resignFirstResponder()
+    }
+}
+
+//https://github.com/MessageKit/MessageKit/issues/1491
+protocol MessagesCollectionViewDelegate: AnyObject {
+    func didTap()
+}
+
+class ChatMessagesCollectionView: MessagesCollectionView {
+    weak var messagesCollectionViewDelegate: MessagesCollectionViewDelegate?
+    
+    override func handleTapGesture(_ gesture: UIGestureRecognizer) {
+        super.handleTapGesture(gesture) // Required for MessageCellDelegate methods to work
+        messagesCollectionViewDelegate?.didTap()
     }
 }
