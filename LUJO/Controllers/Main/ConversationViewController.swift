@@ -69,7 +69,13 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
+        //keep it above super.viewDidLoad
+        //to hide keypad when tapped on uicollectionview https://github.com/MessageKit/MessageKit/issues/1491
+        self.messagesCollectionView = ChatMessagesCollectionView()
+        (self.messagesCollectionView as? ChatMessagesCollectionView)?.messagesCollectionViewDelegate = self
+        
         super.viewDidLoad()
+
         
         //Need to send LAT/LONG with each message to the server
         if CLLocationManager.locationServicesEnabled() {
@@ -157,6 +163,8 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 self.hideNetworkActivity()
             })
         }
+        
+        
     }
     
     //this method creates the cross and edit button, on tap of this button, UIViewcontroller is closed
@@ -343,15 +351,21 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
             }
         })
         
-        //within this 1.5 second interval, content offset get change meaning messagekit is doing some thing i.e. scrolling to the last message
-        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { timer in
-            if (self.messagesCollectionView.contentOffset == CGPoint.zero){
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.messagesCollectionView.contentOffset = CGPoint.init(x: 0, y: -110)
-                })
-            }
-            timer.invalidate()
-        })
+        //changing message collection offset for initial few messages only
+        if (self.messagesCollectionView.contentSize.height < 400){
+            //within this 1.5 second interval, content offset get change meaning messagekit is doing some thing i.e. scrolling to the last message
+            Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { timer in
+                print(self.messagesCollectionView.contentOffset, self.messagesCollectionView.contentInset)
+    //            if (self.messagesCollectionView.contentOffset == CGPoint.init(x: 0, y: -170){// CGPoint.zero){
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.messagesCollectionView.contentOffset = CGPoint.init(x: 0, y: -230)
+//                        self.messagesCollectionView.contentInset = UIEdgeInsets(top: 170, left: 0, bottom: 0, right: 0)
+                    })
+    //            }
+                timer.invalidate()
+            })
+        }
+        
     }
     
     func isLastSectionVisible() -> Bool {
@@ -617,7 +631,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending..."
         // Resign first responder for iPad split view
-        inputBar.inputTextView.resignFirstResponder()
+//        inputBar.inputTextView.resignFirstResponder()
     
         for component in components {
             if let str = component as? String  {
@@ -625,7 +639,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
                     inputBar.sendButton.stopAnimating()
                     if result.isSuccessful {
                         inputBar.inputTextView.placeholder = "Aa"
-                        inputBar.inputTextView.becomeFirstResponder()   
+//                        inputBar.inputTextView.becomeFirstResponder()   
                     } else {
 //                        self.displayErrorMessage("Unable to send message")
                         let error = BackendError.parsing(reason: "Unable to send message")
@@ -738,5 +752,22 @@ extension ConversationViewController:CLLocationManagerDelegate{
     }
 }
 
+extension ConversationViewController: MessagesCollectionViewDelegate {
+    func didTap() {
+        self.messageInputBar.inputTextView.resignFirstResponder()
+    }
+}
 
+//https://github.com/MessageKit/MessageKit/issues/1491
+protocol MessagesCollectionViewDelegate: AnyObject {
+    func didTap()
+}
 
+class ChatMessagesCollectionView: MessagesCollectionView {
+    weak var messagesCollectionViewDelegate: MessagesCollectionViewDelegate?
+    
+    override func handleTapGesture(_ gesture: UIGestureRecognizer) {
+        super.handleTapGesture(gesture) // Required for MessageCellDelegate methods to work
+        messagesCollectionViewDelegate?.didTap()
+    }
+}

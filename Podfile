@@ -6,7 +6,8 @@ target 'LUJO' do
   use_frameworks!
 
   # Pods for LUJO
-  pod 'MessageKit', '~> 3.3.0'
+  #pod 'MessageKit', '~> 3.3.0'
+  pod 'MessageKit'
   pod 'TwilioConversationsClient', '~> 2.0'
   pod 'Cosmos', '~> 23.0'
   

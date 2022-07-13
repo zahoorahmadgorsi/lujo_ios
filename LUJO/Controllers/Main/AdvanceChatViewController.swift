@@ -44,6 +44,9 @@ final class AdvanceChatViewController: ConversationViewController {
         ConversationsManager.sharedConversationsManager.delegate = self
         
         updateTitleView(title: conversation?.friendlyName ?? "LUJO", subtitle: nil)    //extension 2 Online
+
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
         
     }
     
@@ -54,7 +57,32 @@ final class AdvanceChatViewController: ConversationViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.readConsumptionTimer.invalidate()
+//        NotificationCenter.default.removeObserver(self)
     }
+    //messagekit is doing some much in the background at different times i.e. when key board opened, when start typing, when done sending message
+//    @objc func keyboardDidShow(notification: Notification) {
+//        let userInfo = notification.userInfo ?? [:]
+//        let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+//        print(keyboardFrame.height,self.messagesCollectionView.contentSize.height)
+//        //if keyboardFrame.height == 92.0 && self.messagesCollectionView.contentSize.height <= 500{
+//        if keyboardFrame.height == 92.0 {
+//            //since we have a navigation bar so taking its space
+//            UIView.animate(withDuration: 0.5, animations: {
+//                //start should be 110
+//                self.messagesCollectionView.contentOffset = CGPoint.init(x: 0, y: self.messagesCollectionView.contentSize.height * -1)
+//            })
+//        }
+//
+//    }
+//
+//    @objc func keyboardDidHide(notification: Notification) {
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.messagesCollectionView.contentOffset = CGPoint.init(x: 0, y: 0)
+//        })
+////        since we have a navigation bar so taking its space
+//        self.messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//    }
+    
     
     override func configureMessageCollectionView() {
         super.configureMessageCollectionView()
