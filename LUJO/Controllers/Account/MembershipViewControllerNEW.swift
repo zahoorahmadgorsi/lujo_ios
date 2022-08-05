@@ -85,6 +85,7 @@ class MembershipViewControllerNEW: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.referralTextField.autocapitalizationType = .allCharacters
         if self.isModal{
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "X", style: .plain, target: self, action: #selector(cancelTapped))
         }

@@ -130,34 +130,22 @@ class TwoSliderPrefViewController: UIViewController {
                     lblLeisureMin.text = CabinClass.Economy.rawValue
                     lblLeisureMax.text = CabinClass.Business.rawValue
                     self.sliderCorporate.minimumValue = 0
-                    self.sliderCorporate.maximumValue = 3
+                    self.sliderCorporate.maximumValue = 2
                     self.sliderLeisure.minimumValue = 0
-                    self.sliderLeisure.maximumValue = 3
-                    let corporateValue = userPreferences?.travel.travel_airplane_business_cabin_class?[0] ?? intToCabinClass(int: sliderDefaultVal)
-                    let leisureValue = userPreferences?.travel.travel_airplane_leisure_cabin_class?[0] ?? intToCabinClass(int: sliderDefaultVal)
-                    self.sliderCorporate.value = Float(cabinClassToInt(cabinClass: corporateValue))
-                    self.sliderLeisure.value = Float(cabinClassToInt(cabinClass: leisureValue))
-                    self.lblCorporateVaue.text = corporateValue
-                    self.lblLeisureValue.text = leisureValue
-                    self.previouslySelectedItems.append(Int(cabinClassToInt(cabinClass: corporateValue)))
-                    self.previouslySelectedItems.append(Int(cabinClassToInt(cabinClass: leisureValue)))
+                    self.sliderLeisure.maximumValue = 2
+                    let corporateValue = userPreferences?.travel.travel_airplane_business_cabin_class ?? sliderDefaultVal
+                    let leisureValue = userPreferences?.travel.travel_airplane_leisure_cabin_class ?? sliderDefaultVal
+                    self.sliderCorporate.value = Float(corporateValue)
+                    self.sliderLeisure.value = Float( leisureValue)
+                    self.lblCorporateVaue.text = intToCabinClass(int: corporateValue)
+                    self.lblLeisureValue.text = intToCabinClass(int: leisureValue)
+                    self.previouslySelectedItems.append(corporateValue)
+                    self.previouslySelectedItems.append( leisureValue)
                 default:
                     print("default of prefInformationType")
                 }
             default:
                 print("default of main switch")
-        }
-    }
-
-    func cabinClassToInt(cabinClass: String)-> Int{
-        if cabinClass.equals(rhs: CabinClass.Economy.rawValue){
-            return 0
-        }else if cabinClass.equals(rhs: CabinClass.Business.rawValue){
-            return 1
-        }else if cabinClass.equals(rhs: CabinClass.First.rawValue){
-            return 2
-        }else{
-            return 1
         }
     }
     
@@ -166,10 +154,8 @@ class TwoSliderPrefViewController: UIViewController {
             return CabinClass.Economy.rawValue
         }else if int == 1{
             return CabinClass.Business.rawValue
-        }else if int == 2{
+        }else{ //if int == 2{
             return CabinClass.First.rawValue
-        }else{
-            return CabinClass.Economy.rawValue
         }
     }
     
@@ -263,7 +249,7 @@ class TwoSliderPrefViewController: UIViewController {
                     completion(contentString, error)
                 }
             case .travelCabinClass:
-                GoLujoAPIManager().setTravelCabinClass( cabinClass: intToCabinClass(int: corporateFrequency), leisureClass: intToCabinClass(int: leisureFrequency)) { (contentString, error) in
+                GoLujoAPIManager().setTravelCabinClass(cabinClass: corporateFrequency, leisureClass: leisureFrequency) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain the preferences information")
@@ -349,11 +335,9 @@ class TwoSliderPrefViewController: UIViewController {
                 return !compare(current: current , previous: previous)
             case .travelCabinClass:
                 var current :[Int] = []
-                let businessClass = cabinClassToInt(cabinClass: self.userPreferences?.travel.travel_airplane_business_cabin_class?[0] ?? "")
-                let leisureClass = cabinClassToInt(cabinClass: self.userPreferences?.travel.travel_airplane_leisure_cabin_class?[0] ?? "")
+                current.append(self.userPreferences?.travel.travel_airplane_business_cabin_class ?? sliderDefaultVal)  //default value is set to 1
+                current.append(self.userPreferences?.travel.travel_airplane_leisure_cabin_class ?? sliderDefaultVal)
                 
-                current.append(businessClass)  //default value is set to firstclass
-                current.append(leisureClass)
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
             default:
@@ -438,12 +422,10 @@ class TwoSliderPrefViewController: UIViewController {
             case .travelFrequency:
                 self.userPreferences?.travel.travel_times_business = currentValue
             case .travelCabinClass:
-                let strCurrentVal = intToCabinClass( int: currentValue)
+                self.userPreferences?.travel.travel_airplane_business_cabin_class = currentValue
                 DispatchQueue.main.async {
-                    self.lblCorporateVaue.text = strCurrentVal
+                    self.lblCorporateVaue.text = self.intToCabinClass( int: currentValue)
                 }
-                self.userPreferences?.travel.travel_airplane_business_cabin_class = []
-                self.userPreferences?.travel.travel_airplane_business_cabin_class?.append(strCurrentVal)
             default:
                 print("This will not call")
             }
@@ -480,12 +462,10 @@ class TwoSliderPrefViewController: UIViewController {
             case .travelFrequency:
                 self.userPreferences?.travel.travel_times_leisure = currentValue
             case .travelCabinClass:
-                let strCurrentVal = intToCabinClass( int: currentValue)
+                self.userPreferences?.travel.travel_airplane_leisure_cabin_class = currentValue
                 DispatchQueue.main.async {
-                    self.lblLeisureValue.text = strCurrentVal
+                    self.lblLeisureValue.text = self.intToCabinClass( int: currentValue)
                 }
-                self.userPreferences?.travel.travel_airplane_leisure_cabin_class = []
-                self.userPreferences?.travel.travel_airplane_leisure_cabin_class?.append(strCurrentVal)
             default:
                 print("This will not call")
             }

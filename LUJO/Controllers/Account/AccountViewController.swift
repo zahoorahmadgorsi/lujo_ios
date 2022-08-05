@@ -205,7 +205,7 @@ class AccountViewController: UIViewController {
             let viewController = GenerateReferralCodeViewController.instantiate()
             self.navigationController?.pushViewController(viewController, animated: true)
         }else{
-            Utility.inviteFriend(user.referralCode)
+            Utility.inviteFriend(user.referralCode[0])
         }
     }
     

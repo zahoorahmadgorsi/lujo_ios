@@ -100,7 +100,7 @@ enum PreferencesRouter: URLRequestConvertible {
     case setTravelActivities( String)
     case setTravelAirlines( String)
     case setTravelAirplaneSeat( String)
-    case setTravelCabinClass( String, String)
+    case setTravelCabinClass( Int, Int)
     case setTravelMeals( String)
     case setTravelMedicalMeals( String)
     case setTravelHotelStyles( String)
@@ -161,7 +161,11 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getVillaAmenities:    fallthrough
         case .getVillaAccomodation: fallthrough
         case .getOtherInterests:    fallthrough
-        case .searchRegions:
+        case .searchRegions:        fallthrough
+        case .getTravelHotelGroups: fallthrough
+        case .getTravelMedicalMeals: fallthrough
+        case .getTravelActivities:  fallthrough
+        case .getTravelAmenities:
             return .get
 
         case .setGiftHabits:        fallthrough
@@ -197,14 +201,7 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setDiningAllergies: fallthrough
         case .setDiningTimings: fallthrough
         case .setDiningSeatings: fallthrough
-            
-
-
-            
-        case .getTravelHotelGroups: fallthrough
-        case .getTravelMedicalMeals: fallthrough
-        case .getTravelActivities: fallthrough
-        case .getTravelAmenities: fallthrough
+        
         case .setTravelFrequency: fallthrough
         case .setTravelDestinations: fallthrough
         case .setTravelHotelRating: fallthrough
@@ -686,8 +683,8 @@ enum PreferencesRouter: URLRequestConvertible {
     
     fileprivate func setTravelFrequencyAsJSONData( businessFrequency:Int, leisureFrequency:Int) -> Data?{
         let body: [String: Any] = [
-            "travel_times_business": businessFrequency
-            ,"travel_times_leisure": leisureFrequency
+            "travel_times_charter_corporate": businessFrequency
+            ,"travel_times_charter_leisure": leisureFrequency
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -701,8 +698,8 @@ enum PreferencesRouter: URLRequestConvertible {
 
     fileprivate func setTravelHotelRatingAsJSONData( businessRating:Int, leisureRating: Int) -> Data?{
         let body: [String: Any] = [
-            "travel_rating_business_hotels": businessRating
-            ,"travel_rating_leisure_hotels": leisureRating
+            "travel_star_rating_corporate": businessRating
+            ,"travel_star_rating_leisure": leisureRating
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
@@ -716,64 +713,64 @@ enum PreferencesRouter: URLRequestConvertible {
 
     fileprivate func setTravelHotelGroupsAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "travel_hotel_group": commaSeparatedString.components(separatedBy: ",")
+            "travel_hotel_groups": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
     fileprivate func setTravelAmenitiesAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "travel_amenity_ids": commaSeparatedString.components(separatedBy: ",")
+            "travel_preffered_amenities": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
     fileprivate func setTravelActivitiesAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "travel_activity_ids": commaSeparatedString.components(separatedBy: ",")
+            "travel_activities": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
     fileprivate func setTravelAirlinesAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "travel_airline_ids": commaSeparatedString.components(separatedBy: ",")
+            "travel_preferred_airlines": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
     fileprivate func setTravelAirplaneSeatAsJSONData( airplaneSeat:String) -> Data?{
         let body: [String: Any] = [
-            "travel_airplane_seat": airplaneSeat
+            "travel_preferred_seat": airplaneSeat
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
-    fileprivate func setTravelCabinClassAsJSONData( businessCabin:String, leisureCabin: String) -> Data?{
+    fileprivate func setTravelCabinClassAsJSONData( businessCabin:Int, leisureCabin: Int) -> Data?{
         let body: [String: Any] = [
-            "travel_airplane_business_cabin_class": businessCabin
-            ,"travel_airplane_leisure_cabin_class": leisureCabin
+            "travel_preferred_cabin_corporate": businessCabin
+            ,"travel_preferred_cabin_leisure": leisureCabin
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
     fileprivate func setTravelMealsAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "travel_airplane_meals": commaSeparatedString.components(separatedBy: ",")
+            "travel_preferred_meals": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
     fileprivate func setTravelMedicalMealsAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "travel_media_dietary_meal": commaSeparatedString.components(separatedBy: ",")
+            "travel_preferred_medical_dietry_meals": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
 
     fileprivate func setTravelHotelStylesAsJSONData( commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
-            "travel_hotel_types": commaSeparatedString.components(separatedBy: ",")
+            "travel_hotel_styles": commaSeparatedString.components(separatedBy: ",")
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

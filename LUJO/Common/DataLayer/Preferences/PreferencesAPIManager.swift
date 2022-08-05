@@ -2030,7 +2030,7 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func setTravelCabinClass( cabinClass:String, leisureClass:String, completion: @escaping (String?, Error?) -> Void){
+    func setTravelCabinClass( cabinClass:Int, leisureClass:Int, completion: @escaping (String?, Error?) -> Void){
         Alamofire.request(PreferencesRouter.setTravelCabinClass( cabinClass, leisureClass))
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -2210,7 +2210,7 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getTravelHotelGroups( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+    func getTravelHotelGroups( completion: @escaping ([String]?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.getTravelHotelGroups)
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -2228,7 +2228,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Taxonomy]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
@@ -2246,7 +2246,7 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getTravelMedicalMeals( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+    func getTravelMedicalMeals( completion: @escaping ([String]?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.getTravelMedicalMeals)
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -2264,7 +2264,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Taxonomy]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
@@ -2282,7 +2282,7 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getTravelActivities( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+    func getTravelActivities( completion: @escaping ([String]?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.getTravelActivities)
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -2300,7 +2300,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Taxonomy]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
@@ -2318,7 +2318,7 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getTravelAmenities( completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+    func getTravelAmenities( completion: @escaping ([String]?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.getTravelAmenities)
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -2336,7 +2336,7 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Taxonomy]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[String]>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))

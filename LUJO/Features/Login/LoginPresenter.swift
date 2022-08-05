@@ -214,7 +214,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
                                avatar: "",
                                token: "",
                                approved: false,
-                               referralCode: "",
+                               referralCode: [],
                                points: 0,
                                membershipPlan: nil,
                                sfid: "")

@@ -11,6 +11,11 @@ import JGProgressHUD
 import Mixpanel
 import FirebaseCrashlytics
 
+enum SeatInAirplan: String{
+    case aisle = "Aisle"
+    case window = "Window"
+}
+
 class PrefCollectionsViewController: UIViewController {
     
     //MARK: - 🎲 - Init
@@ -216,7 +221,10 @@ class PrefCollectionsViewController: UIViewController {
                 previouslySelectedItems = self.userPreferences?.travel.travel_amenity_id ?? []
             case .travelAirplaneSeat:
                 lblPrefQuestion.text = "Which seat do you prefer on a airplane?"
-                previouslySelectedItems = self.userPreferences?.travel.travel_airplane_seat ?? []
+                if let travelAirplaneSeat = self.userPreferences?.travel.travel_airplane_seat{
+                    previouslySelectedItems.append( travelAirplaneSeat)
+                }
+                
             case .travelMeals:
                 lblPrefQuestion.text = "Preferred Meals"
                 previouslySelectedItems = self.userPreferences?.travel.travel_airplane_meals ?? []
@@ -416,8 +424,8 @@ class PrefCollectionsViewController: UIViewController {
                         self.itemsList = cachedItems
                     }
                 case .travelAirplaneSeat:
-                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: "Aisle")
-                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: "Window")
+                    let taxonomyObj1 = Taxonomy(termId:"asdf1234qwer" , name: SeatInAirplan.aisle.rawValue)  //hardcoded values
+                    let taxonomyObj2 = Taxonomy(termId:"asdf1234qwer" , name: SeatInAirplan.window.rawValue)
                     var taxonomies = [Taxonomy]()
                     taxonomies.append(taxonomyObj1)
                     taxonomies.append(taxonomyObj2)
@@ -743,12 +751,19 @@ class PrefCollectionsViewController: UIViewController {
                         completion(nil, error)
                         return
                     }
+                    
+                    var temptaxonomies = [Taxonomy]()
                     //caching master data into userdefaults
-                    if taxonomies?.count ?? 0 > 0{
-                        self.preferencesMasterData.travelAmenities = taxonomies
+                    if let items = taxonomies ,  items.count > 0{
+                        for item in items{
+                            let taxonomyObj = Taxonomy(termId:"asdf1234qwer" , name: item)
+                            temptaxonomies.append(taxonomyObj)
+                        }
+                        
+                        self.preferencesMasterData.travelAmenities = temptaxonomies
                         LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                     }
-                    completion(taxonomies, error)
+                    completion(temptaxonomies, error)
                 }
             case .travelMeals:
                 //dining preferences and travel meals are same thing
@@ -774,12 +789,18 @@ class PrefCollectionsViewController: UIViewController {
                         completion(nil, error)
                         return
                     }
+                    
+                    var temptaxonomies = [Taxonomy]()
                     //caching master data into userdefaults
-                    if taxonomies?.count ?? 0 > 0{
-                        self.preferencesMasterData.travelMedicalMeals = taxonomies
+                    if let items = taxonomies ,  items.count > 0{
+                        for item in items{
+                            let taxonomyObj = Taxonomy(termId:"asdf1234qwer" , name: item)
+                            temptaxonomies.append(taxonomyObj)
+                        }
+                        self.preferencesMasterData.travelMedicalMeals = temptaxonomies
                         LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                     }
-                    completion(taxonomies, error)
+                    completion(temptaxonomies, error)
                 }
             case .travelAllergies:
                 //trave and dinnig
@@ -1037,20 +1058,19 @@ class PrefCollectionsViewController: UIViewController {
             case .travel:
                 switch prefInformationType {
                 case .travelAmenities:
-                    if let ids = userPreferences?.travel.travel_amenity_id{
-                        for id in ids {
+                    if let names = userPreferences?.travel.travel_amenity_id{
+                        for id in names {
                             if id.count > 0{ //to avoid empty string
                                 selectedArray.append(id)
                             }
                         }
                     }
                 case .travelAirplaneSeat:
-                    if let ids = userPreferences?.travel.travel_airplane_seat{
-                        for id in ids {
-                            if id.count > 0{ //to avoid empty string
-                                selectedArray.append(id)
-                            }
+                    if let name = userPreferences?.travel.travel_airplane_seat{
+                        if name.count > 0{ //to avoid empty string
+                            selectedArray.append(name)
                         }
+
                     }
                 case .travelMeals:
                     if let ids = userPreferences?.travel.travel_airplane_meals{
@@ -1283,7 +1303,7 @@ class PrefCollectionsViewController: UIViewController {
                             LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                         case .travelAirplaneSeat:
                             if arr.count > 0 && arr[0].count > 0{   //avoid empty string
-                                userPreferences.travel.travel_airplane_seat = arr
+                                userPreferences.travel.travel_airplane_seat = arr[0]
                                 LujoSetup().store(userPreferences: userPreferences)//saving user preferences into user defaults
                             }
                         case .travelMeals:
@@ -1941,7 +1961,10 @@ class PrefCollectionsViewController: UIViewController {
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
             case .travelAirplaneSeat:
-                let current = self.userPreferences?.travel.travel_airplane_seat ?? []
+                var current:[String] = []
+                if let travelAirplaneSeat =  self.userPreferences?.travel.travel_airplane_seat{
+                    current.append(travelAirplaneSeat)
+                }
                 let previous = self.previouslySelectedItems
                 return !compare(current: current , previous: previous)
             case .travelMeals:
@@ -2308,8 +2331,8 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
         case .travel:
             switch prefInformationType {
             case .travelAmenities:
-                if let ids = userPreferences?.travel.travel_amenity_id{
-                    if (ids.contains(String(model.termId))){
+                if let names = userPreferences?.travel.travel_amenity_id{
+                    if (names.contains(String(model.name))){
                         cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
@@ -2319,7 +2342,7 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
                 }
             case .travelAirplaneSeat:
                 if let str = userPreferences?.travel.travel_airplane_seat{
-                    if(str.contains(model.name.lowercased()) ){
+                    if(str.contains(model.name) ){
                         cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
@@ -2339,7 +2362,7 @@ extension PrefCollectionsViewController: UICollectionViewDataSource {
                 }
             case .travelMedicalMeals:
                 if let str = userPreferences?.travel.travel_medical_dietary_meal{
-                    if(str.contains(String(model.termId)) ){
+                    if(str.contains(String(model.name)) ){
                         cell.containerView.backgroundColor = UIColor.rgMid
                         cell.lblTitle.textColor = UIColor.white
                     }else{
@@ -2700,24 +2723,24 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
         case .travel:
             switch prefInformationType {
             case .travelAmenities:
-                if var ids = userPreferences?.travel.travel_amenity_id{
-                    if ids.contains(termId){
+                if var names = userPreferences?.travel.travel_amenity_id{
+                    if names.contains(name){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
-                        userPreferences?.travel.travel_amenity_id = ids
+                        names.removeAll{ value in return value == name}
+                        userPreferences?.travel.travel_amenity_id = names
                     }else{
-                        userPreferences?.travel.travel_amenity_id?.append(termId)
+                        userPreferences?.travel.travel_amenity_id?.append(name)
                     }
                 }else{
                     userPreferences?.travel.travel_amenity_id = []    //initializing first
-                    userPreferences?.travel.travel_amenity_id?.append(termId)
+                    userPreferences?.travel.travel_amenity_id?.append(name)
                 }
             case .travelAirplaneSeat:
-                userPreferences?.travel.travel_airplane_seat = []   //making it empty
+                userPreferences?.travel.travel_airplane_seat = ""   //making it empty
                 if (indexPath.row == 0){
-                    userPreferences?.travel.travel_airplane_seat?.append("aisle")
+                    userPreferences?.travel.travel_airplane_seat = SeatInAirplan.aisle.rawValue
                 }else{
-                    userPreferences?.travel.travel_airplane_seat?.append("window")
+                    userPreferences?.travel.travel_airplane_seat = SeatInAirplan.window.rawValue
                 }
                 self.collectionView.reloadData()    //reload every thing in case of single selection i.e. yes or no
                 isSelectionChanged()
@@ -2736,17 +2759,17 @@ extension PrefCollectionsViewController: UICollectionViewDelegate {
                     userPreferences?.travel.travel_airplane_meals?.append(termId)
                 }
             case .travelMedicalMeals:
-                if var ids = userPreferences?.travel.travel_medical_dietary_meal{
-                    if ids.contains(termId){
+                if var names = userPreferences?.travel.travel_medical_dietary_meal{
+                    if names.contains(name){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
-                        userPreferences?.travel.travel_medical_dietary_meal = ids
+                        names.removeAll{ value in return value == name}
+                        userPreferences?.travel.travel_medical_dietary_meal = names
                     }else{
-                        userPreferences?.travel.travel_medical_dietary_meal?.append(termId)
+                        userPreferences?.travel.travel_medical_dietary_meal?.append(name)
                     }
                 }else{
                     userPreferences?.travel.travel_medical_dietary_meal = []    //initializing first
-                    userPreferences?.travel.travel_medical_dietary_meal?.append(termId)
+                    userPreferences?.travel.travel_medical_dietary_meal?.append(name)
                 }
             case .travelAllergies:
                 if var ids = userPreferences?.travel.travel_allergy_id{

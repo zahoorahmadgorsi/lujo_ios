@@ -278,13 +278,18 @@ class PrefImagesCollViewController: UIViewController {
                         completion(nil, error)
                         return
                     }
+                    
+                    var temptaxonomies = [Taxonomy]()
                     //caching master data into userdefaults
                     if let items = taxonomies ,  items.count > 0{
-//                        self.addSelectiveItem(items:items)
-                        self.preferencesMasterData.travelHotelGroups = taxonomies
+                        for item in items{
+                            let taxonomyObj = Taxonomy(termId:"asdf1234qwer" , name: item)
+                            temptaxonomies.append(taxonomyObj)
+                        }
+                        self.preferencesMasterData.travelHotelGroups = temptaxonomies
                         LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                     }
-                    completion(taxonomies, error)
+                    completion(temptaxonomies, error)
                 }
             case .travelActivities:
                 GoLujoAPIManager().getTravelActivities() { taxonomies, error in
@@ -294,13 +299,19 @@ class PrefImagesCollViewController: UIViewController {
                         completion(nil, error)
                         return
                     }
+                    
+                    var temptaxonomies = [Taxonomy]()
                     //caching master data into userdefaults
                     if let items = taxonomies ,  items.count > 0{
+                        for item in items{
+                            let taxonomyObj = Taxonomy(termId:"asdf1234qwer" , name: item)
+                            temptaxonomies.append(taxonomyObj)
+                        }
 //                        self.addSelectiveItem(items:items)
-                        self.preferencesMasterData.travelActivities = taxonomies
+                        self.preferencesMasterData.travelActivities = temptaxonomies
                         LujoSetup().store(preferencesMasterData: self.preferencesMasterData)
                     }
-                    completion(taxonomies, error)
+                    completion(temptaxonomies, error)
                 }
             case .travelAirlines:
                 print("Not required for hard coded data")
@@ -704,9 +715,9 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
 //                cell.lblTitle.text = ""
                 cell.imgView.backgroundColor = UIColor.white
                 cell.imgView.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
-                cell.imgView.image = UIImage(named: model.name + " travel")
+                cell.imgView.image = UIImage(named: model.name.lowercased() + " travel")
                 if let ids = userPreferences?.travel.travel_hotel_group{
-                    if (ids.contains(String(model.termId))){
+                    if (ids.contains(String(model.name))){
                         cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
                     }else{
                         cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
@@ -715,7 +726,7 @@ extension PrefImagesCollViewController: UICollectionViewDataSource {
             case .travelActivities:
                 cell.imgView.image = UIImage(named: model.name + " travel")
                 if let ids = userPreferences?.travel.travel_activity_id{
-                    if (ids.contains(String(model.termId))){
+                    if (ids.contains(String(model.name))){
                         cell.viewContent.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
                     }else{
                         cell.viewContent.addViewBorder( borderColor: UIColor.clear.cgColor, borderWidth: 1.0, borderCornerRadius: cornerRadius)
@@ -783,30 +794,30 @@ extension PrefImagesCollViewController: UICollectionViewDelegate {
                     userPreferences?.travel.travel_destination_type?.append(name)
                 }
             case .travelHotelGroups:
-                if var ids = userPreferences?.travel.travel_hotel_group{
-                    if ids.contains(termId){
+                if var names = userPreferences?.travel.travel_hotel_group{
+                    if names.contains(name){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
-                        userPreferences?.travel.travel_hotel_group = ids
+                        names.removeAll{ value in return value == name}
+                        userPreferences?.travel.travel_hotel_group = names
                     }else{
-                        userPreferences?.travel.travel_hotel_group?.append(termId)
+                        userPreferences?.travel.travel_hotel_group?.append(name)
                     }
                 }else{
                     userPreferences?.travel.travel_hotel_group = []    //initializing first
-                    userPreferences?.travel.travel_hotel_group?.append(termId)
+                    userPreferences?.travel.travel_hotel_group?.append(name)
                 }
             case .travelActivities:
-                if var ids = userPreferences?.travel.travel_activity_id{
-                    if ids.contains(termId){
+                if var names = userPreferences?.travel.travel_activity_id{
+                    if names.contains(name){
                         //remove all occurances in case there is duplication i.e. dirty data
-                        ids.removeAll{ value in return value == termId}
-                        userPreferences?.travel.travel_activity_id = ids
+                        names.removeAll{ value in return value == name}
+                        userPreferences?.travel.travel_activity_id = names
                     }else{
-                        userPreferences?.travel.travel_activity_id?.append(termId)
+                        userPreferences?.travel.travel_activity_id?.append(name)
                     }
                 }else{
                     userPreferences?.travel.travel_activity_id = []    //initializing first
-                    userPreferences?.travel.travel_activity_id?.append(termId)
+                    userPreferences?.travel.travel_activity_id?.append(name)
                 }
             case .travelAirlines:
                 if var ids = userPreferences?.travel.travel_airline_id{
