@@ -32,7 +32,7 @@
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Message Body]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oc-qg-igL">
@@ -42,12 +42,12 @@
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CxK-Y3-nSI">
                                                     <rect key="frame" x="0.0" y="396" width="188" height="40"/>
-                                                    <color key="backgroundColor" name="Black Backgorund"/>
+                                                    <color key="backgroundColor" name="Action Button"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="WqW-Cs-yp3"/>
                                                     </constraints>
@@ -81,6 +81,7 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="mXT-ZK-pj0" firstAttribute="width" secondItem="SU0-uJ-4pP" secondAttribute="width" id="Ha5-5F-fhW"/>
                                                 <constraint firstItem="CxK-Y3-nSI" firstAttribute="width" secondItem="SU0-uJ-4pP" secondAttribute="width" id="N7R-O4-Jg7"/>
@@ -96,9 +97,10 @@
                                     </constraints>
                                 </view>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" name="Navigation Bar"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="c0l-eC-JnE" secondAttribute="trailing" id="4nv-2x-D5c"/>
                         <constraint firstItem="c0l-eC-JnE" firstAttribute="leading" secondItem="A7b-0a-fJG" secondAttribute="leading" id="Shq-Af-zKw"/>
@@ -146,11 +148,14 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="Black Backgorund">
-            <color red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Action Button">
+            <color red="0.95686274509803926" green="0.63921568627450975" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Clear Grey Button">
             <color red="0.30196078431372547" green="0.30196078431372547" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Navigation Bar">
+            <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

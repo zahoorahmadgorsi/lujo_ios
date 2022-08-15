@@ -5,7 +5,6 @@
 //  Created by Iker Kristian on 8/28/19.
 //  Copyright © 2019 Baroque Access. All rights reserved.
 
-
 import UIKit
 import JGProgressHUD
 import FirebaseCrashlytics
