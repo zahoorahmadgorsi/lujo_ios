@@ -59,7 +59,7 @@ enum GoLujoRouter: URLRequestConvertible {
     case registerForPush(String, String)
     case unregisterForPush(String)
     case getTwilioParticipants(String)
-    case unSubscribe
+    case deleteAccount
     
     private func getCategory() -> GoLujoRouterCategory {
         switch self {
@@ -69,7 +69,7 @@ enum GoLujoRouter: URLRequestConvertible {
             return .update
         case .login, .loginWithOTP, .updateDefaults, .userProfile, .countryCodes, .registerForPush, .getTwilioParticipants, .getReferralTypes, .getReferralCodeAgainstType, .getCards, .getAddresses, .getCountries, .getCities:
             return .setup
-        case .unregisterForPush, .unSubscribe,.cardDelete,.addressDelete:
+        case .unregisterForPush, .deleteAccount,.cardDelete,.addressDelete:
             return .delete
         }
     }
@@ -193,7 +193,7 @@ enum GoLujoRouter: URLRequestConvertible {
     fileprivate func getHTTPMethodDelete() -> HTTPMethod {
         switch self {
         case .unregisterForPush: fallthrough
-        case .unSubscribe:  fallthrough
+        case .deleteAccount:  fallthrough
         case .cardDelete:   fallthrough
         case .addressDelete:
             return .delete
@@ -273,7 +273,7 @@ enum GoLujoRouter: URLRequestConvertible {
             newURLComponents.queryItems = [
                 URLQueryItem(name: "type", value: type)
             ]
-        case .unSubscribe:
+        case .deleteAccount:
             newURLComponents.path.append("/users/delete")
         }
 
@@ -341,7 +341,7 @@ enum GoLujoRouter: URLRequestConvertible {
             return getDeviceTokenAsJSONData(userId, deviceToken)
         case .unregisterForPush:        fallthrough
         case .getTwilioParticipants:    fallthrough
-        case .unSubscribe:
+        case .deleteAccount:
             return nil
         }
     }

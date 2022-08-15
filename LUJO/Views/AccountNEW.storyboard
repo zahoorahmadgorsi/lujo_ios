@@ -27,10 +27,10 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shl-p5-qIh">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="825"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="886"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="eYD-0b-QxR">
-                                                <rect key="frame" x="0.0" y="16" width="375" height="793"/>
+                                                <rect key="frame" x="0.0" y="16" width="375" height="854"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7z-J7-BPX">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
@@ -159,15 +159,43 @@
                                                             <constraint firstAttribute="bottom" secondItem="F99-hC-McA" secondAttribute="bottom" id="bDc-b9-Ki7"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c8X-AK-AF0" userLabel="Separator 1">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEc-DK-jfx" userLabel="Separator 1">
                                                         <rect key="frame" x="0.0" y="360" width="375" height="1"/>
+                                                        <color key="backgroundColor" name="Navigation Bar"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="Jh4-Ek-sV7"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="So5-S3-714">
+                                                        <rect key="frame" x="0.0" y="377" width="375" height="28"/>
+                                                        <subviews>
+                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Wishlist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUw-2E-Vtl">
+                                                                <rect key="frame" x="24" y="0.0" width="327" height="28"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="28" id="sgO-ix-Wkz"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <color key="textColor" name="Palette - Paragraph White"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="ZUw-2E-Vtl" secondAttribute="bottom" id="4h9-PI-x4Z"/>
+                                                            <constraint firstItem="ZUw-2E-Vtl" firstAttribute="leading" secondItem="So5-S3-714" secondAttribute="leading" constant="24" id="YCz-fn-p8U"/>
+                                                            <constraint firstAttribute="trailing" secondItem="ZUw-2E-Vtl" secondAttribute="trailing" constant="24" id="b74-b7-0iq"/>
+                                                            <constraint firstItem="ZUw-2E-Vtl" firstAttribute="top" secondItem="So5-S3-714" secondAttribute="top" id="r58-fL-zn3"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c8X-AK-AF0" userLabel="Separator 1">
+                                                        <rect key="frame" x="0.0" y="421" width="375" height="1"/>
                                                         <color key="backgroundColor" name="Navigation Bar"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="SjS-CK-rfZ"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vEo-Ue-E3R">
-                                                        <rect key="frame" x="0.0" y="377" width="375" height="50"/>
+                                                        <rect key="frame" x="0.0" y="438" width="375" height="50"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFx-yn-qqu">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -318,14 +346,14 @@
                                                         </variation>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNc-u7-RTy" userLabel="Separator 1">
-                                                        <rect key="frame" x="0.0" y="443" width="375" height="1"/>
+                                                        <rect key="frame" x="0.0" y="504" width="375" height="1"/>
                                                         <color key="backgroundColor" name="Navigation Bar"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="S9p-wi-Vj1"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4M-Qc-35x">
-                                                        <rect key="frame" x="0.0" y="460" width="375" height="118"/>
+                                                        <rect key="frame" x="0.0" y="521" width="375" height="118"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="QXK-Ny-Qea">
                                                                 <rect key="frame" x="32" y="0.0" width="311" height="50"/>
@@ -382,14 +410,14 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MsW-Ga-O4K" userLabel="Separator 1">
-                                                        <rect key="frame" x="0.0" y="594" width="375" height="1"/>
+                                                        <rect key="frame" x="0.0" y="655" width="375" height="1"/>
                                                         <color key="backgroundColor" name="Navigation Bar"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="BPP-R9-ZtW"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eLb-Zy-12q">
-                                                        <rect key="frame" x="0.0" y="611" width="375" height="28"/>
+                                                        <rect key="frame" x="0.0" y="672" width="375" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6E-fp-FvE">
                                                                 <rect key="frame" x="137.66666666666666" y="0.0" width="100" height="28"/>
@@ -410,10 +438,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a74-sD-V2h">
-                                                        <rect key="frame" x="0.0" y="655" width="375" height="28"/>
+                                                        <rect key="frame" x="0.0" y="716" width="375" height="28"/>
                                                         <subviews>
-                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsubscribe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-lI-G24">
-                                                                <rect key="frame" x="149.66666666666666" y="0.0" width="76" height="28"/>
+                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-lI-G24">
+                                                                <rect key="frame" x="141.66666666666666" y="0.0" width="92" height="28"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="28" id="Odf-VV-980"/>
                                                                 </constraints>
@@ -430,7 +458,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cc-LS-Qia">
-                                                        <rect key="frame" x="0.0" y="699" width="375" height="28"/>
+                                                        <rect key="frame" x="0.0" y="760" width="375" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERl-yP-cD1">
                                                                 <rect key="frame" x="152.66666666666666" y="0.0" width="70" height="28"/>
@@ -451,7 +479,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mCR-dt-cpb">
-                                                        <rect key="frame" x="0.0" y="743" width="375" height="50"/>
+                                                        <rect key="frame" x="0.0" y="804" width="375" height="50"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                 </subviews>
@@ -489,9 +517,10 @@
                         <barButtonItem key="backBarButtonItem" title="   " id="drs-qb-GVP"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="lblDeleteAccount" destination="VA7-lI-G24" id="8rZ-Kx-Irq"/>
                         <outlet property="lblMyBookings" destination="Rzo-dH-I3j" id="wVk-e0-mlS"/>
                         <outlet property="lblMyPreferences" destination="F99-hC-McA" id="BgP-h9-JBo"/>
-                        <outlet property="lblUnsubscribe" destination="VA7-lI-G24" id="8rZ-Kx-Irq"/>
+                        <outlet property="lblWishList" destination="ZUw-2E-Vtl" id="ZMk-Nv-NKu"/>
                         <outlet property="logoutLabel" destination="ERl-yP-cD1" id="Nay-Gu-WEc"/>
                         <outlet property="lujoCreditsLabel" destination="Lha-k8-kcl" id="iqL-EO-bad"/>
                         <outlet property="pictureUpdateLabel" destination="tqh-za-UYX" id="UYy-kF-ogt"/>

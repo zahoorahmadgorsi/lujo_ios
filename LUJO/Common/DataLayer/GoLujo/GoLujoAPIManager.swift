@@ -622,8 +622,8 @@ extension GoLujoAPIManager {
             }
     }
     
-    func unSubscribe( completion: @escaping (String?, Error?) -> Void) {
-        Alamofire.request(GoLujoRouter.unSubscribe)
+    func deleteAccount( completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(GoLujoRouter.deleteAccount)
             .responseJSON { response in
                 switch response.result {
                 case .success:
@@ -639,8 +639,8 @@ extension GoLujoAPIManager {
                         completion(nil, LoginError.errorLogin(description: "There is no data returned from the server"))
                         return
                     }
-                    let unSubscribeResponse = try! JSONDecoder().decode(LujoServerResponse<String>.self, from: data)
-                    completion(unSubscribeResponse.content, nil)
+                    let deleteAccountResponse = try! JSONDecoder().decode(LujoServerResponse<String>.self, from: data)
+                    completion(deleteAccountResponse.content, nil)
                     
                 case let .failure(error):
                     if error._code == NSURLErrorTimedOut {

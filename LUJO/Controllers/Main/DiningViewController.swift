@@ -153,6 +153,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     
     override func viewWillAppear(_ animated: Bool) {
         activateKeyboardManager()
+//        self.tabBarController?.tabBar.isHidden = true
         
         if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
             let isMember = target == "all" || target == "dining"
@@ -169,6 +170,8 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+//        self.tabBarController?.tabBar.isHidden = false
+        
         startPauseAnimation(isPausing: true)
     }
     

@@ -36,11 +36,12 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var pictureUpdateLabel: UILabel!
     @IBOutlet weak var lblMyBookings: UILabel!
     @IBOutlet weak var lblMyPreferences: UILabel!
+    @IBOutlet weak var lblWishList: UILabel!
     @IBOutlet weak var lujoCreditsLabel: UILabel!
     
     @IBOutlet weak var updateProfileLabel: UILabel!
     @IBOutlet weak var logoutLabel: UILabel!
-    @IBOutlet weak var lblUnsubscribe: UILabel!
+    @IBOutlet weak var lblDeleteAccount: UILabel!
     
     private let naHUD = JGProgressHUD(style: .dark)
     
@@ -59,14 +60,17 @@ class AccountViewController: UIViewController {
         let lblMyPreferencesTapResponder = UITapGestureRecognizer(target: self, action: #selector(lblMyPreferencesTapped))
         lblMyPreferences.addGestureRecognizer(lblMyPreferencesTapResponder)
         
+        let lblWishListTapResponder = UITapGestureRecognizer(target: self, action: #selector(lblWishListTapped))
+        lblWishList.addGestureRecognizer(lblWishListTapResponder)
+        
         let userProfileTapResponder = UITapGestureRecognizer(target: self, action: #selector(presentUserProfileViewController))
         updateProfileLabel.addGestureRecognizer(userProfileTapResponder)
 
         let logoutTapResponder = UITapGestureRecognizer(target: self, action: #selector(requestLogout))
         logoutLabel.addGestureRecognizer(logoutTapResponder)
         
-        let unsubscribeTapResponder = UITapGestureRecognizer(target: self, action: #selector(requestUnsubscribe))
-        lblUnsubscribe.addGestureRecognizer(unsubscribeTapResponder)
+        let deleteAccountTapResponder = UITapGestureRecognizer(target: self, action: #selector(deleteAccount))
+        lblDeleteAccount.addGestureRecognizer(deleteAccountTapResponder)
         
         if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
             self.user = user
@@ -190,6 +194,12 @@ class AccountViewController: UIViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    @objc func lblWishListTapped() {
+        print("lblWishListTapped")
+        let viewController = WishListViewController.instantiate()
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     @IBAction func inviteFriendsButton_onClick(_ sender: Any) {
         guard let currentUser = LujoSetup().getLujoUser() else {
             let error = LoginError.errorLogin(description: "No user is logged in.")
@@ -221,15 +231,15 @@ class AccountViewController: UIViewController {
         }
     }
     
-    @objc func requestUnsubscribe() {
-        showCardAlertWith(title: "Account Removal Confirmation", body: "Are you sure you want to remove your account?", buttonTitle: "Yes", cancelButtonTitle: "No") {
+    @objc func deleteAccount() {
+        showCardAlertWith(title: "Delete Account Confirmation", body: "Are you sure you want to delete your account?", buttonTitle: "Yes", cancelButtonTitle: "No") {
             guard LujoSetup().getLujoUser() != nil else {
                 let error = LoginError.errorLogin(description: "No user exist")
                 self.showError(error)
                 return
             }
             self.showNetworkActivity()
-            GoLujoAPIManager().unSubscribe() { unSubscribeResponse, error in
+            GoLujoAPIManager().deleteAccount() { response, error in
                 self.hideNetworkActivity()
                 
                 if let error = error {
