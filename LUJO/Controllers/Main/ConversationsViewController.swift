@@ -14,7 +14,7 @@ class ConversationsViewController: UIViewController {
     //MARK:- Init
     
     /// Class storyboard identifier.
-    class var identifier: String { return "ChatListViewController" }
+    class var identifier: String { return "ConversationsViewController" }
     private let naHUD = JGProgressHUD(style: .dark)
     var conversations = [Conversation]()
     var searchedConversations = [Conversation]()
@@ -103,7 +103,7 @@ class ConversationsViewController: UIViewController {
     }
     
     func getConversations(showActivity: Bool) {
-        //when chatViewController was opened from chatlistViewController and then get closed, then this method would be called from presentationControllerDidDismiss would set delegate to self again
+        //when chatViewController was opened from ConversationsViewController and then get closed, then this method would be called from presentationControllerDidDismiss would set delegate to self again
         ConversationsManager.sharedConversationsManager.delegate = self
         if showActivity {
             self.showNetworkActivity()
@@ -280,7 +280,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
                 // Modal Dismiss iOS 13 onward
                 controller?.presentationController?.delegate = self
             }
-            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then ConversationsViewController should reflect last message body and time
             navViewController.presentationController?.delegate = self
             self.present(navViewController, animated: true, completion: nil)
             // Close keyboard when you select cell
@@ -365,7 +365,7 @@ extension ConversationsViewController: ConversationsManagerDelegate {
     }
 
     func receivedNewMessage(message: TCHMessage, conversation: TCHConversation) {
-        self.getConversations(showActivity: false)    //New message is recived on chatlistViewController time to update the last message body, time and unconsumed index
+        self.getConversations(showActivity: false)    //New message is recived on ConversationsViewController time to update the last message body, time and unconsumed index
     }
     
     func sendSalesForceRequest(conversation: TCHConversation?) {

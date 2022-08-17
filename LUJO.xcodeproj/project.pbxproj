@@ -74,6 +74,7 @@
 		422AB1842863486900BEDCC3 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB1832863486900BEDCC3 /* Address.swift */; };
 		422AB18D286352A400BEDCC3 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18C286352A400BEDCC3 /* CardCell.swift */; };
 		422AB18F2863BB3D00BEDCC3 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */; };
+		42C145B028ACFA2C007436F6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C145AF28ACFA2C007436F6 /* Notification.swift */; };
 		5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527641E23165CFE00380BEB /* HomeViewController.swift */; };
 		5527642123165D1800380BEB /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* ProductsViewController.swift */; };
 		5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642223165D2500380BEB /* SearchProductsViewController.swift */; };
@@ -472,6 +473,7 @@
 		422AB1832863486900BEDCC3 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		422AB18C286352A400BEDCC3 /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardCell.swift; path = "LUJO/Views/Reusable Views/Account/CardCell.swift"; sourceTree = SOURCE_ROOT; };
 		422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		42C145AF28ACFA2C007436F6 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		5527641E23165CFE00380BEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5527642023165D1800380BEB /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		5527642223165D2500380BEB /* SearchProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductsViewController.swift; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 			children = (
 				422AB1802863463600BEDCC3 /* Account */,
 				886145D126AB70A30023E92E /* Chat.swift */,
+				42C145AF28ACFA2C007436F6 /* Notification.swift */,
 				9ABCF5C12163E55500D062C9 /* EntityProtocols.swift */,
 				880B9B0C255845B10070D7CD /* Gift.swift */,
 				880B9B0625582ABC0070D7CD /* Hotel.swift */,
@@ -2307,6 +2310,7 @@
 				9156B75B2614A08700404E1D /* GlobalSearchAnimator.swift in Sources */,
 				9A5C5CB7222FD34F00B8239D /* PaymentResult.swift in Sources */,
 				9A8E93E5212BD1AE00059DD8 /* RoutingTable.swift in Sources */,
+				42C145B028ACFA2C007436F6 /* Notification.swift in Sources */,
 				5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */,
 				9ABCF5BF2163DC3100D062C9 /* Airport.swift in Sources */,
 				3005D47E23202BFC00401243 /* AviationLuggageSelectionViewController.swift in Sources */,

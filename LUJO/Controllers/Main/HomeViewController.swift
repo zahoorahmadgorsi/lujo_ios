@@ -464,7 +464,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 // Modal Dismiss iOS 13 onward
                 controller?.presentationController?.delegate = self
             }
-            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then ConversationsViewController should reflect last message body and time
             navViewController.presentationController?.delegate = self
             self.present(navViewController, animated: true, completion: nil)
         }else{

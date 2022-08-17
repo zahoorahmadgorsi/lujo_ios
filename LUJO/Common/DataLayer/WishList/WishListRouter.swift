@@ -11,6 +11,7 @@ import FirebaseCrashlytics
 import Foundation
 import UIKit
 
+//this router deals with wishlist and pushnotifications
 enum WishListRouter: URLRequestConvertible {
     
     // Obtain backend URL from configuration
@@ -38,6 +39,7 @@ enum WishListRouter: URLRequestConvertible {
     case getFavourites
     case setFavourites(String,String)
     case unSetFavourites(String,String)
+    case getPushNotifications
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -65,7 +67,8 @@ enum WishListRouter: URLRequestConvertible {
 
     func getHTTPMethod() -> HTTPMethod {
         switch self {
-            case .getFavourites:
+            case .getFavourites: fallthrough
+            case .getPushNotifications  :
                 return .get
             case .setFavourites:
                 return .post
@@ -87,6 +90,8 @@ enum WishListRouter: URLRequestConvertible {
                 newURLComponents.path.append("/favorites/set")
             case .unSetFavourites:
                 newURLComponents.path.append("/favorites/unset")
+            case .getPushNotifications:
+                newURLComponents.path.append("/notification")
         }
         
         do {
@@ -105,7 +110,8 @@ enum WishListRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-            case .getFavourites:
+            case .getFavourites:    fallthrough
+        case .getPushNotifications:
                 return nil
             case let .setFavourites(type, id):  fallthrough
             case let .unSetFavourites(type, id):

@@ -155,6 +155,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activateKeyboardManager()
+        print(product.id)
 //        showInformationPopup(withTitle: "Only For Charmaine Diaz", message: "\n type: \(product.type) \n id:\(product.id)")
     }
     
