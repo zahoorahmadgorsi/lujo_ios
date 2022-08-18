@@ -15,7 +15,7 @@ public extension Date {
         dateFormatter.locale = Locale(identifier: locale)
         dateFormatter.timeZone = TimeZone.autoupdatingCurrent
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        print(dateFormatter.date(from: string))
+//        print(dateFormatter.date(from: string))
         return dateFormatter.date(from: string)
     }
     
@@ -23,7 +23,7 @@ public extension Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let localDate = formatter.date(from: string)
-        print(localDate as Any)
+//        print(localDate as Any)
         return localDate
     }
 

@@ -30,11 +30,11 @@ class NotificationsViewController:UIViewController{
     
     @IBOutlet weak var tblView: UITableView!
     
-    private(set) lazy var refreshControl: UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(refreshConversations), for: .valueChanged)
-        return control
-    }()
+//    private(set) lazy var refreshControl: UIRefreshControl = {
+//        let control = UIRefreshControl()
+//        control.addTarget(self, action: #selector(refreshConversations), for: .valueChanged)
+//        return control
+//    }()
     
     /// Init method that will init and return view controller.
     class func instantiate() -> NotificationsViewController {
@@ -42,6 +42,8 @@ class NotificationsViewController:UIViewController{
     }
     
     var deleteIndexPath: IndexPath? = nil //used while deleting at swipe left
+    var currentPage : Int = 0   //having paging on uiTableView
+    var isLoading : Bool = false    //loading next page
     
     //MARK:- View life cycle
     
@@ -50,7 +52,7 @@ class NotificationsViewController:UIViewController{
 
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
-        self.tblView.refreshControl = refreshControl
+//        self.tblView.refreshControl = refreshControl
         
     }
     
@@ -64,10 +66,10 @@ class NotificationsViewController:UIViewController{
         }
     }
     
-    @objc func refreshConversations() {
-        self.refreshControl.beginRefreshing()
-        getPushNotifications(showActivity: false)
-    }
+//    @objc func refreshConversations() {
+//        self.refreshControl.beginRefreshing()
+//        getPushNotifications(showActivity: false)
+//    }
     
     func getPushNotifications(showActivity: Bool) {
         if showActivity {
@@ -81,8 +83,11 @@ class NotificationsViewController:UIViewController{
                 return
             }
             
-            if let informations = information {
-                self.PushNotifications =  informations
+            if let items = information {
+                for item in items{
+                    self.PushNotifications.append(item)
+                }
+                
                 self.tblView.reloadData()
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain wish list information")
@@ -96,15 +101,25 @@ class NotificationsViewController:UIViewController{
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        
-        GoLujoAPIManager().getPushNotifications() { data, error in
+        currentPage += 1
+        GoLujoAPIManager().getPushNotifications(pageNumber: currentPage) { data, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain the push notifications")
                 completion(nil, error)
                 return
             }
+            self.isLoading = false
             completion(data, error)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.y,scrollView.frame.size.height)
+        print(scrollView.contentSize.height)
+        if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && !isLoading){
+            self.isLoading = true
+            self.getPushNotifications(showActivity: true)
         }
     }
     
@@ -119,9 +134,9 @@ class NotificationsViewController:UIViewController{
     
     func showNetworkActivity() {
         // Safe guard to that won't display both loaders at same time.
-        if !refreshControl.isRefreshing {
+//        if !refreshControl.isRefreshing {
             naHUD.show(in: view)
-        }
+//        }
     }
     
     func hideNetworkActivity() {
