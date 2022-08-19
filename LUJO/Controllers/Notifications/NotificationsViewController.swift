@@ -200,9 +200,19 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var notification = self.PushNotifications[indexPath.item]
-        
+        let notification = self.PushNotifications[indexPath.item]
+//        print(notification.payload?.type,notification.payload?.id)
+        if let type = notification.payload?.type, let id = notification.payload?.id, !id.isEmpty{
+//            print("Product Type: \(type) and ProductID: \(id)")
+            var viewController = ProductDetailsViewController()
+            let product = Product(id: id,type: type)
+            viewController = ProductDetailsViewController.instantiate(product: product)
+            viewController.modalPresentationStyle = .overFullScreen
+            self.navigationController?.present(viewController, animated: true)
+        }
+
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -221,8 +231,8 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
     func confirmDelete(name: String) {
         let alert = UIAlertController(title: "Delete \(name)", message: "Are you sure you want to permanently delete this notification?", preferredStyle: .actionSheet)
 
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteChannel)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: handleCancelChannel)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDelete)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: handleDeleteCancel)
         
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
@@ -230,16 +240,29 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
         self.present(alert, animated: true, completion: nil)
    }
     
-    func handleDeleteChannel(alertAction: UIAlertAction! ) -> Void {
+    func handleDelete(alertAction: UIAlertAction! ) -> Void {
         if let indexPath = self.deleteIndexPath {
             let notification = self.PushNotifications[indexPath.row]
-//                self.showNetworkActivity()
+            self.showNetworkActivity()
+            GoLujoAPIManager().getPushNotifications(pageNumber: currentPage) { data, error in
+                self.hideNetworkActivity()
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    let error = BackendError.parsing(reason: "Could not delete the push notifications")
+                    self.showError(error)
+                    return
+                }
                 print (notification.message)
+                self.PushNotifications.remove(at: indexPath.row)
+                // Note that indexPath is wrapped in an array:  [indexPath]
+                self.tblView.deleteRows(at: [indexPath], with: .automatic)
+                self.deleteIndexPath = nil
+            }
             
         }
     }
     
-    func handleCancelChannel(alertAction: UIAlertAction! ) -> Void {
+    func handleDeleteCancel(alertAction: UIAlertAction! ) -> Void {
         deleteIndexPath = nil       //re setting the index
     }
 }

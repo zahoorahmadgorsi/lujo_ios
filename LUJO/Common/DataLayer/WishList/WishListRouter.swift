@@ -40,6 +40,7 @@ enum WishListRouter: URLRequestConvertible {
     case setFavourites(String,String)
     case unSetFavourites(String,String)
     case getPushNotifications(Int)
+    case deletePushNotifications(String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -74,6 +75,8 @@ enum WishListRouter: URLRequestConvertible {
                 return .post
             case .unSetFavourites:
                 return .post
+        case .deletePushNotifications:
+            return .delete
         }
     }
 
@@ -84,18 +87,20 @@ enum WishListRouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
 
         switch self {
-            case .getFavourites:
-                newURLComponents.path.append("/favorites")
-            case .setFavourites:
-                newURLComponents.path.append("/favorites/set")
-            case .unSetFavourites:
-                newURLComponents.path.append("/favorites/unset")
-            case let .getPushNotifications(pageNumber):
-                newURLComponents.path.append("/notification")
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "page", value: String(pageNumber)),
-                    URLQueryItem(name: "limit", value: "15")
-            ]
+        case .getFavourites:
+            newURLComponents.path.append("/favorites")
+        case .setFavourites:
+            newURLComponents.path.append("/favorites/set")
+        case .unSetFavourites:
+            newURLComponents.path.append("/favorites/unset")
+        case let .getPushNotifications(pageNumber):
+            newURLComponents.path.append("/notification")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "page", value: String(pageNumber)),
+                URLQueryItem(name: "limit", value: "15")
+        ]
+        case let .deletePushNotifications(id):
+            newURLComponents.path.append("/notification/delete/"+id)
         }
         
         do {
@@ -114,12 +119,13 @@ enum WishListRouter: URLRequestConvertible {
     
     fileprivate func getBodyData() -> Data? {
         switch self {
-            case .getFavourites:    fallthrough
-        case .getPushNotifications:
-                return nil
-            case let .setFavourites(type, id):  fallthrough
-            case let .unSetFavourites(type, id):
-                return getFavouritesAsJSONData(type , id )
+        case .getFavourites:    fallthrough
+        case .getPushNotifications: fallthrough
+        case .deletePushNotifications:
+            return nil
+        case let .setFavourites(type, id):  fallthrough
+        case let .unSetFavourites(type, id):
+            return getFavouritesAsJSONData(type , id )
         }
     }
     
