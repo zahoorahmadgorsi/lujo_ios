@@ -62,6 +62,7 @@
 		3005D48623202CDA00401243 /* AviationResultsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3005D48523202CDA00401243 /* AviationResultsFilterViewController.swift */; };
 		30368DD72339200D00EDF549 /* MainScreenAviationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */; };
 		30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */; };
+		42130EAB28B3964B006629B3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42130EAA28B3964B006629B3 /* NotificationCell.swift */; };
 		421E0DB828696DB500B32451 /* AddressesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DB728696DB500B32451 /* AddressesViewController.swift */; };
 		421E0DBA2869766300B32451 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DB92869766300B32451 /* AddressCell.swift */; };
 		421E0DBC2869957400B32451 /* CityCountrySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DBB2869957400B32451 /* CityCountrySelectionViewController.swift */; };
@@ -461,6 +462,7 @@
 		3005D48523202CDA00401243 /* AviationResultsFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationResultsFilterViewController.swift; sourceTree = "<group>"; };
 		30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAviationCell.swift; sourceTree = "<group>"; };
 		30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenAviationCell.xib; sourceTree = "<group>"; };
+		42130EAA28B3964B006629B3 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		421E0DB728696DB500B32451 /* AddressesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesViewController.swift; sourceTree = "<group>"; };
 		421E0DB92869766300B32451 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		421E0DBB2869957400B32451 /* CityCountrySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityCountrySelectionViewController.swift; path = LUJO/Controllers/Account/CityCountrySelectionViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -985,6 +987,7 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
+				42130EA928B39630006629B3 /* Notifications */,
 				422AB18B2863529100BEDCC3 /* Account */,
 				886FE43527226195000B9530 /* Filters */,
 				886145F326AC01DE0023E92E /* Chat */,
@@ -1025,6 +1028,14 @@
 				9A818F5620EE74CC005B6455 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		42130EA928B39630006629B3 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				42130EAA28B3964B006629B3 /* NotificationCell.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		422096BD28AA744000496793 /* Notifications */ = {
@@ -2452,6 +2463,7 @@
 				88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */,
 				9AD6EABE21E3BBAF00B695A3 /* CreditCardsDataSource.swift in Sources */,
 				88814DD82659B5360082AA2C /* DestinationSearchCell.swift in Sources */,
+				42130EAB28B3964B006629B3 /* NotificationCell.swift in Sources */,
 				880B9B0D255845B10070D7CD /* Gift.swift in Sources */,
 				9AE0B2AF212330C700E55E6C /* GoLujoRouter.swift in Sources */,
 				1DEDB9ED22F2109600903CAC /* HomeSliderCell.swift in Sources */,

@@ -39,8 +39,9 @@ enum WishListRouter: URLRequestConvertible {
     case getFavourites
     case setFavourites(String,String)
     case unSetFavourites(String,String)
-    case getPushNotifications(Int)
+    case getPushNotifications(Int,Int,String)
     case deletePushNotifications(String)
+    case readPushNotifications(String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -77,6 +78,8 @@ enum WishListRouter: URLRequestConvertible {
                 return .post
         case .deletePushNotifications:
             return .delete
+        case .readPushNotifications:
+            return .put
         }
     }
 
@@ -93,15 +96,20 @@ enum WishListRouter: URLRequestConvertible {
             newURLComponents.path.append("/favorites/set")
         case .unSetFavourites:
             newURLComponents.path.append("/favorites/unset")
-        case let .getPushNotifications(pageNumber):
+        case let .getPushNotifications(pageNumber, pageSize, type):
             newURLComponents.path.append("/notification")
             newURLComponents.queryItems = [
-                URLQueryItem(name: "page", value: String(pageNumber)),
-                URLQueryItem(name: "limit", value: "15")
+                URLQueryItem(name: "page", value: String(pageNumber))
+                ,URLQueryItem(name: "limit", value: String(pageSize))
+                ,URLQueryItem(name: "type", value: type)
         ]
         case let .deletePushNotifications(id):
             newURLComponents.path.append("/notification/delete/"+id)
+        case let .readPushNotifications(id):
+            newURLComponents.path.append("/notification/update/"+id)
         }
+        
+        
         
         do {
             let callURL = try newURLComponents.asURL()
@@ -121,7 +129,8 @@ enum WishListRouter: URLRequestConvertible {
         switch self {
         case .getFavourites:    fallthrough
         case .getPushNotifications: fallthrough
-        case .deletePushNotifications:
+        case .deletePushNotifications:  fallthrough
+        case .readPushNotifications:
             return nil
         case let .setFavourites(type, id):  fallthrough
         case let .unSetFavourites(type, id):

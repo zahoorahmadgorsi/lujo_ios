@@ -20,14 +20,18 @@ enum NotificationPayloadType: String{
     case YACHT = "yacht"
     case VILLA = "villa"
     case TRAVEL = "travel"
+    case RECENT = "recent"
 }
 
 class NotificationsViewController:UIViewController{
     /// Class storyboard identifier.
     class var identifier: String { return "NotificationsViewController" }
     private let naHUD = JGProgressHUD(style: .dark)
-    var PushNotifications = [PushNotification]()
+    var pushNotifications = [PushNotification]()
+    var filteredPushNotifications = [PushNotification]()
+    var isFiltering = false
     
+    var selectedProduct:NotificationPayloadType = NotificationPayloadType.RECENT
     @IBOutlet weak var tblView: UITableView!
     
 //    private(set) lazy var refreshControl: UIRefreshControl = {
@@ -42,23 +46,29 @@ class NotificationsViewController:UIViewController{
     }
     
     var deleteIndexPath: IndexPath? = nil //used while deleting at swipe left
+    var pageSize:Int = 15
     var currentPage : Int = 0   //having paging on uiTableView
+    var currentFilteredPage : Int = 0
     var isLoading : Bool = false    //loading next page
-    
+    var filterPicker: ikDataPickerManger?
     //MARK:- View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterTapped))
+        
         self.tblView.dataSource = self;
         self.tblView.delegate = self;
+        self.tblView.estimatedRowHeight = 135   //to make dynamic height have to provide some height
+        self.tblView.rowHeight = UITableView.automaticDimension
 //        self.tblView.refreshControl = refreshControl
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (self.PushNotifications.count == 0){
+        if (self.pushNotifications.count == 0){
             self.getPushNotifications(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
         }else{
             self.tblView.reloadData()
@@ -84,13 +94,30 @@ class NotificationsViewController:UIViewController{
             }
             
             if let items = information {
-                for item in items{
-                    self.PushNotifications.append(item)
+                if self.isFiltering{
+                    if self.currentFilteredPage > 0 && items.count == 0{ //user has tried to access the page which dont have any item
+                        return //keep displaying existing items
+                    }
+                    for item in items{
+                        if !self.filteredPushNotifications.contains(where: {$0.id == item.id}){
+                            self.filteredPushNotifications.append(item)
+                        }
+                        
+                    }
+                }else{
+                    if self.currentPage > 0 && items.count == 0{ //user has tried to access the page which dont have any item
+                        return //keep displaying existing items
+                    }
+//                    self.pushNotifications.removeAll()
+                    for item in items{
+                        self.pushNotifications.append(item)
+                    }
+                    
+                    
                 }
-                
                 self.tblView.reloadData()
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain wish list information")
+                let error = BackendError.parsing(reason: "Could not obtain push notifications")
                 self.showError(error)
             }
         }
@@ -101,8 +128,16 @@ class NotificationsViewController:UIViewController{
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        currentPage += 1
-        GoLujoAPIManager().getPushNotifications(pageNumber: currentPage) { data, error in
+        var _currentPage = 0
+        if !isFiltering{
+            currentPage += 1
+            _currentPage = currentPage
+        }else{
+            currentFilteredPage += 1
+            _currentPage = currentFilteredPage
+        }
+        
+        GoLujoAPIManager().getPushNotifications(pageNumber: _currentPage, pageSize: self.pageSize , type: self.selectedProduct.rawValue) { data, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain the push notifications")
@@ -115,11 +150,18 @@ class NotificationsViewController:UIViewController{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y,scrollView.frame.size.height)
-        print(scrollView.contentSize.height)
+//        print(scrollView.contentOffset.y,scrollView.frame.size.height)
+//        print(scrollView.contentOffset.y+scrollView.frame.size.height,scrollView.contentSize.height)
         if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && !isLoading){
-            self.isLoading = true
-            self.getPushNotifications(showActivity: true)
+            //if user is filtering data but already pageSize filtered data is present
+            // if user is reloading data but already pagesize data is present
+            if ( (self.isFiltering && (self.filteredPushNotifications.count / self.pageSize) >= self.currentFilteredPage )
+                 || (!self.isFiltering && (self.pushNotifications.count /  self.pageSize) >= self.currentPage )){
+                
+                self.isLoading = true
+                self.getPushNotifications(showActivity: true)
+            }
+            
         }
     }
     
@@ -145,53 +187,171 @@ class NotificationsViewController:UIViewController{
             naHUD.dismiss()
         }
     }
+    
+    @objc func filterTapped(sender: UIBarButtonItem) {
+        if filterPicker == nil {
+            let _filtersDataSource: [[String]] = [[
+                                                    NotificationPayloadType.RESTAURANT.rawValue.capitalizingAllFirstLetters()
+                                                    , NotificationPayloadType.GIFT.rawValue.capitalizingAllFirstLetters()
+                                                    , NotificationPayloadType.VILLA.rawValue.capitalizingAllFirstLetters()
+                                                    , NotificationPayloadType.EVENT.rawValue.capitalizingAllFirstLetters()
+                                                    , NotificationPayloadType.YACHT.rawValue.capitalizingAllFirstLetters()
+                                                    , NotificationPayloadType.TRAVEL.rawValue.capitalizingAllFirstLetters()
+                                                    , NotificationPayloadType.EXPERIENCE.rawValue.capitalizingAllFirstLetters()
+                                                   , "Special event"
+                                                  ]]
+            
+            filterPicker = ikDataPickerManger.create(owner: self, sourceView: sender.customView, title: "Please select the product type", dataSource: _filtersDataSource,okTitle: "OK" , cancelTitle: "Cancel & Clear", callback: { [self] values in
+                //default values which would over ride in next part of the function
+//
+                isFiltering = true
+                self.selectedProduct = .RECENT
+                
+                if values.count > 0{
+                    isFiltering = true
+                    self.filteredPushNotifications.removeAll()
+                    let selectedPickerItem = values[0].lowercased()
+                    if selectedPickerItem == NotificationPayloadType.VILLA.rawValue.lowercased(){
+                        if self.selectedProduct != NotificationPayloadType.VILLA{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.VILLA
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                    }else if selectedPickerItem == "special event"{
+                        if self.selectedProduct != NotificationPayloadType.SPECIAL_EVENT{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.SPECIAL_EVENT
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                        
+                    }else if selectedPickerItem == NotificationPayloadType.EXPERIENCE.rawValue.lowercased(){
+                        if self.selectedProduct != NotificationPayloadType.EXPERIENCE{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.EXPERIENCE
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                        
+                    }else if selectedPickerItem == NotificationPayloadType.EVENT.rawValue.lowercased(){
+                        if self.selectedProduct != NotificationPayloadType.EVENT{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.EVENT
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                        
+                    }else if selectedPickerItem == NotificationPayloadType.GIFT.rawValue.lowercased(){
+                        if self.selectedProduct != NotificationPayloadType.GIFT{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.GIFT
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                        
+                    }else if selectedPickerItem == NotificationPayloadType.RESTAURANT.rawValue.lowercased(){
+                        if self.selectedProduct != NotificationPayloadType.RESTAURANT{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.RESTAURANT
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                        
+                    }else if selectedPickerItem == NotificationPayloadType.TRAVEL.rawValue.lowercased(){
+                        if self.selectedProduct != NotificationPayloadType.TRAVEL{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.TRAVEL
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                        
+                    }else if selectedPickerItem == NotificationPayloadType.YACHT.rawValue.lowercased(){
+                        if self.selectedProduct != NotificationPayloadType.YACHT{ //slection is changing
+                            self.selectedProduct = NotificationPayloadType.YACHT
+                            currentFilteredPage = 0
+                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                        }
+                        
+                    }else{
+                        isFiltering = false
+                        self.title = "Notifications"
+                        return
+                    }
+                    filteredPushNotifications = pushNotifications.filter({$0.payload?.type == self.selectedProduct.rawValue})
+                    if filteredPushNotifications.count == 0{
+                        getPushNotifications(showActivity: true)    //after applying local filter data wasnt found so fetching from server
+                    }else{
+                        self.tblView.reloadData()
+                    }
+                    
+                }else{  //during filtering user has pressed the cancel button, so loading pre filtering data
+                    isFiltering = false
+                    self.tblView.reloadData()
+                }
+                
+            })
+        }
+        filterPicker?.present()
+    }
 }
 
 extension NotificationsViewController: UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.PushNotifications.count == 0 {
-            self.tblView.setEmptyMessage("No notification(s) are available")
-        }else{
-            self.tblView.restore()
+        if isFiltering {
+            if self.filteredPushNotifications.count == 0 {
+                self.tblView.setEmptyMessage("No notification(s) are available for this filter.")
+            }else{
+                self.tblView.restore()
+            }
+            return self.filteredPushNotifications.count
+        } else {
+            if self.pushNotifications.count == 0 {
+                self.tblView.setEmptyMessage("No notification(s) are available")
+            }else{
+                self.tblView.restore()
+            }
+            return self.pushNotifications.count
         }
-        return self.PushNotifications.count
         
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "chatCell") as! ChatCell
-        let model = PushNotifications[indexPath.row]
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell") as! NotificationCell
+        var model:PushNotification
+        if isFiltering {
+            model = filteredPushNotifications[indexPath.row]
+        }else{
+            model = pushNotifications[indexPath.row]
+        }
         if let payload = model.payload{
             if payload.type == NotificationPayloadType.EVENT.rawValue
                 || payload.type == NotificationPayloadType.EXPERIENCE.rawValue
                 || payload.type == NotificationPayloadType.SPECIAL_EVENT.rawValue{
                 
-                cell.imgAvatar.image = UIImage(named:"Get Tickets Icon")
+                cell.imgProduct.image = UIImage(named:"Get Tickets Icon")
             }else if(payload.type == NotificationPayloadType.VILLA.rawValue){
-                cell.imgAvatar.image = UIImage(named:"villa cta")
+                cell.imgProduct.image = UIImage(named:"villa cta")
             }else if(payload.type == NotificationPayloadType.GIFT.rawValue){
-                cell.imgAvatar.image = UIImage(named:"Purchase Goods Icon")
+                cell.imgProduct.image = UIImage(named:"Purchase Goods Icon")
             }else if(payload.type == NotificationPayloadType.YACHT.rawValue){
-                cell.imgAvatar.image = UIImage(named:"Charter Yacht Icon")
+                cell.imgProduct.image = UIImage(named:"Charter Yacht Icon")
             }else if(payload.type == NotificationPayloadType.TRAVEL.rawValue){
-                cell.imgAvatar.image = UIImage(named:"aviation_icon")
+                cell.imgProduct.image = UIImage(named:"aviation_icon")
             }else if(payload.type == NotificationPayloadType.RESTAURANT.rawValue){
-                cell.imgAvatar.image = UIImage(named:"Book Table Icon")
+                cell.imgProduct.image = UIImage(named:"Book Table Icon")
             }
         }
         
-        var titleMessage = ""
         if let title = model.title{
-            titleMessage = title
-            if let subTitle = model.subTitle{
-                titleMessage += " " + subTitle
-            }
-            cell.lblChannelFriendlyName.text = titleMessage
+            cell.lblNotificationTitle.isHidden = false
+            cell.lblNotificationTitle.text = title
+        }else{
+            cell.lblNotificationTitle.isHidden = true
         }
         
-        cell.lblLastMessage.text = model.message
+        if let subTitle = model.subTitle{
+            cell.lblNotificationSubtitle.isHidden = false
+            cell.lblNotificationSubtitle.text = subTitle
+        }else{
+            cell.lblNotificationSubtitle.isHidden = true
+        }
+        
+        cell.lblNotificationBody.text = model.message
         cell.lblCreatedAt.text =  Date.dateFromUTCString(string: model.createdAt)?.whatsAppTimeFormat()
         
         self.tblView.separatorStyle = .singleLine
@@ -202,17 +362,31 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let notification = self.PushNotifications[indexPath.item]
-//        print(notification.payload?.type,notification.payload?.id)
-        if let type = notification.payload?.type, let id = notification.payload?.id, !id.isEmpty{
+        var notification = self.pushNotifications[indexPath.item]
+        if isFiltering {
+            notification = self.filteredPushNotifications[indexPath.item]
+        }
+        let notificationId = notification.id
+        GoLujoAPIManager().readPushNotifications(id: notificationId) { responseString, error in
+            self.hideNetworkActivity()
+            guard error == nil else {
+                Crashlytics.crashlytics().record(error: error!)
+                let error = BackendError.parsing(reason: "Could not set read to the push notifications")
+                self.showError(error)
+                return
+            }
+//            print (responseString)
+            self.tblView.reloadData()
+        }
+        if let productId = notification.payload?.id, let productType = notification.payload?.type{
 //            print("Product Type: \(type) and ProductID: \(id)")
             var viewController = ProductDetailsViewController()
-            let product = Product(id: id,type: type)
+            let product = Product(id: productId, type: productType)
             viewController = ProductDetailsViewController.instantiate(product: product)
             viewController.modalPresentationStyle = .overFullScreen
             self.navigationController?.present(viewController, animated: true)
         }
-
+        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -223,7 +397,7 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
         if (editingStyle == .delete) {
             // handle delete (by removing the data from your array and updating the tableview)
             self.deleteIndexPath = indexPath
-            let itemToDelete = self.PushNotifications[indexPath.row].message
+            let itemToDelete = self.pushNotifications[indexPath.row].message
             confirmDelete(name: itemToDelete ?? "*this notification*")
         }
     }
@@ -242,9 +416,9 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func handleDelete(alertAction: UIAlertAction! ) -> Void {
         if let indexPath = self.deleteIndexPath {
-            let notification = self.PushNotifications[indexPath.row]
+            let notification = self.pushNotifications[indexPath.row]
             self.showNetworkActivity()
-            GoLujoAPIManager().getPushNotifications(pageNumber: currentPage) { data, error in
+            GoLujoAPIManager().deletePushNotifications(id: notification.id) { data, error in
                 self.hideNetworkActivity()
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
@@ -253,7 +427,7 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
                     return
                 }
                 print (notification.message)
-                self.PushNotifications.remove(at: indexPath.row)
+                self.pushNotifications.remove(at: indexPath.row)
                 // Note that indexPath is wrapped in an array:  [indexPath]
                 self.tblView.deleteRows(at: [indexPath], with: .automatic)
                 self.deleteIndexPath = nil

@@ -28,13 +28,17 @@ class ikDataPickerManger {
         dataPickViewController.startValues = values
     }
     
-    class func create(owner: UIViewController, sourceView: UIView?, title: String?, dataSource: [[String]], callback: (([String])->(Void))? = nil) -> ikDataPickerManger {
+    
+    class func create(owner: UIViewController, sourceView: UIView?, title: String?, dataSource: [[String]], okTitle:String?="OK" , cancelTitle:String? = "Cancel" , callback: (([String])->(Void))? = nil) -> ikDataPickerManger {
+
         let instance = ikDataPickerManger()
         instance.dataPickViewController.owner = owner
         instance.dataPickViewController.sourceView = sourceView
         instance.dataPickViewController.pickerTitle = title
         instance.dataPickViewController.dataSource = dataSource
         instance.dataPickViewController.callback = callback
+        instance.dataPickViewController.okTitle = okTitle ?? "OK"
+        instance.dataPickViewController.cancelTitle = cancelTitle ?? "Cancel"
         return instance
     }
     
@@ -48,6 +52,8 @@ class ikDataPickerManger {
         fileprivate var owner: UIViewController!
         fileprivate var sourceView: UIView?
         fileprivate var pickerTitle: String?
+        fileprivate var okTitle: String?
+        fileprivate var cancelTitle: String?
         fileprivate var dataSource: [[String]] = []
         fileprivate var callback: (([String])->(Void))?
         fileprivate var startValues: [String] = []
@@ -88,8 +94,12 @@ class ikDataPickerManger {
             alertController.view.addSubview(pickerView)
             alertController.view.tintColor = UIColor.rgMid
             
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+            alertController.addAction(UIAlertAction(title: self.cancelTitle, style: .cancel, handler: { [weak self] _ in
+                guard let strongSelf = self else { return }
+                strongSelf.selectedValues = []
+                strongSelf.callback?(strongSelf.selectedValues)
+            }))
+            alertController.addAction(UIAlertAction(title: self.okTitle, style: .default, handler: { [weak self] _ in
                 guard let strongSelf = self else { return }
                 strongSelf.selectedValues = []
                 for (component, data) in strongSelf.dataSource.enumerated() {
