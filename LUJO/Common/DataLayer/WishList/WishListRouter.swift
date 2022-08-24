@@ -39,7 +39,7 @@ enum WishListRouter: URLRequestConvertible {
     case getFavourites
     case setFavourites(String,String)
     case unSetFavourites(String,String)
-    case getPushNotifications(Int,Int,String)
+    case getPushNotifications(Int,String)
     case deletePushNotifications(String)
     case readPushNotifications(String)
     
@@ -96,10 +96,10 @@ enum WishListRouter: URLRequestConvertible {
             newURLComponents.path.append("/favorites/set")
         case .unSetFavourites:
             newURLComponents.path.append("/favorites/unset")
-        case let .getPushNotifications(pageNumber, pageSize, type):
+        case let .getPushNotifications( pageSize, type):
             newURLComponents.path.append("/notification")
             newURLComponents.queryItems = [
-                URLQueryItem(name: "page", value: String(pageNumber))
+                URLQueryItem(name: "page", value: "1")
                 ,URLQueryItem(name: "limit", value: String(pageSize))
                 ,URLQueryItem(name: "type", value: type)
         ]

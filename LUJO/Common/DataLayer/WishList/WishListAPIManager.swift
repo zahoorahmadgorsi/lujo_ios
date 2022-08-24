@@ -98,8 +98,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func getPushNotifications(pageNumber:Int,pageSize:Int, type:String, completion: @escaping ([PushNotification]?, Error?) -> Void) {
-        Alamofire.request(WishListRouter.getPushNotifications(pageNumber,pageSize,type))
+    func getPushNotifications(pageSize:Int, type:String, completion: @escaping ([PushNotification]?, Error?) -> Void) {
+        Alamofire.request(WishListRouter.getPushNotifications(pageSize,type))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)

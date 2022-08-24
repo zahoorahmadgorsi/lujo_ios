@@ -46,16 +46,17 @@ class NotificationsViewController:UIViewController{
     }
     
     var deleteIndexPath: IndexPath? = nil //used while deleting at swipe left
-    var pageSize:Int = 15
-    var currentPage : Int = 0   //having paging on uiTableView
-    var currentFilteredPage : Int = 0
-    var isLoading : Bool = false    //loading next page
+    let limit:Int = 15      //page size
+    var increasedLimit: Int = 0 // setting in viewdid load number of records on a page
+    
+    var isLoadingNextPage : Bool = false    //loading next page
     var filterPicker: ikDataPickerManger?
     //MARK:- View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        increasedLimit = limit  //assinging it here becuase limit we can change any time from the declaration area
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterTapped))
         
         self.tblView.dataSource = self;
@@ -63,11 +64,16 @@ class NotificationsViewController:UIViewController{
         self.tblView.estimatedRowHeight = 135   //to make dynamic height have to provide some height
         self.tblView.rowHeight = UITableView.automaticDimension
 //        self.tblView.refreshControl = refreshControl
+        // disallowing table view to hide behind tab bar
+        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
+        self.tblView.contentInset = adjustForTabbarInsets
+        self.tblView.scrollIndicatorInsets = adjustForTabbarInsets
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         if (self.pushNotifications.count == 0){
             self.getPushNotifications(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
         }else{
@@ -95,9 +101,7 @@ class NotificationsViewController:UIViewController{
             
             if let items = information {
                 if self.isFiltering{
-                    if self.currentFilteredPage > 0 && items.count == 0{ //user has tried to access the page which dont have any item
-                        return //keep displaying existing items
-                    }
+                    self.filteredPushNotifications.removeAll()
                     for item in items{
                         if !self.filteredPushNotifications.contains(where: {$0.id == item.id}){
                             self.filteredPushNotifications.append(item)
@@ -105,21 +109,18 @@ class NotificationsViewController:UIViewController{
                         
                     }
                 }else{
-                    if self.currentPage > 0 && items.count == 0{ //user has tried to access the page which dont have any item
-                        return //keep displaying existing items
-                    }
-//                    self.pushNotifications.removeAll()
+                    self.pushNotifications.removeAll()
                     for item in items{
                         self.pushNotifications.append(item)
                     }
-                    
-                    
                 }
+                
                 self.tblView.reloadData()
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain push notifications")
                 self.showError(error)
             }
+              //making it false at the last so that if its success or failure loading should become false
         }
     }
     
@@ -128,23 +129,15 @@ class NotificationsViewController:UIViewController{
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        var _currentPage = 0
-        if !isFiltering{
-            currentPage += 1
-            _currentPage = currentPage
-        }else{
-            currentFilteredPage += 1
-            _currentPage = currentFilteredPage
-        }
         
-        GoLujoAPIManager().getPushNotifications(pageNumber: _currentPage, pageSize: self.pageSize , type: self.selectedProduct.rawValue) { data, error in
+        GoLujoAPIManager().getPushNotifications( pageSize: self.increasedLimit , type: self.selectedProduct.rawValue) { data, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain the push notifications")
                 completion(nil, error)
                 return
             }
-            self.isLoading = false
+            self.isLoadingNextPage = false
             completion(data, error)
         }
     }
@@ -152,13 +145,15 @@ class NotificationsViewController:UIViewController{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        print(scrollView.contentOffset.y,scrollView.frame.size.height)
 //        print(scrollView.contentOffset.y+scrollView.frame.size.height,scrollView.contentSize.height)
-        if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && !isLoading){
+        if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && !isLoadingNextPage){
             //if user is filtering data but already pageSize filtered data is present
             // if user is reloading data but already pagesize data is present
-            if ( (self.isFiltering && (self.filteredPushNotifications.count / self.pageSize) >= self.currentFilteredPage )
-                 || (!self.isFiltering && (self.pushNotifications.count /  self.pageSize) >= self.currentPage )){
+            if ( (self.isFiltering && (self.filteredPushNotifications.count >= self.limit) )
+                 || (!self.isFiltering && (self.pushNotifications.count >=  self.limit)  )){
                 
-                self.isLoading = true
+                self.isLoadingNextPage = true
+                //incrementing current page
+                self.increasedLimit += self.limit    //resetting to page limit
                 self.getPushNotifications(showActivity: true)
             }
             
@@ -212,58 +207,52 @@ class NotificationsViewController:UIViewController{
                     self.filteredPushNotifications.removeAll()
                     let selectedPickerItem = values[0].lowercased()
                     if selectedPickerItem == NotificationPayloadType.VILLA.rawValue.lowercased(){
+                        //resetting to page limit
+                        self.increasedLimit = self.increasedLimit > self.limit ? self.increasedLimit : self.limit
                         if self.selectedProduct != NotificationPayloadType.VILLA{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.VILLA
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                     }else if selectedPickerItem == "special event"{
                         if self.selectedProduct != NotificationPayloadType.SPECIAL_EVENT{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.SPECIAL_EVENT
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                         
                     }else if selectedPickerItem == NotificationPayloadType.EXPERIENCE.rawValue.lowercased(){
                         if self.selectedProduct != NotificationPayloadType.EXPERIENCE{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.EXPERIENCE
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                         
                     }else if selectedPickerItem == NotificationPayloadType.EVENT.rawValue.lowercased(){
                         if self.selectedProduct != NotificationPayloadType.EVENT{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.EVENT
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                         
                     }else if selectedPickerItem == NotificationPayloadType.GIFT.rawValue.lowercased(){
                         if self.selectedProduct != NotificationPayloadType.GIFT{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.GIFT
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                         
                     }else if selectedPickerItem == NotificationPayloadType.RESTAURANT.rawValue.lowercased(){
                         if self.selectedProduct != NotificationPayloadType.RESTAURANT{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.RESTAURANT
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                         
                     }else if selectedPickerItem == NotificationPayloadType.TRAVEL.rawValue.lowercased(){
                         if self.selectedProduct != NotificationPayloadType.TRAVEL{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.TRAVEL
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                         
                     }else if selectedPickerItem == NotificationPayloadType.YACHT.rawValue.lowercased(){
                         if self.selectedProduct != NotificationPayloadType.YACHT{ //slection is changing
                             self.selectedProduct = NotificationPayloadType.YACHT
-                            currentFilteredPage = 0
-                            self.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
+                            self.navigationController?.navigationBar.topItem?.title = selectedPickerItem.capitalizingFirstLetter() + " Notifications"
                         }
                         
                     }else{
@@ -353,7 +342,14 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
         
         cell.lblNotificationBody.text = model.message
         cell.lblCreatedAt.text =  Date.dateFromUTCString(string: model.createdAt)?.whatsAppTimeFormat()
-        
+        if !model.isRead{    //if notification hasn't read yet then change the background
+            cell.contentView.backgroundColor = .backGround
+            print(model.id)
+        }
+        else{
+            cell.contentView.backgroundColor = .clear
+        }
+
         self.tblView.separatorStyle = .singleLine
         self.tblView.separatorColor = .lightGray
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
@@ -376,6 +372,17 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
                 return
             }
 //            print (responseString)
+            if self.isFiltering{
+                if let index = self.filteredPushNotifications.firstIndex(where: { $0.id == notificationId}) {
+                    self.filteredPushNotifications[index].isRead = true
+                }
+            }else{
+                if let index = self.pushNotifications.firstIndex(where: { $0.id == notificationId}) {
+                    print(notificationId)
+                    self.pushNotifications[index].isRead = true
+                }
+            }
+            
             self.tblView.reloadData()
         }
         if let productId = notification.payload?.id, let productType = notification.payload?.type{

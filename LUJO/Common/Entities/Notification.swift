@@ -11,7 +11,7 @@ import TwilioConversationsClient
 import FirebaseCrashlytics
 
 class PushNotification: Codable{//}, NSCoding {  //conforming NSObject, NSCoding  to store in user defaults
-//    var read: Bool
+    
     var id: String
     var title: String?
     var subTitle: String?
@@ -21,9 +21,9 @@ class PushNotification: Codable{//}, NSCoding {  //conforming NSObject, NSCoding
     var createdAt: String
     var updatedAt: String
     var payload: Payload?
+    var isRead: Bool
     
     enum CodingKeys: String, CodingKey {
-//        case read = "read"
         case id = "_id"
         case title
         case subTitle = "sub_title"
@@ -33,14 +33,13 @@ class PushNotification: Codable{//}, NSCoding {  //conforming NSObject, NSCoding
         case createdAt
         case updatedAt
         case payload
-
+        case isRead
     }
   
     required init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
-//            read = try values.decode(Bool.self, forKey: .read)
             id = try values.decode(String.self, forKey: .id)
             title = try values.decodeIfPresent(String.self, forKey: .title)
             subTitle = try values.decodeIfPresent(String.self, forKey: .subTitle)
@@ -50,6 +49,7 @@ class PushNotification: Codable{//}, NSCoding {  //conforming NSObject, NSCoding
             createdAt = try values.decode(String.self, forKey: .createdAt)
             updatedAt = try values.decode(String.self, forKey: .updatedAt)
             payload = try values.decodeIfPresent(Payload.self, forKey: .payload)
+            isRead = try values.decode(Bool.self, forKey: .isRead)
 
         } catch {
             Crashlytics.crashlytics().record(error: error)
