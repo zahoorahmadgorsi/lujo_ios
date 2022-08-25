@@ -77,6 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         loginToTwilio()
         
+        getUnReadPushNotificationsCount()
+        
         return true
     }
 
@@ -101,11 +103,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         isBackground = true
     }
 
+    //How push notification works in simulator https://medium.com/compass-true-north/how-to-ui-test-push-notifications-and-universal-links-in-the-ios-simulator-81cc43b33f81
     // Silent push notifications.
     // when app is running in the background or closed, and there is tap on push notification then this method is called
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        getUnReadPushNotificationsCount()
+        
         //if app is already in foreground then just check the deep link
         switch UIApplication.shared.applicationState {
         case .background, .inactive:    // background
@@ -189,6 +195,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             } else {
                 print("Twilio: Unable to login")
             }
+        }
+    }
+    
+    //this method loads the unread push notifications from the server and set as badge value
+    func getUnReadPushNotificationsCount(){
+        guard let tabBarController = window?.rootViewController as? UITabBarController else { return }
+        GoLujoAPIManager().getUnReadPushNotificationsCount() { count, error in
+            guard error == nil else {
+                Crashlytics.crashlytics().record(error: error!)
+                let error = BackendError.parsing(reason: "Could not obtain the unread push notifications count")
+                return
+            }
+            if let _count = count, _count > 0{
+                print("Twilio: Total UnRead push notification count:\(_count)")
+                tabBarController.tabBar.items?[4].badgeValue = _count > 9 ? String(_count) + "+" : String(_count)
+            }else{
+                tabBarController.tabBar.items?[4].badgeValue = ""
+            }
+            
         }
     }
 }

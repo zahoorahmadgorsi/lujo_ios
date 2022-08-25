@@ -51,6 +51,8 @@ class NotificationsViewController:UIViewController{
     
     var isLoadingNextPage : Bool = false    //loading next page
     var filterPicker: ikDataPickerManger?
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     //MARK:- View life cycle
     
     override func viewDidLoad() {
@@ -64,16 +66,18 @@ class NotificationsViewController:UIViewController{
         self.tblView.estimatedRowHeight = 135   //to make dynamic height have to provide some height
         self.tblView.rowHeight = UITableView.automaticDimension
 //        self.tblView.refreshControl = refreshControl
-        // disallowing table view to hide behind tab bar
-        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
-        self.tblView.contentInset = adjustForTabbarInsets
-        self.tblView.scrollIndicatorInsets = adjustForTabbarInsets
+        // disallowing table view to hide behind tab bar (its working fine in device but emulator)
+//        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
+//        self.tblView.contentInset = adjustForTabbarInsets
+//        self.tblView.scrollIndicatorInsets = adjustForTabbarInsets
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+//        appDelegate.getUnReadPushNotificationsCount()
+        
         if (self.pushNotifications.count == 0){
             self.getPushNotifications(showActivity: true)   //activity indicator is required to stop user from interacting with the grid
         }else{
@@ -257,7 +261,7 @@ class NotificationsViewController:UIViewController{
                         
                     }else{
                         isFiltering = false
-                        self.title = "Notifications"
+                        self.navigationController?.navigationBar.topItem?.title = "Notifications"
                         return
                     }
                     filteredPushNotifications = pushNotifications.filter({$0.payload?.type == self.selectedProduct.rawValue})
@@ -269,6 +273,7 @@ class NotificationsViewController:UIViewController{
                     
                 }else{  //during filtering user has pressed the cancel button, so loading pre filtering data
                     isFiltering = false
+                    self.navigationController?.navigationBar.topItem?.title = "Notifications"
                     self.tblView.reloadData()
                 }
                 
@@ -382,7 +387,7 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
                     self.pushNotifications[index].isRead = true
                 }
             }
-            
+            self.appDelegate.getUnReadPushNotificationsCount()   //user has read the notification now update the badge.
             self.tblView.reloadData()
         }
         if let productId = notification.payload?.id, let productType = notification.payload?.type{

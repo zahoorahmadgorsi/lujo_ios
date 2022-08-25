@@ -65,12 +65,12 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     //MARK:- Utilities
     
-@objc func showBadgeValue() {
-    ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
-        print("Twilio: Total UnRead messages count:\(count)")
-        self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
-    })
-}
+//@objc func showBadgeValue() {
+//    ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
+//        print("Twilio: Total UnRead messages count:\(count)")
+//        self.tabBar.items?[2].badgeValue = count > 0 ? String(count) : nil
+//    })
+//}
 
     //MARK:- User Interaction
 

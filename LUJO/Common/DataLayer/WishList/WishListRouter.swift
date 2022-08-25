@@ -40,6 +40,7 @@ enum WishListRouter: URLRequestConvertible {
     case setFavourites(String,String)
     case unSetFavourites(String,String)
     case getPushNotifications(Int,String)
+    case getUnReadPushNotificationsCount
     case deletePushNotifications(String)
     case readPushNotifications(String)
     
@@ -69,13 +70,14 @@ enum WishListRouter: URLRequestConvertible {
 
     func getHTTPMethod() -> HTTPMethod {
         switch self {
-            case .getFavourites: fallthrough
-            case .getPushNotifications  :
-                return .get
-            case .setFavourites:
-                return .post
-            case .unSetFavourites:
-                return .post
+        case .getFavourites: fallthrough
+        case .getPushNotifications: fallthrough
+        case .getUnReadPushNotificationsCount:
+            return .get
+        case .setFavourites:
+            return .post
+        case .unSetFavourites:
+            return .post
         case .deletePushNotifications:
             return .delete
         case .readPushNotifications:
@@ -103,6 +105,8 @@ enum WishListRouter: URLRequestConvertible {
                 ,URLQueryItem(name: "limit", value: String(pageSize))
                 ,URLQueryItem(name: "type", value: type)
         ]
+        case .getUnReadPushNotificationsCount:
+            newURLComponents.path.append("/notification/unread_count")
         case let .deletePushNotifications(id):
             newURLComponents.path.append("/notification/delete/"+id)
         case let .readPushNotifications(id):
@@ -129,6 +133,7 @@ enum WishListRouter: URLRequestConvertible {
         switch self {
         case .getFavourites:    fallthrough
         case .getPushNotifications: fallthrough
+        case .getUnReadPushNotificationsCount: fallthrough
         case .deletePushNotifications:  fallthrough
         case .readPushNotifications:
             return nil

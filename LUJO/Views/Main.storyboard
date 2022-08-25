@@ -98,11 +98,11 @@
             </objects>
             <point key="canvasLocation" x="1842" y="1430"/>
         </scene>
-        <!--Notification-->
+        <!--Notifications-->
         <scene sceneID="pEn-EV-DlB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="usa-sU-bfL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" image="bell" id="nGT-oa-1XU"/>
+                    <tabBarItem key="tabBarItem" title="Notifications" image="bell" id="nGT-oa-1XU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fdo-8e-pJ7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
