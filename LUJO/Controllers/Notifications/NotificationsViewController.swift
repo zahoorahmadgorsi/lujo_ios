@@ -65,6 +65,10 @@ class NotificationsViewController:UIViewController{
         self.tblView.delegate = self;
         self.tblView.estimatedRowHeight = 135   //to make dynamic height have to provide some height
         self.tblView.rowHeight = UITableView.automaticDimension
+        //adding separator line
+        self.tblView.separatorStyle = .singleLine
+        self.tblView.separatorColor = .lightGray
+        
 //        self.tblView.refreshControl = refreshControl
         // disallowing table view to hide behind tab bar (its working fine in device but emulator)
 //        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
@@ -307,6 +311,7 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell") as! NotificationCell
         var model:PushNotification
+        
         if isFiltering {
             model = filteredPushNotifications[indexPath.row]
         }else{
@@ -354,9 +359,7 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
         else{
             cell.contentView.backgroundColor = .clear
         }
-
-        self.tblView.separatorStyle = .singleLine
-        self.tblView.separatorColor = .lightGray
+        
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }

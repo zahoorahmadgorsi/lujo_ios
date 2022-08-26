@@ -205,15 +205,25 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </stackView>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dxf-Ff-N06">
+                                                    <rect key="frame" x="0.0" y="130.5" width="414" height="1"/>
+                                                    <color key="backgroundColor" name="Palette - Background"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="XlP-W9-2Da"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="Dxf-Ff-N06" firstAttribute="leading" secondItem="Gcy-wS-3UD" secondAttribute="leading" id="5Rf-tL-20p"/>
                                                 <constraint firstAttribute="bottom" secondItem="GGc-FM-9Rg" secondAttribute="bottom" constant="8" id="8Uw-kD-Q7z"/>
                                                 <constraint firstAttribute="trailing" secondItem="GGc-FM-9Rg" secondAttribute="trailing" constant="15" id="CF3-R1-zkH"/>
                                                 <constraint firstItem="GGc-FM-9Rg" firstAttribute="leading" secondItem="sQb-sZ-BBT" secondAttribute="trailing" constant="15" id="D2N-Ug-45f"/>
                                                 <constraint firstItem="sQb-sZ-BBT" firstAttribute="centerY" secondItem="Gcy-wS-3UD" secondAttribute="centerY" id="LlB-MH-ifb"/>
                                                 <constraint firstItem="GGc-FM-9Rg" firstAttribute="top" secondItem="Gcy-wS-3UD" secondAttribute="top" constant="8" id="XYJ-t6-sMu"/>
+                                                <constraint firstItem="Dxf-Ff-N06" firstAttribute="top" secondItem="GGc-FM-9Rg" secondAttribute="bottom" constant="4" id="pI9-Yw-xqd"/>
                                                 <constraint firstItem="sQb-sZ-BBT" firstAttribute="leading" secondItem="Gcy-wS-3UD" secondAttribute="leading" constant="10" id="rs6-2K-Qi8"/>
+                                                <constraint firstAttribute="trailing" secondItem="Dxf-Ff-N06" secondAttribute="trailing" id="wa7-0Q-QxF"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -8831,6 +8841,9 @@ New York, NY 10011 USA</string>
         </namedColor>
         <namedColor name="Palette - Action Button - Text">
             <color red="0.27450980392156865" green="0.13333333333333333" blue="0.074509803921568626" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Background">
+            <color red="0.10196078431372549" green="0.10196078431372549" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Palette - Background 2">
             <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
