@@ -1036,6 +1036,7 @@
 				882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */,
 			);
 			name = Chat;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		5527644523195CEC00380BEB /* Account */ = {
@@ -1054,6 +1055,7 @@
 			isa = PBXGroup;
 			children = (
 				5527644523195CEC00380BEB /* Account */,
+				5527642D2317FDCE00380BEB /* Chat */,
 				557BB5E62315954F00744188 /* Main */,
 				888A30392644027E008754AD /* Preferences */,
 			);
@@ -1093,7 +1095,6 @@
 				5527642223165D2500380BEB /* SearchProductsViewController.swift */,
 				3005D4782320189400401243 /* Aviation */,
 				552764282317F69200380BEB /* Bookings */,
-				5527642D2317FDCE00380BEB /* Chat */,
 				1DDD3CB42389A6D20041D346 /* Custom Requests */,
 				5527641C23165A8800380BEB /* Dining */,
 				5527641D23165BFD00380BEB /* Home */,

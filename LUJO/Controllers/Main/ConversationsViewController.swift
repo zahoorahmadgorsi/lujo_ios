@@ -273,30 +273,33 @@ func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var conversation = self.conversations[indexPath.item].tchConversation
-        if searching {
-            conversation = self.searchedConversations[indexPath.item].tchConversation
-        }
-        if let convers = conversation{
-            let viewController = AdvanceChatViewController()
-            viewController.conversation = convers
-            let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
-            if #available(iOS 13.0, *) {
-                let controller = navViewController.topViewController
-                // Modal Dismiss iOS 13 onward
-                controller?.presentationController?.delegate = self
+        if self.conversations.count >= indexPath.row{
+            var conversation = self.conversations[indexPath.item].tchConversation
+            if searching {
+                conversation = self.searchedConversations[indexPath.item].tchConversation
             }
-            //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
-            navViewController.presentationController?.delegate = self
-            self.present(navViewController, animated: true, completion: nil)
-            // Close keyboard when you select cell
-            self.searchBar.searchTextField.endEditing(true)
+            if let convers = conversation{
+                let viewController = AdvanceChatViewController()
+                viewController.conversation = convers
+                let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
+                if #available(iOS 13.0, *) {
+                    let controller = navViewController.topViewController
+                    // Modal Dismiss iOS 13 onward
+                    controller?.presentationController?.delegate = self
+                }
+                //incase user will do some messaging in AdvanceChatViewController and then dismiss it then chatlistviewcontroller should reflect last message body and time
+                navViewController.presentationController?.delegate = self
+                self.present(navViewController, animated: true, completion: nil)
+                // Close keyboard when you select cell
+                self.searchBar.searchTextField.endEditing(true)
+            }else{
+                let error = BackendError.parsing(reason: "Could not load this conversation")
+                self.showError(error)
+                print("Twilio: Not logged in")
+            }
         }else{
-            let error = BackendError.parsing(reason: "Could not load this conversation")
-            self.showError(error)
-            print("Twilio: Not logged in")
+            print("Conversation not found at index:\(indexPath.row)")
         }
-        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
