@@ -100,12 +100,16 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
         // swiftlint:disable force_cast
         let cell = tblDestinations.dequeueReusableCell(withIdentifier: "destinationSearchCell",
                                                          for: indexPath) as! DestinationSearchCell
-        let model = self.destinations[indexPath.row]
-        cell.lblTermId.text = String(model.termId)
-        //cell.lblDestinationName.text = model.name.uppercased()
-        cell.lblDestinationName.text = model.name
-        cell.separatorView.backgroundColor = (indexPath.row + 1) == self.destinations.count ? UIColor.clear : UIColor.actionButton
         
+        if self.destinations.count >= indexPath.row{
+            let model = self.destinations[indexPath.row]
+            cell.lblTermId.text = String(model.termId)
+            //cell.lblDestinationName.text = model.name.uppercased()
+            cell.lblDestinationName.text = model.name
+            cell.separatorView.backgroundColor = (indexPath.row + 1) == self.destinations.count ? UIColor.clear : UIColor.actionButton
+        }else{
+            print("Destination not found at index:\(indexPath.row)")
+        }
         return cell
     }
     

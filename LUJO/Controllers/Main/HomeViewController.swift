@@ -356,7 +356,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let btnSearch   = UIBarButtonItem(image: imgSearch,  style: .plain, target: self, action: #selector(searchBarButton_onClick(_:)))
         let btnCallToAction = UIBarButtonItem(image: imgCallToActions,  style: .plain, target: self, action: #selector(btnCallToActionTapped(_:)))
         let btnChat = UIBarButtonItem(image: imgChat,  style: .plain, target: self, action: #selector(btnChatTapped(_:)))
-        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]   //order is first second and third
+        navigationItem.rightBarButtonItems = [btnChat,btnCallToAction, btnSearch]   //order is first=chat second=cta and third=search
     }
     
     @IBAction func enableLocationButton_onClick(_ sender: Any) {
@@ -1197,9 +1197,12 @@ extension HomeViewController {
     
     func hideUnhideRightBarButtons(){
         if let rightBarButtonItems = navigationItem.rightBarButtonItems{
-            rightBarButtonItems[0].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all" //!= nil     //chat is only visible to paid users
-            rightBarButtonItems[1].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //CTA is only visible to users having membership plan all
-//            rightBarButtonItems[2].isEnabled = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"   //search only visible to users having membership plan all
+            let isDiningMember = LujoSetup().getLujoUser()?.membershipPlan?.target == "dining"
+            let isFullMember = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
+            let isPaid = (isDiningMember || isFullMember)
+            rightBarButtonItems[0].isEnabled = isPaid   //chat
+            rightBarButtonItems[1].isEnabled =  isFullMember   //search is only available for all access
+            rightBarButtonItems[2].isEnabled = isFullMember   //CTA is only visible to users having membership plan all
         }
     }
     
@@ -1229,11 +1232,15 @@ extension HomeViewController {
 
     @objc func showBadgeValue() {
         ConversationsManager.sharedConversationsManager.getTotalUnReadMessagesCount(completion: { (count) in
-        print("Twilio: showBadgeValue on homeview controller:\(count)")
-        //setting the badge value
-        let rightBarButtons = self.navigationItem.rightBarButtonItems
-        let lastBarButton = rightBarButtons?.first
-        lastBarButton?.setBadge(text: count == 0 ? "" : String(count))  //show empty string if count is zero
+            print("Twilio: showBadgeValue on homeview controller:\(count)")
+            //setting the badge value
+            if count > 0 {  //no need to show 0 count
+//                self.tabBar.items?[2].badgeValue = count > 9 ? "9+" : String(count)
+                let rightBarButtons = self.navigationItem.rightBarButtonItems
+                let lastBarButton = rightBarButtons?.first
+                lastBarButton?.setBadge(text: count == 0 ? "" : (count > 9 ? "9+" : String(count)))  //show empty string if count is zero, show 9+ if unread count is greater then 9
+            }
+            
         })
     }
 

@@ -69,7 +69,8 @@ extension UIBarButtonItem {
         label.alignmentMode = .center
         label.font = font
         label.fontSize = font.pointSize
-
+        
+        
         label.frame = badgeFrame
         label.foregroundColor = filled ? UIColor.white.cgColor : color.cgColor
         label.backgroundColor = UIColor.clear.cgColor
