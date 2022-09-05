@@ -18,7 +18,7 @@ class NotificationParser {
         if let data = userInfo["custom"] as? [String: Any] {
             if let a = data["a"] as? [String: Any] {
                 if let type = a["type"] as? String , let id = a["id"] as? String {
-                    return DeeplinkType.request(productType: type,id: id)
+                    return DeeplinkType.request(productType: type,id: id, pushNotificationId: a["_id"] as? String)
                 }
             }
         }

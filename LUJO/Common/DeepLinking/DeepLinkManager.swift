@@ -17,7 +17,7 @@ enum DeeplinkType {
 //    case messages(Messages)
 //    case activity
 //    case newListing
-    case request(productType: String , id: String)
+    case request(productType: String , id: String, pushNotificationId: String?)
 }
 
 //Singleton

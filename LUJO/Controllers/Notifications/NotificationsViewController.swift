@@ -371,6 +371,7 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
             notification = self.filteredPushNotifications[indexPath.item]
         }
         let notificationId = notification.id
+        self.showNetworkActivity()
         GoLujoAPIManager().readPushNotifications(id: notificationId) { responseString, error in
             self.hideNetworkActivity()
             guard error == nil else {

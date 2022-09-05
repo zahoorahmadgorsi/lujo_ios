@@ -27,9 +27,14 @@ class DeeplinkNavigator {
 //            displayAlert(title: "Messages Details \(id)")
 //        case .newListing:
 //            displayAlert(title: "New Listing")
-        case .request(productType: let type, id: let id):
-            print("Product Type: \(type) and ProductID: \(id)")
+        case .request(productType: let type, id: let id , pushNotificationId: let pushNotificationId):
+            print("Product Type: \(type), ProductID: \(id) and pushNotificationId: \(pushNotificationId)")
 //            displayAlert(title: "Product Type: \(type) and ProductID: \(id)")
+            if let pushId = pushNotificationId, !pushId.isEmpty{ //if tapped push notification contains pushnotificationId then make that notification as read
+                GoLujoAPIManager().readPushNotifications(id: pushId) { responseString, error in
+                    print("Tapped push notification id \(pushNotificationId) has been set as read:")
+                }
+            }
             
             if !id.isEmpty{
                 let product = Product(id: id,type: type)
