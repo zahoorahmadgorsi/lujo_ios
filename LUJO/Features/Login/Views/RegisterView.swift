@@ -4,6 +4,8 @@ import JGProgressHUD
 import M13Checkbox
 import MessageUI
 import UIKit
+import HCaptcha
+import WebKit
 
 class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegate {
     var presenter: LoginViewResponder?
@@ -40,7 +42,17 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
         checkbox.tintColor = UIColor(named: "White Text")
         return checkbox
     }()
-
+    
+//    let hcaptcha = try? HCaptcha()
+    let hcaptcha = try? HCaptcha(
+        apiKey: "a5f74b19-9e45-40e0-b45d-47ff91b7a6c2",
+        baseURL: URL(string: "http://localhost")!
+//        ,host: "your-domain.com"
+//        ,theme: "dark" // "light" or "contrast"
+//        ,endpoint: URL("https://custom.endpoint")!
+    )
+    var captchaWebView: WKWebView?
+    
     fileprivate func navigationBarSetup() {
 //        title = "Create new account"
 //        navigationController?.navigationBar.barTintColor = UIColor(named: "Grey Button")
@@ -143,13 +155,43 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
             string: phoneNumber.placeholder!,
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderText]
         )
+        
+        hcaptcha?.configureWebView { [weak self] webview in
+            webview.frame = self?.view.bounds ?? CGRect.zero
+            
+            // could use this option if using an enterprise passive sitekey:
+            // webview.isHidden = true
+            // seems to prevent flickering on latest iOS 15.2
+            webview.isOpaque = false
+            webview.backgroundColor = UIColor.clear
+            webview.scrollView.backgroundColor = UIColor.clear
+            
+//            self?.captchaWebView = webview
+        }
+        hcaptcha?.onEvent { (event, data) in
+            if event == .open {
+                print("captcha open")
+            } else if event == .error {
+                let error = data as? HCaptchaError
+                print("onEvent error: \(String(describing: error))")
+                
+            }
+        }
     }
 
+    func validate() {
+        hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
+            print(try? result.dematerialize())
+            self?.captchaWebView?.removeFromSuperview()
+        }
+    }
+    
     @IBAction func countryCodeButton_onClick(_ sender: Any) {
         showCountryCodes()
     }
     
     @IBAction func createAccount(_: UIButton) {
+        validate()
         let allFields = [firstName, lastName, email, phoneNumber]
 
         guard termsAgreement.checkState == .checked else {
