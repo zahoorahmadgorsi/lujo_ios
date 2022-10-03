@@ -1,6 +1,8 @@
 import Foundation
 
 class LoginInteractor: LoginInteractuable {
+
+    
     private var dataLayer: GoLujoAPIManager
     private var setup: LoginDataStorable
 
@@ -9,48 +11,48 @@ class LoginInteractor: LoginInteractuable {
         self.setup = setup
     }
 
-    func doLogin(username: String, password: String, completion: @escaping LoginInteractorCallback) {
-        dataLayer.login(username: username, password: password) { token, error in
-            guard error == nil else {
-                guard let loginError = error as? LoginError else {
-                    completion(error!.localizedDescription, .errorLogin(description: error!.localizedDescription))
-                    return
-                }
-                completion("", loginError)
-                return
-            }
-
-            if let setup = self.setup as? AppDefaults, var currentUser = self.setup.getCurrentUser() {
-                setup.updateDefaults {
-                    guard self.getUserStatus() != .noUser else {
-                        completion("", .accountError)
-                        return
-                    }
-
-                    self.dataLayer.approved(user: currentUser, completion: { approved, error in
-                        guard error == nil else {
-                            guard let loginError = error as? LoginError else {
-                                completion(error!.localizedDescription,
-                                           .errorLogin(description: error!.localizedDescription))
-                                return
-                            }
-                            completion(token, loginError)
-                            return
-                        }
-
-                        guard approved else {
-                            completion(token, LoginError.userNotApproved)
-                            return
-                        }
-                        currentUser.approved = true
-                        self.setup.store(currentUser: currentUser)
-
-                        completion(token, nil)
-                    })
-                }
-            }
-        }
-    }
+//    func doLogin(username: String, password: String, completion: @escaping LoginInteractorCallback) {
+//        dataLayer.login(username: username, password: password) { token, error in
+//            guard error == nil else {
+//                guard let loginError = error as? LoginError else {
+//                    completion(error!.localizedDescription, .errorLogin(description: error!.localizedDescription))
+//                    return
+//                }
+//                completion("", loginError)
+//                return
+//            }
+//
+//            if let setup = self.setup as? AppDefaults, var currentUser = self.setup.getCurrentUser() {
+//                setup.updateDefaults {
+//                    guard self.getUserStatus() != .noUser else {
+//                        completion("", .accountError)
+//                        return
+//                    }
+//
+//                    self.dataLayer.approved(user: currentUser, completion: { approved, error in
+//                        guard error == nil else {
+//                            guard let loginError = error as? LoginError else {
+//                                completion(error!.localizedDescription,
+//                                           .errorLogin(description: error!.localizedDescription))
+//                                return
+//                            }
+//                            completion(token, loginError)
+//                            return
+//                        }
+//
+//                        guard approved else {
+//                            completion(token, LoginError.userNotApproved)
+//                            return
+//                        }
+//                        currentUser.approved = true
+//                        self.setup.store(currentUser: currentUser)
+//
+//                        completion(token, nil)
+//                    })
+//                }
+//            }
+//        }
+//    }
 
     func doLoginWithOTP(prefix: String, _ number: String, code: String, completion: @escaping LoginInteractorCallback) {
         dataLayer.loginWithOTP(prefix: prefix, number, code: code) { token, error in
@@ -95,8 +97,8 @@ class LoginInteractor: LoginInteractuable {
         }
     }
 
-    func createAccount(_ user: LujoUser, completion: @escaping LoginInteractorCallback) {
-        dataLayer.create(user: user) { result, error in
+    func createAccount(_ user: LujoUser,captchaToken:String, completion: @escaping LoginInteractorCallback) {
+        dataLayer.create(user: user, captchaToken: captchaToken) { result, error in
             guard error == nil else {
                 guard let createError = error as? LoginError else {
                     completion(error!.localizedDescription, .errorLogin(description: error!.localizedDescription))
@@ -114,12 +116,12 @@ class LoginInteractor: LoginInteractuable {
         }
     }
 
-    func requestVerificationCode(completion: @escaping LoginInteractorCallback) {
+    func requestVerificationCode(captchaToken:String, completion: @escaping LoginInteractorCallback) {
         guard let currentUser = self.setup.getCurrentUser() else {
             completion("", LoginError.errorLogin(description: "User not logged in"))
             return
         }
-        dataLayer.requestOTP(for: currentUser) { result, error in
+        dataLayer.requestOTP(for: currentUser, captchaToken: captchaToken) { result, error in
             guard error == nil else {
                 guard let verificationError = error as? LoginError else {
                     completion(error!.localizedDescription, .errorLogin(description: error!.localizedDescription))
@@ -132,8 +134,8 @@ class LoginInteractor: LoginInteractuable {
         }
     }
 
-    func requestLoginVerificationCode(prefix: PhoneCountryCode, _ number: String, completion: @escaping LoginInteractorCallback) {
-        dataLayer.requestLoginOTP(prefix: prefix, number) { result, error in
+    func requestLoginVerificationCode(prefix: PhoneCountryCode, _ number: String, _ captchaToken: String, completion: @escaping LoginInteractorCallback) {
+        dataLayer.requestLoginOTP(prefix: prefix, number, captchaToken) { result, error in
             guard error == nil else {
                 guard let verificationError = error as? LoginError else {
                     completion(error!.localizedDescription, .errorLogin(description: error!.localizedDescription))
@@ -185,13 +187,13 @@ class LoginInteractor: LoginInteractuable {
         return .approved
     }
 
-    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String, completion: @escaping LoginInteractorCallback) {
+    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String,captchaToken:String, completion: @escaping LoginInteractorCallback) {
         guard let currentUser = self.setup.getCurrentUser() else {
             completion("", LoginError.errorLogin(description: "User not logged in"))
             return
         }
 
-        dataLayer.update(oldPrefix: oldPrefix, oldNumber: oldNumber, newPrefix: newPrefix, newNumber: newNumber) { _, error in
+        dataLayer.update(oldPrefix: oldPrefix, oldNumber: oldNumber, newPrefix: newPrefix, newNumber: newNumber,captchaToken:captchaToken) { _, error in
             if error == nil {
                 completion("", nil)
                 return

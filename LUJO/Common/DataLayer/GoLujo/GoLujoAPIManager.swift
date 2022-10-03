@@ -103,48 +103,48 @@ extension GoLujoAPIManager {
 
     static let shared = GoLujoAPIManager()
 
-    func login(username: String, password: String, completionHandler: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.login(username, password))
-            .responseJSON { response in
-                guard response.result.error == nil else {
-                    completionHandler("", LoginError.errorLogin(description: response.result.error!.localizedDescription))
-                    return
-                }
+//    func login(username: String, password: String, completionHandler: @escaping DataLayerCallback) {
+//        Alamofire.request(GoLujoRouter.login(username, password))
+//            .responseJSON { response in
+//                guard response.result.error == nil else {
+//                    completionHandler("", LoginError.errorLogin(description: response.result.error!.localizedDescription))
+//                    return
+//                }
+//
+//                // Special case where status code is not received, should never happen
+//                guard let statusCode = response.response?.statusCode else {
+//                    completionHandler("", LoginError.errorLogin(description: "Unhandled response from server"))
+//                    return
+//                }
+//
+//                switch statusCode {
+//                case 1 ... 199: // Transfer protoco-level information: Unexpected
+//                    self.reportError(statusCode, response)
+//                case 200 ... 299: // Success
+//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<LUJOTokenReponse>.self, from: response.data!)
+//                    else {
+//                        let errorDescription = "Unable to login user, plase try again"
+//                        completionHandler("", LoginError.errorLogin(description: errorDescription))
+//                        return
+//                    }
+//
+//                    let currentUser = LoginUser(prefix: "", phone: "", token: result.content.token, tokenExpiration: result.content.expiration, approved: false)
+//                    LujoSetup().store(currentUser: currentUser)
+//
+//                    completionHandler(result.content.token, nil)
+//                    return
+//                case 300 ... 399: // Redirection: Unexpected
+//                    self.reportError(statusCode, response)
+//                case 400 ... 499: // Client Error
+//                    self.handleError(response, statusCode, completion: completionHandler)
+//                default: // 500 or bigger, Server Error
+//                    self.handleError(response, statusCode, completion: completionHandler)
+//                }
+//            }
+//    }
 
-                // Special case where status code is not received, should never happen
-                guard let statusCode = response.response?.statusCode else {
-                    completionHandler("", LoginError.errorLogin(description: "Unhandled response from server"))
-                    return
-                }
-
-                switch statusCode {
-                case 1 ... 199: // Transfer protoco-level information: Unexpected
-                    self.reportError(statusCode, response)
-                case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<LUJOTokenReponse>.self, from: response.data!)
-                    else {
-                        let errorDescription = "Unable to login user, plase try again"
-                        completionHandler("", LoginError.errorLogin(description: errorDescription))
-                        return
-                    }
-                    
-                    let currentUser = LoginUser(prefix: "", phone: "", token: result.content.token, tokenExpiration: result.content.expiration, approved: false)
-                    LujoSetup().store(currentUser: currentUser)
-                    
-                    completionHandler(result.content.token, nil)
-                    return
-                case 300 ... 399: // Redirection: Unexpected
-                    self.reportError(statusCode, response)
-                case 400 ... 499: // Client Error
-                    self.handleError(response, statusCode, completion: completionHandler)
-                default: // 500 or bigger, Server Error
-                    self.handleError(response, statusCode, completion: completionHandler)
-                }
-            }
-    }
-
-    func requestLoginOTP(prefix: PhoneCountryCode, _ number: String, completionHandler: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.requestLoginOTP(prefix, number))
+    func requestLoginOTP(prefix: PhoneCountryCode, _ number: String,_ captchaToken:String, completionHandler: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.requestLoginOTP(prefix, number,captchaToken))
             .responseJSON { response in
                 switch response.result {
                 case .success:
@@ -168,8 +168,8 @@ extension GoLujoAPIManager {
             }
     }
 
-    func create(user: LujoUser, completionHandler: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.createUser(user)).responseJSON { response in
+    func create(user: LujoUser,captchaToken:String ,completionHandler: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.createUser(user, captchaToken)).responseJSON { response in
             guard response.result.error == nil else {
                 completionHandler("", LoginError.errorLogin(description: response.result.error!.localizedDescription))
                 return
@@ -239,8 +239,8 @@ extension GoLujoAPIManager {
             }
     }
 
-    func requestOTP(for user: LoginUser, completionHandler: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.requestOTP(user))
+    func requestOTP(for user: LoginUser, captchaToken:String, completionHandler: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.requestOTP(user,captchaToken))
             .responseJSON { response in
                 switch response.result {
                 case .success:
@@ -264,8 +264,8 @@ extension GoLujoAPIManager {
             }
     }
 
-    func update(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String, completion: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.updatePhoneNumber(oldPrefix, oldNumber, newPrefix, newNumber))
+    func update(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String,captchaToken:String, completion: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.updatePhoneNumber(oldPrefix, oldNumber, newPrefix, newNumber,captchaToken))
             .responseJSON { response in
                 switch response.result {
                 case .success:

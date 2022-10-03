@@ -1035,6 +1035,7 @@
                         <barButtonItem key="backBarButtonItem" title="   " id="Yqf-K2-egj"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnAlreadyHaveTheCode" destination="8vT-MH-UUX" id="H0g-lj-JJK"/>
                         <outlet property="confirmButton" destination="bLS-yO-UO6" id="sjH-n6-eCn"/>
                         <outlet property="countryCode" destination="rva-7s-euh" id="7N8-ua-8tO"/>
                         <outlet property="descriptionLabel" destination="fBP-yd-7e1" id="A7d-v9-ScV"/>
@@ -1695,7 +1696,7 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="HS5-hN-OhV"/>
-        <segue reference="OfP-qz-gUe"/>
+        <segue reference="TvE-Pc-Una"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Down Row Icon" width="48" height="48"/>

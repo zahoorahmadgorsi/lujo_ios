@@ -43,13 +43,9 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
         return checkbox
     }()
     
-//    let hcaptcha = try? HCaptcha()
     let hcaptcha = try? HCaptcha(
-        apiKey: "a5f74b19-9e45-40e0-b45d-47ff91b7a6c2",
+        apiKey: "ceeae2b5-8a6f-4a82-8ea2-b17d243a83a1",
         baseURL: URL(string: "http://localhost")!
-//        ,host: "your-domain.com"
-//        ,theme: "dark" // "light" or "contrast"
-//        ,endpoint: URL("https://custom.endpoint")!
     )
     var captchaWebView: WKWebView?
     
@@ -155,7 +151,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
             string: phoneNumber.placeholder!,
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderText]
         )
-        
+        //configuring webview for captcha
         hcaptcha?.configureWebView { [weak self] webview in
             webview.frame = self?.view.bounds ?? CGRect.zero
             
@@ -166,23 +162,48 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
             webview.backgroundColor = UIColor.clear
             webview.scrollView.backgroundColor = UIColor.clear
             
-//            self?.captchaWebView = webview
+            self?.captchaWebView = webview
         }
         hcaptcha?.onEvent { (event, data) in
             if event == .open {
                 print("captcha open")
-            } else if event == .error {
+            }else if event == .close{
+                print(" captcha closed")
+                self.captchaWebView?.removeFromSuperview()  //if we wont remove then screen will become irresponsive
+            }else if event == .error {
                 let error = data as? HCaptchaError
-                print("onEvent error: \(String(describing: error))")
-                
+                print("captcha onEvent error: \(String(describing: error))")
+                self.captchaWebView?.removeFromSuperview()
             }
         }
     }
 
-    func validate() {
+    //this function validates the captcha and if validated sends call for registration
+    func validateCaptchaThenSignup() {
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
-            print(try? result.dematerialize())
+//            print(try? result.dematerialize() as Any)
             self?.captchaWebView?.removeFromSuperview()
+            //After successful validation signup the user
+            if let firstname = self?.firstName.text
+                , let lastName = self?.lastName.text
+                ,let email = self?.email.text
+                ,let phonePrefix = self?.phonePrefix.phonePrefix
+                ,let phoneNumber = self?.phoneNumber.text
+                ,let captchaToken = try? result.dematerialize()
+            {
+            do {
+                try self?.presenter?.createAccount(title: .mr,
+                                             firstName: firstname,
+                                             lastName: lastName,
+                                             email: email,
+                                             phoneNumber: PhoneNumber(countryCode: phonePrefix,
+                                                                      number: phoneNumber)
+                                            ,captchaToken:captchaToken)
+            } catch {
+                // swiftlint:disable force_cast
+                self?.showError(error as! LoginError)
+            }
+            }
         }
     }
     
@@ -191,7 +212,6 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
     }
     
     @IBAction func createAccount(_: UIButton) {
-        validate()
         let allFields = [firstName, lastName, email, phoneNumber]
 
         guard termsAgreement.checkState == .checked else {
@@ -205,18 +225,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
                 return
             }
         }
-
-        do {
-            try presenter?.createAccount(title: .mr,
-                                         firstName: firstName.text!,
-                                         lastName: lastName.text!,
-                                         email: email.text!,
-                                         phoneNumber: PhoneNumber(countryCode: phonePrefix.phonePrefix,
-                                                                  number: phoneNumber.text!))
-        } catch {
-            // swiftlint:disable force_cast
-            showError(error as! LoginError)
-        }
+        validateCaptchaThenSignup()
     }
 
     override func viewWillAppear(_: Bool) {
