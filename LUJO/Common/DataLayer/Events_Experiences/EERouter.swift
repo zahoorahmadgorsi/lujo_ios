@@ -174,10 +174,14 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.path.append("/request")
 
         case let .geopoint(type,_,_):
-            if type == "event"{
-                newURLComponents.path.append("/events/search")
-            }else if type == "restaurant"{
+//            if type == "event"{
+//                newURLComponents.path.append("/events/search")
+//            }else
+            if type == "restaurant"{
                 newURLComponents.path.append("/restaurants/search")
+            }else{
+                newURLComponents.path.append("/events/search")
+//                newURLComponents.path.append("/experiences/search")
             }
             case let .citySearch(token, searchTerm):
                 newURLComponents.path.append("/search-cities")

@@ -459,7 +459,7 @@ extension Product {
 
             id = try values.decode(String.self, forKey: .id)
             print(id)   // 627b518f4ae3b8001d834048, 627a0018d340c1001b0a717e
-            if id == "62d14429b6797d001b11e91a"{
+            if id == "62d14429b6797d001b11e91a" || id == "62d4dc0c9cbd56001bad631f"{
                 print("crashing")
             }
             type = try values.decode(String.self, forKey: .type)

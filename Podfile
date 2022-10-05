@@ -31,6 +31,7 @@ target 'LUJO' do
   pod 'JTAppleCalendar', '~> 7.1'
   pod 'Cosmos', '~> 23.0'
   pod 'QuickLayout', '3.0.2'
+  pod "HCaptcha"
 end
 
 target 'OneSignalNotificationServiceExtension' do
