@@ -383,7 +383,7 @@ enum GoLujoRouter: URLRequestConvertible {
         let credentials: [String: String] = [
             "phone_prefix": prefix.phonePrefix,
             "phone": number,
-            "token" : captchaToken
+            "captcha_token" : captchaToken
         ]
         return try? JSONSerialization.data(withJSONObject: credentials, options: [])
     }
@@ -405,8 +405,9 @@ enum GoLujoRouter: URLRequestConvertible {
             "email": user.email,
             "phone_prefix": String(user.phoneNumber.countryCode),
             "phone": user.phoneNumber.number,
-            "token": token,
-            "country" :  countryName
+            "captcha_token": token,
+            "country" :  countryName,
+            "role" : "customer"
         ]
         return try? JSONSerialization.data(withJSONObject: profileData, options: [])
     }
@@ -424,7 +425,7 @@ enum GoLujoRouter: URLRequestConvertible {
         let verificationData: [String: String] = [
             "phone_prefix": user.prefix,
             "phone": user.phone,
-            "token" : captchaToken
+            "captcha_token" : captchaToken
         ]
         return try? JSONSerialization.data(withJSONObject: verificationData, options: [])
     }
@@ -435,7 +436,7 @@ enum GoLujoRouter: URLRequestConvertible {
             "old_phone": oldNumber,
             "phone_prefix": newPrefix,
             "phone": newNumber,
-            "token": captchaToken
+            "captcha_token": captchaToken
         ]
         return try? JSONSerialization.data(withJSONObject: verificationData, options: [])
     }

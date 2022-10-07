@@ -48,6 +48,8 @@ struct TokenUtils {
 
 struct Utility
 {
+    static var captchaApiKey = "d93f92e9-31a1-4e6c-9fa1-0c62dddf0074"
+    
     static func getAppBuild() -> String {
         if let dictionary = Bundle.main.infoDictionary{
             if let strBuild = dictionary["CFBundleVersion"] as? String{

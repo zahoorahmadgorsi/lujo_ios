@@ -44,7 +44,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
                                                flag: "https://bit.ly/2Vrjgrk")
 
     let hcaptcha = try? HCaptcha(
-        apiKey: "ceeae2b5-8a6f-4a82-8ea2-b17d243a83a1",
+        apiKey: Utility.captchaApiKey,
         baseURL: URL(string: "http://localhost")!
     )
     var captchaWebView: WKWebView?
