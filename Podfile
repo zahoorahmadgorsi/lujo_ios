@@ -33,6 +33,7 @@ target 'LUJO' do
   pod 'Cosmos', '~> 23.0'
   pod 'QuickLayout', '3.0.2'
   pod "HCaptcha"
+  pod 'DropDown'
 end
 
 target 'OneSignalNotificationServiceExtension' do

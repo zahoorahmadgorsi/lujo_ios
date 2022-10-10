@@ -40,7 +40,6 @@ class AccountViewController: UIViewController {
     
     @IBOutlet weak var updateProfileLabel: UILabel!
     @IBOutlet weak var logoutLabel: UILabel!
-    @IBOutlet weak var lblUnsubscribe: UILabel!
     
     private let naHUD = JGProgressHUD(style: .dark)
     
@@ -64,9 +63,6 @@ class AccountViewController: UIViewController {
 
         let logoutTapResponder = UITapGestureRecognizer(target: self, action: #selector(requestLogout))
         logoutLabel.addGestureRecognizer(logoutTapResponder)
-        
-        let unsubscribeTapResponder = UITapGestureRecognizer(target: self, action: #selector(requestUnsubscribe))
-        lblUnsubscribe.addGestureRecognizer(unsubscribeTapResponder)
         
         if let user = LujoSetup().getLujoUser(), user.id > 0 {
             self.user = user
@@ -211,7 +207,8 @@ class AccountViewController: UIViewController {
     }
     
     @objc func presentUserProfileViewController() {
-        let viewController = UserProfileViewController.instantiate(user: user)
+//        let viewController = UserProfileViewController.instantiate(user: user)
+        let viewController = AccountDetailsViewController.instantiate(user: user)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -221,31 +218,7 @@ class AccountViewController: UIViewController {
         }
     }
     
-    @objc func requestUnsubscribe() {
-        showCardAlertWith(title: "Account Removal Confirmation", body: "Are you sure you want to remove your account?", buttonTitle: "Yes", cancelButtonTitle: "No") {
-            guard let currentUser = LujoSetup().getLujoUser() else {
-                let error = LoginError.errorLogin(description: "No user exist")
-                self.showError(error)
-                return
-            }
-            guard let currentUserToken = LujoSetup().getCurrentUser()?.token else {
-                let error = LoginError.errorLogin(description: "No user is logged in.")
-                self.showError(error)
-                return
-            }
-            self.showNetworkActivity()
-            GoLujoAPIManager().unSubscribe(currentUserToken,currentUser.email) { unSubscribeResponse, error in
-//            GoLujoAPIManager().unSubscribe(currentUserToken,"zahoor@mgail.com") { unSubscribeResponse, error in
-                self.hideNetworkActivity()
-                
-                if let error = error {
-                    self.showError(error)
-                }else{
-                    self.logoutUser()
-                }
-            }
-        }
-    }
+    
     
     func showError(_ error: Error) {
         showErrorPopup(withTitle: "Account Error", error: error)

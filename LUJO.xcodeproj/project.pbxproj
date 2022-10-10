@@ -63,6 +63,7 @@
 		3005D48623202CDA00401243 /* AviationResultsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3005D48523202CDA00401243 /* AviationResultsFilterViewController.swift */; };
 		30368DD72339200D00EDF549 /* MainScreenAviationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */; };
 		30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */; };
+		42C1425B28F43D570072E33D /* AccountDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1425A28F43D570072E33D /* AccountDetailsViewController.swift */; };
 		5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527641E23165CFE00380BEB /* HomeViewController.swift */; };
 		5527642123165D1800380BEB /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* ProductsViewController.swift */; };
 		5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642223165D2500380BEB /* SearchProductsViewController.swift */; };
@@ -442,6 +443,7 @@
 		3005D48523202CDA00401243 /* AviationResultsFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationResultsFilterViewController.swift; sourceTree = "<group>"; };
 		30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAviationCell.swift; sourceTree = "<group>"; };
 		30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenAviationCell.xib; sourceTree = "<group>"; };
+		42C1425A28F43D570072E33D /* AccountDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsViewController.swift; sourceTree = "<group>"; };
 		5527641E23165CFE00380BEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5527642023165D1800380BEB /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		5527642223165D2500380BEB /* SearchProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductsViewController.swift; sourceTree = "<group>"; };
@@ -1047,6 +1049,7 @@
 				5527644C23195D5600380BEB /* MembershipViewControllerNEW.swift */,
 				889CF39F28171EAE004481B1 /* GenerateReferralCodeViewController.swift */,
 				889CF3A528171FB6004481B1 /* ShareReferralCodeViewController.swift */,
+				42C1425A28F43D570072E33D /* AccountDetailsViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -2391,6 +2394,7 @@
 				9AC4FE0C225F4E550031E57E /* BookingRequestSummaryView.swift in Sources */,
 				1DDD07D222BCF03700C79AAE /* UIDevice.swift in Sources */,
 				9AF1A0D62249073C00E0680B /* AviationMultiLegSearchOptionsView.swift in Sources */,
+				42C1425B28F43D570072E33D /* AccountDetailsViewController.swift in Sources */,
 				1D70B11C22BA2724007051FA /* UILabel.swift in Sources */,
 				1DBC9C042365B7CA00F0F133 /* PaymentAPIManager.swift in Sources */,
 				3005D48423202CC700401243 /* AviationResultsViewController.swift in Sources */,

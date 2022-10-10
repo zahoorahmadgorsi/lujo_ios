@@ -160,9 +160,11 @@ enum GoLujoRouter: URLRequestConvertible {
     
     fileprivate func getHTTPMethodDelete() -> HTTPMethod {
         switch self {
-        case .unregisterForPush: fallthrough
-        case .unSubscribe:
+        case .unregisterForPush:
             return .delete
+        case .unSubscribe:
+            //return .delete
+            return .post
         default:
             fatalError("Wrong method category called")
         }
@@ -246,7 +248,7 @@ enum GoLujoRouter: URLRequestConvertible {
         case .getTwilioParticipants:
             newURLComponents.path.append("/users/twilio")
         case .unSubscribe:
-            newURLComponents.path.append("/users/delete")
+            newURLComponents.path.append("/users/disable-account")
         }
         
         do {
@@ -435,8 +437,8 @@ enum GoLujoRouter: URLRequestConvertible {
     
     fileprivate func getUnsubscribeAsJSONData(_ token: String, _ email: String) -> Data? {
         let data: [String: String] = [
-            "token" : token,
-            "email": email
+            "token" : token
+//            /"email": email
         ]
         return try? JSONSerialization.data(withJSONObject: data, options: [])
     }
