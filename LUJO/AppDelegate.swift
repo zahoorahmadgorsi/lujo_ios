@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         ChatStyling.appyStyling()
 
-        Mixpanel.initialize(token: "974677a8bc1707f564ce3ac082c3cb62")
+        Mixpanel.initialize(token: "974677a8bc1707f564ce3ac082c3cb62", trackAutomaticEvents: false)
         
         // Remove this method to stop OneSignal Debugging
         OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)

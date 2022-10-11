@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E3A89338F3F1B7DA5DE082E /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60FFCB495E385163B59A29A /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		164330344F7315887695337E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164332CBD01DAAB3FC14056B /* User.swift */; };
 		1643305211AD52F06A13F51D /* LoginProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16433ACA3C4582AF064E31E6 /* LoginProtocols.swift */; };
 		164331801802251D8B984178 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16433F301118F589A55481D6 /* LoginView.swift */; };
@@ -177,7 +178,6 @@
 		88EA9F9425544E8400514626 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F9325544E8400514626 /* WishList.swift */; };
 		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
 		88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F982554552300514626 /* WishListAPIManager.swift */; };
-		8CF0C61F03F180068ED53FB3 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C88A80612D02EC9E7088F9 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		91522DAF2608B2100023BAD8 /* DiningFeaturedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DAE2608B2100023BAD8 /* DiningFeaturedAnimator.swift */; };
 		91522DB4260A1B8A0023BAD8 /* DiningSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */; };
 		91522DBF260CD8300023BAD8 /* WishListSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */; };
@@ -339,7 +339,7 @@
 		9AF561E921833D5800B7BD1A /* UIImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF561E821833D5800B7BD1A /* UIImageView+Download.swift */; };
 		9AF569C72175F07B005B031D /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF569C62175F07B005B031D /* CalendarCell.swift */; };
 		9AF8DC222200C519003D0519 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8DC212200C519003D0519 /* UIButton.swift */; };
-		A0424EB2C4B3542C1078AA07 /* Pods_LUJO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E862A6F8362BC2A026001E1 /* Pods_LUJO.framework */; };
+		CB1AA3BBA4E871534816A22E /* Pods_LUJO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6E508D5465F725435E7E75 /* Pods_LUJO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -452,7 +452,6 @@
 		1DFE1AC423476FCD0025410D /* DiningCityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiningCityView.xib; sourceTree = "<group>"; };
 		1DFE1AC6234772E60025410D /* DiningCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCityView.swift; sourceTree = "<group>"; };
 		1DFE1AC82349FEFD0025410D /* RestaurantListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListViewController.swift; sourceTree = "<group>"; };
-		1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.release.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.release.xcconfig"; sourceTree = "<group>"; };
 		3005D47923202B7D00401243 /* AviationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationViewController.swift; sourceTree = "<group>"; };
 		3005D47B23202BAC00401243 /* AviationAirportSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationAirportSelectionViewController.swift; sourceTree = "<group>"; };
 		3005D47D23202BFB00401243 /* AviationLuggageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationLuggageSelectionViewController.swift; sourceTree = "<group>"; };
@@ -462,6 +461,8 @@
 		3005D48523202CDA00401243 /* AviationResultsFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviationResultsFilterViewController.swift; sourceTree = "<group>"; };
 		30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAviationCell.swift; sourceTree = "<group>"; };
 		30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenAviationCell.xib; sourceTree = "<group>"; };
+		35C4F43966058EC03102433B /* Pods-LUJO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.debug.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.debug.xcconfig"; sourceTree = "<group>"; };
+		3DDBB271EDDB47D80F6FA6FB /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; sourceTree = "<group>"; };
 		42130EAA28B3964B006629B3 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		421E0DB728696DB500B32451 /* AddressesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesViewController.swift; sourceTree = "<group>"; };
 		421E0DB92869766300B32451 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
@@ -497,7 +498,6 @@
 		557BB5ED2315A3F200744188 /* RestaurantSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSearchViewController.swift; sourceTree = "<group>"; };
 		557BB5EF2315A87200744188 /* RestaurantRequestReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRequestReservationViewController.swift; sourceTree = "<group>"; };
 		5583730D230D559100F9536C /* SwiftMessagesManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessagesManger.swift; sourceTree = "<group>"; };
-		6E862A6F8362BC2A026001E1 /* Pods_LUJO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LUJO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88029BA12633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		88029BA32633BF42003F1E77 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		88029BA52633BF42003F1E77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -616,7 +616,6 @@
 		91B4A3B92602AAF800169A0C /* HomeFeaturedAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeaturedAnimator.swift; sourceTree = "<group>"; };
 		91F610CD25BDB215005BCDA2 /* CityView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityView1.xib; sourceTree = "<group>"; };
 		91FF68DE25E2519300B1761E /* VillaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VillaViewController.swift; sourceTree = "<group>"; };
-		9781792218F842832B6DFB72 /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; sourceTree = "<group>"; };
 		9A0104E42181BC8600783E25 /* LiftSearchResultExample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LiftSearchResultExample.json; sourceTree = "<group>"; };
 		9A091DFC21E891B700B0B5E6 /* UserNotApprovedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotApprovedView.swift; sourceTree = "<group>"; };
 		9A091DFF21EC2CEA00B0B5E6 /* PaymentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfiguration.swift; sourceTree = "<group>"; };
@@ -648,6 +647,7 @@
 		9A2AEBC221626A0300F92FB3 /* AirportSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportSearchCell.swift; sourceTree = "<group>"; };
 		9A2C2C4522788B0100CE2591 /* UIStackView+removeAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+removeAll.swift"; sourceTree = "<group>"; };
 		9A2F0C3321250C7200C52BE3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		9A3118420F30C548ACAC7F37 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		9A33941C212665990057CA93 /* HelveticaNeueLTStd-Roman.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HelveticaNeueLTStd-Roman.otf"; sourceTree = "<group>"; };
 		9A38EF692253D01F0097BA0B /* DarkActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkActionButton.swift; sourceTree = "<group>"; };
 		9A38EF6B2253D5090097BA0B /* CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayer.swift; sourceTree = "<group>"; };
@@ -766,11 +766,11 @@
 		9AF569C42175EDBA005B031D /* JTAppleCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JTAppleCalendar.framework; path = Carthage/Build/iOS/JTAppleCalendar.framework; sourceTree = "<group>"; };
 		9AF569C62175F07B005B031D /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		9AF8DC212200C519003D0519 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
-		A5584F7B59D991A0F4914B3A /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		B4C88A80612D02EC9E7088F9 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.beta.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.beta.xcconfig"; sourceTree = "<group>"; };
-		E861444A81832A355301ADB9 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.debug.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.debug.xcconfig"; sourceTree = "<group>"; };
+		BC911DEE7A5EA0DB7661703E /* Pods-LUJO.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.beta.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.beta.xcconfig"; sourceTree = "<group>"; };
+		C2F04C962788948AD94CA9A4 /* Pods-LUJO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUJO.release.xcconfig"; path = "Target Support Files/Pods-LUJO/Pods-LUJO.release.xcconfig"; sourceTree = "<group>"; };
+		CFEC960D867E00693E866057 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		D60FFCB495E385163B59A29A /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD6E508D5465F725435E7E75 /* Pods_LUJO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LUJO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -779,7 +779,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				887492422807138400AB6134 /* OneSignal.xcframework in Frameworks */,
-				8CF0C61F03F180068ED53FB3 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
+				0E3A89338F3F1B7DA5DE082E /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,7 +788,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60067023994B9300B9BA2A /* libc++abi.tbd in Frameworks */,
-				A0424EB2C4B3542C1078AA07 /* Pods_LUJO.framework in Frameworks */,
+				CB1AA3BBA4E871534816A22E /* Pods_LUJO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1853,10 +1853,10 @@
 				1D600676239952D300B9BA2A /* nanopb.framework */,
 				9AECC13C2111CBD700C00C07 /* ObjectMapper.framework */,
 				88029BB42633C811003F1E77 /* OneSignal.xcframework */,
-				6E862A6F8362BC2A026001E1 /* Pods_LUJO.framework */,
 				9A72C3C421383CC3009FE9E2 /* QuickLayout.framework */,
 				9A72C3C2213831ED009FE9E2 /* SwiftEntryKit.framework */,
-				B4C88A80612D02EC9E7088F9 /* Pods_OneSignalNotificationServiceExtension.framework */,
+				FD6E508D5465F725435E7E75 /* Pods_LUJO.framework */,
+				D60FFCB495E385163B59A29A /* Pods_OneSignalNotificationServiceExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1874,12 +1874,12 @@
 		AA08F477D8A9D3D052367B11 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */,
-				1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */,
-				CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */,
-				A5584F7B59D991A0F4914B3A /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
-				E861444A81832A355301ADB9 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
-				9781792218F842832B6DFB72 /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */,
+				35C4F43966058EC03102433B /* Pods-LUJO.debug.xcconfig */,
+				C2F04C962788948AD94CA9A4 /* Pods-LUJO.release.xcconfig */,
+				BC911DEE7A5EA0DB7661703E /* Pods-LUJO.beta.xcconfig */,
+				9A3118420F30C548ACAC7F37 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				CFEC960D867E00693E866057 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+				3DDBB271EDDB47D80F6FA6FB /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1891,7 +1891,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88029BA92633BF42003F1E77 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
 			buildPhases = (
-				33FB2C41BDFCF727DC2370CF /* [CP] Check Pods Manifest.lock */,
+				B1570CB2E6F61C88BCBB5367 /* [CP] Check Pods Manifest.lock */,
 				88029B9D2633BF42003F1E77 /* Sources */,
 				88029B9E2633BF42003F1E77 /* Frameworks */,
 				88029B9F2633BF42003F1E77 /* Resources */,
@@ -1909,7 +1909,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A818F6F20EE74CC005B6455 /* Build configuration list for PBXNativeTarget "LUJO" */;
 			buildPhases = (
-				6B3EC5D9F41CAAA99B19CC61 /* [CP] Check Pods Manifest.lock */,
+				C7CF19A703CCC1D7DCB86480 /* [CP] Check Pods Manifest.lock */,
 				9A1006B7217D85F6009219EA /* SwiftFormat */,
 				9A2975AC211464960074BC80 /* SwiftLint */,
 				9A818F4320EE74CA005B6455 /* Sources */,
@@ -1918,8 +1918,8 @@
 				9ACE52BE212D306F00BB287A /* Fabric */,
 				88029BAD2633BF42003F1E77 /* Embed App Extensions */,
 				88310E002635FF3900301667 /* Embed Frameworks */,
-				2E461DCF362ECED2DF565CE5 /* [CP] Embed Pods Frameworks */,
 				88E4A6C12759A67B00081270 /* ShellScript */,
+				1FCDB51948012D60FA6B60BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2124,7 +2124,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2E461DCF362ECED2DF565CE5 /* [CP] Embed Pods Frameworks */ = {
+		1FCDB51948012D60FA6B60BF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2139,50 +2139,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LUJO/Pods-LUJO-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		33FB2C41BDFCF727DC2370CF /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6B3EC5D9F41CAAA99B19CC61 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-LUJO-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		88E4A6C12759A67B00081270 /* ShellScript */ = {
@@ -2248,8 +2204,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
+			shellScript = "\n";
+		};
+		B1570CB2E6F61C88BCBB5367 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7CF19A703CCC1D7DCB86480 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LUJO-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2577,7 +2576,7 @@
 /* Begin XCBuildConfiguration section */
 		88029BAA2633BF42003F1E77 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5584F7B59D991A0F4914B3A /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			baseConfigurationReference = 9A3118420F30C548ACAC7F37 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2605,7 +2604,7 @@
 		};
 		88029BAB2633BF42003F1E77 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E861444A81832A355301ADB9 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			baseConfigurationReference = CFEC960D867E00693E866057 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2632,7 +2631,7 @@
 		};
 		88029BAC2633BF42003F1E77 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9781792218F842832B6DFB72 /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */;
+			baseConfigurationReference = 3DDBB271EDDB47D80F6FA6FB /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2781,7 +2780,7 @@
 		};
 		9A818F7020EE74CC005B6455 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */;
+			baseConfigurationReference = 35C4F43966058EC03102433B /* Pods-LUJO.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2836,7 +2835,7 @@
 		};
 		9A818F7120EE74CC005B6455 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */;
+			baseConfigurationReference = C2F04C962788948AD94CA9A4 /* Pods-LUJO.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3037,7 +3036,7 @@
 		};
 		9A9A62D6228484D8005F0DAB /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */;
+			baseConfigurationReference = BC911DEE7A5EA0DB7661703E /* Pods-LUJO.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
