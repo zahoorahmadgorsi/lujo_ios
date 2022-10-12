@@ -41,7 +41,6 @@ class AccountViewController: UIViewController {
     
     @IBOutlet weak var updateProfileLabel: UILabel!
     @IBOutlet weak var logoutLabel: UILabel!
-    @IBOutlet weak var lblDeleteAccount: UILabel!
     
     private let naHUD = JGProgressHUD(style: .dark)
     
@@ -68,9 +67,6 @@ class AccountViewController: UIViewController {
 
         let logoutTapResponder = UITapGestureRecognizer(target: self, action: #selector(requestLogout))
         logoutLabel.addGestureRecognizer(logoutTapResponder)
-        
-        let deleteAccountTapResponder = UITapGestureRecognizer(target: self, action: #selector(deleteAccount))
-        lblDeleteAccount.addGestureRecognizer(deleteAccountTapResponder)
         
         if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
             self.user = user
@@ -228,26 +224,6 @@ class AccountViewController: UIViewController {
     @objc func requestLogout() {
         showCardAlertWith(title: "Log out", body: "Are you sure you want to log out?", buttonTitle: "Yes", cancelButtonTitle: "No") {
              self.logoutUser()
-        }
-    }
-    
-    @objc func deleteAccount() {
-        showCardAlertWith(title: "Delete Account Confirmation", body: "Are you sure you want to delete your account?", buttonTitle: "Yes", cancelButtonTitle: "No") {
-            guard LujoSetup().getLujoUser() != nil else {
-                let error = LoginError.errorLogin(description: "No user exist")
-                self.showError(error)
-                return
-            }
-            self.showNetworkActivity()
-            GoLujoAPIManager().deleteAccount() { response, error in
-                self.hideNetworkActivity()
-                
-                if let error = error {
-                    self.showError(error)
-                }else{
-                    self.logoutUser()
-                }
-            }
         }
     }
     

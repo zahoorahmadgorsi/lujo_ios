@@ -437,26 +437,6 @@
                                                             <constraint firstItem="X6E-fp-FvE" firstAttribute="top" secondItem="eLb-Zy-12q" secondAttribute="top" id="cqe-YE-cut"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a74-sD-V2h">
-                                                        <rect key="frame" x="0.0" y="716" width="375" height="28"/>
-                                                        <subviews>
-                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-lI-G24">
-                                                                <rect key="frame" x="141.66666666666666" y="0.0" width="92" height="28"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="28" id="Odf-VV-980"/>
-                                                                </constraints>
-                                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
-                                                                <color key="textColor" name="Palette - Paragraph White"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstItem="VA7-lI-G24" firstAttribute="top" secondItem="a74-sD-V2h" secondAttribute="top" id="11o-e4-xNW"/>
-                                                            <constraint firstItem="VA7-lI-G24" firstAttribute="centerX" secondItem="a74-sD-V2h" secondAttribute="centerX" id="dvH-qf-2vF"/>
-                                                            <constraint firstAttribute="bottom" secondItem="VA7-lI-G24" secondAttribute="bottom" id="qdV-22-LLR"/>
-                                                        </constraints>
-                                                    </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cc-LS-Qia">
                                                         <rect key="frame" x="0.0" y="760" width="375" height="28"/>
                                                         <subviews>
@@ -517,7 +497,6 @@
                         <barButtonItem key="backBarButtonItem" title="   " id="drs-qb-GVP"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="lblDeleteAccount" destination="VA7-lI-G24" id="8rZ-Kx-Irq"/>
                         <outlet property="lblMyBookings" destination="Rzo-dH-I3j" id="wVk-e0-mlS"/>
                         <outlet property="lblMyPreferences" destination="F99-hC-McA" id="BgP-h9-JBo"/>
                         <outlet property="lblWishList" destination="ZUw-2E-Vtl" id="ZMk-Nv-NKu"/>
@@ -731,7 +710,7 @@
             <objects>
                 <viewController storyboardIdentifier="MembershipViewControllerNEW" id="leV-fP-XFz" customClass="MembershipViewControllerNEW" customModule="LUJO" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nBd-aW-Lcz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IRl-lC-gGU" userLabel="BLACK_SCROLL_BACKGROUND_HELPER_VIEW">
