@@ -5,22 +5,18 @@ typealias DataLayerCallback = (_ result: String, Error?) -> Void
 
 // View -> Presenter
 protocol LoginViewResponder: ViewResponder {
-//    func doLogin(username: String, password: String) throws
+    func doLogin(username: String, password: String) throws
     func doLoginWithOTP(prefix: PhoneCountryCode?, _ number: String?, code: String) throws
     func createAccount(title: UserTitle,
                        firstName: String,
                        lastName: String,
-                       email: String,
-                       phoneNumber: PhoneNumber//) throws
-                       ,captchaToken: String
-                       ,countryName: String) throws
+                       email: String, phoneNumber: PhoneNumber) throws
     func verifyCode(_ code: String)
-    func requestOTP(captchaToken:String)
+    func requestOTP()
 //    func requestOTPLogin(prefix: PhoneCountryCode, number: String)
-    //prefix, number and captchaToken is nil only in the case of if user already has the code
-    func requestOTPLogin(phoneCountryCode: PhoneCountryCode?, number: String?,captchaToken:String?)
-    func requestResendCode(captchaToken:String)
-    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String, captchaToken:String)
+    func requestOTPLogin(prefix: PhoneCountryCode?, number: String?)
+    func requestResendCode()
+    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String)
     func forgotPassword(for user: String)
     func showHomeScreen()
     func logoutUser()
@@ -47,14 +43,14 @@ protocol LoginPresentable: Presentable {
 
 // Presenter -> Interactor
 protocol LoginInteractuable {
-//    func doLogin(username: String, password: String, completion: @escaping LoginInteractorCallback)
-    func requestLoginVerificationCode(prefix: PhoneCountryCode, _ number: String, _ captchaToken: String, completion: @escaping LoginInteractorCallback)
+    func doLogin(username: String, password: String, completion: @escaping LoginInteractorCallback)
+    func requestLoginVerificationCode(prefix: PhoneCountryCode, _ number: String, completion: @escaping LoginInteractorCallback)
     func doLoginWithOTP(prefix: String, _ number: String, code: String, completion: @escaping LoginInteractorCallback)
-    func createAccount(_ user: LujoUser, captchaToken:String, countryName:String, completion: @escaping LoginInteractorCallback)
-    func requestVerificationCode(captchaToken:String, completion: @escaping LoginInteractorCallback)
+    func createAccount(_ user: LujoUser, completion: @escaping LoginInteractorCallback)
+    func requestVerificationCode(completion: @escaping LoginInteractorCallback)
     func verify(with code: String, completion: @escaping LoginInteractorCallback)
     func getUserStatus() -> UserStatus
-    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String,captchaToken:String, completion: @escaping LoginInteractorCallback)
+    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String, completion: @escaping LoginInteractorCallback)
     func forgotPassword(for user: String, completion: @escaping LoginInteractorCallback)
     func getUserApproval(completion: @escaping (Bool, Error?) -> Void)
     func logoutUser()
@@ -62,7 +58,7 @@ protocol LoginInteractuable {
 
 // Data layer protocol
 protocol LoginDataLayerProtocol {
-//    func login(username: String, password: String, completionHandler: @escaping DataLayerCallback)
+    func login(username: String, password: String, completionHandler: @escaping DataLayerCallback)
     func loginWithOTP(prefix: String, _ number: String, code: String, completionHandler: @escaping DataLayerCallback)
     func create(user: LujoUser, completionHandler: @escaping DataLayerCallback)
     func requestVerification(for user: LoginUser, withCode code: String, completionHandler: @escaping DataLayerCallback)

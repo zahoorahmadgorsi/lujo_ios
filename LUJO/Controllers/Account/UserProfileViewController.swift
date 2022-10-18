@@ -8,7 +8,6 @@
 
 import UIKit
 import JGProgressHUD
-import DropDown
 
 class UserProfileViewController: UIViewController {
     
@@ -49,7 +48,6 @@ class UserProfileViewController: UIViewController {
         countryCodeLabel.text = phonePrefix.alpha2Code
         prefixLabel.text = phonePrefix.phonePrefix
     }
-    let dropDown = DropDown()
     
     override func viewDidLoad() {
         navigationItem.title = "Edit Profile"
@@ -67,7 +65,7 @@ class UserProfileViewController: UIViewController {
         countryCodeContainer.layer.borderColor = UIColor.inputBorderNoFocus.cgColor
         phoneNumberContainer.layer.borderColor = UIColor.inputBorderNoFocus.cgColor
         
-        setupNavigationBar()
+//        naHUD.textLabel.text = "Updating ..."
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,66 +78,6 @@ class UserProfileViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         self.tabBarController?.tabBar.isHidden = false
-    }
-    
-    func setupNavigationBar() {
-        // Create right bar buttons
-        let imgMenuVertical    = UIImage(named: "menu_vertical")!
-        let btnSearch   = UIBarButtonItem(image: imgMenuVertical,  style: .plain, target: self, action: #selector(menu_onClick(_:)))
-        navigationItem.rightBarButtonItems = [btnSearch]
-        
-        
-        // The view to which the drop down will appear on
-        dropDown.anchorView = btnSearch // UIView or UIBarButtonItem
-
-        // The list of items to display. Can be changed dynamically
-        dropDown.dataSource = ["Delete Account"]
-        //background and text color
-        dropDown.textColor = .white
-        dropDown.backgroundColor = .blackBackgorund
-        
-        // Action triggered on selection
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-          print("Selected item: \(item) at index: \(index)")
-            if index == 0{
-                deleteAccount()
-            }
-        }
-    }
-    
-    @objc func menu_onClick(_ sender: UIBarButtonItem) {
-        // Will set a custom width instead of the anchor view width
-        dropDown.width = 125
-        
-        dropDown.dismissMode = .onTap
-        dropDown.direction = .any
-        // Top of drop down will be below the anchorView
-        dropDown.bottomOffset = CGPoint(x: -100, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        
-        dropDown.show()
-
-    }
-    
-    @objc func deleteAccount() {
-        showCardAlertWith(title: "Delete Account", body: "Are you sure you want to delete your account?", buttonTitle: "Yes", cancelButtonTitle: "No") {
-            guard let currentUser = LujoSetup().getLujoUser() else {
-                let error = LoginError.errorLogin(description: "No user exist")
-                self.showError(error)
-                return
-            }
-            
-            self.showNetworkActivity()
-            GoLujoAPIManager().deleteAccount() { unSubscribeResponse, error in
-//            GoLujoAPIManager().unSubscribe(currentUserToken,"zahoor@mgail.com") { unSubscribeResponse, error in
-                self.hideNetworkActivity()
-                
-                if let error = error {
-                    self.showError(error)
-                }else{
-                    self.logoutUser()
-                }
-            }
-        }
     }
     
     @IBAction func countryCodeButton_onClick(_ sender: Any) {
@@ -236,36 +174,4 @@ extension UserProfileViewController: CountrySelectionDelegate {
         phonePrefix = country
         updatePrefixLabels()
     }
-}
-
-extension UserProfileViewController {
-    
-    func logoutUser() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //deleting every thing from user defaults
-        let appDomain = Bundle.main.bundleIdentifier!
-        //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
-        UserDefaults.standard.removePersistentDomain(forName: appDomain)
-
-        guard let userId = LujoSetup().getLujoUser()?.id else {
-//            print("NO USER ID ERROR!!!")
-            // Present login view controller using VIPER.
-            appDelegate.windowRouter.navigate(from: "/", data: [:])
-            return
-        }
-        
-        showNetworkActivity()
-        logoutUser { _ in
-            self.hideNetworkActivity()
-            appDelegate.removePushToken(userId: userId)
-            // Present login view controller using VIPER.
-            appDelegate.windowRouter.navigate(from: "/", data: [:])
-        }
-    }
-    
-    func logoutUser(completion: @escaping (Error?) -> Void) {
-        LujoSetup().deleteCurrentUser()
-        completion(nil)
-    }
-    
 }

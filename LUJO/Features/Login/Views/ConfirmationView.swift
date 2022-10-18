@@ -1,8 +1,6 @@
 import ActiveLabel
 import JGProgressHUD
 import UIKit
-import HCaptcha
-import WebKit
 
 class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate {
     var presenter: LoginViewResponder?
@@ -24,11 +22,29 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
     private let naHUD = JGProgressHUD(style: .dark)
     private var firstTime: Bool = true
 
-    let hcaptcha = try? HCaptcha(
-        apiKey: Utility.captchaApiKey,
-        baseURL: URL(string: "http://localhost")!
-    )
-    var captchaWebView: WKWebView?
+    func showError(_ error: LoginError) {
+        showErrorPopup(withTitle: "Confirmation Error", error: error)
+    }
+
+    @IBAction func resendButton_onClick(_ sender: Any) {
+        showFeedback("New Code Requested")
+
+        if isLogin, let prefix = prefix, let number = phoneNumber {
+            presenter?.requestOTPLogin(prefix: prefix, number: number)
+            return
+        }
+        presenter?.requestResendCode()
+    }
+
+    @IBAction func updateNumberButton_onClick(_ sender: Any) {
+        showView("ShowUpdatePhoneNumber", data: nil)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = false
+        presenter?.update(view: self)
+        updateUI()
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -39,40 +55,6 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = false
-        presenter?.update(view: self)
-        updateUI()
-    }
-    
-    func showError(_ error: LoginError) {
-        showErrorPopup(withTitle: "Confirmation Error", error: error)
-    }
-
-    @IBAction func resendButton_onClick(_ sender: Any) {
-        validateCaptchaThenOTPRequest()
-    }
-
-    //this function validates captcha and if validated it sends call for user login
-    func validateCaptchaThenOTPRequest() {
-        hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
-//            print(try? result.dematerialize() as Any)
-            if let captchaToken = try? result.dematerialize(){
-                self?.captchaWebView?.removeFromSuperview()
-                //After successful validation login the user
-                if ((self?.isLogin) != nil), let prefix = self?.prefix, let number = self?.phoneNumber {
-                    self?.presenter?.requestOTPLogin(phoneCountryCode: prefix, number: number, captchaToken: captchaToken)
-                }else{
-                    self?.showFeedback("New Code Requested")
-                    self?.presenter?.requestResendCode(captchaToken: captchaToken)
-                }
-            }
-        }
-    }
-
-    @IBAction func updateNumberButton_onClick(_ sender: Any) {
-        showView("ShowUpdatePhoneNumber", data: nil)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -96,28 +78,6 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
         digit2.inputAccessoryView = toolbar
         digit3.inputAccessoryView = toolbar
         digit4.inputAccessoryView = toolbar
-        
-        //configuring webview for captcha
-        hcaptcha?.configureWebView { [weak self] webview in
-            webview.frame = self?.view.bounds ?? CGRect.zero
-            webview.isOpaque = false
-            webview.backgroundColor = UIColor.clear
-            webview.scrollView.backgroundColor = UIColor.clear
-            
-            self?.captchaWebView = webview
-        }
-        hcaptcha?.onEvent { (event, data) in
-            if event == .open {
-                print("captcha open")
-            }else if event == .close{
-                print(" captcha closed")
-                self.captchaWebView?.removeFromSuperview()  //if we wont remove then screen will become irresponsive
-            }else if event == .error {
-                let error = data as? HCaptchaError
-                print("captcha onEvent error: \(String(describing: error))")
-                self.captchaWebView?.removeFromSuperview()
-            }
-        }
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {

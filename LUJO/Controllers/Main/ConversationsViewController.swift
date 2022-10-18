@@ -278,7 +278,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
                 let navViewController: UINavigationController = UINavigationController(rootViewController: viewController)
                 if #available(iOS 13.0, *) {
                     let controller = navViewController.topViewController
-                   // Modal Dismiss iOS 13 onward
+                    // Modal Dismiss iOS 13 onward
                     controller?.presentationController?.delegate = self
                 }
                 //incase user will do some messaging in AdvanceChatViewController and then dismiss it then ConversationsViewController should reflect last message body and time

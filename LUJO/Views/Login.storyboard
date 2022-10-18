@@ -970,8 +970,8 @@
                                             <action selector="verifyNewNumber:" destination="VDY-Qc-Ru5" eventType="touchUpInside" id="gRs-f8-gjy"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vT-MH-UUX">
-                                        <rect key="frame" x="84.666666666666686" y="359" width="142" height="26"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vT-MH-UUX">
+                                        <rect key="frame" x="84.666666666666686" y="339" width="142" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <state key="normal" title="ALREADY HAVE THE CODE">
                                             <color key="titleColor" name="White Text"/>
@@ -981,7 +981,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBq-Qp-CR3">
-                                        <rect key="frame" x="27.666666666666657" y="425" width="255.99999999999997" height="121.66666666666663"/>
+                                        <rect key="frame" x="27.666666666666657" y="359" width="255.99999999999997" height="187.66666666666663"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Do you have any issues? support@golujo.com" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="r3w-kl-eGQ">

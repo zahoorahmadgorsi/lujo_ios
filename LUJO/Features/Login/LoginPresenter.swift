@@ -66,6 +66,7 @@ extension LoginError: LocalizedError {
 }
 
 class LoginPresenter: Presentable, LoginViewResponder {
+
     
     var view: Viewable {
         return presenterView
@@ -90,7 +91,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
             }
 
             guard currentUserStatus != .unverified else {
-                //                self.requestOTP() //commenting this because now captcha verificatino is required for this API to work
+                self.requestOTP()
                 self.presenterView.hideSplashView()
                 LujoSetup().updateDefaults {}
                 return
@@ -114,43 +115,43 @@ class LoginPresenter: Presentable, LoginViewResponder {
 
     // MARK: Login Responder Methods
 
-//    func doLogin(username: String, password: String) throws {
-//        guard !username.isEmpty else {
-//            throw LoginError.missingUsername
-//        }
-//
-//        guard !password.isEmpty else {
-//            throw LoginError.missingPassword
-//        }
-//
-//        view.showNetworkActivity()
-//
-//        presenterInteractor.doLogin(username: username, password: password) { [weak self] _, error in
-//            self?.view.hideNetworkActivity()
-//
-//            guard error == nil else {
-//                if error == LoginError.userNotApproved {
-//                    self?.presenterView.showView("JumpUnapproved", data: nil)
-//                    return
-//                }
-//                if error == LoginError.accountError {
-//                    self?.presenterView.showView("ShowAccountError", data: nil)
-//                    return
-//                }
-//                self?.presenterView.showError(error!)
-//                return
-//            }
-//
-//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//            appDelegate.registerForPushNotifications()
-//
-//            guard let origin = self?.route, !origin.isEmpty else {
-//                return
-//            }
-//
-//            self?.showHomeScreen()
-//        }
-//    }
+    func doLogin(username: String, password: String) throws {
+        guard !username.isEmpty else {
+            throw LoginError.missingUsername
+        }
+
+        guard !password.isEmpty else {
+            throw LoginError.missingPassword
+        }
+
+        view.showNetworkActivity()
+
+        presenterInteractor.doLogin(username: username, password: password) { [weak self] _, error in
+            self?.view.hideNetworkActivity()
+
+            guard error == nil else {
+                if error == LoginError.userNotApproved {
+                    self?.presenterView.showView("JumpUnapproved", data: nil)
+                    return
+                }
+                if error == LoginError.accountError {
+                    self?.presenterView.showView("ShowAccountError", data: nil)
+                    return
+                }
+                self?.presenterView.showError(error!)
+                return
+            }
+
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.registerForPushNotifications()
+
+            guard let origin = self?.route, !origin.isEmpty else {
+                return
+            }
+
+            self?.showHomeScreen()
+        }
+    }
 
     func doLoginWithOTP(prefix: PhoneCountryCode?, _ number: String?, code: String) throws {
         guard let phonePrefix = prefix?.phonePrefix, !phonePrefix.isEmpty else {
@@ -194,10 +195,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
     func createAccount(title: UserTitle,
                        firstName: String,
                        lastName: String,
-                       email: String, phoneNumber: PhoneNumber
-                       ,captchaToken:String
-                       ,countryName:String
-                       ) throws {
+                       email: String, phoneNumber: PhoneNumber) throws {
         guard !firstName.isEmpty else { throw LoginError.missingData }
         guard !lastName.isEmpty else { throw LoginError.missingData }
         guard !email.isEmpty else { throw LoginError.missingData }
@@ -223,7 +221,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
 
         view.showNetworkActivity()
 
-        presenterInteractor.createAccount(currentUser!, captchaToken: captchaToken, countryName:countryName) { [weak self] _, error in
+        presenterInteractor.createAccount(currentUser!) { [weak self] _, error in
             self?.view.hideNetworkActivity()
 
             guard error == nil else {
@@ -261,10 +259,10 @@ class LoginPresenter: Presentable, LoginViewResponder {
         router?.navigate(from: route, data: ["result": "Home" as AnyObject])
     }
 
-    func requestOTP(captchaToken:String) {
+    func requestOTP() {
         presenterView.showView("JumpConfirmation", data: nil)
 
-        presenterInteractor.requestVerificationCode(captchaToken:captchaToken) { _, error in
+        presenterInteractor.requestVerificationCode { _, error in
             guard error == nil else {
                 self.presenterView.showError(error!)
                 return
@@ -272,11 +270,10 @@ class LoginPresenter: Presentable, LoginViewResponder {
         }
     }
 
-    func requestOTPLogin(phoneCountryCode: PhoneCountryCode?, number: String?, captchaToken:String?) {
-        if let countryCode = phoneCountryCode, let phoneNumber = number, let captchaToken = captchaToken{
-            
+    func requestOTPLogin(prefix: PhoneCountryCode?, number: String?) {
+        if let countryCode = prefix, let phoneNumber = number{
             self.presenterView.showNetworkActivity()
-            presenterInteractor.requestLoginVerificationCode(prefix: countryCode, phoneNumber,captchaToken) { [weak self] _, error in
+            presenterInteractor.requestLoginVerificationCode(prefix: countryCode, phoneNumber) { [weak self] _, error in
                 self?.presenterView.hideNetworkActivity()
                 guard error == nil else {
                     self?.presenterView.showError(error!)
@@ -289,8 +286,8 @@ class LoginPresenter: Presentable, LoginViewResponder {
         }
     }
 
-    func requestResendCode(captchaToken:String) {
-        presenterInteractor.requestVerificationCode(captchaToken:captchaToken) { _, error in
+    func requestResendCode() {
+        presenterInteractor.requestVerificationCode { _, error in
             guard error == nil else {
                 self.presenterView.showError(error!)
                 return
@@ -298,9 +295,9 @@ class LoginPresenter: Presentable, LoginViewResponder {
         }
     }
 
-    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String, captchaToken:String) {
+    func updateUserPhone(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String) {
         presenterView.showNetworkActivity()
-        presenterInteractor.updateUserPhone(oldPrefix: oldPrefix, oldNumber: oldNumber, newPrefix: newPrefix, newNumber: newNumber,captchaToken:captchaToken) { _, error in
+        presenterInteractor.updateUserPhone(oldPrefix: oldPrefix, oldNumber: oldNumber, newPrefix: newPrefix, newNumber: newNumber) { _, error in
             self.presenterView.hideNetworkActivity()
 
             guard error == nil else {
@@ -315,7 +312,6 @@ class LoginPresenter: Presentable, LoginViewResponder {
             self.presenterView.showFeedback("You successfully changed your phone number.")
         }
     }
-
 
     func update(view: Viewable) {
         guard let newView = view as? LoginViewProtocol else { return }

@@ -44,11 +44,11 @@ enum GoLujoRouter: URLRequestConvertible {
     case refreshToken(String)
     case login(String, String)
     case loginWithOTP(String, String, String)
-    case requestLoginOTP(PhoneCountryCode, String,String)
-    case createUser(LujoUser,String, String)
+    case requestLoginOTP(PhoneCountryCode, String)
+    case createUser(LujoUser)
     case verify(LoginUser, String)
-    case requestOTP(LoginUser, String)
-    case updatePhoneNumber(String, String, String, String, String)
+    case requestOTP(LoginUser)
+    case updatePhoneNumber(String, String, String, String)
     case updateDefaults
     case countryCodes
     case forgotPassword(String)
@@ -313,16 +313,16 @@ enum GoLujoRouter: URLRequestConvertible {
             return getCredentialsAsJSONData(username, password)
         case let .loginWithOTP(prefix, number, code):
             return getOTPCredentialsAsJSONData(prefix, number, code)
-        case let .requestLoginOTP(prefix, number, captchaToken):
-            return getPhoneNumberAsJSONData(prefix, number,captchaToken)
-        case let .createUser(user, token, countryName):
-            return getCreateUserAsJSONData(user, token,countryName)
+        case let .requestLoginOTP(prefix, number):
+            return getPhoneNumberAsJSONData(prefix, number)
+        case let .createUser(user):
+            return getUserAsJSONData(user)
         case let .verify(user, code):
             return getVerificationAsJSONData(user, code)
-        case let .requestOTP(user, captchaToken):
-            return getOTPAsJSONData(user, captchaToken)
-        case let .updatePhoneNumber(oldPrefix, oldNumber, newPrefix, newNumber, captchaToken):
-            return getUserNameAndPhoneAsJSONData(oldPrefix, oldNumber, newPrefix, newNumber, captchaToken)
+        case let .requestOTP(user):
+            return getUserAsJSONData(user)
+        case let .updatePhoneNumber(oldPrefix, oldNumber, newPrefix, newNumber):
+            return getUserNameAndPhoneAsJSONData(oldPrefix, oldNumber, newPrefix, newNumber)
         case .updateDefaults:
             return nil
         case .countryCodes:
@@ -379,11 +379,10 @@ enum GoLujoRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: credentials, options: [])
     }
 
-    fileprivate func getPhoneNumberAsJSONData(_ prefix: PhoneCountryCode, _ number: String, _ captchaToken:String) -> Data? {
+    fileprivate func getPhoneNumberAsJSONData(_ prefix: PhoneCountryCode, _ number: String) -> Data? {
         let credentials: [String: String] = [
             "phone_prefix": prefix.phonePrefix,
             "phone": number,
-            "captcha_token" : captchaToken
         ]
         return try? JSONSerialization.data(withJSONObject: credentials, options: [])
     }
@@ -397,17 +396,13 @@ enum GoLujoRouter: URLRequestConvertible {
     }
 
     // TODO: Added plus sign before phone prefix until it's taken from list
-    fileprivate func getCreateUserAsJSONData(_ user: LujoUser, _ token:String, _ countryName:String) -> Data? {
+    fileprivate func getUserAsJSONData(_ user: LujoUser) -> Data? {
         let profileData: [String: String] = [
-//            "title": user.title.rawValue,
             "firstname": user.firstName,
             "lastname": user.lastName,
-            "email": user.email,
+            "email": user.email.lowercased(),
             "phone_prefix": String(user.phoneNumber.countryCode),
             "phone": user.phoneNumber.number,
-            "captcha_token": token,
-            "country" :  countryName,
-            "role" : "customer"
         ]
         return try? JSONSerialization.data(withJSONObject: profileData, options: [])
     }
@@ -421,22 +416,20 @@ enum GoLujoRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: verificationData, options: [])
     }
 
-    fileprivate func getOTPAsJSONData(_ user: LoginUser, _ captchaToken: String) -> Data? {
+    fileprivate func getUserAsJSONData(_ user: LoginUser) -> Data? {
         let verificationData: [String: String] = [
             "phone_prefix": user.prefix,
             "phone": user.phone,
-            "captcha_token" : captchaToken
         ]
         return try? JSONSerialization.data(withJSONObject: verificationData, options: [])
     }
 
-    fileprivate func getUserNameAndPhoneAsJSONData(_ oldPrefix: String, _ oldNumber: String, _ newPrefix: String, _ newNumber: String, _ captchaToken: String) -> Data? {
+    fileprivate func getUserNameAndPhoneAsJSONData(_ oldPrefix: String, _ oldNumber: String, _ newPrefix: String, _ newNumber: String) -> Data? {
         let verificationData: [String: String] = [
             "old_phone_prefix": oldPrefix,
             "old_phone": oldNumber,
             "phone_prefix": newPrefix,
             "phone": newNumber,
-            "captcha_token": captchaToken
         ]
         return try? JSONSerialization.data(withJSONObject: verificationData, options: [])
     }

@@ -4,8 +4,6 @@ import JGProgressHUD
 import M13Checkbox
 import MessageUI
 import UIKit
-import HCaptcha
-import WebKit
 
 class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegate {
     var presenter: LoginViewResponder?
@@ -27,7 +25,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
 
     @IBOutlet var termsLabel: ActiveLabel!
 
-    var phoneCountryCode = PhoneCountryCode(id: 238,
+    var phonePrefix = PhoneCountryCode(id: 238,
                                        alpha2Code: "US",
                                        phonePrefix: "+1",
                                        nationality: "American",
@@ -43,12 +41,6 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
         return checkbox
     }()
 
-    let hcaptcha = try? HCaptcha(
-        apiKey: Utility.captchaApiKey,
-        baseURL: URL(string: "http://localhost")!
-    )
-    var captchaWebView: WKWebView?
-    
     fileprivate func navigationBarSetup() {
 //        title = "Create new account"
 //        navigationController?.navigationBar.barTintColor = UIColor(named: "Grey Button")
@@ -110,8 +102,8 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
     }
 
     fileprivate func updatePrefixLabels() {
-        phoneCode.text = phoneCountryCode.alpha2Code
-        phonePrefixValue.text = phoneCountryCode.phonePrefix
+        phoneCode.text = phonePrefix.alpha2Code
+        phonePrefixValue.text = phonePrefix.phonePrefix
     }
 
     override func viewDidLoad() {
@@ -151,65 +143,8 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
             string: phoneNumber.placeholder!,
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderText]
         )
-        
-        //configuring webview for captcha
-        hcaptcha?.configureWebView { [weak self] webview in
-            webview.frame = self?.view.bounds ?? CGRect.zero
-            
-            // could use this option if using an enterprise passive sitekey:
-            // webview.isHidden = true
-            // seems to prevent flickering on latest iOS 15.2
-            webview.isOpaque = false
-            webview.backgroundColor = UIColor.clear
-            webview.scrollView.backgroundColor = UIColor.clear
-            
-            self?.captchaWebView = webview
-        }
-        hcaptcha?.onEvent { (event, data) in
-            if event == .open {
-                print("captcha open")
-            }else if event == .close{
-                print(" captcha closed")
-                self.captchaWebView?.removeFromSuperview()  //if we wont remove then screen will become irresponsive
-            }else if event == .error {
-                let error = data as? HCaptchaError
-                print("captcha onEvent error: \(String(describing: error))")
-                self.captchaWebView?.removeFromSuperview()
-            }
-        }
     }
 
-    //this function validates the captcha and if validated sends call for registration
-    func validateCaptchaThenSignup() {
-        hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
-//            print(try? result.dematerialize() as Any)
-            self?.captchaWebView?.removeFromSuperview()
-            //After successful validation signup the user
-            if let firstname = self?.firstName.text
-                , let lastName = self?.lastName.text
-                ,let email = self?.email.text
-                ,let phonePrefix = self?.phoneCountryCode.phonePrefix
-                ,let phoneNumber = self?.phoneNumber.text
-                ,let captchaToken = try? result.dematerialize()
-                ,let countryName = self?.phoneCountryCode.country
-            {
-            do {
-                try self?.presenter?.createAccount(title: .mr,
-                                             firstName: firstname,
-                                             lastName: lastName,
-                                             email: email,
-                                             phoneNumber: PhoneNumber(countryCode: phonePrefix,
-                                                                      number: phoneNumber)
-                                            ,captchaToken:captchaToken
-                                                   ,countryName:countryName)
-            } catch {
-                // swiftlint:disable force_cast
-                self?.showError(error as! LoginError)
-            }
-            }
-        }
-    }
-    
     @IBAction func countryCodeButton_onClick(_ sender: Any) {
         showCountryCodes()
     }
@@ -228,7 +163,18 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
                 return
             }
         }
-        validateCaptchaThenSignup()
+
+        do {
+            try presenter?.createAccount(title: .mr,
+                                         firstName: firstName.text!,
+                                         lastName: lastName.text!,
+                                         email: email.text!,
+                                         phoneNumber: PhoneNumber(countryCode: phonePrefix.phonePrefix,
+                                                                  number: phoneNumber.text!))
+        } catch {
+            // swiftlint:disable force_cast
+            showError(error as! LoginError)
+        }
     }
 
     override func viewWillAppear(_: Bool) {
@@ -315,7 +261,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
 
     func didSelect(_ country: PhoneCountryCode, at view: CountryCodeSelectionView) {
         view.dismiss(animated: true, completion: nil)
-        phoneCountryCode = country
+        phonePrefix = country
         updatePrefixLabels()
     }
 }
