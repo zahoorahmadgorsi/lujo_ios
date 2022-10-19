@@ -1,5 +1,7 @@
 import UIKit
 import JGProgressHUD
+import HCaptcha
+import WebKit
 
 class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelectionDelegate {
     var presenter: LoginViewResponder?
@@ -34,16 +36,22 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     @IBOutlet weak var errorLabel: UILabel!
     
     var isChanging: Bool = true
-    private var phonePrefix = PhoneCountryCode(id: 238,
+    private var phoneCountryCode = PhoneCountryCode(id: 238,
                                                alpha2Code: "US",
                                                phonePrefix: "+1",
                                                nationality: "American",
                                                country: "United States of America",
                                                flag: "https://bit.ly/2Vrjgrk")
 
+    let hcaptcha = try? HCaptcha(
+        apiKey: Constants.hCaptchaKey,
+        baseURL: URL(string: Constants.hCaptchaURL)!
+    )
+    var captchaWebView: WKWebView?
+    
     fileprivate func updatePrefixLabels() {
-        countryCode.text = phonePrefix.alpha2Code
-        phonePrefixValue.text = phonePrefix.phonePrefix
+        countryCode.text = phoneCountryCode.alpha2Code
+        phonePrefixValue.text = phoneCountryCode.phonePrefix
     }
 
     fileprivate func updateUI() {
@@ -98,6 +106,28 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
 
         updatePrefixLabels()
         updateUI()
+        
+        //configuring webview for captcha
+        hcaptcha?.configureWebView { [weak self] webview in
+            webview.frame = self?.view.bounds ?? CGRect.zero
+            webview.isOpaque = false
+            webview.backgroundColor = UIColor.clear
+            webview.scrollView.backgroundColor = UIColor.clear
+            self?.captchaWebView = webview
+        }
+        hcaptcha?.onEvent { (event, data) in
+            if event == .open {
+                print("captcha open")
+            }else if event == .close{
+                print(" captcha closed")
+                self.captchaWebView?.removeFromSuperview()  //if we wont remove then screen will become irresponsive
+            }else if event == .error {
+                let error = data as? HCaptchaError
+                print("captcha onEvent error: \(String(describing: error))")
+                self.captchaWebView?.removeFromSuperview()
+            }
+        }
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -133,7 +163,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
 //            }
 //        } else
 //        {
-        presenter?.requestOTPLogin(prefix: nil,number: nil)
+        presenter?.requestOTPLogin(phoneCountryCode: nil,number: nil, captchaToken: nil)
 //        }
     }
     
@@ -148,18 +178,48 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
             showError(error)
             return
         }
-
-        if isChanging {
-            if let prefix = LujoSetup().getCurrentUser()?.prefix, let oldNumber = LujoSetup().getCurrentUser()?.phone {
-                presenter?.updateUserPhone(oldPrefix: prefix, oldNumber: oldNumber, newPrefix: phonePrefix.phonePrefix, newNumber: number)
-            } else {
-                showFeedback("Can't change phone number because old number is not available.")
-            }
-        } else {
-            presenter?.requestOTPLogin(prefix: phonePrefix, number: number)
-        }
+        validateCaptcha(phonenNumber:number)
+//        if isChanging {
+//            if let prefix = LujoSetup().getCurrentUser()?.prefix, let oldNumber = LujoSetup().getCurrentUser()?.phone {
+//                presenter?.updateUserPhone(oldPrefix: prefix, oldNumber: oldNumber, newPrefix: phonePrefix.phonePrefix, newNumber: number)
+//            } else {
+//                showFeedback("Can't change phone number because old number is not available.")
+//            }
+//        } else {
+//            validateCaptchaThenLogin(phonenNumber:number)
+////            presenter?.requestOTPLogin(prefix: phonePrefix, number: number)
+//        }
     }
 
+    //this function validates captcha and if validated it sends call for user login or user phone update
+    func validateCaptcha( phonenNumber: String) {
+//    func validateCaptchaThenLogin() {
+        hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
+//            print(try? result.dematerialize() as Any)
+            if let captchaToken = try? result.dematerialize(){
+
+                self?.captchaWebView?.removeFromSuperview()
+                //After successful validation signup the user or change the phone number
+
+                if let isChanging = self?.isChanging, isChanging == true {
+                    if let oldPrefix = LujoSetup().getCurrentUser()?.prefix
+                        , let oldNumber = LujoSetup().getCurrentUser()?.phone
+                        ,let newPrefix = self?.phoneCountryCode.phonePrefix{
+                        self?.presenter?.updateUserPhone(oldPrefix: oldPrefix, oldNumber: oldNumber, newPrefix: newPrefix, newNumber: phonenNumber,captchaToken:captchaToken)
+                    } else {
+                        self?.showFeedback("Can't change phone number because old number is not available.")
+                    }
+                } else if let phoneCountryCode = self?.phoneCountryCode{
+                    //User is coming for login
+                    self?.presenter?.requestOTPLogin(phoneCountryCode: phoneCountryCode, number: phonenNumber, captchaToken: captchaToken)
+                }
+                
+//                self?.presenter?.requestOTPLogin(prefix: self?.phonePrefix, number: phonenNumber,captchaToken:captchaToken)
+            }
+            
+        }
+    }
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         guard let number = newPhoneNumber.text, !number.isEmpty else { return false }
         return true
@@ -175,7 +235,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
 
     func didSelect(_ country: PhoneCountryCode, at view: CountryCodeSelectionView) {
         view.dismiss(animated: true, completion: nil)
-        phonePrefix = country
+        phoneCountryCode = country
         updatePrefixLabels()
     }
 
@@ -183,7 +243,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
         if segue.identifier == "DoOPTConfirmation" {
             guard let confirmationVC = segue.destination as? ConfirmationView else { return }
             confirmationVC.presenter = presenter
-            confirmationVC.prefix = phonePrefix
+            confirmationVC.prefix = phoneCountryCode
             confirmationVC.phoneNumber = newPhoneNumber.text
             confirmationVC.isLogin = true
         }

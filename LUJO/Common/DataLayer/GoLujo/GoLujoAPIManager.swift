@@ -143,8 +143,8 @@ extension GoLujoAPIManager {
             }
     }
 
-    func requestLoginOTP(prefix: PhoneCountryCode, _ number: String, completionHandler: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.requestLoginOTP(prefix, number))
+    func requestLoginOTP(prefix: PhoneCountryCode, _ number: String,_ captchaToken:String, completionHandler: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.requestLoginOTP(prefix, number,captchaToken))
             .responseJSON { response in
                 switch response.result {
                 case .success:
@@ -162,14 +162,15 @@ extension GoLujoAPIManager {
                     if error._code == NSURLErrorTimedOut {
                         completionHandler("", nil)
                         return
-            }
+                    }
                     completionHandler("", LoginError.errorLogin(description: response.result.error!.localizedDescription))
                 }
             }
     }
+    
 
-    func create(user: LujoUser, completionHandler: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.createUser(user)).responseJSON { response in
+    func create(user: LujoUser,captchaToken:String, countryName:String ,completionHandler: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.createUser(user, captchaToken, countryName)).responseJSON { response in
             guard response.result.error == nil else {
                 completionHandler("", LoginError.errorLogin(description: response.result.error!.localizedDescription))
                 return
@@ -240,8 +241,8 @@ extension GoLujoAPIManager {
             }
     }
 
-    func requestOTP(for user: LoginUser, completionHandler: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.requestOTP(user))
+    func requestOTP(for user: LoginUser, captchaToken:String, completionHandler: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.requestOTP(user, captchaToken))
             .responseJSON { response in
                 switch response.result {
                 case .success:
@@ -265,8 +266,8 @@ extension GoLujoAPIManager {
             }
     }
 
-    func update(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String, completion: @escaping DataLayerCallback) {
-        Alamofire.request(GoLujoRouter.updatePhoneNumber(oldPrefix, oldNumber, newPrefix, newNumber))
+    func update(oldPrefix: String, oldNumber: String, newPrefix: String, newNumber: String,captchaToken:String, completion: @escaping DataLayerCallback) {
+        Alamofire.request(GoLujoRouter.updatePhoneNumber(oldPrefix, oldNumber, newPrefix, newNumber, captchaToken))
             .responseJSON { response in
                 switch response.result {
                 case .success:

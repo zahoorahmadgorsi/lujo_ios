@@ -27,10 +27,10 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shl-p5-qIh">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="886"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="842"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="eYD-0b-QxR">
-                                                <rect key="frame" x="0.0" y="16" width="375" height="854"/>
+                                                <rect key="frame" x="0.0" y="16" width="375" height="810"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7z-J7-BPX">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
@@ -437,8 +437,8 @@
                                                             <constraint firstItem="X6E-fp-FvE" firstAttribute="top" secondItem="eLb-Zy-12q" secondAttribute="top" id="cqe-YE-cut"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a74-sD-V2h">
-                                                        <rect key="frame" x="0.0" y="716" width="375" height="28"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a74-sD-V2h">
+                                                        <rect key="frame" x="0.0" y="708" width="375" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-lI-G24">
                                                                 <rect key="frame" x="141.66666666666666" y="0.0" width="92" height="28"/>
@@ -458,7 +458,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cc-LS-Qia">
-                                                        <rect key="frame" x="0.0" y="760" width="375" height="28"/>
+                                                        <rect key="frame" x="0.0" y="716" width="375" height="28"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERl-yP-cD1">
                                                                 <rect key="frame" x="152.66666666666666" y="0.0" width="70" height="28"/>
@@ -479,7 +479,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mCR-dt-cpb">
-                                                        <rect key="frame" x="0.0" y="804" width="375" height="50"/>
+                                                        <rect key="frame" x="0.0" y="760" width="375" height="50"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                 </subviews>
@@ -517,7 +517,6 @@
                         <barButtonItem key="backBarButtonItem" title="   " id="drs-qb-GVP"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="lblDeleteAccount" destination="VA7-lI-G24" id="8rZ-Kx-Irq"/>
                         <outlet property="lblMyBookings" destination="Rzo-dH-I3j" id="wVk-e0-mlS"/>
                         <outlet property="lblMyPreferences" destination="F99-hC-McA" id="BgP-h9-JBo"/>
                         <outlet property="lblWishList" destination="ZUw-2E-Vtl" id="ZMk-Nv-NKu"/>
