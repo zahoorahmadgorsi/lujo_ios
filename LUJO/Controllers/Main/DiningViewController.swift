@@ -156,7 +156,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
 //        self.tabBarController?.tabBar.isHidden = true
         
         if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-            let isMember = target == "all" || target == "dining"
+            let isMember = target.contains("all")  || target.contains("dining")
             dimView.isHidden = isMember
             membershipView.isHidden = isMember
             searchBarButton.isEnabled = isMember

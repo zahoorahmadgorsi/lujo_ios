@@ -68,7 +68,7 @@ class MembershipViewControllerNEW: UIViewController {
     private var screenType: MembershipScreenType = .buyMembership
     private var paymentType: MembershipType! {
         didSet {
-            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == (paymentType == .all ? "all" : "dining")})
+            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains((paymentType == .all ? "all" : "dining")) == true })
         }
     }
     private var price: Int = 0
@@ -181,8 +181,11 @@ class MembershipViewControllerNEW: UIViewController {
     
     private func updateUI() {
         currentMembership = LujoSetup().getLujoUser()?.membershipPlan
-        selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == (paymentType == .all ? "all" : "dining")})
-        price = selectedMembership?.price ?? -1
+        selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains((paymentType == .all ? "all" : "dining")) == true})
+        if let price = selectedMembership?.price?.amount{
+            self.price = Int(price) ?? -1
+        }
+//        price = Int(selectedMembership?.price.amount) ?? -1
         
         if screenType == .buyMembership {
             title = "Purchase membership"
@@ -220,18 +223,18 @@ class MembershipViewControllerNEW: UIViewController {
         } else {
             title = "Membership overview"
             
-            diningContainerView.isHidden = currentMembership?.target == "all"
-            allAccessContainerView.isHidden = currentMembership?.target == "dining"
-            allAccessCardCenter.isActive = currentMembership?.target == "all"
+            diningContainerView.isHidden = currentMembership?.target.contains("all") == true
+            allAccessContainerView.isHidden = currentMembership?.target.contains("dining") == true
+            allAccessCardCenter.isActive = currentMembership?.target.contains("all") == true
             pagerContainerView.isHidden = true
-            eventsContainerView.isHidden = currentMembership?.target == "dining"
-            separatorView.isHidden = currentMembership?.target == "dining"
-            luxaryContainerView.isHidden = currentMembership?.target == "dining"
-            separator2View.isHidden = currentMembership?.target == "dining"
-            hotelsContainerView.isHidden = currentMembership?.target == "dining"
-            separator3View.isHidden = currentMembership?.target == "dining"
+            eventsContainerView.isHidden = currentMembership?.target.contains("dining") == true
+            separatorView.isHidden = currentMembership?.target.contains("dining") == true
+            luxaryContainerView.isHidden = currentMembership?.target.contains("dining") == true
+            separator2View.isHidden = currentMembership?.target.contains("dining") == true
+            hotelsContainerView.isHidden = currentMembership?.target.contains("dining") == true
+            separator3View.isHidden = currentMembership?.target.contains("dining") == true
             paymentInfoView?.removeFromSuperview()
-            if currentMembership?.target == "dining" {
+            if currentMembership?.target.contains("dining") == true {
                 payNowButton.setTitle("U P G R A D E  M E M B E R S H I P", for: .normal)
             } else {
                 payButtonContainerView.removeFromSuperview()
@@ -255,8 +258,11 @@ class MembershipViewControllerNEW: UIViewController {
     
     private func updatePrice() {
         var oldPriceText = ""
+        var selectedPrice = 0
         
-        let selectedPrice = selectedMembership?.price ?? -1
+        if let price = selectedMembership?.price?.amount{
+            selectedPrice = Int(price) ?? -1
+        }
 //        let currentDiscount = selectedMembership?.discount ?? 0
         
         if hasValidCode {

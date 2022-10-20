@@ -62,7 +62,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         super.viewDidLoad()
         
         if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-            let isMember = target == "all" || target == "dining"
+            let isMember = target.contains("all") == true || target.contains("dining") == true
             dimView.isHidden = isMember
             membershipView.isHidden = isMember
         }

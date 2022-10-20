@@ -36,7 +36,16 @@ extension UIViewController {
             if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
                 let userFullname = "\(user.firstName) \(user.lastName)"
                 let hasMembership = LujoSetup().getLujoUser()?.membershipPlan ?? nil != nil
-                let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: hasMembership ? .viewMembership : .buyMembership, paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .dining : .all)
+                var paymentType = MembershipType.none
+                if let isContain = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("dining"), isContain == true{
+                    paymentType = .dining
+                }else{ //if let isContain = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("dining"){
+                    paymentType = .all
+                }
+
+                let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname
+                                                                             , screenType: hasMembership ? .viewMembership : .buyMembership
+                                                                             , paymentType: paymentType)
                 let navController = UINavigationController(rootViewController: viewController)
                 self.present(navController, animated: true)
             }

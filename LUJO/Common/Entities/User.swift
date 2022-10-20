@@ -165,21 +165,86 @@ struct PhoneCountryCode: Codable {
     }
 }
 
+struct CurrencyType: Codable{
+    let id: String
+    let name: String
+    let code: String
+    let symbolRight: String
+    let symbolLeft: String
+    let value: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case name
+        case code
+        case symbolRight = "symbol_right"
+        case symbolLeft = "symbol_left"
+        case value
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            id = try values.decode(String.self, forKey: .id)
+            name = try values.decode(String.self, forKey: .name)
+            code = try values.decode(String.self, forKey: .code)
+            symbolRight = try values.decode(String.self, forKey: .symbolRight)
+            symbolLeft = try values.decode(String.self, forKey: .symbolLeft)
+            value = try values.decode(Int.self, forKey: .value)
+        } catch {
+            throw error
+        }
+    }
+    
+    //For storing and loading into user defaults
+    init(data: [String : Any]) {
+        self.id = data["_id"] as? String ?? "-1"
+        self.name =  data["name"] as? String ?? ""
+        self.code =  data["code"] as? String ?? ""
+        self.symbolRight =  data["symbol_right"] as? String ?? ""
+        self.symbolLeft =  data["symbol_left"] as? String ?? ""
+        self.value =  data["value"] as? Int ?? -1
+    }
+    
+    
+}
+
+struct MembershipPrice: Codable {
+    let _id: String
+    let amount: String
+    let currencyType: CurrencyType?
+    
+    //For storing and loading into user defaults
+    init(data: [String : Any]) {
+        self._id = data["_id"] as? String ?? "-1"
+        self.amount =  data["amount"] as? String ?? ""
+        if let currencyTypeData = data["currencyType"] as? [String : Any]{
+            let currenceType = CurrencyType(data: currencyTypeData)
+            self.currencyType = currenceType
+        }else{
+            self.currencyType = nil
+        }
+    }
+}
+
 struct Membership: Codable {
     let id: String
     let plan: String
-    let price: Int
-    let target: String
+//    let price: Int
+    let price: MembershipPrice?
+    let target: [String]
     let expiration: Int?
     let discount: Int?
+//    let accessTo: [String]?
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case plan
         case price
-        case target
+        case target = "access_to"
         case expiration
         case discount
+//        case accessTo = "access_to"
     }
     
     init(from decoder: Decoder) throws {
@@ -187,25 +252,33 @@ struct Membership: Codable {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             id = try values.decode(String.self, forKey: .id)
             plan = try values.decode(String.self, forKey: .plan)
-            price = try values.decode(Int.self, forKey: .price)
-            target = try values.decode(String.self, forKey: .target)
+//            price = try values.decode(Int.self, forKey: .price)
+            price = try values.decodeIfPresent(MembershipPrice.self, forKey: .price)
+            target = try values.decode([String].self, forKey: .target)
             //expiration will throw an error if member_ship plan has been updated using dummy api /users/membership_plan, please use * /purchase/membership to update the membership, only then expiration would have a valid value
             expiration = try values.decodeIfPresent(Int.self, forKey: .expiration)
 //            expiration = 123456
             discount = try values.decodeIfPresent(Int.self, forKey: .discount)
+//            accessTo = try values.decodeIfPresent([String].self, forKey: .accessTo)
             
         } catch {
             throw error
         }
     }
+    //when storing/loading from userdefault
     
     init(data: [String : Any]) {
         self.id = data["_id"] as? String ?? "-1"
         self.plan = (data["plan"] as? String ?? "").lowercased()
-        self.price =  data["price"] as? Int ?? -1
-        self.target =  data["target"] as? String ?? ""
+        self.target =  data["access_to"] as? [String] ?? []
         self.expiration = data["expiration"] as? Int ?? -1
         self.discount = data["discount"] as? Int ?? -1
+        if let priceData = data["price"] as? [String : Any]{
+            let price = MembershipPrice(data: priceData)
+            self.price = price
+        }else{
+            self.price = nil
+        }
     }
 }
 

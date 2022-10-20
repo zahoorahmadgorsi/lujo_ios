@@ -233,8 +233,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         activateKeyboardManager()
         
         if !UserDefaults.standard.bool(forKey: "showWelcome") {
-            dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
-            membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
+            dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
+            membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
             hideUnhideRightBarButtons()
         }
         
@@ -348,7 +348,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         if let lastName = LujoSetup().getLujoUser()?.lastName {
             fullName += "\(lastName)"
         }
-        self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .upgradeMembership : .buyMembership, paymentType: .all), animated: true)
+        self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: LujoSetup().getLujoUser()?.membershipPlan?.target.contains("dining") == true ? .upgradeMembership : .buyMembership, paymentType: .all), animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -620,9 +620,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         if initialLoad {
             if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-                if target == "all"{
+                if target.contains("all") == true{
                     self.tabBarController?.selectedIndex = 0
-                }else if target == "dining"{
+                }else if target.contains("dining") == true{
                     self.tabBarController?.selectedIndex = 1
                 }else{
                     self.tabBarController?.selectedIndex = 3
@@ -1165,8 +1165,8 @@ extension HomeViewController {
     
     func loadUserProfile() {
         getUserProfile(completion: { _,_ in
-            self.dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
-            self.membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target == "all"
+            self.dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
+            self.membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
             self.hideUnhideRightBarButtons()
             self.getHomeInformation()
         })
@@ -1175,7 +1175,7 @@ extension HomeViewController {
     func hideUnhideRightBarButtons(){
         if let rightBarButtonItems = navigationItem.rightBarButtonItems{
             if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-                if target == "all"{ //chat, CTA and search buttons are only enabled to fully paid member
+                if target.contains("all") == true{ //chat, CTA and search buttons are only enabled to fully paid member
                     rightBarButtonItems[0].isEnabled = true //chat
                     rightBarButtonItems[1].isEnabled = true //CTA
                     rightBarButtonItems[2].isEnabled = true //Search

@@ -122,27 +122,32 @@ class AccountDetailsViewController: UIViewController {
 
         
         let currentMembership = LujoSetup().getLujoUser()?.membershipPlan
-        var membershipPlan = user.membershipPlan?.target
+        let membershipPlan = user.membershipPlan?.target
 //         membershipPlan = "none"   //test case for none
 //         membershipPlan = "dining"   //test case for dining
 //         membershipPlan = "all"   //test case for all
-        if membershipPlan != "dining" && membershipPlan != "all" {    //user has no membership plan
+        print(membershipPlan)
+        if (membershipPlan == nil || (membershipPlan?.contains("dining") == false && membershipPlan?.contains("all") == false)){    //user has no membership plan
             title = "Purchase membership"
             self.lblDiningFirstMessage.text = "Purchase dining membership at"
             self.lblAllFirstMessage.text = "Purchase full membership at"
+            
+            print(PreloadDataManager.Memberships.memberships)
             //updatig dining and full membership price
-            if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "dining"}){
-                self.lblDiningSecondMessage.text = "$" + String(diningMembership.price)
+            if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains("dining") == true})
+                ,let price = diningMembership.price?.amount{
+                self.lblDiningSecondMessage.text = "$" + price
             }
-            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "all"}){
-                self.lblAllSecondMessage.text = "$" + String(fullMembership.price)
+            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains("all") == true})
+                ,let price = fullMembership.price?.amount{
+                self.lblAllSecondMessage.text = "$" + price
             }
             //adding gestures, when both dining and all cards are visible
             cardsContainerView.addGestureRecognizer(swipeLeft)
             cardsContainerView.addGestureRecognizer(swipeRight)
             
 
-        } else if membershipPlan == "dining" {  //user has dining plan hence upgrade able
+        } else if membershipPlan?.contains("dining") == true {  //user has dining plan hence upgrade able
             title = "Membership upgrade"
 
             if let dateTime = currentMembership?.expiration {
@@ -153,8 +158,9 @@ class AccountDetailsViewController: UIViewController {
             
 
             self.lblAllFirstMessage.text = "Purchase full membership at"
-            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target == "all"}){
-                self.lblAllSecondMessage.text = "$" + String(fullMembership.price)
+            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains("all") == true})
+                ,let price = fullMembership.price?.amount{
+                self.lblAllSecondMessage.text = "$" + price
             }
 
             //since user already has dining so upgrading button title to upgrdae to full access
@@ -166,7 +172,7 @@ class AccountDetailsViewController: UIViewController {
         } else {
             title = "Membership overview"
             
-            diningContainerView.isHidden = currentMembership?.target == "all"
+            diningContainerView.isHidden = currentMembership?.target.contains("all") == true
 //            allAccessContainerView.isHidden = currentMembership?.target == "dining"
             //brining relevant card in the centre
             if diningContainerView.isHidden{//if dining is hidden then disable its constraint, which will automatically enable lower priority constraint allAccessCardCentre
@@ -206,7 +212,9 @@ class AccountDetailsViewController: UIViewController {
     @IBAction func btnPurchaseTapped(_ sender: Any) {
         let userFullname = "\(user.firstName) \(user.lastName)"
         let hasMembership = user.membershipPlan ?? nil != nil
-        let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: hasMembership ? .viewMembership : .buyMembership, paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target == "dining" ? .dining : .all)
+        let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname
+                                                                     , screenType: hasMembership ? .viewMembership : .buyMembership
+                                                                     , paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target.contains("dining") == true ? .dining : .all)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
