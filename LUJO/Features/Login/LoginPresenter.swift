@@ -220,7 +220,8 @@ class LoginPresenter: Presentable, LoginViewResponder {
                                referralCode: [],
                                points: 0,
                                membershipPlan: nil,
-                               sfid: "")
+                               sfid: "",
+                            membershipPlanExpiration: -1)
 
         view.showNetworkActivity()
 

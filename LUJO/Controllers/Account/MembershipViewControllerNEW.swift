@@ -71,7 +71,7 @@ class MembershipViewControllerNEW: UIViewController {
             selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains((paymentType == .all ? "all" : "dining")) == true })
         }
     }
-    private var price: Int = 0
+    private var price: Int = 500
     private var currentDiscount: Int = 0
     private var hasValidCode: Bool = false {
         didSet {
@@ -186,7 +186,7 @@ class MembershipViewControllerNEW: UIViewController {
             self.price = Int(price) ?? -1
         }
 //        price = Int(selectedMembership?.price.amount) ?? -1
-        
+        print(currentMembership?.plan,selectedMembership?.plan)
         if screenType == .buyMembership {
             title = "Purchase membership"
             
@@ -214,7 +214,7 @@ class MembershipViewControllerNEW: UIViewController {
             
             diningContainerView.isHidden = true
             pagerContainerView.isHidden = true
-            price = 500
+//            price = 500
             priceLabel.text = formatPrice(amount: price)
             oldPriceLabel.text = ""
             referralTextField.isHidden = true

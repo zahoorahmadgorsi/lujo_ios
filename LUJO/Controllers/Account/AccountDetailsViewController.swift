@@ -120,8 +120,8 @@ class AccountDetailsViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeRight.direction = .right
 
-        
-        let currentMembership = LujoSetup().getLujoUser()?.membershipPlan
+        let lujoUser = LujoSetup().getLujoUser()
+        let currentMembership = lujoUser?.membershipPlan
         let membershipPlan = user.membershipPlan?.target
 //         membershipPlan = "none"   //test case for none
 //         membershipPlan = "dining"   //test case for dining
@@ -132,7 +132,7 @@ class AccountDetailsViewController: UIViewController {
             self.lblDiningFirstMessage.text = "Purchase dining membership at"
             self.lblAllFirstMessage.text = "Purchase full membership at"
             
-            print(PreloadDataManager.Memberships.memberships)
+//            print(PreloadDataManager.Memberships.memberships)
             //updatig dining and full membership price
             if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains("dining") == true})
                 ,let price = diningMembership.price?.amount{
@@ -150,7 +150,7 @@ class AccountDetailsViewController: UIViewController {
         } else if membershipPlan?.contains("dining") == true {  //user has dining plan hence upgrade able
             title = "Membership upgrade"
 
-            if let dateTime = currentMembership?.expiration {
+            if let dateTime = lujoUser?.membershipPlanExpiration {
                 let date = Date(timeIntervalSince1970: TimeInterval(dateTime))
                 //updating second label's message for both dining only
                 self.lblDiningSecondMessage.text = date.stripTime().whatsAppTimeFormat()
@@ -183,7 +183,7 @@ class AccountDetailsViewController: UIViewController {
             self.lblDiningFirstMessage.text = "Membership will expire on"
             self.lblAllFirstMessage.text = "Membership will expire on"
 
-            if let dateTime = currentMembership?.expiration {
+            if let dateTime = user?.membershipPlanExpiration {
                 let date = Date(timeIntervalSince1970: TimeInterval(dateTime))
                 //updating second label's message for both dining and all access, at one time either dining or all access one label would be hidden
                 self.lblDiningSecondMessage.text = date.stripTime().whatsAppTimeFormat()
@@ -211,7 +211,11 @@ class AccountDetailsViewController: UIViewController {
 
     @IBAction func btnPurchaseTapped(_ sender: Any) {
         let userFullname = "\(user.firstName) \(user.lastName)"
-        let hasMembership = user.membershipPlan ?? nil != nil
+        var hasMembership = false
+        if let membership = user.membershipPlan, (membership.target.contains("dining") == true || membership.target.contains("all") == true){
+            hasMembership = true
+        }
+        
         let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname
                                                                      , screenType: hasMembership ? .viewMembership : .buyMembership
                                                                      , paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target.contains("dining") == true ? .dining : .all)

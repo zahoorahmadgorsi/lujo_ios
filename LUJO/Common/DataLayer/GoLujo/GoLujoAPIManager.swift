@@ -419,7 +419,8 @@ extension GoLujoAPIManager {
                                             referralCode: resultResponse.content.referralCode,
                                             points: resultResponse.content.points,
                                             membershipPlan: resultResponse.content.membershipPlan,
-                                            sfid: resultResponse.content.sfid)
+                                            sfid: resultResponse.content.sfid
+                                            ,membershipPlanExpiration: resultResponse.content.membershipPlanExpiration)
                         completion(user, nil)
 
                     } catch {

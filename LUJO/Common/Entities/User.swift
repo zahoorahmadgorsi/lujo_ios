@@ -55,6 +55,7 @@ class LujoUser: Equatable, Codable {
     var points: Int
     var membershipPlan: Membership?
     var sfid: String
+    var membershipPlanExpiration: Int
 
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
@@ -70,6 +71,7 @@ class LujoUser: Equatable, Codable {
         case points
         case membershipPlan = "membership_plan"
         case sfid
+        case membershipPlanExpiration = "membership_plan_expiration"
     }
 
     func getLoginUser() -> LoginUser {
@@ -80,7 +82,7 @@ class LujoUser: Equatable, Codable {
                          approved: approved == true)
     }
     
-    init(id: String, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: Bool, referralCode: [String], points: Int, membershipPlan: Membership?, sfid:String) {
+    init(id: String, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: Bool, referralCode: [String], points: Int, membershipPlan: Membership?, sfid:String, membershipPlanExpiration:Int) {
         self.id = id
         self.title = title
         self.firstName = firstName
@@ -95,6 +97,7 @@ class LujoUser: Equatable, Codable {
         self.points = points
         self.membershipPlan = membershipPlan
         self.sfid = sfid
+        self.membershipPlanExpiration = membershipPlanExpiration
     }
     
     static func == (lhs: LujoUser, rhs: LujoUser) -> Bool {
@@ -117,6 +120,7 @@ struct LujoUserProfile: Codable {
     let points: Int
     let membershipPlan: Membership?
     var sfid: String
+    let membershipPlanExpiration: Int
     
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
@@ -132,6 +136,7 @@ struct LujoUserProfile: Codable {
         case points
         case membershipPlan = "membership_plan"
         case sfid
+        case membershipPlanExpiration = "membership_plan_expiration"
     }
 }
 
@@ -230,21 +235,18 @@ struct MembershipPrice: Codable {
 struct Membership: Codable {
     let id: String
     let plan: String
-//    let price: Int
     let price: MembershipPrice?
     let target: [String]
-    let expiration: Int?
     let discount: Int?
-//    let accessTo: [String]?
+
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case plan
         case price
         case target = "access_to"
-        case expiration
+//        case expiration
         case discount
-//        case accessTo = "access_to"
     }
     
     init(from decoder: Decoder) throws {
@@ -252,14 +254,9 @@ struct Membership: Codable {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             id = try values.decode(String.self, forKey: .id)
             plan = try values.decode(String.self, forKey: .plan)
-//            price = try values.decode(Int.self, forKey: .price)
             price = try values.decodeIfPresent(MembershipPrice.self, forKey: .price)
             target = try values.decode([String].self, forKey: .target)
-            //expiration will throw an error if member_ship plan has been updated using dummy api /users/membership_plan, please use * /purchase/membership to update the membership, only then expiration would have a valid value
-            expiration = try values.decodeIfPresent(Int.self, forKey: .expiration)
-//            expiration = 123456
             discount = try values.decodeIfPresent(Int.self, forKey: .discount)
-//            accessTo = try values.decodeIfPresent([String].self, forKey: .accessTo)
             
         } catch {
             throw error
@@ -271,7 +268,6 @@ struct Membership: Codable {
         self.id = data["_id"] as? String ?? "-1"
         self.plan = (data["plan"] as? String ?? "").lowercased()
         self.target =  data["access_to"] as? [String] ?? []
-        self.expiration = data["expiration"] as? Int ?? -1
         self.discount = data["discount"] as? Int ?? -1
         if let priceData = data["price"] as? [String : Any]{
             let price = MembershipPrice(data: priceData)
