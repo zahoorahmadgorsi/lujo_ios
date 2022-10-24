@@ -155,14 +155,19 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         activateKeyboardManager()
 //        self.tabBarController?.tabBar.isHidden = true
         
-        if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-            let isMember = target.contains("all")  || target.contains("dining")
+        if let target = LujoSetup().getLujoUser()?.membershipPlan?.accessTo{
+            let isMember =  target.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame})  ||
+                            target.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame})
             dimView.isHidden = isMember
             membershipView.isHidden = isMember
             searchBarButton.isEnabled = isMember
         }else{
             searchBarButton.isEnabled = false   //incase of no membership plan just hide the search button
         }
+        
+//        if diningInformations == nil{   //information could not loaded on onLoad
+//            getDiningInformation(showActivity: true)
+//        }
         
         checkLocationAuthorizationStatus()
         startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
@@ -430,7 +435,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         GoLujoAPIManager().setUnSetFavourites(type,id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not update favourites information at dining")
                 completion(nil, error)
                 return
             }
@@ -500,7 +505,7 @@ extension DiningViewController {
             if let informations = information {
                 self.update(informations)
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not obtain dining information")
                 self.showError(error)
             }
         }
@@ -515,7 +520,7 @@ extension DiningViewController {
         GoLujoAPIManager().home() { restaurants, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not obtain dining information")
                 completion(nil, error)
                 return
             }

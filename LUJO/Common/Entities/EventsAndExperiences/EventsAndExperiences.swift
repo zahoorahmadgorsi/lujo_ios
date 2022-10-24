@@ -352,7 +352,7 @@ struct Product: Codable {
     var phone: String?
     var zipCode: String?
     var email: String?
-    var website: String?
+    var website: [String]?
     var starChef: [StarChef]?
     var restaurantCategory: [Taxonomy]?
     var cuisineCategory: [Taxonomy]?
@@ -459,7 +459,7 @@ extension Product {
 
             id = try values.decode(String.self, forKey: .id)
             print(id)   // 627b518f4ae3b8001d834048, 627a0018d340c1001b0a717e
-            if id == "62d14429b6797d001b11e91a"{
+            if id == "6347adf02f1bd0001dee6f01"{
                 print("crashing")
             }
             type = try values.decode(String.self, forKey: .type)
@@ -551,7 +551,7 @@ extension Product {
             phone = try values.decodeIfPresent(String.self, forKey: .phone)
             zipCode = try values.decodeIfPresent(String.self, forKey: .zipCode)
             email = try values.decodeIfPresent(String.self, forKey: .email)
-            website = try values.decodeIfPresent(String.self, forKey: .website)
+            website = try values.decodeIfPresent([String].self, forKey: .website)
             starChef = try values.decodeIfPresent([StarChef].self, forKey: .starChef)
             restaurantCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .restaurantCategory)
             cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)

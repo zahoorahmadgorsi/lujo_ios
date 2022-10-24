@@ -279,7 +279,7 @@ extension RestaurantSearchViewController {
         GoLujoAPIManager().search(token, term: term, cityId: nil, currentLocation: currentLocation) { restaurants, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                let error = BackendError.parsing(reason: "Could not search dining information")
                 completion(nil, error)
                 return
             }

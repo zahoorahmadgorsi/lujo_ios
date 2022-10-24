@@ -209,8 +209,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 return
             }
             if let _count = count, _count > 0{
-                print("Twilio: Total UnRead push notification count:\(_count)")
-                tabBarController.tabBar.items?[4].badgeValue = _count > 9 ? String(_count) + "+" : String(_count)
+//                print("Twilio: Total UnRead push notification count:\(_count)")
+                tabBarController.tabBar.items?[4].badgeValue = _count > 9 ? "9+" : String(_count)
             }else{
                 tabBarController.tabBar.items?[4].badgeValue = ""
             }

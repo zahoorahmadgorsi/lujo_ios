@@ -122,23 +122,25 @@ class AccountDetailsViewController: UIViewController {
 
         let lujoUser = LujoSetup().getLujoUser()
         let currentMembership = lujoUser?.membershipPlan
-        let membershipPlan = user.membershipPlan?.target
+        let membershipPlan = user.membershipPlan?.accessTo
 //         membershipPlan = "none"   //test case for none
 //         membershipPlan = "dining"   //test case for dining
 //         membershipPlan = "all"   //test case for all
-        print(membershipPlan)
-        if (membershipPlan == nil || (membershipPlan?.contains("dining") == false && membershipPlan?.contains("all") == false)){    //user has no membership plan
+//        print(membershipPlan)
+        
+        if (membershipPlan == nil ||
+            (membershipPlan?.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == false && membershipPlan?.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == false)){    //user has no membership plan
             title = "Purchase membership"
             self.lblDiningFirstMessage.text = "Purchase dining membership at"
             self.lblAllFirstMessage.text = "Purchase full membership at"
             
 //            print(PreloadDataManager.Memberships.memberships)
             //updatig dining and full membership price
-            if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains("dining") == true})
+            if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true})
                 ,let price = diningMembership.price?.amount{
                 self.lblDiningSecondMessage.text = "$" + price
             }
-            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains("all") == true})
+            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true})
                 ,let price = fullMembership.price?.amount{
                 self.lblAllSecondMessage.text = "$" + price
             }
@@ -147,7 +149,7 @@ class AccountDetailsViewController: UIViewController {
             cardsContainerView.addGestureRecognizer(swipeRight)
             
 
-        } else if membershipPlan?.contains("dining") == true {  //user has dining plan hence upgrade able
+        } else if membershipPlan?.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true {  //user has dining plan hence upgrade able
             title = "Membership upgrade"
 
             if let dateTime = lujoUser?.membershipPlanExpiration {
@@ -158,7 +160,8 @@ class AccountDetailsViewController: UIViewController {
             
 
             self.lblAllFirstMessage.text = "Purchase full membership at"
-            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains("all") == true})
+            print(PreloadDataManager.Memberships.memberships)
+            if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true})
                 ,let price = fullMembership.price?.amount{
                 self.lblAllSecondMessage.text = "$" + price
             }
@@ -172,7 +175,7 @@ class AccountDetailsViewController: UIViewController {
         } else {
             title = "Membership overview"
             
-            diningContainerView.isHidden = currentMembership?.target.contains("all") == true
+            diningContainerView.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true
 //            allAccessContainerView.isHidden = currentMembership?.target == "dining"
             //brining relevant card in the centre
             if diningContainerView.isHidden{//if dining is hidden then disable its constraint, which will automatically enable lower priority constraint allAccessCardCentre
@@ -212,13 +215,13 @@ class AccountDetailsViewController: UIViewController {
     @IBAction func btnPurchaseTapped(_ sender: Any) {
         let userFullname = "\(user.firstName) \(user.lastName)"
         var hasMembership = false
-        if let membership = user.membershipPlan, (membership.target.contains("dining") == true || membership.target.contains("all") == true){
+        if let membership = user.membershipPlan, (membership.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true || membership.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true){
             hasMembership = true
         }
         
         let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname
                                                                      , screenType: hasMembership ? .viewMembership : .buyMembership
-                                                                     , paymentType: LujoSetup().getLujoUser()?.membershipPlan?.target.contains("dining") == true ? .dining : .all)
+                                                                     , paymentType: LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true ? .dining : .all)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

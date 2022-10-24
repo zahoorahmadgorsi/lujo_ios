@@ -617,7 +617,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining cuisines information")
                         completion(nil, error)
                         return
                     }
@@ -632,7 +632,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningAllergies() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining allergies information")
                         completion(nil, error)
                         return
                     }
@@ -647,7 +647,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningPreferences() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining preferences information")
                         completion(nil, error)
                         return
                     }
@@ -662,7 +662,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningTimings() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining timings information")
                         completion(nil, error)
                         return
                     }
@@ -677,7 +677,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningBeverages() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining beverages information")
                         completion(nil, error)
                         return
                     }
@@ -692,7 +692,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningSeatings() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain Dining information")
+                        let error = BackendError.parsing(reason: "Could not obtain dining seatings information")
                         completion(nil, error)
                         return
                     }

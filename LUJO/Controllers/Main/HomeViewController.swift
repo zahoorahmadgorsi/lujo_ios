@@ -233,8 +233,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         activateKeyboardManager()
         
         if !UserDefaults.standard.bool(forKey: "showWelcome") {
-            dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
-            membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
+            dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true
+            membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true
             hideUnhideRightBarButtons()
         }
         
@@ -348,7 +348,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         if let lastName = LujoSetup().getLujoUser()?.lastName {
             fullName += "\(lastName)"
         }
-        self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: LujoSetup().getLujoUser()?.membershipPlan?.target.contains("dining") == true ? .upgradeMembership : .buyMembership, paymentType: .all), animated: true)
+        self.navigationController?.pushViewController(MembershipViewControllerNEW.instantiate(userFullname: fullName, screenType: LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true ? .upgradeMembership : .buyMembership, paymentType: .all), animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -619,10 +619,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         }
         
         if initialLoad {
-            if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-                if target.contains("all") == true{
+            if let target = LujoSetup().getLujoUser()?.membershipPlan?.accessTo{
+                if target.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true{
                     self.tabBarController?.selectedIndex = 0
-                }else if target.contains("dining") == true{
+                }else if target.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true{
                     self.tabBarController?.selectedIndex = 1
                 }else{
                     self.tabBarController?.selectedIndex = 3
@@ -1165,8 +1165,8 @@ extension HomeViewController {
     
     func loadUserProfile() {
         getUserProfile(completion: { _,_ in
-            self.dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
-            self.membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.target.contains("all") == true
+            self.dimView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true
+                                                                                               self.membershipView.isHidden = LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true
             self.hideUnhideRightBarButtons()
             self.getHomeInformation()
         })
@@ -1174,8 +1174,8 @@ extension HomeViewController {
     
     func hideUnhideRightBarButtons(){
         if let rightBarButtonItems = navigationItem.rightBarButtonItems{
-            if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-                if target.contains("all") == true{ //chat, CTA and search buttons are only enabled to fully paid member
+            if let target = LujoSetup().getLujoUser()?.membershipPlan?.accessTo{
+                if target.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true{ //chat, CTA and search buttons are only enabled to fully paid member
                     rightBarButtonItems[0].isEnabled = true //chat
                     rightBarButtonItems[1].isEnabled = true //CTA
                     rightBarButtonItems[2].isEnabled = true //Search
@@ -1218,7 +1218,7 @@ extension HomeViewController {
         //setting the badge value
         let rightBarButtons = self.navigationItem.rightBarButtonItems
         let lastBarButton = rightBarButtons?.first
-        lastBarButton?.setBadge(text: count == 0 ? "" : String(count))  //show empty string if count is zero
+            lastBarButton?.setBadge(text: count == 0 ? "" : (count > 9 ? "9+" : String(count)) )  //show empty string if count is zero
         })
     }
 

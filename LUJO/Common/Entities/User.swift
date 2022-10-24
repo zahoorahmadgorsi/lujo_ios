@@ -236,7 +236,7 @@ struct Membership: Codable {
     let id: String
     let plan: String
     let price: MembershipPrice?
-    let target: [String]
+    let accessTo: [String]
     let discount: Int?
 
     
@@ -244,7 +244,7 @@ struct Membership: Codable {
         case id = "_id"
         case plan
         case price
-        case target = "access_to"
+        case accessTo = "access_to"
 //        case expiration
         case discount
     }
@@ -255,7 +255,7 @@ struct Membership: Codable {
             id = try values.decode(String.self, forKey: .id)
             plan = try values.decode(String.self, forKey: .plan)
             price = try values.decodeIfPresent(MembershipPrice.self, forKey: .price)
-            target = try values.decode([String].self, forKey: .target)
+            accessTo = try values.decode([String].self, forKey: .accessTo)
             discount = try values.decodeIfPresent(Int.self, forKey: .discount)
             
         } catch {
@@ -267,7 +267,7 @@ struct Membership: Codable {
     init(data: [String : Any]) {
         self.id = data["_id"] as? String ?? "-1"
         self.plan = (data["plan"] as? String ?? "").lowercased()
-        self.target =  data["access_to"] as? [String] ?? []
+        self.accessTo =  data["access_to"] as? [String] ?? []
         self.discount = data["discount"] as? Int ?? -1
         if let priceData = data["price"] as? [String : Any]{
             let price = MembershipPrice(data: priceData)

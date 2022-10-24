@@ -61,8 +61,9 @@ class WishListViewController: UIViewController, WishListViewProtocol{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let target = LujoSetup().getLujoUser()?.membershipPlan?.target{
-            let isMember = target.contains("all") == true || target.contains("dining") == true
+        if let target = LujoSetup().getLujoUser()?.membershipPlan?.accessTo{
+            let isMember =  target.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true ||
+                            target.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
             dimView.isHidden = isMember
             membershipView.isHidden = isMember
         }

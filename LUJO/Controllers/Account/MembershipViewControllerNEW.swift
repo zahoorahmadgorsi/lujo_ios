@@ -68,7 +68,7 @@ class MembershipViewControllerNEW: UIViewController {
     private var screenType: MembershipScreenType = .buyMembership
     private var paymentType: MembershipType! {
         didSet {
-            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains((paymentType == .all ? "all" : "dining")) == true })
+            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains((paymentType == .all ? "all" : "dining")) == true })
         }
     }
     private var price: Int = 500
@@ -181,7 +181,7 @@ class MembershipViewControllerNEW: UIViewController {
     
     private func updateUI() {
         currentMembership = LujoSetup().getLujoUser()?.membershipPlan
-        selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.target.contains((paymentType == .all ? "all" : "dining")) == true})
+        selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains((paymentType == .all ? "all" : "dining")) == true})
         if let price = selectedMembership?.price?.amount{
             self.price = Int(price) ?? -1
         }
@@ -223,18 +223,18 @@ class MembershipViewControllerNEW: UIViewController {
         } else {
             title = "Membership overview"
             
-            diningContainerView.isHidden = currentMembership?.target.contains("all") == true
-            allAccessContainerView.isHidden = currentMembership?.target.contains("dining") == true
-            allAccessCardCenter.isActive = currentMembership?.target.contains("all") == true
+            diningContainerView.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true
+            allAccessContainerView.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
+            allAccessCardCenter.isActive = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true
             pagerContainerView.isHidden = true
-            eventsContainerView.isHidden = currentMembership?.target.contains("dining") == true
-            separatorView.isHidden = currentMembership?.target.contains("dining") == true
-            luxaryContainerView.isHidden = currentMembership?.target.contains("dining") == true
-            separator2View.isHidden = currentMembership?.target.contains("dining") == true
-            hotelsContainerView.isHidden = currentMembership?.target.contains("dining") == true
-            separator3View.isHidden = currentMembership?.target.contains("dining") == true
+            eventsContainerView.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
+            separatorView.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
+            luxaryContainerView.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
+            separator2View.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
+            hotelsContainerView.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
+            separator3View.isHidden = currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true
             paymentInfoView?.removeFromSuperview()
-            if currentMembership?.target.contains("dining") == true {
+            if currentMembership?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true {
                 payNowButton.setTitle("U P G R A D E  M E M B E R S H I P", for: .normal)
             } else {
                 payButtonContainerView.removeFromSuperview()
