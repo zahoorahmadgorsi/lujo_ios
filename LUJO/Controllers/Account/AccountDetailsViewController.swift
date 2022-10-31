@@ -129,7 +129,8 @@ class AccountDetailsViewController: UIViewController {
 //        print(membershipPlan)
         
         if (membershipPlan == nil ||
-            (membershipPlan?.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == false && membershipPlan?.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == false)){    //user has no membership plan
+            (membershipPlan?.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == false &&
+             membershipPlan?.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == false)){    //user has no membership plan
             title = "Purchase membership"
             self.lblDiningFirstMessage.text = "Purchase dining membership at"
             self.lblAllFirstMessage.text = "Purchase full membership at"
@@ -137,12 +138,16 @@ class AccountDetailsViewController: UIViewController {
 //            print(PreloadDataManager.Memberships.memberships)
             //updatig dining and full membership price
             if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true})
-                ,let price = diningMembership.price?.amount{
-                self.lblDiningSecondMessage.text = "$" + price
+                ,let price = diningMembership.price{
+                let symboleLeft = price.currencyType?.symbolLeft ?? ""
+                let symboleRight = price.currencyType?.symbolRight ?? ""
+                self.lblDiningSecondMessage.text = symboleLeft + price.amount + symboleRight
             }
             if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true})
-                ,let price = fullMembership.price?.amount{
-                self.lblAllSecondMessage.text = "$" + price
+                ,let price = fullMembership.price{
+                let symboleLeft = price.currencyType?.symbolLeft ?? ""
+                let symboleRight = price.currencyType?.symbolRight ?? ""
+                self.lblAllSecondMessage.text = symboleLeft + price.amount + symboleRight
             }
             //adding gestures, when both dining and all cards are visible
             cardsContainerView.addGestureRecognizer(swipeLeft)
@@ -162,8 +167,10 @@ class AccountDetailsViewController: UIViewController {
             self.lblAllFirstMessage.text = "Purchase full membership at"
             print(PreloadDataManager.Memberships.memberships)
             if let fullMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true})
-                ,let price = fullMembership.price?.amount{
-                self.lblAllSecondMessage.text = "$" + price
+                ,let price = fullMembership.price{
+                let symboleLeft = price.currencyType?.symbolLeft ?? ""
+                let symboleRight = price.currencyType?.symbolRight ?? ""
+                self.lblAllSecondMessage.text = symboleLeft + price.amount + symboleRight
             }
 
             //since user already has dining so upgrading button title to upgrdae to full access

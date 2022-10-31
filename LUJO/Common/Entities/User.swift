@@ -214,7 +214,7 @@ struct CurrencyType: Codable{
     
 }
 
-struct MembershipPrice: Codable {
+struct Price: Codable {
     let _id: String
     let amount: String
     let currencyType: CurrencyType?
@@ -235,7 +235,7 @@ struct MembershipPrice: Codable {
 struct Membership: Codable {
     let id: String
     let plan: String
-    let price: MembershipPrice?
+    let price: Price?
     let accessTo: [String]
     let discount: Int?
 
@@ -254,7 +254,7 @@ struct Membership: Codable {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             id = try values.decode(String.self, forKey: .id)
             plan = try values.decode(String.self, forKey: .plan)
-            price = try values.decodeIfPresent(MembershipPrice.self, forKey: .price)
+            price = try values.decodeIfPresent(Price.self, forKey: .price)
             accessTo = try values.decode([String].self, forKey: .accessTo)
             discount = try values.decodeIfPresent(Int.self, forKey: .discount)
             
@@ -270,7 +270,7 @@ struct Membership: Codable {
         self.accessTo =  data["access_to"] as? [String] ?? []
         self.discount = data["discount"] as? Int ?? -1
         if let priceData = data["price"] as? [String : Any]{
-            let price = MembershipPrice(data: priceData)
+            let price = Price(data: priceData)
             self.price = price
         }else{
             self.price = nil

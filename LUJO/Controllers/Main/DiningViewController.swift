@@ -100,7 +100,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         noNearbyRestaurantsContainerView.isHidden = true
         myLocationCityView.isHidden = true
         
-        getDiningInformation(showActivity: true)
+//        getDiningInformation(showActivity: true)  now we are loading in viewAppear
         
         locationManager.delegate = self
         
@@ -165,9 +165,11 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             searchBarButton.isEnabled = false   //incase of no membership plan just hide the search button
         }
         
-//        if diningInformations == nil{   //information could not loaded on onLoad
-//            getDiningInformation(showActivity: true)
-//        }
+        if diningInformations == nil{   //information could not loaded on onLoad
+            getDiningInformation(showActivity: true)
+        }else{
+            getDiningInformation(showActivity: false)
+        }
         
         checkLocationAuthorizationStatus()
         startPauseAnimation(isPausing: false)    //will start animating at 0 seconds

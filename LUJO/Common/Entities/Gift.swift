@@ -13,7 +13,8 @@ struct Gift: Codable {
     let id: Int?
     let name: String?
     let description: String?
-    let price: String?
+//    let price: String?
+    let price: Price?
     let pdf_info: Bool?
     let primaryMedia: Gallery?
     let gallery: [Gallery]?
@@ -44,7 +45,7 @@ extension Gift {
             id = try values.decodeIfPresent(Int.self, forKey: .id)
             name = try values.decodeIfPresent(String.self, forKey: .name)
             description = try values.decodeIfPresent(String.self, forKey: .description)
-            price = try values.decodeIfPresent(String.self, forKey: .price)
+            price = try values.decodeIfPresent(Price.self, forKey: .price)
             pdf_info = try values.decodeIfPresent(Bool.self, forKey: .pdf_info)
             primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)

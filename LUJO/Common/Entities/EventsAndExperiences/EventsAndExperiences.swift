@@ -294,7 +294,8 @@ struct Product: Codable {
     var id: String
     var name: String
     var description: String
-    var price: String?
+    //var price: String?
+    var price: Price?
     var link: String?
     var isFeatured: Bool?
     var startDate: Date?
@@ -465,7 +466,8 @@ extension Product {
             type = try values.decode(String.self, forKey: .type)
             name = try values.decode(String.self, forKey: .name)
             description = try values.decode(String.self, forKey: .description)
-            price = try values.decodeIfPresent(String.self, forKey: .price)
+            //price = try values.decodeIfPresent(String.self, forKey: .price)
+            price = try values.decodeIfPresent(Price.self, forKey: .price)
 //            let priceStr = try values.decodeIfPresent(String.self, forKey: .price)
 //            price = Double(priceStr ?? Int(0.0))
             link = try values.decodeIfPresent(String.self, forKey: .link)
