@@ -81,7 +81,7 @@ enum CCRouter: URLRequestConvertible {
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue(CCRouter.authorization, forHTTPHeaderField: "Authorization")
-        print(urlRequest.url as Any)
+        print("urlRequest:\(urlRequest.url as Any)" )
         return urlRequest
     }
 }

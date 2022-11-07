@@ -25,8 +25,8 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
     private var firstTime: Bool = true
     
     let hcaptcha = try? HCaptcha(
-        apiKey: "ceeae2b5-8a6f-4a82-8ea2-b17d243a83a1",
-        baseURL: URL(string: "http://localhost")!
+        apiKey: Constants.hCaptchaKey,
+        baseURL: URL(string: Constants.hCaptchaURL)!
     )
     var captchaWebView: WKWebView?
 

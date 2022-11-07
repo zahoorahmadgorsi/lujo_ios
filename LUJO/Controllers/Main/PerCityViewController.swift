@@ -120,6 +120,7 @@ class PerCityViewController: UIViewController {
         
         self.collContainerView.addSubview(collectionView)
         applyConstraints()
+        
         //showing preferences and get the quick filters (hiding it for now as shuja API isnt returning right results)
 //        switch category {
 //            case .event: fallthrough

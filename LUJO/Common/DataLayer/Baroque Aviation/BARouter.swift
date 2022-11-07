@@ -136,7 +136,10 @@ extension BARouter {
             }
         case let .authorize(authorization):
             do {
-                return try JSONEncoder().encode(authorization)
+                let data = try JSONEncoder().encode(authorization)
+                let dataString = String(data: data, encoding: .utf8)!
+                print("Authorize:\(dataString)")
+                return data
             } catch {
                 print(error)
             }

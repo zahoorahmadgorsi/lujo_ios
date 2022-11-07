@@ -34,7 +34,7 @@ enum GoLujoRouter: URLRequestConvertible {
     case refreshToken(String)
 //    case login(String, String)
     case loginWithOTP(String, String, String)
-    case requestLoginOTP(PhoneCountryCode, String,String)
+    case requestLoginOTP(PhoneCountryCode, String, String)
     case createUser(LujoUser,String)
     case verify(LoginUser, String)
     case requestOTP(LoginUser, String)
@@ -357,7 +357,7 @@ enum GoLujoRouter: URLRequestConvertible {
     }
 
     // TODO: Added plus sign before phone prefix until it's taken from list
-    fileprivate func getCreateUserAsJSONData(_ user: LujoUser, _ token:String) -> Data? {
+    fileprivate func getCreateUserAsJSONData(_ user: LujoUser,_ token:String) -> Data? {
         let profileData: [String: String] = [
 //            "title": user.title.rawValue,
             "firstname": user.firstName,
