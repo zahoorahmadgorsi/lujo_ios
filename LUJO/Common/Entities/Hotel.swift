@@ -43,7 +43,8 @@ struct Hotel: Codable {
         case phone
         case email
         case website
-        case primaryMedia = "featured_media"
+//        case primaryMedia = "featured_media"
+        case primaryMedia = "thumbnail"
         case gallery
         case latitude
         case longtitude

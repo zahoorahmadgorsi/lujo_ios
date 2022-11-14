@@ -66,9 +66,9 @@ class MembershipViewControllerNEW: UIViewController {
     
     private(set) var userFullname: String = ""
     private var screenType: MembershipScreenType = .buyMembership
-    private var paymentType: MembershipType! {
+    private var paymentType: MembershipType! {  //user has come to this screen to pay for "dining" or "all"
         didSet {
-            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains((paymentType == .all ? "all" : "dining")) == true })
+            selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare((paymentType == .all ? "all" : "dining")) == .orderedSame}) == true})
         }
     }
     private var price: Int = 500
@@ -181,11 +181,13 @@ class MembershipViewControllerNEW: UIViewController {
     
     private func updateUI() {
         currentMembership = LujoSetup().getLujoUser()?.membershipPlan
-        selectedMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains((paymentType == .all ? "all" : "dining")) == true})
+//        print(PreloadDataManager.Memberships.memberships)
+
         if let price = selectedMembership?.price?.amount{
             self.price = Int(price) ?? -1
         }
-//        price = Int(selectedMembership?.price.amount) ?? -1
+
+        //selected membership is initialized before loading this viewcontroller i.e instantiate
         print(currentMembership?.plan,selectedMembership?.plan)
         if screenType == .buyMembership {
             title = "Purchase membership"

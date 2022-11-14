@@ -67,7 +67,8 @@ struct Yacht: Codable {
         case charter_price_low_season_per_week
         case charter_price_high_season_per_week
         case sale_price
-        case primaryMedia
+//        case primaryMedia
+        case primaryMedia = "thumbnail"
         case gallery
         case lujo_tag
         case yacht_type

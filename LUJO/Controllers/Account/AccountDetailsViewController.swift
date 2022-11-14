@@ -139,6 +139,7 @@ class AccountDetailsViewController: UIViewController {
             //updatig dining and full membership price
             if let diningMembership = PreloadDataManager.Memberships.memberships.first(where: { $0.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true})
                 ,let price = diningMembership.price{
+                
                 let symboleLeft = price.currencyType?.symbolLeft ?? ""
                 let symboleRight = price.currencyType?.symbolRight ?? ""
                 self.lblDiningSecondMessage.text = symboleLeft + price.amount + symboleRight

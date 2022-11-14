@@ -46,7 +46,8 @@ struct Villa: Codable {
         case rent_price_per_week_low_season
         case rent_price_per_week_high_season
         case sale_price
-        case primaryMedia
+//        case primaryMedia
+        case primaryMedia = "thumbnail"
         case gallery
         case latitude
         case longtitude

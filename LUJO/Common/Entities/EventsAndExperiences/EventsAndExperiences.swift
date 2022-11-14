@@ -288,6 +288,9 @@ struct EventExperienceCity: Codable {
     let items: [Product]
 }
 
+struct DiscoverSearchResponse:Codable{
+    let docs: [Product]
+}
 //it could be an event, experience, gift, villa or yacht
 struct Product: Codable {
     var type: String
@@ -311,7 +314,9 @@ struct Product: Codable {
     var locations: TaxonomyLocation?  //city country
     var isFavourite: Bool?
     //Gifts related
-    var giftCategory: [Taxonomy]?
+    var giftCategory: Taxonomy?
+    var giftSubCategory : Taxonomy?
+    var giftBrand : Taxonomy?
     //Villas related
     var headline: String?
     var numberOfBedrooms: Int?
@@ -370,7 +375,8 @@ struct Product: Codable {
         case startDate = "start_date"
         case endDate = "end_date"
         case timezone
-        case primaryMedia = "featured_media"
+        //case primaryMedia = "featured_media"
+        case primaryMedia = "thumbnail"
         case gallery
         case eventCategory = "event_category"
         case experienceCategory = "experience_category"
@@ -427,6 +433,9 @@ struct Product: Codable {
         case restaurantCategory = "restaurant_category"
         case cuisineCategory = "cuisine_category"
         case michelinStar = "michelin_star"
+        //gift
+        case giftSubCategory = "gift_sub_category"
+        case giftBrand = "gift_brand"
     }
 
     func getGalleryImagesURL() -> [String] {
@@ -459,8 +468,8 @@ extension Product {
             let values = try decoder.container(keyedBy: CodingKeys.self)
 
             id = try values.decode(String.self, forKey: .id)
-            print(id)   // 627b518f4ae3b8001d834048, 627a0018d340c1001b0a717e
-            if id == "6347adf02f1bd0001dee6f01"{
+            print("productid: \(id)")   // 627b518f4ae3b8001d834048, 627a0018d340c1001b0a717e
+            if id == "636b90d2326ce1001b7d99d9"{
                 print("crashing")
             }
             type = try values.decode(String.self, forKey: .type)
@@ -506,7 +515,9 @@ extension Product {
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
             eventCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .eventCategory)
             experienceCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .experienceCategory)
-            giftCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .giftCategory)
+            giftCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .giftCategory)
+            giftSubCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .giftSubCategory)
+            giftBrand = try values.decodeIfPresent(Taxonomy.self, forKey: .giftBrand)
             tags = try values.decodeIfPresent([Taxonomy].self, forKey: .tags)
             eventVenue = try values.decodeIfPresent([Taxonomy].self, forKey: .eventVenue)
             priceRange = try values.decodeIfPresent([Taxonomy].self, forKey: .priceRange)

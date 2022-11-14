@@ -55,7 +55,7 @@ class LujoUser: Equatable, Codable {
     var points: Int
     var membershipPlan: Membership?
     var sfid: String
-    var membershipPlanExpiration: Int
+    var membershipPlanExpiration: Int?
 
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
@@ -82,7 +82,7 @@ class LujoUser: Equatable, Codable {
                          approved: approved == true)
     }
     
-    init(id: String, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: Bool, referralCode: [String], points: Int, membershipPlan: Membership?, sfid:String, membershipPlanExpiration:Int) {
+    init(id: String, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: Bool, referralCode: [String], points: Int, membershipPlan: Membership?, sfid:String, membershipPlanExpiration:Int?) {
         self.id = id
         self.title = title
         self.firstName = firstName
@@ -120,7 +120,7 @@ struct LujoUserProfile: Codable {
     let points: Int
     let membershipPlan: Membership?
     var sfid: String
-    let membershipPlanExpiration: Int
+    let membershipPlanExpiration: Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
@@ -210,18 +210,16 @@ struct CurrencyType: Codable{
         self.symbolLeft =  data["symbol_left"] as? String ?? ""
         self.value =  data["value"] as? Int ?? -1
     }
-    
-    
 }
 
 struct Price: Codable {
-    let _id: String
+//    let _id: String?
     let amount: String
     let currencyType: CurrencyType?
     
     //For storing and loading into user defaults
     init(data: [String : Any]) {
-        self._id = data["_id"] as? String ?? "-1"
+//        self._id = data["_id"] as? String ?? "-1"
         self.amount =  data["amount"] as? String ?? ""
         if let currencyTypeData = data["currencyType"] as? [String : Any]{
             let currenceType = CurrencyType(data: currencyTypeData)
