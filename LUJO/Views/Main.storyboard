@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sri-oa-nUS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sri-oa-nUS">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -46,7 +46,7 @@
                     <tabBarItem key="tabBarItem" title="Dining" image="dining_selected" id="mus-hU-q7B"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sbX-La-vr0">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -67,7 +67,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ofg-1E-H8S">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -86,7 +86,7 @@
                     <tabBarItem key="tabBarItem" title="Aviation" image="aviation_selected" id="Fdu-eE-5Ky"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6FX-4b-gcM">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -105,7 +105,7 @@
                     <tabBarItem key="tabBarItem" title="Notifications" image="bell" id="nGT-oa-1XU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fdo-8e-pJ7">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -126,11 +126,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YhO-po-EJU">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="notificationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="notificationCell" id="pUl-Zp-MCG" customClass="NotificationCell" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="134.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="134.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pUl-Zp-MCG" id="Gcy-wS-3UD">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="134.5"/>
@@ -265,7 +265,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7of-tm-u6E">
-                                <rect key="frame" x="0.0" y="88" width="414" height="1829"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="1825"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="JyT-3i-xEo">
                                         <rect key="frame" x="0.0" y="16" width="414" height="1498"/>
@@ -1223,7 +1223,7 @@
                                 <color key="backgroundColor" name="Palette - Separator"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sV5-YE-jaa">
-                                <rect key="frame" x="12" y="60" width="24" height="24"/>
+                                <rect key="frame" x="12" y="64" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="nhE-bj-zUk"/>
                                     <constraint firstAttribute="height" constant="24" id="v3H-Iy-rzB"/>
@@ -1446,7 +1446,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qnR-W9-bF3">
-                                <rect key="frame" x="8" y="52" width="398" height="810"/>
+                                <rect key="frame" x="8" y="56" width="398" height="806"/>
                                 <color key="backgroundColor" name="Black Backgorund"/>
                                 <collectionViewLayout key="collectionViewLayout" id="TKr-IL-GQl" customClass="LiftLayout" customModule="LUJO" customModuleProvider="target"/>
                                 <cells/>
@@ -1482,7 +1482,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="499-08-2Eh">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fG-up-2Hm">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
@@ -1534,7 +1534,7 @@
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pTo-uY-zKY">
-                                        <rect key="frame" x="8" y="90" width="398" height="762"/>
+                                        <rect key="frame" x="8" y="90" width="398" height="758"/>
                                         <color key="backgroundColor" name="Black Backgorund"/>
                                         <collectionViewLayout key="collectionViewLayout" id="4Rz-k8-1SH" customClass="LiftLayout" customModule="LUJO" customModuleProvider="target"/>
                                         <cells/>
@@ -1625,7 +1625,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1em-TM-oyg">
-                                <rect key="frame" x="0.0" y="88" width="414" height="1780"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="1776"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQV-I8-dS9" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="3257.5"/>
@@ -2300,6 +2300,7 @@
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jm1-CV-5gj">
                                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="310.5"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </imageView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3247,7 +3248,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhC-qR-Xic">
-                                <rect key="frame" x="0.0" y="44" width="414" height="1122"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="1118"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vi3-K0-jVI">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
@@ -3308,11 +3309,11 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7lc-80-PCD">
-                                        <rect key="frame" x="16" y="82" width="382" height="1040"/>
+                                        <rect key="frame" x="16" y="82" width="382" height="1036"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CityCell" id="hvq-o7-wth" customClass="CityCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="44.5" width="382" height="66"/>
+                                                <rect key="frame" x="0.0" y="50" width="382" height="66"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hvq-o7-wth" id="7gB-s5-Mtr">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="66"/>
@@ -3355,7 +3356,7 @@
                                         </connections>
                                     </tableView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4Y-V3-uWH">
-                                        <rect key="frame" x="16" y="82" width="382" height="1040"/>
+                                        <rect key="frame" x="16" y="82" width="382" height="1036"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Yd2-PK-ySF">
                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="958"/>
@@ -4619,7 +4620,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="no2-ZA-tSt">
-                                <rect key="frame" x="8" y="52" width="398" height="810"/>
+                                <rect key="frame" x="8" y="56" width="398" height="806"/>
                                 <color key="backgroundColor" name="Black Backgorund"/>
                                 <collectionViewLayout key="collectionViewLayout" id="K0I-Wh-aIo" customClass="LiftLayout" customModule="LUJO" customModuleProvider="target"/>
                                 <cells>
@@ -4808,7 +4809,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GpE-ne-fre">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RAT-jr-Rut">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
@@ -4868,7 +4869,7 @@
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vWB-Mg-8Mj">
-                                        <rect key="frame" x="8" y="90" width="398" height="762"/>
+                                        <rect key="frame" x="8" y="90" width="398" height="758"/>
                                         <color key="backgroundColor" name="Black Backgorund"/>
                                         <collectionViewLayout key="collectionViewLayout" id="OPC-6S-OBE" customClass="LiftLayout" customModule="LUJO" customModuleProvider="target"/>
                                         <cells>
@@ -5692,7 +5693,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kEI-IV-MFZ">
-                                <rect key="frame" x="370" y="52" width="28" height="28"/>
+                                <rect key="frame" x="370" y="56" width="28" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="2nr-cz-p4n"/>
                                     <constraint firstAttribute="width" constant="28" id="hYe-3C-JyE"/>
@@ -5734,7 +5735,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KsT-hB-EfM" userLabel="Content">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJq-vr-Igr">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -5799,11 +5800,11 @@
                                         </constraints>
                                     </view>
                                     <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MxG-Gl-yLz" userLabel="BookingsList">
-                                        <rect key="frame" x="16" y="60" width="382" height="758"/>
+                                        <rect key="frame" x="16" y="60" width="382" height="754"/>
                                         <color key="backgroundColor" name="Black Backgorund"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myBookingCellID" rowHeight="499" id="LWY-QP-DC1" customClass="MyBookingsCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="44.5" width="382" height="499"/>
+                                                <rect key="frame" x="0.0" y="50" width="382" height="499"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LWY-QP-DC1" id="uGP-rb-rTt">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="499"/>
@@ -5942,7 +5943,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4RZ-cI-z0D">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E1a-fJ-Giy" userLabel="contentView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="744"/>
@@ -6055,11 +6056,11 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9p4-gf-vDF" userLabel="BgView">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
                                 <color key="backgroundColor" name="Black Backgorund"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mYZ-bC-sJY">
-                                <rect key="frame" x="32" y="88" width="350" height="44"/>
+                                <rect key="frame" x="32" y="92" width="350" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBc-Ef-GFd">
                                         <rect key="frame" x="0.0" y="0.0" width="116" height="44"/>
@@ -6185,14 +6186,14 @@ New York, NY 10011 USA</string>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JuD-86-dSp" userLabel="TripKindUnderline">
-                                <rect key="frame" x="32" y="132" width="350" height="1"/>
+                                <rect key="frame" x="32" y="136" width="350" height="1"/>
                                 <color key="backgroundColor" name="Palette - Separator"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="iEY-cy-JLA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Hi-E6-hfW" userLabel="Search Options Container">
-                                <rect key="frame" x="0.0" y="157" width="414" height="656"/>
+                                <rect key="frame" x="0.0" y="161" width="414" height="652"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -6238,7 +6239,7 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8J-oC-FHm">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17M-aX-sh5" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -6300,13 +6301,13 @@ New York, NY 10011 USA</string>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UFK-8j-XBG">
-                                        <rect key="frame" x="0.0" y="105" width="414" height="713"/>
+                                        <rect key="frame" x="0.0" y="105" width="414" height="709"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="separatorColor" name="Action Button"/>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchAirportCell" rowHeight="57" id="wyE-8r-3fl" customClass="AirportSearchCell" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="44.5" width="414" height="57"/>
+                                                <rect key="frame" x="0.0" y="50" width="414" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wyE-8r-3fl" id="UtN-7j-QOA">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
@@ -6424,7 +6425,7 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QvQ-nz-gVx">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JHV-g4-tEr" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -6657,7 +6658,7 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SiX-IN-5qo">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADA-Mj-EpP" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -6689,11 +6690,11 @@ New York, NY 10011 USA</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0w-uC-4m7">
-                                        <rect key="frame" x="0.0" y="44" width="414" height="808"/>
+                                        <rect key="frame" x="0.0" y="44" width="414" height="804"/>
                                         <color key="backgroundColor" name="Black Backgorund"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dUA-cl-Kle" userLabel="Search Options Container">
-                                        <rect key="frame" x="0.0" y="92" width="414" height="760"/>
+                                        <rect key="frame" x="0.0" y="92" width="414" height="756"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -6739,11 +6740,11 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tzu-E5-vpW" userLabel="Bg View">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <color key="backgroundColor" name="Black Backgorund"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mgC-ZU-Qf6" userLabel="Top Bar">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2NS-uF-UOp">
                                         <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
@@ -6789,7 +6790,7 @@ New York, NY 10011 USA</string>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3p5-CH-sJC">
-                                <rect key="frame" x="8" y="104" width="398" height="758"/>
+                                <rect key="frame" x="8" y="108" width="398" height="754"/>
                                 <color key="backgroundColor" name="Black Backgorund"/>
                                 <collectionViewLayout key="collectionViewLayout" id="H9b-DI-2No" customClass="LiftLayout" customModule="LUJO" customModuleProvider="target"/>
                                 <cells>
@@ -7007,7 +7008,7 @@ New York, NY 10011 USA</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJV-kJ-CwO" userLabel="Top Bar">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odI-JA-QoK">
                                         <rect key="frame" x="184" y="12" width="46.5" height="20.5"/>
@@ -7037,7 +7038,7 @@ New York, NY 10011 USA</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pRO-0Q-RGU">
-                                <rect key="frame" x="0.0" y="88" width="414" height="698"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="694"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="53q-kS-5Fw">
                                         <rect key="frame" x="32" y="32" width="350" height="353"/>
@@ -7284,7 +7285,7 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bui-Of-zaa">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ilI-fV-5WY" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -7883,7 +7884,7 @@ New York, NY 10011 USA</string>
                     <tabBarItem key="tabBarItem" title="Chat" image="chat_selected" id="qtM-pI-j65"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MGR-eN-Dv6">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -8493,17 +8494,17 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search by title" translatesAutoresizingMaskIntoConstraints="NO" id="2Hb-iS-Zi2">
-                                <rect key="frame" x="0.0" y="44" width="414" height="51"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IJi-ox-2S1">
-                                <rect key="frame" x="0.0" y="95" width="414" height="801"/>
+                                <rect key="frame" x="0.0" y="104" width="414" height="792"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="chatCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="chatCell" id="KWF-B6-dAP" customClass="ChatCell" customModule="LUJO" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="66.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="66.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KWF-B6-dAP" id="8kR-Gr-NRg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="66.5"/>

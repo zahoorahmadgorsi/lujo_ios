@@ -133,8 +133,8 @@ struct DiningHomeObjects: Codable {
     func getFeaturedImages() -> [String] {
         var urlList = [String]()
         for feature in slider ?? [] {
-            if feature.primaryMedia?.type == "image" {
-                urlList.append(feature.primaryMedia?.mediaUrl ?? "")
+            if feature.thumbnail?.mediaType == "image" {
+                urlList.append(feature.thumbnail?.mediaUrl ?? "")
             } else {
                 urlList.append("")
             }

@@ -89,7 +89,10 @@ class DiningCityView: UIView {
         
         for (index, restaurant) in city?.restaurants.enumerated() ?? [].enumerated() {
             if index == 0 {
-                restaurant1ImageView.downloadImageFrom(link: restaurant.primaryMedia?.mediaUrl ?? "", contentMode: .scaleAspectFill)
+                if let url = restaurant.thumbnail?.mediaUrl {
+                    print("Thumbnail url: \(url)")
+                    restaurant1ImageView.downloadImageFrom(link: url, contentMode: .scaleAspectFill)
+                }
                 restaurant1NameLabel.text = restaurant.name
                 restaurant1locationContainerView.isHidden = restaurant.locations == nil
                 restaurant1locationLabel.text = restaurant.locations?.city?.name.uppercased()
@@ -105,8 +108,11 @@ class DiningCityView: UIView {
                 
             } else if index == 1 {
                 restaurant2ContainerView.isHidden = false
+                if let url = restaurant.thumbnail?.mediaUrl {
+                    print("Thumbnail url: \(url)")
+                    restaurant2ImageView.downloadImageFrom(link: url, contentMode: .scaleAspectFill)
+                }
                 
-                restaurant2ImageView.downloadImageFrom(link: restaurant.primaryMedia?.mediaUrl ?? "", contentMode: .scaleAspectFill)
                 restaurant2NameLabel.text = restaurant.name
                 restaurant2locationContainerView.isHidden = restaurant.locations == nil
                 restaurant2locationLabel.text = restaurant.locations?.city?.name.uppercased()

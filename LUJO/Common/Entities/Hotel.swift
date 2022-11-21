@@ -19,7 +19,7 @@ struct Hotel: Codable {
     let zipCode: String?
     let email: String?
     let website: String?
-    let primaryMedia: Gallery?
+    let thumbnail: Gallery?
     let gallery: [Gallery]?
 
     let latitude: String?
@@ -43,8 +43,8 @@ struct Hotel: Codable {
         case phone
         case email
         case website
-//        case primaryMedia = "featured_media"
-        case primaryMedia = "thumbnail"
+
+        case thumbnail
         case gallery
         case latitude
         case longtitude
@@ -76,7 +76,7 @@ extension Hotel {
             email = try values.decodeIfPresent(String.self, forKey: .email)
             website = try values.decodeIfPresent(String.self, forKey: .website)
 
-            primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
+            thumbnail = try values.decodeIfPresent(Gallery.self, forKey: .thumbnail)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
 
             latitude = try values.decodeIfPresent(String.self, forKey: .latitude)

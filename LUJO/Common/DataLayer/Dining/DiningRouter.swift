@@ -105,6 +105,7 @@ enum DiningRouter: URLRequestConvertible {
         var body: [String: Any] = [
             "search": search ?? ""
             ,"location": location ?? ""
+            ,"status": "Published"
         ]
         if let lat = latitude{
             body["latitude"] = lat

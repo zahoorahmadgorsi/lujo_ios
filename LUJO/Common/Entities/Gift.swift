@@ -16,7 +16,7 @@ struct Gift: Codable {
 //    let price: String?
     let price: Price?
     let pdf_info: Bool?
-    let primaryMedia: Gallery?
+    let thumbnail: Gallery?
     let gallery: [Gallery]?
     let gift_category : Taxonomy?
     let lujo_tag: [Taxonomy]?
@@ -31,7 +31,7 @@ struct Gift: Codable {
         case description
         case price
         case pdf_info
-        case primaryMedia = "thumbnail"
+        case thumbnail
         case gallery
         case gift_category
         case lujo_tag
@@ -51,7 +51,7 @@ extension Gift {
             description = try values.decodeIfPresent(String.self, forKey: .description)
             price = try values.decodeIfPresent(Price.self, forKey: .price)
             pdf_info = try values.decodeIfPresent(Bool.self, forKey: .pdf_info)
-            primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
+            thumbnail = try values.decodeIfPresent(Gallery.self, forKey: .thumbnail)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
             gift_category = try values.decodeIfPresent(Taxonomy.self, forKey: .gift_category)
             lujo_tag = try values.decodeIfPresent([Taxonomy].self, forKey: .lujo_tag)

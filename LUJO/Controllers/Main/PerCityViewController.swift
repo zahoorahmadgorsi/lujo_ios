@@ -94,16 +94,16 @@ class PerCityViewController: UIViewController {
     
     //MARK:-  Filters
     
-    var firstFilter:String = ""                 //name
-    var secondFilter: [Taxonomy] = []     //yacht Charter
-    var thirdFilter: String = ""     //yacht Guests
-    var fourthFilter: Taxonomy?     //yacht Length in Feet
-    var fifthFilter: Taxonomy?     //yacht Length in Meters
-    var sixthFilter: [Taxonomy] = []     //yacht Type
-    var seventhFilter: String = ""     //yacht Built After
-    var eighthFilter: Taxonomy?     //yacht tags
-    var ninthFilter: [Taxonomy] = []      //Interested in charter or sale
-    var tenthFilter: Taxonomy?      //Region
+    var firstFilter:String = ""         //name
+    var secondFilter: [Taxonomy] = []   //yacht Charter
+    var thirdFilter: String = ""        //yacht Guests
+    var fourthFilter: Taxonomy?         //yacht Length in Feet
+    var fifthFilter: Taxonomy?          //yacht Length in Meters
+    var sixthFilter: [Taxonomy] = []    //yacht Type
+    var seventhFilter: String = ""      //yacht Built After
+    var eighthFilter: Taxonomy?         //yacht tags
+    var ninthFilter: [Taxonomy] = []    //Interested in charter or sale
+    var tenthFilter: Taxonomy?          //Region
     var eleventhFilter: String = ""     //min price
     var twelvethFilter: String = ""     //max price
     
@@ -140,7 +140,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
             case .yacht:
-                self.svFilters.isHidden = true
+                self.svFilters.isHidden = false
                 //Loading the preferences related to yacht only very first time
                 if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)

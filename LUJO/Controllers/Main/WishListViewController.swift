@@ -173,7 +173,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
-                    , primaryMedia:item.primaryMedia
+                    , primaryMedia:item.thumbnail
                     , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
@@ -204,7 +204,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
-                    , primaryMedia:item.primaryMedia
+                    , primaryMedia:item.thumbnail
                     , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
@@ -234,7 +234,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
-                    , primaryMedia:item.primaryMedia
+                    , primaryMedia:item.thumbnail
                     , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
@@ -264,7 +264,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
-                    , primaryMedia:item.primaryMedia
+                    , primaryMedia:item.thumbnail
                     , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
@@ -324,7 +324,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
-                    , primaryMedia:item.primaryMedia
+                    , primaryMedia:item.thumbnail
                     , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
@@ -354,7 +354,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
-                    , primaryMedia:item.primaryMedia
+                    , primaryMedia:item.thumbnail
                     , locations: item.locations
                     , isFavourite: item.isFavourite))
             }
@@ -384,7 +384,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                 itemsList.append( Favourite(id: item.id
                     , name: item.name
                     , description: item.description
-                    , primaryMedia:item.primaryMedia
+                    , primaryMedia:item.thumbnail
                     , locations: item.locations
                     , isFavourite: item.isFavourite))
             }

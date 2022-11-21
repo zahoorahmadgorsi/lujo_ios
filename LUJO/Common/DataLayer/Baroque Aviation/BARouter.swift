@@ -51,6 +51,7 @@ enum BARouter: URLRequestConvertible {
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         if let token = LujoSetup().getCurrentUser()?.token{
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            print("Bearer \(token)")
         }
         print("urlRequest:\(String(describing: urlRequest.url))")
         return urlRequest

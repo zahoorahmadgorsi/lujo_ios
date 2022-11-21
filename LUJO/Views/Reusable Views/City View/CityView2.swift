@@ -89,18 +89,18 @@ class CityView2: UIView {
         
         for (index, product) in city?.items?.enumerated() ?? [].enumerated() {
             if index == 0 {
-                if (product.primaryMedia?.type == "image"){
-                    if let mediaLink = product.primaryMedia?.mediaUrl {
+                if (product.thumbnail?.mediaType == "image"){
+                    if let mediaLink = product.thumbnail?.mediaUrl {
                         print(mediaLink)
                         product1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                     }else if let firstImageLink = product.getGalleryImagesURL().first {
                         print(firstImageLink)
                         product1ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                     }
-                }else if( product.primaryMedia?.type == "video"){
+                }else if( product.thumbnail?.mediaType == "video"){
                     var avPlayer: AVPlayer!
                     //Playing the video
-                    if let videoLink = URL(string: product.primaryMedia?.mediaUrl ?? ""){
+                    if let videoLink = URL(string: product.thumbnail?.mediaUrl ?? ""){
                         product1ImageView.isHidden = true;
                         product1ImageContainer.removeLayer(layerName: "videoPlayer") //removing video player if was added
                         
@@ -115,7 +115,7 @@ class CityView2: UIView {
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()
                         }
-                    }else if let mediaLink = product.primaryMedia?.mediaUrl {
+                    }else if let mediaLink = product.thumbnail?.mediaUrl {
                             print(mediaLink)
                             product1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                         }else if let firstImageLink = product.getGalleryImagesURL().first {
@@ -160,18 +160,18 @@ class CityView2: UIView {
                 viewHeart1.tag = index
             }
             else if index == 1 {
-                if (product.primaryMedia?.type == "image"){
-                    if let mediaLink = product.primaryMedia?.mediaUrl {
+                if (product.thumbnail?.mediaType == "image"){
+                    if let mediaLink = product.thumbnail?.mediaUrl {
                         print(mediaLink)
                         product2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                     }else if let firstImageLink = product.getGalleryImagesURL().first {
                         print(firstImageLink)
                         product2ImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
                     }
-                }else if( product.primaryMedia?.type == "video"){
+                }else if( product.thumbnail?.mediaType == "video"){
                     var avPlayer: AVPlayer!
                     //Playing the video
-                    if let videoLink = URL(string: product.primaryMedia?.mediaUrl ?? ""){
+                    if let videoLink = URL(string: product.thumbnail?.mediaUrl ?? ""){
                         product2ImageView.isHidden = true;
                         product2ImageContainer.removeLayer(layerName: "videoPlayer") //removing video player if was added
                         
@@ -186,7 +186,7 @@ class CityView2: UIView {
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()
                         }
-                    }else if let mediaLink = product.primaryMedia?.mediaUrl {
+                    }else if let mediaLink = product.thumbnail?.mediaUrl {
                             print(mediaLink)
                             product2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                         }else if let firstImageLink = product.getGalleryImagesURL().first {

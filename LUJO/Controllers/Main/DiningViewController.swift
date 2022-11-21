@@ -273,7 +273,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
                 if city.termId == locationRestaurants.first?.locations?.city?.termId {
                     cityView.removeFromSuperview()
                 }
-            } else if !(city.termId == locationRestaurants.first?.locations?.city?.termId) {
+            } else if !(city.termId == locationRestaurants.first?.locations?.city?.termId) && city.restaurantsNum > 0{  //no need to add a city with 0 restaurant 
                 let cityView = DiningCityView()
                 cityView.city = city
                 cityView.delegate = self

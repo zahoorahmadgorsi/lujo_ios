@@ -1142,12 +1142,7 @@ extension HomeViewController {
             showNetworkActivity()
         }
         
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            self.showError(LoginError.errorLogin(description: "User does not exist or is not verified"), "Verification")
-            return
-        }
-        
-        EEAPIManager().home(token) { information, error in
+        EEAPIManager().home() { information, error in
             self.hideNetworkActivity()
             
             if let error = error {

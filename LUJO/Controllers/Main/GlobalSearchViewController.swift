@@ -164,7 +164,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     event1TagContainerView.isHidden = true
                 }
                 
-                if let mediaLink = event.primaryMedia?.mediaUrl, event.primaryMedia?.type == "image" {
+                if let mediaLink = event.thumbnail?.mediaUrl, event.thumbnail?.mediaType == "image" {
                     event1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             } else if index == 1 {
@@ -178,7 +178,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     event2TagContainerView.isHidden = true
                 }
                 
-                if let mediaLink = event.primaryMedia?.mediaUrl, event.primaryMedia?.type == "image" {
+                if let mediaLink = event.thumbnail?.mediaUrl, event.thumbnail?.mediaType == "image" {
                     event2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             }
@@ -195,7 +195,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
             if index == 0 {
                 restaurant1NameLabel.text = restaurant.name
                 
-                if let mediaLink = restaurant.primaryMedia?.mediaUrl, restaurant.primaryMedia?.type == "image" {
+                if let mediaLink = restaurant.thumbnail?.mediaUrl, restaurant.thumbnail?.mediaType == "image" {
                     restaurant1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
                 
@@ -216,7 +216,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
             } else if index == 1 {
                 restaurant2NameLabel.text = restaurant.name
                 
-                if let mediaLink = restaurant.primaryMedia?.mediaUrl, restaurant.primaryMedia?.type == "image" {
+                if let mediaLink = restaurant.thumbnail?.mediaUrl, restaurant.thumbnail?.mediaType == "image" {
                     restaurant2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
                 
@@ -253,7 +253,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     experience1TagContainerView.isHidden = true
                 }
                 
-                if let mediaLink = experience.primaryMedia?.mediaUrl, experience.primaryMedia?.type == "image" {
+                if let mediaLink = experience.thumbnail?.mediaUrl, experience.thumbnail?.mediaType == "image" {
                     experience1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             } else if index == 1 {
@@ -266,7 +266,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     experience2TagContainerView.isHidden = true
                 }
                 
-                if let mediaLink = experience.primaryMedia?.mediaUrl, experience.primaryMedia?.type == "image" {
+                if let mediaLink = experience.thumbnail?.mediaUrl, experience.thumbnail?.mediaType == "image" {
                     experience2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             }

@@ -344,7 +344,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
 extension ProductDetailsViewController {
     
     fileprivate func setupEvents(_ product: Product) {
-        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         else if let firstImageLink = product.getGalleryImagesURL().first {
@@ -422,7 +422,7 @@ extension ProductDetailsViewController {
     }
     
     fileprivate func setupExperience(_ product: Product) {
-        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         else if let firstImageLink = product.getGalleryImagesURL().first {
@@ -455,7 +455,7 @@ extension ProductDetailsViewController {
     }
     
     fileprivate func setupVilla(_ product: Product) {
-        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         else if let firstImageLink = product.getGalleryImagesURL().first {
@@ -592,7 +592,7 @@ extension ProductDetailsViewController {
     }
     
     fileprivate func setupYacht(_ product: Product) {
-        if let mediaLink = product.primaryMedia?.mediaUrl, product.primaryMedia?.type == "image" {
+        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         else if let firstImageLink = product.getGalleryImagesURL().first {

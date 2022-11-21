@@ -32,7 +32,7 @@ struct Yacht: Codable {
     let charter_price_low_season_per_week : String?
     let charter_price_high_season_per_week : String?
     let sale_price : String?
-    let primaryMedia: Gallery?
+    let thumbnail: Gallery?
     let gallery: [Gallery]?
     let lujo_tag: [Taxonomy]?
     let yacht_type : [Taxonomy]?
@@ -67,8 +67,7 @@ struct Yacht: Codable {
         case charter_price_low_season_per_week
         case charter_price_high_season_per_week
         case sale_price
-//        case primaryMedia
-        case primaryMedia = "thumbnail"
+        case thumbnail
         case gallery
         case lujo_tag
         case yacht_type
@@ -110,7 +109,7 @@ extension Yacht {
             charter_price_low_season_per_week = try values.decodeIfPresent(String.self, forKey: .charter_price_low_season_per_week)
             charter_price_high_season_per_week = try values.decodeIfPresent(String.self, forKey: .charter_price_high_season_per_week)
             sale_price = try values.decodeIfPresent(String.self, forKey: .sale_price)
-            primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
+            thumbnail = try values.decodeIfPresent(Gallery.self, forKey: .thumbnail)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
             lujo_tag = try values.decodeIfPresent([Taxonomy].self, forKey: .lujo_tag)
             yacht_type = try values.decodeIfPresent([Taxonomy].self, forKey: .yacht_type)

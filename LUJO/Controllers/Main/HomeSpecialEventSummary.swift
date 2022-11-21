@@ -46,7 +46,7 @@ class HomeSpecialEventSummary: UIView {
 
         if let event = data as? Product, event.type == "special-event" {
 //            specialEvent = event
-            if let mediaLink = event.primaryMedia?.mediaUrl, event.primaryMedia?.type == "image" {
+            if let mediaLink = event.thumbnail?.mediaUrl, event.thumbnail?.mediaType == "image" {
                 primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
             

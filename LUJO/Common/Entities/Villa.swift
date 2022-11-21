@@ -21,7 +21,7 @@ struct Villa: Codable {
     let rent_price_per_week_low_season : String?
     let rent_price_per_week_high_season : String?
     let sale_price : String?
-    let primaryMedia: Gallery?
+    let thumbnail: Gallery?
     let gallery: [Gallery]?
     let latitude : String?
     let longtitude : String?
@@ -46,8 +46,7 @@ struct Villa: Codable {
         case rent_price_per_week_low_season
         case rent_price_per_week_high_season
         case sale_price
-//        case primaryMedia
-        case primaryMedia = "thumbnail"
+        case thumbnail
         case gallery
         case latitude
         case longtitude
@@ -77,7 +76,7 @@ extension Villa {
             rent_price_per_week_low_season = try values.decodeIfPresent(String.self, forKey: .rent_price_per_week_low_season)
             rent_price_per_week_high_season = try values.decodeIfPresent(String.self, forKey: .rent_price_per_week_high_season)
             sale_price = try values.decodeIfPresent(String.self, forKey: .sale_price)
-            primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
+            thumbnail = try values.decodeIfPresent(Gallery.self, forKey: .thumbnail)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
             latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
             longtitude = try values.decodeIfPresent(String.self, forKey: .longtitude)

@@ -118,7 +118,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiningViewCell.identifier, for: indexPath) as! DiningViewCell
 
         let model = dataSource[indexPath.row]
-        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
+        if let mediaLink = model.thumbnail?.mediaUrl, model.thumbnail?.mediaType == "image" {
             cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
 
@@ -127,9 +127,9 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         cell.primaryImage.isHidden = false;
         cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
-        if( model.primaryMedia?.type == "video"){
+        if( model.thumbnail?.mediaType == "video"){
             //Playing the video
-            if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+            if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
                 cell.primaryImage.isHidden = true;
 
                 avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
@@ -144,7 +144,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
                     avPlayer?.play()
                 }
             }else
-                if let mediaLink = model.primaryMedia?.thumbnail {
+                if let mediaLink = model.thumbnail?.thumbnail {
                 cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
         }

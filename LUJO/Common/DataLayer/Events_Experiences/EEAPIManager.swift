@@ -40,8 +40,8 @@ class EEAPIManager {
         }
     }
     
-    func home(_ token: String, completion: @escaping (HomeObjects?, Error?) -> Void) {
-        Alamofire.request(EERouter.home(token))
+    func home( completion: @escaping (HomeObjects?, Error?) -> Void) {
+        Alamofire.request(EERouter.home)
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -262,12 +262,12 @@ class EEAPIManager {
                     }
                     completion(result.content.categories?[0].items ?? [], nil)
                 }else{
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self, from: response.data!)
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self, from: response.data!)
                     else {
                         completion([], BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content, nil)
+                    completion(result.content.docs, nil)
                 
                 }
                 return

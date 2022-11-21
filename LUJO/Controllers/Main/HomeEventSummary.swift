@@ -34,7 +34,7 @@ class HomeEventSummary: UIView {
             return
         }
         if let event = data as? Product, event.type == "event" {
-            if let mediaLink = event.primaryMedia?.mediaUrl, event.primaryMedia?.type == "image" {
+            if let mediaLink = event.thumbnail?.mediaUrl, event.thumbnail?.mediaType == "image" {
                 primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
             name.text = event.name
@@ -70,7 +70,7 @@ class HomeEventSummary: UIView {
         }
 
         if let experience = data as? Product, experience.type == "experience" {
-            if let mediaLink = experience.primaryMedia?.mediaUrl, experience.primaryMedia?.type == "image" {
+            if let mediaLink = experience.thumbnail?.mediaUrl, experience.thumbnail?.mediaType == "image" {
                 primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
             name.text = experience.name

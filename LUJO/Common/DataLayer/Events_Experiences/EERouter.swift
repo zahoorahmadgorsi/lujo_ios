@@ -26,7 +26,7 @@ enum EERouter: URLRequestConvertible {
         return scheme
     }()
 
-    case home(String)
+    case home
     case events(Bool, String?, String?, String?)
     case experiences( String?, String?, String?)
     case salesforce(SalesforceRequest, String?)
@@ -61,6 +61,7 @@ enum EERouter: URLRequestConvertible {
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         if let token = LujoSetup().getCurrentUser()?.token{
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            print("Bearer token: \(token)")
         }
         print("urlRequest:\(String(describing: urlRequest.url))")
         return urlRequest
@@ -114,11 +115,8 @@ enum EERouter: URLRequestConvertible {
         newURLComponents.path = EERouter.apiVersion
 
         switch self {
-            case let .home(token):
+            case .home:
                 newURLComponents.path.append("/home")
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token),
-                ]
             case let .events(_, _, _, id):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/events/detail/" + productId)
@@ -174,14 +172,12 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.path.append("/request")
 
         case let .geopoint(type,_,_):
-//            if type == "event"{
-//                newURLComponents.path.append("/events/search")
-//            }else
-            if type == "restaurant"{
-                newURLComponents.path.append("/restaurants/search")
-            }else{
+            if type == "event"{
                 newURLComponents.path.append("/events/search")
-//                newURLComponents.path.append("/experiences/search")
+            }else if type == "restaurant"{
+                newURLComponents.path.append("/restaurants/search")
+            }else if type == "restaurant"{
+                newURLComponents.path.append("/experiences/search")
             }
             case let .citySearch(token, searchTerm):
                 newURLComponents.path.append("/search-cities")
@@ -317,7 +313,7 @@ enum EERouter: URLRequestConvertible {
     }
     
     fileprivate func getEventsSearchDataAsJSONData(_ past: Bool, _ search: String?, _ location:String?) -> Data? {
-        var body: [String: Any] = [:]
+        var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
         }
@@ -331,7 +327,7 @@ enum EERouter: URLRequestConvertible {
     }
     
     fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?) -> Data? {
-        var body: [String: Any] = [:]
+        var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
         }
@@ -342,7 +338,7 @@ enum EERouter: URLRequestConvertible {
     }
     
     fileprivate func getGoodsSearchDataAsJSONData(_ search: String?) -> Data? {
-        var body: [String: Any] = [:]
+        var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
         }
@@ -352,8 +348,9 @@ enum EERouter: URLRequestConvertible {
     
     fileprivate func getVillasDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
         var body: [String: Any] = [:]
-        body["page"] = 1
-        body["per_page"] = 20
+//        var body: [String: Any] = ["status": "Published"]
+//        body["page"] = 1
+//        body["per_page"] = 20
         if let search = search , !search.isEmpty {
             body["search"] = search
         }
@@ -368,6 +365,7 @@ enum EERouter: URLRequestConvertible {
     }
     
     fileprivate func getYachtsDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
+//        var body: [String: Any] = ["status": "Published"]
         var body: [String: Any] = [:]
         body["page"] = 1    //else this API might fail as there are thousands of yachts data is available
         body["per_page"] = 20

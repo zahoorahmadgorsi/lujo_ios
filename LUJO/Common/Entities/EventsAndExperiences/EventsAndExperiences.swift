@@ -226,13 +226,15 @@ struct BaroqueAviationCategory: Codable {
 
 struct Gallery: Codable {
     let type: String
+    let mediaType: String?   //used for thumbnail
     let mediaUrl: String
-    let thumbnail: String?
+    let thumbnail: String?  //thumbnail in case of the video
 
     enum CodingKeys: String, CodingKey {
         case type
+        case mediaType = "media_type"
         case mediaUrl = "url"
-        case thumbnail
+        case thumbnail = "thumbnail"
     }
 }
 
@@ -304,7 +306,7 @@ struct Product: Codable {
     var startDate: Date?
     var endDate: Date?
     var timezone: String?
-    var primaryMedia: Gallery?
+    var thumbnail: Gallery?
     var gallery: [Gallery]?
     var eventCategory: [Taxonomy]?
     var experienceCategory: [Taxonomy]?
@@ -347,8 +349,10 @@ struct Product: Codable {
     var topSpeedKnot: String?
     var charterPriceLowSeasonPerWeek: String?
     var charterPriceHighSeasonPerWeek: String?
-    var yachtType: [Taxonomy]?
-    var yachtStatus: [Taxonomy]?
+//    var yachtType: [Taxonomy]?
+//    var yachtStatus: [Taxonomy]?
+    var yachtType: String?
+    var yachtStatus: String?
     var yachtExtras: [Taxonomy]?
     var charterPriceLowSeasonPerDay: String?
     var charterPriceHighSeasonPerDay: String?
@@ -375,8 +379,7 @@ struct Product: Codable {
         case startDate = "start_date"
         case endDate = "end_date"
         case timezone
-        //case primaryMedia = "featured_media"
-        case primaryMedia = "thumbnail"
+        case thumbnail
         case gallery
         case eventCategory = "event_category"
         case experienceCategory = "experience_category"
@@ -469,7 +472,7 @@ extension Product {
 
             id = try values.decode(String.self, forKey: .id)
             print("productid: \(id)")   // 627b518f4ae3b8001d834048, 627a0018d340c1001b0a717e
-            if id == "636b90d2326ce1001b7d99d9"{
+            if id == "63526fbaf199da001bc4fd11"{
                 print("crashing")
             }
             type = try values.decode(String.self, forKey: .type)
@@ -511,7 +514,7 @@ extension Product {
             }
 
             timezone = try values.decodeIfPresent(String.self, forKey: .timezone)
-            primaryMedia = try values.decodeIfPresent(Gallery.self, forKey: .primaryMedia)
+            thumbnail = try values.decodeIfPresent(Gallery.self, forKey: .thumbnail)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
             eventCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .eventCategory)
             experienceCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .experienceCategory)
@@ -553,8 +556,10 @@ extension Product {
             topSpeedKnot = try values.decodeIfPresent(String.self, forKey: .topSpeedKnot)
             charterPriceLowSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerWeek)
             charterPriceHighSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerWeek)
-            yachtType = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtType)
-            yachtStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtStatus)
+//            yachtType = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtType)
+//            yachtStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtStatus)
+            yachtType = try values.decodeIfPresent(String.self, forKey: .yachtType)
+            yachtStatus = try values.decodeIfPresent(String.self, forKey: .yachtStatus)
             yachtExtras = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtExtras)
             charterPriceLowSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerDay)
             charterPriceHighSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerDay)
@@ -603,8 +608,8 @@ struct HomeObjects: Codable {
     func getFeaturedImages() -> [String] {
         var urlList = [String]()
         for feature in slider {
-            if feature.primaryMedia?.type == "image" {
-                urlList.append(feature.primaryMedia?.mediaUrl ?? "")
+            if feature.thumbnail?.mediaType == "image" {
+                urlList.append(feature.thumbnail?.mediaUrl ?? "")
             } else {
                 urlList.append("")
             }

@@ -149,12 +149,12 @@ extension ImageCarousel: UICollectionViewDataSource {
         //*****
         if ( itemsList.count > indexPath.row){  //in gallery, itemsList count would be 0
             let model = itemsList[indexPath.row]
-            if( model.primaryMedia?.type == "video"){
+            if( model.thumbnail?.mediaType == "video"){
                 cell.primaryImage.isHidden = false;
                 cell.containerView.removeLayer(layerName: "videoPlayer")//removing video player if was added
                 var avPlayer: AVPlayer!
                 //Playing the video
-                if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+                if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
                     avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
                     let avPlayerLayer = AVPlayerLayer(player: avPlayer)
                     avPlayerLayer.name = "videoPlayer"
@@ -168,8 +168,7 @@ extension ImageCarousel: UICollectionViewDataSource {
                         avPlayer?.seek(to: CMTime.zero)
                         avPlayer?.play()
                     }
-                }else
-                    if let mediaLink = model.primaryMedia?.thumbnail {
+                }else if let mediaLink = model.thumbnail?.thumbnail {
                     cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             }
@@ -185,12 +184,12 @@ extension ImageCarousel: UICollectionViewDataSource {
         //********
         if ( restaurantsList.count > indexPath.row){  //in gallery, itemsList count would be 0
             let model = restaurantsList[indexPath.row]
-            if( model.primaryMedia?.type == "video"){
+            if( model.thumbnail?.mediaType == "video"){
                 cell.primaryImage.isHidden = false;
                 cell.containerView.removeLayer(layerName: "videoPlayer")//removing video player if was added
                 var avPlayer: AVPlayer!
                 //Playing the video
-                if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+                if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
                     avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
                     let avPlayerLayer = AVPlayerLayer(player: avPlayer)
                     avPlayerLayer.name = "videoPlayer"
@@ -205,7 +204,7 @@ extension ImageCarousel: UICollectionViewDataSource {
                         avPlayer?.play()
                     }
                 }else
-                    if let mediaLink = model.primaryMedia?.thumbnail {
+                    if let mediaLink = model.thumbnail?.thumbnail {
                     cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             }

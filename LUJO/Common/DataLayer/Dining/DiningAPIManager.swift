@@ -30,14 +30,26 @@ extension GoLujoAPIManager  {
                 case 1 ... 199: // Transfer protoco-level information: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiningHomeObjects>.self,
-                                                                 from: response.data!)
-                    else {
+//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiningHomeObjects>.self,
+//                                                                 from: response.data!)
+//                    else {
+//                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+//                        return
+//                    }
+//                    completion(result.content, nil)
+//                    return
+                    //DON'T DELETE THE BELOW BLOCK, IT WILL HELP IN DEBUGGING, JUST UNCOMMENT AND COMMENT THE ABOVE CODE AND SEE THE ERROR
+                    do {
+                        let result = try JSONDecoder().decode(LujoServerResponse<DiningHomeObjects>.self,
+                                                                     from: response.data!)
+                        completion(result.content, nil)
+                        return
+                    }catch {
+                        print(error)
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
-                    }
-                    completion(result.content, nil)
-                    return
+                      }
+                    
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))
                 case 400 ... 499: // Client Error
