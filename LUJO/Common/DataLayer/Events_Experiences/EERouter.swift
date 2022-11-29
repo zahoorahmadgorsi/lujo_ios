@@ -122,18 +122,31 @@ enum EERouter: URLRequestConvertible {
                         newURLComponents.path.append("/events/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/events/search")
+                    newURLComponents.queryItems = [
+                        URLQueryItem(name: "page", value: "1"),
+                        URLQueryItem(name: "per_page", value: "100"),
+                    ]
                 }
             case let .experiences(_, _, id):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/experiences/detail/" + productId)
                     }else{
                         newURLComponents.path.append("/experiences/search")
+                        newURLComponents.queryItems = [
+                            URLQueryItem(name: "page", value: "1"),
+                            URLQueryItem(name: "per_page", value: "100"),
+                        ]
                     }
             case let .villas(_, _, id):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/villas/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/villas/search")
+                    //in villa search pagination parameters are going into body
+//                    newURLComponents.queryItems = [
+//                        URLQueryItem(name: "page", value: "1"),
+//                        URLQueryItem(name: "per_page", value: "100"),
+//                    ]
                 }
             case let .goods( _, gift_category_id, id):
                 if let giftId = id , !giftId.isEmpty {  //if gift is search by giftId then user different API (called when push notificatino is receveid )
@@ -145,6 +158,10 @@ enum EERouter: URLRequestConvertible {
                     ]
                 }else{
                     newURLComponents.path.append("/gifts/search")
+                    newURLComponents.queryItems = [
+                        URLQueryItem(name: "page", value: "1"),
+                        URLQueryItem(name: "per_page", value: "100"),
+                    ]
                 }
                 
             case let .yachts(_, _, id):
@@ -152,11 +169,15 @@ enum EERouter: URLRequestConvertible {
                         newURLComponents.path.append("/yachts/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/yachts/search")
+                    newURLComponents.queryItems = [
+                        URLQueryItem(name: "page", value: "1"),
+                        URLQueryItem(name: "per_page", value: "100"),
+                    ]
                 }
             case let .recents(token, limit, type):
                 newURLComponents.path.append("/recent")
                 
-                newURLComponents.queryItems = [
+                newURLComponents.queryItems = [                                             
                     URLQueryItem(name: "token", value: token),
                 ]
                 if let limit = limit {
@@ -176,7 +197,7 @@ enum EERouter: URLRequestConvertible {
                 newURLComponents.path.append("/events/search")
             }else if type == "restaurant"{
                 newURLComponents.path.append("/restaurants/search")
-            }else if type == "restaurant"{
+            }else if type == "experience"{
                 newURLComponents.path.append("/experiences/search")
             }
             case let .citySearch(token, searchTerm):
@@ -318,7 +339,7 @@ enum EERouter: URLRequestConvertible {
             body["search"] = search
         }
         if let location = location, !location.isEmpty  {
-            body["location"] = location
+            body["location"] = location     //e.g. dubai events, then it will contain dubai _id
         }
         if past{
             body["show_past"] = true
@@ -347,10 +368,11 @@ enum EERouter: URLRequestConvertible {
     
     
     fileprivate func getVillasDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
-        var body: [String: Any] = [:]
-//        var body: [String: Any] = ["status": "Published"]
-//        body["page"] = 1
-//        body["per_page"] = 20
+//        var body: [String: Any] = [:]
+        //pagination parameter would in body only in case of villas
+        var body: [String: Any] = ["status": "Published"]
+        body["page"] = 1
+        body["per_page"] = 20
         if let search = search , !search.isEmpty {
             body["search"] = search
         }
@@ -367,8 +389,8 @@ enum EERouter: URLRequestConvertible {
     fileprivate func getYachtsDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
 //        var body: [String: Any] = ["status": "Published"]
         var body: [String: Any] = [:]
-        body["page"] = 1    //else this API might fail as there are thousands of yachts data is available
-        body["per_page"] = 20
+//        body["page"] = 1    //else this API might fail as there are thousands of yachts data is available
+//        body["per_page"] = 20
         if let search = search , !search.isEmpty {
             body["search"] = search
         }

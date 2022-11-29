@@ -762,7 +762,7 @@ extension ProductDetailsViewController {
     
     func setUpGallery(_ product: Product){
         //Setting up gallery
-        switch product.gallery?.count {
+        switch product.gallery?.filter({$0.type == "image"}).count {
         case 0: print("No need to add any gallery")
         case 1:
             let galleryView = GalleryView1()

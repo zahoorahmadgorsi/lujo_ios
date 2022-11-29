@@ -116,12 +116,12 @@ class EEAPIManager {
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
                     completion(products, nil)
                 }else{
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self, from: response.data!)
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self, from: response.data!)
                     else {
                         completion([], BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content, nil)
+                    completion(result.content.docs, nil)
                 }
                 
                 return
@@ -163,12 +163,12 @@ class EEAPIManager {
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
                     completion(products, nil)
                 }else{
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self, from: response.data!)
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self, from: response.data!)
                     else {
                         completion([], BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content, nil)
+                    completion(result.content.docs, nil)
                 
                 }
                 return

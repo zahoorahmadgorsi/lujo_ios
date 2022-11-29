@@ -152,6 +152,10 @@ struct ReferralCode: Codable {
     }
 }
 
+struct TaxonomyResponse: Codable{
+    let docs: [Taxonomy]
+}
+
 struct Taxonomy: Codable {
     let termId: String
     let name: String
