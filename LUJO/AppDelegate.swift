@@ -212,7 +212,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //                print("Twilio: Total UnRead push notification count:\(_count)")
                 tabBarController.tabBar.items?[4].badgeValue = _count > 9 ? "9+" : String(_count)
             }else{
-                tabBarController.tabBar.items?[4].badgeValue = ""
+                tabBarController.tabBar.items?[4].badgeValue = nil
             }
             
         }

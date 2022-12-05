@@ -173,10 +173,10 @@ struct PhoneCountryCode: Codable {
 struct CurrencyType: Codable{
     let id: String
     let name: String
-    let code: String
-    let symbolRight: String
-    let symbolLeft: String
-    let value: Int
+    let code: String?
+    let symbolRight: String?
+    let symbolLeft: String?
+    let value: Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -192,10 +192,10 @@ struct CurrencyType: Codable{
             let values = try decoder.container(keyedBy: CodingKeys.self)
             id = try values.decode(String.self, forKey: .id)
             name = try values.decode(String.self, forKey: .name)
-            code = try values.decode(String.self, forKey: .code)
-            symbolRight = try values.decode(String.self, forKey: .symbolRight)
-            symbolLeft = try values.decode(String.self, forKey: .symbolLeft)
-            value = try values.decode(Int.self, forKey: .value)
+            code = try values.decodeIfPresent(String.self, forKey: .code)
+            symbolRight = try values.decodeIfPresent(String.self, forKey: .symbolRight)
+            symbolLeft = try values.decodeIfPresent(String.self, forKey: .symbolLeft)
+            value = try values.decodeIfPresent(Int.self, forKey: .value)
         } catch {
             throw error
         }
