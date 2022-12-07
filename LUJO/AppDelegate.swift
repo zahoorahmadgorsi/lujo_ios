@@ -1,4 +1,5 @@
 import FirebaseCrashlytics
+import AVFAudio
 //import Crashlytics
 //import Fabric
 import IQKeyboardManagerSwift
@@ -79,9 +80,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         getUnReadPushNotificationsCount()
         
+        setAudioMix()
+        
         return true
     }
 
+    //if you will mute your video from the app it wont impact other audio/video players running on iphone i.e. apple music etc
+    func setAudioMix(){
+        do{
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.default, options: [.mixWithOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+        }catch{
+            print("something went wrong")
+        }
+    }
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface. applicationDidBecomeActive will never be called if app is in foreground and you have received a push notification
     func applicationDidBecomeActive(_ application: UIApplication) {
 //        Delighted.initializeSDK()

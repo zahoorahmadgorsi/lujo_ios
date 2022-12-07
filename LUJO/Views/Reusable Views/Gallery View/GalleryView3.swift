@@ -75,6 +75,7 @@ class GalleryView3: UIView {
                         avPlayerLayer.videoGravity = .resizeAspectFill
                         imgView1Container.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
+                        avPlayer.isMuted = true // To mute the sound
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()
@@ -99,6 +100,7 @@ class GalleryView3: UIView {
                         avPlayerLayer.videoGravity = .resizeAspectFill
                         imgView2Container.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
+                        avPlayer.isMuted = true // To mute the sound
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()
@@ -123,6 +125,7 @@ class GalleryView3: UIView {
                         avPlayerLayer.videoGravity = .resizeAspectFill
                         imgView3Container.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
+                        avPlayer.isMuted = true // To mute the sound
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()

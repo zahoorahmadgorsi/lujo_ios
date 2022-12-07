@@ -145,6 +145,7 @@ class CityView4: UIView {
                         avPlayerLayer.videoGravity = .resizeAspectFill
                         product1ImageContainer.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
+                        avPlayer.isMuted = true // To mute the sound
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()
@@ -216,6 +217,7 @@ class CityView4: UIView {
                         avPlayerLayer.videoGravity = .resizeAspectFill
                         product2ImageContainer.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
+                        avPlayer.isMuted = true // To mute the sound
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()
@@ -286,6 +288,7 @@ class CityView4: UIView {
                         avPlayerLayer.videoGravity = .resizeAspectFill
                         product3ImageContainer.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
+                        avPlayer.isMuted = true // To mute the sound
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()
@@ -356,6 +359,7 @@ class CityView4: UIView {
                         avPlayerLayer.videoGravity = .resizeAspectFill
                         product4ImageContainer.layer.insertSublayer(avPlayerLayer, at: 0)
                         avPlayer.play()
+                        avPlayer.isMuted = true // To mute the sound
                         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                             avPlayer?.seek(to: CMTime.zero)
                             avPlayer?.play()

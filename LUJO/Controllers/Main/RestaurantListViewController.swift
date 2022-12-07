@@ -139,6 +139,7 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
                 avPlayerLayer.videoGravity = .resizeAspectFill
                 cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
                 avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                     avPlayer?.seek(to: CMTime.zero)
                     avPlayer?.play()

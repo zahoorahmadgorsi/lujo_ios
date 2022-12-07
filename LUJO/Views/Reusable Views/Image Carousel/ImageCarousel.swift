@@ -162,6 +162,7 @@ extension ImageCarousel: UICollectionViewDataSource {
                     avPlayerLayer.videoGravity = .resizeAspectFill
                     cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
                     avPlayer.play()
+                    avPlayer.isMuted = true // To mute the sound
                     cell.primaryImage.isHidden = true;
 
                     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
@@ -197,6 +198,7 @@ extension ImageCarousel: UICollectionViewDataSource {
                     avPlayerLayer.videoGravity = .resizeAspectFill
                     cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
                     avPlayer.play()
+                    avPlayer.isMuted = true // To mute the sound
                     cell.primaryImage.isHidden = true;
 
                     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in

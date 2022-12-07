@@ -165,7 +165,7 @@ extension WishListView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavouriteCell.identifier, for: indexPath) as! FavouriteCell
         
         let model = itemsList[indexPath.row]
-        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.type == "image" {
+        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.mediaType == "image" {
             cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }//Zahoor started 20201026
         else if let firstImageLink = model.getGalleryImagesURL().first {
@@ -175,7 +175,7 @@ extension WishListView: UICollectionViewDataSource {
         cell.primaryImage.isHidden = false;
         cell.imgContainerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
-        if( model.primaryMedia?.type == "video"){
+        if( model.primaryMedia?.mediaType == "video"){
             //Playing the video
             if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
                 cell.primaryImage.isHidden = true;
@@ -187,6 +187,7 @@ extension WishListView: UICollectionViewDataSource {
                 avPlayerLayer.videoGravity = .resizeAspectFill
                 cell.imgContainerView.layer.insertSublayer(avPlayerLayer, at: 0)
                 avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                     avPlayer?.seek(to: CMTime.zero)
                     avPlayer?.play()

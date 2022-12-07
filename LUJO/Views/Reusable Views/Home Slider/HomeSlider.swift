@@ -123,7 +123,7 @@ extension HomeSlider: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemsList.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSliderCell.identifier,
@@ -151,6 +151,8 @@ extension HomeSlider: UICollectionViewDataSource {
                 avPlayerLayer.videoGravity = .resizeAspectFill
                 cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
                 avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
+
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                     avPlayer?.seek(to: CMTime.zero)
                     avPlayer?.play()
