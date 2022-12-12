@@ -75,7 +75,7 @@ class SearchProductsViewController: UIViewController {
                 if let subCat = subCategory{
                     str += " " + subCat.rawValue.lowercased()
                 }
-                title = str
+                title = str + " (+15 rank)"
             case .recent:
                 currentLayout?.setCustomCellHeight(170)
                 title = "Search recenlty viewed"
