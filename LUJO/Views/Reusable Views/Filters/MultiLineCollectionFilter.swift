@@ -9,11 +9,7 @@
 import UIKit
 import AVFoundation
 
-protocol SingleLineCollectionFilterProtocol:class {
-    func didTappedOnFilterAt(tag: Int, termId: String)
-}
-
-class SingleLineCollectionFilter: UIView {
+class MultiLineCollectionFilter: UIView {
 
     var itemWidth:Int = 125
     var itemHeight:Int = 36
@@ -25,6 +21,7 @@ class SingleLineCollectionFilter: UIView {
     @IBOutlet weak var viewTitle: UIView!
     
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var collectionViewParent: UIView!
     var delegate:SingleLineCollectionFilterProtocol?
     
@@ -34,7 +31,7 @@ class SingleLineCollectionFilter: UIView {
         let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         contentView.dataSource = self
         contentView.delegate = self
-        contentView.register(UINib(nibName: SingleLineFilterCell.identifier, bundle: nil), forCellWithReuseIdentifier: SingleLineFilterCell.identifier)
+        contentView.register(UINib(nibName: AirportCollViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: AirportCollViewCell.identifier)
         contentView.backgroundColor = .clear
         contentView.showsHorizontalScrollIndicator = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +60,7 @@ class SingleLineCollectionFilter: UIView {
     }
     
     private func commonInit() {
-        Bundle.main.loadNibNamed("SingleLineCollectionFilter", owner: self, options: nil)
+        Bundle.main.loadNibNamed("MultiLineCollectionFilter", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -82,23 +79,17 @@ class SingleLineCollectionFilter: UIView {
     }
 }
 
-extension SingleLineCollectionFilter : UICollectionViewDataSource {
+extension MultiLineCollectionFilter : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SingleLineFilterCell.identifier, for: indexPath) as! SingleLineFilterCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AirportCollViewCell.identifier, for: indexPath) as! AirportCollViewCell
         
-        cell.delegate = self
         let model = items[indexPath.row]
-        cell.imgView.tag = indexPath.row    //to get the index when tapped on this cell
-        cell.imgView.image = model.isSelected == true ? UIImage(named: "filters_check") : UIImage(named: "filters_uncheck")
-        
         cell.lblTitle.text = model.name
 
-        //change cell looks like a tag, default value is false
-        cell.changeCellLook(isTagLookAlike: isTagLookAlike, isSelected: model.isSelected ?? false)
         return cell
     }
     
@@ -119,7 +110,7 @@ extension SingleLineCollectionFilter : UICollectionViewDataSource {
 
 }
 
-extension SingleLineCollectionFilter: UICollectionViewDelegateFlowLayout {
+extension MultiLineCollectionFilter: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -130,7 +121,7 @@ extension SingleLineCollectionFilter: UICollectionViewDelegateFlowLayout {
 //    func collectionView(_ collectionView: UICollectionView,
 //                        layout collectionViewLayout: UICollectionViewLayout,
 //                        insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: CGFloat(itemMargin), bottom: 0, right: CGFloat(itemMargin)) 
+//        return UIEdgeInsets(top: 0, left: CGFloat(0), bottom: 0, right: CGFloat(0))
 //    }
 //
 //    func collectionView(_ collectionView: UICollectionView,
@@ -146,19 +137,3 @@ extension SingleLineCollectionFilter: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SingleLineCollectionFilter:SingleLineFilterCellProtocol{
-    func didTappedOnCheckBox(index: Int) {
-        for i in 0..<self.items.count{
-            if (i == index){
-                if let isSelected = self.items[i].isSelected{
-                    self.items[i].isSelected = !isSelected
-                    delegate?.didTappedOnFilterAt(tag: self.tag, termId: self.items[i].termId)  //delegate is only set for interested in i.e. tag 8
-                }
-                
-            }else{
-                self.items[i].isSelected = false
-            }
-        }
-        self.collectionView.reloadData()    //reload collection after updating the model
-    }
-}

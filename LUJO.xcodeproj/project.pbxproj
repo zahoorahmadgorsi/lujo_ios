@@ -76,6 +76,8 @@
 		422AB1842863486900BEDCC3 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB1832863486900BEDCC3 /* Address.swift */; };
 		422AB18D286352A400BEDCC3 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18C286352A400BEDCC3 /* CardCell.swift */; };
 		422AB18F2863BB3D00BEDCC3 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */; };
+		42AFD12D29538BD60098A25C /* MultiLineCollectionFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */; };
+		42AFD12F29538BE70098A25C /* MultiLineCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */; };
 		42C145B028ACFA2C007436F6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C145AF28ACFA2C007436F6 /* Notification.swift */; };
 		5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527641E23165CFE00380BEB /* HomeViewController.swift */; };
 		5527642123165D1800380BEB /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* ProductsViewController.swift */; };
@@ -477,6 +479,8 @@
 		422AB1832863486900BEDCC3 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		422AB18C286352A400BEDCC3 /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardCell.swift; path = "LUJO/Views/Reusable Views/Account/CardCell.swift"; sourceTree = SOURCE_ROOT; };
 		422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiLineCollectionFilter.xib; sourceTree = "<group>"; };
+		42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineCollectionFilter.swift; sourceTree = "<group>"; };
 		42C145AF28ACFA2C007436F6 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		5527641E23165CFE00380BEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5527642023165D1800380BEB /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
@@ -989,20 +993,20 @@
 		3005D487232823E100401243 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
-				42130EA928B39630006629B3 /* Notifications */,
-				422AB18B2863529100BEDCC3 /* Account */,
-				886FE43527226195000B9530 /* Filters */,
-				886145F326AC01DE0023E92E /* Chat */,
 				9A194FEF22945A5D00E3DBD1 /* HomeEventCell.swift */,
 				30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */,
 				9AAA101F22773540008CE1D2 /* MyBookingsCell.swift */,
 				30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */,
+				422AB18B2863529100BEDCC3 /* Account */,
+				886145F326AC01DE0023E92E /* Chat */,
 				91F610CC25BDB1C9005BCDA2 /* City View */,
 				1D88012A233E48420039DEA6 /* Dining Category Slider */,
 				1DFE1AC323476EA50025410D /* Dining City View */,
+				886FE43527226195000B9530 /* Filters */,
 				9183E82125EBEC7500656B48 /* Gallery View */,
 				1DEDB9E822F20D0B00903CAC /* Home Slider */,
 				9A74716C2244D8710047F4AE /* Image Carousel */,
+				42130EA928B39630006629B3 /* Notifications */,
 				888A306126460BA2008754AD /* Preferences */,
 				88E731A6256FC58100BEDD00 /* Product Details */,
 				883A86BF2561767D00E41A27 /* Wish List View */,
@@ -1239,6 +1243,8 @@
 			children = (
 				887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */,
 				887E27B22748E099000A93B8 /* MinMaxFilter.xib */,
+				42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */,
+				42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */,
 				88988674272363F60030613A /* SingleLineCollectionFilter.swift */,
 				88988672272363DE0030613A /* SingleLineCollectionFilter.xib */,
 				8898867E2723E2450030613A /* SingleLineFilterCell.swift */,
@@ -2069,6 +2075,7 @@
 				886FE43F272268E9000B9530 /* YachtLengthFilter.xib in Resources */,
 				9A4CE04120F6F0AC00BB27FC /* HelveticaLTStd-Light.otf in Resources */,
 				9183E83625EBEEA300656B48 /* GalleryView3.xib in Resources */,
+				42AFD12D29538BD60098A25C /* MultiLineCollectionFilter.xib in Resources */,
 				9A4CE04320F6F0AC00BB27FC /* HelveticaLTStd-Roman.otf in Resources */,
 				9A33941D212665990057CA93 /* HelveticaNeueLTStd-Roman.otf in Resources */,
 				557BB5E3231592F100744188 /* Main.storyboard in Resources */,
@@ -2396,6 +2403,7 @@
 				9AE0B2B121233D7900E55E6C /* BackendError.swift in Sources */,
 				9AD6EAC021E49C9600B695A3 /* PaymentTypeCell.swift in Sources */,
 				888B00EF26AF51EE004FA1B5 /* ChatUser.swift in Sources */,
+				42AFD12F29538BE70098A25C /* MultiLineCollectionFilter.swift in Sources */,
 				1DBC9BF8235F4FB200F0F133 /* Bookings.swift in Sources */,
 				422096BF28AA746700496793 /* NotificationsViewController.swift in Sources */,
 				9AC9542221A7055A00C7A119 /* UpdatePhoneNumberView.swift in Sources */,
@@ -2803,7 +2811,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2857,7 +2865,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3057,7 +3065,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

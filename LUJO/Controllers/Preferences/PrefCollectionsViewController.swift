@@ -1591,7 +1591,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setEventCategory(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the event categories preferences")
+                        let error = BackendError.parsing(reason: "Could not save the types of event/experience preferences")
                         completion(nil, error)
                         return
                     }

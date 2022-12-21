@@ -39,8 +39,8 @@ enum EERouter: URLRequestConvertible {
 //    case getYachtGallery(String, String)
     case topRated(type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
-    case perCity(String, String, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?)
-    case filters(String, String)
+    case perCity( String, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?)
+    case filters(String)
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -101,10 +101,14 @@ enum EERouter: URLRequestConvertible {
             return .post
         case .recents:
             return .get
-        case .perCity:
-            return .get
+        case let .perCity(type, _, _, _, _, _, _, _, _, _, _, _, _):
+            if (type.equals(rhs: "gift")){
+                return .get
+            }else{
+                return .post
+            }
         case .filters:
-            return .post
+            return .get
         }
     }
 
@@ -213,7 +217,7 @@ enum EERouter: URLRequestConvertible {
                     URLQueryItem(name: "token", value: token),
                     URLQueryItem(name: "place_id", value: cityId)
                 ]
-            case let .perCity(token, type, yachtName, yachtCharter, yachtGuests, yachtLengthFeet, yachtLengthMeters, yachtType, yachtBuiltAfter, yachtTag, yachtStatus, region, minPrice, MaxPrice):
+            case let .perCity(type, yachtName, yachtCharter, yachtGuests, yachtLengthFeet, yachtLengthMeters, yachtType, yachtBuiltAfter, yachtTag, yachtStatus, region, minPrice, MaxPrice):
                 
                 if (type.equals(rhs: "gift")){
                     newURLComponents.path.append("/gifts/per-category")
@@ -261,8 +265,11 @@ enum EERouter: URLRequestConvertible {
                         newURLComponents.queryItems?.append(URLQueryItem(name: "max_price", value: filter))
                     }
                 }
-            case .filters:
-                newURLComponents.path.append("/filters")
+            case let .filters(type):
+                newURLComponents.path.append("/reference/mobile_filters")
+                newURLComponents.queryItems = [
+                    URLQueryItem(name: "type", value: type)
+                ]
         }
         
         do {
@@ -327,9 +334,9 @@ enum EERouter: URLRequestConvertible {
         case .cityInfo:
             return nil
         case .perCity:
+            return nil  //now it will have some data
+        case .filters:
             return nil
-        case let .filters(token, type):
-            return getFiltersDataAsJSONData(type: type, token: token)
         }
     }
     
@@ -405,7 +412,7 @@ enum EERouter: URLRequestConvertible {
     
     fileprivate func getTopRatedDataAsJSONData( type: String?, term:String? ) -> Data? {
         var body: [String: Any] = [:]
-        if let type = type , !type.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
+        if let type = type , !type.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts, zahoor
             body["type"] = type
         }
         if let term = term {
@@ -498,11 +505,5 @@ enum EERouter: URLRequestConvertible {
         
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
-    
-    fileprivate func getFiltersDataAsJSONData(type: String, token: String) -> Data? {
-        let body: [String: Any] = [
-            "type": type
-        ]
-        return try? JSONSerialization.data(withJSONObject: body, options: [])
-    }
+
 }

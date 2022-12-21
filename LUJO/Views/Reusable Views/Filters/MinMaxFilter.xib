@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,20 +25,17 @@
                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAf-oX-6Ux">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hsd-wB-4Sc">
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hsd-wB-4Sc">
                             <rect key="frame" x="16" y="0.0" width="382" height="48"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRF-mf-eWD">
-                                    <rect key="frame" x="0.0" y="0.0" width="120" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="120" id="U6c-DI-0Iv"/>
-                                    </constraints>
+                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="48"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <color key="textColor" name="White Text"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="aQJ-1p-1G8">
-                                    <rect key="frame" x="128" y="0.0" width="254" height="48"/>
+                                    <rect key="frame" x="64.5" y="0.0" width="317.5" height="48"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -61,8 +58,16 @@
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bVZ-it-qdt">
                     <rect key="frame" x="16" y="48" width="382" height="44"/>
                     <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="USD" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qrS-Gt-nob" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="57" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="U6f-v4-3lX"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        </textField>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Minimum" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vc2-Hg-kaM" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="157.5" height="44"/>
+                            <rect key="frame" x="73" y="0.0" width="121" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="HqX-F9-fmn"/>
                             </constraints>
@@ -70,7 +75,7 @@
                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDb-4Z-0PF">
-                            <rect key="frame" x="173.5" y="0.0" width="35" height="44"/>
+                            <rect key="frame" x="210" y="0.0" width="35" height="44"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="small_horizontal_line" translatesAutoresizingMaskIntoConstraints="NO" id="SxB-10-97G">
                                     <rect key="frame" x="0.0" y="21.5" width="35" height="1"/>
@@ -88,7 +93,7 @@
                             </constraints>
                         </view>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Maximum" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3sC-ac-YTH" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                            <rect key="frame" x="224.5" y="0.0" width="157.5" height="44"/>
+                            <rect key="frame" x="261" y="0.0" width="121" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="OSv-1w-1Jh"/>
                             </constraints>

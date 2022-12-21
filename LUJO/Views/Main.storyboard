@@ -7699,7 +7699,7 @@ New York, NY 10011 USA</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZz-Cq-GbK">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Fch-I8-Oui">
                                         <rect key="frame" x="0.0" y="16" width="414" height="302"/>
@@ -7839,7 +7839,7 @@ New York, NY 10011 USA</string>
                                 <constraints>
                                     <constraint firstItem="Fch-I8-Oui" firstAttribute="leading" secondItem="mZz-Cq-GbK" secondAttribute="leading" id="Bmj-ey-Ehw"/>
                                     <constraint firstAttribute="trailing" secondItem="Fch-I8-Oui" secondAttribute="trailing" id="Fkh-ey-6CA"/>
-                                    <constraint firstAttribute="bottom" secondItem="Fch-I8-Oui" secondAttribute="bottom" id="qzr-9N-5GH"/>
+                                    <constraint firstAttribute="bottom" secondItem="Fch-I8-Oui" secondAttribute="bottom" priority="250" id="qzr-9N-5GH"/>
                                     <constraint firstItem="Fch-I8-Oui" firstAttribute="top" secondItem="mZz-Cq-GbK" secondAttribute="top" constant="16" id="wTR-Yo-YBd"/>
                                 </constraints>
                             </scrollView>
@@ -7851,7 +7851,7 @@ New York, NY 10011 USA</string>
                             <constraint firstItem="mZz-Cq-GbK" firstAttribute="top" secondItem="DZq-dp-J3a" secondAttribute="top" id="5go-Nf-uHN"/>
                             <constraint firstItem="mZz-Cq-GbK" firstAttribute="leading" secondItem="DZq-dp-J3a" secondAttribute="leading" id="81E-PE-yga"/>
                             <constraint firstAttribute="trailing" secondItem="mZz-Cq-GbK" secondAttribute="trailing" id="Du3-na-BOn"/>
-                            <constraint firstAttribute="bottom" secondItem="mZz-Cq-GbK" secondAttribute="bottom" id="Vf6-Go-myy"/>
+                            <constraint firstItem="yHH-gX-eL4" firstAttribute="bottom" secondItem="mZz-Cq-GbK" secondAttribute="bottom" id="Vf6-Go-myy"/>
                             <constraint firstItem="Fch-I8-Oui" firstAttribute="height" secondItem="DZq-dp-J3a" secondAttribute="height" priority="250" id="wOx-Xv-cBt"/>
                         </constraints>
                     </view>
@@ -8766,7 +8766,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="225.5" height="30"/>
+            <size key="intrinsicContentSize" width="253.5" height="30"/>
         </designable>
     </designables>
     <resources>

@@ -533,8 +533,7 @@ class EEAPIManager {
         }
     }
     
-    func getPerCity(_ token: String
-                    , type: String
+    func getPerCity(type: String
                     , yachtName:String?
                     , yachtCharter:String?
                     , yachtGuests:String?
@@ -548,7 +547,7 @@ class EEAPIManager {
                     , minPrice:String?
                     , maxPrice:String?
                     , completion: @escaping (PerCityObjects?, Error?) -> Void) {
-        Alamofire.request(EERouter.perCity(token, type, yachtName, yachtCharter, yachtGuests, yachtLengthFeet, yachtLengthMeters, yachtType, yachtBuiltAfter, yachtTag, yachtStatus, region, minPrice, maxPrice)).responseJSON { response in
+        Alamofire.request(EERouter.perCity( type, yachtName, yachtCharter, yachtGuests, yachtLengthFeet, yachtLengthMeters, yachtType, yachtBuiltAfter, yachtTag, yachtStatus, region, minPrice, maxPrice)).responseJSON { response in
             guard response.result.error == nil else {
                 completion(nil, response.result.error!)
                 return
@@ -582,8 +581,8 @@ class EEAPIManager {
         }
     }
     
-    func getFilters(_ token: String, type: String, completion: @escaping (Filters?, Error?) -> Void) {
-        Alamofire.request(EERouter.filters(token, type)).responseJSON { response in
+    func getFilters(type: String, completion: @escaping ([Filters]?, Error?) -> Void) {
+        Alamofire.request(EERouter.filters(type)).responseJSON { response in
             guard response.result.error == nil else {
                 completion(nil, response.result.error!)
                 return
@@ -599,7 +598,7 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<Filters>.self,
+                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Filters]>.self,
                                                              from: response.data!)
                 else {
                     completion(nil, BackendError.parsing(reason: "Unable to parse response"))

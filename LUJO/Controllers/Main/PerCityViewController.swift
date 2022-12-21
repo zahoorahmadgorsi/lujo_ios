@@ -62,7 +62,7 @@ class PerCityViewController: UIViewController {
     @IBOutlet weak var svFilters: UIStackView!
     @IBOutlet var homeTopRatedSlider: HomeSlider!
     private var homeObjects: PerCityObjects?
-    private var filters:Filters?
+    private var filters:[Filters]?
     var quickFilters: [Taxonomy] = [] {
         didSet {
             collectionView.reloadData()
@@ -124,7 +124,7 @@ class PerCityViewController: UIViewController {
         switch category {
             case .event: fallthrough
             case .experience:
-                self.svFilters.isHidden = true
+                self.svFilters.isHidden = false
                 //Loading the preferences related to events and experience only very first time
                 if !UserDefaults.standard.bool(forKey: "isEventPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .events, prefInformationType: .eventCategory)
@@ -160,7 +160,7 @@ class PerCityViewController: UIViewController {
        
         }
         //get the quick filters (hiding it for now as shuja API isnt returning right results)
-//        getFilters()
+        getFilters()
     }
     
     //this method is mainly used when user is coming back from filters screen after picking some filters, this function first clears all quick filters selction, and then checks if user has picked some filter which also exists in quick filter then its highlighting that quick filter, then sorts the quick filters on the bases of selection and then fetches the data on the bases of filters
@@ -227,13 +227,15 @@ class PerCityViewController: UIViewController {
     
     private func getFilters(){
         //loading the filters
-        self.getFilters(for: category) { (filters, filterError) in
-            self.hideNetworkActivity()
-            if let error = filterError {
-                self.showError(error, "Filters")
-            } else {
-                self.filters = filters
-                self.quickFilters = filters?.quickFilters ?? []
+        if !self.svFilters.isHidden{    //if filters stackView is not hidden then fetch filters
+            self.getFilters(for: category) { (filters, filterError) in
+                self.hideNetworkActivity()
+                if let error = filterError {
+                    self.showError(error, "Filters")
+                } else {
+                    self.filters = filters
+                    //                self.quickFilters = filters?.quickFilters ?? []
+                }
             }
         }
     }
@@ -381,7 +383,8 @@ class PerCityViewController: UIViewController {
 extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filters?.quickFilters?.count ?? 0
+        //return filters?.quickFilters?.count ?? 0
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -614,10 +617,6 @@ extension PerCityViewController: CityViewProtocol {
     }
     
     func getList(for category: ProductCategory, completion: @escaping (PerCityObjects?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
         var categoryType = ""
         switch category {
             case .event:
@@ -700,8 +699,7 @@ extension PerCityViewController: CityViewProtocol {
         }
         
         
-        EEAPIManager().getPerCity(token
-                                  , type: categoryType
+        EEAPIManager().getPerCity(type: categoryType
                                   , yachtName: firstFilter
                                   , yachtCharter: secondFilterTermId
                                   , yachtGuests: thirdFilter
@@ -725,11 +723,8 @@ extension PerCityViewController: CityViewProtocol {
         
     }
     
-    func getFilters(for category: ProductCategory, completion: @escaping (Filters?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
+    func getFilters(for category: ProductCategory, completion: @escaping ([Filters]?, Error?) -> Void) {
+
         var categoryType = ""
         switch category {
             case .event:
@@ -746,7 +741,7 @@ extension PerCityViewController: CityViewProtocol {
                 categoryType = "event"
        
         }
-        EEAPIManager().getFilters(token, type: categoryType) { list, error in
+        EEAPIManager().getFilters(type: categoryType) { list, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain filters on per city")
