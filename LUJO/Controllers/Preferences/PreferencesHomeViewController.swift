@@ -271,7 +271,8 @@ class PreferencesHomeViewController: UIViewController {
             let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
             self.navigationController?.pushViewController(viewController, animated: true)
         case 4:
-            let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
+            let airportCollViewCell = AirportCollViewCell()
+            let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations, cell: airportCollViewCell)
             self.navigationController?.pushViewController(viewController, animated: true)
         case 5:
             let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)

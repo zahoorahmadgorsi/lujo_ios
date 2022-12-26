@@ -135,7 +135,8 @@ class PerCityViewController: UIViewController {
                 self.svFilters.isHidden = true
                 //Loading the preferences related to villa only very first time
                 if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
-                    let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations)
+                    let airportCollViewCell = AirportCollViewCell()
+                    let viewController = PreferredDestinationaViewController.instantiate(prefType: .villas, prefInformationType: .villaDestinations, cell: airportCollViewCell)
                     self.navigationController?.pushViewController(viewController, animated: true)
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
@@ -148,7 +149,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isYachtPreferencesAlreadyShown")
                 }
             case .gift:
-                self.svFilters.isHidden = true
+                self.svFilters.isHidden = false
                 //Loading the preferences related to gift only very first time
                 if !UserDefaults.standard.bool(forKey: "isGiftPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)

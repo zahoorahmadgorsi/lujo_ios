@@ -76,6 +76,8 @@
 		422AB1842863486900BEDCC3 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB1832863486900BEDCC3 /* Address.swift */; };
 		422AB18D286352A400BEDCC3 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18C286352A400BEDCC3 /* CardCell.swift */; };
 		422AB18F2863BB3D00BEDCC3 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */; };
+		42720E1F2959FA61005CFDA8 /* GiftFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */; };
+		42720E212959FACD005CFDA8 /* GiftFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42720E202959FACD005CFDA8 /* GiftFilterCell.xib */; };
 		42AFD12D29538BD60098A25C /* MultiLineCollectionFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */; };
 		42AFD12F29538BE70098A25C /* MultiLineCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */; };
 		42C145B028ACFA2C007436F6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C145AF28ACFA2C007436F6 /* Notification.swift */; };
@@ -479,6 +481,8 @@
 		422AB1832863486900BEDCC3 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		422AB18C286352A400BEDCC3 /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardCell.swift; path = "LUJO/Views/Reusable Views/Account/CardCell.swift"; sourceTree = SOURCE_ROOT; };
 		422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftFilterCell.swift; sourceTree = "<group>"; };
+		42720E202959FACD005CFDA8 /* GiftFilterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GiftFilterCell.xib; path = "LUJO/Views/Reusable Views/Filters/GiftFilterCell.xib"; sourceTree = SOURCE_ROOT; };
 		42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiLineCollectionFilter.xib; sourceTree = "<group>"; };
 		42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineCollectionFilter.swift; sourceTree = "<group>"; };
 		42C145AF28ACFA2C007436F6 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -1241,6 +1245,8 @@
 		886FE43527226195000B9530 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
+				42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */,
+				42720E202959FACD005CFDA8 /* GiftFilterCell.xib */,
 				887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */,
 				887E27B22748E099000A93B8 /* MinMaxFilter.xib */,
 				42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */,
@@ -2065,6 +2071,7 @@
 				8894D0322562E63C00BF84D8 /* WishListView.xib in Resources */,
 				88872113266F805100854099 /* PrefImageCollViewCell.xib in Resources */,
 				9183E83E25EBEF0900656B48 /* GalleryView4.xib in Resources */,
+				42720E212959FACD005CFDA8 /* GiftFilterCell.xib in Resources */,
 				9A41571421301E6C00D85B56 /* HelveticaNeueLTStd-Md.otf in Resources */,
 				9A9EC8AE2253BA2800098E7D /* AviationLegCell.xib in Resources */,
 				918BA98425BDCD79007B4D43 /* CityView3.xib in Resources */,
@@ -2401,6 +2408,7 @@
 				88EA9F9425544E8400514626 /* WishList.swift in Sources */,
 				9A53A69C2151F78F00AAE322 /* UIView.swift in Sources */,
 				9AE0B2B121233D7900E55E6C /* BackendError.swift in Sources */,
+				42720E1F2959FA61005CFDA8 /* GiftFilterCell.swift in Sources */,
 				9AD6EAC021E49C9600B695A3 /* PaymentTypeCell.swift in Sources */,
 				888B00EF26AF51EE004FA1B5 /* ChatUser.swift in Sources */,
 				42AFD12F29538BE70098A25C /* MultiLineCollectionFilter.swift in Sources */,

@@ -271,7 +271,8 @@ class TwoSliderPrefViewController: UIViewController {
         case .aviation:
             switch self.prefInformationType {
             case .aviationCharterFrequency:
-                let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination)
+                let airportCollViewCell = AirportCollViewCell()
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredDestination, cell: airportCollViewCell)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("This will not call")
@@ -279,7 +280,8 @@ class TwoSliderPrefViewController: UIViewController {
         case .yachts:
             switch self.prefInformationType {
             case .yachtCharterFrequency:
-                let viewController = PreferredDestinationaViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredRegions)
+                let airportCollViewCell = AirportCollViewCell()
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .yachts, prefInformationType: .yachtPreferredRegions, cell: airportCollViewCell)
                 self.navigationController?.pushViewController(viewController, animated: true)
             default:
                 print("This will not call")
@@ -287,7 +289,8 @@ class TwoSliderPrefViewController: UIViewController {
         case .travel:
             switch self.prefInformationType {
             case .travelFrequency:
-                let viewController = PreferredDestinationaViewController.instantiate(prefType: .travel, prefInformationType: .travelDestinations)
+                let airportCollViewCell = AirportCollViewCell()
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .travel, prefInformationType: .travelDestinations, cell: airportCollViewCell)
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .travelCabinClass:
                 let viewController = PrefCollectionsViewController.instantiate(prefType: .travel, prefInformationType: .travelMeals)

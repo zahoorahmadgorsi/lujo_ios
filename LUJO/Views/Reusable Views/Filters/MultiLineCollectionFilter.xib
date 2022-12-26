@@ -12,8 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiLineCollectionFilter" customModule="LUJO" customModuleProvider="target">
             <connections>
                 <outlet property="collectionViewParent" destination="8oi-SW-hIr" id="ILt-w4-wRg"/>
+                <outlet property="collectionViewParentHeightConstraint" destination="Wh3-If-D5Q" id="rb8-SP-xCR"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="2hh-1M-C4h"/>
                 <outlet property="lblTitle" destination="iRF-mf-eWD" id="gJo-MF-UyE"/>
+                <outlet property="titleView" destination="FAf-oX-6Ux" id="2fT-HF-nbI"/>
                 <outlet property="txtName" destination="thb-sf-gCz" id="tGb-Gg-7Gp"/>
                 <outlet property="viewTitle" destination="iRF-mf-eWD" id="XRZ-XV-Wfx"/>
             </connections>
@@ -70,18 +72,18 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8oi-SW-hIr">
                             <rect key="frame" x="0.0" y="108" width="382" height="48"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="AeL-fg-QxU"/>
-                            </constraints>
                         </view>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="156" id="Wh3-If-D5Q"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="dwB-kg-bgM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="N6K-m3-eTm"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="dwB-kg-bgM" secondAttribute="bottom" id="lrN-Ut-6Yb"/>
+                <constraint firstAttribute="bottom" secondItem="dwB-kg-bgM" secondAttribute="bottom" id="lrN-Ut-6Yb"/>
                 <constraint firstItem="dwB-kg-bgM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="rhB-YH-sYV"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="dwB-kg-bgM" secondAttribute="trailing" constant="16" id="zGZ-3W-Uuh"/>
             </constraints>

@@ -15,41 +15,65 @@ class MultiLineCollectionFilter: UIView {
     var itemHeight:Int = 36
     var itemMargin:Int = 8
     var isTagLookAlike:Bool = false
-    var isTextFieldHidden = true
     
+    
+    
+    @IBOutlet weak var titleView: UIView!
+    @IBOutlet weak var collectionViewParent: UIView!
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var viewTitle: UIView!
-    
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var txtName: UITextField!
-    @IBOutlet weak var collectionViewParent: UIView!
+    @IBOutlet weak var collectionViewParentHeightConstraint: NSLayoutConstraint!
+    
+    
+    
     var delegate:SingleLineCollectionFilterProtocol?
+    var cell: MultiLineFilterProtocol!
+    var scrollDirection: UICollectionView.ScrollDirection!
+    //used in gift filter
+    var leftImageName:String = ""
+    var rightImageName:String = ""
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .horizontal
+        flowLayout.scrollDirection = self.scrollDirection
         let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         contentView.dataSource = self
         contentView.delegate = self
-        contentView.register(UINib(nibName: AirportCollViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: AirportCollViewCell.identifier)
+        contentView.register(UINib(nibName: cell.identifier, bundle: nil), forCellWithReuseIdentifier: cell.identifier)
         contentView.backgroundColor = .clear
         contentView.showsHorizontalScrollIndicator = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
     
+    public init(cell: MultiLineFilterProtocol, cellWidth: Int, cellHeight: Int, scrollDirection: UICollectionView.ScrollDirection, leftImageName:String = "", rightImageName:String = ""){
+        self.cell = cell
+        self.itemWidth = cellWidth
+        self.itemHeight = cellHeight
+        self.scrollDirection = scrollDirection
+        self.leftImageName = leftImageName
+        self.rightImageName = rightImageName
+        super.init(frame: .zero)
+        commonInit()
+    }
     
     var items: [Taxonomy] = [] {
         didSet {
             collectionView.reloadData()
+//            print(self.titleView.frame.height,self.collectionViewParent.frame)
+            //setting the view height to dynamic
+            self.collectionViewParentHeightConstraint.constant =  self.titleView.frame.height + (self.collectionViewParent.frame.height * CGFloat(items.count))
+            self.collectionView.layoutIfNeeded()    //to make it dynammic height
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        commonInit()
+//    }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
@@ -85,12 +109,17 @@ extension MultiLineCollectionFilter : UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AirportCollViewCell.identifier, for: indexPath) as! AirportCollViewCell
-        
-        let model = items[indexPath.row]
-        cell.lblTitle.text = model.name
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell.identifier, for: indexPath) as? MultiLineFilterProtocol{
+            
+            let model = items[indexPath.row]
+            
+            cell.setTitle(title: model.name)
+            cell.setLeftRightImages(leftImageName: self.leftImageName, rightImageName: self.rightImageName)   
 
-        return cell
+            return cell as! UICollectionViewCell
+        }
+        return UICollectionViewCell()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

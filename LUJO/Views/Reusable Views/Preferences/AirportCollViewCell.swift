@@ -8,9 +8,12 @@
 
 import UIKit
 
-class AirportCollViewCell: UICollectionViewCell {
-
-    static var identifier: String = "AirportCollViewCell"
+class AirportCollViewCell: UICollectionViewCell, MultiLineFilterProtocol {
+    func setLeftRightImages(leftImageName: String, rightImageName: String) {
+        //only used in gift filter
+    }
+    
+    var identifier: String = "AirportCollViewCell"
     @IBOutlet weak var imgContainerView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
 
@@ -25,10 +28,13 @@ class AirportCollViewCell: UICollectionViewCell {
         reset()
     }
 
-    private func reset() {
+    internal func reset() {
         imgContainerView.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: 6.0)
         lblTitle.text = ""
     }
     
+    func setTitle(title:String){
+        self.lblTitle.text = title
+    }
 
 }

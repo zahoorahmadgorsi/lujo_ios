@@ -299,8 +299,11 @@ class FiltersViewController: UIViewController {
             viewRegion.txtName.text = ""//viewController.secondFilter.name
         }
         stackView.addArrangedSubview(viewRegion)
-        
-        let viewCategory = MultiLineCollectionFilter()
+        //**********
+        //NEW FILTER
+        //**********
+        let airportCollViewCell = AirportCollViewCell()
+        let viewCategory = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
         viewCategory.lblTitle.text = "Category"
         viewCategory.txtName.placeholder = "Select Category"
         viewCategory.items = [Taxonomy(termId: "-123" , name: "Adventure") , Taxonomy(termId: "-123" , name: "Arts")]
@@ -326,7 +329,8 @@ class FiltersViewController: UIViewController {
         stackView.addArrangedSubview(viewMinMax)
         
         if let items = self.filters , items.count > 0{
-            let view = MultiLineCollectionFilter()
+            let airportCollViewCell = AirportCollViewCell()
+            let view = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
             view.isTagLookAlike = true
             view.lblTitle.text = "Tags"
             view.txtName.placeholder = "Enter tags here"
@@ -335,6 +339,60 @@ class FiltersViewController: UIViewController {
             stackView.addArrangedSubview(view)
         }
 
+    }
+    
+    func updateGiftsFilters(_ previousViewController: UIViewController){
+        //**********
+        //NEW FILTER
+        //**********
+        let giftCell = GiftFilterCell()
+        let sortByFilter = MultiLineCollectionFilter(cell: giftCell, cellWidth: 400, cellHeight: 36, scrollDirection: .vertical, leftImageName: "", rightImageName: "filters_uncheck")
+        sortByFilter.lblTitle.text = "Sort By"
+        sortByFilter.txtName.isHidden = true
+        sortByFilter.items = [Taxonomy(termId: "-123" , name: "Our Picks"),
+                              Taxonomy(termId: "-123" , name: "New Items"),
+                              Taxonomy(termId: "-123" , name: "Price (low first)"),
+                              Taxonomy(termId: "-123" , name: "Price (high first)")]
+        sortByFilter.tag = 1
+
+        //pre-filling with existing filters
+        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
+//            viewCategory.txtName.text = ""//viewController.secondFilter.name
+        }
+        stackView.addArrangedSubview(sortByFilter)
+        
+        //**********
+        //NEW FILTER
+        //**********
+        let filterByCell = GiftFilterCell()
+        let filterByFilter = MultiLineCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, scrollDirection: .vertical, leftImageName: "", rightImageName: "filters_check")
+        filterByFilter.lblTitle.text = "Filter By"
+        filterByFilter.txtName.isHidden = true
+        filterByFilter.items = [Taxonomy(termId: "-123" , name: "Brands"),
+                              Taxonomy(termId: "-123" , name: "Categories"),
+                              Taxonomy(termId: "-123" , name: "Colors")]
+        filterByFilter.tag = 1
+
+        //pre-filling with existing filters
+        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
+//            viewCategory.txtName.text = ""//viewController.secondFilter.name
+        }
+        stackView.addArrangedSubview(filterByFilter)
+        //**********
+        //NEW FILTER
+        //**********
+        let viewMinMax = MinMaxFilter()
+        viewMinMax.lblTitle.text = "Price"
+        viewMinMax.tag = 10
+
+        //pre-filling with existing filters
+        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
+            viewMinMax.txtMinimum.text = viewController.eleventhFilter
+        }
+        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
+            viewMinMax.txtMaximum.text = viewController.twelvethFilter
+        }
+        stackView.addArrangedSubview(viewMinMax)
     }
     
     func updateContent() {
@@ -351,6 +409,9 @@ class FiltersViewController: UIViewController {
                 updateEventsExperiencesFilters(type: "Event", previousViewController)
             case .experience:
                 updateEventsExperiencesFilters(type: "Experience", previousViewController)
+                break
+            case .gift:
+                updateGiftsFilters(previousViewController)
                 break
             default:
                 break

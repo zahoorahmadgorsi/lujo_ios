@@ -24,6 +24,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var collContainerView: UIView!
     var userPreferences: Preferences?
     @IBOutlet weak var btnNextStep: UIButton!
+    var cell: MultiLineFilterProtocol!
     
     
     lazy var collectionView: UICollectionView = {
@@ -32,7 +33,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         contentView.dataSource = self
         contentView.delegate = self
-        contentView.register(UINib(nibName: AirportCollViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: AirportCollViewCell.identifier)
+        contentView.register(UINib(nibName: cell.identifier, bundle: nil), forCellWithReuseIdentifier: cell.identifier)
         contentView.backgroundColor = .clear
         contentView.showsHorizontalScrollIndicator = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,10 +54,12 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
 
     /// Init method that will init and return view controller.
     //class func instantiate(user: LujoUser) -> MyPreferencesViewController {
-    class func instantiate(prefType: PrefType, prefInformationType : PrefInformationType) -> PreferredDestinationaViewController {
+    class func instantiate(prefType: PrefType, prefInformationType : PrefInformationType, cell: MultiLineFilterProtocol) -> PreferredDestinationaViewController {
         let viewController = UIStoryboard.preferences.instantiate(identifier) as! PreferredDestinationaViewController
         viewController.prefType = prefType
         viewController.prefInformationType = prefInformationType
+        viewController.cell = cell
+        
         return viewController
     }
 
@@ -360,7 +363,8 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
         case .aviation:
             switch self.prefInformationType {
             case .aviationPreferredDestination:
-                let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredAirport)
+                let airportCollViewCell = AirportCollViewCell()
+                let viewController = PreferredDestinationaViewController.instantiate(prefType: .aviation, prefInformationType: .aviationPreferredAirport, cell: airportCollViewCell)
                 self.navigationController?.pushViewController(viewController, animated: true)
             case .aviationPreferredAirport:
                 let viewController = PrefProductCategoryViewController.instantiate(prefType: .aviation, prefInformationType: .aviationAircraftCategory)
@@ -591,14 +595,16 @@ extension PreferredDestinationaViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AirportCollViewCell.identifier, for: indexPath) as! AirportCollViewCell
-        let model = itemsList[indexPath.row]
-        cell.lblTitle.text = model.name
-
-        return cell
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell.identifier, for: indexPath) as? AirportCollViewCell{
+            let model = itemsList[indexPath.row]
+            cell.lblTitle.text = model.name
+            
+            return cell
+        }else{
+            return UICollectionViewCell()
+        }
         // swiftlint:enable force_cast
     }
-    
     
 }
 
