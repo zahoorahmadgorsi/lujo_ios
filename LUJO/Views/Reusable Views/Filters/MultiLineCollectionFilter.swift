@@ -24,7 +24,7 @@ class MultiLineCollectionFilter: UIView {
     @IBOutlet weak var viewTitle: UIView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var txtName: UITextField!
-    @IBOutlet weak var collectionViewParentHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var fullViewHeight: NSLayoutConstraint!
     
     
     
@@ -34,6 +34,14 @@ class MultiLineCollectionFilter: UIView {
     //used in gift filter
     var leftImageName:String = ""
     var rightImageName:String = ""
+    
+    var picker: ikDataPickerManger?
+    var strPickerSelection:String?  //what user has picked from the picker would be saved here
+    var pickerItems: [[String]] = [[]] {
+        didSet {
+//            collectionView.reloadData()
+        }
+    }
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -59,13 +67,15 @@ class MultiLineCollectionFilter: UIView {
         commonInit()
     }
     
-    var items: [Taxonomy] = [] {
+    var pickedItems: [Taxonomy] = [] {
         didSet {
             collectionView.reloadData()
-//            print(self.titleView.frame.height,self.collectionViewParent.frame)
-            //setting the view height to dynamic
-            self.collectionViewParentHeightConstraint.constant =  self.titleView.frame.height + (self.collectionViewParent.frame.height * CGFloat(items.count))
-            self.collectionView.layoutIfNeeded()    //to make it dynammic height
+            print(self.collectionViewParent.frame.height , (pickedItems.count > 0 ? 1 : 0))
+            var collectionViewParentHeight = CGFloat(48) * (pickedItems.count > 0 ? 1 : 0) //48 is the height of collectionViewParent
+//            //setting the view height to dynamic
+            print(self.titleView.frame.height,self.txtName.frame.height)
+            self.fullViewHeight.constant =  self.titleView.frame.height + self.txtName.frame.height + collectionViewParentHeight  + 16
+            self.collectionView.layoutIfNeeded()
         }
     }
     
@@ -91,6 +101,20 @@ class MultiLineCollectionFilter: UIView {
         
         collectionViewParent.addSubview(collectionView)
         setupLayout()
+        txtName.delegate = self
+        
+    }
+    
+    override func didMoveToSuperview(){
+        super.didMoveToSuperview()
+        if self.tag == FilterType.EventCategory.rawValue{   //event category
+            GoLujoAPIManager().getEventCategory() { taxonomies, error in
+                guard error == nil else {
+                    return
+                }
+                self.pickerItems = self.getEventCategoriesForPicker(categories: taxonomies ?? [])
+            }
+        }
     }
     
     private func setupLayout() {
@@ -101,17 +125,28 @@ class MultiLineCollectionFilter: UIView {
              collectionView.trailingAnchor.constraint(equalTo: collectionViewParent.trailingAnchor)]
         )
     }
+    
+    func getEventCategoriesForPicker(categories : [Taxonomy])->[[String]]{
+        var _categories:[[String]] = [[]]
+        if categories.count > 0{
+            for category in categories{
+                _categories[0].append(category.name)
+            }
+        }
+        return _categories
+    }
+    
 }
 
 extension MultiLineCollectionFilter : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return pickedItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell.identifier, for: indexPath) as? MultiLineFilterProtocol{
             
-            let model = items[indexPath.row]
+            let model = pickedItems[indexPath.row]
             
             cell.setTitle(title: model.name)
             cell.setLeftRightImages(leftImageName: self.leftImageName, rightImageName: self.rightImageName)   
@@ -123,20 +158,40 @@ extension MultiLineCollectionFilter : UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (isTagLookAlike){
-            for i in 0..<self.items.count{
-                if (i == indexPath.row){
-                    if let isSelected = self.items[i].isSelected{
-                        self.items[i].isSelected = !isSelected
-                    }
-                }else{
-                    items[i].isSelected = false
-                }
-            }
-            self.collectionView.reloadData()
-        }
+//        if (isTagLookAlike){
+//            for i in 0..<self.items.count{
+//                if (i == indexPath.row){
+//                    if let isSelected = self.items[i].isSelected{
+//                        self.items[i].isSelected = !isSelected
+//                    }
+//                }else{
+//                    items[i].isSelected = false
+//                }
+//            }
+//            self.collectionView.reloadData()
+//        }
+        //when tapped on the cell it should be removed
+        self.collectionView.deleteItems(at: [indexPath])
+        self.pickedItems.remove(at: indexPath.row)
     }
 
+    func loadEventCategory(textField: UITextField){
+        self.parentViewController?.view.endEditing(true)
+        
+        if picker == nil {
+            self.picker = ikDataPickerManger.create(owner: self.parentViewController!, sourceView: textField , title: "Please select one", dataSource: self.pickerItems, callback: { values in
+                if values.count > 0{
+                    self.strPickerSelection = values[0]
+                    var _temp = self.pickedItems
+                    _temp.append(Taxonomy(termId: "-123", name: values[0]))
+                    self.pickedItems = _temp  //it will reload
+                    
+                }
+            })
+            
+        }
+        picker?.present()
+    }
 }
 
 extension MultiLineCollectionFilter: UICollectionViewDelegateFlowLayout {
@@ -163,6 +218,40 @@ extension MultiLineCollectionFilter: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CGFloat(itemMargin)
+//        return 0
     }
 }
 
+extension MultiLineCollectionFilter:  UITextFieldDelegate{
+    //making preffered destination field uneditable
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        print (self.tag)
+        //if textField == self.txtName {
+//        if self.tag == FilterType.EventLocation.rawValue{   //event region
+//            let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .yachtPreferredRegions)   //pass regions
+////                viewController.delegate = self
+//            self.parentViewController?.present(viewController, animated: true, completion: nil)
+//            return false
+//        }
+        if self.tag == FilterType.EventCategory.rawValue{   //event category
+            self.loadEventCategory(textField: textField)
+            return false
+        }
+//        }
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if self.tag == FilterType.EventTags.rawValue{
+            if let text = textField.text{
+                var _temp = self.pickedItems
+                _temp.append(Taxonomy(termId: "-123", name: text))
+                self.pickedItems = _temp  //it will reload
+                self.txtName.text = ""
+                // Do not add a line break
+                return false
+            }
+        }
+        return true
+    }
+}

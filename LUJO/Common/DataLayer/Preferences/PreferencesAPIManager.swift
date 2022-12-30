@@ -950,6 +950,42 @@ extension GoLujoAPIManager  {
             }
     }
     
+    func searchCurrencies(strToSearch:String, completion: @escaping ([Taxonomy]?, Error?) -> Void) {
+        Alamofire.request(PreferencesRouter.searchCurrencies(strToSearch))
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    completion(nil, response.result.error!)
+                    return
+                }
+
+                // Special case where status code is not received, should never happen
+                guard let statusCode = response.response?.statusCode else {
+                    completion(nil, BackendError.unhandledStatus)
+                    return
+                }
+
+                switch statusCode {
+                case 1 ... 199: // Transfer protoco-level information: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 200 ... 299: // Success
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<TaxonomyResponse>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    completion(result.content.docs, nil)
+                    return
+                case 300 ... 399: // Redirection: Unexpected
+                    completion(nil, self.handleError(response, statusCode))
+                case 400 ... 499: // Client Error
+                    completion(nil, self.handleError(response, statusCode))
+                default: // 500 or bigger, Server Error
+                    completion(nil, self.handleError(response, statusCode))
+                }
+            }
+    }
+    
     
     func setYachtHaveCharteredBefore(yesOrNo:String, completion: @escaping (String?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.setYachtHaveCharteredBefore(yesOrNo))

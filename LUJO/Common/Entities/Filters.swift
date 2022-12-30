@@ -46,6 +46,7 @@ import FirebaseCrashlytics
 
 struct Filters:Codable{
     let name: String?
+    let key: String?
     let options: [filterOption]?
 }
 
@@ -53,4 +54,21 @@ struct filterOption:Codable{
     let name: String?
     let key: String?
     let value: String?
+    var isSelected: Bool?   //ony used in filters
+}
+
+struct ApplyFilters{
+    var eventFilters:EventFilters
+}
+
+struct EventFilters{
+    var featuredCities:[String]
+    var productName: String
+    var selectedRegion: String
+    
+    init(featuredCities: [String], productName:String, selectedRegion:String) {
+        self.featuredCities = featuredCities
+        self.productName = productName
+        self.selectedRegion = selectedRegion
+    }
 }

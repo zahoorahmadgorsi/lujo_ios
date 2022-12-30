@@ -84,6 +84,8 @@ enum PrefInformationType:String{
     case villaAmenities
     case villaAccomodation
     case profile
+    
+    case currency
 }
 
 enum PreferenceError: Error {

@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="KdH-Yw-epW"/>
                 <outlet property="lblTitle" destination="iRF-mf-eWD" id="4zu-dD-238"/>
+                <outlet property="txtCurrency" destination="qrS-Gt-nob" id="qpU-Xp-XS0"/>
                 <outlet property="txtMaximum" destination="3sC-ac-YTH" id="19A-1f-Thw"/>
                 <outlet property="txtMinimum" destination="Vc2-Hg-kaM" id="eRA-dT-lD4"/>
             </connections>

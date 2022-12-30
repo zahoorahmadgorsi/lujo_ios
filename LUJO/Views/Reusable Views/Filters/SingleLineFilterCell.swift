@@ -9,13 +9,15 @@
 import UIKit
 
 protocol SingleLineFilterCellProtocol:class {
-    func didTappedOnCheckBox(index:Int)
+    func didTappedOnItem(at index:Int)
 }
 
 class SingleLineFilterCell: UICollectionViewCell {
     
     static var identifier: String = "SingleLineFilterCell"
 
+    
+    @IBOutlet weak var mainStackView: UIStackView!
     
     @IBOutlet weak var viewImage: UIView!
     @IBOutlet weak var imgView: UIImageView!
@@ -37,9 +39,9 @@ class SingleLineFilterCell: UICollectionViewCell {
     }
 
     private func reset() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedOnCheckBox))
-        viewImage.isUserInteractionEnabled = true
-        viewImage.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappedOnStackView))
+        mainStackView.isUserInteractionEnabled = true
+        mainStackView.addGestureRecognizer(tapGesture)
     }
     
     //this function will change the look and feel of the view
@@ -59,10 +61,10 @@ class SingleLineFilterCell: UICollectionViewCell {
     }
     
     
-    @objc func didTappedOnCheckBox(_ sender: Any) {
-        delegate?.didTappedOnCheckBox(index: imgView.tag)
+    @objc func didTappedOnStackView(_ sender: Any) {
+        delegate?.didTappedOnItem(at: imgView.tag)
     }
-    
+ 
 }
 
 

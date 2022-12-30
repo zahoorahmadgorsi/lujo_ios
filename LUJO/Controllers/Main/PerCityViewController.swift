@@ -94,6 +94,7 @@ class PerCityViewController: UIViewController {
     
     //MARK:-  Filters
     
+    
     var firstFilter:String = ""         //name
     var secondFilter: [Taxonomy] = []   //yacht Charter
     var thirdFilter: String = ""        //yacht Guests
@@ -168,34 +169,34 @@ class PerCityViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         clearQuickFilterSelection()     //first clearing all selection
         //highlight the quick filter if filter selection matches with quick
-        if secondFilter.count > 0 {     //yacht Charter
-            selectQuickFilter(secondFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
-        }
-        //yacht Length in Feet
-        if let filter = fourthFilter{
-            selectQuickFilter(filter)
-        }
-        //yacht Length in Meters
-        if let filter = fifthFilter{
-            selectQuickFilter(filter)
-        }
-        //yacht Type
-        if sixthFilter.count > 0 {     //yacht Charter
-            selectQuickFilter(sixthFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
-        }
-        //yacht tags
-        if let filter = eighthFilter{
-            selectQuickFilter(filter)
-        }
-        //Interested in charter or sale
-        if ninthFilter.count > 0 {     //yacht Charter
-            selectQuickFilter(ninthFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
-        }
-        
-        //Region
-        if let filter = tenthFilter{
-            selectQuickFilter(filter)
-        }
+//        if secondFilter.count > 0 {     //yacht Charter
+//            selectQuickFilter(secondFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
+//        }
+//        //yacht Length in Feet
+//        if let filter = fourthFilter{
+//            selectQuickFilter(filter)
+//        }
+//        //yacht Length in Meters
+//        if let filter = fifthFilter{
+//            selectQuickFilter(filter)
+//        }
+//        //yacht Type
+//        if sixthFilter.count > 0 {     //yacht Charter
+//            selectQuickFilter(sixthFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
+//        }
+//        //yacht tags
+//        if let filter = eighthFilter{
+//            selectQuickFilter(filter)
+//        }
+//        //Interested in charter or sale
+//        if ninthFilter.count > 0 {     //yacht Charter
+//            selectQuickFilter(ninthFilter[0])    //only one value per filter can be selected from filter screen so this array will always contain 1 value here
+//        }
+//
+//        //Region
+//        if let filter = tenthFilter{
+//            selectQuickFilter(filter)
+//        }
     
         quickFilters.sort { ($0.isSelected ?? false) && !($1.isSelected ?? false) }
         collectionView.reloadData()
@@ -370,7 +371,7 @@ class PerCityViewController: UIViewController {
     @IBAction func viewFilterTapped(_ sender: Any) {
         if let filters = self.filters{
             let viewController = FiltersViewController.instantiate(filters: filters, category:self.category)
-            viewController.delegate = self
+//            viewController.delegate = self
             self.navigationController?.pushViewController(viewController, animated: false)
         }else{
             let error = BackendError.parsing(reason: "No filters are available")
@@ -413,15 +414,15 @@ extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDel
         let filter = self.quickFilters[indexPath.row]
         
 //        if let filter.filterParameter = secondFilter{     //yacht Charter
-        if filter.filterParameter == "charter_term_id" {     //yacht Charter
-            if filter.isSelected ?? false {     //if is selected is true then append
-                secondFilter.append( filter)
-            }else { //if is selected is false then remove if exists
-                if let idx = secondFilter.firstIndex(where: { $0.termId == filter.termId }) {
-                    secondFilter.remove(at: idx)
-                }
-            }
-        }
+//        if filter.filterParameter == "charter_term_id" {     //yacht Charter
+//            if filter.isSelected ?? false {     //if is selected is true then append
+//                secondFilter.append( filter)
+//            }else { //if is selected is false then remove if exists
+//                if let idx = secondFilter.firstIndex(where: { $0.termId == filter.termId }) {
+//                    secondFilter.remove(at: idx)
+//                }
+//            }
+//        }
 //        //yacht Length in Feet (not used in quick filters)
 //        if filter.filterParameter == "" {
 //            fourthFilter = filter
@@ -431,37 +432,37 @@ extension PerCityViewController: UICollectionViewDataSource, UICollectionViewDel
 //            fifthFilter = filter
 //        }
         //yacht Type (motor/sail)
-        if filter.filterParameter == "type_term_id" {
-            if filter.isSelected ?? false {     //if is selected is true then append
-                sixthFilter.append( filter)
-            }else { //if is selected is false then remove if exists
-                if let idx = sixthFilter.firstIndex(where: { $0.termId == filter.termId }) {
-                    sixthFilter.remove(at: idx)
-                }
-            }
-        }
+//        if filter.filterParameter == "type_term_id" {
+//            if filter.isSelected ?? false {     //if is selected is true then append
+//                sixthFilter.append( filter)
+//            }else { //if is selected is false then remove if exists
+//                if let idx = sixthFilter.firstIndex(where: { $0.termId == filter.termId }) {
+//                    sixthFilter.remove(at: idx)
+//                }
+//            }
+//        }
 //        //yacht tags (not used in quick filters)
 //        if filter.filterParameter == "" {
 //            eighthFilter = filter
 //        }
-        //Interested in charter or sale
-        if filter.filterParameter == "yacht_status" {
-            if filter.isSelected ?? false {     //if is selected is true then append
-                ninthFilter.append( filter)
-            }else { //if is selected is false then remove if exists
-                if let idx = ninthFilter.firstIndex(where: { $0.termId == filter.termId }) {
-                    ninthFilter.remove(at: idx)
-                }
-            }
-        }
-        //Region
-        if filter.filterParameter == "region" {
-            if filter.isSelected ?? false {
-                tenthFilter = filter
-            }else{
-                tenthFilter = nil
-            }
-        }
+//        //Interested in charter or sale
+//        if filter.filterParameter == "yacht_status" {
+//            if filter.isSelected ?? false {     //if is selected is true then append
+//                ninthFilter.append( filter)
+//            }else { //if is selected is false then remove if exists
+//                if let idx = ninthFilter.firstIndex(where: { $0.termId == filter.termId }) {
+//                    ninthFilter.remove(at: idx)
+//                }
+//            }
+//        }
+//        //Region
+//        if filter.filterParameter == "region" {
+//            if filter.isSelected ?? false {
+//                tenthFilter = filter
+//            }else{
+//                tenthFilter = nil
+//            }
+//        }
     
 
         getInformation()    //applying the quick filter
@@ -637,69 +638,69 @@ extension PerCityViewController: CityViewProtocol {
         
         var secondFilterTermId = "" , fourthFilterTermId = "", fifthFilterTermId = "", sixthFilterTermId = "", eighthFilterTermId = "", ninthFilterTermId = "", tenthFilterTermId = ""
         
-        var dictFilter = [String: String]() //used for mixpanle logging
-        if (firstFilter.count > 0){
-            dictFilter["Filter First (Name)"] = firstFilter
-        }
-        if secondFilter.count > 0{
-            let ids = secondFilter.map { $0.termId }
-            secondFilterTermId = (ids.map{String($0)}).joined(separator: ",")
-            
-            let names = secondFilter.map{($0.name)}
-            dictFilter["Filter Second"] = names.joined(separator: ",")
-        }
-        if (thirdFilter.count > 0){
-            dictFilter["Filter Third"] = thirdFilter
-        }
-        if let filter = fourthFilter{
-            fourthFilterTermId = String(filter.termId)
-            dictFilter["Filter Fourth (Length In Feet)"] = filter.name
-        }
-        if let filter = fifthFilter{
-            fifthFilterTermId = String(filter.termId)
-            dictFilter["Filter Fifth (Length In Meters)"] = filter.name
-        }
-
-        if sixthFilter.count > 0{
-            let ids = sixthFilter.map { $0.termId }
-            sixthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
-            
-            let names = sixthFilter.map{($0.name)}
-            dictFilter["Filter Sixth"] = names.joined(separator: ",")
-        }
-        
-        if (seventhFilter.count > 0){
-            dictFilter["Filter Seventh"] = seventhFilter
-        }
-        if let filter = eighthFilter{
-            eighthFilterTermId = String(filter.termId)
-            dictFilter["Filter Eighth"] = filter.name
-        }
-        
-        if ninthFilter.count > 0{
-            let ids = ninthFilter.map { $0.termId }
-            ninthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
-            
-            let names = ninthFilter.map{($0.name)}
-            dictFilter["Ninth Sixth"] = names.joined(separator: ",")
-        }
-        
-        if let filter = tenthFilter{
-            tenthFilterTermId = String(filter.termId)
-            dictFilter["Filter Tenth"] = filter.name
-        }
-        if (eleventhFilter.count > 0){
-            dictFilter["Filter Eleventh (Min Price)"] = eleventhFilter
-        }
-        if (twelvethFilter.count > 0){
-            dictFilter["Filter Twelveth (Max Price)"] = twelvethFilter
-        }
-        if (dictFilter.count > 0){
-            Mixpanel.mainInstance().track(event: "Filters Applied On \(category.rawValue)",
-                                          properties: dictFilter)
-        }
-        
-        
+//        var dictFilter = [String: String]() //used for mixpanle logging
+//        if (firstFilter.count > 0){
+//            dictFilter["Filter First (Name)"] = firstFilter
+//        }
+//        if secondFilter.count > 0{
+//            let ids = secondFilter.map { $0.termId }
+//            secondFilterTermId = (ids.map{String($0)}).joined(separator: ",")
+//
+//            let names = secondFilter.map{($0.name)}
+//            dictFilter["Filter Second"] = names.joined(separator: ",")
+//        }
+//        if (thirdFilter.count > 0){
+//            dictFilter["Filter Third"] = thirdFilter
+//        }
+//        if let filter = fourthFilter{
+//            fourthFilterTermId = String(filter.termId)
+//            dictFilter["Filter Fourth (Length In Feet)"] = filter.name
+//        }
+//        if let filter = fifthFilter{
+//            fifthFilterTermId = String(filter.termId)
+//            dictFilter["Filter Fifth (Length In Meters)"] = filter.name
+//        }
+//
+//        if sixthFilter.count > 0{
+//            let ids = sixthFilter.map { $0.termId }
+//            sixthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
+//
+//            let names = sixthFilter.map{($0.name)}
+//            dictFilter["Filter Sixth"] = names.joined(separator: ",")
+//        }
+//
+//        if (seventhFilter.count > 0){
+//            dictFilter["Filter Seventh"] = seventhFilter
+//        }
+//        if let filter = eighthFilter{
+//            eighthFilterTermId = String(filter.termId)
+//            dictFilter["Filter Eighth"] = filter.name
+//        }
+//
+//        if ninthFilter.count > 0{
+//            let ids = ninthFilter.map { $0.termId }
+//            ninthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
+//
+//            let names = ninthFilter.map{($0.name)}
+//            dictFilter["Ninth Sixth"] = names.joined(separator: ",")
+//        }
+//
+//        if let filter = tenthFilter{
+//            tenthFilterTermId = String(filter.termId)
+//            dictFilter["Filter Tenth"] = filter.name
+//        }
+//        if (eleventhFilter.count > 0){
+//            dictFilter["Filter Eleventh (Min Price)"] = eleventhFilter
+//        }
+//        if (twelvethFilter.count > 0){
+//            dictFilter["Filter Twelveth (Max Price)"] = twelvethFilter
+//        }
+//        if (dictFilter.count > 0){
+//            Mixpanel.mainInstance().track(event: "Filters Applied On \(category.rawValue)",
+//                                          properties: dictFilter)
+//        }
+//
+//
         EEAPIManager().getPerCity(type: categoryType
                                   , yachtName: firstFilter
                                   , yachtCharter: secondFilterTermId
@@ -878,62 +879,66 @@ extension PerCityViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension PerCityViewController: FiltersVCProtocol{
-    func setFirstFilter(filter: String) {
-        self.firstFilter = filter
-    }
+//extension PerCityViewController: FiltersVCProtocol{
+//    func setCities(cities: [String]) {
+//        self.cities = cities
+//    }
     
-    func setSecondFilter(filter: Taxonomy?) {
-        self.secondFilter = []  //from filter multiple selection isnt allowed
-        if let filt = filter{
-            self.secondFilter.append(filt)
-        }
-        
-    }
-    
-    func setThirdFilter(filter: String) {
-        self.thirdFilter = filter
-    }
-    
-    func setFourthFilter(filter: Taxonomy?) {
-        self.fourthFilter = filter
-    }
-    
-    func setFifthFilter(filter: Taxonomy?) {
-        self.fifthFilter = filter
-    }
-    
-    func setSixthFilter(filter: Taxonomy?) {
-        self.sixthFilter = []  //from filter multiple selection isnt allowed
-        if let filt = filter{
-            self.sixthFilter.append(filt)
-        }
-    }
-    
-    func setSeventhFilter(filter: String) {
-        self.seventhFilter = filter
-    }
-    
-    func setEighthFilter(filter: Taxonomy?) {
-        self.eighthFilter = filter
-    }
-    
-    func setNinthFilter(filter: Taxonomy?) {
-        self.ninthFilter = []  //from filter multiple selection isnt allowed
-        if let filt = filter{
-            self.ninthFilter.append(filt)
-        }
-    }
-    
-    func setTenthFilter(filter: Taxonomy?) {
-        self.tenthFilter = filter
-    }
-    
-    func setEleventhFilter(filter: String) {
-        self.eleventhFilter = filter
-    }
-    
-    func setTwelvethFilter(filter: String) {
-        self.twelvethFilter = filter
-    }
-}
+//    func setFirstFilter(filter: String) {
+//        self.firstFilter = filter
+//    }
+//
+//    func setSecondFilter(filter: Taxonomy?) {
+//        self.secondFilter = []  //from filter multiple selection isnt allowed
+//        if let filt = filter{
+//            self.secondFilter.append(filt)
+//        }
+//
+//    }
+//
+//    func setThirdFilter(filter: String) {
+//        self.thirdFilter = filter
+//    }
+//
+//    func setFourthFilter(filter: Taxonomy?) {
+//        self.fourthFilter = filter
+//    }
+//
+//    func setFifthFilter(filter: Taxonomy?) {
+//        self.fifthFilter = filter
+//    }
+//
+//    func setSixthFilter(filter: Taxonomy?) {
+//        self.sixthFilter = []  //from filter multiple selection isnt allowed
+//        if let filt = filter{
+//            self.sixthFilter.append(filt)
+//        }
+//    }
+//
+//    func setSeventhFilter(filter: String) {
+//        self.seventhFilter = filter
+//    }
+//
+//    func setEighthFilter(filter: Taxonomy?) {
+//        self.eighthFilter = filter
+//    }
+//
+//    func setNinthFilter(filter: Taxonomy?) {
+//        self.ninthFilter = []  //from filter multiple selection isnt allowed
+//        if let filt = filter{
+//            self.ninthFilter.append(filt)
+//        }
+//    }
+//
+//    func setTenthFilter(filter: Taxonomy?) {
+//        self.tenthFilter = filter
+//    }
+//
+//    func setEleventhFilter(filter: String) {
+//        self.eleventhFilter = filter
+//    }
+//
+//    func setTwelvethFilter(filter: String) {
+//        self.twelvethFilter = filter
+//    }
+//}

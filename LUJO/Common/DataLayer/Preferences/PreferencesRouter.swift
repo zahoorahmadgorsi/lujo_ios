@@ -69,6 +69,7 @@ enum PreferencesRouter: URLRequestConvertible {
     case setYachtPreferredRegions(String)
     case setYachtLength(String)
     case searchRegions(String)
+    case searchCurrencies(String)
     
     case getDiningCuisines
     case getDiningAllergies
@@ -221,7 +222,8 @@ enum PreferencesRouter: URLRequestConvertible {
         
         case .setVillaDestinations: fallthrough
         case .setVillaAmenities: fallthrough
-        case .setVillaAccomodation:
+        case .setVillaAccomodation: fallthrough
+        case .searchCurrencies:
                 return .post
         }
     }
@@ -318,6 +320,8 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setVillaDestinations: fallthrough
         case .setVillaAmenities: fallthrough
         case .setVillaAccomodation: newURLComponents.path.append("/preferences/villa")
+            
+        case .searchCurrencies: newURLComponents.path.append("/currencies")
         }
         
         do {
@@ -468,6 +472,10 @@ enum PreferencesRouter: URLRequestConvertible {
             
         case let.setProfilePreferences(commaSeparatedString):
             return setProfilePreferencesAsJSONData(commaSeparatedString:commaSeparatedString)
+            
+        case let .searchCurrencies(search):
+            return setCurrencySearchAsJSONData(search: search)
+            
         }
     }
     
@@ -807,6 +815,15 @@ enum PreferencesRouter: URLRequestConvertible {
     fileprivate func setProfilePreferencesAsJSONData(commaSeparatedString:String) -> Data?{
         let body: [String: Any] = [
             "type": commaSeparatedString.components(separatedBy: ",")
+        ]
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    fileprivate func setCurrencySearchAsJSONData( search:String) -> Data?{
+        let body: [String: Any] = [
+            "search": search,
+            "page" : 1,
+            "per_page" : 100
         ]
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

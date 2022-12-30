@@ -85,7 +85,7 @@ extension TextFieldFilter:  UITextFieldDelegate{
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         print (self.tag)
         if textField == self.txtName {
-            if self.tag == 9{   //region
+            if self.tag == FilterType.EventLocation.rawValue{   //event region
                 let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .yachtPreferredRegions)   //pass regions
                 viewController.delegate = self
                 self.parentViewController?.present(viewController, animated: true, completion: nil)

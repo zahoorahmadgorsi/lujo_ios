@@ -42,7 +42,7 @@ class SingleLineCollectionFilter: UIView {
     }()
     
     
-    var items: [Taxonomy] = [] {
+    var items: [filterOption] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -94,7 +94,7 @@ extension SingleLineCollectionFilter : UICollectionViewDataSource {
         let model = items[indexPath.row]
         cell.imgView.tag = indexPath.row    //to get the index when tapped on this cell
         cell.imgView.image = model.isSelected == true ? UIImage(named: "filters_check") : UIImage(named: "filters_uncheck")
-        
+
         cell.lblTitle.text = model.name
 
         //change cell looks like a tag, default value is false
@@ -105,13 +105,13 @@ extension SingleLineCollectionFilter : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (isTagLookAlike){
             for i in 0..<self.items.count{
-                if (i == indexPath.row){
-                    if let isSelected = self.items[i].isSelected{
-                        self.items[i].isSelected = !isSelected
-                    }
-                }else{
-                    items[i].isSelected = false
-                }
+//                if (i == indexPath.row){
+//                    if let isSelected = self.items[i].isSelected{
+//                        self.items[i].isSelected = !isSelected
+//                    }
+//                }else{
+//                    items[i].isSelected = false
+//                }
             }
             self.collectionView.reloadData()
         }
@@ -147,17 +147,22 @@ extension SingleLineCollectionFilter: UICollectionViewDelegateFlowLayout {
 }
 
 extension SingleLineCollectionFilter:SingleLineFilterCellProtocol{
-    func didTappedOnCheckBox(index: Int) {
+
+    
+    func didTappedOnItem(at index: Int) {
         for i in 0..<self.items.count{
             if (i == index){
-                if let isSelected = self.items[i].isSelected{
+                let isSelected = self.items[i].isSelected ?? false
+//                if let isSelected = self.items[i].isSelected{
                     self.items[i].isSelected = !isSelected
-                    delegate?.didTappedOnFilterAt(tag: self.tag, termId: self.items[i].termId)  //delegate is only set for interested in i.e. tag 8
-                }
-                
-            }else{
-                self.items[i].isSelected = false
+//                    delegate?.didTappedOnFilterAt(tag: self.tag, termId: self.items[i].termId)  //delegate is only set for interested in i.e. tag 8
+//                }
+                break   //no need to continue with the loop
             }
+            //uncomment below if want to disable multi selection
+//            else{
+//                self.items[i].isSelected = false
+//            }
         }
         self.collectionView.reloadData()    //reload collection after updating the model
     }

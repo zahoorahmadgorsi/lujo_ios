@@ -29,12 +29,17 @@ class ProductsViewController: UIViewController {
     class var identifier: String { return "ProductsViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(category: ProductCategory, subCategory: ProductCategory? = nil, dataSource: [Product] = [], city: DiningCity? = nil) -> ProductsViewController {
+    class func instantiate(category: ProductCategory,
+                           subCategory: ProductCategory? = nil,
+                           dataSource: [Product] = [],
+                           city: DiningCity? = nil,
+                           applyFilters: ApplyFilters? = nil) -> ProductsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! ProductsViewController
         viewController.category = category
         viewController.subCategory = subCategory
         viewController.dataSource = dataSource
         viewController.city = city
+        viewController.applyFilters =  applyFilters
         return viewController
     }
     
@@ -68,6 +73,9 @@ class ProductsViewController: UIViewController {
         self.collectionView.refreshControl = refreshControl
         return refreshControl
     }()
+    
+    //Filters
+    var applyFilters: ApplyFilters?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -513,3 +521,4 @@ extension ProductsViewController: UIViewControllerTransitioningDelegate {
             return eventsAnimator
     }
 }
+

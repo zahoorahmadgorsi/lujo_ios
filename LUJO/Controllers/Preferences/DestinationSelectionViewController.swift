@@ -46,6 +46,9 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
             titleLabel.text = "Search Destinations"
         case .yachtPreferredRegions:
             titleLabel.text = "Search Regions"
+        case .currency:
+            titleLabel.text = "Search Currency"
+            self.searchText.placeholder = "Currency name"
         default:
             print("Never going to get executed")
         }
@@ -163,6 +166,16 @@ extension DestinationSelectionViewController {
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain preferred regions")
+                    self.showErrorPopup(withTitle: "Error", error: error)
+                    return
+                }
+                self.showDestinationsList(taxonomies ?? [])
+            }
+        case .currency:
+            GoLujoAPIManager().searchCurrencies( strToSearch: pattern) { taxonomies, error in
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    let error = BackendError.parsing(reason: "Could not obtain currencies")
                     self.showErrorPopup(withTitle: "Error", error: error)
                     return
                 }

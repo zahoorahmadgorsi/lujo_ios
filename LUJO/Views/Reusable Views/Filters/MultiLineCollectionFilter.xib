@@ -12,8 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiLineCollectionFilter" customModule="LUJO" customModuleProvider="target">
             <connections>
                 <outlet property="collectionViewParent" destination="8oi-SW-hIr" id="ILt-w4-wRg"/>
-                <outlet property="collectionViewParentHeightConstraint" destination="Wh3-If-D5Q" id="rb8-SP-xCR"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="2hh-1M-C4h"/>
+                <outlet property="fullViewHeight" destination="Wh3-If-D5Q" id="rb8-SP-xCR"/>
                 <outlet property="lblTitle" destination="iRF-mf-eWD" id="gJo-MF-UyE"/>
                 <outlet property="titleView" destination="FAf-oX-6Ux" id="2fT-HF-nbI"/>
                 <outlet property="txtName" destination="thb-sf-gCz" id="tGb-Gg-7Gp"/>

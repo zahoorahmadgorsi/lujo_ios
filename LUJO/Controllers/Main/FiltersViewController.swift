@@ -10,18 +10,23 @@ import UIKit
 
 
 protocol FiltersVCProtocol:class {
-    func setFirstFilter(filter:String)      //name
-    func setSecondFilter(filter:Taxonomy?)  //daily or weekly charter
-    func setThirdFilter(filter:String)
-    func setFourthFilter(filter:Taxonomy?)
-    func setFifthFilter(filter:Taxonomy?)
-    func setSixthFilter(filter:Taxonomy?)
-    func setSeventhFilter(filter:String)
-    func setEighthFilter(filter:Taxonomy?)  //yacht tag
-    func setNinthFilter(filter:Taxonomy?)   //charter or sale
-    func setTenthFilter(filter:Taxonomy?)   //region
-    func setEleventhFilter(filter:String)    //min price
-    func setTwelvethFilter(filter:String)    //mx price
+    func setCities(cities:[String])
+//    func setFirstFilter(filter:String)      //name
+//    func setSecondFilter(filter:Taxonomy?)  //daily or weekly charter
+//    func setThirdFilter(filter:String)
+//    func setFourthFilter(filter:Taxonomy?)
+//    func setFifthFilter(filter:Taxonomy?)
+//    func setSixthFilter(filter:Taxonomy?)
+//    func setSeventhFilter(filter:String)
+//    func setEighthFilter(filter:Taxonomy?)  //yacht tag
+//    func setNinthFilter(filter:Taxonomy?)   //charter or sale
+//    func setTenthFilter(filter:Taxonomy?)   //region
+//    func setEleventhFilter(filter:String)    //min price
+//    func setTwelvethFilter(filter:String)    //mx price
+}
+
+enum FilterType: Int {
+    case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags
 }
 
 class FiltersViewController: UIViewController {
@@ -35,7 +40,9 @@ class FiltersViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var scrollView: UIScrollView!
     
-    var delegate:FiltersVCProtocol?     //used to set the filters
+
+    
+//    var delegate:FiltersVCProtocol?     //used to set the filters
     
     /// Init method that will init and return view controller.
     class func instantiate(filters: [Filters], category: ProductCategory) -> FiltersViewController {
@@ -67,6 +74,7 @@ class FiltersViewController: UIViewController {
     }
     
 
+    
     @objc func back(sender: UIBarButtonItem) {
         print("Clear all filters")
         clearAllFilters()
@@ -79,18 +87,18 @@ class FiltersViewController: UIViewController {
     }
     
     func clearAllFilters(){
-        delegate?.setFirstFilter(filter: "")
-        delegate?.setSecondFilter(filter: nil)
-        delegate?.setThirdFilter(filter: "")
-        delegate?.setFourthFilter(filter: nil)
-        delegate?.setFifthFilter(filter: nil)
-        delegate?.setSixthFilter(filter: nil)
-        delegate?.setSeventhFilter(filter: "")
-        delegate?.setEighthFilter(filter: nil)
-        delegate?.setNinthFilter(filter: nil)
-        delegate?.setTenthFilter(filter: nil)
-        delegate?.setEleventhFilter(filter: "")
-        delegate?.setTwelvethFilter(filter: "")
+//        delegate?.setFirstFilter(filter: "")
+//        delegate?.setSecondFilter(filter: nil)
+//        delegate?.setThirdFilter(filter: "")
+//        delegate?.setFourthFilter(filter: nil)
+//        delegate?.setFifthFilter(filter: nil)
+//        delegate?.setSixthFilter(filter: nil)
+//        delegate?.setSeventhFilter(filter: "")
+//        delegate?.setEighthFilter(filter: nil)
+//        delegate?.setNinthFilter(filter: nil)
+//        delegate?.setTenthFilter(filter: nil)
+//        delegate?.setEleventhFilter(filter: "")
+//        delegate?.setTwelvethFilter(filter: "")
     }
     
     func updateYachtFilters(_ previousViewController: UIViewController){
@@ -100,9 +108,9 @@ class FiltersViewController: UIViewController {
         view.tag = 1
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.firstFilter.count > 0{
-            view.txtName.text = viewController.firstFilter
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.firstFilter.count > 0{
+//            view.txtName.text = viewController.firstFilter
+//        }
         stackView.addArrangedSubview(view)
 
 //        if var items = self.filters.yachtStatus , items.count > 0{
@@ -120,7 +128,7 @@ class FiltersViewController: UIViewController {
 //            }
 
             //viewInterestedIn.items = items
-            viewInterestedIn.items = [Taxonomy(termId: "-123", name: "Purchase")]
+//            viewInterestedIn.items = [Taxonomy(termId: "-123", name: "Purchase")]
             view.tag = 8
             viewInterestedIn.delegate = self    //it will cause the tap event on radio button fire which will hide unhide yacht charter view
             stackView.addArrangedSubview(viewInterestedIn)
@@ -141,16 +149,16 @@ class FiltersViewController: UIViewController {
 //            }
 
 //            viewCharterType.items = items
-            viewCharterType.items = [Taxonomy(termId: "-123", name: "Daily"), Taxonomy(termId: "-123", name: "Weekly")]
+//            viewCharterType.items = [Taxonomy(termId: "-123", name: "Daily"), Taxonomy(termId: "-123", name: "Weekly")]
             viewCharterType.tag = 2
-            if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter.count != 0{
-                //if user had selected *purchase* in interest in
-                let termID = viewController.ninthFilter[0].termId
-                print("Apply the below check")
-//                        if (termID == 3023 || termID == 273 ){ //3023 = Sale on production and 273 = sale on staging
-//                            view.isHidden = true    //Hide yacht charter view if user is interested in purchase
-//                        }
-            }
+//            if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter.count != 0{
+//                //if user had selected *purchase* in interest in
+//                let termID = viewController.ninthFilter[0].termId
+//                print("Apply the below check")
+////                        if (termID == 3023 || termID == 273 ){ //3023 = Sale on production and 273 = sale on staging
+////                            view.isHidden = true    //Hide yacht charter view if user is interested in purchase
+////                        }
+//            }
             stackView.addArrangedSubview(viewCharterType)
 //        }
 
@@ -160,9 +168,9 @@ class FiltersViewController: UIViewController {
         viewRegion.tag = 9
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.tenthFilter != nil {
-            viewRegion.txtName.text = viewController.tenthFilter?.name
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.tenthFilter != nil {
+//            viewRegion.txtName.text = viewController.tenthFilter?.name
+//        }
         stackView.addArrangedSubview(viewRegion)
 
         let viewGuests = TextFieldFilter()
@@ -171,10 +179,10 @@ class FiltersViewController: UIViewController {
         viewGuests.txtName.isHidden = true
         viewGuests.tag = 3
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.thirdFilter.count > 0{
-            viewGuests.lblPickerSelection.text = viewController.thirdFilter
-            viewGuests.txtPickerSelection = viewController.thirdFilter
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.thirdFilter.count > 0{
+//            viewGuests.lblPickerSelection.text = viewController.thirdFilter
+//            viewGuests.txtPickerSelection = viewController.thirdFilter
+//        }
         stackView.addArrangedSubview(viewGuests)
 
 //        if ((self.filters.yachtLengthInFeet?.count ?? 0 > 0) || (self.filters.yachtLengthInMeter?.count ?? 0 > 0)){
@@ -224,7 +232,7 @@ class FiltersViewController: UIViewController {
 //            }
 
 //            viewYachtType.items = items
-            viewYachtType.items = [Taxonomy(termId: "-123", name: "Motor"), Taxonomy(termId: "-123", name: "Sail")]
+//            viewYachtType.items = [Taxonomy(termId: "-123", name: "Motor"), Taxonomy(termId: "-123", name: "Sail")]
             viewYachtType.tag = 5
             stackView.addArrangedSubview(viewYachtType)
 //        }
@@ -235,10 +243,10 @@ class FiltersViewController: UIViewController {
         viewBuiltAfter.txtName.isHidden = true
         viewBuiltAfter.tag = 6
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.seventhFilter.count > 0{
-            viewBuiltAfter.lblPickerSelection.text = viewController.seventhFilter
-            viewBuiltAfter.txtPickerSelection = viewController.seventhFilter
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.seventhFilter.count > 0{
+//            viewBuiltAfter.lblPickerSelection.text = viewController.seventhFilter
+//            viewBuiltAfter.txtPickerSelection = viewController.seventhFilter
+//        }
         stackView.addArrangedSubview(viewBuiltAfter)
 
         let viewMinMax = MinMaxFilter()
@@ -246,12 +254,12 @@ class FiltersViewController: UIViewController {
         viewMinMax.tag = 10
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
-            viewMinMax.txtMinimum.text = viewController.eleventhFilter
-        }
-        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
-            viewMinMax.txtMaximum.text = viewController.twelvethFilter
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
+//            viewMinMax.txtMinimum.text = viewController.eleventhFilter
+//        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
+//            viewMinMax.txtMaximum.text = viewController.twelvethFilter
+//        }
         stackView.addArrangedSubview(viewMinMax)
 
 //        if let items = self.filters.yachtTag , items.count > 0{
@@ -259,83 +267,99 @@ class FiltersViewController: UIViewController {
             viewYachtTag.isTagLookAlike = true
             viewYachtTag.lblTitle.text = "Tag"
 //            viewYachtTag.items = items
-            viewYachtTag.items = [Taxonomy(termId: "-123", name: "New"), Taxonomy(termId: "-123", name: "Luxury")]
+//            viewYachtTag.items = [Taxonomy(termId: "-123", name: "New"), Taxonomy(termId: "-123", name: "Luxury")]
             viewYachtTag.tag = 7
             stackView.addArrangedSubview(viewYachtTag)
 //        }
     }
     
     func updateEventsExperiencesFilters(type: String ,_ previousViewController: UIViewController){
-        
+        //****************
+        // Featured Cities
+        //****************
         if let items = self.filters , items.count > 0{
             let view = SingleLineCollectionFilter()
             view.isTagLookAlike = true
             view.lblTitle.text = "Featured " + (type == "Event" ? "events" : "experiences")
-            view.items = [Taxonomy(termId: "-123" , name: "Drift"), Taxonomy(termId: "-123" , name: "Awesome")]
-            view.tag = 7
+            
+            let citiesFilter = self.filters.filter({$0.key == "cities"})
+            if citiesFilter.count > 0, let options = citiesFilter[0].options, options.count > 0{
+                view.items = options
+            }
+            view.tag = FilterType.FeaturedEvents.rawValue
             stackView.addArrangedSubview(view)
         }
-        
+        //****************
+        // Product Name
+        //****************
         let viewName = TextFieldFilter()
         viewName.lblTitle.text = (type == "Event" ? "Event" : "Experience") + " name"
         viewName.txtName.placeholder = "Enter Keywords"
         viewName.viewPicker.isHidden = true
-        viewName.tag = 2
+        viewName.tag = FilterType.EventName.rawValue
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.secondFilter.count > 0{
-            viewName.txtName.text = viewController.firstFilter
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.secondFilter.count > 0{
+//            viewName.txtName.text = viewController.firstFilter
+//        }
         stackView.addArrangedSubview(viewName)
-        
+        //****************
+        // Region
+        //****************
         let viewRegion = TextFieldFilter()
         viewRegion.lblTitle.text = "Location"
         viewRegion.txtName.placeholder = "Enter region"
         viewRegion.viewPicker.isHidden = true
-        viewRegion.tag = 3
+        viewRegion.tag = FilterType.EventLocation.rawValue
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.thirdFilter != nil {
-            viewRegion.txtName.text = ""//viewController.secondFilter.name
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.thirdFilter != nil {
+//            viewRegion.txtName.text = ""//viewController.secondFilter.name
+//        }
         stackView.addArrangedSubview(viewRegion)
         //**********
-        //NEW FILTER
+        //CATEGORY
         //**********
         let airportCollViewCell = AirportCollViewCell()
         let viewCategory = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
         viewCategory.lblTitle.text = "Category"
         viewCategory.txtName.placeholder = "Select Category"
-        viewCategory.items = [Taxonomy(termId: "-123" , name: "Adventure") , Taxonomy(termId: "-123" , name: "Arts")]
-        viewCategory.tag = 4
+        viewCategory.pickerItems = [[]]
+        viewCategory.pickedItems = []
+        viewCategory.tag = FilterType.EventCategory.rawValue
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
-//            viewCategory.txtName.text = ""//viewController.secondFilter.name
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
+////            viewCategory.txtName.text = ""//viewController.secondFilter.name
+//        }
         stackView.addArrangedSubview(viewCategory)
         
+        //**********
+        //PRICE
+        //**********
         let viewMinMax = MinMaxFilter()
         viewMinMax.lblTitle.text = "Price"
-        viewMinMax.tag = 5
-
+        viewMinMax.tag = FilterType.EventPrice.rawValue
+        viewMinMax.pickerItems = [["USD" , "PKR"]]
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
-            viewMinMax.txtMinimum.text = viewController.eleventhFilter
-        }
-        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
-            viewMinMax.txtMaximum.text = viewController.twelvethFilter
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
+//            viewMinMax.txtMinimum.text = viewController.eleventhFilter
+//        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
+//            viewMinMax.txtMaximum.text = viewController.twelvethFilter
+//        }
         stackView.addArrangedSubview(viewMinMax)
-        
+        //**********
+        //TAGS
+        //**********
         if let items = self.filters , items.count > 0{
             let airportCollViewCell = AirportCollViewCell()
             let view = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
             view.isTagLookAlike = true
             view.lblTitle.text = "Tags"
             view.txtName.placeholder = "Enter tags here"
-            view.items = [Taxonomy(termId: "-123" , name: "Sports") , Taxonomy(termId: "-123" , name: "Arts")]
-            view.tag = 7
+            view.pickedItems = []//[Taxonomy(termId: "-123" , name: "Sports") , Taxonomy(termId: "-123" , name: "Arts")]
+            view.tag = FilterType.EventTags.rawValue
             stackView.addArrangedSubview(view)
         }
 
@@ -349,34 +373,35 @@ class FiltersViewController: UIViewController {
         let sortByFilter = MultiLineCollectionFilter(cell: giftCell, cellWidth: 400, cellHeight: 36, scrollDirection: .vertical, leftImageName: "", rightImageName: "filters_uncheck")
         sortByFilter.lblTitle.text = "Sort By"
         sortByFilter.txtName.isHidden = true
-        sortByFilter.items = [Taxonomy(termId: "-123" , name: "Our Picks"),
+        sortByFilter.pickedItems = [Taxonomy(termId: "-123" , name: "Our Picks"),
                               Taxonomy(termId: "-123" , name: "New Items"),
                               Taxonomy(termId: "-123" , name: "Price (low first)"),
                               Taxonomy(termId: "-123" , name: "Price (high first)")]
         sortByFilter.tag = 1
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
-//            viewCategory.txtName.text = ""//viewController.secondFilter.name
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
+////            viewCategory.txtName.text = ""//viewController.secondFilter.name
+//        }
         stackView.addArrangedSubview(sortByFilter)
         
         //**********
         //NEW FILTER
         //**********
         let filterByCell = GiftFilterCell()
-        let filterByFilter = MultiLineCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, scrollDirection: .vertical, leftImageName: "", rightImageName: "filters_check")
+//        let filterByCell = CollectionInsideCell()
+        let filterByFilter = MultiLineCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, scrollDirection: .vertical, leftImageName: "", rightImageName: "filter_right_arrow")
         filterByFilter.lblTitle.text = "Filter By"
         filterByFilter.txtName.isHidden = true
-        filterByFilter.items = [Taxonomy(termId: "-123" , name: "Brands"),
+        filterByFilter.pickedItems = [Taxonomy(termId: "-123" , name: "Brands"),
                               Taxonomy(termId: "-123" , name: "Categories"),
                               Taxonomy(termId: "-123" , name: "Colors")]
         filterByFilter.tag = 1
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
-//            viewCategory.txtName.text = ""//viewController.secondFilter.name
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
+////            viewCategory.txtName.text = ""//viewController.secondFilter.name
+//        }
         stackView.addArrangedSubview(filterByFilter)
         //**********
         //NEW FILTER
@@ -386,12 +411,12 @@ class FiltersViewController: UIViewController {
         viewMinMax.tag = 10
 
         //pre-filling with existing filters
-        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
-            viewMinMax.txtMinimum.text = viewController.eleventhFilter
-        }
-        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
-            viewMinMax.txtMaximum.text = viewController.twelvethFilter
-        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
+//            viewMinMax.txtMinimum.text = viewController.eleventhFilter
+//        }
+//        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
+//            viewMinMax.txtMaximum.text = viewController.twelvethFilter
+//        }
         stackView.addArrangedSubview(viewMinMax)
     }
     
@@ -435,78 +460,121 @@ class FiltersViewController: UIViewController {
     
     @IBAction func btnApplyTapped(_ sender: Any) {
         clearAllFilters()   //first clear all filters, then set new filters
+        
+        var _featuredCities:[String] = []
+        var _productName:String = ""
+        var _regionId:String = ""
+        
         for view in stackView.subviews{
-            if view is TextFieldFilter{
-                if let v = view as? TextFieldFilter , let txt = v.txtName.text, txt.count > 0{
-                    if (v.tag == 1){    //user has entered some thing in the text field yacht name
-                        delegate?.setFirstFilter(filter: txt )
-                    }else if (v.tag == 9){    //user has selected region
-                        delegate?.setTenthFilter(filter: v.selectedItem)
-                    }
-                }else if let v = view as? TextFieldFilter , let txt = v.txtPickerSelection, txt.count > 0{
-                    if (v.tag == 3){    //user has selected something from yacht guest
-                        delegate?.setThirdFilter(filter: txt)
-                    }else if (v.tag == 6){    //user has selected something from built after
-                        delegate?.setSeventhFilter(filter: txt)
-                    }
-                }
-                
-            }else if view is SingleLineCollectionFilter{
-                let v = view as! SingleLineCollectionFilter
-                let items = v.items.filter({$0.isSelected == true})
-                if (items.count == 1){  //so far user can select only 1 filter
-                    if (v.tag == 2){    //user has selected something from yacht charter, charter would be hidden if user is intersted in yacht purchase
-                        if (v.isHidden == false){
-                            delegate?.setSecondFilter(filter: items[0]) //set yacht charter if view is not hidden i.e. user has selected some thing
-                        }else{
-                            delegate?.setSecondFilter(filter: nil)      //unset if user is not selecting any thing on yacht charter
+            if category == .event || category == .experience{
+                //***************
+                //Featured Cities
+                //***************
+                if let v = view as? SingleLineCollectionFilter{
+                    let items = v.items.filter({$0.isSelected == true})
+                    if items.count > 0{
+                        for item in items{
+                            if let cityId = item.value{
+                                _featuredCities.append(cityId)
+                            }
                         }
-                        
-                    }else if (v.tag == 5){    //user has selected something from yacht type
-                        delegate?.setSixthFilter(filter: items[0])
-                    }else if (v.tag == 7){    //user has selected something from yacht tag
-                        delegate?.setEighthFilter(filter: items[0])
-                    }else if (v.tag == 8){    //user has selected something from Interested in, yacht charter or yacht purchase
-                        delegate?.setNinthFilter(filter: items[0])
                     }
                 }
-            }
-            else if view is YachtLengthFilter{
-                let v = view as! YachtLengthFilter
-                var items = v.feet.filter({$0.isSelected == true})
-                if (items.count == 1 && v.tag == 4){  //so far user can select only 1 filter, selected from feet
-                    delegate?.setFourthFilter(filter: items[0])
-//                    delegate?.setFifthFilter(filter: nil)
-                }
-                items = v.meters.filter({$0.isSelected == true})
-                if (items.count == 1 && v.tag == 4){  //so far user can select only 1 filter, selected from meters
-//                    delegate?.setFourthFilter(filter: nil)
-                    delegate?.setFifthFilter(filter: items[0])
-                }
-            }else if view is MinMaxFilter{
-                if let v = view as? MinMaxFilter , let txt = v.txtMinimum.text, txt.count > 0{
-                    if (v.tag == 10){    //user has entered some thing in the text field min price
-                        delegate?.setEleventhFilter(filter: txt )
+                //**************************
+                //Product Name & Region Name
+                //**************************
+                else if let v = view as? TextFieldFilter{
+                    if v.tag == 2{  //Product name
+                        if let text = v.txtName.text, text.count > 0{
+                            _productName = text
+                        }
+                    }else if v.tag == 3{    //region name
+                        if let selectedRegion = v.selectedItem{
+                            _regionId = selectedRegion.termId
+                        }
                     }
                 }
-                if let v = view as? MinMaxFilter , let txt = v.txtMaximum.text, txt.count > 0{
-                    if (v.tag == 10){    //user has entered some thing in the text field max price
-                        delegate?.setTwelvethFilter(filter: txt )
-                    }
-                }
-                
-            }
-            else{
-                print("Some other")
             }
         }
+        let _eventFilters = EventFilters(featuredCities: _featuredCities, productName: _productName, selectedRegion: _regionId)
+        let _applyFilter = ApplyFilters(eventFilters: _eventFilters)
+        
+        let viewController = ProductsViewController.instantiate(category: .event, applyFilters: _applyFilter)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+//            if let v = view as? SingleLineCollectionFilter{
+//                let v = view as! SingleLineCollectionFilter
+//                let items = v.items.filter({$0.isSelected == true})
+////                if (items.count == 1){  //so far user can select only 1 filter
+//                    if (v.tag == 2){    //user has selected something from yacht charter, charter would be hidden if user is intersted in yacht purchase
+//                        if (v.isHidden == false){
+//                            delegate?.setSecondFilter(filter: items[0]) //set yacht charter if view is not hidden i.e. user has selected some thing
+//                        }else{
+//                            delegate?.setSecondFilter(filter: nil)      //unset if user is not selecting any thing on yacht charter
+//                        }
+//
+//                    }else if (v.tag == 5){    //user has selected something from yacht type
+//                        delegate?.setSixthFilter(filter: items[0])
+//                    }else if (v.tag == 7){    //user has selected something from yacht tag
+//                        delegate?.setEighthFilter(filter: items[0])
+//                    }else if (v.tag == 8){    //user has selected something from Interested in, yacht charter or yacht purchase
+//                        delegate?.setNinthFilter(filter: items[0])
+//                    }
+//                }
+//            }
+//            else
+//            if view is TextFieldFilter{
+//                if let v = view as? TextFieldFilter , let txt = v.txtName.text, txt.count > 0{
+//                    if (v.tag == 1){    //user has entered some thing in the text field yacht name
+//                        delegate?.setFirstFilter(filter: txt )
+//                    }else if (v.tag == 9){    //user has selected region
+//                        delegate?.setTenthFilter(filter: v.selectedItem)
+//                    }
+//                }else if let v = view as? TextFieldFilter , let txt = v.txtPickerSelection, txt.count > 0{
+//                    if (v.tag == 3){    //user has selected something from yacht guest
+//                        delegate?.setThirdFilter(filter: txt)
+//                    }else if (v.tag == 6){    //user has selected something from built after
+//                        delegate?.setSeventhFilter(filter: txt)
+//                    }
+//                }
+//
+//            }
+//            else if view is YachtLengthFilter{
+//                let v = view as! YachtLengthFilter
+//                var items = v.feet.filter({$0.isSelected == true})
+//                if (items.count == 1 && v.tag == 4){  //so far user can select only 1 filter, selected from feet
+//                    delegate?.setFourthFilter(filter: items[0])
+////                    delegate?.setFifthFilter(filter: nil)
+//                }
+//                items = v.meters.filter({$0.isSelected == true})
+//                if (items.count == 1 && v.tag == 4){  //so far user can select only 1 filter, selected from meters
+////                    delegate?.setFourthFilter(filter: nil)
+//                    delegate?.setFifthFilter(filter: items[0])
+//                }
+//            }else if view is MinMaxFilter{
+//                if let v = view as? MinMaxFilter , let txt = v.txtMinimum.text, txt.count > 0{
+//                    if (v.tag == 10){    //user has entered some thing in the text field min price
+//                        delegate?.setEleventhFilter(filter: txt )
+//                    }
+//                }
+//                if let v = view as? MinMaxFilter , let txt = v.txtMaximum.text, txt.count > 0{
+//                    if (v.tag == 10){    //user has entered some thing in the text field max price
+//                        delegate?.setTwelvethFilter(filter: txt )
+//                    }
+//                }
+//
+//            }
+//            else{
+//                print("Some other")
+//            }
+//        }
         
         
         //popping up the VC
-        if let navController = self.navigationController {
-            navController.popViewController(animated: true)
-        }
-    }
+//        if let navController = self.navigationController {
+//            navController.popViewController(animated: true)
+//        }
+//    }
 }
 
 extension FiltersViewController:SingleLineCollectionFilterProtocol{
