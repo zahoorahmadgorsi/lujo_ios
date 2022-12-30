@@ -106,8 +106,7 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
         if self.destinations.count >= indexPath.row{
             let model = self.destinations[indexPath.row]
             cell.lblTermId.text = String(model.termId)
-            //cell.lblDestinationName.text = model.name.uppercased()
-            cell.lblDestinationName.text = model.name
+            cell.lblDestinationName.text =  model.name
             cell.separatorView.backgroundColor = (indexPath.row + 1) == self.destinations.count ? UIColor.clear : UIColor.actionButton
         }else{
             print("Destination not found at index:\(indexPath.row)")
@@ -128,7 +127,6 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
-        
         guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
         let keyboardFrame = keyboardSize.cgRectValue
@@ -151,7 +149,8 @@ extension DestinationSelectionViewController {
         switch(self.prefInformationType){
         case .aviationPreferredDestination: fallthrough
         case .travelDestinations: fallthrough
-        case .villaDestinations:
+        case .villaDestinations: fallthrough
+        case .eventLocation:
             GoLujoAPIManager().searchDestination( strToSearch: pattern) { taxonomies, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)

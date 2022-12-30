@@ -58,17 +58,35 @@ struct filterOption:Codable{
 }
 
 struct ApplyFilters{
-    var eventFilters:EventFilters
+    var eventExperienceFilters:EventExperienceFilters
 }
 
-struct EventFilters{
+struct EventExperienceFilters{
     var featuredCities:[String]
     var productName: String
-    var selectedRegion: String
+    var selectedCountry: String?
+    var categoryIds: [String]
+    var price: ProductPrice?
+    var tagIds: [String]
     
-    init(featuredCities: [String], productName:String, selectedRegion:String) {
+    init(featuredCities: [String], productName:String, selectedCountry:String?, categoryIds: [String], price:ProductPrice?, tagIds: [String]) {
         self.featuredCities = featuredCities
         self.productName = productName
-        self.selectedRegion = selectedRegion
+        self.selectedCountry = selectedCountry
+        self.categoryIds = categoryIds
+        self.price = price
+        self.tagIds = tagIds
+    }
+}
+
+struct ProductPrice{
+    var currencyCode:String
+    var minPrice:String
+    var maxMax:String
+    
+    init(currencyCode: String, minPrice: String, maxMax: String) {
+        self.currencyCode = currencyCode
+        self.minPrice = minPrice
+        self.maxMax = maxMax
     }
 }

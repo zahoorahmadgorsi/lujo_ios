@@ -26,7 +26,8 @@ protocol FiltersVCProtocol:class {
 }
 
 enum FilterType: Int {
-    case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags
+    case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags, ExperienceCategory, ExperienceTags
+        
 }
 
 class FiltersViewController: UIViewController {
@@ -58,7 +59,8 @@ class FiltersViewController: UIViewController {
         let newBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(back(sender:)))
         newBackButton.image = UIImage(named: "Back Button Top")
         self.navigationItem.leftBarButtonItem = newBackButton
-        self.title = category.rawValue + " filters"
+        //self.title = category.rawValue + " filters"
+        self.title = "Filters"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Clear All", style: .plain, target: self, action: #selector(clearAllTapped))
         updateContent()
     }
@@ -274,24 +276,25 @@ class FiltersViewController: UIViewController {
     }
     
     func updateEventsExperiencesFilters(type: String ,_ previousViewController: UIViewController){
-        //****************
-        // Featured Cities
-        //****************
+        //**********************
+        // Event Featured Cities
+        //**********************
         if let items = self.filters , items.count > 0{
             let view = SingleLineCollectionFilter()
             view.isTagLookAlike = true
-            view.lblTitle.text = "Featured " + (type == "Event" ? "events" : "experiences")
+            //view.lblTitle.text = "Featured " + (type == "Event" ? "events" : "experiences")
+            view.lblTitle.text = "Featured cities"
             
             let citiesFilter = self.filters.filter({$0.key == "cities"})
             if citiesFilter.count > 0, let options = citiesFilter[0].options, options.count > 0{
                 view.items = options
             }
-            view.tag = FilterType.FeaturedEvents.rawValue
+            view.tag = self.category == .event ? FilterType.FeaturedEvents.rawValue : FilterType.FeaturedEvents.rawValue
             stackView.addArrangedSubview(view)
         }
-        //****************
-        // Product Name
-        //****************
+        //*******************
+        // Event Product Name
+        //*******************
         let viewName = TextFieldFilter()
         viewName.lblTitle.text = (type == "Event" ? "Event" : "Experience") + " name"
         viewName.txtName.placeholder = "Enter Keywords"
@@ -304,11 +307,11 @@ class FiltersViewController: UIViewController {
 //        }
         stackView.addArrangedSubview(viewName)
         //****************
-        // Region
+        // Event Location
         //****************
         let viewRegion = TextFieldFilter()
         viewRegion.lblTitle.text = "Location"
-        viewRegion.txtName.placeholder = "Enter region"
+        viewRegion.txtName.placeholder = "Enter city, state or country"
         viewRegion.viewPicker.isHidden = true
         viewRegion.tag = FilterType.EventLocation.rawValue
 
@@ -317,16 +320,16 @@ class FiltersViewController: UIViewController {
 //            viewRegion.txtName.text = ""//viewController.secondFilter.name
 //        }
         stackView.addArrangedSubview(viewRegion)
-        //**********
-        //CATEGORY
-        //**********
+        //***************
+        // Event CATEGORY
+        //***************
         let airportCollViewCell = AirportCollViewCell()
         let viewCategory = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
         viewCategory.lblTitle.text = "Category"
         viewCategory.txtName.placeholder = "Select Category"
-        viewCategory.pickerItems = [[]]
+        viewCategory.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
         viewCategory.pickedItems = []
-        viewCategory.tag = FilterType.EventCategory.rawValue
+        viewCategory.tag = self.category == .event ? FilterType.EventCategory.rawValue : FilterType.ExperienceCategory.rawValue
 
         //pre-filling with existing filters
 //        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
@@ -334,13 +337,12 @@ class FiltersViewController: UIViewController {
 //        }
         stackView.addArrangedSubview(viewCategory)
         
-        //**********
-        //PRICE
-        //**********
+        //***********
+        //EVENT PRICE
+        //***********
         let viewMinMax = MinMaxFilter()
         viewMinMax.lblTitle.text = "Price"
         viewMinMax.tag = FilterType.EventPrice.rawValue
-        viewMinMax.pickerItems = [["USD" , "PKR"]]
         //pre-filling with existing filters
 //        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
 //            viewMinMax.txtMinimum.text = viewController.eleventhFilter
@@ -350,19 +352,17 @@ class FiltersViewController: UIViewController {
 //        }
         stackView.addArrangedSubview(viewMinMax)
         //**********
-        //TAGS
+        //Event TAGS
         //**********
-        if let items = self.filters , items.count > 0{
-            let airportCollViewCell = AirportCollViewCell()
-            let view = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
-            view.isTagLookAlike = true
-            view.lblTitle.text = "Tags"
-            view.txtName.placeholder = "Enter tags here"
-            view.pickedItems = []//[Taxonomy(termId: "-123" , name: "Sports") , Taxonomy(termId: "-123" , name: "Arts")]
-            view.tag = FilterType.EventTags.rawValue
-            stackView.addArrangedSubview(view)
-        }
-
+        let tagsCell = AirportCollViewCell()
+        let view = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+//            view.isTagLookAlike = true
+        view.lblTitle.text = "Tags"
+        view.txtName.placeholder = "Select tags"
+        viewCategory.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
+        view.pickedItems = []//[Taxonomy(termId: "-123" , name: "Sports") , Taxonomy(termId: "-123" , name: "Arts")]
+        view.tag = self.category == .event ?  FilterType.EventTags.rawValue : FilterType.ExperienceTags.rawValue
+        stackView.addArrangedSubview(view)
     }
     
     func updateGiftsFilters(_ previousViewController: UIViewController){
@@ -463,7 +463,10 @@ class FiltersViewController: UIViewController {
         
         var _featuredCities:[String] = []
         var _productName:String = ""
-        var _regionId:String = ""
+        var _countryId:String = ""
+        var _categoryIds:[String] = []
+        var _price: ProductPrice?
+        var _tags:[String] = []
         
         for view in stackView.subviews{
             if category == .event || category == .experience{
@@ -472,34 +475,60 @@ class FiltersViewController: UIViewController {
                 //***************
                 if let v = view as? SingleLineCollectionFilter{
                     let items = v.items.filter({$0.isSelected == true})
-                    if items.count > 0{
-                        for item in items{
-                            if let cityId = item.value{
-                                _featuredCities.append(cityId)
+                    for item in items{
+                        if let cityId = item.value{
+                            _featuredCities.append(cityId)
+                        }
+                    }
+                }
+                //****************************
+                //Product Name & Location Name
+                //****************************
+                else if let v = view as? TextFieldFilter{
+                    if v.tag == FilterType.EventName.rawValue{  //Product name
+                        if let text = v.txtName.text, text.count > 0{
+                            _productName = text
+                        }
+                    }else if v.tag == FilterType.EventLocation.rawValue{    //location name
+                        if let selectedLocation = v.selectedItem{
+                            if let country = selectedLocation.country{  //if country exist then user has searched a city
+                                _featuredCities.append(selectedLocation.termId)
+                            }else{
+                                _countryId = selectedLocation.termId
                             }
                         }
                     }
                 }
-                //**************************
-                //Product Name & Region Name
-                //**************************
-                else if let v = view as? TextFieldFilter{
-                    if v.tag == 2{  //Product name
-                        if let text = v.txtName.text, text.count > 0{
-                            _productName = text
+                //*************************
+                //Event Categories and Tags
+                //*************************
+                else if let v = view as? MultiLineCollectionFilter{
+                    let items = v.pickedItems
+                    for item in items{
+                        if v.tag == FilterType.EventCategory.rawValue || v.tag == FilterType.ExperienceCategory.rawValue{
+                            _categoryIds.append(item.termId)
+                        }else if v.tag == FilterType.EventTags.rawValue || v.tag == FilterType.ExperienceTags.rawValue{
+                            _tags.append(item.termId)
                         }
-                    }else if v.tag == 3{    //region name
-                        if let selectedRegion = v.selectedItem{
-                            _regionId = selectedRegion.termId
+                    }
+                }
+                //***********
+                //Event Price
+                //***********
+                else if let v = view as? MinMaxFilter{
+                    if v.tag == FilterType.EventPrice.rawValue{
+                        if let code = v.selectedItem.code, let min = v.txtMinimum.text, let max = v.txtMaximum.text, min.count > 0 , max.count > 0{
+                            _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
                         }
                     }
                 }
             }
         }
-        let _eventFilters = EventFilters(featuredCities: _featuredCities, productName: _productName, selectedRegion: _regionId)
-        let _applyFilter = ApplyFilters(eventFilters: _eventFilters)
+        let _eventExperienceFilters = EventExperienceFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId,
+                                         categoryIds: _categoryIds, price: _price, tagIds: _tags)
+        let _applyFilter = ApplyFilters(eventExperienceFilters: _eventExperienceFilters)
         
-        let viewController = ProductsViewController.instantiate(category: .event, applyFilters: _applyFilter)
+        let viewController = ProductsViewController.instantiate(category: self.category, applyFilters: _applyFilter)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 //            if let v = view as? SingleLineCollectionFilter{

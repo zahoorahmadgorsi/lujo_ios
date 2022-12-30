@@ -43,7 +43,10 @@ enum PreferencesRouter: URLRequestConvertible {
     case setGiftPreferences(String)
     case getCuisines
     case getEventCategory
+    case getEventTags
     case getEventLocation
+    case getExperienceCategory
+    case getExperienceTags
     
     case getAviationBeverages
     case getAviationCategories
@@ -154,7 +157,11 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getGiftCategories:    fallthrough
         case .getGiftPreferences:   fallthrough
         case .getEventCategory:     fallthrough
+        case .getEventTags:         fallthrough
         case .getEventLocation:     fallthrough
+        case .getExperienceCategory:     fallthrough
+        case .getExperienceTags:         fallthrough
+            
         case .getCuisines:          fallthrough
         case .getAviationBeverages: fallthrough
         case .searchDestination:    fallthrough
@@ -290,7 +297,16 @@ enum PreferencesRouter: URLRequestConvertible {
         case .setDiningTimings: fallthrough
         case .setDiningSeatings: newURLComponents.path.append("/preferences/restaurant")
             
+        case .getExperienceCategory: newURLComponents.path.append("/experiences/experience-category")
         case .getEventCategory: newURLComponents.path.append("/events/event-category")
+        case .getExperienceTags:    fallthrough
+        case .getEventTags:
+            newURLComponents.path.append("/events/event-tag")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "page", value: "1"),
+                URLQueryItem(name: "limit", value: "100"),
+                URLQueryItem(name: "type", value: "event"),
+            ]
         case .getEventLocation: newURLComponents.path.append("/events/event-continent")
         case .setEventCategory: fallthrough
         case .setEventLocation: newURLComponents.path.append("/preferences/event")
@@ -352,8 +368,12 @@ enum PreferencesRouter: URLRequestConvertible {
         case .getGiftCategories:    fallthrough
         case .getGiftPreferences:   fallthrough
         case .getEventCategory:     fallthrough
+        case .getEventTags:          fallthrough
         case .getEventLocation:     fallthrough
-
+            
+        case .getExperienceCategory:     fallthrough
+        case .getExperienceTags:          fallthrough
+            
         case .getCuisines:          fallthrough
         case .getOtherInterests:    fallthrough
         case .getAviationBeverages: fallthrough

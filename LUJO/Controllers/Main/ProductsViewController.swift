@@ -142,7 +142,7 @@ class ProductsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if dataSource.isEmpty {
-            getInformation(for: category, past: false, term: nil, cityId: city?.termId)
+            getInformation(for: category, past: false, term: nil, cityId: city?.termId, filtersToApply: self.applyFilters)
         }
     }
     
@@ -159,11 +159,11 @@ class ProductsViewController: UIViewController {
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
-        getInformation(for: category, past: false, term: nil, cityId: city?.termId)
+        getInformation(for: category, past: false, term: nil, cityId: city?.termId, filtersToApply: self.applyFilters)
     }
     
     @IBAction func eventTypeChanged(_ sender: Any) {
-        getInformation(for: category, past: false, term: nil, cityId: nil)
+        getInformation(for: category, past: false, term: nil, cityId: nil, filtersToApply: self.applyFilters)
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
@@ -343,9 +343,9 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension ProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?) {
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:ApplyFilters? = nil) {
         showNetworkActivity()
-        getList(for: category, past: past, term: term, cityId: cityId) { items, error in
+        getList(for: category, past: past, term: term, cityId: cityId, filtersToApply:filtersToApply) { items, error in
             self.hideNetworkActivity()
             // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
             self.refreshControl.endRefreshing()
@@ -357,7 +357,8 @@ extension ProductsViewController {
         }
     }
     
-    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, completion: @escaping ([Product], Error?) -> Void) {
+    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:ApplyFilters? = nil,
+                 completion: @escaping ([Product], Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -365,7 +366,8 @@ extension ProductsViewController {
         
         switch category {
             case .event:
-                EEAPIManager().getEvents( past: past, term: term, cityId: cityId, productId: nil) { list, error in
+            EEAPIManager().getEvents( past: past, term: term, cityId: cityId, productId: nil,
+                                      filtersToApply: filtersToApply) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Events information")
@@ -375,7 +377,8 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .experience:
-                EEAPIManager().getExperiences( term: term, cityId: cityId, productId: nil) { list, error in
+                EEAPIManager().getExperiences( term: term, cityId: cityId, productId: nil,
+                                               filtersToApply: filtersToApply) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experience information")

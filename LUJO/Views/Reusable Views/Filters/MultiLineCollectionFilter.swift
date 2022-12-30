@@ -37,6 +37,7 @@ class MultiLineCollectionFilter: UIView {
     
     var picker: ikDataPickerManger?
     var strPickerSelection:String?  //what user has picked from the picker would be saved here
+    var items:[Taxonomy]?   //it contains taxonomy data whose name keys are loaded into picker
     var pickerItems: [[String]] = [[]] {
         didSet {
 //            collectionView.reloadData()
@@ -112,7 +113,32 @@ class MultiLineCollectionFilter: UIView {
                 guard error == nil else {
                     return
                 }
-                self.pickerItems = self.getEventCategoriesForPicker(categories: taxonomies ?? [])
+                self.items = taxonomies
+                self.pickerItems = self.getStringArrayFromTaxonomyArray(taxonomies: taxonomies ?? [])
+            }
+        }else if self.tag == FilterType.EventTags.rawValue{   //event tags
+            GoLujoAPIManager().getEventTags() { taxonomies, error in
+                guard error == nil else {
+                    return
+                }
+                self.items = taxonomies
+                self.pickerItems = self.getStringArrayFromTaxonomyArray(taxonomies: taxonomies ?? [])
+            }
+        }else if self.tag == FilterType.ExperienceCategory.rawValue{   //event category
+            GoLujoAPIManager().getExperienceCategory() { taxonomies, error in
+                guard error == nil else {
+                    return
+                }
+                self.items = taxonomies
+                self.pickerItems = self.getStringArrayFromTaxonomyArray(taxonomies: taxonomies ?? [])
+            }
+        }else if self.tag == FilterType.ExperienceTags.rawValue{   //event tags
+            GoLujoAPIManager().getExperienceTags() { taxonomies, error in
+                guard error == nil else {
+                    return
+                }
+                self.items = taxonomies
+                self.pickerItems = self.getStringArrayFromTaxonomyArray(taxonomies: taxonomies ?? [])
             }
         }
     }
@@ -126,14 +152,14 @@ class MultiLineCollectionFilter: UIView {
         )
     }
     
-    func getEventCategoriesForPicker(categories : [Taxonomy])->[[String]]{
-        var _categories:[[String]] = [[]]
-        if categories.count > 0{
-            for category in categories{
-                _categories[0].append(category.name)
+    func getStringArrayFromTaxonomyArray(taxonomies : [Taxonomy])->[[String]]{
+        var _stringArray:[[String]] = [[]]
+        if taxonomies.count > 0{
+            for category in taxonomies{
+                _stringArray[0].append(category.name)
             }
         }
-        return _categories
+        return _stringArray
     }
     
 }
@@ -175,16 +201,21 @@ extension MultiLineCollectionFilter : UICollectionViewDataSource {
         self.pickedItems.remove(at: indexPath.row)
     }
 
-    func loadEventCategory(textField: UITextField){
+    func loadPickerItems(textField: UITextField){
         self.parentViewController?.view.endEditing(true)
         
         if picker == nil {
             self.picker = ikDataPickerManger.create(owner: self.parentViewController!, sourceView: textField , title: "Please select one", dataSource: self.pickerItems, callback: { values in
                 if values.count > 0{
-                    self.strPickerSelection = values[0]
-                    var _temp = self.pickedItems
-                    _temp.append(Taxonomy(termId: "-123", name: values[0]))
-                    self.pickedItems = _temp  //it will reload
+                    let _pickedString = values[0]
+                    self.strPickerSelection = _pickedString
+                    
+                    if let _pickedItem = self.items?.filter({$0.name == _pickedString}){
+                        var _temp = self.pickedItems
+                        _temp.append(contentsOf: _pickedItem)
+                        self.pickedItems = _temp  //it will reload
+                    }
+                    
                     
                 }
             })
@@ -233,25 +264,27 @@ extension MultiLineCollectionFilter:  UITextFieldDelegate{
 //            self.parentViewController?.present(viewController, animated: true, completion: nil)
 //            return false
 //        }
-        if self.tag == FilterType.EventCategory.rawValue{   //event category
-            self.loadEventCategory(textField: textField)
+        if self.tag == FilterType.EventCategory.rawValue || self.tag == FilterType.EventTags.rawValue ||
+            self.tag == FilterType.ExperienceCategory.rawValue || self.tag == FilterType.ExperienceTags.rawValue{   //event category or tags
+            self.loadPickerItems(textField: textField)
             return false
         }
-//        }
+
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if self.tag == FilterType.EventTags.rawValue{
-            if let text = textField.text{
-                var _temp = self.pickedItems
-                _temp.append(Taxonomy(termId: "-123", name: text))
-                self.pickedItems = _temp  //it will reload
-                self.txtName.text = ""
-                // Do not add a line break
-                return false
-            }
-        }
+        //it will work for yacht
+//        if self.tag == FilterType.EventTags.rawValue{
+//            if let text = textField.text{
+//                var _temp = self.pickedItems
+//                _temp.append(Taxonomy(termId: "-123", name: text))
+//                self.pickedItems = _temp  //it will reload
+//                self.txtName.text = ""
+//                // Do not add a line break
+//                return false
+//            }
+//        }
         return true
     }
 }

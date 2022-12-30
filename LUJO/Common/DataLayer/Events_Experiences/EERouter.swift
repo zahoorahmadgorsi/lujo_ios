@@ -27,8 +27,8 @@ enum EERouter: URLRequestConvertible {
     }()
 
     case home
-    case events(Bool, String?, String?, String?)
-    case experiences( String?, String?, String?)
+    case events(Bool, String?, String?, String?, ApplyFilters?)
+    case experiences( String?, String?, String?, ApplyFilters?)
     case salesforce(SalesforceRequest, String?)
     case geopoint(type: String, latitude: Float, longitude: Float)
     case citySearch(token: String, searchTerm: String)
@@ -71,8 +71,8 @@ enum EERouter: URLRequestConvertible {
         switch self {
         case .home:
             return .get
-        case let .events(_, _, _, id):      fallthrough
-        case let .experiences(_, _, id):    fallthrough
+        case let .events(_, _, _, id, _):      fallthrough
+        case let .experiences(_, _, id, _):    fallthrough
         case let .yachts(_, _, id):         fallthrough
         case let .villas(_, _, id):
             if let id = id , id.count > 0 {  //if event is search by id then use different API
@@ -121,7 +121,7 @@ enum EERouter: URLRequestConvertible {
         switch self {
             case .home:
                 newURLComponents.path.append("/home")
-            case let .events(_, _, _, id):
+        case let .events(_, _, _, id, _):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/events/detail/" + productId)
                 }else{
@@ -131,7 +131,7 @@ enum EERouter: URLRequestConvertible {
                         URLQueryItem(name: "per_page", value: "100"),
                     ]
                 }
-            case let .experiences(_, _, id):
+            case let .experiences(_, _, id, _):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/experiences/detail/" + productId)
                     }else{
@@ -287,17 +287,17 @@ enum EERouter: URLRequestConvertible {
         switch self {
         case .home:
             return nil
-        case let .events(past, search, location, id):
+        case let .events(past, search, location, id, filters):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getEventsSearchDataAsJSONData(past, search, location)
+                return getEventsSearchDataAsJSONData(past, search, location, filters)
             }
-        case let .experiences(search, location, id):
+        case let .experiences(search, location, id, filters):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getExperiencesSearchDataAsJSONData(search, location)
+                return getExperiencesSearchDataAsJSONData(search, location, filters)
             }
             
         case let .villas(term,cityId,productId):
@@ -340,7 +340,10 @@ enum EERouter: URLRequestConvertible {
         }
     }
     
-    fileprivate func getEventsSearchDataAsJSONData(_ past: Bool, _ search: String?, _ location:String?) -> Data? {
+    fileprivate func getEventsSearchDataAsJSONData(_ past: Bool,
+                                                   _ search: String?,
+                                                   _ location:String?,
+                                                   _ filters:ApplyFilters?) -> Data? {
         var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
@@ -351,16 +354,66 @@ enum EERouter: URLRequestConvertible {
         if past{
             body["show_past"] = true
         }
+        //filters
+        if let items = filters?.eventExperienceFilters.featuredCities, items.count > 0{
+            body["cities"] = items
+        }
+        if let name = filters?.eventExperienceFilters.productName, !name.isEmpty{
+            body["name"] = name
+        }
+        if let country = filters?.eventExperienceFilters.selectedCountry, !country.isEmpty{
+            let countries:[String] = [country]
+            body["countries"] = countries
+        }
+        if let items = filters?.eventExperienceFilters.categoryIds, items.count > 0{
+            body["event_category_ids"] = items
+        }
+        if let price = filters?.eventExperienceFilters.price{
+            body["custom_price_range"] = [
+                "from": Int(price.minPrice) as Any,
+                "to": Int(price.maxMax) as Any,
+                "currencyType" : price.currencyCode
+            ]
+            body["orderByPrice"] = "Custom-Range"
+        }
+        if let items = filters?.eventExperienceFilters.tagIds, items.count > 0{
+            body["tag_ids"] = items
+        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?) -> Data? {
+    fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?,_ filters:ApplyFilters?) -> Data? {
         var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
         }
         if let location = location, !location.isEmpty  {
             body["location"] = location
+        }
+        //filters
+        if let items = filters?.eventExperienceFilters.featuredCities, items.count > 0{
+            body["cities"] = items
+        }
+        if let name = filters?.eventExperienceFilters.productName, !name.isEmpty{
+            body["name"] = name
+        }
+        if let country = filters?.eventExperienceFilters.selectedCountry, !country.isEmpty{
+            let countries:[String] = [country]
+            body["countries"] = countries
+        }
+        if let items = filters?.eventExperienceFilters.categoryIds, items.count > 0{
+            body["experience_category_ids"] = items
+        }
+        if let price = filters?.eventExperienceFilters.price{
+            body["custom_price_range"] = [
+                "from": Int(price.minPrice) as Any,
+                "to": Int(price.maxMax) as Any,
+                "currencyType" : price.currencyCode
+            ]
+            body["orderByPrice"] = "Custom-Range"
+        }
+        if let items = filters?.eventExperienceFilters.tagIds, items.count > 0{
+            body["tag_ids"] = items
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

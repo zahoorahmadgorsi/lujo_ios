@@ -159,16 +159,19 @@ struct TaxonomyResponse: Codable{
 struct Taxonomy: Codable {
     let termId: String
     let name: String
+    
+    var country: String?    //used in city/country search
+    var code: String?    //used in case of currency (code)
     var isSelected: Bool?
     var filterParameter: String?   //used in per city filters
-//    var taxonomyName: String?   //used in filters
     
     enum CodingKeys: String, CodingKey {
         case termId = "_id"
         case name
         case isSelected
         case filterParameter = "per_city_input_param"
-//        case taxonomyName = "taxonomy"
+        case code
+        case country
     }
     
     init(from decoder: Decoder) throws {
@@ -180,7 +183,8 @@ struct Taxonomy: Codable {
             //isSelected would never be sent from API
             isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
             filterParameter = try values.decodeIfPresent(String.self, forKey: .filterParameter)
-//            taxonomyName = try values.decodeIfPresent(String.self, forKey: .taxonomyName)
+            code = try values.decodeIfPresent(String.self, forKey: .code)
+            country = try values.decodeIfPresent(String.self, forKey: .country)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
@@ -192,6 +196,13 @@ struct Taxonomy: Codable {
         self.termId = termId
         self.name = name
         self.isSelected = isSelected
+    }
+    
+    //constructor in case of currency
+    init(id:String , name: String, code:String){
+        self.termId = id
+        self.name = name
+        self.code = code
     }
 }
 
