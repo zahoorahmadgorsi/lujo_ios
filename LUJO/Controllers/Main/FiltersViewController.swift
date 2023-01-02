@@ -517,8 +517,16 @@ class FiltersViewController: UIViewController {
                 //***********
                 else if let v = view as? MinMaxFilter{
                     if v.tag == FilterType.EventPrice.rawValue{
-                        if let code = v.selectedItem.code, let min = v.txtMinimum.text, let max = v.txtMaximum.text, min.count > 0 , max.count > 0{
-                            _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
+                        if let code = v.selectedItem.code{
+                            if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
+                                if  min.count > 0 , max.count > 0{
+                                    _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
+                                }
+                                else{
+                                    showCardAlertWith(title: "Price Filter", body: "Both min and max prices are required.")
+                                    return
+                                }
+                            }
                         }
                     }
                 }

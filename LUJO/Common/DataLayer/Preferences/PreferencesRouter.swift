@@ -299,13 +299,19 @@ enum PreferencesRouter: URLRequestConvertible {
             
         case .getExperienceCategory: newURLComponents.path.append("/experiences/experience-category")
         case .getEventCategory: newURLComponents.path.append("/events/event-category")
-        case .getExperienceTags:    fallthrough
         case .getEventTags:
             newURLComponents.path.append("/events/event-tag")
             newURLComponents.queryItems = [
                 URLQueryItem(name: "page", value: "1"),
                 URLQueryItem(name: "limit", value: "100"),
                 URLQueryItem(name: "type", value: "event"),
+            ]
+        case .getExperienceTags: //the only difference between getEventTags and getExperienceTags is one query param
+            newURLComponents.path.append("/events/event-tag")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "page", value: "1"),
+                URLQueryItem(name: "limit", value: "100"),
+                URLQueryItem(name: "type", value: "experience"),
             ]
         case .getEventLocation: newURLComponents.path.append("/events/event-continent")
         case .setEventCategory: fallthrough
