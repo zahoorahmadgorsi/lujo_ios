@@ -81,9 +81,9 @@ enum CCRouter: URLRequestConvertible {
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue(CCRouter.authorization, forHTTPHeaderField: "Authorization")
-        if let token = LujoSetup().getCurrentUser()?.token{
-            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+//        if let token = LujoSetup().getCurrentUser()?.token{
+//            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+//        }
         print("urlRequest:\(String(describing: urlRequest.url))")
         return urlRequest
     }
@@ -109,7 +109,7 @@ extension CCRouter {
         var newURLComponents = URLComponents()
         newURLComponents.scheme = "https"
         newURLComponents.host = CCRouter.baseURLHost
-        newURLComponents.port = CCRouter.baseURLPort
+        newURLComponents.port = CCRouter.baseURLPort  //making it same as android by removing port zahoor
         newURLComponents.path = CCRouter.baseURLPath
 
         switch self {
@@ -153,8 +153,8 @@ extension CCRouter {
             "amount": String(amountVal.roundTo(places: 2)),
             "expiry": method.methodInfo.expiryDate,
             "account": method.methodInfo.cardToken,
-            "currency": method.currency.rawValue,
-            "profile": session?.id == "" ? "Y" : "N",
+            "currency": method.currency.rawValue
+            ,"profile": session?.id == "" ? "Y" : "N",
             "tokenize": "Y",
             "ccv2": String(method.methodInfo.codeCVV),
             "name": method.displayName,

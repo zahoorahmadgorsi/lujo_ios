@@ -196,15 +196,25 @@ extension AviationResultsViewController: LiftDetailDelegate {
     }
     
     func performAction(for result: String) {
-        var viewController: UIViewController? = self
-        while !(viewController is MainTabBarController) {
-            let presenter = viewController?.presentingViewController
-            viewController?.dismiss(animated: false, completion: nil)
-            viewController = presenter
-        }
+//        var viewController: UIViewController? = self
+//        while !(viewController is MainTabBarController) {
+//            let presenter = viewController?.presentingViewController
+//            viewController?.dismiss(animated: false, completion: nil)
+//            viewController = presenter
+//        }
+//
+//        self.dismiss(animated: true, completion: {
+//            (viewController as? MainTabBarController)?.selectedIndex = 4    //it has been given to wishlist zahoor
+//        })
         
-        self.dismiss(animated: true, completion: {
-            (viewController as? MainTabBarController)?.selectedIndex = 4    //it has been given to wishlist zahoor
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: {
+            if let top = UIApplication.topViewController(){
+                if let topNav = top.navigationController{
+                    let viewController = BookingsViewController.instantiate()
+                    viewController.selectedItemIndex = 1
+                    topNav.pushViewController(viewController, animated: true)
+                }
+            }
         })
     }
 

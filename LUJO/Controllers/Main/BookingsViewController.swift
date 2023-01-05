@@ -51,6 +51,7 @@ class BookingsViewController: UIViewController {
     private var forceReload: Bool = false
     private var shouldLoadAgain: Bool = true
     private var selectedBooking: Booking?
+    var selectedItemIndex: Int = 0
     
     override func viewDidLoad() {
         setupInfoKindView()
@@ -110,6 +111,10 @@ class BookingsViewController: UIViewController {
                 }
             }
         }
+//        //if coming form aviation booking then load 2nd index by default because AviationResultsViewController is setting the index selectedItemIndex = 1
+        self.informationSelector.selectedSegmentIndex = self.selectedItemIndex
+        self.informationSelector.sendActions(for: .valueChanged)
+        
         updatePlaceholderView()
         updateInformationCounters()
         tableView.reloadData()

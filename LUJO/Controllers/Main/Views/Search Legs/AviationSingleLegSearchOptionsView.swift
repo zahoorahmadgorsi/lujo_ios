@@ -309,6 +309,23 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         timeFormatter.dateFormat = "HH:mm"
         timeFormatter.timeZone = Calendar.current.timeZone
         timeFormatter.locale = Calendar.current.locale
+        
+        #if DEBUG
+        let startAirport = Airport(id: "aport-5199", name: "ALLAMA IQBAL INTL", city: "LAHORE", country: Country(code: "PK", name: "Pakistan"), icao: "OPLA", iata: "LHE", faaId: nil, type: "airports")
+
+        let endAirport = Airport(id: "aport-5191", name: "JINNAH INTL", city: "KARACHI", country: Country(code: "PK", name: "Pakistan"), icao: "OPKC", iata: "KHI", faaId: nil, type: "airports")
+
+        segmentData.startAirport = startAirport
+        segmentData.endAirport = endAirport
+
+        var dayComponent    = DateComponents()
+        dayComponent.day    = 7 // For removing one day (yesterday): -1
+        let theCalendar     = Calendar.current
+        if let nextDate        = theCalendar.date(byAdding: dayComponent, to: Date()){
+            segmentData.departureDateTime.date = formatter.string(from: nextDate)
+            segmentData.departureDateTime.time =  timeFormatter.string(from: nextDate)
+        }
+        #endif
     }
 
     override init(frame: CGRect) {
