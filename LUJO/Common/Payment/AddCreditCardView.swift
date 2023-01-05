@@ -26,8 +26,14 @@ class AddCreditCardView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         prepareControlDelegatesAndTargets()
+        #if DEBUG
+            cardHolderName.text = "ZAHOOR AHMAD GORSI"
+            cardNumber.text = "4111 1111 1111 1111"
+            expiryMonth.text = "12"
+            expiryYear.text = "28"
+            cvcCode.text = "135"
+        #endif
     }
 
     @IBAction func addCreditCard(_ sender: Any) {

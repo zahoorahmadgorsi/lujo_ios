@@ -1317,23 +1317,23 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate {
 
 extension HomeViewController:ConversationsManagerDelegate{
 
-//    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) {}
+    //    func conversationUpdated(conversation: TCHConversation, updated: TCHConversationUpdate) {}
 
-func reloadMessages() {
-print("Twilio: reloadMessages")
-}
+    func reloadMessages() {
+    print("Twilio: reloadMessages")
+    }
 
-func receivedNewMessage(message: TCHMessage, conversation: TCHConversation){
-showBadgeValue()
-//        return nil
-}
+    func receivedNewMessage(message: TCHMessage, conversation: TCHConversation){
+    showBadgeValue()
+    //        return nil
+    }
 
-func channelJoined(channel: TCHConversation) {
-print("Twilio: channelJoined")
-}
+    func channelJoined(channel: TCHConversation) {
+    print("Twilio: channelJoined")
+    }
 
-func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
-}
+    func typingOn(_ conversation: TCHConversation, _ participant: TCHParticipant, isTyping:Bool){
+    }
 }
 
 

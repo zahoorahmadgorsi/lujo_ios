@@ -51,6 +51,7 @@ class BookingsViewController: UIViewController {
     private var forceReload: Bool = false
     private var shouldLoadAgain: Bool = true
     private var selectedBooking: Booking?
+    var selectedItemIndex: Int = 0
     
     override func viewDidLoad() {
         setupInfoKindView()
@@ -110,6 +111,10 @@ class BookingsViewController: UIViewController {
                 }
             }
         }
+//        //if coming form aviation booking then load 2nd index by default because AviationResultsViewController is setting the index selectedItemIndex = 1
+        self.informationSelector.selectedSegmentIndex = self.selectedItemIndex
+        self.informationSelector.sendActions(for: .valueChanged)
+        
         updatePlaceholderView()
         updateInformationCounters()
         tableView.reloadData()
@@ -118,11 +123,13 @@ class BookingsViewController: UIViewController {
     private func updateInformationCounters() {}
     
     private func updatePlaceholderView() {
+        
         placeholderStackView.isHidden = informationSelector.selectedSegmentIndex == 0 ? !upcomingBookings.isEmpty : !bookingRequests.isEmpty
         if !placeholderStackView.isHidden {
             placeholderLabel.text =  informationSelector.selectedSegmentIndex == 0 ? "You have no upcoming arrangements" : "You have no requests"
             placeholderButton.setTitle("SEND A CUSTOM REQUEST", for: .normal)
         }
+
     }
     
     @IBAction func infoSelectionChanged(_ sender: Any) {

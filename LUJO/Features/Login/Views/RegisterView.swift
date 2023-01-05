@@ -46,6 +46,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
     let hcaptcha = try? HCaptcha(
         apiKey: Constants.hCaptchaKey,
         baseURL: URL(string: Constants.hCaptchaURL)!
+//        ,size: .compact
     )
     var captchaWebView: WKWebView?
     

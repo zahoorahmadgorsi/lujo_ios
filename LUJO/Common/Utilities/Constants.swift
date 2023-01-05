@@ -9,6 +9,7 @@
 import Foundation
 
 struct Constants{
-    static let hCaptchaKey = "ceeae2b5-8a6f-4a82-8ea2-b17d243a83a1"
+//    static let hCaptchaKey = "ceeae2b5-8a6f-4a82-8ea2-b17d243a83a1"
+    static let hCaptchaKey = "d93f92e9-31a1-4e6c-9fa1-0c62dddf0074"
     static let hCaptchaURL = "http://localhost"
 }
