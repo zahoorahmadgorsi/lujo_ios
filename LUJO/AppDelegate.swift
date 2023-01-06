@@ -15,8 +15,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var windowRouter: Router!
     var navigationController: UINavigationController!
     var isBackground: Bool!
+  
+    //used in universal linking
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+//        let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
+//        alertController.addAction(okButton)
+//        let passed = url.absoluteString.components(separatedBy: "://")
+//        if passed.count > 1 {
+//            alertController.title = passed[1]
+//            if let vc = UIApplication.shared.keyWindow?.rootViewController {
+//                if vc.presentedViewController != nil {
+//                    alertController.dismiss(animated: false, completion: {
+//                        vc.present(alertController, animated: true, completion: nil)
+//                    })
+//                } else {
+//                    vc.present(alertController, animated: true, completion: nil)
+//                }
+//            }
+//        }
+//        return true
+//    }
+    
 
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        print(launchOptions as Any)
         isBackground = false
 
         window = UIWindow(frame: UIScreen.main.bounds)

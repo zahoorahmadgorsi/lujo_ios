@@ -53,7 +53,7 @@
 			<string>com.baroqueaccess.golujo</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>golujo-app</string>
+				<string>golujo</string>
 			</array>
 		</dict>
 	</array>
