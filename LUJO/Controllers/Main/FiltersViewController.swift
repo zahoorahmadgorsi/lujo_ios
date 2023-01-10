@@ -27,7 +27,7 @@ protocol FiltersVCProtocol:class {
 
 enum FilterType: Int {
     case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags, ExperienceCategory, ExperienceTags,
-        YachtPopularLocations, YachtName, YachtStatus, YachtCharter, YachtRegion, YachtGuests, YachtLength, YachtType, YachtBuiltAfter, YachtPrice
+        YachtPopularLocations, YachtName, YachtStatus, YachtCharter, YachtRegion, YachtGuests, YachtLength, YachtType, YachtBuiltAfter, YachtPrice, YachtTags
         
 }
 
@@ -113,7 +113,7 @@ class FiltersViewController: UIViewController {
             view.isTagLookAlike = true
             view.lblTitle.text = "Popular charter locations"
             
-            let citiesFilter = self.filters.filter({$0.key == "cities"})
+            let citiesFilter = self.filters.filter({$0.key == "countries"})
             if citiesFilter.count > 0, let options = citiesFilter[0].options, options.count > 0{
                 view.items = options
             }
@@ -215,15 +215,28 @@ class FiltersViewController: UIViewController {
         //******************
         // Yacht Tags
         //******************
-//        if let items = self.filters.yachtTag , items.count > 0{
-//            let viewYachtTag = SingleLineCollectionFilter()
-//            viewYachtTag.isTagLookAlike = true
-//            viewYachtTag.lblTitle.text = "Tag"
-//            viewYachtTag.items = items
-//            viewYachtTag.items = [Taxonomy(termId: "-123", name: "New"), Taxonomy(termId: "-123", name: "Luxury")]
-//            viewYachtTag.tag = 7
-//            stackView.addArrangedSubview(viewYachtTag)
+//        items = self.filters.filter({$0.key == "tags"})
+//        let viewYachtTag = SingleLineCollectionFilter()
+//        viewYachtTag.isTagLookAlike = true
+//        viewYachtTag.lblTitle.text = "Tag"
+//        if  items.count > 0, let options = items[0].options, options.count > 0{
+//            viewYachtTag.items = options
 //        }
+//        viewYachtTag.tag = FilterType.YachtTags.rawValue
+//        stackView.addArrangedSubview(viewYachtTag)
+        //**********
+        //Yacht TAGS
+        //**********
+//        items = self.filters.filter({$0.key == "tags"})
+        let tagsCell = AirportCollViewCell()
+        let viewYachtTag = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        viewYachtTag.isTagLookAlike = true
+        viewYachtTag.lblTitle.text = "Tags"
+        viewYachtTag.txtName.placeholder = "Enter tags"
+        viewYachtTag.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
+        viewYachtTag.pickedItems = []//[Taxonomy(termId: "-123" , name: "Sports") , Taxonomy(termId: "-123" , name: "Arts")]
+        viewYachtTag.tag = FilterType.YachtTags.rawValue
+        stackView.addArrangedSubview(viewYachtTag)
     }
     
     func updateEventsExperiencesFilters(type: String ,_ previousViewController: UIViewController){
@@ -444,7 +457,11 @@ class FiltersViewController: UIViewController {
                                 }
                             }else if v.tag == FilterType.YachtType.rawValue{
                                 _yachtType = value
-                            }else{
+                            }
+//                            else if v.tag == FilterType.YachtPopularLocations.rawValue{
+//                                _countryId.append(value)  //its working for key cities which is last else statement of thi code block
+//                            }
+                            else{
                                 _featuredCities.append(value)
                             }
                         }
@@ -477,24 +494,26 @@ class FiltersViewController: UIViewController {
                         }
                     }else if v.tag == FilterType.YachtRegion.rawValue{    //in case of yacht region will become country, country will become city
                         if let selectedLocation = v.selectedItem{
-//                            if selectedLocation.country != nil{     //if country exist then user has searched a region, else country
-                                _regionId  = selectedLocation.termId
-//                            }else{
-//                                _countryId = selectedLocation.termId
-//                            }
+                            if selectedLocation.yachtRegion != nil{     //if region exist then user has searched a country, else region
+                                _countryId  = selectedLocation.termId
+                            }else{
+                                _regionId = selectedLocation.termId
+                            }
                         }
                     }
                 }
-                //*************************
-                //Event Categories and Tags
-                //*************************
+                //**********************************
+                //Event Categories, Tags, Yacht Tags
+                //**********************************
                 else if let v = view as? MultiLineCollectionFilter{
                     let items = v.pickedItems
                     for item in items{
                         if v.tag == FilterType.EventCategory.rawValue || v.tag == FilterType.ExperienceCategory.rawValue{
                             _categoryIds.append(item.termId)
-                        }else if v.tag == FilterType.EventTags.rawValue || v.tag == FilterType.ExperienceTags.rawValue{
+                        }else if v.tag == FilterType.EventTags.rawValue || v.tag == FilterType.ExperienceTags.rawValue {
                             _tags.append(item.termId)
+                        }else if v.tag == FilterType.YachtTags.rawValue {
+                            _tags.append(item.name)
                         }
                     }
                 }

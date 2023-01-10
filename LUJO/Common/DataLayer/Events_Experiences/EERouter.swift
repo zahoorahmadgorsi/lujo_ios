@@ -173,10 +173,10 @@ enum EERouter: URLRequestConvertible {
                         newURLComponents.path.append("/yachts/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/yachts/search")
-                    newURLComponents.queryItems = [
-                        URLQueryItem(name: "page", value: "1"),
-                        URLQueryItem(name: "per_page", value: "20"),
-                    ]
+//                    newURLComponents.queryItems = [   //paging is in the body
+//                        URLQueryItem(name: "page", value: "1"),
+//                        URLQueryItem(name: "per_page", value: "20"),
+//                    ]
                 }
             case let .recents(token, limit, type):
                 newURLComponents.path.append("/recent")
@@ -361,7 +361,7 @@ enum EERouter: URLRequestConvertible {
         if let name = filters?.productName, !name.isEmpty{
             body["name"] = name
         }
-        if let country = filters?.selectedCountry, !country.isEmpty{
+        if let country = filters?.countryId, !country.isEmpty{
             let countries:[String] = [country]
             body["countries"] = countries
         }
@@ -397,7 +397,7 @@ enum EERouter: URLRequestConvertible {
         if let name = filters?.productName, !name.isEmpty{
             body["name"] = name
         }
-        if let country = filters?.selectedCountry, !country.isEmpty{
+        if let country = filters?.countryId, !country.isEmpty{
             let countries:[String] = [country]
             body["countries"] = countries
         }
@@ -449,8 +449,8 @@ enum EERouter: URLRequestConvertible {
     fileprivate func getYachtsDataAsJSONData( search: String?, location:String?, id:String?,_ filters:AppliedFilters? ) -> Data? {
 //        var body: [String: Any] = ["status": "Published"]
         var body: [String: Any] = [:]
-//        body["page"] = 1    //else this API might fail as there are thousands of yachts data is available
-//        body["per_page"] = 20
+        body["page"] = 1    //else this API might fail as there are thousands of yachts data is available
+        body["per_page"] = 20
         if let search = search , !search.isEmpty {
             body["search"] = search
         }
@@ -473,11 +473,11 @@ enum EERouter: URLRequestConvertible {
         if let item = filters?.yachtCharter, !item.isEmpty{
             body["charter_time"] = item
         }
-        if let country = filters?.selectedCountry, !country.isEmpty{
+        if let country = filters?.countryId, !country.isEmpty{
             let countries:[String] = [country]
             body["countries"] = countries
         }
-        if let region = filters?.selectedRegion, !region.isEmpty{
+        if let region = filters?.regionId, !region.isEmpty{
             let regions:[String] = [region]
             body["regions"] = regions
         }
@@ -512,7 +512,7 @@ enum EERouter: URLRequestConvertible {
             body["orderByPrice"] = "Custom-Range"
         }
         if let items = filters?.tagIds, items.count > 0{
-            body["tag_ids"] = items
+            body["tags"] = items
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

@@ -151,6 +151,11 @@ struct ReferralCode: Codable {
         }
     }
 }
+struct YachtRegion: Codable{
+    let _id: String?
+    let name: String?
+    let description: String?
+}
 
 struct TaxonomyResponse: Codable{
     let docs: [Taxonomy]
@@ -161,7 +166,8 @@ struct Taxonomy: Codable {
     let name: String
     
     var country: String?    //used in city/country search
-    var code: String?    //used in case of currency (code)
+    var yachtRegion: YachtRegion?    //used in yacht country/region search
+    var code: String?       //used in case of currency (code)
     var isSelected: Bool?
     var filterParameter: String?   //used in per city filters
     
@@ -172,6 +178,7 @@ struct Taxonomy: Codable {
         case filterParameter = "per_city_input_param"
         case code
         case country
+        case yachtRegion = "yacht_region"
     }
     
     init(from decoder: Decoder) throws {
@@ -185,6 +192,7 @@ struct Taxonomy: Codable {
             filterParameter = try values.decodeIfPresent(String.self, forKey: .filterParameter)
             code = try values.decodeIfPresent(String.self, forKey: .code)
             country = try values.decodeIfPresent(String.self, forKey: .country)
+            yachtRegion = try values.decodeIfPresent(YachtRegion.self, forKey: .yachtRegion)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error

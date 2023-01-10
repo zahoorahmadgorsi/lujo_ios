@@ -275,16 +275,16 @@ extension MultiLineCollectionFilter:  UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //it will work for yacht
-//        if self.tag == FilterType.EventTags.rawValue{
-//            if let text = textField.text{
-//                var _temp = self.pickedItems
-//                _temp.append(Taxonomy(termId: "-123", name: text))
-//                self.pickedItems = _temp  //it will reload
-//                self.txtName.text = ""
-//                // Do not add a line break
-//                return false
-//            }
-//        }
+        if self.tag == FilterType.YachtTags.rawValue{
+            if let text = textField.text{
+                var _temp = self.pickedItems
+                _temp.append(Taxonomy(termId: "-123", name: text))
+                self.pickedItems = _temp  //it will reload
+                self.txtName.text = ""
+                // Do not add a line break
+                return false
+            }
+        }
         return true
     }
 }

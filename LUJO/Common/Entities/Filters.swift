@@ -64,13 +64,13 @@ struct filterOption:Codable{
 struct AppliedFilters{
     var featuredCities:[String]
     var productName: String
-    var selectedCountry: String?
+    var countryId: String?
     var categoryIds: [String]
     var price: ProductPrice?
     var tagIds: [String]
     var yachtStatus: String
     var yachtCharter: String
-    var selectedRegion: String?
+    var regionId: String?
     var guests: GuestsRange?
     var yachtLength: YachtLength?
     var yachtType: String
@@ -79,13 +79,13 @@ struct AppliedFilters{
     init(featuredCities: [String], productName:String, selectedCountry:String?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:GuestsRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String) {
         self.featuredCities = featuredCities
         self.productName = productName
-        self.selectedCountry = selectedCountry
+        self.countryId = selectedCountry
         self.categoryIds = categoryIds
         self.price = price
         self.tagIds = tagIds
         self.yachtStatus = yachtStatus
         self.yachtCharter = yachtCharter
-        self.selectedRegion = selectedRegion
+        self.regionId = selectedRegion
         self.guests = guests
         self.yachtLength = yachtLength
         self.yachtType = yachtType

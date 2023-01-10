@@ -46,6 +46,7 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
             titleLabel.text = "Search Destinations"
         case .yachtPreferredRegions:
             titleLabel.text = "Search Regions"
+            self.searchText.placeholder = "Country or Region"
         case .currency:
             titleLabel.text = "Search Currency"
             self.searchText.placeholder = "Currency name"
