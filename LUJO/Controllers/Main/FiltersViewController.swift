@@ -26,7 +26,8 @@ protocol FiltersVCProtocol:class {
 }
 
 enum FilterType: Int {
-    case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags, ExperienceCategory, ExperienceTags
+    case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags, ExperienceCategory, ExperienceTags,
+        YachtPopularLocations, YachtName, YachtStatus, YachtCharter, YachtRegion, YachtGuests, YachtLength, YachtType, YachtBuiltAfter, YachtPrice
         
 }
 
@@ -104,174 +105,124 @@ class FiltersViewController: UIViewController {
     }
     
     func updateYachtFilters(_ previousViewController: UIViewController){
+        //************************
+        // Yacht Popular Locations
+        //************************
+        if let items = self.filters , items.count > 0{
+            let view = SingleLineCollectionFilter()
+            view.isTagLookAlike = true
+            view.lblTitle.text = "Popular charter locations"
+            
+            let citiesFilter = self.filters.filter({$0.key == "cities"})
+            if citiesFilter.count > 0, let options = citiesFilter[0].options, options.count > 0{
+                view.items = options
+            }
+            view.tag = FilterType.YachtPopularLocations.rawValue
+            stackView.addArrangedSubview(view)
+        }
+        //***********
+        // Yacht Name
+        //***********
         let view = TextFieldFilter()
         view.lblTitle.text = "Yacht name"
         view.viewPicker.isHidden = true
-        view.tag = 1
+        view.tag = FilterType.YachtName.rawValue
 
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.firstFilter.count > 0{
-//            view.txtName.text = viewController.firstFilter
-//        }
         stackView.addArrangedSubview(view)
-
-//        if var items = self.filters.yachtStatus , items.count > 0{
+        //**************************
+        // Yacht Status Charter/Sale
+        //**************************
+        var items = self.filters.filter({$0.key == "yacht_status"})
+        if  items.count > 0, let options = items[0].options, options.count > 0{
             let viewInterestedIn = SingleLineCollectionFilter()
-        viewInterestedIn.lblTitle.text = "Interested In"
+            viewInterestedIn.lblTitle.text = items[0].name
 
-            //To pre-fill with existing filters
-            //if previous VC is percity and second filter was set
-//            if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter.count != 0 {
-//                for (index, element) in items.enumerated() {
-//                    if element.termId == viewController.ninthFilter[0].termId{
-//                        items[index].isSelected = true
-//                    }
-//                }
-//            }
-
-            //viewInterestedIn.items = items
-//            viewInterestedIn.items = [Taxonomy(termId: "-123", name: "Purchase")]
-            view.tag = 8
+            viewInterestedIn.items = options
+            viewInterestedIn.tag = FilterType.YachtStatus.rawValue
             viewInterestedIn.delegate = self    //it will cause the tap event on radio button fire which will hide unhide yacht charter view
             stackView.addArrangedSubview(viewInterestedIn)
-//        }
-
-//        if var items = self.filters.yachtCharterType , items.count > 0{
+        }
+        //*******************************
+        // Yacht Charter Any/Daily/Weekly
+        //*******************************
+        items = self.filters.filter({$0.key == "charter_time"})
+        if  items.count > 0, let options = items[0].options, options.count > 0{
             let viewCharterType = SingleLineCollectionFilter()
-        viewCharterType.lblTitle.text = "Charter"
+            viewCharterType.lblTitle.text = items[0].name
 
-            //To pre-fill with existing filters
-            //if previous VC is percity and second filter was set
-//            if let viewController = previousViewController as? PerCityViewController , viewController.secondFilter.count != 0 {
-//                for (index, element) in items.enumerated() {
-//                    if element.termId == viewController.secondFilter[0].termId{
-//                        items[index].isSelected = true
-//                    }
-//                }
-//            }
+            viewCharterType.items = options
+            viewCharterType.tag = FilterType.YachtCharter.rawValue
+            viewCharterType.delegate = self    //it will cause the tap event on radio button fire which will hide unhide yacht charter view
 
-//            viewCharterType.items = items
-//            viewCharterType.items = [Taxonomy(termId: "-123", name: "Daily"), Taxonomy(termId: "-123", name: "Weekly")]
-            viewCharterType.tag = 2
-//            if let viewController = previousViewController as? PerCityViewController , viewController.ninthFilter.count != 0{
-//                //if user had selected *purchase* in interest in
-//                let termID = viewController.ninthFilter[0].termId
-//                print("Apply the below check")
-////                        if (termID == 3023 || termID == 273 ){ //3023 = Sale on production and 273 = sale on staging
-////                            view.isHidden = true    //Hide yacht charter view if user is interested in purchase
-////                        }
-//            }
             stackView.addArrangedSubview(viewCharterType)
-//        }
-
+        }
+        //*************
+        // Yacht Region
+        //*************
         let viewRegion = TextFieldFilter()
         viewRegion.lblTitle.text = "Region"
         viewRegion.viewPicker.isHidden = true
-        viewRegion.tag = 9
+        viewRegion.tag = FilterType.YachtRegion.rawValue
 
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.tenthFilter != nil {
-//            viewRegion.txtName.text = viewController.tenthFilter?.name
-//        }
         stackView.addArrangedSubview(viewRegion)
-
+        //*************
+        // Yacht Guests
+        //*************
         let viewGuests = TextFieldFilter()
         viewGuests.lblTitle.text = "Guests"
         viewGuests.items = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51-100", "101-150", "151-200", "200+"]]
         viewGuests.txtName.isHidden = true
-        viewGuests.tag = 3
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.thirdFilter.count > 0{
-//            viewGuests.lblPickerSelection.text = viewController.thirdFilter
-//            viewGuests.txtPickerSelection = viewController.thirdFilter
-//        }
+        viewGuests.tag = FilterType.YachtGuests.rawValue
+
         stackView.addArrangedSubview(viewGuests)
-
-//        if ((self.filters.yachtLengthInFeet?.count ?? 0 > 0) || (self.filters.yachtLengthInMeter?.count ?? 0 > 0)){
-            let viewYachtLength = YachtLengthFilter()
-//            if var items = self.filters.yachtLengthInFeet{
-//                //To pre-fill with existing filters
-//                //if previous VC is percity and second filter was set
-//                if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
-//                    for (index, element) in items.enumerated() {
-//                        if element.termId == viewController.fourthFilter?.termId{
-//                            items[index].isSelected = true
-//                        }
-//                    }
-//                }
-//                viewYachtLength.feet = items
+        //*************
+        // Yacht Length
+        //*************
+        let viewYachtLength = YachtLengthFilter()
         viewYachtLength.feet = [Taxonomy(termId: "-123", name: "30-40"), Taxonomy(termId: "-123", name: "41-60")]
-//            }
-//            if var items = self.filters.yachtLengthInMeter{
-//                //To pre-fill with existing filters
-//                //if previous VC is percity and second filter was set
-//                if let viewController = previousViewController as? PerCityViewController , viewController.fifthFilter != nil {
-//                    for (index, element) in items.enumerated() {
-//                        if element.termId == viewController.fifthFilter?.termId{
-//                            items[index].isSelected = true
-//                        }
-//                    }
-//                }
-//                viewYachtLength.meters = items
-        viewYachtLength.meters = [Taxonomy(termId: "-123", name: "10-13"), Taxonomy(termId: "-123", name: "14-20")]
-//            }
-            viewYachtLength.tag = 4
-            stackView.addArrangedSubview(viewYachtLength)
-//        }
+        viewYachtLength.meters = [Taxonomy(termId: "-123", name: "9-13"), Taxonomy(termId: "-123", name: "14-20")]
+        viewYachtLength.tag = FilterType.YachtLength.rawValue
+        stackView.addArrangedSubview(viewYachtLength)
+        //*************
+        // Yacht Type
+        //*************
+        items = self.filters.filter({$0.key == "yacht_type"})
+        if  items.count > 0, let options = items[0].options, options.count > 0{
+            let viewInterestedIn = SingleLineCollectionFilter()
+            viewInterestedIn.lblTitle.text = items[0].name
 
-//        if var items = self.filters.yachtType , items.count > 0{
-            let viewYachtType = SingleLineCollectionFilter()
-        viewYachtType.lblTitle.text = "Type"
-
-            //To pre-fill with existing filters
-            //if previous VC is percity and second filter was set
-//            if let viewController = previousViewController as? PerCityViewController , viewController.sixthFilter.count != 0{
-//                for (index, element) in items.enumerated() {
-//                    if element.termId == viewController.sixthFilter[0].termId{
-//                        items[index].isSelected = true
-//                    }
-//                }
-//            }
-
-//            viewYachtType.items = items
-//            viewYachtType.items = [Taxonomy(termId: "-123", name: "Motor"), Taxonomy(termId: "-123", name: "Sail")]
-            viewYachtType.tag = 5
-            stackView.addArrangedSubview(viewYachtType)
-//        }
-
+            viewInterestedIn.items = options
+            viewInterestedIn.tag = FilterType.YachtType.rawValue
+            viewInterestedIn.delegate = self    //it will cause the tap event on radio button fire which will hide unhide yacht charter view
+            stackView.addArrangedSubview(viewInterestedIn)
+        }
+        //******************
+        // Yacht Built After
+        //******************
         let viewBuiltAfter = TextFieldFilter()
         viewBuiltAfter.lblTitle.text = "Built after"
-        viewBuiltAfter.items = [["1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021"]]
+        viewBuiltAfter.items = [["1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"]]
         viewBuiltAfter.txtName.isHidden = true
-        viewBuiltAfter.tag = 6
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.seventhFilter.count > 0{
-//            viewBuiltAfter.lblPickerSelection.text = viewController.seventhFilter
-//            viewBuiltAfter.txtPickerSelection = viewController.seventhFilter
-//        }
+        viewBuiltAfter.tag = FilterType.YachtBuiltAfter.rawValue
         stackView.addArrangedSubview(viewBuiltAfter)
-
+        //******************
+        // Yacht Price
+        //******************
         let viewMinMax = MinMaxFilter()
         viewMinMax.lblTitle.text = "Price"
-        viewMinMax.tag = 10
-
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
-//            viewMinMax.txtMinimum.text = viewController.eleventhFilter
-//        }
-//        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
-//            viewMinMax.txtMaximum.text = viewController.twelvethFilter
-//        }
+        viewMinMax.tag = FilterType.YachtPrice.rawValue
         stackView.addArrangedSubview(viewMinMax)
-
+        //******************
+        // Yacht Tags
+        //******************
 //        if let items = self.filters.yachtTag , items.count > 0{
-            let viewYachtTag = SingleLineCollectionFilter()
-            viewYachtTag.isTagLookAlike = true
-            viewYachtTag.lblTitle.text = "Tag"
+//            let viewYachtTag = SingleLineCollectionFilter()
+//            viewYachtTag.isTagLookAlike = true
+//            viewYachtTag.lblTitle.text = "Tag"
 //            viewYachtTag.items = items
 //            viewYachtTag.items = [Taxonomy(termId: "-123", name: "New"), Taxonomy(termId: "-123", name: "Luxury")]
-            viewYachtTag.tag = 7
-            stackView.addArrangedSubview(viewYachtTag)
+//            viewYachtTag.tag = 7
+//            stackView.addArrangedSubview(viewYachtTag)
 //        }
     }
     
@@ -467,35 +418,70 @@ class FiltersViewController: UIViewController {
         var _categoryIds:[String] = []
         var _price: ProductPrice?
         var _tags:[String] = []
+        var _yachtStatus:String = ""
+        var _yachtCharter:String = ""
+        var _regionId:String = ""
+        var _guests:GuestsRange?
+        var _yachtLength:YachtLength?
+        var _yachtType:String = ""
+        var _yachtBuiltAfter:String = ""
         
         for view in stackView.subviews{
-            if category == .event || category == .experience{
-                //***************
-                //Featured Cities
-                //***************
+            if category == .event || category == .experience || category == .yacht{
+                //*******************************************
+                //Featured Cities, YachtStatus, Charter, Type
+                //*******************************************
                 if let v = view as? SingleLineCollectionFilter{
                     let items = v.items.filter({$0.isSelected == true})
                     for item in items{
-                        if let cityId = item.value{
-                            _featuredCities.append(cityId)
+                        if let value = item.value{
+                            if v.tag == FilterType.YachtStatus.rawValue{
+                                _yachtStatus = value
+                            }else if v.tag == FilterType.YachtCharter.rawValue {
+                                //yacht charter must not be hidden, if hidden mean yacht status "sale" is selected
+                                if !v.isHidden{
+                                    _yachtCharter = value
+                                }
+                            }else if v.tag == FilterType.YachtType.rawValue{
+                                _yachtType = value
+                            }else{
+                                _featuredCities.append(value)
+                            }
                         }
                     }
                 }
-                //****************************
-                //Product Name & Location Name
-                //****************************
+                //*******************************************************************
+                //Product Name, Location Name, Yacht Name,region, guests, Built After
+                //*******************************************************************
                 else if let v = view as? TextFieldFilter{
-                    if v.tag == FilterType.EventName.rawValue{  //Product name
+                    if v.tag == FilterType.EventName.rawValue ||
+                        v.tag == FilterType.YachtName.rawValue{  //Product name
                         if let text = v.txtName.text, text.count > 0{
                             _productName = text
                         }
+                    }else if v.tag == FilterType.YachtGuests.rawValue {  //Guests
+                        if let text = v.txtPickerSelection, text.count > 0{
+                            _guests = getGuestsRange(range: text)
+                        }
+                    }else if v.tag == FilterType.YachtBuiltAfter.rawValue {  //Built After
+                        if let text = v.txtPickerSelection, text.count > 0{
+                            _yachtBuiltAfter = text
+                        }
                     }else if v.tag == FilterType.EventLocation.rawValue{    //location name
                         if let selectedLocation = v.selectedItem{
-                            if let country = selectedLocation.country{  //if country exist then user has searched a city
+                            if selectedLocation.country != nil{  //if country exist then user has searched a city
                                 _featuredCities.append(selectedLocation.termId)
                             }else{
                                 _countryId = selectedLocation.termId
                             }
+                        }
+                    }else if v.tag == FilterType.YachtRegion.rawValue{    //in case of yacht region will become country, country will become city
+                        if let selectedLocation = v.selectedItem{
+//                            if selectedLocation.country != nil{     //if country exist then user has searched a region, else country
+                                _regionId  = selectedLocation.termId
+//                            }else{
+//                                _countryId = selectedLocation.termId
+//                            }
                         }
                     }
                 }
@@ -512,17 +498,16 @@ class FiltersViewController: UIViewController {
                         }
                     }
                 }
-                //***********
-                //Event Price
-                //***********
+                //******************
+                //Event, Yacht Price
+                //******************
                 else if let v = view as? MinMaxFilter{
-                    if v.tag == FilterType.EventPrice.rawValue{
+                    if v.tag == FilterType.EventPrice.rawValue || v.tag == FilterType.YachtPrice.rawValue{
                         if let code = v.selectedItem.code{
                             if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
                                 if  min.count > 0 , max.count > 0{
                                     _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
-                                }
-                                else{
+                                }else if !(min.count == 0 && max.count == 0){
                                     showCardAlertWith(title: "Price Filter", body: "Both min and max prices are required.")
                                     return
                                 }
@@ -530,13 +515,31 @@ class FiltersViewController: UIViewController {
                         }
                     }
                 }
+                //************
+                //Yacht Length
+                //************
+                else if view is YachtLengthFilter{
+                    let v = view as! YachtLengthFilter
+                    var items = v.feet.filter({$0.isSelected == true})
+                    if (items.count == 1 && v.tag == FilterType.YachtLength.rawValue){  //selected from feet
+                        _yachtLength = YachtLength(type: .FEET,
+                                                   from: String(items[0].name.split(separator: "-")[0]),
+                                                   to: String(items[0].name.split(separator: "-")[1]))
+                    }else{ //if user has selected in meters and not in feet
+                        items = v.meters.filter({$0.isSelected == true})
+                        if (items.count == 1 && v.tag == FilterType.YachtLength.rawValue){  //so far user can select only 1 filter, selected from meters
+                            _yachtLength = YachtLength(type: .METER,
+                                                       from: String(items[0].name.split(separator: "-")[0]),
+                                                       to: String(items[0].name.split(separator: "-")[1]))
+                        }
+                    }
+                }
             }
         }
-        let _eventExperienceFilters = EventExperienceFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId,
-                                         categoryIds: _categoryIds, price: _price, tagIds: _tags)
-        let _applyFilter = ApplyFilters(eventExperienceFilters: _eventExperienceFilters)
+        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter)
         
-        let viewController = ProductsViewController.instantiate(category: self.category, applyFilters: _applyFilter)
+        
+        let viewController = ProductsViewController.instantiate(category: self.category, applyFilters: _eventExperienceFilters)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 //            if let v = view as? SingleLineCollectionFilter{
@@ -612,20 +615,32 @@ class FiltersViewController: UIViewController {
 //            navController.popViewController(animated: true)
 //        }
 //    }
+    
+    func getGuestsRange(range:String) -> GuestsRange?{
+        let _guestsRange = range.split(separator: "-")
+        var _from = "", _to = "1000"
+        if _guestsRange.count > 0{
+            _from  = String(_guestsRange[0])
+        }
+        if _guestsRange.count > 1{
+            _to  =  String(_guestsRange[1])
+        }
+        if _from.count > 0{
+            let _guestsRange = GuestsRange(from: _from , to: _to)
+            return _guestsRange
+        }else{
+            return nil
+        }
+    }
 }
 
 extension FiltersViewController:SingleLineCollectionFilterProtocol{
     
-    func didTappedOnFilterAt(tag: Int, termId: String) {
-        if (tag == 8){
+    func didTappedOnFilterAt(tag: Int, tappedValue: String) {
+        if (tag == FilterType.YachtStatus.rawValue){
             for view in stackView.subviews{
-                if view is SingleLineCollectionFilter, view.tag == 2{
-                    print("add termid check commented below")
-//                    if termId == 272 || termId == 3022{         // 272 = rent on staging, 3022 = rent on production
-//                        view.isHidden = false
-//                    }else if termId == 273 || termId == 3023{   // 273 = sale on staging, 3023 = sale on production
-//                        view.isHidden = true
-//                    }
+                if view is SingleLineCollectionFilter, view.tag == FilterType.YachtCharter.rawValue{
+                    view.isHidden = tappedValue == "sale"    //if value of tapped item is sale then hide yachtCharter
                 }
             }
         }

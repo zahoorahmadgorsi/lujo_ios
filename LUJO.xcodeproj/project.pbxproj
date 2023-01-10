@@ -1249,10 +1249,10 @@
 		886FE43527226195000B9530 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */,
 				426D9B06295CD9230014080A /* CollectionInsideCell.swift */,
-				42720E202959FACD005CFDA8 /* GiftFilterCell.xib */,
 				426D9B08295CDCC30014080A /* CollectionInsideCell.xib */,
+				42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */,
+				42720E202959FACD005CFDA8 /* GiftFilterCell.xib */,
 				887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */,
 				887E27B22748E099000A93B8 /* MinMaxFilter.xib */,
 				42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */,

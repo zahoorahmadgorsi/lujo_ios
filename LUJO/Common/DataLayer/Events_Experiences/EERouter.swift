@@ -27,15 +27,15 @@ enum EERouter: URLRequestConvertible {
     }()
 
     case home
-    case events(Bool, String?, String?, String?, ApplyFilters?)
-    case experiences( String?, String?, String?, ApplyFilters?)
+    case events(Bool, String?, String?, String?, AppliedFilters?)
+    case experiences( String?, String?, String?, AppliedFilters?)
     case salesforce(SalesforceRequest, String?)
     case geopoint(type: String, latitude: Float, longitude: Float)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
     case villas(String?, String?, String?)
     case goods(String?, String?, String?)
-    case yachts( String?, String?, String?)
+    case yachts( String?, String?, String?, AppliedFilters?)
 //    case getYachtGallery(String, String)
     case topRated(type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
@@ -73,7 +73,7 @@ enum EERouter: URLRequestConvertible {
             return .get
         case let .events(_, _, _, id, _):      fallthrough
         case let .experiences(_, _, id, _):    fallthrough
-        case let .yachts(_, _, id):         fallthrough
+        case let .yachts(_, _, id, _):         fallthrough
         case let .villas(_, _, id):
             if let id = id , id.count > 0 {  //if event is search by id then use different API
                 return .get
@@ -168,14 +168,14 @@ enum EERouter: URLRequestConvertible {
                     ]
                 }
                 
-            case let .yachts(_, _, id):
-                if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
+            case let .yachts(_, _, id, _):
+                if let productId = id , !productId.isEmpty {  //if yacht is search by id then user different API
                         newURLComponents.path.append("/yachts/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/yachts/search")
                     newURLComponents.queryItems = [
                         URLQueryItem(name: "page", value: "1"),
-                        URLQueryItem(name: "per_page", value: "100"),
+                        URLQueryItem(name: "per_page", value: "20"),
                     ]
                 }
             case let .recents(token, limit, type):
@@ -315,11 +315,11 @@ enum EERouter: URLRequestConvertible {
                 return getGoodsSearchDataAsJSONData(search)
             }
             
-        case let .yachts(term,cityId,productId):
+        case let .yachts(term,cityId,productId, filters):
             if let id = productId , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getYachtsDataAsJSONData(search: term,location: cityId,id: productId)
+                return getYachtsDataAsJSONData(search: term,location: cityId,id: productId, filters)
             }
         case let .topRated(type,term):
             return getTopRatedDataAsJSONData( type: type, term:term )
@@ -343,7 +343,7 @@ enum EERouter: URLRequestConvertible {
     fileprivate func getEventsSearchDataAsJSONData(_ past: Bool,
                                                    _ search: String?,
                                                    _ location:String?,
-                                                   _ filters:ApplyFilters?) -> Data? {
+                                                   _ filters:AppliedFilters?) -> Data? {
         var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
@@ -355,20 +355,20 @@ enum EERouter: URLRequestConvertible {
             body["show_past"] = true
         }
         //filters
-        if let items = filters?.eventExperienceFilters.featuredCities, items.count > 0{
+        if let items = filters?.featuredCities, items.count > 0{
             body["cities"] = items
         }
-        if let name = filters?.eventExperienceFilters.productName, !name.isEmpty{
+        if let name = filters?.productName, !name.isEmpty{
             body["name"] = name
         }
-        if let country = filters?.eventExperienceFilters.selectedCountry, !country.isEmpty{
+        if let country = filters?.selectedCountry, !country.isEmpty{
             let countries:[String] = [country]
             body["countries"] = countries
         }
-        if let items = filters?.eventExperienceFilters.categoryIds, items.count > 0{
+        if let items = filters?.categoryIds, items.count > 0{
             body["event_category_ids"] = items
         }
-        if let price = filters?.eventExperienceFilters.price{
+        if let price = filters?.price{
             body["custom_price_range"] = [
                 "from": Int(price.minPrice) as Any,
                 "to": Int(price.maxMax) as Any,
@@ -376,13 +376,13 @@ enum EERouter: URLRequestConvertible {
             ]
             body["orderByPrice"] = "Custom-Range"
         }
-        if let items = filters?.eventExperienceFilters.tagIds, items.count > 0{
+        if let items = filters?.tagIds, items.count > 0{
             body["tag_ids"] = items
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?,_ filters:ApplyFilters?) -> Data? {
+    fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?, _ location:String?,_ filters:AppliedFilters?) -> Data? {
         var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
@@ -391,20 +391,20 @@ enum EERouter: URLRequestConvertible {
             body["location"] = location
         }
         //filters
-        if let items = filters?.eventExperienceFilters.featuredCities, items.count > 0{
+        if let items = filters?.featuredCities, items.count > 0{
             body["cities"] = items
         }
-        if let name = filters?.eventExperienceFilters.productName, !name.isEmpty{
+        if let name = filters?.productName, !name.isEmpty{
             body["name"] = name
         }
-        if let country = filters?.eventExperienceFilters.selectedCountry, !country.isEmpty{
+        if let country = filters?.selectedCountry, !country.isEmpty{
             let countries:[String] = [country]
             body["countries"] = countries
         }
-        if let items = filters?.eventExperienceFilters.categoryIds, items.count > 0{
+        if let items = filters?.categoryIds, items.count > 0{
             body["experience_category_ids"] = items
         }
-        if let price = filters?.eventExperienceFilters.price{
+        if let price = filters?.price{
             body["custom_price_range"] = [
                 "from": Int(price.minPrice) as Any,
                 "to": Int(price.maxMax) as Any,
@@ -412,7 +412,7 @@ enum EERouter: URLRequestConvertible {
             ]
             body["orderByPrice"] = "Custom-Range"
         }
-        if let items = filters?.eventExperienceFilters.tagIds, items.count > 0{
+        if let items = filters?.tagIds, items.count > 0{
             body["tag_ids"] = items
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
@@ -446,7 +446,7 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getYachtsDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
+    fileprivate func getYachtsDataAsJSONData( search: String?, location:String?, id:String?,_ filters:AppliedFilters? ) -> Data? {
 //        var body: [String: Any] = ["status": "Published"]
         var body: [String: Any] = [:]
 //        body["page"] = 1    //else this API might fail as there are thousands of yachts data is available
@@ -459,6 +459,60 @@ enum EERouter: URLRequestConvertible {
         }
         if let id = id , !id.isEmpty {
             body["id"] = id
+        }
+        //filters
+        if let items = filters?.featuredCities, items.count > 0{
+            body["cities"] = items
+        }
+        if let name = filters?.productName, !name.isEmpty{
+            body["name"] = name
+        }
+        if let item = filters?.yachtStatus, !item.isEmpty{
+            body["yacht_status"] = item
+        }
+        if let item = filters?.yachtCharter, !item.isEmpty{
+            body["charter_time"] = item
+        }
+        if let country = filters?.selectedCountry, !country.isEmpty{
+            let countries:[String] = [country]
+            body["countries"] = countries
+        }
+        if let region = filters?.selectedRegion, !region.isEmpty{
+            let regions:[String] = [region]
+            body["regions"] = regions
+        }
+        if let guests = filters?.guests{
+            body["guest_range"] = [
+                "from": guests.from,
+                "to": guests.to
+            ]
+        }
+        if let yachtLength = filters?.yachtLength{
+            body["length"] = [
+                "type": yachtLength.type.rawValue,
+                "from": yachtLength.from,
+                "to": yachtLength.to
+            ]
+        }
+        if let item = filters?.yachtType, !item.isEmpty{
+            body["yacht_type"] = item
+        }
+        if let item = filters?.yachtBuiltAfter, !item.isEmpty{
+            body["build_year"] = item
+        }
+        if let items = filters?.categoryIds, items.count > 0{
+            body["event_category_ids"] = items
+        }
+        if let price = filters?.price{
+            body["custom_price_range"] = [
+                "from": Int(price.minPrice) as Any,
+                "to": Int(price.maxMax) as Any,
+                "currencyType" : price.currencyCode
+            ]
+            body["orderByPrice"] = "Custom-Range"
+        }
+        if let items = filters?.tagIds, items.count > 0{
+            body["tag_ids"] = items
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

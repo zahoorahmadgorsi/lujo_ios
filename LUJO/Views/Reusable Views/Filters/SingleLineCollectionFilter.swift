@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 protocol SingleLineCollectionFilterProtocol:class {
-    func didTappedOnFilterAt(tag: Int, termId: String)
+    func didTappedOnFilterAt(tag: Int, tappedValue: String)
 }
 
 class SingleLineCollectionFilter: UIView {
@@ -151,18 +151,19 @@ extension SingleLineCollectionFilter:SingleLineFilterCellProtocol{
     
     func didTappedOnItem(at index: Int) {
         for i in 0..<self.items.count{
-            if (i == index){
+            if (i == index){    //only interested in tapped item
                 let isSelected = self.items[i].isSelected ?? false
-//                if let isSelected = self.items[i].isSelected{
+                if let value = self.items[i].value{
                     self.items[i].isSelected = !isSelected
-//                    delegate?.didTappedOnFilterAt(tag: self.tag, termId: self.items[i].termId)  //delegate is only set for interested in i.e. tag 8
-//                }
-                break   //no need to continue with the loop
+                    delegate?.didTappedOnFilterAt(tag: self.tag, tappedValue: value)
+                }
             }
-            //uncomment below if want to disable multi selection
-//            else{
-//                self.items[i].isSelected = false
-//            }
+            else if self.tag == FilterType.YachtStatus.rawValue ||
+                    self.tag == FilterType.YachtCharter.rawValue ||
+                    self.tag == FilterType.YachtType.rawValue 
+            {//disable multiSelection
+                self.items[i].isSelected = false //uncomment if you want to disable multi selection
+            }
         }
         self.collectionView.reloadData()    //reload collection after updating the model
     }

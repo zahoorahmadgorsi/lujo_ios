@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var navigationController: UINavigationController!
     var isBackground: Bool!
   
-    //used in universal linking
+    //used in universal linking (info -> URL types)
 //    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
 //        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 //        let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)

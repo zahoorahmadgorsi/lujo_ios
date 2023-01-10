@@ -89,7 +89,7 @@ class EEAPIManager {
             }
     }
 
-    func getEvents( past: Bool, term: String?, cityId: String?, productId: String?, filtersToApply:ApplyFilters? = nil,
+    func getEvents( past: Bool, term: String?, cityId: String?, productId: String?, filtersToApply:AppliedFilters? = nil,
                     completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.events(past, term, cityId, productId, filtersToApply)).responseJSON { response in
             guard response.result.error == nil else {
@@ -137,7 +137,7 @@ class EEAPIManager {
     }
 
 
-    func getExperiences( term: String?, cityId: String?, productId: String?, filtersToApply:ApplyFilters? = nil, completion: @escaping ([Product], Error?) -> Void) {
+    func getExperiences( term: String?, cityId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.experiences( term, cityId, productId, filtersToApply)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
@@ -282,8 +282,8 @@ class EEAPIManager {
         }
     }
     
-    func getYachts(term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.yachts(term, cityId, productId)).responseJSON { response in
+    func getYachts(term: String?, cityId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.yachts(term, cityId, productId, filtersToApply)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

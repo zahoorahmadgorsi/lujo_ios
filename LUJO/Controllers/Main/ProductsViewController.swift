@@ -33,7 +33,7 @@ class ProductsViewController: UIViewController {
                            subCategory: ProductCategory? = nil,
                            dataSource: [Product] = [],
                            city: DiningCity? = nil,
-                           applyFilters: ApplyFilters? = nil) -> ProductsViewController {
+                           applyFilters: AppliedFilters? = nil) -> ProductsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! ProductsViewController
         viewController.category = category
         viewController.subCategory = subCategory
@@ -75,7 +75,7 @@ class ProductsViewController: UIViewController {
     }()
     
     //Filters
-    var applyFilters: ApplyFilters?
+    var applyFilters: AppliedFilters?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -343,7 +343,7 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension ProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:ApplyFilters? = nil) {
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil) {
         showNetworkActivity()
         getList(for: category, past: past, term: term, cityId: cityId, filtersToApply:filtersToApply) { items, error in
             self.hideNetworkActivity()
@@ -357,7 +357,7 @@ extension ProductsViewController {
         }
     }
     
-    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:ApplyFilters? = nil,
+    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil,
                  completion: @escaping ([Product], Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
@@ -387,6 +387,17 @@ extension ProductsViewController {
                     }
                     completion(list, error)
                 }
+            case .yacht:
+                EEAPIManager().getYachts( term: term, cityId: cityId, productId: nil,
+                                          filtersToApply: filtersToApply) { list, error in
+                    guard error == nil else {
+                        Crashlytics.crashlytics().record(error: error!)
+                        let error = BackendError.parsing(reason: "Could not obtain yachts information")
+                        completion([], error)
+                        return
+                    }
+                completion(list, error)
+            }
             case .villa:
                 EEAPIManager().getVillas(term: term, cityId: cityId, productId: nil) { list, error in
                     guard error == nil else {
@@ -408,16 +419,7 @@ extension ProductsViewController {
                     }
                 completion(list, error)
             }
-            case .yacht:
-                EEAPIManager().getYachts( term: term, cityId: cityId, productId: nil) { list, error in
-                    guard error == nil else {
-                        Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain yachts information")
-                        completion([], error)
-                        return
-                    }
-                completion(list, error)
-            }
+
             case .topRated:
                 EEAPIManager().getTopRated(type: self.subCategoryType, term: nil) { list, error in
                     guard error == nil else {

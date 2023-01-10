@@ -85,8 +85,13 @@ extension TextFieldFilter:  UITextFieldDelegate{
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         print (self.tag)
         if textField == self.txtName {
-            if self.tag == FilterType.EventLocation.rawValue{   //event region
+            if self.tag == FilterType.EventLocation.rawValue {   //event region
                 let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .eventLocation)   
+                viewController.delegate = self
+                self.parentViewController?.present(viewController, animated: true, completion: nil)
+                return false
+            }else if self.tag == FilterType.YachtRegion.rawValue{   //yacht region
+                let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .yachtPreferredRegions)
                 viewController.delegate = self
                 self.parentViewController?.present(viewController, animated: true, completion: nil)
                 return false

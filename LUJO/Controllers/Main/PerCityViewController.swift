@@ -142,7 +142,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
             case .yacht:
-                self.svFilters.isHidden = true
+                self.svFilters.isHidden = false
                 //Loading the preferences related to yacht only very first time
                 if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .yachts, prefInformationType: .yachtHaveCharteredBefore)

@@ -57,25 +57,39 @@ struct filterOption:Codable{
     var isSelected: Bool?   //ony used in filters
 }
 
-struct ApplyFilters{
-    var eventExperienceFilters:EventExperienceFilters
-}
+//struct ApplyFilters{
+//    var eventExperienceFilters:AppliedFilters
+//}
 
-struct EventExperienceFilters{
+struct AppliedFilters{
     var featuredCities:[String]
     var productName: String
     var selectedCountry: String?
     var categoryIds: [String]
     var price: ProductPrice?
     var tagIds: [String]
+    var yachtStatus: String
+    var yachtCharter: String
+    var selectedRegion: String?
+    var guests: GuestsRange?
+    var yachtLength: YachtLength?
+    var yachtType: String
+    var yachtBuiltAfter: String
     
-    init(featuredCities: [String], productName:String, selectedCountry:String?, categoryIds: [String], price:ProductPrice?, tagIds: [String]) {
+    init(featuredCities: [String], productName:String, selectedCountry:String?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:GuestsRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String) {
         self.featuredCities = featuredCities
         self.productName = productName
         self.selectedCountry = selectedCountry
         self.categoryIds = categoryIds
         self.price = price
         self.tagIds = tagIds
+        self.yachtStatus = yachtStatus
+        self.yachtCharter = yachtCharter
+        self.selectedRegion = selectedRegion
+        self.guests = guests
+        self.yachtLength = yachtLength
+        self.yachtType = yachtType
+        self.yachtBuiltAfter = yachtBuiltAfter
     }
 }
 
@@ -88,5 +102,34 @@ struct ProductPrice{
         self.currencyCode = currencyCode
         self.minPrice = minPrice
         self.maxMax = maxMax
+    }
+}
+
+//used in yachts guests
+struct GuestsRange{
+    var from:String
+    var to:String?
+    
+    init(from: String, to: String? = "1000") {
+        self.from = from
+        self.to = to
+    }
+}
+
+enum YachtLengthType: String {
+    case FEET = "feet",
+         METER = "meter"
+}
+
+//used in yacht filter
+struct YachtLength{
+    var type : YachtLengthType
+    var from:String
+    var to:String
+    
+    init(type : YachtLengthType,from: String, to: String ) {
+        self.type = type
+        self.from = from
+        self.to = to
     }
 }

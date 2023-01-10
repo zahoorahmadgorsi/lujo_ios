@@ -57,7 +57,8 @@ class MinMaxFilter: UIView {
 extension MinMaxFilter:  UITextFieldDelegate{
     //making preffered destination field uneditable
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if self.tag == FilterType.EventPrice.rawValue{   //event currency
+        if self.tag == FilterType.EventPrice.rawValue ||
+            self.tag == FilterType.YachtPrice.rawValue{   //event currency
             if textField == self.txtCurrency {
                 let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .currency)
                 viewController.delegate = self
