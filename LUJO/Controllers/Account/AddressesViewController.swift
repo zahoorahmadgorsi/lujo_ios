@@ -160,6 +160,11 @@ extension AddressesViewController: UITableViewDelegate, UITableViewDataSource{
         cell.lblCity.text = model.city.name
         cell.lblCountry.text = model.country.name
         
+        //Setting tap gesture on tap to edit
+        let gestureEdit = UITapGestureRecognizer(target: self, action:  #selector (self.tappedOnEdit (_:)))
+        cell.viewTapToEdit.tag = indexPath.section
+        cell.viewTapToEdit.addGestureRecognizer(gestureEdit)
+        
         if(model.default_address){ //if default is true then update button title
             cell.lblAddressSetAsDefault.text =  "D E F A U L T"
             cell.viewSetAsDefault.backgroundColor = UIColor.lightGrey
@@ -183,6 +188,14 @@ extension AddressesViewController: UITableViewDelegate, UITableViewDataSource{
 
         
         return cell
+    }
+    
+    @objc func tappedOnEdit(_ sender:UITapGestureRecognizer){
+        if let tag = sender.view?.tag{
+            let address = addresses[tag]
+            let viewController = AddressViewController.instantiate(address: address)
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     @objc func tappedOnRemoveAddress(_ sender:UITapGestureRecognizer){

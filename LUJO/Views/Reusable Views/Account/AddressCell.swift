@@ -9,6 +9,8 @@
 import UIKit
 
 class AddressCell: UITableViewCell {
+    
+    @IBOutlet weak var viewTapToEdit: UIView!
     @IBOutlet weak var lblType: UILabel!
     @IBOutlet weak var lblNumber: UILabel!  //apartment, suit, office number
     @IBOutlet weak var lblAddress: UILabel!
@@ -19,6 +21,8 @@ class AddressCell: UITableViewCell {
     @IBOutlet weak var lblAddressSetAsDefault: UILabel!    //set as default label on address, there is an other label having title set as default
     @IBOutlet weak var viewRemoveAddress: UIView!
 
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         reset()
@@ -41,5 +45,6 @@ class AddressCell: UITableViewCell {
         viewRemoveAddress.backgroundColor = UIColor.grayButton
 //        viewSetAsDefault.addViewBorder( borderColor: UIColor.rgMid.cgColor, borderWidth: 1.0, borderCornerRadius: 0.0)
     }
+    
     
 }

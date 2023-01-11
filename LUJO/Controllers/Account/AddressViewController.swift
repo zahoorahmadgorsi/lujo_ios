@@ -10,6 +10,10 @@ import UIKit
 import JGProgressHUD
 import FirebaseCrashlytics
 
+enum AddressType:String{
+        case Home, Office, Other
+}
+
 class AddressViewController: UIViewController {
     
     //MARK: - 🎲 - Init
@@ -18,8 +22,9 @@ class AddressViewController: UIViewController {
     class var identifier: String { return "AddressViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate() -> AddressViewController {
+    class func instantiate(address: Address? = nil) -> AddressViewController {
         let viewController = UIStoryboard.accountNEW.instantiate(identifier) as! AddressViewController
+        viewController.address = address
         return viewController
     }
     
@@ -31,25 +36,33 @@ class AddressViewController: UIViewController {
     @IBOutlet var txtAddress: LujoTextField!
     @IBOutlet var txtApartmentSuit: LujoTextField!
     @IBOutlet var txtPostZipCode: LujoTextField!
+    //address types
     @IBOutlet weak var viewHome: UIView!
     @IBOutlet weak var viewOffice: UIView!
     @IBOutlet weak var viewOther: UIView!
+    
     @IBOutlet weak var viewSetAsDefault: UIView!
     @IBOutlet weak var imgIsHome: UIImageView!
     @IBOutlet weak var imgIsOffice: UIImageView!
     @IBOutlet weak var imgIsOther: UIImageView!
     @IBOutlet weak var imgIsSetAsDefault: UIImageView!
+    private var address:Address?
     
     private let naHUD = JGProgressHUD(style: .dark)
     
     private var selectedCountry:Taxonomy?{
         didSet{
             self.lblCountry.text = selectedCountry?.name
+            self.selectedCity = nil //reseting city due to country change
         }
     }
     private var selectedCity:Taxonomy?{
         didSet{
-            self.lblCity.text = selectedCity?.name
+            if let city = selectedCity{
+                self.lblCity.text = city.name
+            }else{
+                self.lblCity.text = ""
+            }
         }
     }
     private var isHome:Bool = true{
@@ -112,6 +125,28 @@ class AddressViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
+        if let _address = self.address{ //coming to edit
+            self.selectedCountry = _address.country
+            self.selectedCity = _address.city
+            self.txtAddress.text = _address.address
+            self.txtApartmentSuit.text = _address.apartment
+            self.txtPostZipCode.text = _address.zip_code
+            
+            if ( _address.address_type == AddressType.Home.rawValue ){
+                self.isHome = true
+                self.isOffice = false
+                self.isOther = false
+            }else if ( _address.address_type == AddressType.Office.rawValue ){
+                self.isHome = false
+                self.isOffice = true
+                self.isOther = false
+            }else{
+                self.isHome = false
+                self.isOffice = false
+                self.isOther = true
+            }
+            self.isSetAsDefault = _address.default_address
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -166,27 +201,53 @@ class AddressViewController: UIViewController {
             return
         }
         
-        var address_type:String = "Home"   //by default is home
+        var address_type:String = AddressType.Home.rawValue   //by default is home
         if isOffice{
-            address_type = "Office"
+            address_type = AddressType.Office.rawValue
         }else if isOther{
-            address_type = "Other"
+            address_type = AddressType.Other.rawValue
         }
         
-        let item = Address("", country, city,address, apartment, postZip, address_type, isSetAsDefault)
-        showNetworkActivity()
-        GoLujoAPIManager().addressAdd(item) { response, error in
-            self.hideNetworkActivity()
-            guard error == nil else {
-                Crashlytics.crashlytics().record(error: error!)
-                let description = error?.localizedDescription ?? "Address could not be added."
-                let error = BackendError.parsing(reason: description)
-                self.showError(error)
-                return
+        if self.address == nil{ //coming to create/add an address
+            self.address = Address("", country, city,address, apartment, postZip, address_type, isSetAsDefault)
+            if let addressObject = self.address{
+                showNetworkActivity()
+                GoLujoAPIManager().addressAdd(addressObject) { response, error in
+                    self.hideNetworkActivity()
+                    guard error == nil else {
+                        Crashlytics.crashlytics().record(error: error!)
+                        let description = error?.localizedDescription ?? "Address could not be added."
+                        let error = BackendError.parsing(reason: description)
+                        self.showError(error)
+                        return
+                    }
+                    //pop in case of success, and on previous UI latest data would be shown
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
-            //pop in case of success, and on previous UI latest data would be shown
-            self.navigationController?.popViewController(animated: true)
+        }else{  //coming to edit the address
+            let _address = Address(self.address?.id, country, city,address, apartment, postZip, address_type, isSetAsDefault)
+            self.address = _address
+            
+            if let addressObject = self.address{
+                showNetworkActivity()
+                GoLujoAPIManager().addressUpdate(addressObject) { response, error in
+                    self.hideNetworkActivity()
+                    guard error == nil else {
+                        Crashlytics.crashlytics().record(error: error!)
+                        let description = error?.localizedDescription ?? "Address could not be updated."
+                        let error = BackendError.parsing(reason: description)
+                        self.showError(error)
+                        return
+                    }
+                    //pop in case of success, and on previous UI latest data would be shown
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         }
+        
+        
+
         
     }
     
@@ -215,7 +276,7 @@ class AddressViewController: UIViewController {
     }
     
     func showError(_ error: Error) {
-        showErrorPopup(withTitle: "Profile Error", error: error)
+        showErrorPopup(withTitle: "Address Book Error", error: error)
     }
     
     func showNetworkActivity() {
