@@ -69,8 +69,10 @@ class TextFieldFilter: UIView {
         
         if picker == nil {
             picker = ikDataPickerManger.create(owner: self.parentViewController!, sourceView: sender as? UIView, title: "Please select one", dataSource: items, callback: { [self] values in
-                self.lblPickerSelection.text = values[0]
-                self.txtPickerSelection = values[0]
+                if values.count > 0{
+                    self.lblPickerSelection.text = values[0]
+                    self.txtPickerSelection = values[0]
+                }
             })
         }
         picker?.present()
@@ -85,7 +87,7 @@ extension TextFieldFilter:  UITextFieldDelegate{
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         print (self.tag)
         if textField == self.txtName {
-            if self.tag == FilterType.EventLocation.rawValue {   //event region
+            if self.tag == FilterType.EventLocation.rawValue || self.tag == FilterType.VillaLocation.rawValue {   //event location
                 let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .eventLocation)   
                 viewController.delegate = self
                 self.parentViewController?.present(viewController, animated: true, completion: nil)

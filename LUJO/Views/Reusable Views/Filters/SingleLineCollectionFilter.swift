@@ -160,7 +160,8 @@ extension SingleLineCollectionFilter:SingleLineFilterCellProtocol{
             }
             else if self.tag == FilterType.YachtStatus.rawValue ||
                     self.tag == FilterType.YachtCharter.rawValue ||
-                    self.tag == FilterType.YachtType.rawValue 
+                    self.tag == FilterType.YachtType.rawValue ||
+                    self.tag == FilterType.VillaSaleType.rawValue
             {//disable multiSelection
                 self.items[i].isSelected = false //uncomment if you want to disable multi selection
             }

@@ -183,8 +183,8 @@ class EEAPIManager {
         }
     }
     
-    func getVillas(term: String?, cityId: String?, productId: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.villas( term, cityId, productId)).responseJSON { response in
+    func getVillas(term: String?, cityId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.villas( term, cityId, productId,filtersToApply)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

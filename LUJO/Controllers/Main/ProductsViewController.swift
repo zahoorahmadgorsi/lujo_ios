@@ -399,7 +399,8 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .villa:
-                EEAPIManager().getVillas(term: term, cityId: cityId, productId: nil) { list, error in
+                EEAPIManager().getVillas(term: term, cityId: cityId, productId: nil,
+                                         filtersToApply: filtersToApply) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")

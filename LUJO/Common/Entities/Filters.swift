@@ -64,7 +64,7 @@ struct filterOption:Codable{
 struct AppliedFilters{
     var featuredCities:[String]
     var productName: String
-    var countryId: String?
+    var countryId: [String]?
     var categoryIds: [String]
     var price: ProductPrice?
     var tagIds: [String]
@@ -75,8 +75,9 @@ struct AppliedFilters{
     var yachtLength: YachtLength?
     var yachtType: String
     var yachtBuiltAfter: String
+    var villaSaleType: VillaSaleType?
     
-    init(featuredCities: [String], productName:String, selectedCountry:String?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:GuestsRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String) {
+    init(featuredCities: [String], productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:GuestsRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?) {
         self.featuredCities = featuredCities
         self.productName = productName
         self.countryId = selectedCountry
@@ -90,6 +91,7 @@ struct AppliedFilters{
         self.yachtLength = yachtLength
         self.yachtType = yachtType
         self.yachtBuiltAfter = yachtBuiltAfter
+        self.villaSaleType = villaSaleType
     }
 }
 
@@ -108,9 +110,9 @@ struct ProductPrice{
 //used in yachts guests
 struct GuestsRange{
     var from:String
-    var to:String?
+    var to:String
     
-    init(from: String, to: String? = "1000") {
+    init(from: String, to: String = "1000") {
         self.from = from
         self.to = to
     }
@@ -131,5 +133,15 @@ struct YachtLength{
         self.type = type
         self.from = from
         self.to = to
+    }
+}
+
+struct VillaSaleType{
+    var buy : Bool?
+    var rent: Bool?
+    
+    init(buy: Bool?, rent: Bool? ) {
+        self.buy = buy
+        self.rent = rent
     }
 }

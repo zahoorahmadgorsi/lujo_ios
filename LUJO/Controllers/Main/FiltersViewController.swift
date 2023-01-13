@@ -27,7 +27,8 @@ protocol FiltersVCProtocol:class {
 
 enum FilterType: Int {
     case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags, ExperienceCategory, ExperienceTags,
-        YachtPopularLocations, YachtName, YachtStatus, YachtCharter, YachtRegion, YachtGuests, YachtLength, YachtType, YachtBuiltAfter, YachtPrice, YachtTags
+        YachtPopularLocations, YachtName, YachtStatus, YachtCharter, YachtRegion, YachtGuests, YachtLength, YachtType, YachtBuiltAfter, YachtPrice, YachtTags,
+         VillaFeaturedLocations, VillaLocation, VillaSaleType, VillaGuests, VillaType, VillaLifeStyle, VillaPrice, VillaBedRooms, VillaBathRooms, VillaTags
         
 }
 
@@ -212,18 +213,6 @@ class FiltersViewController: UIViewController {
         viewMinMax.lblTitle.text = "Price"
         viewMinMax.tag = FilterType.YachtPrice.rawValue
         stackView.addArrangedSubview(viewMinMax)
-        //******************
-        // Yacht Tags
-        //******************
-//        items = self.filters.filter({$0.key == "tags"})
-//        let viewYachtTag = SingleLineCollectionFilter()
-//        viewYachtTag.isTagLookAlike = true
-//        viewYachtTag.lblTitle.text = "Tag"
-//        if  items.count > 0, let options = items[0].options, options.count > 0{
-//            viewYachtTag.items = options
-//        }
-//        viewYachtTag.tag = FilterType.YachtTags.rawValue
-//        stackView.addArrangedSubview(viewYachtTag)
         //**********
         //Yacht TAGS
         //**********
@@ -294,11 +283,6 @@ class FiltersViewController: UIViewController {
         viewCategory.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
         viewCategory.pickedItems = []
         viewCategory.tag = self.category == .event ? FilterType.EventCategory.rawValue : FilterType.ExperienceCategory.rawValue
-
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
-////            viewCategory.txtName.text = ""//viewController.secondFilter.name
-//        }
         stackView.addArrangedSubview(viewCategory)
         
         //***********
@@ -384,6 +368,112 @@ class FiltersViewController: UIViewController {
         stackView.addArrangedSubview(viewMinMax)
     }
     
+    func updateVillaFilters(_ previousViewController: UIViewController){
+        //************************
+        // Yacht Popular Locations
+        //************************
+        if let items = self.filters , items.count > 0{
+            let view = SingleLineCollectionFilter()
+            view.isTagLookAlike = true
+            view.lblTitle.text = "Featured locations"
+            
+            let citiesFilter = self.filters.filter({$0.key == "cities"})
+            if citiesFilter.count > 0, let options = citiesFilter[0].options, options.count > 0{
+                view.items = options
+            }
+            view.tag = FilterType.VillaFeaturedLocations.rawValue
+            stackView.addArrangedSubview(view)
+        }
+        //***************
+        // Villa Location
+        //***************
+        let viewRegion = TextFieldFilter()
+        viewRegion.lblTitle.text = "Location"
+        viewRegion.txtName.placeholder = "Enter Location"
+        viewRegion.viewPicker.isHidden = true
+        viewRegion.tag = FilterType.VillaLocation.rawValue
+        stackView.addArrangedSubview(viewRegion)
+        //**************************
+        // Villa Rent/Sale
+        //**************************
+        var items = self.filters.filter({$0.key == "sales_type"})
+        if  items.count > 0, let options = items[0].options, options.count > 0{
+            let viewInterestedIn = SingleLineCollectionFilter()
+            viewInterestedIn.lblTitle.text = items[0].name
+
+            viewInterestedIn.items = options
+            viewInterestedIn.tag = FilterType.VillaSaleType.rawValue
+            viewInterestedIn.delegate = self    //it will cause the tap event on radio button fire which will hide unhide yacht charter view
+            stackView.addArrangedSubview(viewInterestedIn)
+        }
+        //******************
+        // Villa Guests
+        //******************
+        let viewMinMax = MinMaxFilter()
+        viewMinMax.isCurrency = false   //it will hide currency textview
+        viewMinMax.lblTitle.text = "Guests"
+        viewMinMax.tag = FilterType.VillaGuests.rawValue
+        stackView.addArrangedSubview(viewMinMax)
+        //***************
+        // Villa Type
+        //***************
+        let airportCollViewCell = AirportCollViewCell()
+        let viewCategory = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        viewCategory.lblTitle.text = "Type"
+        viewCategory.txtName.placeholder = "Select"
+        viewCategory.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
+        viewCategory.pickedItems = []
+        viewCategory.tag = FilterType.VillaType.rawValue
+        stackView.addArrangedSubview(viewCategory)
+        //*****************
+        // Villa Life Style
+        //*****************
+        let lifeStyleCollViewCell = AirportCollViewCell()
+        let villaLifeStyle = MultiLineCollectionFilter(cell: lifeStyleCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        villaLifeStyle.lblTitle.text = "Lifestyle"
+        villaLifeStyle.txtName.placeholder = "Select"
+        villaLifeStyle.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
+        villaLifeStyle.pickedItems = []
+        villaLifeStyle.tag = FilterType.VillaLifeStyle.rawValue
+        stackView.addArrangedSubview(villaLifeStyle)
+        //************
+        // Villa Price
+        //************
+        let viewVillaPrice = MinMaxFilter()
+        viewVillaPrice.lblTitle.text = "Price"
+        viewVillaPrice.tag = FilterType.VillaPrice.rawValue
+        stackView.addArrangedSubview(viewVillaPrice)
+        //******************
+        // Villa Bed Rooms
+        //******************
+        let viewVillaBedRooms = MinMaxFilter()
+        viewVillaBedRooms.isCurrency = false   //it will hide currency textview
+        viewVillaBedRooms.lblTitle.text = "No. of Bedrooms"
+        viewVillaBedRooms.tag = FilterType.VillaBedRooms.rawValue
+        stackView.addArrangedSubview(viewVillaBedRooms)
+        //******************
+        // Villa Bath Rooms
+        //******************
+        let viewVillaBathRooms = MinMaxFilter()
+        viewVillaBathRooms.isCurrency = false   //it will hide currency textview
+        viewVillaBathRooms.lblTitle.text = "No. of Bathrooms"
+        viewVillaBathRooms.tag = FilterType.VillaBathRooms.rawValue
+        stackView.addArrangedSubview(viewVillaBathRooms)
+        //**********
+        // Villa TAGS
+        //**********
+//        items = self.filters.filter({$0.key == "tags"})
+        let tagsCell = AirportCollViewCell()
+        let viewYachtTag = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        viewYachtTag.isTagLookAlike = true
+        viewYachtTag.lblTitle.text = "Tags"
+        viewYachtTag.txtName.placeholder = "Enter tags"
+        viewYachtTag.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
+        viewYachtTag.pickedItems = []//[Taxonomy(termId: "-123" , name: "Sports") , Taxonomy(termId: "-123" , name: "Arts")]
+        viewYachtTag.tag = FilterType.VillaTags.rawValue
+        stackView.addArrangedSubview(viewYachtTag)
+    }
+    
     func updateContent() {
         for view in self.stackView.subviews {
             view.removeFromSuperview()
@@ -391,6 +481,9 @@ class FiltersViewController: UIViewController {
         let i = navigationController?.viewControllers.firstIndex(of: self)
         if let previousViewController = navigationController?.viewControllers[i!-1]{
             switch category {
+            case .villa:
+                updateVillaFilters(previousViewController)
+                break
             case .yacht:
                 updateYachtFilters(previousViewController)
                 break
@@ -427,7 +520,7 @@ class FiltersViewController: UIViewController {
         
         var _featuredCities:[String] = []
         var _productName:String = ""
-        var _countryId:String = ""
+        var _countryId:[String] = []
         var _categoryIds:[String] = []
         var _price: ProductPrice?
         var _tags:[String] = []
@@ -438,12 +531,13 @@ class FiltersViewController: UIViewController {
         var _yachtLength:YachtLength?
         var _yachtType:String = ""
         var _yachtBuiltAfter:String = ""
+        var _villaSaleType:VillaSaleType?
         
         for view in stackView.subviews{
-            if category == .event || category == .experience || category == .yacht{
-                //*******************************************
-                //Featured Cities, YachtStatus, Charter, Type
-                //*******************************************
+//            if category == .event || category == .experience || category == .yacht{
+                //************************************************************
+                //Featured Cities, YachtStatus, Charter, Type, Villa SaleType
+                //***********************************************************
                 if let v = view as? SingleLineCollectionFilter{
                     let items = v.items.filter({$0.isSelected == true})
                     for item in items{
@@ -457,10 +551,16 @@ class FiltersViewController: UIViewController {
                                 }
                             }else if v.tag == FilterType.YachtType.rawValue{
                                 _yachtType = value
+                            }else if v.tag == FilterType.YachtPopularLocations.rawValue{
+                                _countryId.append(value)  //its working for key cities which is last else statement of thi code block
+                            }else if v.tag == FilterType.VillaSaleType.rawValue{
+                                if value.equals(rhs: "rent"){
+                                    _villaSaleType = VillaSaleType(buy: false, rent: true)
+                                }else if value.equals(rhs: "sale"){
+                                    _villaSaleType = VillaSaleType(buy: true, rent: false)
+                                }
+                                
                             }
-//                            else if v.tag == FilterType.YachtPopularLocations.rawValue{
-//                                _countryId.append(value)  //its working for key cities which is last else statement of thi code block
-//                            }
                             else{
                                 _featuredCities.append(value)
                             }
@@ -484,18 +584,18 @@ class FiltersViewController: UIViewController {
                         if let text = v.txtPickerSelection, text.count > 0{
                             _yachtBuiltAfter = text
                         }
-                    }else if v.tag == FilterType.EventLocation.rawValue{    //location name
+                    }else if v.tag == FilterType.EventLocation.rawValue || v.tag == FilterType.VillaLocation.rawValue{    //location name
                         if let selectedLocation = v.selectedItem{
                             if selectedLocation.country != nil{  //if country exist then user has searched a city
                                 _featuredCities.append(selectedLocation.termId)
                             }else{
-                                _countryId = selectedLocation.termId
+                                _countryId.append(selectedLocation.termId)
                             }
                         }
                     }else if v.tag == FilterType.YachtRegion.rawValue{    //in case of yacht region will become country, country will become city
                         if let selectedLocation = v.selectedItem{
                             if selectedLocation.yachtRegion != nil{     //if region exist then user has searched a country, else region
-                                _countryId  = selectedLocation.termId
+                                _countryId.append(selectedLocation.termId)
                             }else{
                                 _regionId = selectedLocation.termId
                             }
@@ -503,7 +603,7 @@ class FiltersViewController: UIViewController {
                     }
                 }
                 //**********************************
-                //Event Categories, Tags, Yacht Tags
+                //Event Categories, Tags, Yacht Tags, Villa Types
                 //**********************************
                 else if let v = view as? MultiLineCollectionFilter{
                     let items = v.pickedItems
@@ -517,9 +617,9 @@ class FiltersViewController: UIViewController {
                         }
                     }
                 }
-                //******************
-                //Event, Yacht Price
-                //******************
+                //********************************
+                //Event, Yacht Price, Villa Guests
+                //********************************
                 else if let v = view as? MinMaxFilter{
                     if v.tag == FilterType.EventPrice.rawValue || v.tag == FilterType.YachtPrice.rawValue{
                         if let code = v.selectedItem.code{
@@ -532,6 +632,16 @@ class FiltersViewController: UIViewController {
                                 }
                             }
                         }
+                    }else if v.tag == FilterType.VillaGuests.rawValue {
+                        if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
+                            if  min.count > 0 , max.count > 0{
+                                _guests = GuestsRange(from: min, to: max)
+                            }else if !(min.count == 0 && max.count == 0){
+                                showCardAlertWith(title: "Guest Filter", body: "Both min and max are required.")
+                                return
+                            }
+                        }
+                        
                     }
                 }
                 //************
@@ -554,8 +664,8 @@ class FiltersViewController: UIViewController {
                     }
                 }
             }
-        }
-        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter)
+//        }
+        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter, villaSaleType: _villaSaleType)
         
         
         let viewController = ProductsViewController.instantiate(category: self.category, applyFilters: _eventExperienceFilters)
@@ -637,9 +747,10 @@ class FiltersViewController: UIViewController {
     
     func getGuestsRange(range:String) -> GuestsRange?{
         let _guestsRange = range.split(separator: "-")
-        var _from = "", _to = "1000"
+        var _from = "", _to = ""
         if _guestsRange.count > 0{
             _from  = String(_guestsRange[0])
+            _to = _from //initially keep it same as from as in next code block _to is updating
         }
         if _guestsRange.count > 1{
             _to  =  String(_guestsRange[1])

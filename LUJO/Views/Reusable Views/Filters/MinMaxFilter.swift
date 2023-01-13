@@ -10,12 +10,6 @@
 import UIKit
 import AVFoundation
 
-//protocol CityViewProtocol:class {
-//    func seeAllProductsForCity(city: Cities)
-//    func didTappedOnProductAt(product: Product, itemIndex: Int)
-//    func didTappedOnHeartAt(city: Cities, itemIndex: Int)
-//}
-
 class MinMaxFilter: UIView {
 
     @IBOutlet var contentView: UIView!
@@ -25,6 +19,11 @@ class MinMaxFilter: UIView {
     @IBOutlet weak var txtMaximum: UITextField!
     
     var selectedItem = Taxonomy(id: "633a7c01e6d9bd322cca5899", name: "Dollar", code:"USD")    //default currency
+    var isCurrency:Bool = true{
+        didSet{
+            self.txtCurrency.isHidden = !isCurrency
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

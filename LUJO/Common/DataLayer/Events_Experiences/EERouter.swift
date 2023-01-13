@@ -33,7 +33,7 @@ enum EERouter: URLRequestConvertible {
     case geopoint(type: String, latitude: Float, longitude: Float)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
-    case villas(String?, String?, String?)
+    case villas(String?, String?, String?, AppliedFilters?)
     case goods(String?, String?, String?)
     case yachts( String?, String?, String?, AppliedFilters?)
 //    case getYachtGallery(String, String)
@@ -74,7 +74,7 @@ enum EERouter: URLRequestConvertible {
         case let .events(_, _, _, id, _):      fallthrough
         case let .experiences(_, _, id, _):    fallthrough
         case let .yachts(_, _, id, _):         fallthrough
-        case let .villas(_, _, id):
+        case let .villas(_, _, id, _):
             if let id = id , id.count > 0 {  //if event is search by id then use different API
                 return .get
             }else{
@@ -141,7 +141,7 @@ enum EERouter: URLRequestConvertible {
                             URLQueryItem(name: "per_page", value: "100"),
                         ]
                     }
-            case let .villas(_, _, id):
+            case let .villas(_, _, id, _):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/villas/detail/" + productId)
                 }else{
@@ -300,11 +300,11 @@ enum EERouter: URLRequestConvertible {
                 return getExperiencesSearchDataAsJSONData(search, location, filters)
             }
             
-        case let .villas(term,cityId,productId):
+        case let .villas(term,cityId,productId, filters):
             if let id = productId , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getVillasDataAsJSONData(search: term,location: cityId,id: productId)
+                return getVillasDataAsJSONData(search: term,location: cityId,id: productId, filters)
             }
         case let .goods(search, giftCategoryId, id):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
@@ -361,9 +361,8 @@ enum EERouter: URLRequestConvertible {
         if let name = filters?.productName, !name.isEmpty{
             body["name"] = name
         }
-        if let country = filters?.countryId, !country.isEmpty{
-            let countries:[String] = [country]
-            body["countries"] = countries
+        if let items = filters?.countryId, items.count > 0{
+            body["countries"] = items
         }
         if let items = filters?.categoryIds, items.count > 0{
             body["event_category_ids"] = items
@@ -397,9 +396,8 @@ enum EERouter: URLRequestConvertible {
         if let name = filters?.productName, !name.isEmpty{
             body["name"] = name
         }
-        if let country = filters?.countryId, !country.isEmpty{
-            let countries:[String] = [country]
-            body["countries"] = countries
+        if let items = filters?.countryId, items.count > 0{
+            body["countries"] = items
         }
         if let items = filters?.categoryIds, items.count > 0{
             body["experience_category_ids"] = items
@@ -427,7 +425,7 @@ enum EERouter: URLRequestConvertible {
     }
     
     
-    fileprivate func getVillasDataAsJSONData( search: String?, location:String? , id:String? ) -> Data? {
+    fileprivate func getVillasDataAsJSONData( search: String?, location:String? , id:String?,_ filters:AppliedFilters? ) -> Data? {
 //        var body: [String: Any] = [:]
         //pagination parameter would in body only in case of villas
         var body: [String: Any] = ["status": "Published"]
@@ -442,7 +440,25 @@ enum EERouter: URLRequestConvertible {
         if let id = id , !id.isEmpty {
             body["id"] = id
         }
-        
+        //filters
+        if let items = filters?.featuredCities, items.count > 0{
+            body["cities"] = items
+        }
+        if let items = filters?.countryId, items.count > 0{
+            body["countries"] = items
+        }
+        if let item = filters?.villaSaleType{
+            body["sales_type"] = [
+                "buy" : item.buy == true ? true : false,
+                "rent" : item.rent == true ? true : false
+            ]
+        }
+        if let guests = filters?.guests{
+            body["no_of_guests"] = [
+                "min": Int(guests.from),
+                "max": Int(guests.to)
+            ]
+        }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
@@ -473,9 +489,8 @@ enum EERouter: URLRequestConvertible {
         if let item = filters?.yachtCharter, !item.isEmpty{
             body["charter_time"] = item
         }
-        if let country = filters?.countryId, !country.isEmpty{
-            let countries:[String] = [country]
-            body["countries"] = countries
+        if let items = filters?.countryId, items.count > 0{
+            body["countries"] = items
         }
         if let region = filters?.regionId, !region.isEmpty{
             let regions:[String] = [region]

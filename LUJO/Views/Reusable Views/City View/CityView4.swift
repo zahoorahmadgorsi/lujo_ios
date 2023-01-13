@@ -125,7 +125,7 @@ class CityView4: UIView {
             if index == 0 {
                 if (product.thumbnail?.mediaType == "image"){
                     if let mediaLink = product.thumbnail?.mediaUrl {
-                        print("Thumbnail url: \(mediaLink)")
+                        //print("Thumbnail url: \(mediaLink)")
                         product1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                     }else if let firstImageLink = product.getGalleryImagesURL().first {
                         print(firstImageLink)
@@ -197,7 +197,7 @@ class CityView4: UIView {
             else if index == 1 {
                 if (product.thumbnail?.mediaType == "image"){
                     if let mediaLink = product.thumbnail?.mediaUrl {
-                        print("Thumbnail url: \(mediaLink)")
+                        //print("Thumbnail url: \(mediaLink)")
                         product2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                     }else if let firstImageLink = product.getGalleryImagesURL().first {
                         print(firstImageLink)
@@ -268,7 +268,7 @@ class CityView4: UIView {
             }else if index == 2 {
                 if (product.thumbnail?.mediaType == "image"){
                     if let mediaLink = product.thumbnail?.mediaUrl {
-                        print("Thumbnail url: \(mediaLink)")
+                        //print("Thumbnail url: \(mediaLink)")
                         product3ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                     }else if let firstImageLink = product.getGalleryImagesURL().first {
                         print(firstImageLink)
@@ -339,7 +339,7 @@ class CityView4: UIView {
             }else if index == 3 {
                 if (product.thumbnail?.mediaType == "image"){
                     if let mediaLink = product.thumbnail?.mediaUrl {
-                        print("Thumbnail url: \(mediaLink)")
+                        //print("Thumbnail url: \(mediaLink)")
                         product4ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                     }else if let firstImageLink = product.getGalleryImagesURL().first {
                         print(firstImageLink)

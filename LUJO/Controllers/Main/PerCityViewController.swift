@@ -133,7 +133,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isEventPreferencesAlreadyShown")
                 }
             case .villa:
-                self.svFilters.isHidden = true
+                self.svFilters.isHidden = false
                 //Loading the preferences related to villa only very first time
                 if !UserDefaults.standard.bool(forKey: "isVillaPreferencesAlreadyShown")  {
                     let airportCollViewCell = AirportCollViewCell()
