@@ -56,15 +56,16 @@ class MinMaxFilter: UIView {
 extension MinMaxFilter:  UITextFieldDelegate{
     //making preffered destination field uneditable
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if self.tag == FilterType.EventPrice.rawValue ||
-            self.tag == FilterType.YachtPrice.rawValue{   //event currency
+//        if self.tag == FilterType.EventPrice.rawValue ||
+//            self.tag == FilterType.YachtPrice.rawValue ||
+//            self.tag == FilterType.VillaPrice.rawValue{   //event currency
             if textField == self.txtCurrency {
                 let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .currency)
                 viewController.delegate = self
                 self.parentViewController?.present(viewController, animated: true, completion: nil)
                 return false
             }
-        }
+//        }
         return true
     }
 }
@@ -72,15 +73,15 @@ extension MinMaxFilter:  UITextFieldDelegate{
 extension MinMaxFilter:DestinationSearchViewDelegate{
     //WHen user has selected some destination region
     func select(_ destination: Taxonomy) {
-        if self.tag == FilterType.EventPrice.rawValue{
+//        if self.tag == FilterType.EventPrice.rawValue{
             self.selectedItem = destination
-            if self.tag == FilterType.EventPrice.rawValue{   //event currency
+            if self.tag == FilterType.EventPrice.rawValue || self.tag == FilterType.YachtPrice.rawValue || self.tag == FilterType.VillaPrice.rawValue{   //event currency
                 self.txtCurrency.text = self.selectedItem.code
             }else{
                 self.txtCurrency.text = self.selectedItem.name
             }
             self.selectedItem.isSelected = true
-        }
+//        }
     }
 }
 

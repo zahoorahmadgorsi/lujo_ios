@@ -368,6 +368,16 @@ class FiltersViewController: UIViewController {
         stackView.addArrangedSubview(viewMinMax)
     }
     
+    private func createTaxonomiesFromFilters(filters: [filterOption]) -> [Taxonomy]{
+        var taxonomies:[Taxonomy] = []
+        for item in filters{
+            if let _name = item.name{
+                taxonomies.append( Taxonomy(id: "-123", name: _name, code: "-123asdf"))
+            }
+        }
+        return taxonomies
+    }
+    
     func updateVillaFilters(_ previousViewController: UIViewController){
         //************************
         // Yacht Popular Locations
@@ -418,13 +428,17 @@ class FiltersViewController: UIViewController {
         // Villa Type
         //***************
         let airportCollViewCell = AirportCollViewCell()
-        let viewCategory = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
-        viewCategory.lblTitle.text = "Type"
-        viewCategory.txtName.placeholder = "Select"
-        viewCategory.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
-        viewCategory.pickedItems = []
-        viewCategory.tag = FilterType.VillaType.rawValue
-        stackView.addArrangedSubview(viewCategory)
+        let viewVillaType = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        viewVillaType.lblTitle.text = "Type"
+        viewVillaType.txtName.placeholder = "Select"
+        //taking [options] out of [filters]
+        if let filterOptions = self.filters.filter({$0.key == "property_type"}).map({$0.options})[0]{
+            viewVillaType.items = createTaxonomiesFromFilters (filters: filterOptions )
+        }
+        viewVillaType.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
+        viewVillaType.pickedItems = []
+        viewVillaType.tag = FilterType.VillaType.rawValue
+        stackView.addArrangedSubview(viewVillaType)
         //*****************
         // Villa Life Style
         //*****************
@@ -432,6 +446,10 @@ class FiltersViewController: UIViewController {
         let villaLifeStyle = MultiLineCollectionFilter(cell: lifeStyleCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
         villaLifeStyle.lblTitle.text = "Lifestyle"
         villaLifeStyle.txtName.placeholder = "Select"
+        //taking [options] out of [filters]
+        if let filterOptions = self.filters.filter({$0.key == "lifestyle"}).map({$0.options})[0]{
+            villaLifeStyle.items = createTaxonomiesFromFilters (filters: filterOptions )
+        }
         villaLifeStyle.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
         villaLifeStyle.pickedItems = []
         villaLifeStyle.tag = FilterType.VillaLifeStyle.rawValue
@@ -527,11 +545,15 @@ class FiltersViewController: UIViewController {
         var _yachtStatus:String = ""
         var _yachtCharter:String = ""
         var _regionId:String = ""
-        var _guests:GuestsRange?
+        var _guests:AnyRange?
         var _yachtLength:YachtLength?
         var _yachtType:String = ""
         var _yachtBuiltAfter:String = ""
         var _villaSaleType:VillaSaleType?
+        var _villaTypes:[String] = []
+        var _villaLifeStyles:[String] = []
+        var _bedRooms:AnyRange?
+        var _bathRooms:AnyRange?
         
         for view in stackView.subviews{
 //            if category == .event || category == .experience || category == .yacht{
@@ -568,7 +590,7 @@ class FiltersViewController: UIViewController {
                     }
                 }
                 //*******************************************************************
-                //Product Name, Location Name, Yacht Name,region, guests, Built After
+                //Product Name, Location Name, Yacht Name,region, guests, Built After, villa bedroom, bathrooms
                 //*******************************************************************
                 else if let v = view as? TextFieldFilter{
                     if v.tag == FilterType.EventName.rawValue ||
@@ -579,6 +601,14 @@ class FiltersViewController: UIViewController {
                     }else if v.tag == FilterType.YachtGuests.rawValue {  //Guests
                         if let text = v.txtPickerSelection, text.count > 0{
                             _guests = getGuestsRange(range: text)
+                        }
+                    }else if v.tag == FilterType.VillaBedRooms.rawValue {  //bedrooms
+                        if let text = v.txtPickerSelection, text.count > 0{
+                            _bedRooms = getGuestsRange(range: text)
+                        }
+                    }else if v.tag == FilterType.VillaBathRooms.rawValue {  //bathrooms
+                        if let text = v.txtPickerSelection, text.count > 0{
+                            _bathRooms = getGuestsRange(range: text)
                         }
                     }else if v.tag == FilterType.YachtBuiltAfter.rawValue {  //Built After
                         if let text = v.txtPickerSelection, text.count > 0{
@@ -602,46 +632,51 @@ class FiltersViewController: UIViewController {
                         }
                     }
                 }
-                //**********************************
-                //Event Categories, Tags, Yacht Tags, Villa Types
-                //**********************************
+                //****************************************************************
+                //Event Categories, Tags, Yacht Tags, Villa Types, lifestyle, tags
+                //****************************************************************
                 else if let v = view as? MultiLineCollectionFilter{
                     let items = v.pickedItems
                     for item in items{
-                        if v.tag == FilterType.EventCategory.rawValue || v.tag == FilterType.ExperienceCategory.rawValue{
+                        if v.tag == FilterType.EventCategory.rawValue ||
+                           v.tag == FilterType.ExperienceCategory.rawValue{
                             _categoryIds.append(item.termId)
-                        }else if v.tag == FilterType.EventTags.rawValue || v.tag == FilterType.ExperienceTags.rawValue {
+                        }else if v.tag == FilterType.EventTags.rawValue ||
+                                 v.tag == FilterType.ExperienceTags.rawValue  {
                             _tags.append(item.termId)
-                        }else if v.tag == FilterType.YachtTags.rawValue {
+                        }else if v.tag == FilterType.YachtTags.rawValue ||
+                                 v.tag == FilterType.VillaTags.rawValue{
                             _tags.append(item.name)
+                        }else if v.tag == FilterType.VillaType.rawValue {
+                            _villaTypes.append(item.name)
+                        }else if v.tag == FilterType.VillaLifeStyle.rawValue {
+                            _villaLifeStyles.append(item.name)
                         }
                     }
                 }
-                //********************************
-                //Event, Yacht Price, Villa Guests
-                //********************************
+                //****************************************
+                //Event, Yacht Price, Villa Guests, Price
+                //****************************************
                 else if let v = view as? MinMaxFilter{
-                    if v.tag == FilterType.EventPrice.rawValue || v.tag == FilterType.YachtPrice.rawValue{
-                        if let code = v.selectedItem.code{
-                            if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
-                                if  min.count > 0 , max.count > 0{
+                    if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
+                        if  min.count > 0 , max.count > 0{
+                            if v.tag == FilterType.EventPrice.rawValue ||
+                                v.tag == FilterType.YachtPrice.rawValue ||
+                                v.tag == FilterType.VillaPrice.rawValue{
+                                if let code = v.selectedItem.code{
                                     _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
-                                }else if !(min.count == 0 && max.count == 0){
-                                    showCardAlertWith(title: "Price Filter", body: "Both min and max prices are required.")
-                                    return
                                 }
+                            }else if v.tag == FilterType.VillaGuests.rawValue{
+                                _guests = AnyRange(from: min, to: max)
+                            }else if v.tag == FilterType.VillaBedRooms.rawValue {
+                                _bedRooms = AnyRange(from: min, to: max)
+                            }else if v.tag == FilterType.VillaBathRooms.rawValue{
+                                _bathRooms = AnyRange(from: min, to: max)
                             }
+                        }else if !(min.count == 0 && max.count == 0){
+                            showCardAlertWith(title: "Min Max Filter", body: "Both min and max are required.")
+                            return
                         }
-                    }else if v.tag == FilterType.VillaGuests.rawValue {
-                        if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
-                            if  min.count > 0 , max.count > 0{
-                                _guests = GuestsRange(from: min, to: max)
-                            }else if !(min.count == 0 && max.count == 0){
-                                showCardAlertWith(title: "Guest Filter", body: "Both min and max are required.")
-                                return
-                            }
-                        }
-                        
                     }
                 }
                 //************
@@ -665,87 +700,15 @@ class FiltersViewController: UIViewController {
                 }
             }
 //        }
-        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter, villaSaleType: _villaSaleType)
+        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter, villaSaleType: _villaSaleType, villaTypes: _villaTypes, villaLifeStyle: _villaLifeStyles, bedRooms: _bedRooms , bathRooms: _bathRooms)
         
         
         let viewController = ProductsViewController.instantiate(category: self.category, applyFilters: _eventExperienceFilters)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
-//            if let v = view as? SingleLineCollectionFilter{
-//                let v = view as! SingleLineCollectionFilter
-//                let items = v.items.filter({$0.isSelected == true})
-////                if (items.count == 1){  //so far user can select only 1 filter
-//                    if (v.tag == 2){    //user has selected something from yacht charter, charter would be hidden if user is intersted in yacht purchase
-//                        if (v.isHidden == false){
-//                            delegate?.setSecondFilter(filter: items[0]) //set yacht charter if view is not hidden i.e. user has selected some thing
-//                        }else{
-//                            delegate?.setSecondFilter(filter: nil)      //unset if user is not selecting any thing on yacht charter
-//                        }
-//
-//                    }else if (v.tag == 5){    //user has selected something from yacht type
-//                        delegate?.setSixthFilter(filter: items[0])
-//                    }else if (v.tag == 7){    //user has selected something from yacht tag
-//                        delegate?.setEighthFilter(filter: items[0])
-//                    }else if (v.tag == 8){    //user has selected something from Interested in, yacht charter or yacht purchase
-//                        delegate?.setNinthFilter(filter: items[0])
-//                    }
-//                }
-//            }
-//            else
-//            if view is TextFieldFilter{
-//                if let v = view as? TextFieldFilter , let txt = v.txtName.text, txt.count > 0{
-//                    if (v.tag == 1){    //user has entered some thing in the text field yacht name
-//                        delegate?.setFirstFilter(filter: txt )
-//                    }else if (v.tag == 9){    //user has selected region
-//                        delegate?.setTenthFilter(filter: v.selectedItem)
-//                    }
-//                }else if let v = view as? TextFieldFilter , let txt = v.txtPickerSelection, txt.count > 0{
-//                    if (v.tag == 3){    //user has selected something from yacht guest
-//                        delegate?.setThirdFilter(filter: txt)
-//                    }else if (v.tag == 6){    //user has selected something from built after
-//                        delegate?.setSeventhFilter(filter: txt)
-//                    }
-//                }
-//
-//            }
-//            else if view is YachtLengthFilter{
-//                let v = view as! YachtLengthFilter
-//                var items = v.feet.filter({$0.isSelected == true})
-//                if (items.count == 1 && v.tag == 4){  //so far user can select only 1 filter, selected from feet
-//                    delegate?.setFourthFilter(filter: items[0])
-////                    delegate?.setFifthFilter(filter: nil)
-//                }
-//                items = v.meters.filter({$0.isSelected == true})
-//                if (items.count == 1 && v.tag == 4){  //so far user can select only 1 filter, selected from meters
-////                    delegate?.setFourthFilter(filter: nil)
-//                    delegate?.setFifthFilter(filter: items[0])
-//                }
-//            }else if view is MinMaxFilter{
-//                if let v = view as? MinMaxFilter , let txt = v.txtMinimum.text, txt.count > 0{
-//                    if (v.tag == 10){    //user has entered some thing in the text field min price
-//                        delegate?.setEleventhFilter(filter: txt )
-//                    }
-//                }
-//                if let v = view as? MinMaxFilter , let txt = v.txtMaximum.text, txt.count > 0{
-//                    if (v.tag == 10){    //user has entered some thing in the text field max price
-//                        delegate?.setTwelvethFilter(filter: txt )
-//                    }
-//                }
-//
-//            }
-//            else{
-//                print("Some other")
-//            }
-//        }
-        
-        
-        //popping up the VC
-//        if let navController = self.navigationController {
-//            navController.popViewController(animated: true)
-//        }
-//    }
+
     
-    func getGuestsRange(range:String) -> GuestsRange?{
+    func getGuestsRange(range:String) -> AnyRange?{
         let _guestsRange = range.split(separator: "-")
         var _from = "", _to = ""
         if _guestsRange.count > 0{
@@ -756,7 +719,7 @@ class FiltersViewController: UIViewController {
             _to  =  String(_guestsRange[1])
         }
         if _from.count > 0{
-            let _guestsRange = GuestsRange(from: _from , to: _to)
+            let _guestsRange = AnyRange(from: _from , to: _to)
             return _guestsRange
         }else{
             return nil

@@ -454,10 +454,39 @@ enum EERouter: URLRequestConvertible {
             ]
         }
         if let guests = filters?.guests{
-            body["no_of_guests"] = [
-                "min": Int(guests.from),
-                "max": Int(guests.to)
+            body["guest_range"] = [
+                "from": guests.from,
+                "to": guests.to
             ]
+        }
+        if let items = filters?.villaTypes, items.count > 0{
+            body["property_type"] = items
+        }
+        if let items = filters?.villaLifeStyle, items.count > 0{
+            body["lifestyle"] = items
+        }
+        if let price = filters?.price{
+            body["custom_price_range"] = [
+                "from": Int(price.minPrice) as Any,
+                "to": Int(price.maxMax) as Any,
+                "currencyType" : price.currencyCode
+            ]
+            body["orderByPrice"] = "Custom-Range"
+        }
+        if let items = filters?.bedRooms{
+            body["bedroom_range"] = [
+                "from": items.from,
+                "to": items.to
+            ]
+        }
+        if let items = filters?.bathRooms{
+            body["bathroom_range"] = [
+                "from": items.from,
+                "to": items.to
+            ]
+        }
+        if let items = filters?.tagIds, items.count > 0{
+            body["tags"] = items
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

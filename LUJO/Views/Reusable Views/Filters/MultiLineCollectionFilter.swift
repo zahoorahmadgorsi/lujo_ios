@@ -140,7 +140,10 @@ class MultiLineCollectionFilter: UIView {
                 self.items = taxonomies
                 self.pickerItems = self.getStringArrayFromTaxonomyArray(taxonomies: taxonomies ?? [])
             }
+        }else if self.tag == FilterType.VillaType.rawValue || self.tag == FilterType.VillaLifeStyle.rawValue{   //villa types, life styles
+            self.pickerItems = self.getStringArrayFromTaxonomyArray(taxonomies: self.items ?? [])
         }
+            
     }
     
     private func setupLayout() {
@@ -264,10 +267,14 @@ extension MultiLineCollectionFilter:  UITextFieldDelegate{
 //            self.parentViewController?.present(viewController, animated: true, completion: nil)
 //            return false
 //        }
-        if self.tag == FilterType.EventCategory.rawValue || self.tag == FilterType.EventTags.rawValue ||
-            self.tag == FilterType.ExperienceCategory.rawValue || self.tag == FilterType.ExperienceTags.rawValue{   //event category or tags
-            self.loadPickerItems(textField: textField)
-            return false
+        if self.tag == FilterType.EventCategory.rawValue ||
+            self.tag == FilterType.EventTags.rawValue ||
+            self.tag == FilterType.ExperienceCategory.rawValue ||
+            self.tag == FilterType.ExperienceTags.rawValue ||
+            self.tag == FilterType.VillaType.rawValue ||
+            self.tag == FilterType.VillaLifeStyle.rawValue {   //event category, tags, villa types and lifeStyles
+                self.loadPickerItems(textField: textField)
+                return false
         }
 
         return true
@@ -275,7 +282,7 @@ extension MultiLineCollectionFilter:  UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //it will work for yacht
-        if self.tag == FilterType.YachtTags.rawValue{
+        if self.tag == FilterType.YachtTags.rawValue || self.tag == FilterType.VillaTags.rawValue{
             if let text = textField.text{
                 var _temp = self.pickedItems
                 _temp.append(Taxonomy(termId: "-123", name: text))

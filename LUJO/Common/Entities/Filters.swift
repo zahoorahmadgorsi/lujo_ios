@@ -71,13 +71,18 @@ struct AppliedFilters{
     var yachtStatus: String
     var yachtCharter: String
     var regionId: String?
-    var guests: GuestsRange?
+    var guests: AnyRange?
     var yachtLength: YachtLength?
     var yachtType: String
     var yachtBuiltAfter: String
     var villaSaleType: VillaSaleType?
+    var villaTypes: [String]?
+    var villaLifeStyle: [String]?
     
-    init(featuredCities: [String], productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:GuestsRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?) {
+    var bedRooms: AnyRange?
+    var bathRooms: AnyRange?
+    
+    init(featuredCities: [String], productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:AnyRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?, villaTypes: [String]?, villaLifeStyle: [String]? , bedRooms: AnyRange? , bathRooms: AnyRange?) {
         self.featuredCities = featuredCities
         self.productName = productName
         self.countryId = selectedCountry
@@ -92,6 +97,10 @@ struct AppliedFilters{
         self.yachtType = yachtType
         self.yachtBuiltAfter = yachtBuiltAfter
         self.villaSaleType = villaSaleType
+        self.villaTypes = villaTypes
+        self.villaLifeStyle = villaLifeStyle
+        self.bedRooms = bedRooms
+        self.bathRooms = bathRooms
     }
 }
 
@@ -108,7 +117,7 @@ struct ProductPrice{
 }
 
 //used in yachts guests
-struct GuestsRange{
+struct AnyRange{
     var from:String
     var to:String
     
