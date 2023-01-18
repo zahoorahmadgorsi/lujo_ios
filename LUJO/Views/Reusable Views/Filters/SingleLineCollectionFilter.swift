@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-protocol SingleLineCollectionFilterProtocol:class {
+protocol SingleLineCollectionFilterProtocol {
     func didTappedOnFilterAt(tag: Int, tappedValue: String)
 }
 
@@ -146,7 +146,8 @@ extension SingleLineCollectionFilter: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SingleLineCollectionFilter:SingleLineFilterCellProtocol{
+extension SingleLineCollectionFilter:TapOnCellProtocol{
+    
 
     
     func didTappedOnItem(at index: Int) {

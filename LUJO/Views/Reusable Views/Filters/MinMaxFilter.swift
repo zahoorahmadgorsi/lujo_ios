@@ -75,7 +75,10 @@ extension MinMaxFilter:DestinationSearchViewDelegate{
     func select(_ destination: Taxonomy) {
 //        if self.tag == FilterType.EventPrice.rawValue{
             self.selectedItem = destination
-            if self.tag == FilterType.EventPrice.rawValue || self.tag == FilterType.YachtPrice.rawValue || self.tag == FilterType.VillaPrice.rawValue{   //event currency
+            if self.tag == FilterType.EventPrice.rawValue ||
+                self.tag == FilterType.YachtPrice.rawValue ||
+                self.tag == FilterType.VillaPrice.rawValue ||
+                self.tag == FilterType.GiftPrice.rawValue{   //event currency
                 self.txtCurrency.text = self.selectedItem.code
             }else{
                 self.txtCurrency.text = self.selectedItem.name

@@ -91,6 +91,7 @@
                 <outlet property="imgLeft" destination="gfO-Kb-u79" id="RPL-hK-vax"/>
                 <outlet property="imgRight" destination="0Yh-eN-ZUz" id="bCe-hM-XEY"/>
                 <outlet property="lblTitle" destination="XYO-cq-YsY" id="w9k-oS-C80"/>
+                <outlet property="mainView" destination="6Jd-0M-Szf" id="6yB-5F-Vl8"/>
                 <outlet property="viewLeft" destination="nkv-mt-rxC" id="ppI-SO-j4Z"/>
                 <outlet property="viewRight" destination="TTi-cO-yGg" id="fPD-O2-UIW"/>
             </connections>

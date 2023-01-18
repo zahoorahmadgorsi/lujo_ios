@@ -63,6 +63,8 @@
 		30368DD72339200D00EDF549 /* MainScreenAviationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */; };
 		30368DD82339200D00EDF549 /* MainScreenAviationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */; };
 		42130EAB28B3964B006629B3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42130EAA28B3964B006629B3 /* NotificationCell.swift */; };
+		4213527B297893D600EC0490 /* GiftsCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213527A297893D600EC0490 /* GiftsCollectionFilter.swift */; };
+		4213527D297893F600EC0490 /* GiftsCollectionFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4213527C297893F600EC0490 /* GiftsCollectionFilter.xib */; };
 		4215E26E2900297F0087DE91 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215E26D2900297F0087DE91 /* Constants.swift */; };
 		421E0DB828696DB500B32451 /* AddressesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DB728696DB500B32451 /* AddressesViewController.swift */; };
 		421E0DBA2869766300B32451 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E0DB92869766300B32451 /* AddressCell.swift */; };
@@ -470,6 +472,8 @@
 		30368DD52339200D00EDF549 /* MainScreenAviationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAviationCell.swift; sourceTree = "<group>"; };
 		30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenAviationCell.xib; sourceTree = "<group>"; };
 		42130EAA28B3964B006629B3 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		4213527A297893D600EC0490 /* GiftsCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiftsCollectionFilter.swift; sourceTree = "<group>"; };
+		4213527C297893F600EC0490 /* GiftsCollectionFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GiftsCollectionFilter.xib; sourceTree = "<group>"; };
 		4215E26D2900297F0087DE91 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		421E0DB728696DB500B32451 /* AddressesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesViewController.swift; sourceTree = "<group>"; };
 		421E0DB92869766300B32451 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
@@ -1253,6 +1257,8 @@
 				426D9B08295CDCC30014080A /* CollectionInsideCell.xib */,
 				42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */,
 				42720E202959FACD005CFDA8 /* GiftFilterCell.xib */,
+				4213527A297893D600EC0490 /* GiftsCollectionFilter.swift */,
+				4213527C297893F600EC0490 /* GiftsCollectionFilter.xib */,
 				887E27B72748E0B2000A93B8 /* MinMaxFilter.swift */,
 				887E27B22748E099000A93B8 /* MinMaxFilter.xib */,
 				42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */,
@@ -2121,6 +2127,7 @@
 				1D880130233E4AB30039DEA6 /* DiningCategorySliderCell.xib in Resources */,
 				88988673272363DE0030613A /* SingleLineCollectionFilter.xib in Resources */,
 				88CEBD0726546D1A00360CB6 /* AirportCollViewCell.xib in Resources */,
+				4213527D297893F600EC0490 /* GiftsCollectionFilter.xib in Resources */,
 				1DBC9BFD235F6BCA00F0F133 /* BookingDetailCell.xib in Resources */,
 				9A645BA1226492BB009BF14D /* BookingPriceSummaryView.xib in Resources */,
 				5527644723195CF800380BEB /* AccountNEW.storyboard in Resources */,
@@ -2403,6 +2410,7 @@
 				9A64764621F9BF6100EB93C4 /* BAFlights.swift in Sources */,
 				421E0DBC2869957400B32451 /* CityCountrySelectionViewController.swift in Sources */,
 				8868754927A6CBCE00563CDC /* CameraInputBarAccessoryView.swift in Sources */,
+				4213527B297893D600EC0490 /* GiftsCollectionFilter.swift in Sources */,
 				9A762356212BB80300328F74 /* Trie.swift in Sources */,
 				9A53A6A52152085E00AAE322 /* AviationProtocols.swift in Sources */,
 				1DFE1AC92349FEFD0025410D /* RestaurantListViewController.swift in Sources */,

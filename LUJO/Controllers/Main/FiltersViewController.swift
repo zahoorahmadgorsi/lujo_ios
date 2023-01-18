@@ -11,24 +11,13 @@ import UIKit
 
 protocol FiltersVCProtocol:class {
     func setCities(cities:[String])
-//    func setFirstFilter(filter:String)      //name
-//    func setSecondFilter(filter:Taxonomy?)  //daily or weekly charter
-//    func setThirdFilter(filter:String)
-//    func setFourthFilter(filter:Taxonomy?)
-//    func setFifthFilter(filter:Taxonomy?)
-//    func setSixthFilter(filter:Taxonomy?)
-//    func setSeventhFilter(filter:String)
-//    func setEighthFilter(filter:Taxonomy?)  //yacht tag
-//    func setNinthFilter(filter:Taxonomy?)   //charter or sale
-//    func setTenthFilter(filter:Taxonomy?)   //region
-//    func setEleventhFilter(filter:String)    //min price
-//    func setTwelvethFilter(filter:String)    //mx price
 }
 
 enum FilterType: Int {
     case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags, ExperienceCategory, ExperienceTags,
         YachtPopularLocations, YachtName, YachtStatus, YachtCharter, YachtRegion, YachtGuests, YachtLength, YachtType, YachtBuiltAfter, YachtPrice, YachtTags,
-         VillaFeaturedLocations, VillaLocation, VillaSaleType, VillaGuests, VillaType, VillaLifeStyle, VillaPrice, VillaBedRooms, VillaBathRooms, VillaTags
+         VillaFeaturedLocations, VillaLocation, VillaSaleType, VillaGuests, VillaType, VillaLifeStyle, VillaPrice, VillaBedRooms, VillaBathRooms, VillaTags,
+        GiftSortBy,GiftFilterBy,GiftPrice
         
 }
 
@@ -218,7 +207,7 @@ class FiltersViewController: UIViewController {
         //**********
 //        items = self.filters.filter({$0.key == "tags"})
         let tagsCell = AirportCollViewCell()
-        let viewYachtTag = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        let viewYachtTag = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36)
         viewYachtTag.isTagLookAlike = true
         viewYachtTag.lblTitle.text = "Tags"
         viewYachtTag.txtName.placeholder = "Enter tags"
@@ -277,7 +266,7 @@ class FiltersViewController: UIViewController {
         // Event CATEGORY
         //***************
         let airportCollViewCell = AirportCollViewCell()
-        let viewCategory = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        let viewCategory = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36)
         viewCategory.lblTitle.text = "Category"
         viewCategory.txtName.placeholder = "Select Category"
         viewCategory.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
@@ -303,68 +292,50 @@ class FiltersViewController: UIViewController {
         //Event TAGS
         //**********
         let tagsCell = AirportCollViewCell()
-        let view = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        let view = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36)
 //            view.isTagLookAlike = true
         view.lblTitle.text = "Tags"
         view.txtName.placeholder = "Select tags"
-        viewCategory.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
-        view.pickedItems = []//[Taxonomy(termId: "-123" , name: "Sports") , Taxonomy(termId: "-123" , name: "Arts")]
+        view.pickerItems = [[]] //by default nothing is picked hence collectionView space is not allocated
+        view.pickedItems = []
         view.tag = self.category == .event ?  FilterType.EventTags.rawValue : FilterType.ExperienceTags.rawValue
         stackView.addArrangedSubview(view)
     }
     
     func updateGiftsFilters(_ previousViewController: UIViewController){
         //**********
-        //NEW FILTER
+        // Sort By
         //**********
         let giftCell = GiftFilterCell()
-        let sortByFilter = MultiLineCollectionFilter(cell: giftCell, cellWidth: 400, cellHeight: 36, scrollDirection: .vertical, leftImageName: "", rightImageName: "filters_uncheck")
+        let sortByFilter = GiftsCollectionFilter(cell: giftCell, cellWidth: 400, cellHeight: 36, leftImageName: "", rightImageName: "filters_uncheck", filterCellType: FilterCellType.SortBy)
         sortByFilter.lblTitle.text = "Sort By"
-        sortByFilter.txtName.isHidden = true
-        sortByFilter.pickedItems = [Taxonomy(termId: "-123" , name: "Our Picks"),
-                              Taxonomy(termId: "-123" , name: "New Items"),
-                              Taxonomy(termId: "-123" , name: "Price (low first)"),
-                              Taxonomy(termId: "-123" , name: "Price (high first)")]
-        sortByFilter.tag = 1
 
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
-////            viewCategory.txtName.text = ""//viewController.secondFilter.name
-//        }
+        let sortByFilters = self.filters.filter({$0.key == "Sort By"})
+        if sortByFilters.count > 0, let filterOptions = sortByFilters[0].options, filterOptions.count > 0{
+            sortByFilter.pickedItems = createTaxonomiesFromFilters (filters: filterOptions )
+        }
+        sortByFilter.tag = FilterType.GiftSortBy.rawValue
         stackView.addArrangedSubview(sortByFilter)
-        
         //**********
-        //NEW FILTER
+        // FILTER By
         //**********
         let filterByCell = GiftFilterCell()
 //        let filterByCell = CollectionInsideCell()
-        let filterByFilter = MultiLineCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, scrollDirection: .vertical, leftImageName: "", rightImageName: "filter_right_arrow")
-        filterByFilter.lblTitle.text = "Filter By"
-        filterByFilter.txtName.isHidden = true
-        filterByFilter.pickedItems = [Taxonomy(termId: "-123" , name: "Brands"),
-                              Taxonomy(termId: "-123" , name: "Categories"),
-                              Taxonomy(termId: "-123" , name: "Colors")]
-        filterByFilter.tag = 1
+        let filterByView = GiftsCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, leftImageName: "", rightImageName: "filter_right_arrow", filterCellType: FilterCellType.FilterBy)
+        filterByView.lblTitle.text = "Filter By"
 
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.fourthFilter != nil {
-////            viewCategory.txtName.text = ""//viewController.secondFilter.name
-//        }
-        stackView.addArrangedSubview(filterByFilter)
+        let filterBy = self.filters.filter({$0.key == "filter by"})
+        if filterBy.count > 0, let filterOptions = filterBy[0].options, filterOptions.count > 0{
+            filterByView.pickedItems = createTaxonomiesFromFilters (filters: filterOptions )
+        }
+        filterByView.tag = FilterType.GiftFilterBy.rawValue
+        stackView.addArrangedSubview(filterByView)
         //**********
-        //NEW FILTER
+        //Price
         //**********
         let viewMinMax = MinMaxFilter()
         viewMinMax.lblTitle.text = "Price"
-        viewMinMax.tag = 10
-
-        //pre-filling with existing filters
-//        if let viewController = previousViewController as? PerCityViewController , viewController.eleventhFilter.count > 0{
-//            viewMinMax.txtMinimum.text = viewController.eleventhFilter
-//        }
-//        if let viewController = previousViewController as? PerCityViewController , viewController.twelvethFilter.count > 0{
-//            viewMinMax.txtMaximum.text = viewController.twelvethFilter
-//        }
+        viewMinMax.tag = FilterType.GiftPrice.rawValue
         stackView.addArrangedSubview(viewMinMax)
     }
     
@@ -428,7 +399,7 @@ class FiltersViewController: UIViewController {
         // Villa Type
         //***************
         let airportCollViewCell = AirportCollViewCell()
-        let viewVillaType = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        let viewVillaType = MultiLineCollectionFilter(cell: airportCollViewCell, cellWidth: 125, cellHeight: 36)
         viewVillaType.lblTitle.text = "Type"
         viewVillaType.txtName.placeholder = "Select"
         //taking [options] out of [filters]
@@ -443,7 +414,7 @@ class FiltersViewController: UIViewController {
         // Villa Life Style
         //*****************
         let lifeStyleCollViewCell = AirportCollViewCell()
-        let villaLifeStyle = MultiLineCollectionFilter(cell: lifeStyleCollViewCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        let villaLifeStyle = MultiLineCollectionFilter(cell: lifeStyleCollViewCell, cellWidth: 125, cellHeight: 36)
         villaLifeStyle.lblTitle.text = "Lifestyle"
         villaLifeStyle.txtName.placeholder = "Select"
         //taking [options] out of [filters]
@@ -482,7 +453,7 @@ class FiltersViewController: UIViewController {
         //**********
 //        items = self.filters.filter({$0.key == "tags"})
         let tagsCell = AirportCollViewCell()
-        let viewYachtTag = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36, scrollDirection: .horizontal)
+        let viewYachtTag = MultiLineCollectionFilter(cell: tagsCell, cellWidth: 125, cellHeight: 36)
         viewYachtTag.isTagLookAlike = true
         viewYachtTag.lblTitle.text = "Tags"
         viewYachtTag.txtName.placeholder = "Enter tags"
@@ -660,18 +631,23 @@ class FiltersViewController: UIViewController {
                 else if let v = view as? MinMaxFilter{
                     if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
                         if  min.count > 0 , max.count > 0{
-                            if v.tag == FilterType.EventPrice.rawValue ||
-                                v.tag == FilterType.YachtPrice.rawValue ||
-                                v.tag == FilterType.VillaPrice.rawValue{
-                                if let code = v.selectedItem.code{
-                                    _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
+                            if Int(min) ?? 0 > Int(max) ?? 0{
+                                showCardAlertWith(title: "Min Max Filter", body: "Min must be less then the max.")
+                                return
+                            }else{
+                                if v.tag == FilterType.EventPrice.rawValue ||
+                                    v.tag == FilterType.YachtPrice.rawValue ||
+                                    v.tag == FilterType.VillaPrice.rawValue{
+                                    if let code = v.selectedItem.code{
+                                        _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
+                                    }
+                                }else if v.tag == FilterType.VillaGuests.rawValue{
+                                    _guests = AnyRange(from: min, to: max)
+                                }else if v.tag == FilterType.VillaBedRooms.rawValue {
+                                    _bedRooms = AnyRange(from: min, to: max)
+                                }else if v.tag == FilterType.VillaBathRooms.rawValue{
+                                    _bathRooms = AnyRange(from: min, to: max)
                                 }
-                            }else if v.tag == FilterType.VillaGuests.rawValue{
-                                _guests = AnyRange(from: min, to: max)
-                            }else if v.tag == FilterType.VillaBedRooms.rawValue {
-                                _bedRooms = AnyRange(from: min, to: max)
-                            }else if v.tag == FilterType.VillaBathRooms.rawValue{
-                                _bathRooms = AnyRange(from: min, to: max)
                             }
                         }else if !(min.count == 0 && max.count == 0){
                             showCardAlertWith(title: "Min Max Filter", body: "Both min and max are required.")

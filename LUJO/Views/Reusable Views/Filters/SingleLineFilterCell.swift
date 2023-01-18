@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SingleLineFilterCellProtocol:class {
+protocol TapOnCellProtocol {
     func didTappedOnItem(at index:Int)
 }
 
@@ -26,7 +26,7 @@ class SingleLineFilterCell: UICollectionViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var svBottom: UIStackView!
-    var delegate:SingleLineFilterCellProtocol?
+    var delegate:TapOnCellProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()

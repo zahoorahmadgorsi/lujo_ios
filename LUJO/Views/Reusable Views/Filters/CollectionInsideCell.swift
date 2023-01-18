@@ -10,6 +10,8 @@
 import UIKit
 
 class CollectionInsideCell: UICollectionViewCell, UICollectionViewDelegate, MultiLineFilterProtocol {
+    var delegate: TapOnCellProtocol?
+    
     
     var cell: MultiLineFilterProtocol!
     var scrollDirection: UICollectionView.ScrollDirection!

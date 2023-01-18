@@ -173,7 +173,9 @@ extension YachtLengthFilter: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension YachtLengthFilter:SingleLineFilterCellProtocol{
+extension YachtLengthFilter:TapOnCellProtocol{
+
+    
     func didTappedOnItem(at index: Int) {
         print(index)
         if index / tagOffset == 0 { //tapp is on feet

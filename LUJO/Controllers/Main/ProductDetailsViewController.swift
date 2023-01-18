@@ -1036,10 +1036,11 @@ extension ProductDetailsViewController {
                     }else{
                         slideViewTo(translation.x,translation.y)    //swipe both horizontally and vertically if on main image
                     }
-                }else{
-                    print ("swiping from right to left")
                 }
-                
+//            else{
+//                    print ("swiping from right to left")
+//                }
+//                
                 
                 self.view.layer.cornerRadius = 12
             case .ended:

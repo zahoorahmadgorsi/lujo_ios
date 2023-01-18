@@ -150,7 +150,7 @@ class PerCityViewController: UIViewController {
                     UserDefaults.standard.set(true, forKey: "isYachtPreferencesAlreadyShown")
                 }
             case .gift:
-                self.svFilters.isHidden = true
+                self.svFilters.isHidden = false
                 //Loading the preferences related to gift only very first time
                 if !UserDefaults.standard.bool(forKey: "isGiftPreferencesAlreadyShown")  {
                     let viewController = PrefCollectionsViewController.instantiate(prefType: .gifts, prefInformationType: .giftHabbits)

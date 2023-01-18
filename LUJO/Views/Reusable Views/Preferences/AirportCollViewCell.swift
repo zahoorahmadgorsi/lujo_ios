@@ -9,6 +9,8 @@
 import UIKit
 
 class AirportCollViewCell: UICollectionViewCell, MultiLineFilterProtocol {
+    var delegate: TapOnCellProtocol?
+    
     func setLeftRightImages(leftImageName: String, rightImageName: String) {
         //only used in gift filter
     }
