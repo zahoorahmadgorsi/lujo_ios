@@ -545,7 +545,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain aviation information")
+                        let error = BackendError.parsing(reason: "Could not obtain aviation cuisines")
                         completion(nil, error)
                         return
                     }
@@ -560,7 +560,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getAviationBeverages() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                        let error = BackendError.parsing(reason: "Could not obtain the aviation bevereges")
                         completion(nil, error)
                         return
                     }
@@ -581,7 +581,7 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain yacht information")
+                        let error = BackendError.parsing(reason: "Could not obtain yacht cuisines")
                         completion(nil, error)
                         return
                     }

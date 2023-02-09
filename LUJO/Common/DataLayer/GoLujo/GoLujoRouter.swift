@@ -3,6 +3,12 @@ import FirebaseCrashlytics
 import Foundation
 import UIKit
 
+extension URLRequest {
+    func print() {
+        Swift.print("Method: \(self.httpMethod!) \nURL: \(self.url!) \nHeaders: \(self.allHTTPHeaderFields!) \nBody: \(String(data: self.httpBody ?? Data(), encoding: .utf8)!)" )
+    }
+}
+
 enum GoLujoRouterCategory {
     case creation, update, setup, delete
 }
@@ -103,7 +109,7 @@ enum GoLujoRouter: URLRequestConvertible {
         default:
             break
         }
-        print("urlRequest:\(String(describing: urlRequest.url))")
+        urlRequest.print()
         return urlRequest
     }
 

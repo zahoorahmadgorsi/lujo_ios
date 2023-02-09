@@ -115,12 +115,14 @@ extension GoLujoAPIManager  {
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self,
+//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
                                                                  from: response.data!)
                         else {
                             completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                             return
                     }
                     completion(result.content.docs, nil)
+//                    completion(result.content, nil)
                     return
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))

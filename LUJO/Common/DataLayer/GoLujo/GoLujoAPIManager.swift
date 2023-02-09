@@ -392,6 +392,8 @@ extension GoLujoAPIManager {
     func userProfile(for token: String, completion: @escaping (LujoUser?, Error?) -> Void) {
         Alamofire.request(GoLujoRouter.userProfile)
             .responseJSON { response in
+                print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
+
                 switch response.result {
                 case .success:
                     guard let statusCode = response.response?.statusCode else {
@@ -468,6 +470,8 @@ extension GoLujoAPIManager {
     func update(user profile: LujoUser, completion: @escaping (Error?) -> Void) {
         Alamofire.request(GoLujoRouter.updateProfile(profile))
             .responseJSON { response in
+                print("Request URL: \(String(describing: response.request)) \tRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \tResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
+                
                 switch response.result {
                 case .success:
                     guard let statusCode = response.response?.statusCode else {

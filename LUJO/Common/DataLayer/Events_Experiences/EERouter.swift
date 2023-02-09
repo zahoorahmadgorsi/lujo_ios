@@ -34,7 +34,7 @@ enum EERouter: URLRequestConvertible {
     case citySearch(token: String, searchTerm: String)
     case cityInfo(token: String, cityId: String)
     case villas(String?, String?, String?, AppliedFilters?)
-    case goods(String?, String?, String?)
+    case goods(String?, String?, String?, AppliedFilters?)
     case yachts( String?, String?, String?, AppliedFilters?)
 //    case getYachtGallery(String, String)
     case topRated(type: String?,term: String?)   //type is villa,event etc and term is search text
@@ -61,9 +61,8 @@ enum EERouter: URLRequestConvertible {
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         if let token = LujoSetup().getCurrentUser()?.token{
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            print("Bearer token: \(token)")
         }
-        print("urlRequest:\(String(describing: urlRequest.url))")
+        urlRequest.print()
         return urlRequest
     }
 
@@ -88,7 +87,7 @@ enum EERouter: URLRequestConvertible {
             return .get
         case .cityInfo:
             return .get
-        case let .goods(_, giftCategoryId, id):
+        case let .goods(_, giftCategoryId, id,_):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
                 return .get
             }else if let id = giftCategoryId , id.count > 0 {  //if event is search by id then user different API
@@ -152,7 +151,7 @@ enum EERouter: URLRequestConvertible {
 //                        URLQueryItem(name: "per_page", value: "100"),
 //                    ]
                 }
-            case let .goods( _, gift_category_id, id):
+            case let .goods( _, gift_category_id, id,_):
                 if let giftId = id , !giftId.isEmpty {  //if gift is search by giftId then user different API (called when push notificatino is receveid )
                         newURLComponents.path.append("/gifts/detail/" + giftId)
                 }else if let giftCategoryId = gift_category_id , !giftCategoryId.isEmpty {  //if gift is search by categoryid, when user has tapped on seeAll button of a particular category on gifts by category view screen (percity)
@@ -306,13 +305,13 @@ enum EERouter: URLRequestConvertible {
             }else{
                 return getVillasDataAsJSONData(search: term,location: cityId,id: productId, filters)
             }
-        case let .goods(search, giftCategoryId, id):
+        case let .goods(search, giftCategoryId, id, filters):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else if let id = giftCategoryId , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getGoodsSearchDataAsJSONData(search)
+                return getGoodsSearchDataAsJSONData(search, filters)
             }
             
         case let .yachts(term,cityId,productId, filters):
@@ -416,10 +415,28 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getGoodsSearchDataAsJSONData(_ search: String?) -> Data? {
+    fileprivate func getGoodsSearchDataAsJSONData(_ search: String?,_ filters:AppliedFilters?) -> Data? {
         var body: [String: Any] = ["status": "Published"]
         if let search = search , !search.isEmpty {    //type wont contain nil but empty string if viewing topRate yachts, event, gifts
             body["search"] = search
+        }
+        //filters
+        if let isFeature = filters?.isFeature{
+            body["is_featured"] = isFeature
+        }
+        if let orderByName = filters?.orderByName, !orderByName.isEmpty{
+            body["orderByName"] = orderByName
+        }
+        if let orderByPrice = filters?.orderByPrice, !orderByPrice.isEmpty{
+            body["orderByPrice"] = orderByPrice
+        }
+        if let price = filters?.price{
+            body["custom_price_range"] = [
+                "from": Int(price.minPrice) as Any,
+                "to": Int(price.maxMax) as Any,
+                "currencyType" : price.currencyCode
+            ]
+            body["orderByPrice"] = "Custom-Range"
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

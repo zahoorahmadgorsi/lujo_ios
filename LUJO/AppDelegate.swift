@@ -15,28 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var windowRouter: Router!
     var navigationController: UINavigationController!
     var isBackground: Bool!
-  
-    //used in universal linking (info -> URL types)
-//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-//        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-//        let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
-//        alertController.addAction(okButton)
-//        let passed = url.absoluteString.components(separatedBy: "://")
-//        if passed.count > 1 {
-//            alertController.title = passed[1]
-//            if let vc = UIApplication.shared.keyWindow?.rootViewController {
-//                if vc.presentedViewController != nil {
-//                    alertController.dismiss(animated: false, completion: {
-//                        vc.present(alertController, animated: true, completion: nil)
-//                    })
-//                } else {
-//                    vc.present(alertController, animated: true, completion: nil)
-//                }
-//            }
-//        }
-//        return true
-//    }
-    
 
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print(launchOptions as Any)
@@ -249,7 +227,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }else{
                 tabBarController.tabBar.items?[4].badgeValue = nil
             }
-            
+
         }
+    }
+    
+    //used in universal sceheme (info -> URL types)
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+//        let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
+//        alertController.addAction(okButton)
+//        let passed = url.absoluteString.components(separatedBy: "://")
+//        if passed.count > 1 {
+//            alertController.title = passed[1]
+////            if let vc = UIApplication.shared.keyWindow?.rootViewController {
+//            if let kw = UIApplication.shared.windows.filter({$0.isKeyWindow}).first , let vc = kw.rootViewController{
+//                if vc.presentedViewController != nil {
+//                    alertController.dismiss(animated: false, completion: {
+//                        vc.present(alertController, animated: true, completion: nil)
+//                    })
+//                } else {
+//                    vc.present(alertController, animated: true, completion: nil)
+//                }
+//            }
+//        }
+//        return true
+//    }
+    
+    //used in universal linking
+//    public func application(_ application: UIApplication,
+//                            continue userActivity: NSUserActivity,
+//                            restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    
+    public func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        if let url = userActivity.webpageURL {
+            var view = url.lastPathComponent
+            var parameters: [String: String] = [:]
+            URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.forEach {
+                parameters[$0.name] = $0.value
+            }
+            
+            print(parameters)
+        }
+        return true
     }
 }

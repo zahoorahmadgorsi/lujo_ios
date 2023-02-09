@@ -82,7 +82,11 @@ struct AppliedFilters{
     var bedRooms: AnyRange?
     var bathRooms: AnyRange?
     
-    init(featuredCities: [String], productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:AnyRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?, villaTypes: [String]?, villaLifeStyle: [String]? , bedRooms: AnyRange? , bathRooms: AnyRange?) {
+    var isFeature:Bool?
+    var orderByName: String?
+    var orderByPrice: String?
+    
+    init(featuredCities: [String], productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:AnyRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?, villaTypes: [String]?, villaLifeStyle: [String]? , bedRooms: AnyRange? , bathRooms: AnyRange?, isFeature:Bool?, orderByName: String?, orderByPrice: String?) {
         self.featuredCities = featuredCities
         self.productName = productName
         self.countryId = selectedCountry
@@ -101,6 +105,10 @@ struct AppliedFilters{
         self.villaLifeStyle = villaLifeStyle
         self.bedRooms = bedRooms
         self.bathRooms = bathRooms
+        //gift
+        self.isFeature = isFeature
+        self.orderByName = orderByName
+        self.orderByPrice = orderByPrice
     }
 }
 

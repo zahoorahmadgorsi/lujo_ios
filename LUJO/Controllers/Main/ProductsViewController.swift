@@ -411,7 +411,8 @@ extension ProductsViewController {
                 }
             case .gift:
                 //sending category_term_id in case of gifts in the paraeter cityid
-                EEAPIManager().getGoods( term: term, giftCategoryId: cityId, productId: nil) { list, error in
+                EEAPIManager().getGoods( term: term, giftCategoryId: cityId, productId: nil,
+                                         filtersToApply: filtersToApply) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")

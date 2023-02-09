@@ -396,7 +396,7 @@ struct Product: Codable {
         case id = "_id"
         case name
         case description
-        case price
+        case price //= "usd_price"
         case link
         case isFeatured = "is_featured"
         case startDate = "start_date"

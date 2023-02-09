@@ -65,7 +65,7 @@ enum WishListRouter: URLRequestConvertible {
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             print("token \(token)")
         }
-        print("urlRequest:\(String(describing: urlRequest.url))")
+        urlRequest.print()
         return urlRequest
     }
 

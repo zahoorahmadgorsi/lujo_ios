@@ -7,6 +7,8 @@ class EEAPIManager {
     func geopoint(type: String, latitude: Float, longitude: Float, completion: @escaping ([Product]?, Error?) -> Void) {
         Alamofire.request(EERouter.geopoint(type: type, latitude: latitude, longitude: longitude))
             .responseJSON { response in
+                print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
+
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
                     return
@@ -23,12 +25,14 @@ class EEAPIManager {
                     completion(nil, self.handleError(response, statusCode))
                 case 200 ... 299: // Success
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self,
+//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
                                                                  from: response.data!)
                         else {
                             completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                             return
                     }
                     completion(result.content.docs, nil)
+//                    completion(result.content, nil)
                     return
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))
@@ -229,8 +233,8 @@ class EEAPIManager {
         }
     }
     
-    func getGoods(term: String?, giftCategoryId: String?, productId: String? , completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.goods(term, giftCategoryId, productId)).responseJSON { response in
+    func getGoods(term: String?, giftCategoryId: String?, productId: String?, filtersToApply:AppliedFilters? = nil , completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.goods(term, giftCategoryId, productId, filtersToApply)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

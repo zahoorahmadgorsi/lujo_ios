@@ -320,7 +320,6 @@ class FiltersViewController: UIViewController {
         // FILTER By
         //**********
         let filterByCell = GiftFilterCell()
-//        let filterByCell = CollectionInsideCell()
         let filterByView = GiftsCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, leftImageName: "", rightImageName: "filter_right_arrow", filterCellType: FilterCellType.FilterBy)
         filterByView.lblTitle.text = "Filter By"
 
@@ -343,7 +342,7 @@ class FiltersViewController: UIViewController {
         var taxonomies:[Taxonomy] = []
         for item in filters{
             if let _name = item.name{
-                taxonomies.append( Taxonomy(id: "-123", name: _name, code: "-123asdf"))
+                taxonomies.append( Taxonomy(id: item.key ?? "", name: _name, code: item.value ?? ""))
             }
         }
         return taxonomies
@@ -525,6 +524,10 @@ class FiltersViewController: UIViewController {
         var _villaLifeStyles:[String] = []
         var _bedRooms:AnyRange?
         var _bathRooms:AnyRange?
+        //gift
+        var _isFeature:Bool?
+        var _orderByName: String?
+        var _orderByPrice: String?
         
         for view in stackView.subviews{
 //            if category == .event || category == .experience || category == .yacht{
@@ -625,9 +628,9 @@ class FiltersViewController: UIViewController {
                         }
                     }
                 }
-                //****************************************
-                //Event, Yacht Price, Villa Guests, Price
-                //****************************************
+                //***************************************************
+                //Event, Yacht Price, Villa Guests, Price, Gift Price
+                //***************************************************
                 else if let v = view as? MinMaxFilter{
                     if let min = v.txtMinimum.text, let max = v.txtMaximum.text{
                         if  min.count > 0 , max.count > 0{
@@ -637,7 +640,8 @@ class FiltersViewController: UIViewController {
                             }else{
                                 if v.tag == FilterType.EventPrice.rawValue ||
                                     v.tag == FilterType.YachtPrice.rawValue ||
-                                    v.tag == FilterType.VillaPrice.rawValue{
+                                    v.tag == FilterType.VillaPrice.rawValue ||
+                                    v.tag == FilterType.GiftPrice.rawValue{
                                     if let code = v.selectedItem.code{
                                         _price = ProductPrice(currencyCode: code, minPrice: min, maxMax: max)
                                     }
@@ -674,9 +678,27 @@ class FiltersViewController: UIViewController {
                         }
                     }
                 }
+                //************
+                // Gift SortBy
+                //************
+                else if view is GiftsCollectionFilter{
+                    let v = view as! GiftsCollectionFilter
+                    if v.tag == FilterType.GiftSortBy.rawValue{
+                        if let item = v.pickedItems.filter({$0.isSelected == true}).first{
+                            if item.name == "Our Picks"{
+                                _isFeature = true
+                            }else if item.name == "New Items"{
+                                _orderByName = item.code
+                            }else if item.name == "Price(low first)" || item.name == "Price(high first)"{
+                                _orderByPrice = item.code
+                            }
+                        }
+
+                    }
+                }
             }
 //        }
-        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter, villaSaleType: _villaSaleType, villaTypes: _villaTypes, villaLifeStyle: _villaLifeStyles, bedRooms: _bedRooms , bathRooms: _bathRooms)
+        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter, villaSaleType: _villaSaleType, villaTypes: _villaTypes, villaLifeStyle: _villaLifeStyles, bedRooms: _bedRooms , bathRooms: _bathRooms , isFeature:_isFeature, orderByName: _orderByName, orderByPrice: _orderByPrice)
         
         
         let viewController = ProductsViewController.instantiate(category: self.category, applyFilters: _eventExperienceFilters)

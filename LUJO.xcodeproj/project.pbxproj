@@ -78,6 +78,7 @@
 		422AB1842863486900BEDCC3 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB1832863486900BEDCC3 /* Address.swift */; };
 		422AB18D286352A400BEDCC3 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18C286352A400BEDCC3 /* CardCell.swift */; };
 		422AB18F2863BB3D00BEDCC3 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AB18E2863BB3C00BEDCC3 /* CardsViewController.swift */; };
+		4236C5522991199900123ED0 /* LUJO.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1D3E09D822D747FE0051BDBC /* LUJO.entitlements */; };
 		426D9B07295CD9230014080A /* CollectionInsideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426D9B06295CD9230014080A /* CollectionInsideCell.swift */; };
 		426D9B09295CDCC30014080A /* CollectionInsideCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 426D9B08295CDCC30014080A /* CollectionInsideCell.xib */; };
 		42720E1F2959FA61005CFDA8 /* GiftFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */; };
@@ -378,14 +379,14 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		88029BAD2633BF42003F1E77 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 				88029BA82633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		88310E002635FF3900301667 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2064,6 +2065,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4236C5522991199900123ED0 /* LUJO.entitlements in Resources */,
 				9AD1CE0022817F48007A0D63 /* BookingPaymentSummaryView.xib in Resources */,
 				9A990C1A21C94E4A00056E31 /* SF-Pro-Text-Bold.otf in Resources */,
 				9183E82E25EBEE8800656B48 /* GalleryView2.xib in Resources */,
@@ -2630,7 +2632,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.debug.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2817,6 +2819,7 @@
 			baseConfigurationReference = FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				APP_DISPLAY_NAME = "Lujo New STG";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				AVIATION_API_TOKEN = "c108cdbd-9330-1d33-ee0f-08c63c42e68b";
 				AVIATION_API_VERSION = V1;
@@ -2846,6 +2849,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = LUJO/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2854,7 +2858,7 @@
 				LUJO_API_VERSION = v1;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LUJO/LUJO-Bridging-Header.h";
@@ -2871,6 +2875,7 @@
 			baseConfigurationReference = 1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				APP_DISPLAY_NAME = "Lujo New PROD";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				AVIATION_API_TOKEN = "c108cdbd-9330-1d33-ee0f-08c63c42e68b";
 				AVIATION_API_VERSION = V1;
@@ -2878,7 +2883,7 @@
 				AVIATION_PRODUCT_NAME = "baroqueaviation-software";
 				AVIATION_SERVER = sandbox.avinode.com;
 				BACKEND_CONNECTION_SCHEME = https;
-				BACKEND_SERVER = "api-v2.golujo.com";
+				BACKEND_SERVER = "api-prod-v2.golujo.com";
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CARDCONNECT_API_PASSWORD = "RVKz4#sP2T@hKnm!gR5b";
 				CARDCONNECT_API_USERNAME = baroquea;
@@ -2899,6 +2904,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = LUJO/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3071,6 +3077,7 @@
 			baseConfigurationReference = CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				APP_DISPLAY_NAME = "Lujo New";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				AVIATION_API_TOKEN = "c108cdbd-9330-1d33-ee0f-08c63c42e68b";
 				AVIATION_API_VERSION = V1;

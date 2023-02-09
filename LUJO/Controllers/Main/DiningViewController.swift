@@ -254,7 +254,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             starsContainerView.isHidden = starChielf.chefRestaurant?.michelinStar?.first == nil
             starsLabel.text = starChielf.chefRestaurant?.michelinStar?.first?.name.uppercased()
             restaurantName.text = starChielf.chefRestaurant?.name
-            
+
             let gradientColors = [UIColor.blackBackgorund.cgColor,
                                   UIColor(red: 13 / 255, green: 13 / 255, blue: 13 / 255, alpha: 0.01).cgColor]
             let gradient = CAGradientLayer(start: .bottomCenter, end: .topCenter, colors: gradientColors, type: .axial)
@@ -305,14 +305,9 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             selectedCellImageViewSnapshot = selectedFeaturedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
             
             presentRestaurantDetailViewController(restaurant: featuredItem, presentationStyle: .overFullScreen)
-        } else if sender.view == chefContainerView {
+        }
+        else if sender.view == chefContainerView {
             guard let restaurant = diningInformations?.starChef?.chefRestaurant else { return }
-            
-            // B2 - 6
-//            selectedCell = (cityView as? DiningCityView)?.restaurant1ImageView
-//            animationtype = .specialEvent   //chef
-//            // B2 - 7
-//            selectedCellImageViewSnapshot = chiefImageView.snapshotView(afterScreenUpdates: false)
             presentRestaurantDetailViewController(restaurant: restaurant, presentationStyle: .overFullScreen)
         }
     }

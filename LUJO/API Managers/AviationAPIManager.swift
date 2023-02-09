@@ -148,6 +148,7 @@ class AviationAPIManagerNEW {
     func searchAirports(matching pattern: String, completionHandler: @escaping ([Airport]?, Error?) -> Void) {
 //        guard let token = authorisationToken else { return }
         Alamofire.request(BARouter.searchAirport(pattern)).responseJSON { response in
+            
             guard response.result.error == nil else {
                 completionHandler([], LoginError.errorLogin(description: response.result.error!.localizedDescription))
                 return
