@@ -277,8 +277,12 @@ extension GoLujoAPIManager {
                         completion("", LoginError.errorLogin(description: "Unhandled response from server"))
                         return
                     }
+//                    guard (200 ... 299).contains(statusCode) else {
+//                        completion("", LoginError.errorLogin(description: result.content))
+//                        return
+//                    }
                     guard (200 ... 299).contains(statusCode) else {
-                        completion("", LoginError.errorLogin(description: result.content))
+                        completion("", LoginError.errorLogin(description: result.content ))
                         return
                     }
                     completion("", nil)
@@ -401,7 +405,8 @@ extension GoLujoAPIManager {
                         return
                     }
                     guard (200 ... 299).contains(statusCode) else {
-                        completion(nil, LoginError.errorLogin(description: "Server error \(statusCode)"))
+                        let result = try? JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+                        completion(nil , LoginError.errorLogin(description: result?.content ?? "User profile could not updated"))
                         return
                     }
                     do {
@@ -479,7 +484,9 @@ extension GoLujoAPIManager {
                         return
                     }
                     guard (200 ... 299).contains(statusCode) else {
-                        completion(LoginError.errorLogin(description: "Server error \(statusCode)"))
+                        let result = try? JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+                        completion(LoginError.errorLogin(description: result?.content ?? "Some error happend, please try again later."))
+                        
                         return
                     }
                     completion(nil)
@@ -503,7 +510,8 @@ extension GoLujoAPIManager {
                         return
                     }
                     guard (200 ... 299).contains(statusCode) else {
-                        completion(nil, LoginError.errorLogin(description: "Server error \(statusCode)"))
+                        let result = try? JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+                        completion(nil, LoginError.errorLogin(description: result?.content ?? "Server error \(statusCode)"))
                         return
                     }
                     guard let data = response.data else {
@@ -536,7 +544,8 @@ extension GoLujoAPIManager {
                     return
                 }
                 guard (200 ... 299).contains(statusCode) else {
-                    completion(false, LoginError.errorLogin(description: "Server error \(statusCode)"))
+                    let result = try? JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+                    completion(false, LoginError.errorLogin(description: result?.content ?? "Server error \(statusCode)"))
                     return
                 }
 
@@ -638,7 +647,8 @@ extension GoLujoAPIManager {
                         return
                     }
                     guard (200 ... 299).contains(statusCode) else {
-                        completion(nil, LoginError.errorLogin(description: "Server error \(statusCode)"))
+                        let result = try? JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+                        completion(nil, LoginError.errorLogin(description: result?.content ?? "Server error \(statusCode)"))
                         return
                     }
                     guard let data = response.data else {

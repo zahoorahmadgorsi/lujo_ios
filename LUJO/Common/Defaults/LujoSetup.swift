@@ -174,21 +174,6 @@ class LujoSetup: LoginDataStorable, AppDefaults {
     fileprivate func storeProfileFor(user: LujoUser) {
         store(userInfo: user)
         store(currentUser: user.getLoginUser())
-
-//        guard !user.avatar.isEmpty else { return }
-//        guard var urlComponents = URLComponents(string: user.avatar) else { return }
-//
-//        urlComponents.scheme = "https"
-//
-//        guard let newImageUrl = urlComponents.string, let imageURL = URL(string: newImageUrl) else { return }
-//
-//        do {
-//            guard let image = try UIImage(withUrl: imageURL) else { return }
-//            storeUserImage(image)
-//        } catch {
-//            let error = BackendError.parsing(reason: "Error loading Image from \(user.avatar)")
-//            Crashlytics.crashlytics().record(error: error)
-//        }
     }
 
     func store(_ codes: [PhoneCountryCode]) {

@@ -9,6 +9,8 @@
 import UIKit
 import JGProgressHUD
 import DropDown
+import HCaptcha
+import WebKit
 
 class UserProfileViewController: UIViewController {
     
@@ -21,12 +23,14 @@ class UserProfileViewController: UIViewController {
     class func instantiate(user: LujoUser) -> UserProfileViewController {
         let viewController = UIStoryboard.accountNEW.instantiate(identifier) as! UserProfileViewController
         viewController.user = user
+//        viewController.updatedUser = user
         return viewController
     }
     
     //MARK:- Globals
     
     private(set) var user: LujoUser!
+//    private(set) var updatedUser: LujoUser? //user having ONLY updated email/phone
     
     @IBOutlet var countryCodeContainer: UIView!
     @IBOutlet var phoneNumberContainer: UIView!
@@ -45,6 +49,12 @@ class UserProfileViewController: UIViewController {
     
     private var phonePrefix: PhoneCountryCode!
     let dropDown = DropDown()
+    
+    let hcaptcha = try? HCaptcha(
+        apiKey: Constants.hCaptchaKey,
+        baseURL: URL(string: Constants.hCaptchaURL)!
+    )
+    var captchaWebView: WKWebView?
     
     fileprivate func updatePrefixLabels() {
         countryCodeLabel.text = phonePrefix.alpha2Code
@@ -68,6 +78,32 @@ class UserProfileViewController: UIViewController {
         phoneNumberContainer.layer.borderColor = UIColor.inputBorderNoFocus.cgColor
         
         setupNavigationBar()
+        
+        //configuring webview for captcha
+        hcaptcha?.configureWebView { [weak self] webview in
+            webview.frame = self?.view.bounds ?? CGRect.zero
+            
+            // could use this option if using an enterprise passive sitekey:
+            // webview.isHidden = true
+            // seems to prevent flickering on latest iOS 15.2
+            webview.isOpaque = false
+            webview.backgroundColor = UIColor.clear
+            webview.scrollView.backgroundColor = UIColor.clear
+            
+            self?.captchaWebView = webview
+        }
+        hcaptcha?.onEvent { (event, data) in
+            if event == .open {
+                print("captcha open")
+            }else if event == .close{
+                print(" captcha closed")
+                self.captchaWebView?.removeFromSuperview()  //if we wont remove then screen will become irresponsive
+            }else if event == .error {
+                let error = data as? HCaptchaError
+                print("captcha onEvent error: \(String(describing: error))")
+                self.captchaWebView?.removeFromSuperview()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -174,41 +210,98 @@ class UserProfileViewController: UIViewController {
         }
         
         if email != user.email {
-            guard email == emailConfirmationTF.text else {
+            guard email.lowercased() == emailConfirmationTF.text?.lowercased() else {
                 let error = LoginError.errorLogin(description: "Email confirmation does not match")
                 showError(error)
                 return
             }
         }
         
-        user.firstName = firstName
-        user.lastName = lastName
-        user.email = email
-        user.phoneNumber = PhoneNumber(countryCode: phonePrefix.phonePrefix, number: phoneNumber)
         
-        updateProfile(for: user)
+//        user.firstName = firstName
+//        user.lastName = lastName
+//        user.email = email
+//        user.phoneNumber = PhoneNumber(countryCode:  phonePrefix.phonePrefix, number: phoneNumber)
+        //if new number's is not changed i.e. both prefix and number
+        var newNumber = PhoneNumber(countryCode:  phonePrefix.phonePrefix, number: phoneNumber)
+        if user.phoneNumber.readableNumber == newNumber.readableNumber {
+            newNumber = PhoneNumber(countryCode:  "", number: "")
+            let updatedUser: LujoUser = LujoUser(firstName: firstName,
+                                                 lastName: lastName,
+                                                 email: user.email == email ? "" : email,
+                                                 phoneNumber: PhoneNumber(countryCode: newNumber.countryCode,
+                                                                          number: newNumber.number))
+            
+            updateProfile(for: updatedUser)
+        }else{
+            validateCaptchaThenUpdate(firstName, lastName, user.email == email ? "" : email, newNumber)
+        }
+
     }
     
-    func updateProfile(for user: LujoUser) {
-        showNetworkActivity()
-        updateProfile(for: user) { error in
-            self.hideNetworkActivity()
+    func validateCaptchaThenUpdate(_ firstName:String,_ lastName:String,_ email:String,_ newNumber:PhoneNumber) {
+        hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
+//            print(try? result.dematerialize() as Any)
+            self?.captchaWebView?.removeFromSuperview()
+            let _captchaToken = try? result.dematerialize()
+            //After successful validation signup the user
+            let updatedUser: LujoUser = LujoUser(firstName: firstName,
+                                                 lastName: lastName,
+                                                 email: email,
+                                                 phoneNumber: PhoneNumber(countryCode: newNumber.countryCode,
+                                                                          number: newNumber.number),
+                                                 captchaToken: _captchaToken ?? "")
             
+            self?.updateProfile(for: updatedUser)
+        }
+    }
+    
+    func updateProfile(for _user: LujoUser) {
+        showNetworkActivity()
+        updateProfile(for: _user) { error in
+            self.hideNetworkActivity()
+            let _emailVerificationTitle = "Please verify your email"
+            let _emailVerificationText = "Your email address will only be updated if you will tap on the verification link which we have sent to '\(_user.email)'."
             if let error = error {
                 self.showError(error)
             } else {
-                
-                LujoSetup().updateDefaults {
-                    DispatchQueue.main.async {
-                        self.navigationController?.popViewController(animated: true)
+                //email and phone both has been updated
+                if (!_user.email.isEmpty && (self.user.email != _user.email)) &&
+                    (!_user.phoneNumber.readableNumber.isEmpty && ( self.user.phoneNumber.readableNumber != _user.phoneNumber.readableNumber)){
+                    self.showInformationPopup(withTitle: _emailVerificationTitle, message: _emailVerificationText, btnTitle: "Ok" , btnTapHandler: { () in
+                        LujoSetup().updateDefaults {
+                            DispatchQueue.main.async {
+                                print("navigate to the OTP screen")
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    })
+                }
+                if !_user.email.isEmpty && ( self.user.email != _user.email){   //only email has been updated
+                    self.showInformationPopup(withTitle: _emailVerificationTitle, message: _emailVerificationText, btnTitle: "Ok" , btnTapHandler: { () in
+                        LujoSetup().updateDefaults {
+                            DispatchQueue.main.async {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    })
+                }else if !_user.phoneNumber.readableNumber.isEmpty && (self.user.phoneNumber.readableNumber != _user.phoneNumber.readableNumber){   //Only Phone has been updated
+                    print("navigate to the OTP screen")
+                    self.navigationController?.popViewController(animated: true)
+                }else{
+                    LujoSetup().updateDefaults {
+                        DispatchQueue.main.async {
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     }
                 }
+                
             }
         }
     }
     
-    func updateProfile(for user: LujoUser, completion: @escaping (Error?) -> Void) {
-        GoLujoAPIManager().update(user: user) { error in
+    func updateProfile(for _user: LujoUser, completion: @escaping (Error?) -> Void) {
+        GoLujoAPIManager().update(user: _user) { error in
             completion(error)
         }
     }

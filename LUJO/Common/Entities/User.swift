@@ -100,6 +100,26 @@ class LujoUser: Equatable, Codable {
         self.membershipPlanExpiration = membershipPlanExpiration
     }
     
+    //used in user profile update
+    init( firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, captchaToken: String = "") {
+        self.id = ""
+        self.title = nil
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.phoneNumber = phoneNumber
+        self.password = ""
+        self.avatar = ""
+        self.token = captchaToken
+        self.approved = true
+        self.referralCode = [""]
+        self.points = -1
+        self.membershipPlan = nil
+        self.sfid = ""
+        self.membershipPlanExpiration = nil
+    }
+    
+    
     static func == (lhs: LujoUser, rhs: LujoUser) -> Bool {
         return lhs.id == rhs.id
     }

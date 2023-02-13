@@ -22,7 +22,6 @@ class AccountDetailsViewController: UIViewController {
     class func instantiate(user: LujoUser) -> AccountDetailsViewController {
         let viewController = UIStoryboard.accountNEW.instantiate(identifier) as! AccountDetailsViewController
         viewController.user = user
-        viewController.userFullname = user.firstName + " " + user.lastName
         return viewController
     }
     
@@ -70,6 +69,11 @@ class AccountDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.tabBarController?.tabBar.isHidden = true
+        //if user is coming to this screen after profile update, so first and last name might have been updated
+        if let _user = LujoSetup().getLujoUser(), user.id.count > 0 {
+            self.user = _user
+        }
+        self.userFullname = user.firstName + " " + user.lastName
         self.updateUI()
     }
    
@@ -221,13 +225,13 @@ class AccountDetailsViewController: UIViewController {
     }
 
     @IBAction func btnPurchaseTapped(_ sender: Any) {
-        let userFullname = "\(user.firstName) \(user.lastName)"
+        let _userFullname = "\(user.firstName) \(user.lastName)"
         var hasMembership = false
         if let membership = user.membershipPlan, (membership.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true || membership.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true){
             hasMembership = true
         }
         
-        let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname
+        let viewController = MembershipViewControllerNEW.instantiate(userFullname: _userFullname
                                                                      , screenType: hasMembership ? .viewMembership : .buyMembership
                                                                      , paymentType: LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true ? .dining : .all)
         self.navigationController?.pushViewController(viewController, animated: true)

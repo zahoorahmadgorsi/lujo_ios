@@ -338,7 +338,7 @@ enum GoLujoRouter: URLRequestConvertible {
         case .userProfile:
             return nil
         case let .updateProfile(profile):
-            return getProfileAsJSONData(profile)
+            return getUpdateProfileAsJSONData(profile)
         case let .updateUserImage(user, image):
             return getUserImageAsJSONData(user, image)
         case .approved:
@@ -446,16 +446,25 @@ enum GoLujoRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: verificationData, options: [])
     }
 
-    fileprivate func getProfileAsJSONData(_ profile: LujoUser) -> Data? {
-        let profileData: [String: String] = [
+    fileprivate func getUpdateProfileAsJSONData(_ profile: LujoUser) -> Data? {
+        var data: [String: String] = [
             "firstname": profile.firstName,
             "lastname": profile.lastName,
-            "email": profile.email.lowercased(),
-            "phone_prefix": String(profile.phoneNumber.countryCode),
-            "phone": profile.phoneNumber.number,
-            "token": profile.token,
         ]
-        return try? JSONSerialization.data(withJSONObject: profileData, options: [])
+        if !profile.email.isEmpty{
+            data["email"] = profile.email.lowercased()
+        }
+        let preFix = profile.phoneNumber.countryCode
+        let phoneNumber = profile.phoneNumber.number
+        if !preFix.isEmpty && !phoneNumber.isEmpty{
+            data["phone_prefix"] = String(profile.phoneNumber.countryCode)
+            data["phone"] = phoneNumber
+        }
+        if !profile.token.isEmpty{
+            data["captcha_token"] =  profile.token
+        }
+
+        return try? JSONSerialization.data(withJSONObject: data, options: [])
     }
     
     fileprivate func getUrlDataForPushService(isStaging: Bool) -> (url: String, scheme: String) {
