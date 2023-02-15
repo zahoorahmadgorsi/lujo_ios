@@ -43,7 +43,13 @@ class UserProfileViewController: UIViewController {
     
     @IBOutlet var phoneNumberTF: UITextField!
     @IBOutlet var emailAddressTF: LujoTextField!
-    @IBOutlet var emailConfirmationTF: LujoTextField!
+//    @IBOutlet var emailConfirmationTF: LujoTextField!
+    
+    @IBOutlet weak var svEmailVerification: UIStackView!
+    
+    @IBOutlet weak var lblIsEmailVerified: UILabel!
+    
+    @IBOutlet weak var btnSendEmailVerificationLink: UIButton!
     
     private let naHUD = JGProgressHUD(style: .dark)
     
@@ -71,6 +77,13 @@ class UserProfileViewController: UIViewController {
         
         phoneNumberTF.text = user.phoneNumber.number
         emailAddressTF.text = user.email
+        emailAddressTF.textColor = .lightGrey
+        
+        //hiding resend email button if user is already verified
+        let isEmailVerified = user.isEmailVerified ?? false
+        self.lblIsEmailVerified.text = isEmailVerified == true ? "Verified" : "Email isn't verified"
+//        self.btnSendEmailVerificationLink.isHidden = isEmailVerified
+        self.svEmailVerification.isHidden = isEmailVerified
         
         updatePrefixLabels()
         
@@ -209,13 +222,13 @@ class UserProfileViewController: UIViewController {
             return
         }
         
-        if email != user.email {
-            guard email.lowercased() == emailConfirmationTF.text?.lowercased() else {
-                let error = LoginError.errorLogin(description: "Email confirmation does not match")
-                showError(error)
-                return
-            }
-        }
+//        if email != user.email {
+//            guard email.lowercased() == emailConfirmationTF.text?.lowercased() else {
+//                let error = LoginError.errorLogin(description: "Email confirmation does not match")
+//                showError(error)
+//                return
+//            }
+//        }
         
         
 //        user.firstName = firstName
@@ -365,4 +378,7 @@ extension UserProfileViewController {
         completion(nil)
     }
     
+    @IBAction func btnSendEmailVerificationLinkTapped(_ sender: Any) {
+        print("btnSendEmailVerificationLinkTapped")
+    }
 }

@@ -56,6 +56,7 @@ class LujoUser: Equatable, Codable {
     var membershipPlan: Membership?
     var sfid: String
     var membershipPlanExpiration: Int?
+    var isEmailVerified: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
@@ -72,6 +73,7 @@ class LujoUser: Equatable, Codable {
         case membershipPlan = "membership_plan"
         case sfid
         case membershipPlanExpiration = "membership_plan_expiration"
+        case isEmailVerified = "is_email_verified"
     }
 
     func getLoginUser() -> LoginUser {
@@ -82,7 +84,7 @@ class LujoUser: Equatable, Codable {
                          approved: approved == true)
     }
     
-    init(id: String, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: Bool, referralCode: [String], points: Int, membershipPlan: Membership?, sfid:String, membershipPlanExpiration:Int?) {
+    init(id: String, title: UserTitle?, firstName: String, lastName: String, email: String, phoneNumber: PhoneNumber, password: String, avatar: String, token: String, approved: Bool, referralCode: [String], points: Int, membershipPlan: Membership?, sfid:String, membershipPlanExpiration:Int?, isEmailVerified:Bool = false) {
         self.id = id
         self.title = title
         self.firstName = firstName
@@ -98,6 +100,7 @@ class LujoUser: Equatable, Codable {
         self.membershipPlan = membershipPlan
         self.sfid = sfid
         self.membershipPlanExpiration = membershipPlanExpiration
+        self.isEmailVerified = isEmailVerified
     }
     
     //used in user profile update
@@ -117,6 +120,7 @@ class LujoUser: Equatable, Codable {
         self.membershipPlan = nil
         self.sfid = ""
         self.membershipPlanExpiration = nil
+//        self.isEmailVerified = false
     }
     
     
@@ -141,6 +145,7 @@ struct LujoUserProfile: Codable {
     let membershipPlan: Membership?
     var sfid: String
     let membershipPlanExpiration: Int?
+    let isEmailVerified: Bool
     
     enum CodingKeys: String, CodingKey {
         case id = "customer_id"
@@ -157,6 +162,7 @@ struct LujoUserProfile: Codable {
         case membershipPlan = "membership_plan"
         case sfid
         case membershipPlanExpiration = "membership_plan_expiration"
+        case isEmailVerified = "is_email_verified"
     }
 }
 

@@ -560,48 +560,11 @@
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v9d-nW-cIw" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                <rect key="frame" x="16" y="271" width="343" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="HdB-f3-COr"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9vK-Nd-jRz" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
-                                <rect key="frame" x="16" y="331" width="343" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="p2Y-mX-8p9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWI-kK-3Z3" userLabel="Create Account" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
-                                <rect key="frame" x="16" y="407" width="343" height="44"/>
-                                <color key="backgroundColor" name="Action Button"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="r1v-Rq-t12"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaLTStd-Light" family="Helvetica LT Std" pointSize="10"/>
-                                <state key="normal" title="U P D A T E">
-                                    <color key="titleColor" name="BasicBg"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="updateUserProfile:" destination="tN4-AI-EKu" eventType="touchUpInside" id="pdd-z2-I3b"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RuP-pP-mlQ" userLabel="Phone Number Container">
                                 <rect key="frame" x="96" y="211" width="263" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+381" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fas-tG-ba8" userLabel="Prefix">
-                                        <rect key="frame" x="10" y="12" width="37.666666666666664" height="20"/>
+                                        <rect key="frame" x="10" y="11.999999999999998" width="37.666666666666664" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" name="Palette - R-G Mid"/>
                                         <nil key="highlightedColor"/>
@@ -640,7 +603,7 @@
                                 <rect key="frame" x="16" y="211" width="70" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llS-I0-yJI" userLabel="CountryCodeLabel">
-                                        <rect key="frame" x="10" y="12" width="33" height="20"/>
+                                        <rect key="frame" x="10" y="11.999999999999998" width="33" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" name="White Text"/>
                                         <nil key="highlightedColor"/>
@@ -681,21 +644,72 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v9d-nW-cIw" customClass="LujoTextField" customModule="LUJO" customModuleProvider="target">
+                                <rect key="frame" x="16" y="271" width="343" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="HdB-f3-COr"/>
+                                </constraints>
+                                <color key="textColor" name="Palette - Input Boder NO Focus"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="2Ax-h9-2mh">
+                                <rect key="frame" x="16" y="347" width="343" height="138.66666666666663"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="7xK-NU-P1J">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="70.666666666666671"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Is Email Verified?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7jI-K3-5CP">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUz-jW-N6h">
+                                                <rect key="frame" x="0.0" y="36.333333333333314" width="343" height="34.333333333333343"/>
+                                                <color key="tintColor" name="Action Button"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="SEND VERIFICATION LINK"/>
+                                                <connections>
+                                                    <action selector="btnSendEmailVerificationLinkTapped:" destination="tN4-AI-EKu" eventType="touchUpInside" id="UYg-NI-cHG"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWI-kK-3Z3" userLabel="Create Account" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="94.666666666666686" width="343" height="44"/>
+                                        <color key="backgroundColor" name="Action Button"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="r1v-Rq-t12"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaLTStd-Light" family="Helvetica LT Std" pointSize="10"/>
+                                        <state key="normal" title="U P D A T E">
+                                            <color key="titleColor" name="BasicBg"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="updateUserProfile:" destination="tN4-AI-EKu" eventType="touchUpInside" id="pdd-z2-I3b"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DuE-mp-cxT"/>
                         <color key="backgroundColor" name="Black Backgorund"/>
                         <constraints>
                             <constraint firstItem="RuP-pP-mlQ" firstAttribute="trailing" secondItem="fzK-gA-Oyv" secondAttribute="trailing" id="2dc-cZ-IFc"/>
                             <constraint firstItem="DuE-mp-cxT" firstAttribute="trailing" secondItem="pB6-IF-Eab" secondAttribute="trailing" constant="16" id="4J3-u3-PVf"/>
-                            <constraint firstItem="XWI-kK-3Z3" firstAttribute="leading" secondItem="pB6-IF-Eab" secondAttribute="leading" id="7ou-jO-l8O"/>
-                            <constraint firstItem="XWI-kK-3Z3" firstAttribute="trailing" secondItem="pB6-IF-Eab" secondAttribute="trailing" id="9J1-Le-osc"/>
-                            <constraint firstItem="9vK-Nd-jRz" firstAttribute="top" secondItem="v9d-nW-cIw" secondAttribute="bottom" constant="16" id="Bkd-wn-xWf"/>
+                            <constraint firstItem="DuE-mp-cxT" firstAttribute="trailing" secondItem="2Ax-h9-2mh" secondAttribute="trailing" constant="16" id="Am3-2D-UUu"/>
                             <constraint firstItem="RuP-pP-mlQ" firstAttribute="centerY" secondItem="Cgk-5q-bWK" secondAttribute="centerY" id="Cq3-fJ-PnT"/>
-                            <constraint firstItem="9vK-Nd-jRz" firstAttribute="trailing" secondItem="pB6-IF-Eab" secondAttribute="trailing" id="F2l-xa-Vmh"/>
-                            <constraint firstItem="9vK-Nd-jRz" firstAttribute="leading" secondItem="pB6-IF-Eab" secondAttribute="leading" id="I3u-uQ-pVp"/>
                             <constraint firstItem="RuP-pP-mlQ" firstAttribute="leading" secondItem="Cgk-5q-bWK" secondAttribute="trailing" constant="10" id="OEe-Ex-pK2"/>
                             <constraint firstItem="fzK-gA-Oyv" firstAttribute="leading" secondItem="pB6-IF-Eab" secondAttribute="leading" id="U1g-Qh-Kel"/>
                             <constraint firstItem="v9d-nW-cIw" firstAttribute="leading" secondItem="pB6-IF-Eab" secondAttribute="leading" id="Ug3-Zb-EKQ"/>
+                            <constraint firstItem="2Ax-h9-2mh" firstAttribute="leading" secondItem="DuE-mp-cxT" secondAttribute="leading" constant="16" id="Xmu-z8-Wpm"/>
                             <constraint firstItem="Cgk-5q-bWK" firstAttribute="top" secondItem="fzK-gA-Oyv" secondAttribute="bottom" constant="16" id="YZ4-Dd-iEc"/>
                             <constraint firstItem="fzK-gA-Oyv" firstAttribute="top" secondItem="pB6-IF-Eab" secondAttribute="bottom" constant="16" id="bkN-Yl-oWV"/>
                             <constraint firstItem="v9d-nW-cIw" firstAttribute="trailing" secondItem="pB6-IF-Eab" secondAttribute="trailing" id="f92-qz-UrJ"/>
@@ -704,19 +718,21 @@
                             <constraint firstItem="v9d-nW-cIw" firstAttribute="top" secondItem="Cgk-5q-bWK" secondAttribute="bottom" constant="16" id="pK2-wd-qFg"/>
                             <constraint firstItem="pB6-IF-Eab" firstAttribute="top" secondItem="DuE-mp-cxT" secondAttribute="top" constant="44" id="qBg-wA-fZO"/>
                             <constraint firstItem="fzK-gA-Oyv" firstAttribute="trailing" secondItem="pB6-IF-Eab" secondAttribute="trailing" id="qRy-kt-Huq"/>
-                            <constraint firstItem="XWI-kK-3Z3" firstAttribute="top" secondItem="9vK-Nd-jRz" secondAttribute="bottom" constant="32" id="z6s-Q4-djQ"/>
+                            <constraint firstItem="2Ax-h9-2mh" firstAttribute="top" secondItem="v9d-nW-cIw" secondAttribute="bottom" constant="32" id="qVi-sK-0T9"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnSendEmailVerificationLink" destination="aUz-jW-N6h" id="4R9-Qf-8hL"/>
                         <outlet property="countryCodeContainer" destination="Cgk-5q-bWK" id="3eX-Ph-eTP"/>
                         <outlet property="countryCodeLabel" destination="llS-I0-yJI" id="hsD-WL-U04"/>
                         <outlet property="emailAddressTF" destination="v9d-nW-cIw" id="fbg-Qc-9mW"/>
-                        <outlet property="emailConfirmationTF" destination="9vK-Nd-jRz" id="ftv-kG-lUD"/>
                         <outlet property="firstNameTF" destination="pB6-IF-Eab" id="y0k-38-8MQ"/>
                         <outlet property="lastNameTF" destination="fzK-gA-Oyv" id="lp4-Ks-Gnb"/>
+                        <outlet property="lblIsEmailVerified" destination="7jI-K3-5CP" id="Hx9-72-oHe"/>
                         <outlet property="phoneNumberContainer" destination="RuP-pP-mlQ" id="Uh0-rc-nLE"/>
                         <outlet property="phoneNumberTF" destination="QkV-mi-ZUW" id="z8z-gE-Bxq"/>
                         <outlet property="prefixLabel" destination="fas-tG-ba8" id="s8M-T7-S6Y"/>
+                        <outlet property="svEmailVerification" destination="7xK-NU-P1J" id="a2E-nP-Qup"/>
                         <segue destination="H8M-4K-yjc" kind="unwind" identifier="unwindToAccountView" unwindAction="unwindToAccountViewWithSegue:" id="rxG-oQ-hJn"/>
                     </connections>
                 </viewController>
@@ -3190,7 +3206,7 @@
     </scenes>
     <designables>
         <designable name="LJg-KE-5kp">
-            <size key="intrinsicContentSize" width="216.66666666666666" height="26.666666666666668"/>
+            <size key="intrinsicContentSize" width="184.66666666666666" height="26.666666666666668"/>
         </designable>
     </designables>
     <resources>
@@ -3225,6 +3241,9 @@
         </namedColor>
         <namedColor name="Navigation Bar">
             <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Palette - Input Boder NO Focus">
+            <color red="0.55294117647058827" green="0.5490196078431373" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Palette - Paragraph White">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

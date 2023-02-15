@@ -427,7 +427,8 @@ extension GoLujoAPIManager {
                                             points: resultResponse.content.points,
                                             membershipPlan: resultResponse.content.membershipPlan,
                                             sfid: resultResponse.content.sfid
-                                            ,membershipPlanExpiration: resultResponse.content.membershipPlanExpiration)
+                                            ,membershipPlanExpiration: resultResponse.content.membershipPlanExpiration
+                                            ,isEmailVerified: resultResponse.content.isEmailVerified)
                         completion(user, nil)
 
                     } catch {
