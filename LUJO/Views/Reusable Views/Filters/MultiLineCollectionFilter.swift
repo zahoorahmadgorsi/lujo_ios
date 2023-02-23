@@ -180,20 +180,9 @@ extension MultiLineCollectionFilter : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if var cell = collectionView.dequeueReusableCell(withReuseIdentifier: cell.identifier, for: indexPath) as? MultiLineFilterProtocol{
             cell.delegate = self
-//            if let giftCell = cell as? GiftFilterCell{
-//                giftCell.mainView.tag = indexPath.row
-//                giftCell.filterCellType = self.filterCellType
-//            }
             let model = pickedItems[indexPath.row]
-            
             cell.setTitle(title: model.name)
             
-//            if model.isSelected == true && self.filterCellType == FilterCellType.SortBy{
-//                cell.setLeftRightImages(leftImageName: self.leftImageName, rightImageName: "filters_check")
-//            }else{
-//                cell.setLeftRightImages(leftImageName: self.leftImageName, rightImageName: self.rightImageName)
-//            }
-
             return cell as! UICollectionViewCell
         }
         return UICollectionViewCell()

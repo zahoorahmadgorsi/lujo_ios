@@ -122,4 +122,16 @@ struct Utility
         }
         return verticalType
     }
+    
+    static func isUserAMember() -> Bool{
+        let lujoUser = LujoSetup().getLujoUser()
+        print(lujoUser as Any)
+        let membershipPlan = lujoUser?.membershipPlan?.accessTo
+        var hasMembership = false
+        if (membershipPlan?.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true ||
+             membershipPlan?.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true){
+            hasMembership = true
+        }
+        return hasMembership
+    }
 }

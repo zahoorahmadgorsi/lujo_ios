@@ -43,6 +43,9 @@ enum WishListRouter: URLRequestConvertible {
     case getUnReadPushNotificationsCount
     case deletePushNotifications(String)
     case readPushNotifications(String)
+    case getBrands
+    case getCategories
+    case getColors
     
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -63,7 +66,7 @@ enum WishListRouter: URLRequestConvertible {
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         if let token = LujoSetup().getCurrentUser()?.token{
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            print("token \(token)")
+//            print("token \(token)")
         }
         urlRequest.print()
         return urlRequest
@@ -73,7 +76,10 @@ enum WishListRouter: URLRequestConvertible {
         switch self {
         case .getFavourites: fallthrough
         case .getPushNotifications: fallthrough
-        case .getUnReadPushNotificationsCount:
+        case .getUnReadPushNotificationsCount: fallthrough
+        case .getBrands: fallthrough
+        case .getCategories: fallthrough
+        case .getColors:
             return .get
         case .setFavourites:
             return .post
@@ -106,6 +112,24 @@ enum WishListRouter: URLRequestConvertible {
                 ,URLQueryItem(name: "limit", value: String(pageSize))
                 ,URLQueryItem(name: "type", value: type)
         ]
+        case .getBrands:
+            newURLComponents.path.append("/gifts/gift-brand")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "page", value: "1")
+                ,URLQueryItem(name: "limit", value: "100")
+        ]
+        case .getCategories:
+            newURLComponents.path.append("/gifts/gift-category/cat_with_sub_cat")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "page", value: "1")
+                ,URLQueryItem(name: "limit", value: "100")
+        ]
+        case .getColors:
+            newURLComponents.path.append("/gifts/gift-color")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "page", value: "1")
+                ,URLQueryItem(name: "limit", value: "100")
+        ]
         case .getUnReadPushNotificationsCount:
             newURLComponents.path.append("/notification/unread_count")
         case let .deletePushNotifications(id):
@@ -136,7 +160,10 @@ enum WishListRouter: URLRequestConvertible {
         case .getPushNotifications: fallthrough
         case .getUnReadPushNotificationsCount: fallthrough
         case .deletePushNotifications:  fallthrough
-        case .readPushNotifications:
+        case .readPushNotifications: fallthrough
+        case .getBrands:    fallthrough
+        case .getCategories:    fallthrough
+        case .getColors:
             return nil
         case let .setFavourites(type, id):  fallthrough
         case let .unSetFavourites(type, id):

@@ -34,11 +34,11 @@ class NotificationsViewController:UIViewController{
     var selectedProduct:NotificationPayloadType = NotificationPayloadType.RECENT
     @IBOutlet weak var tblView: UITableView!
     
-//    private(set) lazy var refreshControl: UIRefreshControl = {
-//        let control = UIRefreshControl()
-//        control.addTarget(self, action: #selector(refreshConversations), for: .valueChanged)
-//        return control
-//    }()
+    private(set) lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(refreshConversations), for: .valueChanged)
+        return control
+    }()
     
     /// Init method that will init and return view controller.
     class func instantiate() -> NotificationsViewController {
@@ -69,7 +69,7 @@ class NotificationsViewController:UIViewController{
         self.tblView.separatorStyle = .singleLine
         self.tblView.separatorColor = .lightGray
         
-//        self.tblView.refreshControl = refreshControl
+        self.tblView.refreshControl = refreshControl
         // disallowing table view to hide behind tab bar (its working fine in device but emulator)
 //        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
 //        self.tblView.contentInset = adjustForTabbarInsets
@@ -90,16 +90,17 @@ class NotificationsViewController:UIViewController{
         }
     }
     
-//    @objc func refreshConversations() {
-//        self.refreshControl.beginRefreshing()
-//        getPushNotifications(showActivity: false)
-//    }
+    @objc func refreshConversations() {
+        self.refreshControl.beginRefreshing()
+        getPushNotifications(showActivity: false)
+    }
     
     func getPushNotifications(showActivity: Bool) {
         if showActivity {
             self.showNetworkActivity()
         }
         getPushNotifications() {information, error in
+            self.refreshControl.endRefreshing()
             self.hideNetworkActivity()
             
             if let error = error {
@@ -114,7 +115,6 @@ class NotificationsViewController:UIViewController{
                         if !self.filteredPushNotifications.contains(where: {$0.id == item.id}){
                             self.filteredPushNotifications.append(item)
                         }
-                        
                     }
                 }else{
                     self.pushNotifications.removeAll()
@@ -401,6 +401,26 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
             viewController = ProductDetailsViewController.instantiate(product: product)
             viewController.modalPresentationStyle = .overFullScreen
             self.navigationController?.present(viewController, animated: true)
+        }else{ //related to membership, if membership is expired or expiring then opening the membership page
+            if notification.title?.contains("Membership") == true{
+                if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
+                    let userFullname = "\(user.firstName) \(user.lastName)"
+                    let hasMembership = Utility.isUserAMember()
+                    var paymentType = MembershipType.none
+                    
+                    if let isContain = LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}), isContain == true{
+                        paymentType = .dining
+                    }else{
+                        paymentType = .all
+                    }
+
+                    let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname
+                                                                                 , screenType: hasMembership ? .viewMembership : .buyMembership
+                                                                                 , paymentType: paymentType)
+                    let navController = UINavigationController(rootViewController: viewController)
+                    self.present(navController, animated: true)
+                }
+            }
         }
         
     }

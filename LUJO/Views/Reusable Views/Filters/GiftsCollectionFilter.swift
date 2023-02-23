@@ -29,8 +29,6 @@ class GiftsCollectionFilter: UIView {
     var itemMargin:Int = 8
     var isTagLookAlike:Bool = false
     
-    
-    
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var collectionViewParent: UIView!
     @IBOutlet var contentView: UIView!
@@ -194,6 +192,12 @@ extension GiftsCollectionFilter: TapOnGiftCellProtocol{
                 }
             }
             self.collectionView.reloadData()    //reload collection after updating the model
+        }else if filterCellType == FilterCellType.FilterBy{
+            for i in 0..<self.pickedItems.count{
+                if (i == index){    //only interested in tapped item
+                    delegate?.didTappedOnFilterAt(tag: self.tag, tappedValue: self.pickedItems[i].termId)
+                }
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ extension UIStoryboard {
     static let payment       = UIStoryboard(name: "Payment", bundle: nil)
     static let customRequest = UIStoryboard(name: "CustomRequests", bundle: nil)
     static let preferences = UIStoryboard(name: "Preferences", bundle: nil)
+    static let filters = UIStoryboard(name: "Filters", bundle: nil)
     
     /// Instantiate view controller from storyboard.
     func instantiate<T: UIViewController>(_ identifier: String) -> T {

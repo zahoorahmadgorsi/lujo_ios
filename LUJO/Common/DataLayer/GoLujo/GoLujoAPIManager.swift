@@ -1029,6 +1029,53 @@ extension GoLujoAPIManager {
             }
     }
     
+    func resendEmailVerificationLink( completion: @escaping (String?, Error?) -> Void) {
+        Alamofire.request(GoLujoRouter.resendEmailVerificationLink)
+            .responseJSON { response in
+                switch response.result {
+                case .success:
+//                    guard let statusCode = response.response?.statusCode else {
+//                        completion(nil, LoginError.errorLogin(description: "Unhandled response from server"))
+//                        return
+//                    }
+//                    guard (200 ... 299).contains(statusCode) else {
+//                        let result = try? JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+//                        completion(nil, LoginError.errorLogin(description: result?.content ?? "Server error \(statusCode)"))
+//                        return
+//                    }
+//                    guard let data = response.data else {
+//                        completion(nil, LoginError.errorLogin(description: "There is no data returned from the server"))
+//                        return
+//                    }
+//                    let strResponse = try! JSONDecoder().decode(String.self, from: data)
+//                    completion(strResponse, nil)
+                    
+                    guard let statusCode = response.response?.statusCode else {
+                        completion(nil, LoginError.errorLogin(description: "Unhandled response from server"))
+                        return
+                    }
+                    guard (200 ... 299).contains(statusCode) else {
+                        let result = try? JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
+                        completion(nil, LoginError.errorLogin(description: result?.content ?? "Server error \(statusCode)"))
+                        return
+                    }
+                    guard let data = response.data else {
+                        completion(nil, LoginError.errorLogin(description: "There is no data returned from the server"))
+                        return
+                    }
+                    let strResponse = try! JSONDecoder().decode(LujoServerResponse<String>.self, from: data)
+                    completion(strResponse.content, nil)
+                    
+                case let .failure(error):
+                    if error._code == NSURLErrorTimedOut {
+                        completion(nil, nil)
+                        return
+                    }
+                    completion(nil, LoginError.errorLogin(description: response.result.error!.localizedDescription))
+                }
+            }
+    }
+    
     // MARK: Helper methods
 
     fileprivate func handleSuccess(_ json: [String: Any],

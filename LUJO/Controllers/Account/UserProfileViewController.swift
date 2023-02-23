@@ -241,18 +241,20 @@ class UserProfileViewController: UIViewController {
             newNumber = PhoneNumber(countryCode:  "", number: "")
             let updatedUser: LujoUser = LujoUser(firstName: firstName,
                                                  lastName: lastName,
-                                                 email: user.email == email ? "" : email,
+                                                 //email: user.email == email ? "" : email,
+                                                 email: "",
                                                  phoneNumber: PhoneNumber(countryCode: newNumber.countryCode,
                                                                           number: newNumber.number))
             
             updateProfile(for: updatedUser)
         }else{
-            validateCaptchaThenUpdate(firstName, lastName, user.email == email ? "" : email, newNumber)
+            //validateCaptchaThenUpdate(firstName, lastName, user.email == email ? "" : email, newNumber)
+            validateCaptchaThenUpdate(firstName, lastName, email: "", newNumber)
         }
 
     }
     
-    func validateCaptchaThenUpdate(_ firstName:String,_ lastName:String,_ email:String,_ newNumber:PhoneNumber) {
+    func validateCaptchaThenUpdate(_ firstName:String,_ lastName:String, email:String,_ newNumber:PhoneNumber) {
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             self?.captchaWebView?.removeFromSuperview()
@@ -273,32 +275,33 @@ class UserProfileViewController: UIViewController {
         showNetworkActivity()
         updateProfile(for: _user) { error in
             self.hideNetworkActivity()
-            let _emailVerificationTitle = "Please verify your email"
-            let _emailVerificationText = "Your email address will only be updated if you will tap on the verification link which we have sent to '\(_user.email)'."
+//            let _emailVerificationTitle = "Please verify your email"
+//            let _emailVerificationText = "Your email address will only be updated if you will tap on the verification link which we have sent to '\(_user.email)'."
             if let error = error {
                 self.showError(error)
             } else {
                 //email and phone both has been updated
-                if (!_user.email.isEmpty && (self.user.email != _user.email)) &&
-                    (!_user.phoneNumber.readableNumber.isEmpty && ( self.user.phoneNumber.readableNumber != _user.phoneNumber.readableNumber)){
-                    self.showInformationPopup(withTitle: _emailVerificationTitle, message: _emailVerificationText, btnTitle: "Ok" , btnTapHandler: { () in
-                        LujoSetup().updateDefaults {
-                            DispatchQueue.main.async {
-                                print("navigate to the OTP screen")
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    })
-                }
-                if !_user.email.isEmpty && ( self.user.email != _user.email){   //only email has been updated
-                    self.showInformationPopup(withTitle: _emailVerificationTitle, message: _emailVerificationText, btnTitle: "Ok" , btnTapHandler: { () in
-                        LujoSetup().updateDefaults {
-                            DispatchQueue.main.async {
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    })
-                }else if !_user.phoneNumber.readableNumber.isEmpty && (self.user.phoneNumber.readableNumber != _user.phoneNumber.readableNumber){   //Only Phone has been updated
+//                if (!_user.email.isEmpty && (self.user.email != _user.email)) &&
+//                    (!_user.phoneNumber.readableNumber.isEmpty && ( self.user.phoneNumber.readableNumber != _user.phoneNumber.readableNumber)){
+//                    self.showInformationPopup(withTitle: _emailVerificationTitle, message: _emailVerificationText, btnTitle: "Ok" , btnTapHandler: { () in
+//                        LujoSetup().updateDefaults {
+//                            DispatchQueue.main.async {
+//                                print("navigate to the OTP screen")
+//                                self.navigationController?.popViewController(animated: true)
+//                            }
+//                        }
+//                    })
+//                }
+//                if !_user.email.isEmpty && ( self.user.email != _user.email){   //only email has been updated
+//                    self.showInformationPopup(withTitle: _emailVerificationTitle, message: _emailVerificationText, btnTitle: "Ok" , btnTapHandler: { () in
+//                        LujoSetup().updateDefaults {
+//                            DispatchQueue.main.async {
+//                                self.navigationController?.popViewController(animated: true)
+//                            }
+//                        }
+//                    })
+//                }else
+                if !_user.phoneNumber.readableNumber.isEmpty && (self.user.phoneNumber.readableNumber != _user.phoneNumber.readableNumber){   //Only Phone has been updated
                     print("navigate to the OTP screen")
                     self.navigationController?.popViewController(animated: true)
                 }else{
@@ -379,6 +382,20 @@ extension UserProfileViewController {
     }
     
     @IBAction func btnSendEmailVerificationLinkTapped(_ sender: Any) {
-        print("btnSendEmailVerificationLinkTapped")
+        GoLujoAPIManager().resendEmailVerificationLink(){ stringResponse, error in
+            if error == nil{
+                showCardAlertWith(title: "Email verification", body: stringResponse ?? "Email sent successfully", buttonTitle: "Open email client", cancelButtonTitle: "I'll verify laters") {
+                    let mailURL = URL(string: "message://")!
+                    if UIApplication.shared.canOpenURL(mailURL) {
+                        UIApplication.shared.open(mailURL, options: [:], completionHandler: nil)
+                    }
+                }
+            }else if let err = error{
+                self.showError(err)
+            }
+            
+        }
+            
+        
     }
 }

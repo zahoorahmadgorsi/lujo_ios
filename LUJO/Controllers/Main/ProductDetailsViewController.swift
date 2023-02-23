@@ -168,7 +168,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
         }
-        
+        print("Product: \(product)")
         if (product.type == "event"){
             EEAPIManager().getEvents(past: false, term: nil, cityId: nil, productId: product.id) { list, error in
                 guard error == nil else {
@@ -214,6 +214,16 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Yacht could not be loaded")
+                    completion(nil, error)
+                    return
+                }
+                completion(list[0], error)
+            }
+        }else if (product.type == "restaurant"){
+            EEAPIManager().getRestaurant( productId: product.id) { list, error in
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    let error = BackendError.parsing(reason: "Restaurant could not be loaded")
                     completion(nil, error)
                     return
                 }

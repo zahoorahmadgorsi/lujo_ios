@@ -36,6 +36,7 @@ enum EERouter: URLRequestConvertible {
     case villas(String?, String?, String?, AppliedFilters?)
     case goods(String?, String?, String?, AppliedFilters?)
     case yachts( String?, String?, String?, AppliedFilters?)
+    case restaurants(String)    //get restauurant by id
 //    case getYachtGallery(String, String)
     case topRated(type: String?,term: String?)   //type is villa,event etc and term is search text
     case recents(String, String?, String?)
@@ -70,6 +71,7 @@ enum EERouter: URLRequestConvertible {
         switch self {
         case .home:
             return .get
+        
         case let .events(_, _, _, id, _):      fallthrough
         case let .experiences(_, _, id, _):    fallthrough
         case let .yachts(_, _, id, _):         fallthrough
@@ -79,6 +81,8 @@ enum EERouter: URLRequestConvertible {
             }else{
                 return .post
             }
+        case let .restaurants(id):
+            return .get
         case .salesforce:
             return .post
         case .geopoint:
@@ -177,6 +181,8 @@ enum EERouter: URLRequestConvertible {
 //                        URLQueryItem(name: "per_page", value: "20"),
 //                    ]
                 }
+            case let .restaurants(id):
+                newURLComponents.path.append("/restaurants/detail/" + id)
             case let .recents(token, limit, type):
                 newURLComponents.path.append("/recent")
                 
@@ -284,7 +290,8 @@ enum EERouter: URLRequestConvertible {
 
     fileprivate func getBodyData() -> Data? {
         switch self {
-        case .home:
+        case .home: fallthrough
+        case .restaurants:
             return nil
         case let .events(past, search, location, id, filters):
             if let id = id , id.count > 0 {  //if event is search by id then user different API

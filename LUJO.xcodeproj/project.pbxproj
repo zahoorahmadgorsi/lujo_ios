@@ -83,6 +83,9 @@
 		426D9B09295CDCC30014080A /* CollectionInsideCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 426D9B08295CDCC30014080A /* CollectionInsideCell.xib */; };
 		42720E1F2959FA61005CFDA8 /* GiftFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */; };
 		42720E212959FACD005CFDA8 /* GiftFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42720E202959FACD005CFDA8 /* GiftFilterCell.xib */; };
+		4288FBB629A7EC3100BF7C19 /* BrandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288FBB529A7EC3100BF7C19 /* BrandsViewController.swift */; };
+		4288FBB829A7ED8F00BF7C19 /* Filters.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4288FBB729A7ED8F00BF7C19 /* Filters.storyboard */; };
+		4288FBBA29A7F59200BF7C19 /* BrandsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288FBB929A7F59200BF7C19 /* BrandsCell.swift */; };
 		42AFD12D29538BD60098A25C /* MultiLineCollectionFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */; };
 		42AFD12F29538BE70098A25C /* MultiLineCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */; };
 		42C145B028ACFA2C007436F6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C145AF28ACFA2C007436F6 /* Notification.swift */; };
@@ -186,7 +189,7 @@
 		88E731AE256FFAAF00BEDD00 /* ProductDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88E731AD256FFAAF00BEDD00 /* ProductDetailView.xib */; };
 		88EA9F9425544E8400514626 /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F9325544E8400514626 /* WishList.swift */; };
 		88EA9F972554550D00514626 /* WishListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F962554550D00514626 /* WishListRouter.swift */; };
-		88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F982554552300514626 /* WishListAPIManager.swift */; };
+		88EA9F992554552300514626 /* GoLujoAPIManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA9F982554552300514626 /* GoLujoAPIManagerExtension.swift */; };
 		8CF0C61F03F180068ED53FB3 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C88A80612D02EC9E7088F9 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		91522DAF2608B2100023BAD8 /* DiningFeaturedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DAE2608B2100023BAD8 /* DiningFeaturedAnimator.swift */; };
 		91522DB4260A1B8A0023BAD8 /* DiningSliderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */; };
@@ -492,6 +495,9 @@
 		426D9B08295CDCC30014080A /* CollectionInsideCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionInsideCell.xib; sourceTree = "<group>"; };
 		42720E1E2959FA61005CFDA8 /* GiftFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftFilterCell.swift; sourceTree = "<group>"; };
 		42720E202959FACD005CFDA8 /* GiftFilterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GiftFilterCell.xib; path = "LUJO/Views/Reusable Views/Filters/GiftFilterCell.xib"; sourceTree = SOURCE_ROOT; };
+		4288FBB529A7EC3100BF7C19 /* BrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsViewController.swift; sourceTree = "<group>"; };
+		4288FBB729A7ED8F00BF7C19 /* Filters.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Filters.storyboard; sourceTree = "<group>"; };
+		4288FBB929A7F59200BF7C19 /* BrandsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsCell.swift; sourceTree = "<group>"; };
 		42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiLineCollectionFilter.xib; sourceTree = "<group>"; };
 		42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineCollectionFilter.swift; sourceTree = "<group>"; };
 		42C145AF28ACFA2C007436F6 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -533,7 +539,7 @@
 		8844D9B02563F712002FF846 /* FavouriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCell.swift; sourceTree = "<group>"; };
 		8844D9B12563F712002FF846 /* FavouriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouriteCell.xib; sourceTree = "<group>"; };
 		886145D126AB70A30023E92E /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
-		886145F426AC02090023E92E /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatCell.swift; path = "LUJO/Views/Reusable Views/Chat/ChatCell.swift"; sourceTree = SOURCE_ROOT; };
+		886145F426AC02090023E92E /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatCell.swift; path = LUJO/Controllers/Main/ChatCell.swift; sourceTree = SOURCE_ROOT; };
 		886145FC26AC04610023E92E /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		8868750B27A6A84600563CDC /* ConversationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsManager.swift; sourceTree = "<group>"; };
 		8868750C27A6A84600563CDC /* ConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -603,7 +609,7 @@
 		88E731AD256FFAAF00BEDD00 /* ProductDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailView.xib; sourceTree = "<group>"; };
 		88EA9F9325544E8400514626 /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
 		88EA9F962554550D00514626 /* WishListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListRouter.swift; sourceTree = "<group>"; };
-		88EA9F982554552300514626 /* WishListAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListAPIManager.swift; sourceTree = "<group>"; };
+		88EA9F982554552300514626 /* GoLujoAPIManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoLujoAPIManagerExtension.swift; sourceTree = "<group>"; };
 		91522DAE2608B2100023BAD8 /* DiningFeaturedAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningFeaturedAnimator.swift; sourceTree = "<group>"; };
 		91522DB3260A1B8A0023BAD8 /* DiningSliderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningSliderAnimator.swift; sourceTree = "<group>"; };
 		91522DBE260CD8300023BAD8 /* WishListSliderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListSliderAnimator.swift; sourceTree = "<group>"; };
@@ -1011,7 +1017,6 @@
 				9AAA101F22773540008CE1D2 /* MyBookingsCell.swift */,
 				30368DD62339200D00EDF549 /* MainScreenAviationCell.xib */,
 				422AB18B2863529100BEDCC3 /* Account */,
-				886145F326AC01DE0023E92E /* Chat */,
 				91F610CC25BDB1C9005BCDA2 /* City View */,
 				1D88012A233E48420039DEA6 /* Dining Category Slider */,
 				1DFE1AC323476EA50025410D /* Dining City View */,
@@ -1084,6 +1089,16 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		4288FBB429A7EBED00BF7C19 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				886FE46827228E8E000B9530 /* FiltersViewController.swift */,
+				4288FBB529A7EC3100BF7C19 /* BrandsViewController.swift */,
+				4288FBB929A7F59200BF7C19 /* BrandsCell.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
 		5527641C23165A8800380BEB /* Dining */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,6 +1136,7 @@
 		5527642D2317FDCE00380BEB /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				886145F426AC02090023E92E /* ChatCell.swift */,
 				422AB17A2859C39C00BEDCC3 /* WebViewVC.swift */,
 				8868750E27A6A84600563CDC /* AdvanceChatViewController.swift */,
 				8868750B27A6A84600563CDC /* ConversationsManager.swift */,
@@ -1152,6 +1168,7 @@
 		557BB5DD23158F8900744188 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4288FBB429A7EBED00BF7C19 /* Filters */,
 				5527644523195CEC00380BEB /* Account */,
 				5527642D2317FDCE00380BEB /* Chat */,
 				557BB5E62315954F00744188 /* Main */,
@@ -1164,6 +1181,7 @@
 		557BB5DE23158F9000744188 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4288FBB729A7ED8F00BF7C19 /* Filters.storyboard */,
 				9A2F0C3321250C7200C52BE3 /* Login.storyboard */,
 				5527644623195CF800380BEB /* AccountNEW.storyboard */,
 				1D618003238A56C600F01199 /* CustomRequests.storyboard */,
@@ -1199,7 +1217,6 @@
 				5527641C23165A8800380BEB /* Dining */,
 				5527641D23165BFD00380BEB /* Home */,
 				88EA9F8D2554069100514626 /* WishList */,
-				886FE46827228E8E000B9530 /* FiltersViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1232,14 +1249,6 @@
 				8844D9B12563F712002FF846 /* FavouriteCell.xib */,
 			);
 			path = "Wish List View";
-			sourceTree = "<group>";
-		};
-		886145F326AC01DE0023E92E /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				886145F426AC02090023E92E /* ChatCell.swift */,
-			);
-			path = Chat;
 			sourceTree = "<group>";
 		};
 		8868754527A6CBCE00563CDC /* Chat */ = {
@@ -1374,7 +1383,7 @@
 			isa = PBXGroup;
 			children = (
 				88EA9F962554550D00514626 /* WishListRouter.swift */,
-				88EA9F982554552300514626 /* WishListAPIManager.swift */,
+				88EA9F982554552300514626 /* GoLujoAPIManagerExtension.swift */,
 			);
 			path = WishList;
 			sourceTree = "<group>";
@@ -2107,6 +2116,7 @@
 				918BA98925BDCDA5007B4D43 /* CityView4.xib in Resources */,
 				1DD785B823749B27001A9CF9 /* PayAlertView.xib in Resources */,
 				426D9B09295CDCC30014080A /* CollectionInsideCell.xib in Resources */,
+				4288FBB829A7ED8F00BF7C19 /* Filters.storyboard in Resources */,
 				9A18716921130D4800B81BFD /* Lora-Regular.ttf in Resources */,
 				88E731AE256FFAAF00BEDD00 /* ProductDetailView.xib in Resources */,
 				9AF1A0D22248EFD500E0680B /* AviationSearchOptions.xib in Resources */,
@@ -2369,6 +2379,7 @@
 				9AD1CE02228182B2007A0D63 /* BookingPaymentSummaryView.swift in Sources */,
 				1D70B11922B95F35007051FA /* ImageCarouselCell.swift in Sources */,
 				1DD785B923749B27001A9CF9 /* PayAlertView.swift in Sources */,
+				4288FBBA29A7F59200BF7C19 /* BrandsCell.swift in Sources */,
 				886FE45627226E04000B9530 /* YachtLengthFilter.swift in Sources */,
 				9A86F07D218A088E00495E4D /* LiftSpecsSubView.swift in Sources */,
 				888A305D26458ADB008754AD /* PrefCollectionsViewController.swift in Sources */,
@@ -2441,6 +2452,7 @@
 				918BA9A325BF480A007B4D43 /* CityView2.swift in Sources */,
 				1D618010238C3BDE00F01199 /* ikDataPickerManager.swift in Sources */,
 				9A53E35D218207A000594AA6 /* AviationSearchView.swift in Sources */,
+				4288FBB629A7EC3100BF7C19 /* BrandsViewController.swift in Sources */,
 				5527644B23195D4300380BEB /* UserProfileViewController.swift in Sources */,
 				9AF561E52183311100B7BD1A /* LiftCollectionViewCell.swift in Sources */,
 				1643305211AD52F06A13F51D /* LoginProtocols.swift in Sources */,
@@ -2499,7 +2511,7 @@
 				9A67F20A22566AE800E06F1D /* LujoIconLabel.swift in Sources */,
 				9A817B98224D0D2C00EE7BAC /* AviationLuggageSelectionView.swift in Sources */,
 				9156B7562614948900404E1D /* SearchAnimator.swift in Sources */,
-				88EA9F992554552300514626 /* WishListAPIManager.swift in Sources */,
+				88EA9F992554552300514626 /* GoLujoAPIManagerExtension.swift in Sources */,
 				9AD6EABE21E3BBAF00B695A3 /* CreditCardsDataSource.swift in Sources */,
 				88814DD82659B5360082AA2C /* DestinationSearchCell.swift in Sources */,
 				42130EAB28B3964B006629B3 /* NotificationCell.swift in Sources */,

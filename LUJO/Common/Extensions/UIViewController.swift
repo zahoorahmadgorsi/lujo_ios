@@ -35,12 +35,12 @@ extension UIViewController {
         showInformationPopup(withTitle: "Information", message: "24/7 agent chat is only available to Lujo members. Please upgrade to enjoy full benefits of Lujo.", btnTitle: "Upgrade" , btnTapHandler: { () in
             if let user = LujoSetup().getLujoUser(), user.id.count > 0 {
                 let userFullname = "\(user.firstName) \(user.lastName)"
-                let hasMembership = LujoSetup().getLujoUser()?.membershipPlan ?? nil != nil
+                let hasMembership = Utility.isUserAMember()
                 var paymentType = MembershipType.none
                 
                 if let isContain = LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}), isContain == true{
                     paymentType = .dining
-                }else{ //if let isContain = LujoSetup().getLujoUser()?.membershipPlan?.target.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}){
+                }else{
                     paymentType = .all
                 }
 

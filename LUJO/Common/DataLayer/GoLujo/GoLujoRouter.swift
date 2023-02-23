@@ -66,10 +66,11 @@ enum GoLujoRouter: URLRequestConvertible {
     case unregisterForPush(String)
     case getTwilioParticipants(String)
     case deleteAccount
+    case resendEmailVerificationLink
     
     private func getCategory() -> GoLujoRouterCategory {
         switch self {
-        case .createUser, .verify, .requestOTP, .requestLoginOTP, .approved, .cardAdd, .addressAdd:
+        case .createUser, .verify, .requestOTP, .requestLoginOTP, .approved, .cardAdd, .addressAdd, .resendEmailVerificationLink:
             return .creation
         case .refreshToken, .updatePhoneNumber, .updateProfile, .updateUserImage, .forgotPassword, .cardUpdate, .addressUpdate:
             return .update
@@ -134,7 +135,8 @@ enum GoLujoRouter: URLRequestConvertible {
         case .requestOTP:       fallthrough
         case .requestLoginOTP:  fallthrough
         case .cardAdd:          fallthrough
-        case .addressAdd:
+        case .addressAdd:       fallthrough
+        case .resendEmailVerificationLink:
             return .post
         case .approved: fallthrough
         case .getReferralTypes: fallthrough
@@ -281,6 +283,9 @@ enum GoLujoRouter: URLRequestConvertible {
             ]
         case .deleteAccount:
             newURLComponents.path.append("/users/delete")
+        case .resendEmailVerificationLink:
+            newURLComponents.path.append("/users/resend_link")
+            
         }
 
         do {
@@ -329,25 +334,22 @@ enum GoLujoRouter: URLRequestConvertible {
             return getOTPAsJSONData(user, captchaToken)
         case let .updatePhoneNumber(oldPrefix, oldNumber, newPrefix, newNumber, captchaToken):
             return getUserNameAndPhoneAsJSONData(oldPrefix, oldNumber, newPrefix, newNumber, captchaToken)
-        case .updateDefaults:
-            return nil
-        case .countryCodes:
-            return nil
-        case .forgotPassword:
-            return nil
-        case .userProfile:
-            return nil
+
         case let .updateProfile(profile):
             return getUpdateProfileAsJSONData(profile)
         case let .updateUserImage(user, image):
             return getUserImageAsJSONData(user, image)
-        case .approved:
-            return nil // getUserTokenAsJSONData(token)
         case let .registerForPush(userId, deviceToken):
             return getDeviceTokenAsJSONData(userId, deviceToken)
+        case .resendEmailVerificationLink: fallthrough
+        case .approved:     fallthrough
         case .unregisterForPush:        fallthrough
         case .getTwilioParticipants:    fallthrough
-        case .deleteAccount:
+        case .deleteAccount:            fallthrough
+        case .updateDefaults:           fallthrough
+        case .countryCodes:             fallthrough
+        case .forgotPassword:           fallthrough
+        case .userProfile:
             return nil
         }
     }
@@ -451,6 +453,7 @@ enum GoLujoRouter: URLRequestConvertible {
             "firstname": profile.firstName,
             "lastname": profile.lastName,
         ]
+        //now email would always be empty as now we arent updating the email
         if !profile.email.isEmpty{
             data["email"] = profile.email.lowercased()
         }

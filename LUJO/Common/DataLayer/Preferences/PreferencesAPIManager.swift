@@ -17,6 +17,7 @@ extension GoLujoAPIManager  {
     func getAllPreferences(completion: @escaping (Preferences?, Error?) -> Void) {
         Alamofire.request(PreferencesRouter.getAllPreferences)
             .responseJSON { response in
+                print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
                     return

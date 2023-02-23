@@ -147,9 +147,7 @@ extension SingleLineCollectionFilter: UICollectionViewDelegateFlowLayout {
 }
 
 extension SingleLineCollectionFilter:TapOnCellProtocol{
-    
 
-    
     func didTappedOnItem(at index: Int) {
         for i in 0..<self.items.count{
             if (i == index){    //only interested in tapped item

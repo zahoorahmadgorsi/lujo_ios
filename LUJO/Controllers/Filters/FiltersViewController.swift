@@ -320,6 +320,7 @@ class FiltersViewController: UIViewController {
         // FILTER By
         //**********
         let filterByCell = GiftFilterCell()
+        
         let filterByView = GiftsCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, leftImageName: "", rightImageName: "filter_right_arrow", filterCellType: FilterCellType.FilterBy)
         filterByView.lblTitle.text = "Filter By"
 
@@ -328,6 +329,7 @@ class FiltersViewController: UIViewController {
             filterByView.pickedItems = createTaxonomiesFromFilters (filters: filterOptions )
         }
         filterByView.tag = FilterType.GiftFilterBy.rawValue
+        filterByView.delegate = self
         stackView.addArrangedSubview(filterByView)
         //**********
         //Price
@@ -728,14 +730,28 @@ class FiltersViewController: UIViewController {
 extension FiltersViewController:SingleLineCollectionFilterProtocol{
     
     func didTappedOnFilterAt(tag: Int, tappedValue: String) {
-        if (tag == FilterType.YachtStatus.rawValue){
+//        if (tag == FilterType.YachtStatus.rawValue){
             for view in stackView.subviews{
                 if view is SingleLineCollectionFilter, view.tag == FilterType.YachtCharter.rawValue{
                     view.isHidden = tappedValue == "sale"    //if value of tapped item is sale then hide yachtCharter
+                }else if view is GiftsCollectionFilter, view.tag == FilterType.GiftFilterBy.rawValue{
+                    if tappedValue == "brand"{
+                        let viewController = BrandsViewController.instantiate(currentFilterType: .brands)
+                        self.navigationController?.pushViewController(viewController, animated: true)
+                    }else if tappedValue == "category"{
+                        let viewController = BrandsViewController.instantiate(currentFilterType: .categories)
+                        self.navigationController?.pushViewController(viewController, animated: true)
+                    }else if tappedValue == "colors"{
+                        let viewController = BrandsViewController.instantiate(currentFilterType: .colors)
+                        self.navigationController?.pushViewController(viewController, animated: true)
+                    }
+                    
                 }
             }
-        }
+//        }
+//        else if (tag == FilterType.GiftFilterBy.rawValue){
+//            print(tag,tappedValue)
+//        }
     }
-    
-    
 }
+

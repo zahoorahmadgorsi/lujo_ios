@@ -269,8 +269,9 @@ class AccountViewController: UIViewController {
     
     @IBAction func membershipButton_onClick(_ sender: UIButton) {
         if let userFullname = self.welcomeLabel.text {
-            let hasMembership = LujoSetup().getLujoUser()?.membershipPlan ?? nil != nil
-            let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: hasMembership ? .viewMembership : .buyMembership, paymentType: LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true ? .dining : .all)
+            let hasMembership = Utility.isUserAMember()
+            let viewController = MembershipViewControllerNEW.instantiate(userFullname: userFullname, screenType: hasMembership ? .viewMembership : .buyMembership, 
+                paymentType: LujoSetup().getLujoUser()?.membershipPlan?.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true ? .dining : .all)
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }

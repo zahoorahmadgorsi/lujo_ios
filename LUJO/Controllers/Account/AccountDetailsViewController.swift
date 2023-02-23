@@ -132,9 +132,8 @@ class AccountDetailsViewController: UIViewController {
 //         membershipPlan = "all"   //test case for all
 //        print(membershipPlan)
         
-        if (membershipPlan == nil ||
-            (membershipPlan?.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == false &&
-             membershipPlan?.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == false)){    //user has no membership plan
+
+        if (Utility.isUserAMember() == false){
             title = "Purchase membership"
             self.lblDiningFirstMessage.text = "Purchase dining membership at"
             self.lblAllFirstMessage.text = "Purchase full membership at"
@@ -226,10 +225,7 @@ class AccountDetailsViewController: UIViewController {
 
     @IBAction func btnPurchaseTapped(_ sender: Any) {
         let _userFullname = "\(user.firstName) \(user.lastName)"
-        var hasMembership = false
-        if let membership = user.membershipPlan, (membership.accessTo.contains(where: {$0.caseInsensitiveCompare("dining") == .orderedSame}) == true || membership.accessTo.contains(where: {$0.caseInsensitiveCompare("all") == .orderedSame}) == true){
-            hasMembership = true
-        }
+        let hasMembership = Utility.isUserAMember()
         
         let viewController = MembershipViewControllerNEW.instantiate(userFullname: _userFullname
                                                                      , screenType: hasMembership ? .viewMembership : .buyMembership
