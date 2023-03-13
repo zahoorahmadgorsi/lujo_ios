@@ -191,7 +191,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
                 ,let phonePrefix = self?.phoneCountryCode.phonePrefix
                 ,let phoneNumber = self?.phoneNumber.text
                 ,let captchaToken = try? result.dematerialize()
-                ,let countryName = self?.phoneCountryCode.country
+                ,let countryAlpha2Code = self?.phoneCountryCode.alpha2Code
             {
             do {
                 try self?.presenter?.createAccount(title: .mr,
@@ -201,7 +201,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
                                              phoneNumber: PhoneNumber(countryCode: phonePrefix,
                                                                       number: phoneNumber)
                                             ,captchaToken:captchaToken
-                                            ,countryName: countryName)
+                                            ,countryAlpha2Code: countryAlpha2Code)
             } catch {
                 // swiftlint:disable force_cast
                 self?.showError(error as! LoginError)

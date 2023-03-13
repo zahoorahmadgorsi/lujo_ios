@@ -98,6 +98,8 @@ class EEAPIManager {
     func getEvents( past: Bool, term: String?, cityId: String?, productId: String?, filtersToApply:AppliedFilters? = nil,
                     completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.events(past, term, cityId, productId, filtersToApply)).responseJSON { response in
+            print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
+
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

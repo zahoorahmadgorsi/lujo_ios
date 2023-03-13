@@ -47,8 +47,9 @@ class RestaurantListViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if dataSource.isEmpty, let city = city {
-            getInformation(for: city)
+//        if dataSource.isEmpty, let city = city {
+        if let city = city {
+            getInformation(showActivity: dataSource.isEmpty, for: city)
         }
     }
     
@@ -89,14 +90,15 @@ class RestaurantListViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func getInformation(for city: DiningCity) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            showFeedback("User does not exist or is not verified")
-            return
+    func getInformation(showActivity: Bool, for city: DiningCity) {
+//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+//            showFeedback("User does not exist or is not verified")
+//            return
+//        }
+        if (showActivity){
+            showNetworkActivity()
         }
-        
-        showNetworkActivity()
-        GoLujoAPIManager().search(token, term: nil, cityId: city.termId, currentLocation: nil) { restaurants, error in
+        GoLujoAPIManager().search(term: nil, cityId: city.termId, currentLocation: nil, cuisineCategoryId: nil) { restaurants, error in
             self.hideNetworkActivity()
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)

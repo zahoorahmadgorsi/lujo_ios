@@ -263,7 +263,7 @@ class PerCityViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = nil
         }
         let titleString = category.rawValue
-        title = titleString
+        title = titleString == "Villas" ? "Properties" : titleString
 //        naHUD.textLabel.text = "Loading " + category.rawValue
     }
     

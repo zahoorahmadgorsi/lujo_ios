@@ -480,8 +480,9 @@ extension DiningViewController: ImageCarouselDelegate {
 
 extension DiningViewController: DidSelectCategotyItemProtocol {
     func didSelectSliderItemAt(indexPath: IndexPath, sender: DiningCategorySlider) {
-        let categoryName = categorySlider.itemsList[indexPath.row].name
-        let viewController = RestaurantSearchViewController.instantiate(searchTerm: categoryName, currentLocation: currentLocation)
+        //let categoryName = categorySlider.itemsList[indexPath.row].name
+        let _cuisineCategory = categorySlider.itemsList[indexPath.row]
+        let viewController = RestaurantSearchViewController.instantiate(cuisineCategory: _cuisineCategory, currentLocation: currentLocation)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -527,11 +528,14 @@ extension DiningViewController {
     }
     
     func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView) {
-        if view == myLocationCityView {
-            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: locationRestaurants), animated: true)
-        } else {
-            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: city), animated: true)
-        }
+//        if view == myLocationCityView {
+//            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: locationRestaurants), animated: true)
+//        } else {
+//            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: city), animated: true)
+//        }
+        //if data source has something then that data would be loaded immediately and rest of the data would be loaded silenlty
+        //we need to pass data from here as on locationView we are loading only 2 records so those 2 would be loaded immediately and rest would be loaded silently, if we dont want to load silent data then have to ask API to not to send only 2 records but all.
+        navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: locationRestaurants.isEmpty == true ? city.restaurants :locationRestaurants, city: city), animated: true)
     }
     
     func didTappedOnRestaurantAt(index: Int,restaurant: Product) {

@@ -13,7 +13,7 @@ protocol LoginViewResponder: ViewResponder {
                        email: String,
                        phoneNumber: PhoneNumber//) throws
                        ,captchaToken:String
-                       ,countryName:String) throws
+                       ,countryAlpha2Code:String) throws
     func verifyCode(_ code: String)
     func requestOTP(captchaToken:String)
 //    func requestOTPLogin(prefix: PhoneCountryCode, number: String)

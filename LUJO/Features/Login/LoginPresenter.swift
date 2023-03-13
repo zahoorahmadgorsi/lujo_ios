@@ -198,7 +198,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
                        email: String,
                        phoneNumber: PhoneNumber
                        ,captchaToken:String
-                       ,countryName:String) throws {
+                       ,countryAlpha2Code:String) throws {
         guard !firstName.isEmpty else { throw LoginError.missingData }
         guard !lastName.isEmpty else { throw LoginError.missingData }
         guard !email.isEmpty else { throw LoginError.missingData }
@@ -225,7 +225,7 @@ class LoginPresenter: Presentable, LoginViewResponder {
 
         view.showNetworkActivity()
 
-        presenterInteractor.createAccount(currentUser!, captchaToken: captchaToken,countryName: countryName) { [weak self] _, error in
+        presenterInteractor.createAccount(currentUser!, captchaToken: captchaToken,countryName: countryAlpha2Code) { [weak self] _, error in
             self?.view.hideNetworkActivity()
 
             guard error == nil else {

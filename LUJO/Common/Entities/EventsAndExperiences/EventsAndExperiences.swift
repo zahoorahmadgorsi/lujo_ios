@@ -157,7 +157,7 @@ struct YachtRegion: Codable{
     let description: String?
 }
 
-struct TaxonomyResponse: Codable{
+struct TaxonomyDocs: Codable{
     let docs: [Taxonomy]
 }
 
@@ -331,8 +331,10 @@ struct Product: Codable {
     var timezone: String?
     var thumbnail: Gallery?
     var gallery: [Gallery]?
-    var eventCategory: [Taxonomy]?
-    var experienceCategory: [Taxonomy]?
+//    var eventCategory: [Taxonomy]?
+//    var experienceCategory: [Taxonomy]?
+    var eventCategory: Taxonomy?
+    var experienceCategory: Taxonomy?
     var tags: [Taxonomy]?
     var eventVenue: [Taxonomy]?
     var priceRange: [Taxonomy]?
@@ -370,15 +372,21 @@ struct Product: Codable {
     var grossTonnage: String?
     var cruisingSpeedKnot: String?
     var topSpeedKnot: String?
-    var charterPriceLowSeasonPerWeek: String?
-    var charterPriceHighSeasonPerWeek: String?
+    
+    var charterPriceLowSeasonPerWeek: Price?
+    var charterPriceHighSeasonPerWeek: Price?
+//    var charterPriceLowSeasonPerWeek: String?
+//    var charterPriceHighSeasonPerWeek: String?
 //    var yachtType: [Taxonomy]?
 //    var yachtStatus: [Taxonomy]?
     var yachtType: String?
     var yachtStatus: String?
     var yachtExtras: [Taxonomy]?
-    var charterPriceLowSeasonPerDay: String?
-    var charterPriceHighSeasonPerDay: String?
+    
+    var charterPriceLowSeasonPerDay: Price?
+    var charterPriceHighSeasonPerDay: Price?
+//    var charterPriceLowSeasonPerDay: String?
+//    var charterPriceHighSeasonPerDay: String?
 //    Restaurant related
     var tripadvisor: String?
     var address: String?
@@ -539,8 +547,10 @@ extension Product {
             timezone = try values.decodeIfPresent(String.self, forKey: .timezone)
             thumbnail = try values.decodeIfPresent(Gallery.self, forKey: .thumbnail)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
-            eventCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .eventCategory)
-            experienceCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .experienceCategory)
+//            eventCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .eventCategory)
+//            experienceCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .experienceCategory)
+            eventCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .eventCategory)
+            experienceCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .experienceCategory)
             giftCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .giftCategory)
             giftSubCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .giftSubCategory)
             giftBrand = try values.decodeIfPresent(Taxonomy.self, forKey: .giftBrand)
@@ -577,15 +587,19 @@ extension Product {
             grossTonnage = try values.decodeIfPresent(String.self, forKey: .grossTonnage)
             cruisingSpeedKnot = try values.decodeIfPresent(String.self, forKey: .cruisingSpeedKnot)
             topSpeedKnot = try values.decodeIfPresent(String.self, forKey: .topSpeedKnot)
-            charterPriceLowSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerWeek)
-            charterPriceHighSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerWeek)
+            charterPriceLowSeasonPerWeek = try values.decodeIfPresent(Price.self, forKey: .charterPriceLowSeasonPerWeek)
+            charterPriceHighSeasonPerWeek = try values.decodeIfPresent(Price.self, forKey: .charterPriceHighSeasonPerWeek)
+//            charterPriceLowSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerWeek)
+//            charterPriceHighSeasonPerWeek = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerWeek)
 //            yachtType = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtType)
 //            yachtStatus = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtStatus)
             yachtType = try values.decodeIfPresent(String.self, forKey: .yachtType)
             yachtStatus = try values.decodeIfPresent(String.self, forKey: .yachtStatus)
             yachtExtras = try values.decodeIfPresent([Taxonomy].self, forKey: .yachtExtras)
-            charterPriceLowSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerDay)
-            charterPriceHighSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerDay)
+            charterPriceLowSeasonPerDay = try values.decodeIfPresent(Price.self, forKey: .charterPriceLowSeasonPerDay)
+            charterPriceHighSeasonPerDay = try values.decodeIfPresent(Price.self, forKey: .charterPriceHighSeasonPerDay)
+//            charterPriceLowSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceLowSeasonPerDay)
+//            charterPriceHighSeasonPerDay = try values.decodeIfPresent(String.self, forKey: .charterPriceHighSeasonPerDay)
             //    Restaurant related
             tripadvisor = try values.decodeIfPresent(String.self, forKey: .tripadvisor)
             address = try values.decodeIfPresent(String.self, forKey: .address)

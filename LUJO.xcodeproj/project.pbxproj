@@ -498,6 +498,7 @@
 		4288FBB529A7EC3100BF7C19 /* BrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsViewController.swift; sourceTree = "<group>"; };
 		4288FBB729A7ED8F00BF7C19 /* Filters.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Filters.storyboard; sourceTree = "<group>"; };
 		4288FBB929A7F59200BF7C19 /* BrandsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsCell.swift; sourceTree = "<group>"; };
+		4288FBBB29A8F3E700BF7C19 /* LUJORelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LUJORelease.entitlements; sourceTree = "<group>"; };
 		42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiLineCollectionFilter.xib; sourceTree = "<group>"; };
 		42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineCollectionFilter.swift; sourceTree = "<group>"; };
 		42C145AF28ACFA2C007436F6 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -1687,6 +1688,7 @@
 		9A818F4920EE74CA005B6455 /* LUJO */ = {
 			isa = PBXGroup;
 			children = (
+				4288FBBB29A8F3E700BF7C19 /* LUJORelease.entitlements */,
 				88E4A6F82759B36600081270 /* GoogleService-Info.plist */,
 				1D6006852399535900B9BA2A /* LUJO-Bridging-Header.h */,
 				9AC4FE08225CA31F0031E57E /* AppDelegate.swift */,
@@ -2887,7 +2889,7 @@
 			baseConfigurationReference = 1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				APP_DISPLAY_NAME = "Lujo New PROD";
+				APP_DISPLAY_NAME = "Lujo New";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				AVIATION_API_TOKEN = "c108cdbd-9330-1d33-ee0f-08c63c42e68b";
 				AVIATION_API_VERSION = V1;
@@ -2903,7 +2905,7 @@
 				CARDCONNECT_PORT = 8443;
 				CARDCONNECT_URL = fts.cardconnect.com;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LUJO/LUJORelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.9;

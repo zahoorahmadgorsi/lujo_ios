@@ -320,7 +320,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.delegate = self
             wishListView.itemType = .villa
             wishListView.imgTitle.image = UIImage(named: "villa grey icon")
-            wishListView.lblTitle.text = "Villa"
+            wishListView.lblTitle.text = "Properties"
             //preparing data of collection view
             var itemsList = [Favourite]()
             for item in items{

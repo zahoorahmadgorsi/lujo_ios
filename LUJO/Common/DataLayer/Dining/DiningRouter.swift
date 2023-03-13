@@ -35,7 +35,7 @@ enum DiningRouter: URLRequestConvertible {
     }()
 
     case home
-    case search(String?, String?, Double?, Double?)
+    case search(String?, String?, Double?, Double?, String?)
 
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -65,7 +65,8 @@ enum DiningRouter: URLRequestConvertible {
         switch self {
         case .home:
             return .get
-        case .search: return .post
+        case .search:
+            return .post
         }
     }
 
@@ -96,22 +97,28 @@ enum DiningRouter: URLRequestConvertible {
         switch self {
         case .home:
             return nil
-        case let .search(search, location, latitude, longitude):
-            return getSearchDataAsJSONData(search,location, latitude, longitude)
+        case let .search(search, location, latitude, longitude, cuisineCategoryId):
+            return getSearchDataAsJSONData(search,location, latitude, longitude, cuisineCategoryId)
         }
     }
     
-    fileprivate func getSearchDataAsJSONData(_ search: String?, _ location:String?, _ latitude:Double?, _ longitude: Double?) -> Data? {
-        var body: [String: Any] = [
-            "search": search ?? ""
-            ,"location": location ?? ""
-            ,"status": "Published"
-        ]
+    fileprivate func getSearchDataAsJSONData(_ search: String?, _ location:String?, _ latitude:Double?, _ longitude: Double?,_ cuisineCategoryId:String?) -> Data? {
+        var body: [String: Any] = [ "status": "Published" ]
+        if let _location = location{
+            body["location"] = _location
+        }
+        if let _search = search{
+            body["search"] = _search
+        }
         if let lat = latitude{
             body["latitude"] = lat
         }
         if let long = longitude {
             body["longitude"] = long
+        }
+        if let _cuisineCategoryId = cuisineCategoryId {
+            let temp:[String] = [_cuisineCategoryId]
+            body["cuisine_category_ids"] = temp
         }
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }

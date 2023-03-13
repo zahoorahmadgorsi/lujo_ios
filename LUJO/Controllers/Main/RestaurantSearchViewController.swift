@@ -21,10 +21,13 @@ class RestaurantSearchViewController: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "RestaurantSearchViewController" }
     
+    
     /// Init method that will init and return view controller.
-    class func instantiate(searchTerm: String? = nil, currentLocation: CLLocation? = nil) -> RestaurantSearchViewController {
+    //class func instantiate(searchTerm: String? = nil, currentLocation: CLLocation? = nil) -> RestaurantSearchViewController {
+    class func instantiate(cuisineCategory: Cuisine? = nil, currentLocation: CLLocation? = nil) -> RestaurantSearchViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantSearchViewController
-        viewController.searchTerm = searchTerm
+//        viewController.searchTerm = searchTerm
+        viewController.cuisineCategory = cuisineCategory
         viewController.currentLocation = currentLocation
         return viewController
     }
@@ -46,7 +49,8 @@ class RestaurantSearchViewController: UIViewController {
     @IBOutlet weak var noResultsTitleLabel: UILabel!
     @IBOutlet weak var noResultsActionButton: UIButton!
     
-    private var searchTerm: String?
+//    private var searchTerm: String?
+    var cuisineCategory:Cuisine?
     private var currentLocation: CLLocation?
     
     private var keyword: String = "" {
@@ -67,11 +71,18 @@ class RestaurantSearchViewController: UIViewController {
         collectionView.register(UINib(nibName: DiningViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: DiningViewCell.identifier)
         
         title = "Search dining spots"
-        searchTextField.text = searchTerm
-        if let term = searchTerm {
-            keyword = term
-            searchRestaurants(term: term)
-        } else {
+//        searchTextField.text = searchTerm
+//        if let term = searchTerm {
+//            keyword = term
+//            searchRestaurants(term: term, cityId: nil, currentLocation: nil)
+//        }
+        if let _cuisineCategory = self.cuisineCategory{
+            title = "\(_cuisineCategory.name) Cuisine"
+//            searchTextField.text = _cuisineCategory.name
+            keyword = _cuisineCategory.name
+            //search cuisine by category id
+            searchRestaurants(term: nil, cityId: nil, currentLocation: nil, cuisineCategoryId: _cuisineCategory.termId)
+        }else {
             searchTextField.becomeFirstResponder()
         }
         
@@ -245,7 +256,10 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
         if keyword.count > 1 {
             textField.resignFirstResponder()
             
-            self.searchRestaurants(term: keyword)
+            self.searchRestaurants(term: keyword,
+                                   cityId: nil ,
+                                   currentLocation: nil,
+                                   cuisineCategoryId: self.cuisineCategory?.termId )
             return true
         }
         
@@ -257,9 +271,12 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
 
 extension RestaurantSearchViewController {
 
-    func searchRestaurants(term: String) {
+    func searchRestaurants(term: String?, cityId: String?, currentLocation: CLLocation?, cuisineCategoryId: String?) {
         self.showNetworkActivity()
-        self.searchRestaurants(term: term) { information, error in
+        self.searchRestaurants(term: term,
+                               cityId: cityId,
+                               currLocation: currentLocation,
+                               cuisineCategoryId: cuisineCategoryId) { information, error in
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error)
@@ -268,16 +285,19 @@ extension RestaurantSearchViewController {
         }
     }
     
-    func searchRestaurants(term: String, completion: @escaping ([Product]?, Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
+    func searchRestaurants(term: String?, cityId: String?, currLocation: CLLocation?, cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
+//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+//            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
+//            return
+//        }
         
         Mixpanel.mainInstance().track(event: "RestaurantSearched",
               properties: ["SearchedText" : term])
         
-        GoLujoAPIManager().search(token, term: term, cityId: nil, currentLocation: currentLocation) { restaurants, error in
+        GoLujoAPIManager().search(term: term,
+                                  cityId: cityId,
+                                  currentLocation: currLocation,
+                                  cuisineCategoryId: cuisineCategoryId) { restaurants, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not search dining information")

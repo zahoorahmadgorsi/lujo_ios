@@ -705,26 +705,22 @@ extension ProductDetailsViewController {
         //preparing price data of collection view
         itemsList =  [ProductDetail]()
     
-        if let val = product.charterPriceHighSeasonPerDay, val.count > 0{
-            itemsList.append(ProductDetail(key: "Daily Charter",value: "$" + val.withCommas() ,isHighSeason: true)) // high season
-//            itemsList.append(ProductDetail(key: "Daily Charter",value:  val,isHighSeason: true)) // high season
+        if let val = product.charterPriceHighSeasonPerDay, val.amount.count > 0{
+            itemsList.append(ProductDetail(key: "Daily Charter",value: (val.currencyType?.symbolLeft ?? "") + val.amount.withCommas() + (val.currencyType?.symbolRight ?? "") ,isHighSeason: true)) // high season
         }
-        if let val = product.charterPriceHighSeasonPerWeek, val.count > 0{
-            itemsList.append(ProductDetail(key: "Weekly Charter",value: "$" + val.withCommas() ,isHighSeason: true)) // high season
-//            itemsList.append(ProductDetail(key: "Weekly Charter",value: val,isHighSeason: true)) // high season
+        if let val = product.charterPriceHighSeasonPerWeek, val.amount.count > 0{
+            itemsList.append(ProductDetail(key: "Weekly Charter",value: (val.currencyType?.symbolLeft ?? "") + val.amount.withCommas() + (val.currencyType?.symbolRight ?? "") ,isHighSeason: true)) // high season
         }
         
-        if let val = product.charterPriceLowSeasonPerDay, val.count > 0{
-            itemsList.append(ProductDetail(key: "Daily Charter",value: "$" + val.withCommas() ,isHighSeason: false)) // low season
-//            itemsList.append(ProductDetail(key: "Daily Charter",value: val,isHighSeason: false)) // low season
+        if let val = product.charterPriceLowSeasonPerDay, val.amount.count > 0{
+            itemsList.append(ProductDetail(key: "Daily Charter",value: (val.currencyType?.symbolLeft ?? "") + val.amount.withCommas() + (val.currencyType?.symbolRight ?? "") ,isHighSeason: false)) // low season
         }
         
-        if let val = product.charterPriceLowSeasonPerWeek, val.count > 0{
-            itemsList.append(ProductDetail(key: "Weekly Charter",value: "$" + val.withCommas() ,isHighSeason: false)) //low season
-//            itemsList.append(ProductDetail(key: "Weekly Charter",value: val,isHighSeason: false)) //low season
+        if let val = product.charterPriceLowSeasonPerWeek, val.amount.count > 0{
+            itemsList.append(ProductDetail(key: "Weekly Charter",value: (val.currencyType?.symbolLeft ?? "") + val.amount.withCommas() + (val.currencyType?.symbolRight ?? "") ,isHighSeason: false)) //low season
         }
         if let val = product.salePrice , val.count > 0{
-            itemsList.append(ProductDetail(key: "Sale Price",value: "$" + val.withCommas() ,isHighSeason: nil))
+            itemsList.append(ProductDetail(key: "Sale Price",value: val.withCommas() ,isHighSeason: nil))
         }
         
         if (itemsList.count > 0){

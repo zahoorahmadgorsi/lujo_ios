@@ -61,6 +61,7 @@ enum EERouter: URLRequestConvertible {
         urlRequest.httpBody = body
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         if let token = LujoSetup().getCurrentUser()?.token{
+//            print("Bearer token:\(token)")
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         urlRequest.print()
