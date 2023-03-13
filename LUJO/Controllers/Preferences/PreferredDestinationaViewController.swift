@@ -147,7 +147,7 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 }
             case .villas:
                 imgPreference.image = UIImage(named: "villa cta")
-                lblPrefLabel.text = "Villa"
+                lblPrefLabel.text = "Property"
                 switch prefInformationType {
                 case .villaDestinations:
                     lblPrefQuestion.text = "What are your top preferred destinations?"

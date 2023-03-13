@@ -258,7 +258,7 @@ class PrefCollectionsViewController: UIViewController {
             }
         case .villas:
             imgPreference.image = UIImage(named: "villa cta")
-            lblPrefLabel.text = "Villa"
+            lblPrefLabel.text = "Property"
             switch prefInformationType {
             case .villaAmenities:
                 lblPrefQuestion.text = "Preferred Amenities"

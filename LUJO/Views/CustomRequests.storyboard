@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lil-OG-wom">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="47" width="375" height="765"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qo5-Ta-2uH" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -254,7 +254,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mpI-hb-YKE" userLabel="Bottom Bar">
-                                        <rect key="frame" x="0.0" y="666" width="375" height="68"/>
+                                        <rect key="frame" x="0.0" y="663" width="375" height="68"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfK-SR-rGR" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
@@ -282,7 +282,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mha-9r-ZT7">
-                                        <rect key="frame" x="0.0" y="734" width="375" height="34"/>
+                                        <rect key="frame" x="0.0" y="731" width="375" height="34"/>
                                         <color key="backgroundColor" name="Palette - Separator"/>
                                     </view>
                                 </subviews>
@@ -337,7 +337,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9VW-wW-t1o">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="47" width="375" height="765"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFC-Y3-WTf" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -475,7 +475,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="drK-hl-XSz" userLabel="Bottom Bar">
-                                        <rect key="frame" x="0.0" y="666" width="375" height="68"/>
+                                        <rect key="frame" x="0.0" y="663" width="375" height="68"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QxX-i2-qVN" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
@@ -502,7 +502,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pn-L4-lYe">
-                                        <rect key="frame" x="0.0" y="734" width="375" height="34"/>
+                                        <rect key="frame" x="0.0" y="731" width="375" height="34"/>
                                         <color key="backgroundColor" name="Palette - Separator"/>
                                     </view>
                                 </subviews>
@@ -552,7 +552,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fm-cH-KBk">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="47" width="375" height="765"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q6M-bY-g9v" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="366" height="44"/>
@@ -687,7 +687,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5W-oD-F8G" userLabel="Bottom Bar">
-                                        <rect key="frame" x="0.0" y="666" width="375" height="68"/>
+                                        <rect key="frame" x="0.0" y="663" width="375" height="68"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCd-A6-uaS" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
@@ -715,7 +715,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O6S-dD-0tw">
-                                        <rect key="frame" x="0.0" y="734" width="375" height="34"/>
+                                        <rect key="frame" x="0.0" y="731" width="375" height="34"/>
                                         <color key="backgroundColor" name="Palette - Separator"/>
                                     </view>
                                 </subviews>
@@ -1156,7 +1156,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OR6-UF-G2L">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="47" width="375" height="765"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZNV-Hi-fPK" userLabel="Title Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1191,7 +1191,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ul5-dp-GHi" userLabel="Bottom Bar">
-                                        <rect key="frame" x="0.0" y="666" width="375" height="68"/>
+                                        <rect key="frame" x="0.0" y="663" width="375" height="68"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccO-4C-vbW" customClass="ActionButton" customModule="LUJO" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="343" height="44"/>
@@ -1218,11 +1218,11 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ujS-YD-Wbn">
-                                        <rect key="frame" x="0.0" y="734" width="375" height="34"/>
+                                        <rect key="frame" x="0.0" y="731" width="375" height="34"/>
                                         <color key="backgroundColor" name="Palette - Separator"/>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHC-hi-Mzb">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="622"/>
+                                        <rect key="frame" x="0.0" y="44" width="375" height="619"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="YjD-OB-yQn">
                                                 <rect key="frame" x="20" y="0.0" width="335" height="697"/>
@@ -1712,8 +1712,8 @@
                                                             <constraint firstAttribute="height" constant="20" id="LdS-9a-JaL"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rent a Villa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eO8-0V-xSf">
-                                                        <rect key="frame" x="31.999999999999993" y="16" width="94.333333333333314" height="32"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rent a property" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eO8-0V-xSf">
+                                                        <rect key="frame" x="32" y="16" width="133" height="32"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
