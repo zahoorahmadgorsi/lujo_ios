@@ -359,10 +359,10 @@ extension ProductsViewController {
     
     func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil,
                  completion: @escaping ([Product], Error?) -> Void) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
-            return
-        }
+//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+//            completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
+//            return
+//        }
         
         switch category {
             case .event:
@@ -433,7 +433,7 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .recent:
-                EEAPIManager().getRecents(token, limit: "30", type: "") { list, error in
+                EEAPIManager().getRecents( limit: "30", type: "") { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")

@@ -120,6 +120,7 @@ class RestaurantSearchViewController: UIViewController {
         guard let userFirstName = LujoSetup().getLujoUser()?.firstName else { return }
         let initialMessage = """
         Hi Concierge team,
+        
         I could not find any restaurants when I typed '\(keyword)'. Can you assist?"
         
         \(userFirstName)
@@ -128,7 +129,7 @@ class RestaurantSearchViewController: UIViewController {
         if ConversationsManager.sharedConversationsManager.getClient() != nil
         {
             let viewController = AdvanceChatViewController()
-            viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Searched")
+            viewController.salesforceRequest = SalesforceRequest(id: "-1asdf1234qwer" , type: "restaurant" , name: "Restaurant Searched", sfRequestType: .CUSTOM)
             viewController.initialMessage = initialMessage
             let navController = UINavigationController(rootViewController:viewController)
             UIApplication.topViewController()?.present(navController, animated: true, completion: nil)

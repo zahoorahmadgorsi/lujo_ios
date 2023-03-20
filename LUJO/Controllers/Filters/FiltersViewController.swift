@@ -31,9 +31,10 @@ class FiltersViewController: UIViewController {
     class var identifier: String { return "FiltersViewController" }
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var scrollView: UIScrollView!
-    
-
-    
+    private var giftBrands = [Taxonomy]()
+    private var giftCategories:[Taxonomy] = []
+    private var giftSubCategoriess:[Taxonomy] = []
+    private var giftColors:[Taxonomy] = []
 //    var delegate:FiltersVCProtocol?     //used to set the filters
     
     /// Init method that will init and return view controller.
@@ -80,18 +81,10 @@ class FiltersViewController: UIViewController {
     }
     
     func clearAllFilters(){
-//        delegate?.setFirstFilter(filter: "")
-//        delegate?.setSecondFilter(filter: nil)
-//        delegate?.setThirdFilter(filter: "")
-//        delegate?.setFourthFilter(filter: nil)
-//        delegate?.setFifthFilter(filter: nil)
-//        delegate?.setSixthFilter(filter: nil)
-//        delegate?.setSeventhFilter(filter: "")
-//        delegate?.setEighthFilter(filter: nil)
-//        delegate?.setNinthFilter(filter: nil)
-//        delegate?.setTenthFilter(filter: nil)
-//        delegate?.setEleventhFilter(filter: "")
-//        delegate?.setTwelvethFilter(filter: "")
+        self.giftBrands = []
+        self.giftCategories = []
+        self.giftSubCategoriess = []
+        self.giftColors = []
     }
     
     func updateYachtFilters(_ previousViewController: UIViewController){
@@ -302,7 +295,7 @@ class FiltersViewController: UIViewController {
         stackView.addArrangedSubview(view)
     }
     
-    func updateGiftsFilters(_ previousViewController: UIViewController){
+    func updateGiftsFilters(){
         //**********
         // Sort By
         //**********
@@ -319,6 +312,19 @@ class FiltersViewController: UIViewController {
         //**********
         // FILTER By
         //**********
+        
+        updateGiftsFilterByFilter(index: self.stackView.subviews.count)
+        
+        //**********
+        //Price
+        //**********
+        let viewMinMax = MinMaxFilter()
+        viewMinMax.lblTitle.text = "Price"
+        viewMinMax.tag = FilterType.GiftPrice.rawValue
+        stackView.addArrangedSubview(viewMinMax)
+    }
+    
+    func updateGiftsFilterByFilter(index:Int){
         let filterByCell = GiftFilterCell()
         
         let filterByView = GiftsCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, leftImageName: "", rightImageName: "filter_right_arrow", filterCellType: FilterCellType.FilterBy)
@@ -330,20 +336,24 @@ class FiltersViewController: UIViewController {
         }
         filterByView.tag = FilterType.GiftFilterBy.rawValue
         filterByView.delegate = self
-        stackView.addArrangedSubview(filterByView)
-        //**********
-        //Price
-        //**********
-        let viewMinMax = MinMaxFilter()
-        viewMinMax.lblTitle.text = "Price"
-        viewMinMax.tag = FilterType.GiftPrice.rawValue
-        stackView.addArrangedSubview(viewMinMax)
+        stackView.insertArrangedSubview(filterByView, at: index)
     }
     
     private func createTaxonomiesFromFilters(filters: [filterOption]) -> [Taxonomy]{
         var taxonomies:[Taxonomy] = []
+        var _count = 0
         for item in filters{
-            if let _name = item.name{
+            _count = 0
+            if var _name = item.name{
+                if item.key == "brand", self.giftBrands.count > 0{
+                    _count = self.giftBrands.count
+                }else if item.key == "category", self.giftCategories.count > 0{
+                    _count = self.giftCategories.count
+                }else if item.key == "colors", self.giftColors.count > 0{
+                    _count = self.giftColors.count
+                }
+                //append count of picked items from the filter i.e. brand, category
+                _name = _count > 0 ? _name + " (\(_count))" : _name
                 taxonomies.append( Taxonomy(id: item.key ?? "", name: _name, code: item.value ?? ""))
             }
         }
@@ -483,7 +493,7 @@ class FiltersViewController: UIViewController {
                 updateEventsExperiencesFilters(type: "Experience", previousViewController)
                 break
             case .gift:
-                updateGiftsFilters(previousViewController)
+                updateGiftsFilters()
                 break
             default:
                 break
@@ -506,7 +516,7 @@ class FiltersViewController: UIViewController {
     
     
     @IBAction func btnApplyTapped(_ sender: Any) {
-        clearAllFilters()   //first clear all filters, then set new filters
+//        clearAllFilters()   //first clear all filters, then set new filters
         
         var _featuredCities:[String] = []
         var _productName:String = ""
@@ -700,8 +710,32 @@ class FiltersViewController: UIViewController {
                 }
             }
 //        }
-        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities, productName: _productName, selectedCountry: _countryId, categoryIds: _categoryIds, price: _price, tagIds: _tags, yachtStatus: _yachtStatus, yachtCharter: _yachtCharter, selectedRegion: _regionId, guests:_guests, yachtLength: _yachtLength, yachtType: _yachtType, yachtBuiltAfter:_yachtBuiltAfter, villaSaleType: _villaSaleType, villaTypes: _villaTypes, villaLifeStyle: _villaLifeStyles, bedRooms: _bedRooms , bathRooms: _bathRooms , isFeature:_isFeature, orderByName: _orderByName, orderByPrice: _orderByPrice)
-        
+        let _eventExperienceFilters = AppliedFilters(featuredCities: _featuredCities,
+                                                     productName: _productName,
+                                                     selectedCountry: _countryId,
+                                                     categoryIds: _categoryIds,
+                                                     price: _price,
+                                                     tagIds: _tags,
+                                                     yachtStatus: _yachtStatus,
+                                                     yachtCharter: _yachtCharter,
+                                                     selectedRegion: _regionId,
+                                                     guests:_guests,
+                                                     yachtLength: _yachtLength,
+                                                     yachtType: _yachtType,
+                                                     yachtBuiltAfter:_yachtBuiltAfter,
+                                                     villaSaleType: _villaSaleType,
+                                                     villaTypes: _villaTypes,
+                                                     villaLifeStyle: _villaLifeStyles,
+                                                     bedRooms: _bedRooms ,
+                                                     bathRooms: _bathRooms ,
+                                                     isFeature:_isFeature,
+                                                     orderByName: _orderByName,
+                                                     orderByPrice: _orderByPrice,
+                                                     giftBrands: self.giftBrands.map{$0.termId},
+                                                     giftCategories: self.giftCategories.map{ $0.termId },
+                                                     giftSubCategoriess:self.giftSubCategoriess.map{ $0.termId },
+                                                     giftColors: self.giftColors.map{ $0.termId })
+
         
         let viewController = ProductsViewController.instantiate(category: self.category, applyFilters: _eventExperienceFilters)
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -736,13 +770,13 @@ extension FiltersViewController:SingleLineCollectionFilterProtocol{
                     view.isHidden = tappedValue == "sale"    //if value of tapped item is sale then hide yachtCharter
                 }else if view is GiftsCollectionFilter, view.tag == FilterType.GiftFilterBy.rawValue{
                     if tappedValue == "brand"{
-                        let viewController = BrandsViewController.instantiate(currentFilterType: .brands)
+                        let viewController = BrandsViewController.instantiate(currentFilterType: .brands, alreadyPickedItems: self.giftBrands, delegate: self)
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }else if tappedValue == "category"{
-                        let viewController = BrandsViewController.instantiate(currentFilterType: .categories)
+                        let viewController = BrandsViewController.instantiate(currentFilterType: .categories,  alreadyPickedItems: self.giftCategories, delegate: self)
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }else if tappedValue == "colors"{
-                        let viewController = BrandsViewController.instantiate(currentFilterType: .colors)
+                        let viewController = BrandsViewController.instantiate(currentFilterType: .colors, alreadyPickedItems: self.giftColors, delegate: self)
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }
                     
@@ -755,3 +789,28 @@ extension FiltersViewController:SingleLineCollectionFilterProtocol{
     }
 }
 
+extension FiltersViewController:BrandsSelectionProtocol{
+    func passBackPickedItems(currentFilterType:GiftFilterType, pickedItems: [Taxonomy]) {
+        switch currentFilterType{
+        case .brands:
+            self.giftBrands = pickedItems
+        case .categories:
+            self.giftCategories = pickedItems
+        case .colors:
+            self.giftColors = pickedItems
+        }
+//        if pickedItems.count > 0{
+            //first removing all previous filter
+        for view in self.stackView.subviews {
+            if view.tag == FilterType.GiftFilterBy.rawValue{
+                view.removeFromSuperview()
+                updateGiftsFilterByFilter(index: self.stackView.subviews.count - 1)//update the name of filter by
+                break
+            }
+        }
+            
+//        }
+    }
+    
+    
+}

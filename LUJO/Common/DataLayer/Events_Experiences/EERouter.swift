@@ -39,7 +39,7 @@ enum EERouter: URLRequestConvertible {
     case restaurants(String)    //get restauurant by id
 //    case getYachtGallery(String, String)
     case topRated(type: String?,term: String?)   //type is villa,event etc and term is search text
-    case recents(String, String?, String?)
+    case recents( String?, String?)
     case perCity( String, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?, String?)
     case filters(String)
     
@@ -184,12 +184,8 @@ enum EERouter: URLRequestConvertible {
                 }
             case let .restaurants(id):
                 newURLComponents.path.append("/restaurants/detail/" + id)
-            case let .recents(token, limit, type):
+            case let .recents(limit, type):
                 newURLComponents.path.append("/recent")
-                
-                newURLComponents.queryItems = [                                             
-                    URLQueryItem(name: "token", value: token),
-                ]
                 if let limit = limit {
                     newURLComponents.queryItems?.append(URLQueryItem(name: "limit", value: limit))
                 }
@@ -446,6 +442,19 @@ enum EERouter: URLRequestConvertible {
             ]
             body["orderByPrice"] = "Custom-Range"
         }
+        if let items = filters?.giftBrands, items.count > 0{
+            body["gift_brand_ids"] = items
+        }
+        if let items = filters?.giftCategories, items.count > 0{
+            body["gift_category_ids"] = items
+        }
+        if let items = filters?.giftSubCategoriess, items.count > 0{
+            body["gift_sub_category_ids"] = items
+        }
+        if let items = filters?.giftColors, items.count > 0{
+            body["gift_color_ids"] = items
+        }
+        
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
@@ -611,7 +620,8 @@ enum EERouter: URLRequestConvertible {
             "item" : [
                 "itemId": salesforceRequest.productId,
                 "type": salesforceRequest.productType
-            ]
+            ],
+            "booking_type" : salesforceRequest.sfRequestType.rawValue
         ]
         if let channelId = conversationId, !channelId.isEmpty {
             body["channel_id"] = channelId

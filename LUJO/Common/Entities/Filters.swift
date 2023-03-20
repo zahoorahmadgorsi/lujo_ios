@@ -45,8 +45,13 @@ struct AppliedFilters{
     var isFeature:Bool?
     var orderByName: String?
     var orderByPrice: String?
+    var giftBrands:[String]?
+    var giftCategories:[String]?
+    var giftSubCategoriess:[String]?
+    var giftColors:[String]?
     
-    init(featuredCities: [String], productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:AnyRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?, villaTypes: [String]?, villaLifeStyle: [String]? , bedRooms: AnyRange? , bathRooms: AnyRange?, isFeature:Bool?, orderByName: String?, orderByPrice: String?) {
+    init(featuredCities: [String], productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:AnyRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?, villaTypes: [String]?, villaLifeStyle: [String]? , bedRooms: AnyRange? , bathRooms: AnyRange?, isFeature:Bool?, orderByName: String?, orderByPrice: String?, giftBrands:[String]?, giftCategories:[String]?, giftSubCategoriess:[String]?, giftColors:[String]?) {
+        
         self.featuredCities = featuredCities
         self.productName = productName
         self.countryId = selectedCountry
@@ -69,6 +74,10 @@ struct AppliedFilters{
         self.isFeature = isFeature
         self.orderByName = orderByName
         self.orderByPrice = orderByPrice
+        self.giftBrands = giftBrands
+        self.giftCategories = giftCategories
+        self.giftSubCategoriess = giftSubCategoriess
+        self.giftColors = giftColors
     }
 }
 

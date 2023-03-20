@@ -417,8 +417,8 @@ class EEAPIManager {
         }
     }
     
-    func getRecents(_ token: String, limit: String?, type: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.recents(token, limit, type)).responseJSON { response in
+    func getRecents( limit: String?, type: String?, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.recents(limit, type)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

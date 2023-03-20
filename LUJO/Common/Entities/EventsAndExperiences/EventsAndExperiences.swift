@@ -1,11 +1,17 @@
 import FirebaseCrashlytics
 import Foundation
 
+enum SalesforceRequestType:String{
+    case CUSTOM = "custom"
+    case GENERAL = "general"
+
+}
 
 struct SalesforceRequest {
     var productId: String
     var productType: String
     var productName: String
+    var sfRequestType: SalesforceRequestType
     //dining
     var dingingRequestDate: String?
     var dingingRequestTime: String?
@@ -31,17 +37,19 @@ struct SalesforceRequest {
     var hotel_stars: Int?
     
     //event, experience and gift
-    init(id:String, type:String, name:String = ""){
+    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL){
         self.productId = id
         self.productType = type
         self.productName =  name
+        self.sfRequestType = sfRequestType
     }
     
     //dining
-    init(id:String, type:String, name:String = "", date:String? = nil , time:String? = nil , persons:Int? = nil){
+    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL, date:String? = nil , time:String? = nil , persons:Int? = nil){
         self.productId = id
         self.productType = type
         self.productName =  name
+        self.sfRequestType = sfRequestType
         //below params are only going to use for dining request
         self.dingingRequestDate = date
         self.dingingRequestTime = time
@@ -49,10 +57,11 @@ struct SalesforceRequest {
     }
     
     //yacht
-    init(id:String, type:String, name:String = "", yacht_charter:String? = nil , yacht_destination:String? = nil , yacht_date_from:String? = nil, yacht_date_to:String? = nil, yacht_guests:Int? = nil){
+    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL, yacht_charter:String? = nil , yacht_destination:String? = nil , yacht_date_from:String? = nil, yacht_date_to:String? = nil, yacht_guests:Int? = nil){
         self.productId = id
         self.productType = type
         self.productName =  name
+        self.sfRequestType = sfRequestType
         //below params are only going to use for dining request
         self.yacht_charter = yacht_charter
         self.yacht_destination = yacht_destination
@@ -62,10 +71,11 @@ struct SalesforceRequest {
     }
     
     //villa
-    init(id:String, type:String, name:String = "", villa_check_in:String? = nil , villa_check_out:String? = nil , villa_guests:Int? = nil){
+    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL, villa_check_in:String? = nil , villa_check_out:String? = nil , villa_guests:Int? = nil){
         self.productId = id
         self.productType = type
         self.productName =  name
+        self.sfRequestType = sfRequestType
         //below params are only going to use for dining request
         self.villa_check_in = villa_check_in
         self.villa_check_out = villa_check_out
@@ -73,10 +83,11 @@ struct SalesforceRequest {
     }
     
     //hotel
-    init(id:String, type:String, name:String = "", hotel_name:String? = nil , hotel_neighborhood:String? = nil , hotel_radius:Int? = nil, hotel_check_in_date:String? = nil,hotel_check_out_date:String? = nil, hotel_guests:Int? = nil, hotel_rooms:Int? = nil , hotel_stars:Int? = nil){
+    init(id:String, type:String, name:String = "", hotel_name:String? = nil, sfRequestType: SalesforceRequestType = .GENERAL , hotel_neighborhood:String? = nil , hotel_radius:Int? = nil, hotel_check_in_date:String? = nil,hotel_check_out_date:String? = nil, hotel_guests:Int? = nil, hotel_rooms:Int? = nil , hotel_stars:Int? = nil){
         self.productId = id
         self.productType = type
         self.productName =  name
+        self.sfRequestType = sfRequestType
         //below params are only going to use for dining request
         self.hotel_name = hotel_name
         self.hotel_neighborhood = hotel_neighborhood

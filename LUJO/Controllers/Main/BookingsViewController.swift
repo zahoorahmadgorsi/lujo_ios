@@ -157,7 +157,7 @@ class BookingsViewController: UIViewController {
             if ConversationsManager.sharedConversationsManager.getClient() != nil
             {
                 let viewController = AdvanceChatViewController()
-                viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "access" , name: "Booking Inquiry")
+                viewController.salesforceRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43" , type: "access" , name: "Booking Inquiry", sfRequestType: .CUSTOM)
                 viewController.initialMessage = initialMessage
                 self.navigationController?.pushViewController(viewController,animated: true)
             }else{

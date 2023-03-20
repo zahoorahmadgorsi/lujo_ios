@@ -119,7 +119,7 @@ enum WishListRouter: URLRequestConvertible {
                 ,URLQueryItem(name: "limit", value: "100")
         ]
         case .getCategories:
-            newURLComponents.path.append("/gifts/gift-category/cat_with_sub_cat")
+            newURLComponents.path.append("/gifts/gift-category")
             newURLComponents.queryItems = [
                 URLQueryItem(name: "page", value: "1")
                 ,URLQueryItem(name: "limit", value: "100")

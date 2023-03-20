@@ -163,6 +163,7 @@ class HotelViewController: UIViewController {
             let sfRequest = SalesforceRequest(id: "616cfe0f7c13a8001be01e43"
                                               , type: "travel"
                                               ,hotel_name: self.hotelNameTextField.text
+                                              ,sfRequestType: .CUSTOM
                                               ,hotel_neighborhood: self.txtHotelNeighbourhood.text
                                               ,hotel_radius:Int(self.distanceSlider.value)
                                               ,hotel_check_in_date:checkInDateString

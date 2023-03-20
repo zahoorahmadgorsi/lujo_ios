@@ -10,6 +10,10 @@ import UIKit
 import JGProgressHUD
 import FirebaseCrashlytics
 
+protocol BrandsSelectionProtocol{
+    func passBackPickedItems(currentFilterType:GiftFilterType,pickedItems: [Taxonomy])
+}
+
 enum GiftFilterType : String{
     case brands, categories, colors
 }
@@ -41,10 +45,15 @@ class BrandsViewController: UIViewController {
     }()
     
     /// Init method that will init and return view controller.
-    class func instantiate(currentFilterType:GiftFilterType) -> BrandsViewController {
+    class func instantiate(currentFilterType:GiftFilterType,
+                           alreadyPickedItems: [Taxonomy]? = [],
+                           delegate:BrandsSelectionProtocol) -> BrandsViewController {
         let viewController = UIStoryboard.filters.instantiate(identifier) as! BrandsViewController
 //        return UIStoryboard.filters.instantiate(identifier)
         viewController.currentFilterType = currentFilterType
+        //viewController.alreadyPickedItems = alreadyPickedItems ?? []
+        viewController.pickedItems = alreadyPickedItems ?? []
+        viewController.delegate = delegate
         return viewController
     }
 
@@ -61,6 +70,7 @@ class BrandsViewController: UIViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
+//    var alreadyPickedItems: [Taxonomy] = [] // items which user has picked previously when filter was applied
     var pickedItems: [Taxonomy] = [] {
         didSet {
             collectionView.reloadData()
@@ -78,6 +88,7 @@ class BrandsViewController: UIViewController {
 //            self.collectionView.layoutIfNeeded()
         }
     }
+    var delegate:BrandsSelectionProtocol?
     
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -128,6 +139,8 @@ class BrandsViewController: UIViewController {
         }
         //emptying picked items
         self.pickedItems = []
+        delegate?.passBackPickedItems(currentFilterType: self.currentFilterType,
+                                     pickedItems: self.pickedItems)
         //reloading table view and collection view
         self.tblView.reloadData()
         self.collectionView.reloadData()
@@ -269,6 +282,8 @@ class BrandsViewController: UIViewController {
     
     @IBAction func btnApplyTapped(_ sender: Any) {
         print("btnApplyTapped")
+        delegate?.passBackPickedItems(currentFilterType: self.currentFilterType, pickedItems: self.pickedItems)
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -314,9 +329,16 @@ extension BrandsViewController: UITableViewDelegate, UITableViewDataSource{
         if searching {
             model = searchedItems[indexPath.row]
         }
-//        else if self.pickedItems.contains(where: {$0.termId == model.termId}){
-//            model.isSelected = true
-//        }
+        //if user has already picked this filter then show it as selected, set isSelected to true for all
+        //if self.alreadyPickedItems.contains(where: ({$0.termId == model.termId})){
+        if self.pickedItems.contains(where: ({$0.termId == model.termId})){
+            model.isSelected = true
+            if searching {
+                searchedItems[indexPath.row].isSelected = true
+            }else{
+                items[indexPath.row].isSelected = true
+            }
+        }
         cell.lblTitle.text = model.name
         cell.imgView.image = model.isSelected == true ? UIImage(named: "filters_check") : UIImage(named: "filters_uncheck")
 
@@ -340,7 +362,12 @@ extension BrandsViewController: UITableViewDelegate, UITableViewDataSource{
         }else{
             if self.items.count >= indexPath.row{
                 self.items[indexPath.row].isSelected = !( self.items[indexPath.row].isSelected ?? false)
-                self.pickedItems = self.items.filter({$0.isSelected == true})
+                //self.pickedItems = self.items.filter({$0.isSelected == true})
+                if self.items[indexPath.row].isSelected ?? true{
+                    self.pickedItems.append(self.items[indexPath.row])
+                }else{
+                    self.pickedItems.removeAll(where: ({$0.termId == self.items[indexPath.row].termId}))
+                }
             }
         }
         

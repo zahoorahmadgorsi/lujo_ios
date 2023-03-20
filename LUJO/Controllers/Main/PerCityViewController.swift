@@ -231,7 +231,7 @@ class PerCityViewController: UIViewController {
         //loading the filters
         if !self.svFilters.isHidden{    //if filters stackView is not hidden then fetch filters
             self.getFilters(for: category) { (filters, filterError) in
-                self.hideNetworkActivity()
+//                self.hideNetworkActivity()    //it will hide the percity loader as well
                 if let error = filterError {
                     self.showError(error, "Filters")
                 } else {

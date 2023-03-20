@@ -162,6 +162,7 @@ extension GoLujoAPIManager  {
         Crashlytics.crashlytics().record(error: error)
     }
     
+//    this function has been moved to EEAPIManager
 //    func sendRequestForSalesForce(itemId: String, date: String, time: String, persons: Int , completion: @escaping (CustomBookingResponse?, Error?) -> Void) {
 //        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
 //            print("***ERROR***: User does not exist or is not verified - can't send data to salesforce")

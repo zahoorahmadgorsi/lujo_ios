@@ -20,6 +20,7 @@ struct Booking: Codable {
     let bookingQuote: Double?
     let bookingAviationType: String?
     let bookingAviation: AviationBooking?
+    let bookingCreation: Date?
     
     enum CodingKeys: String, CodingKey {
         case bookingId = "booking_id"
@@ -32,6 +33,7 @@ struct Booking: Codable {
         case bookingQuote = "booking_quote"
         case bookingAviationType = "booking_aviation_type"
         case bookingAviation = "booking_aviation"
+        case bookingCreation = "booking_creation"
     }
 }
 
@@ -62,6 +64,20 @@ extension Booking {
                 }
             } catch {
                 bookingDate = nil
+            }
+            
+            do {
+                if let intDate = try values.decodeIfPresent(Int.self, forKey: .bookingCreation) {
+                    if intDate >= 0 {
+                        bookingCreation = Date(timeIntervalSince1970: TimeInterval(intDate))
+                    } else {
+                        bookingCreation = nil
+                    }
+                } else {
+                    bookingCreation = nil
+                }
+            } catch {
+                bookingCreation = nil
             }
             
         } catch {

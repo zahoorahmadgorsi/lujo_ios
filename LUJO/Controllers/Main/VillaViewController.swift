@@ -211,7 +211,7 @@ class VillaViewController: UIViewController {
         }
         
         let initialMessage = """
-        Hi Concierge team
+        Hi Concierge team,
 
         I would like to rent \(villaName) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you assist me, please?
 
