@@ -35,7 +35,7 @@ enum DiningRouter: URLRequestConvertible {
     }()
 
     case home
-    case search(String?, String?, Double?, Double?, String?)
+    case search(String?, Double?, Double?, String?)
 
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -97,16 +97,16 @@ enum DiningRouter: URLRequestConvertible {
         switch self {
         case .home:
             return nil
-        case let .search(search, location, latitude, longitude, cuisineCategoryId):
-            return getSearchDataAsJSONData(search,location, latitude, longitude, cuisineCategoryId)
+        case let .search(search, latitude, longitude, cuisineCategoryId):
+            return getSearchDataAsJSONData(search, latitude, longitude, cuisineCategoryId)
         }
     }
     
-    fileprivate func getSearchDataAsJSONData(_ search: String?, _ location:String?, _ latitude:Double?, _ longitude: Double?,_ cuisineCategoryId:String?) -> Data? {
+    fileprivate func getSearchDataAsJSONData(_ search: String?, _ latitude:Double?, _ longitude: Double?,_ cuisineCategoryId:String?) -> Data? {
         var body: [String: Any] = [ "status": "Published" ]
-        if let _location = location{
-            body["location"] = _location
-        }
+//        if let _location = location{
+//            body["location"] = _location
+//        }
         if let _search = search{
             body["search"] = _search
         }

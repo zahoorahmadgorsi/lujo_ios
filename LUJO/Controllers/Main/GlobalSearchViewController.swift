@@ -22,6 +22,26 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var scrollView: UIScrollView!
+
+    // Properties
+    @IBOutlet weak var propertyContainerView: UIView!
+    
+    @IBOutlet weak var property1ContainerView: UIView!
+    @IBOutlet weak var property1ImageView: UIImageView!
+    @IBOutlet weak var property1NameLabel: UILabel!
+    @IBOutlet weak var property1DateLabel: UILabel!
+    @IBOutlet weak var property1TagContainerView: UIView!
+    @IBOutlet weak var property1TagLabel: UILabel!
+    
+    @IBOutlet weak var property2ContainerView: UIView!
+    @IBOutlet weak var property2ImageView: UIImageView!
+    @IBOutlet weak var property2NameLabel: UILabel!
+    @IBOutlet weak var property2DateLabel: UILabel!
+    @IBOutlet weak var property2TagContainerView: UIView!
+    @IBOutlet weak var property2TagLabel: UILabel!
+    
+    @IBOutlet weak var propertyMoreContainerView: UIView!
+    @IBOutlet weak var propertyMoreLabel: UILabel!
     
     // Event
     @IBOutlet weak var eventContainerView: UIView!
@@ -42,6 +62,26 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var eventMoreContainerView: UIView!
     @IBOutlet weak var eventMoreLabel: UILabel!
+    
+    // Yachts
+    @IBOutlet weak var yachtContainerView: UIView!
+    
+    @IBOutlet weak var yacht1ContainerView: UIView!
+    @IBOutlet weak var yacht1ImageView: UIImageView!
+    @IBOutlet weak var yacht1NameLabel: UILabel!
+    @IBOutlet weak var yacht1DateLabel: UILabel!
+    @IBOutlet weak var yacht1TagContainerView: UIView!
+    @IBOutlet weak var yacht1TagLabel: UILabel!
+    
+    @IBOutlet weak var yacht2ContainerView: UIView!
+    @IBOutlet weak var yacht2ImageView: UIImageView!
+    @IBOutlet weak var yacht2NameLabel: UILabel!
+    @IBOutlet weak var yacht2DateLabel: UILabel!
+    @IBOutlet weak var yacht2TagContainerView: UIView!
+    @IBOutlet weak var yacht2TagLabel: UILabel!
+    
+    @IBOutlet weak var yachtMoreContainerView: UIView!
+    @IBOutlet weak var yachtMoreLabel: UILabel!
     
     // Restaurant
     @IBOutlet weak var restaurantContainerView: UIView!
@@ -130,9 +170,80 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         cityInformation = informations
         scrollView.isHidden = false
         searchTextField.isEnabled = false
+        
+        propertyContainerView.isHidden = informations.property.items.isEmpty
         eventContainerView.isHidden = informations.event.items.isEmpty
+        yachtContainerView.isHidden = informations.yacht.items.isEmpty
         restaurantContainerView.isHidden = informations.restaurant.items.isEmpty
         experienceContainerView.isHidden = informations.experience.items.isEmpty
+        
+        //properties
+        propertyMoreContainerView.isHidden = informations.property.num < 3
+        propertyMoreLabel.text = "+ \(informations.property.num - 2) more"
+        property2ContainerView.alpha = informations.property.items.count < 2 ? 0 : 1
+        
+        for (index,property) in informations.property.items.enumerated() {
+            
+//            let startDateText = ProductDetailsViewController.convertDateFormate(date: property.startDate!)
+//            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: property.startDate!)
+//
+//            var endDateText = ""
+//            if let propertyEndDate = property.endDate {
+//                endDateText = ProductDetailsViewController.convertDateFormate(date: propertyEndDate)
+//            }
+//
+//            if let timezone = property.timezone {
+//                startTimeText = "\(startTimeText) (\(timezone))"
+//            }
+            
+            if index == 0 {
+                property1NameLabel.text = property.name
+                
+//                property1DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
+                
+                if let city = property.locations?.city {
+//                    restaurant1locationContainerView.isHidden = false
+                    property1DateLabel.text = city.name.uppercased()
+                }
+//                else {
+//                    restaurant1locationContainerView.isHidden = true
+//                }
+                
+                if property.tags?.count ?? 0 > 0, let fistTag = property.tags?[0] {
+                    property1ContainerView.isHidden = false
+                    property1TagLabel.text = fistTag.name.uppercased()
+                } else {
+                    property1TagContainerView.isHidden = true
+                }
+                
+                if let mediaLink = property.thumbnail?.mediaUrl, property.thumbnail?.mediaType == "image" {
+                    property1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                }
+            } else if index == 1 {
+                property2NameLabel.text = property.name
+                
+//                property2DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
+//
+                if let city = property.locations?.city {
+//                    restaurant1locationContainerView.isHidden = false
+                    property2DateLabel.text = city.name.uppercased()
+                }
+//                else {
+//                    restaurant1locationContainerView.isHidden = true
+//                }
+                
+                if property.tags?.count ?? 0 > 0, let fistTag = property.tags?[0] {
+                    property2ContainerView.isHidden = false
+                    property2TagLabel.text = fistTag.name.uppercased()
+                } else {
+                    property2TagContainerView.isHidden = true
+                }
+                
+                if let mediaLink = property.thumbnail?.mediaUrl, property.thumbnail?.mediaType == "image" {
+                    property2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                }
+            }
+        }
         
         //events
         eventMoreContainerView.isHidden = informations.event.num < 3
@@ -184,6 +295,72 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         
+        //yachts
+        yachtMoreContainerView.isHidden = informations.yacht.num < 3
+        yachtMoreLabel.text = "+ \(informations.yacht.num - 2) more"
+        yacht2ContainerView.alpha = informations.yacht.items.count < 2 ? 0 : 1
+        
+        for (index,yacht) in informations.yacht.items.enumerated() {
+            
+//            let startDateText = ProductDetailsViewController.convertDateFormate(date: yacht.startDate!)
+//            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: yacht.startDate!)
+            
+//            var endDateText = ""
+//            if let yachtEndDate = yacht.endDate {
+//                endDateText = ProductDetailsViewController.convertDateFormate(date: yachtEndDate)
+//            }
+            
+//            if let timezone = yacht.timezone {
+//                startTimeText = "\(startTimeText) (\(timezone))"
+//            }
+            
+            if index == 0 {
+                yacht1NameLabel.text = yacht.name
+                
+//                yacht1DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
+                
+                if let city = yacht.locations?.city {
+//                    restaurant1locationContainerView.isHidden = false
+                    yacht1DateLabel.text = city.name.uppercased()
+                }
+//                else {
+//                    restaurant1locationContainerView.isHidden = true
+//                }
+                
+                if yacht.tags?.count ?? 0 > 0, let fistTag = yacht.tags?[0] {
+                    yacht1ContainerView.isHidden = false
+                    yacht1TagLabel.text = fistTag.name.uppercased()
+                } else {
+                    yacht1TagContainerView.isHidden = true
+                }
+                
+                if let mediaLink = yacht.thumbnail?.mediaUrl, yacht.thumbnail?.mediaType == "image" {
+                    yacht1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                }
+            } else if index == 1 {
+                yacht2NameLabel.text = yacht.name
+//                yacht2DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
+                
+                if let city = yacht.locations?.city {
+//                    restaurant1locationContainerView.isHidden = false
+                    yacht1DateLabel.text = city.name.uppercased()
+                }
+//                else {
+//                    restaurant1locationContainerView.isHidden = true
+//                }
+                
+                if yacht.tags?.count ?? 0 > 0, let fistTag = yacht.tags?[0] {
+                    yacht2ContainerView.isHidden = false
+                    yacht2TagLabel.text = fistTag.name.uppercased()
+                } else {
+                    yacht2TagContainerView.isHidden = true
+                }
+                
+                if let mediaLink = yacht.thumbnail?.mediaUrl, yacht.thumbnail?.mediaType == "image" {
+                    yacht2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                }
+            }
+        }
         
         // restaurant
         restaurantMoreContainerView.isHidden = informations.restaurant.num < 3
@@ -283,14 +460,46 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         searchTextField.becomeFirstResponder()
         dataSource = []
     }
+
+    @IBAction func villaButton_onClick(_ sender: UIButton) {
+        if let item = cityInformation?.property.items[sender.tag] {
+            let viewController = ProductDetailsViewController.instantiate(product: item)
+            viewController.modalPresentationStyle = .overFullScreen
+            present(viewController, animated: true)
+        }
+    }
+    
+    @IBAction func seeAllVillaButton_onClick(_ sender: Any) {
+        if let termId = cityInformation?.property.items.first?.locations?.city?.termId {
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .villa, dataSource: [], city: Cities(termId: termId, name: cityInformation?.property.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.property.num ?? 0, items: [])), animated: true)
+        }
+    }
     
     @IBAction func eventButton_onClick(_ sender: UIButton) {
         if let event = cityInformation?.event.items[sender.tag] {
             let viewController = ProductDetailsViewController.instantiate(product: event)
-    //        // B1 - 4
-            //That is how you configure a present custom transition. But it is not how you configure a push custom transition.
             viewController.modalPresentationStyle = .overFullScreen
             present(viewController, animated: true)
+        }
+    }
+    
+    @IBAction func seeAllEventsButton_onClick(_ sender: Any) {
+        if let termId = cityInformation?.event.items.first?.locations?.city?.termId {
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .event, dataSource: [], city: Cities(termId: termId, name: cityInformation?.event.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.event.num ?? 0, items: [])), animated: true)
+        }
+    }
+    
+    @IBAction func yachtButton_onClick(_ sender: UIButton) {
+        if let item = cityInformation?.yacht.items[sender.tag] {
+            let viewController = ProductDetailsViewController.instantiate(product: item)
+            viewController.modalPresentationStyle = .overFullScreen
+            present(viewController, animated: true)
+        }
+    }
+    
+    @IBAction func seeAllYachtButton_onClick(_ sender: Any) {
+        if let termId = cityInformation?.yacht.items.first?.locations?.city?.termId {
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .yacht, dataSource: [], city: Cities(termId: termId, name: cityInformation?.yacht.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.yacht.num ?? 0, items: [])), animated: true)
         }
     }
     
@@ -302,6 +511,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    @IBAction func seeAllRestaurantsButton_onClick(_ sender: Any) {
+        if let termId = cityInformation?.restaurant.items.first?.locations?.city?.termId {
+            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: Cities(termId: termId, name: cityInformation?.restaurant.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.restaurant.num ?? 0, items: [])), animated: true)
+        }
+    }
+    
     @IBAction func experianceButton_onClick(_ sender: UIButton) {
         if let experience = cityInformation?.experience.items[sender.tag] {
             let viewController = ProductDetailsViewController.instantiate(product: experience)
@@ -310,21 +525,9 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    @IBAction func seeAllEventsButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.event.items.first?.locations?.city?.termId {
-            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .event, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.event.items.first?.locations?.city?.name ?? "", restaurantsNum: cityInformation?.event.num ?? 0, restaurants: [])), animated: true)
-        }
-    }
-    
-    @IBAction func seeAllRestaurantsButton_onClick(_ sender: Any) {
-        if let termId = cityInformation?.restaurant.items.first?.locations?.city?.termId {
-            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.restaurant.items.first?.locations?.city?.name ?? "", restaurantsNum: cityInformation?.restaurant.num ?? 0, restaurants: [])), animated: true)
-        }
-    }
-    
     @IBAction func seeAllExperiancesButton_onClick(_ sender: Any) {
         if let termId = cityInformation?.experience.items.first?.locations?.city?.termId {
-            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .experience, dataSource: [], city: DiningCity(termId: termId, name: cityInformation?.experience.items.first?.locations?.city?.name ?? "", restaurantsNum: cityInformation?.experience.num ?? 0, restaurants: [])), animated: true)
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .experience, dataSource: [], city: Cities(termId: termId, name: cityInformation?.experience.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.experience.num ?? 0, items: [])), animated: true)
         }
     }
     
@@ -427,14 +630,14 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func fetchDataForCity(_ city: City) {
-        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-            showFeedback("User does not exist or is not verified")
-            return
-        }
+//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
+//            showFeedback("User does not exist or is not verified")
+//            return
+//        }
         
         showNetworkActivity()
         
-        EEAPIManager().getInfoForCity(token: token, cityId: city.placeId) { (informations, error) in
+        EEAPIManager().getInfoForCity( cityId: city.placeId) { (informations, error) in
             self.hideNetworkActivity()
             
             if let error = error {

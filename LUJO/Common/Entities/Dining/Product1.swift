@@ -69,43 +69,11 @@ extension Cuisine {
     }
 }
 
-struct DiningCity: Codable {
-    var termId: String
-    var name: String
-    let restaurantsNum: Int
-    var restaurants: [Product]
-    
-    enum CodingKeys: String, CodingKey {
-        case termId = "_id"
-        case name
-        case restaurantsNum = "items_num"
-        case restaurants    = "items"
-    }
-}
-
-extension DiningCity {
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            
-            termId = try values.decode(String.self, forKey: .termId)
-//            print(termId)
-            name = try values.decode(String.self, forKey: .name)
-            restaurantsNum = try values.decode(Int.self, forKey: .restaurantsNum)
-            restaurants = try values.decode([Product].self, forKey: .restaurants)
-            
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-            throw error
-        }
-    }
-}
-
 struct DiningHomeObjects: Codable {
     let slider: [Product]?
     let starChef: StarChef?
     let cuisines: [Cuisine]
-    var cities: [DiningCity]
+    var cities: [Cities]
 
     
     enum CodingKeys: String, CodingKey {
@@ -122,7 +90,8 @@ struct DiningHomeObjects: Codable {
             slider = try values.decodeIfPresent([Product].self, forKey: .slider)
             starChef = try values.decodeIfPresent(StarChef.self, forKey: .starChef)
             cuisines = try values.decode([Cuisine].self, forKey: .cuisines)
-            cities = try values.decode([DiningCity].self, forKey: .cities)
+            //cities = try values.decode([DiningCity].self, forKey: .cities)
+            cities = try values.decode([Cities].self, forKey: .cities)
 
         } catch {
             Crashlytics.crashlytics().record(error: error)

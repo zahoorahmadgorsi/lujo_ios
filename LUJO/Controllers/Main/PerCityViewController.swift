@@ -21,7 +21,7 @@ class PerCityViewController: UIViewController {
     class var identifier: String { return "PerCityViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(category: ProductCategory, dataSource: PerCityObjects? = nil, city: DiningCity? = nil) -> PerCityViewController {
+    class func instantiate(category: ProductCategory, dataSource: PerCityObjects? = nil, city: Cities? = nil) -> PerCityViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! PerCityViewController
         viewController.category = category
         viewController.dataSource = dataSource
@@ -33,7 +33,7 @@ class PerCityViewController: UIViewController {
     
     @IBOutlet weak var viewSeeAll: UIView!
     private(set) var category: ProductCategory!
-    private var city: DiningCity?
+    private var city: Cities?
     
     @IBOutlet weak var collContainerView: UIView!
     
@@ -483,7 +483,7 @@ extension PerCityViewController: UICollectionViewDelegateFlowLayout {
 
 extension PerCityViewController: CityViewProtocol {
     func seeAllProductsForCity(city: Cities) {
-        let viewController = ProductsViewController.instantiate(category: self.category, city:DiningCity(termId: city.termId ?? "asdf1234qwer", name: city.name ?? "" , restaurantsNum: -1, restaurants: []))
+        let viewController = ProductsViewController.instantiate(category: self.category, city: Cities(termId: city.termId ?? "asdf1234qwer", name: city.name ?? "" , itemsNum: -1, items: [], latitude: city.latitude, longitude: city.longitude))
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

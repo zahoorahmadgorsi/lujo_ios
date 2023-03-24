@@ -162,7 +162,7 @@ struct ReferralCode: Codable {
         }
     }
 }
-struct YachtRegion: Codable{
+struct TaxonomyYachtRegion: Codable{
     let _id: String?
     let name: String?
     let description: String?
@@ -172,12 +172,18 @@ struct TaxonomyDocs: Codable{
     let docs: [Taxonomy]
 }
 
+struct TaxonomyCountry: Codable{
+    let _id: String
+    let name: String
+}
+
 struct Taxonomy: Codable {
     let termId: String
     let name: String
     
-    var country: String?    //used in city/country search
-    var yachtRegion: YachtRegion?    //used in yacht country/region search
+    var stateName: String?          //used in /restaurants/preferred_location/search
+    var country: TaxonomyCountry?   //used in /restaurants/preferred_location/search
+    var yachtRegion: TaxonomyYachtRegion?    //used in yacht country/region search
     var code: String?       //used in case of currency (code)
     var isSelected: Bool?
     var filterParameter: String?   //used in per city filters
@@ -188,6 +194,7 @@ struct Taxonomy: Codable {
         case isSelected
         case filterParameter = "per_city_input_param"
         case code
+        case stateName
         case country
         case yachtRegion = "yacht_region"
     }
@@ -202,8 +209,9 @@ struct Taxonomy: Codable {
             isSelected = try values.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
             filterParameter = try values.decodeIfPresent(String.self, forKey: .filterParameter)
             code = try values.decodeIfPresent(String.self, forKey: .code)
-            country = try values.decodeIfPresent(String.self, forKey: .country)
-            yachtRegion = try values.decodeIfPresent(YachtRegion.self, forKey: .yachtRegion)
+            stateName = try values.decodeIfPresent(String.self, forKey: .stateName)
+            country = try values.decodeIfPresent(TaxonomyCountry.self, forKey: .country)
+            yachtRegion = try values.decodeIfPresent(TaxonomyYachtRegion.self, forKey: .yachtRegion)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
@@ -309,17 +317,53 @@ struct City: Codable {
 }
 
 struct CityInfo: Codable {
-    let restaurant: RestaurantCity
-    let event: EventExperienceCity
-    let experience: EventExperienceCity
+    let topRated: [Product]
+    let featuredProducts: DiscoverCityFeatured
+    let restaurant: DiscoverCity
+    let event: DiscoverCity
+    let experience: DiscoverCity
+    let specialEvent: DiscoverCity
+    let yacht: DiscoverCity
+    let property: DiscoverCity
+    
+    enum CodingKeys: String, CodingKey {
+        case topRated = "top-rated"
+        case featuredProducts = "featured_products"
+        case restaurant
+        case event
+        case experience
+        case specialEvent = "special_event"
+        case yacht
+        case property = "villa"
+    }
+    
+    init(from decoder: Decoder) throws {
+        do {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            
+            topRated = try values.decode([Product].self, forKey: .topRated)
+            featuredProducts = try values.decode(DiscoverCityFeatured.self, forKey: .featuredProducts)
+            restaurant = try values.decode(DiscoverCity.self, forKey: .restaurant)
+            event = try values.decode(DiscoverCity.self, forKey: .event)
+            experience = try values.decode(DiscoverCity.self, forKey: .experience)
+            specialEvent = try values.decode(DiscoverCity.self, forKey: .specialEvent)
+            yacht = try values.decode(DiscoverCity.self, forKey: .yacht)
+            property = try values.decode(DiscoverCity.self, forKey: .property)
+        }catch {
+            print(error)
+            Crashlytics.crashlytics().record(error: error)
+            throw error
+        }
+    }
+    
+}
+struct DiscoverCityFeatured: Codable{
+    let restaurant: [Product]
+    let event: [Product]
+    let experience: [Product]
 }
 
-struct RestaurantCity: Codable {
-    let num: Int
-    let items: [Product]
-}
-
-struct EventExperienceCity: Codable {
+struct DiscoverCity: Codable {
     let num: Int
     let items: [Product]
 }
@@ -700,32 +744,49 @@ struct HomeObjects: Codable {
 
 // it is used in /per-city
 struct Cities: Codable{
-    var name: String?
+    
     var termId: String?
+    var name: String?
     var itemsNum : Int?
     var items:[Product]?
+    var latitude: Double?
+    var longitude: Double?
     
     enum CodingKeys: String,CodingKey{
-        case name
         case termId = "_id"
+        case name
         case itemsNum = "items_num"
         case items
+        case latitude
+        case longitude
     }
     
     init(from decoder: Decoder) throws {
         do {
             let values = try decoder.container(keyedBy: CodingKeys.self)
             
-            name = try values.decodeIfPresent(String.self, forKey: .name)
             termId = try values.decodeIfPresent(String.self, forKey: .termId)
+            name = try values.decodeIfPresent(String.self, forKey: .name)
             itemsNum = try values.decodeIfPresent(Int.self, forKey: .itemsNum)
             items = try values.decodeIfPresent([Product].self, forKey: .items)
+            latitude = try values.decodeIfPresent(Double.self, forKey: .latitude)
+            longitude = try values.decodeIfPresent(Double.self, forKey: .longitude)
             
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error
         }
     }
+    
+    internal init(termId: String? = nil, name: String? = nil, itemsNum: Int? = nil, items: [Product]? = nil, latitude: Double? = nil, longitude: Double? = nil) {
+        self.termId = termId
+        self.name = name
+        self.itemsNum = itemsNum
+        self.items = items
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
 }
 
 struct PerCityObjects: Codable {

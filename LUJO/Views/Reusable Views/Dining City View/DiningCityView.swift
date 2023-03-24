@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DiningCityProtocol:class {
-    func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView)
+    func seeAllRestaurantsForCity(city: Cities, view: DiningCityView)
     func didTappedOnRestaurantAt(index: Int,restaurant: Product)
     func didTappedOnHeartAt(index: Int, sender: Product)
 }
@@ -43,7 +43,7 @@ class DiningCityView: UIView {
     
     weak var delegate: DiningCityProtocol?
     
-    var city: DiningCity? {
+    var city: Cities? {
         didSet {
             setupViewUI()
         }
@@ -87,7 +87,7 @@ class DiningCityView: UIView {
         cityNameLabel.text = city?.name
         restaurant2ContainerView.isHidden = true
         
-        for (index, restaurant) in city?.restaurants.enumerated() ?? [].enumerated() {
+        for (index, restaurant) in city?.items?.enumerated() ?? [].enumerated() {
             if index == 0 {
                 if let url = restaurant.thumbnail?.mediaUrl {
                     print("Thumbnail url: \(url)")
@@ -143,13 +143,13 @@ class DiningCityView: UIView {
     
     //Zahoor start
     @objc func tappedOnHeart(_ sender:AnyObject){
-        if let restaurant = city?.restaurants[sender.view.tag] {
+        if let restaurant = city?.items?[sender.view.tag] {
             delegate?.didTappedOnHeartAt(index: sender.view.tag, sender: restaurant)
         }
     }
     
     @objc func tappedOnRestaurant(_ sender:AnyObject){
-        if let restaurant = city?.restaurants[sender.view.tag] {
+        if let restaurant = city?.items?[sender.view.tag] {
             delegate?.didTappedOnRestaurantAt(index: sender.view.tag,restaurant: restaurant)
         }
     }

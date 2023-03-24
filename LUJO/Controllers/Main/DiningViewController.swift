@@ -232,7 +232,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         myLocationCityView.isHidden = restaurants.count == 0
         noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
         if let termId = restaurants.first?.locations?.city?.termId, let name = restaurants.first?.locations?.city?.name {
-            myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: restaurants)
+            self.myLocationCityView.city = Cities(termId: termId, name: name, itemsNum: 2, items: self.locationRestaurants)
             myLocationCityView.delegate = self
             updatePopularCities()
         }
@@ -274,7 +274,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
                 if city.termId == locationRestaurants.first?.locations?.city?.termId {
                     cityView.removeFromSuperview()
                 }
-            } else if !(city.termId == locationRestaurants.first?.locations?.city?.termId) && city.restaurantsNum > 0{  //no need to add a city with 0 restaurant 
+            } else if !(city.termId == locationRestaurants.first?.locations?.city?.termId) && city.itemsNum ?? 0 > 0{  //no need to add a city with 0 restaurant
                 let cityView = DiningCityView()
                 cityView.city = city
                 cityView.delegate = self
@@ -527,15 +527,12 @@ extension DiningViewController {
         }
     }
     
-    func seeAllRestaurantsForCity(city: DiningCity, view: DiningCityView) {
-//        if view == myLocationCityView {
-//            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: locationRestaurants), animated: true)
-//        } else {
-//            navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: city), animated: true)
-//        }
+    func seeAllRestaurantsForCity(city: Cities, view: DiningCityView) {
         //if data source has something then that data would be loaded immediately and rest of the data would be loaded silenlty
         //we need to pass data from here as on locationView we are loading only 2 records so those 2 would be loaded immediately and rest would be loaded silently, if we dont want to load silent data then have to ask API to not to send only 2 records but all.
-        navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: locationRestaurants.isEmpty == true ? city.restaurants :locationRestaurants, city: city), animated: true)
+        navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource:  locationRestaurants.isEmpty == true ? (city.items ?? []) : locationRestaurants,
+                                                city: city),
+                                                animated: true)
     }
     
     func didTappedOnRestaurantAt(index: Int,restaurant: Product) {
@@ -545,7 +542,7 @@ extension DiningViewController {
         //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
         if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.locations?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
             //Finding restaurant which user has just tapped
-            if let tappedRestaurant = (cityView as? DiningCityView)?.city?.restaurants.enumerated().first(where: {$0.element.id == restaurant.id}) {
+            if let tappedRestaurant = (cityView as? DiningCityView)?.city?.items?.enumerated().first(where: {$0.element.id == restaurant.id}) {
                 if (tappedRestaurant.offset == 0){
                     selectedCell = (cityView as? DiningCityView)?.restaurant1ImageView
                     selectedCellHeart = (cityView as? DiningCityView)?.imgHeart1
@@ -582,15 +579,15 @@ extension DiningViewController {
                 if let allCitiesAtDining = self.diningInformations?.cities{
                     for i in 0..<allCitiesAtDining.count {  //looping all cities on dining page
                         //Finding restaurant which user has just favourited/unfavourited
-                        if let itemRestaurant = allCitiesAtDining[i].restaurants.enumerated().first(where: {$0.element.id == sender.id}) {
+                        if let itemRestaurant = allCitiesAtDining[i].items?.enumerated().first(where: {$0.element.id == sender.id}) {
                             //Just got the city by value else we can also use long like like self.diningInformations?.cities[i]
                             if let city = self.diningInformations?.cities[i]{
                                 //toggling the isFavourite value
-                                self.diningInformations?.cities[i].restaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
+                                self.diningInformations?.cities[i].items?[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
                                 //finding current cityview from the stackview, to remove and then again adding updated by red/white heart
                                 if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
                                     if let termId = sender.locations?.city?.termId, let name = sender.locations?.city?.name {
-                                        (cityView as? DiningCityView)?.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: (self.diningInformations?.cities[i].restaurants)! )
+                                        (cityView as? DiningCityView)?.city = Cities(termId: termId, name: name, itemsNum: 2, items: (self.diningInformations?.cities[i].items)! )
                                     }
                                 }
                             }
@@ -605,7 +602,7 @@ extension DiningViewController {
                     //toggling the isFavourite value
                     self.locationRestaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
                     if let termId = sender.locations?.city?.termId, let name = sender.locations?.city?.name {
-                        self.myLocationCityView.city = DiningCity(termId: termId, name: name, restaurantsNum: 2, restaurants: self.locationRestaurants)
+                        self.myLocationCityView.city = Cities(termId: termId, name: name, itemsNum: 2, items: self.locationRestaurants)
                     }
                 }
 //                print(" ServerResponse:" + informations)

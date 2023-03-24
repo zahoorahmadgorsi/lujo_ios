@@ -107,7 +107,15 @@ class DestinationSelectionViewController: UIViewController, UITableViewDelegate,
         if self.destinations.count >= indexPath.row{
             let model = self.destinations[indexPath.row]
             cell.lblTermId.text = String(model.termId)
-            cell.lblDestinationName.text =  model.name
+            var destinationName = model.name
+            if let country = model.country{
+                if let state = model.stateName{
+                    destinationName +=  ", " + state + ", " + country.name
+                }else{
+                    destinationName +=   ", " + country.name
+                }
+            }
+            cell.lblDestinationName.text = destinationName
             cell.separatorView.backgroundColor = (indexPath.row + 1) == self.destinations.count ? UIColor.clear : UIColor.actionButton
         }else{
             print("Destination not found at index:\(indexPath.row)")

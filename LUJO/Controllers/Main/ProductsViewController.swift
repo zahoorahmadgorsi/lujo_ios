@@ -32,7 +32,7 @@ class ProductsViewController: UIViewController {
     class func instantiate(category: ProductCategory,
                            subCategory: ProductCategory? = nil,
                            dataSource: [Product] = [],
-                           city: DiningCity? = nil,
+                           city: Cities? = nil,
                            applyFilters: AppliedFilters? = nil) -> ProductsViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! ProductsViewController
         viewController.category = category
@@ -48,7 +48,7 @@ class ProductsViewController: UIViewController {
     private(set) var category: ProductCategory!
     private(set) var subCategory: ProductCategory! //e.g. toprated event
     
-    private var city: DiningCity?
+    private var city: Cities?
     
     @IBOutlet var collectionView: UICollectionView!
     private var dataSource: [Product]!
@@ -142,7 +142,7 @@ class ProductsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if dataSource.isEmpty {
-            getInformation(for: category, past: false, term: nil, cityId: city?.termId, filtersToApply: self.applyFilters)
+            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters)
         }
     }
     
@@ -159,11 +159,11 @@ class ProductsViewController: UIViewController {
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
-        getInformation(for: category, past: false, term: nil, cityId: city?.termId, filtersToApply: self.applyFilters)
+        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters)
     }
     
     @IBAction func eventTypeChanged(_ sender: Any) {
-        getInformation(for: category, past: false, term: nil, cityId: nil, filtersToApply: self.applyFilters)
+        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: nil, longitude:nil,filtersToApply: self.applyFilters)
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
@@ -194,9 +194,9 @@ class ProductsViewController: UIViewController {
         
         if dataSource.count > 0 {
             titleString = "\(dataSource[0].locations?.city?.name ?? "") \(category == ProductCategory.experience ? "experiances" : "events")"
-        } else if let city = city {
+        } else if let city = city , let name = city.name {
             //titleString = "\(city.name) \(category == ProductCategory.experience ? "experiances" : "events")"
-            titleString = "\(city.name) \(category.rawValue)"    //dubai event
+            titleString = "\(name) \(category.rawValue)"    //dubai event
         }
         //sub category will exist e.g. toprated events (event is subcategory) if user is coming from percity view controller by clicking on see all button at top rated
         //if subcategory exists then append it with appending s (to make it plural)
@@ -343,9 +343,9 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension ProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil) {
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil) {
         showNetworkActivity()
-        getList(for: category, past: past, term: term, cityId: cityId, filtersToApply:filtersToApply) { items, error in
+        getList(for: category, past: past, term: term, cityId: cityId,latitude: latitude,longitude:longitude, filtersToApply:filtersToApply) { items, error in
             self.hideNetworkActivity()
             // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
             self.refreshControl.endRefreshing()
@@ -357,7 +357,7 @@ extension ProductsViewController {
         }
     }
     
-    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil,
+    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil,
                  completion: @escaping ([Product], Error?) -> Void) {
 //        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
 //            completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
@@ -366,7 +366,7 @@ extension ProductsViewController {
         
         switch category {
             case .event:
-            EEAPIManager().getEvents( past: past, term: term, cityId: cityId, productId: nil,
+            EEAPIManager().getEvents( past: past, term: term, latitude: latitude, longitude: longitude, productId: nil,
                                       filtersToApply: filtersToApply) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
@@ -377,7 +377,7 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .experience:
-                EEAPIManager().getExperiences( term: term, cityId: cityId, productId: nil,
+                EEAPIManager().getExperiences( term: term, latitude: latitude, longitude: longitude, productId: nil,
                                                filtersToApply: filtersToApply) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
@@ -399,7 +399,7 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .villa:
-                EEAPIManager().getVillas(term: term, cityId: cityId, productId: nil,
+                EEAPIManager().getVillas(term: term, latitude: latitude, longitude: longitude, productId: nil,
                                          filtersToApply: filtersToApply) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)

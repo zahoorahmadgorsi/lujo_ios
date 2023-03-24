@@ -19,7 +19,7 @@ class RestaurantListViewController: UIViewController {
     class var identifier: String { return "RestaurantListViewController" }
     
     /// Init method that will init and return view controller.
-    class func instantiate(dataSource: [Product] = [], city: DiningCity? = nil) -> RestaurantListViewController {
+    class func instantiate(dataSource: [Product] = [], city: Cities? = nil) -> RestaurantListViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantListViewController
         viewController.dataSource = dataSource
         viewController.city = city
@@ -30,7 +30,7 @@ class RestaurantListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var dataSource: [Product]!
-    private var city: DiningCity?
+    private var city: Cities?
     
     private let naHUD = JGProgressHUD(style: .dark)
     private var currentLayout: LiftLayout?
@@ -90,7 +90,7 @@ class RestaurantListViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func getInformation(showActivity: Bool, for city: DiningCity) {
+    func getInformation(showActivity: Bool, for city: Cities) {
 //        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
 //            showFeedback("User does not exist or is not verified")
 //            return
@@ -98,7 +98,7 @@ class RestaurantListViewController: UIViewController {
         if (showActivity){
             showNetworkActivity()
         }
-        GoLujoAPIManager().search(term: nil, cityId: city.termId, currentLocation: nil, cuisineCategoryId: nil) { restaurants, error in
+        GoLujoAPIManager().search(term: nil, latitude: city.latitude, longitude: city.longitude, cuisineCategoryId: nil) { restaurants, error in
             self.hideNetworkActivity()
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)

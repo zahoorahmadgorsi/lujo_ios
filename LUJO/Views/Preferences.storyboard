@@ -1353,42 +1353,46 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JFK" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8D-OH-BiM">
-                                                            <rect key="frame" x="335" y="0.0" width="63" height="57"/>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
-                                                            <color key="textColor" name="Palette - Separator"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Hob-ab-hca">
-                                                            <rect key="frame" x="16" y="0.0" width="303" height="57"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="5Bs-IS-S7y">
+                                                            <rect key="frame" x="16" y="8" width="382" height="41"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lahore, Islamic Republic of Pakistan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARH-xc-qvq">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="272.5" height="52"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" name="White Text"/>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Hob-ab-hca">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="41"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lahore, Islamic Republic of Pakistan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARH-xc-qvq">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="272.5" height="36"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" name="White Text"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-8p-mms">
+                                                                            <rect key="frame" x="0.0" y="40" width="16" height="1"/>
+                                                                            <color key="backgroundColor" name="Action Button"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="16" id="OIW-l4-Jmw"/>
+                                                                                <constraint firstAttribute="height" constant="1" id="aUC-Zr-ewf"/>
+                                                                            </constraints>
+                                                                        </view>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JFK" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8D-OH-BiM">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="63" height="41"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="63" id="ygH-67-OBK"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                                                    <color key="textColor" name="Palette - Separator"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRx-8p-mms">
-                                                                    <rect key="frame" x="0.0" y="56" width="16" height="1"/>
-                                                                    <color key="backgroundColor" name="Action Button"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="16" id="OIW-l4-Jmw"/>
-                                                                        <constraint firstAttribute="height" constant="1" id="aUC-Zr-ewf"/>
-                                                                    </constraints>
-                                                                </view>
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="Hob-ab-hca" secondAttribute="bottom" id="9iT-CT-gnM"/>
-                                                        <constraint firstItem="O8D-OH-BiM" firstAttribute="top" secondItem="7VM-bE-6WO" secondAttribute="top" id="A9P-Ct-vHR"/>
-                                                        <constraint firstItem="Hob-ab-hca" firstAttribute="top" secondItem="7VM-bE-6WO" secondAttribute="top" id="HxY-rp-3jj"/>
-                                                        <constraint firstItem="O8D-OH-BiM" firstAttribute="leading" secondItem="Hob-ab-hca" secondAttribute="trailing" constant="16" id="Kax-fD-qcl"/>
-                                                        <constraint firstAttribute="trailing" secondItem="O8D-OH-BiM" secondAttribute="trailing" constant="16" id="KcX-Lz-9wo"/>
-                                                        <constraint firstItem="ARH-xc-qvq" firstAttribute="width" secondItem="7VM-bE-6WO" secondAttribute="width" multiplier="0.658213" id="N8J-JW-U5Q"/>
-                                                        <constraint firstAttribute="bottom" secondItem="O8D-OH-BiM" secondAttribute="bottom" id="krV-DL-udu"/>
-                                                        <constraint firstItem="Hob-ab-hca" firstAttribute="leading" secondItem="7VM-bE-6WO" secondAttribute="leading" constant="16" id="yZp-ev-H29"/>
+                                                        <constraint firstItem="5Bs-IS-S7y" firstAttribute="leading" secondItem="7VM-bE-6WO" secondAttribute="leading" constant="16" id="1Ov-B2-XGK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="5Bs-IS-S7y" secondAttribute="trailing" constant="16" id="2Ky-e6-YTN"/>
+                                                        <constraint firstItem="5Bs-IS-S7y" firstAttribute="top" secondItem="7VM-bE-6WO" secondAttribute="top" constant="8" id="GWb-Bl-1lz"/>
+                                                        <constraint firstAttribute="bottom" secondItem="5Bs-IS-S7y" secondAttribute="bottom" constant="8" id="i8f-pb-mOV"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -81,7 +81,7 @@ class RestaurantSearchViewController: UIViewController {
 //            searchTextField.text = _cuisineCategory.name
             keyword = _cuisineCategory.name
             //search cuisine by category id
-            searchRestaurants(term: nil, cityId: nil, currentLocation: nil, cuisineCategoryId: _cuisineCategory.termId)
+            searchRestaurants(term: nil, latitude: nil, longitude: nil, cuisineCategoryId: _cuisineCategory.termId)
         }else {
             searchTextField.becomeFirstResponder()
         }
@@ -258,8 +258,8 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
             
             self.searchRestaurants(term: keyword,
-                                   cityId: nil ,
-                                   currentLocation: nil,
+                                   latitude: nil ,
+                                   longitude: nil,
                                    cuisineCategoryId: self.cuisineCategory?.termId )
             return true
         }
@@ -272,11 +272,11 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
 
 extension RestaurantSearchViewController {
 
-    func searchRestaurants(term: String?, cityId: String?, currentLocation: CLLocation?, cuisineCategoryId: String?) {
+    func searchRestaurants(term: String?, latitude: Double?, longitude: Double?, cuisineCategoryId: String?) {
         self.showNetworkActivity()
         self.searchRestaurants(term: term,
-                               cityId: cityId,
-                               currLocation: currentLocation,
+                               latitude: latitude,
+                               longitude: longitude,
                                cuisineCategoryId: cuisineCategoryId) { information, error in
             self.hideNetworkActivity()
             if let error = error {
@@ -286,7 +286,7 @@ extension RestaurantSearchViewController {
         }
     }
     
-    func searchRestaurants(term: String?, cityId: String?, currLocation: CLLocation?, cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
+    func searchRestaurants(term: String?, latitude: Double?, longitude: Double?, cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
 //        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
 //            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
 //            return
@@ -296,8 +296,8 @@ extension RestaurantSearchViewController {
               properties: ["SearchedText" : term])
         
         GoLujoAPIManager().search(term: term,
-                                  cityId: cityId,
-                                  currentLocation: currLocation,
+                                  latitude: latitude,
+                                  longitude: longitude,
                                   cuisineCategoryId: cuisineCategoryId) { restaurants, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
