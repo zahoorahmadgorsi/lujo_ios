@@ -46,12 +46,12 @@ class CountryCodeSelectionView: UIViewController, UITableViewDataSource, UITable
     }
     
     func setCountriesList(list: [PhoneCountryCode]) {
-        let sortedCountries = list.sorted(by: { $0.country < $1.country })
+        let sortedCountries = list.sorted(by: { $0.country.name < $1.country.name })
         
         countriesList = sortedCountries.reduce([[PhoneCountryCode]]()) {
             guard var last = $0.last else { return [[$1]] }
             var collection = $0
-            if last.first!.country.prefix(1) == $1.country.prefix(1) {
+            if last.first!.country.name.prefix(1) == $1.country.name.prefix(1) {
                 last += [$1]
                 collection[collection.count - 1] = last
             } else {
@@ -81,7 +81,7 @@ class CountryCodeSelectionView: UIViewController, UITableViewDataSource, UITable
         var section = -1
 
         for (index, countrySection) in countriesList.enumerated() {
-            if countrySection.first!.country.prefix(1) == searchText.prefix(1) {
+            if countrySection.first!.country.name.prefix(1) == searchText.prefix(1) {
                 section = index
                 break
             }
@@ -89,7 +89,7 @@ class CountryCodeSelectionView: UIViewController, UITableViewDataSource, UITable
 
         guard section >= 0 else { return }
 
-        if let index = countriesList[section].firstIndex(where: { $0.country.hasPrefix(searchText) }) {
+        if let index = countriesList[section].firstIndex(where: { $0.country.name.hasPrefix(searchText) }) {
             countriesTableView.scrollToRow(at: IndexPath(row: index, section: section), at: .top, animated: true)
         }
     }
@@ -117,7 +117,7 @@ class CountryCodeSelectionView: UIViewController, UITableViewDataSource, UITable
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return countriesList[section].first!.country.prefix(1).uppercased()
+        return countriesList[section].first!.country.name.prefix(1).uppercased()
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -135,7 +135,7 @@ class CountryCodeSelectionView: UIViewController, UITableViewDataSource, UITable
         let countryData = countriesList[indexPath.section][indexPath.row]
 
         cell.code.text = countryData.phonePrefix
-        cell.name.text = countryData.country
+        cell.name.text = countryData.country.name
         cell.flag.image = UIImage(named: "flag_\(countryData.alpha2Code.lowercased())")
 
         return cell

@@ -47,21 +47,11 @@ class BookingDetailCell: UITableViewCell {
         statusLabel.text = bookingInfo?.bookingStatus?.uppercased()
         viewDetailsButton.isHidden = bookingInfo?.bookingQuote == nil || bookingInfo?.bookingStatus?.lowercased() != "payment"
         
-        if let date = bookingInfo?.bookingDate ?? bookingInfo?.bookingCreation{
-            let formatter = DateFormatter()
-            formatter.timeZone = TimeZone(identifier: "GMT")
-            formatter.dateFormat = "dd MMM HH:mm'h'"
-            timeLabel.text = formatter.string(from: date)
+        if let date = bookingInfo?.bookingCreation ?? bookingInfo?.bookingDate{
+            timeLabel.text = Date.dateToString(date: date, format: "dd MMM HH:mm'h'")
         }else{
             timeStackView.isHidden = true
         }
-//        timeStackView.isHidden = bookingInfo?.bookingDate == nil
-//        if let bookingDate = bookingInfo?.bookingDate {
-//            let formatter = DateFormatter()
-//            formatter.timeZone = TimeZone(identifier: "GMT")
-//            formatter.dateFormat = "dd MMM HH:mm'h'"
-//            timeLabel.text = formatter.string(from: bookingDate)
-//        }
     }
     
     private func getImageForType() -> UIImage? {

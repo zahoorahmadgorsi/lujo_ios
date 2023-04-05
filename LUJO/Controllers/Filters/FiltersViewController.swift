@@ -115,20 +115,20 @@ class FiltersViewController: UIViewController {
         //**************************
         // Yacht Status Charter/Sale
         //**************************
-        var items = self.filters.filter({$0.key == "yacht_status"})
-        if  items.count > 0, let options = items[0].options, options.count > 0{
-            let viewInterestedIn = SingleLineCollectionFilter()
-            viewInterestedIn.lblTitle.text = items[0].name
-
-            viewInterestedIn.items = options
-            viewInterestedIn.tag = FilterType.YachtStatus.rawValue
-            viewInterestedIn.delegate = self    //it will cause the tap event on radio button fire which will hide unhide yacht charter view
-            stackView.addArrangedSubview(viewInterestedIn)
-        }
+//        var items = self.filters.filter({$0.key == "yacht_status"})
+//        if  items.count > 0, let options = items[0].options, options.count > 0{
+//            let viewInterestedIn = SingleLineCollectionFilter()
+//            viewInterestedIn.lblTitle.text = items[0].name
+//
+//            viewInterestedIn.items = options
+//            viewInterestedIn.tag = FilterType.YachtStatus.rawValue
+//            viewInterestedIn.delegate = self    //it will cause the tap event on radio button fire which will hide unhide yacht charter view
+//            stackView.addArrangedSubview(viewInterestedIn)
+//        }
         //*******************************
         // Yacht Charter Any/Daily/Weekly
         //*******************************
-        items = self.filters.filter({$0.key == "charter_time"})
+        var items = self.filters.filter({$0.key == "charter_time"})
         if  items.count > 0, let options = items[0].options, options.count > 0{
             let viewCharterType = SingleLineCollectionFilter()
             viewCharterType.lblTitle.text = items[0].name

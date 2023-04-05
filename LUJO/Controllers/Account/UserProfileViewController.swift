@@ -73,7 +73,7 @@ class UserProfileViewController: UIViewController {
         firstNameTF.text = user.firstName
         lastNameTF.text = user.lastName
         phonePrefix = LujoSetup().getCode(for: user.phoneNumber.countryCode) ??
-            PhoneCountryCode(id: 238, alpha2Code: "US", phonePrefix: "+1", nationality: "American", country: "United States of America", flag: "https://seeklogo.net/wp-content/uploads/2013/05/flag-of-serbia-vector-logo.png")
+            PhoneCountryCode(id: 238, alpha2Code: "US", phonePrefix: "+1", nationality: "American", country: TaxonomyCountry( _id : "238" , name: "United States of America"), flag: "https://seeklogo.net/wp-content/uploads/2013/05/flag-of-serbia-vector-logo.png")
         
         phoneNumberTF.text = user.phoneNumber.number
         emailAddressTF.text = user.email

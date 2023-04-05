@@ -47,7 +47,9 @@ class SearchProductsViewController: UIViewController {
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
     var searchAnimator: SearchAnimator?
- 
+    //for paginations
+    var pageNumber = 1
+    let pageSize = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +64,7 @@ class SearchProductsViewController: UIViewController {
                 title = "Search experiences"
             case .villa:
                 currentLayout?.setCustomCellHeight(170)
-                title = "Search villas"
+                title = "Search properties"
             case .gift:
                 currentLayout?.setCustomCellHeight(170)
                 title = "Search gifts"
@@ -111,10 +113,22 @@ class SearchProductsViewController: UIViewController {
     }
     
     func update(listOf objects: [Product]) {
-        dataSource = objects
-//        print("Found \(dataSource.count) items")
+        if dataSource.isEmpty{
+            dataSource = objects
+            DispatchQueue.main.async(execute: collectionView.reloadData)
+        }else {  //paging is being applied
+            if objects.count > 0{
+                for item in objects{
+                    dataSource.append(item)
+                }
+            }else{
+                return  //stop it from executing collectionView.reloadData
+            }
+        }
+        //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
-        collectionView.reloadData()
+        DispatchQueue.main.async(execute: collectionView.reloadData)
+
     }
     
     func showError(_ error: Error, _ errorTitle:String) {
@@ -235,6 +249,16 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath.row,collectionView.numberOfItems(inSection: indexPath.section))
+        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2  {   //if half data has been loaded then load rest silently
+            print("load next set")
+            self.pageNumber += 1
+//            self.pageSize += self.pageSize
+            self.getInformation(for: category, past: false, term: self.searchTextField.text, page: self.pageNumber, perPage: self.pageSize)
+        }
+    }
 }
 
 extension SearchProductsViewController: UITextFieldDelegate {
@@ -242,7 +266,7 @@ extension SearchProductsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.text?.count ?? 0 > 1 {
             textField.resignFirstResponder()
-            self.getInformation(for: category, past: false, term: textField.text)
+            self.getInformation(for: category, past: false, term: textField.text, page: self.pageNumber, perPage: self.pageSize)
             return true
         }
         
@@ -254,9 +278,9 @@ extension SearchProductsViewController: UITextFieldDelegate {
 
 extension SearchProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?) {
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, page: Int, perPage: Int) {
         showNetworkActivity()
-        getList(for: category, past: past, term: term) { items, error in
+        getList(for: category, past: past, term: term, page:page, perPage: perPage) { items, error in
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error, category.rawValue)
@@ -265,7 +289,9 @@ extension SearchProductsViewController {
         }
     }
     
-    func getList(for category: ProductCategory, past: Bool, term: String?, completion: @escaping ([Product], Error?) -> Void) {
+    func getList(for category: ProductCategory, past: Bool, term: String?, page: Int, perPage: Int
+                 , completion: @escaping ([Product], Error?) -> Void) {
+        
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
             return
@@ -274,7 +300,7 @@ extension SearchProductsViewController {
         switch category {
             case .event:
                 Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
-            EEAPIManager().getEvents(past: past, term: term, latitude: nil, longitude: nil, productId: nil) { list, error in
+            EEAPIManager().getEvents(past: past, term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain events information")
@@ -286,7 +312,7 @@ extension SearchProductsViewController {
             case .experience:
                 Mixpanel.mainInstance().track(event: "ExperienceSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getExperiences(term: term, latitude: nil, longitude: nil, productId: nil) { list, error in
+                EEAPIManager().getExperiences(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experiences information")
@@ -298,7 +324,7 @@ extension SearchProductsViewController {
             case .villa:
                 Mixpanel.mainInstance().track(event: "VillaSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getVillas(term: term, latitude: nil, longitude: nil, productId: nil) { list, error in
+            EEAPIManager().getVillas(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")
@@ -310,7 +336,7 @@ extension SearchProductsViewController {
             case .gift:
                 Mixpanel.mainInstance().track(event: "GiftSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getGoods( term: term, giftCategoryId: nil, productId: nil) { list, error in
+                EEAPIManager().getGoods( term: term, giftCategoryId: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
@@ -322,7 +348,7 @@ extension SearchProductsViewController {
             case .yacht:
                 Mixpanel.mainInstance().track(event: "YachtSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getYachts( term: term, cityId: nil, productId: nil) { list, error in
+                EEAPIManager().getYachts( term: term, cityId: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
@@ -359,7 +385,7 @@ extension SearchProductsViewController {
                     completion(list, error)
             }
             case .recent:   //it will never be called
-                EEAPIManager().getYachts( term: term, cityId: nil, productId: nil) { list, error in
+                EEAPIManager().getYachts( term: term, cityId: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")

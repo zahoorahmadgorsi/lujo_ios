@@ -31,7 +31,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
                                        alpha2Code: "US",
                                        phonePrefix: "+1",
                                        nationality: "American",
-                                       country: "United States of America",
+                                            country: TaxonomyCountry( _id : "238" , name: "United States of America"),
                                        flag: "https://bit.ly/2Vrjgrk")
 
     var termsAgreement: M13Checkbox = {

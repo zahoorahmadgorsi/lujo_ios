@@ -183,7 +183,7 @@ struct PhoneCountryCode: Codable {
     let alpha2Code: String
     let phonePrefix: String
     let nationality: String
-    let country: String
+    let country: TaxonomyCountry
     let flag: String?
 
     enum CodingKeys: String, CodingKey {

@@ -58,6 +58,10 @@ class ProductsViewController: UIViewController {
     private var currentLayout: LiftLayout?
     private var subCategoryType = ""
     
+    //for paginations
+    var pageNumber = 1
+    let pageSize = 20
+    
     // B2 - 5
     var selectedCell: HomeSliderCell?
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
@@ -142,7 +146,7 @@ class ProductsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if dataSource.isEmpty {
-            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters)
+            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
         }
     }
     
@@ -159,11 +163,11 @@ class ProductsViewController: UIViewController {
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
-        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters)
+        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
     }
     
     @IBAction func eventTypeChanged(_ sender: Any) {
-        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: nil, longitude:nil,filtersToApply: self.applyFilters)
+        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: nil, longitude:nil,filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
@@ -175,7 +179,7 @@ class ProductsViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = nil
         }
         
-        var titleString = category.rawValue
+        var titleString = category == .villa ? "Properties" : category.rawValue
         //Deciding the title
         switch subCategory {
             case .event:
@@ -201,7 +205,7 @@ class ProductsViewController: UIViewController {
         //sub category will exist e.g. toprated events (event is subcategory) if user is coming from percity view controller by clicking on see all button at top rated
         //if subcategory exists then append it with appending s (to make it plural)
         title = titleString + (subCategoryType.count > 0 ? " " + subCategoryType.capitalizingFirstLetter() + "s" : "")
-//        print(title as Any)
+        print(title as Any)
 //        naHUD.textLabel.text = "Loading " + category.rawValue
     }
     
@@ -228,11 +232,22 @@ class ProductsViewController: UIViewController {
     }
     
     func update(listOf objects: [Product]) {
-        dataSource = objects
-//        print("Found \(dataSource.count) items")
+        if dataSource.isEmpty{
+            dataSource = objects
+            DispatchQueue.main.async(execute: collectionView.reloadData)
+        }else {  //paging is being applied
+            if objects.count > 0{
+                for item in objects{
+                    dataSource.append(item)
+                }
+            }else{
+                return  //stop it from executing collectionView.reloadData
+            }
+            
+        }
+        //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
-        collectionView.reloadData()
-
+        DispatchQueue.main.async(execute: collectionView.reloadData)
     }
 }
 
@@ -339,13 +354,25 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath.row,collectionView.numberOfItems(inSection: indexPath.section))
+        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2  {   //if half data has been loaded then load rest silently
+            print("load next set")
+            self.pageNumber += 1
+//            self.pageSize += self.pageSize
+            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize, isSilentFetch: true)
+        }
+    }
 }
 
 extension ProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil) {
-        showNetworkActivity()
-        getList(for: category, past: past, term: term, cityId: cityId,latitude: latitude,longitude:longitude, filtersToApply:filtersToApply) { items, error in
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, isSilentFetch: Bool = false) {
+        if !isSilentFetch{
+            showNetworkActivity()
+        }
+        getList(for: category, past: past, term: term, cityId: cityId,latitude: latitude,longitude:longitude, filtersToApply:filtersToApply, page: page, perPage: perPage) { items, error in
             self.hideNetworkActivity()
             // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
             self.refreshControl.endRefreshing()
@@ -357,7 +384,7 @@ extension ProductsViewController {
         }
     }
     
-    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil,
+    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int,
                  completion: @escaping ([Product], Error?) -> Void) {
 //        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
 //            completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
@@ -367,7 +394,7 @@ extension ProductsViewController {
         switch category {
             case .event:
             EEAPIManager().getEvents( past: past, term: term, latitude: latitude, longitude: longitude, productId: nil,
-                                      filtersToApply: filtersToApply) { list, error in
+                                      filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Events information")
@@ -378,7 +405,7 @@ extension ProductsViewController {
                 }
             case .experience:
                 EEAPIManager().getExperiences( term: term, latitude: latitude, longitude: longitude, productId: nil,
-                                               filtersToApply: filtersToApply) { list, error in
+                                               filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experience information")
@@ -389,7 +416,7 @@ extension ProductsViewController {
                 }
             case .yacht:
                 EEAPIManager().getYachts( term: term, cityId: cityId, productId: nil,
-                                          filtersToApply: filtersToApply) { list, error in
+                                          filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
@@ -400,7 +427,7 @@ extension ProductsViewController {
             }
             case .villa:
                 EEAPIManager().getVillas(term: term, latitude: latitude, longitude: longitude, productId: nil,
-                                         filtersToApply: filtersToApply) { list, error in
+                                         filtersToApply: filtersToApply, page:page, perPage: perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")
@@ -412,7 +439,7 @@ extension ProductsViewController {
             case .gift:
                 //sending category_term_id in case of gifts in the paraeter cityid
                 EEAPIManager().getGoods( term: term, giftCategoryId: cityId, productId: nil,
-                                         filtersToApply: filtersToApply) { list, error in
+                                         filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
@@ -426,7 +453,7 @@ extension ProductsViewController {
                 EEAPIManager().getTopRated(type: self.subCategoryType, term: nil) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain top rated items information")
+                        let error = BackendError.parsing(reason: "Could not obtain top rated items")
                         completion([], error)
                         return
                     }
@@ -436,7 +463,7 @@ extension ProductsViewController {
                 EEAPIManager().getRecents( limit: "30", type: "") { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")
+                        let error = BackendError.parsing(reason: "Could not obtain home recently viewed items")
                         completion([], error)
                         return
                     }

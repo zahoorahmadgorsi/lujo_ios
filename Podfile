@@ -19,7 +19,7 @@ target 'LUJO' do
   pod 'Mixpanel-swift'
   pod 'IQKeyboardManagerSwift'
   pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
-  pod 'Kingfisher', '~> 7.0'
+  pod 'Kingfisher', '~> 7.6.1'
   pod 'SwiftMessages'
   pod 'M13Checkbox'
   pod 'ActiveLabel'

@@ -28,9 +28,11 @@ public extension Date {
     }
 
     static func dateToString(date: Date, format: String = "yyyy-MM-dd-HH-mm-ss") -> String {
+        print(date)
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = format
         let dateTimePrefix: String = formatter.string(from: date)
+        print(dateTimePrefix)
         return dateTimePrefix
     }
     
