@@ -247,16 +247,14 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                 break
         }
         //Setting up ReadMore
-        if let font = descriptionTextView.font{
-            let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
-            print(currentHeight,descHeightToShowReadMore)
-            if (currentHeight > descHeightToShowReadMore){
-                viewReadMore.isHidden = false
-                lblDescriptionHeight.constant = descHeightToShowReadMore
-            }else{
-                viewReadMore.isHidden = true  //no need to show readmore button
-                lblDescriptionHeight.constant = currentHeight
-            }
+        let currentHeight = getTextViewHeight(uiTextView: descriptionTextView)
+        print(currentHeight,descHeightToShowReadMore)
+        if (currentHeight > descHeightToShowReadMore){
+            viewReadMore.isHidden = false
+            lblDescriptionHeight.constant = descHeightToShowReadMore
+        }else{
+            viewReadMore.isHidden = true  //no need to show readmore button
+            lblDescriptionHeight.constant = currentHeight
         }
         
         //setting up gallery
@@ -320,35 +318,26 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             btnReadMore.setTitle("Read more", for: .normal)
             isLabelAtMaxHeight = false
 
-            if let font = descriptionTextView.font{
-                let currentHeight = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
-//                    print(currentHeight,descHeightToShowReadMore)
-                if (currentHeight > descHeightToShowReadMore){
-                    lblDescriptionHeight.constant = descHeightToShowReadMore
-                }else{
-                    lblDescriptionHeight.constant = currentHeight
-                }
+            let currentHeight = getTextViewHeight(uiTextView: descriptionTextView)
+            if (currentHeight > descHeightToShowReadMore){
+                lblDescriptionHeight.constant = descHeightToShowReadMore
+            }else{
+                lblDescriptionHeight.constant = currentHeight
             }
         }
         else {
             btnReadMore.setTitle("Read less", for: .normal)
             isLabelAtMaxHeight = true
-            if let font = descriptionTextView.font{
-                lblDescriptionHeight.constant = getTextViewHeight(text: descriptionTextView.text, width: descriptionTextView.bounds.width, font: font )
-            }
+            lblDescriptionHeight.constant = getTextViewHeight(uiTextView: descriptionTextView)
+            
         }
     }
     
-    func getTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
-            let lbl = UITextView(frame: .zero)
-            lbl.frame.size.width = width
-            lbl.font = font
-//            lbl.numberOfLines = 0
-            lbl.text = text
-            lbl.attributedText = convertToAttributedString(text)
-            lbl.sizeToFit()
-            return lbl.frame.height
-        }
+    func getTextViewHeight(uiTextView: UITextView) -> CGFloat {
+        let sizeThatFitsTextView = uiTextView.sizeThatFits(CGSize(width: uiTextView.frame.size.width, height: CGFloat(MAXFLOAT)))
+        let heightOfText = sizeThatFitsTextView.height
+        return heightOfText
+    }
 }
 
 extension ProductDetailsViewController {
@@ -416,7 +405,9 @@ extension ProductDetailsViewController {
         viewYachtCabins.isHidden = true
         viewBathrooms.isHidden = true
         
-        descriptionTextView.attributedText = convertToAttributedString(product.description)
+        let desc = product.description
+        print("isHtml:\(desc.isHtml())")
+        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
         
         chatButton.isEnabled = !isEventPast
         requestButton.isEnabled = !isEventPast
@@ -460,7 +451,10 @@ extension ProductDetailsViewController {
         viewYachtCabins.isHidden = true
         viewBathrooms.isHidden = true
         
-        descriptionTextView.attributedText = convertToAttributedString(product.description)
+        let desc = product.description
+        print("isHtml:\(desc.isHtml())")
+        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
+        
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
     
@@ -596,7 +590,9 @@ extension ProductDetailsViewController {
             //applying constraints on wishListView
             setupProductDetailLayout(productDetailView: productDetailView)
         }
-        descriptionTextView.attributedText = convertToAttributedString(product.description)
+        let desc = product.description
+        print("isHtml:\(desc.isHtml())")
+        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
         
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
@@ -762,7 +758,10 @@ extension ProductDetailsViewController {
             //applying constraints on wishListView
             setupProductDetailLayout(productDetailView: productDetailView)
         }
-        descriptionTextView.attributedText = convertToAttributedString(product.description)
+        let desc = product.description
+        print("isHtml:\(desc.isHtml())")
+        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
+        
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
     
@@ -827,6 +826,7 @@ extension ProductDetailsViewController {
     
     private func convertToAttributedString(_ text: String) -> NSAttributedString {
 //        let range = NSRange(location: 0, length: text.count)
+        print(text.count,text.unicodeScalars.count)
         let range = NSRange(location: 0, length: text.unicodeScalars.count) //unicodeScalars will count \n and \r as well.
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
@@ -834,6 +834,7 @@ extension ProductDetailsViewController {
         aString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 15, weight: .light), range: range)
         aString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
         aString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
+//        aString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
         return aString
     }
     

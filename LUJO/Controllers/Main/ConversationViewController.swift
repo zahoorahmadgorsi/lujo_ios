@@ -653,7 +653,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
 //                        return msg
                         let stringWithAttribute = NSAttributedString(string: messageBody,
                                                                      attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0)
-                                                                                  ,NSAttributedString.Key.foregroundColor: UIColor.white])
+                                                                    ,NSAttributedString.Key.foregroundColor: UIColor.white])
                         let msg = ChatMessage(attributedText: stringWithAttribute, user: user, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date() , messageIndex: message.index ?? 0)
                         return msg
                     }

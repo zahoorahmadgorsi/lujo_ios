@@ -256,7 +256,7 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
             print("load next set")
             self.pageNumber += 1
 //            self.pageSize += self.pageSize
-            self.getInformation(for: category, past: false, term: self.searchTextField.text, page: self.pageNumber, perPage: self.pageSize)
+            self.getInformation(for: category, past: false, term: self.searchTextField.text, page: self.pageNumber, perPage: self.pageSize, isSilentFetch: true)
         }
     }
 }
@@ -278,8 +278,10 @@ extension SearchProductsViewController: UITextFieldDelegate {
 
 extension SearchProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?, page: Int, perPage: Int) {
-        showNetworkActivity()
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, page: Int, perPage: Int, isSilentFetch: Bool = false) {
+        if !isSilentFetch{
+            showNetworkActivity()
+        }
         getList(for: category, past: past, term: term, page:page, perPage: perPage) { items, error in
             self.hideNetworkActivity()
             if let error = error {

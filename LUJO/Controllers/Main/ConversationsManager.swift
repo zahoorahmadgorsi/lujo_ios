@@ -401,7 +401,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                                 return
                             }
                             var participantEmails = result.content.map({$0.email})
-    //                                        participantEmails = []
+//                            participantEmails = []
 //                            participantEmails.append("varun.kumar@qualhon.com")
 //                            participantEmails.append("zahoor.gorsi@gmail.com")
 //                            participantEmails.append("zahoor.ahmad@live.com")
