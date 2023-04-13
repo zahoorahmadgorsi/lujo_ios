@@ -193,10 +193,11 @@ class AccountViewController: UIViewController {
             self.showError(error)
             return
         }
+        print("currentUser.email:\(currentUser.email)")
         if (currentUser.email == "sahleg@golujo.com"
             || currentUser.email == "zahoor.gorsi@gmail.com"
-            || currentUser.email == "shuja@baroque-group.com"
             || currentUser.email == "thearchitectxy@gmail.com"
+            || currentUser.email == "hasn2022ali@gmail.com"
         ){
             let viewController = GenerateReferralCodeViewController.instantiate()
             self.navigationController?.pushViewController(viewController, animated: true)

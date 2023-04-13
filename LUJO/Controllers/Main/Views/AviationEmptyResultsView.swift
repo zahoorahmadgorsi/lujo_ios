@@ -49,7 +49,8 @@ class AviationEmptyResultsView: UIView {
                         let viewController = AdvanceChatViewController()
                         viewController.product = Product(id: -1 , type: "aviation" , name: "Flight Booking Inquiry")
                         viewController.initialMessage = initialMessage
-                        self?.parentViewController?.navigationController?.pushViewController(viewController,animated: true)
+                        let navController = UINavigationController(rootViewController:viewController)
+                        UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
                     }else{
                         let error = BackendError.parsing(reason: "Chat option is not available, please try again later")
                         self?.parentViewController?.showErrorPopup(withTitle: "Error", error: error)

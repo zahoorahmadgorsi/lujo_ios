@@ -316,6 +316,7 @@ extension MembershipViewControllerNEW: UITextFieldDelegate {
                 showNetworkActivity()
                 if let membershipId = selectedMembership?.id{
                     PaymentAPIManagerNEW.shared.validateReferralCode(token,updatedText,membershipId) { referralValidation, error in
+                        print(referralValidation)
                         self.hideNetworkActivity()
                         guard error == nil  else {
                             Crashlytics.crashlytics().record(error: error!)
