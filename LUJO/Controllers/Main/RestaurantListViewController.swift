@@ -39,7 +39,7 @@ class RestaurantListViewController: UIViewController {
         super.viewDidLoad()
 
         currentLayout = collectionView.collectionViewLayout as? LiftLayout
-        currentLayout?.setCustomCellHeight(196)
+        currentLayout?.setCustomCellHeight(180)
         
         collectionView.register(UINib(nibName: DiningViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: DiningViewCell.identifier)
     
@@ -171,12 +171,12 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
             cell.locationContainerView.isHidden = true
         }
 
-        if let star = model.michelinStar?.first {
-            cell.starImageContainerView.isHidden = false
-            cell.starCountLabel.text = star.name.uppercased()
-        } else {
-            cell.starImageContainerView.isHidden = true
-        }
+//        if let star = model.michelinStar?.first {
+//            cell.starImageContainerView.isHidden = false
+//            cell.starCountLabel.text = star.name.uppercased()
+//        } else {
+//            cell.starImageContainerView.isHidden = true
+//        }
 
         return cell
     }

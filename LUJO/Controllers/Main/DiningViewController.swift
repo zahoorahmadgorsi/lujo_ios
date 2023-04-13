@@ -50,7 +50,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     @IBOutlet var gradientView: UIView!
     @IBOutlet var chefImageView: UIImageView!
     @IBOutlet var restaurantName: UILabel!
-    @IBOutlet var starsContainerView: UIView!
+//    @IBOutlet var starsContainerView: UIView!
     @IBOutlet var starsLabel: UILabel!
     @IBOutlet var chefNameLabel: UILabel!
     
@@ -242,7 +242,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         if let featuredImages = diningInformations?.getFeaturedImages() {
             featured.imageURLList = featuredImages
             featured.titleList = diningInformations!.getFeaturedNames()
-            featured.starList = diningInformations!.getFeaturedStars()
+//            featured.starList = diningInformations!.getFeaturedStars()
             featured.locationList = diningInformations!.getFeaturedLocations()
             allImagesNum.text = "\(featuredImages.count)"
             currentImageNum.text = "1"
@@ -252,8 +252,8 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         if let starChielf = diningInformations?.starChef {
             chefNameLabel.text = starChielf.chefName.uppercased()
             chefImageView.downloadImageFrom(link: starChielf.chefImage ?? "", contentMode: .scaleAspectFill)
-            starsContainerView.isHidden = starChielf.chefRestaurant?.michelinStar?.first == nil
-            starsLabel.text = starChielf.chefRestaurant?.michelinStar?.first?.name.uppercased()
+//            starsContainerView.isHidden = starChielf.chefRestaurant?.michelinStar?.first == nil
+//            starsLabel.text = starChielf.chefRestaurant?.michelinStar?.first?.name.uppercased()
             restaurantName.text = starChielf.chefRestaurant?.name
 
             let gradientColors = [UIColor.blackBackgorund.cgColor,

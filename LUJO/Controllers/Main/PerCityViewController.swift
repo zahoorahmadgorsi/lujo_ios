@@ -779,7 +779,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
         var item: Product!
         switch sender {
             case homeTopRatedSlider:
-                item = homeObjects?.topRated[index]
+            item = homeObjects?.topRated[index]
             default: return
         }
         
@@ -816,7 +816,7 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
         
         switch sender {
             case homeTopRatedSlider:
-                product = homeObjects?.topRated[indexPath.row]
+            product = homeObjects?.topRated[indexPath.row]
             default: return
         }
         let viewController = ProductDetailsViewController.instantiate(product: product)

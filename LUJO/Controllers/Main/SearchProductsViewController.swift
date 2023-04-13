@@ -377,7 +377,7 @@ extension SearchProductsViewController {
                 default:
                     subCatParam = subCategory?.rawValue.lowercased() ?? ""
                 }
-                EEAPIManager().getTopRated( type: subCatParam, term: term) { list, error in
+                EEAPIManager().getTopRated( type: subCatParam, term: term, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain top rated information")

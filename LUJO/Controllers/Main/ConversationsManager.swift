@@ -397,7 +397,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                         switch statusCode {
                         case 200 ... 299: // Success
                             guard let result = try? JSONDecoder().decode(LujoServerResponse<[Participant]>.self, from: response.data!) else {
-                                print("Twilio: Response format is different then the expected")
+                                print("Twilio: Response format is different than the expected")
                                 return
                             }
                             var participantEmails = result.content.map({$0.email})
@@ -410,10 +410,9 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                                 convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
                                     if result.isSuccessful == false {
                                         print("Twilio: \(participantEmail) could not added.")
+                                    }else{
+                                        print("Twilio: \(participantEmail) added successfully.")
                                     }
-//                                    else{
-//                                        print("Twilio: \(participantEmail) added successfully.")
-//                                    }
                                 })
                             }
                         default: // 500 or bigger, Server Error

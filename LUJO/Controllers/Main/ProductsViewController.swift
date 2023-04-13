@@ -238,7 +238,12 @@ class ProductsViewController: UIViewController {
         }else {  //paging is being applied
             if objects.count > 0{
                 for item in objects{
-                    dataSource.append(item)
+                    //incase of gifts we dont have paging so same item would be added again and again so if found then replace
+//                    if let row = self.dataSource.firstIndex(where: {$0.id == item.id}) {
+//                        dataSource[row] = item
+//                    }else{
+                        dataSource.append(item)
+//                    }
                 }
             }else{
                 return  //stop it from executing collectionView.reloadData
@@ -377,7 +382,7 @@ extension ProductsViewController {
             // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
             self.refreshControl.endRefreshing()
             if let error = error {
-                self.showError(error, category.rawValue)
+                self.showError(error, category.rawValue == "Villas" ? "Properties" :category.rawValue)
             } else {
                 self.update(listOf: items)
             }
@@ -430,7 +435,7 @@ extension ProductsViewController {
                                          filtersToApply: filtersToApply, page:page, perPage: perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain villas information")
+                        let error = BackendError.parsing(reason: "Could not obtain properties information")
                         completion([], error)
                         return
                     }
@@ -450,7 +455,7 @@ extension ProductsViewController {
             }
 
             case .topRated:
-                EEAPIManager().getTopRated(type: self.subCategoryType, term: nil) { list, error in
+                EEAPIManager().getTopRated(type: self.subCategoryType, term: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain top rated items")

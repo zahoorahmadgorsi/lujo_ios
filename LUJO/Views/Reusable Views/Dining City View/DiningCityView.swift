@@ -26,8 +26,8 @@ class DiningCityView: UIView {
     @IBOutlet weak var restaurant1NameLabel: UILabel!
     @IBOutlet weak var restaurant1locationLabel: UILabel!
     @IBOutlet weak var restaurant1locationContainerView: UIView!
-    @IBOutlet weak var restaurant1starCountLabel: UILabel!
-    @IBOutlet weak var restaurant1starImageContainerView: UIView!
+//    @IBOutlet weak var restaurant1starCountLabel: UILabel!
+//    @IBOutlet weak var restaurant1starImageContainerView: UIView!
     @IBOutlet weak var viewHeart1: UIView!
     @IBOutlet weak var imgHeart1: UIImageView!
     
@@ -36,8 +36,8 @@ class DiningCityView: UIView {
     @IBOutlet weak var restaurant2NameLabel: UILabel!
     @IBOutlet weak var restaurant2locationLabel: UILabel!
     @IBOutlet weak var restaurant2locationContainerView: UIView!
-    @IBOutlet weak var restaurant2starCountLabel: UILabel!
-    @IBOutlet weak var restaurant2starImageContainerView: UIView!
+//    @IBOutlet weak var restaurant2starCountLabel: UILabel!
+//    @IBOutlet weak var restaurant2starImageContainerView: UIView!
     @IBOutlet weak var viewHeart2: UIView!
     @IBOutlet weak var imgHeart2: UIImageView!
     
@@ -96,8 +96,8 @@ class DiningCityView: UIView {
                 restaurant1NameLabel.text = restaurant.name
                 restaurant1locationContainerView.isHidden = restaurant.locations == nil
                 restaurant1locationLabel.text = restaurant.locations?.city?.name.uppercased()
-                restaurant1starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
-                restaurant1starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
+//                restaurant1starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
+//                restaurant1starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
                 //Zahoor
                 //checking favourite image red or white
                 if (restaurant.isFavourite ?? false){
@@ -116,8 +116,8 @@ class DiningCityView: UIView {
                 restaurant2NameLabel.text = restaurant.name
                 restaurant2locationContainerView.isHidden = restaurant.locations == nil
                 restaurant2locationLabel.text = restaurant.locations?.city?.name.uppercased()
-                restaurant2starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
-                restaurant2starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
+//                restaurant2starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
+//                restaurant2starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
                 //Zahoor
                 //checking favourite image red or white
                 if (restaurant.isFavourite ?? false){

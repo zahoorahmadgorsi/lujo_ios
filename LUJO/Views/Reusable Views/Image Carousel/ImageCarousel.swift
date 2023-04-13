@@ -74,11 +74,11 @@ class ImageCarousel: UIView {
         }
     }
 
-    var starList: [String] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+//    var starList: [String] = [] {
+//        didSet {
+//            collectionView.reloadData()
+//        }
+//    }
 
     var locationList: [String] = [] {
         didSet {
@@ -242,12 +242,12 @@ extension ImageCarousel: UICollectionViewDataSource {
             
         }
 
-        if starList.count > indexPath.row, !starList[indexPath.row].isEmpty {
-            cell.starsContainerView.isHidden = false
-            cell.starsLabel.text = starList[indexPath.row].uppercased()
-        } else {
-            cell.starsContainerView.isHidden = true
-        }
+//        if starList.count > indexPath.row, !starList[indexPath.row].isEmpty {
+//            cell.starsContainerView.isHidden = false
+//            cell.starsLabel.text = starList[indexPath.row].uppercased()
+//        } else {
+//            cell.starsContainerView.isHidden = true
+//        }
 
         if locationList.count > indexPath.row, !locationList[indexPath.row].isEmpty {
             cell.locationContainerView.isHidden = false

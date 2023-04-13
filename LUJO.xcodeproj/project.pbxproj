@@ -114,7 +114,6 @@
 		88029BA82633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 88029BA12633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0625582ABC0070D7CD /* Hotel.swift */; };
 		880B9B0925582E350070D7CD /* Yacht.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0825582E350070D7CD /* Yacht.swift */; };
-		880B9B0B255840C10070D7CD /* Villa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0A255840C10070D7CD /* Villa.swift */; };
 		880B9B0D255845B10070D7CD /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0C255845B10070D7CD /* Gift.swift */; };
 		882AAAB826E81B31006B7D03 /* ChatOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */; };
 		882AD4CD25515A5700F0FCDE /* RecentlyViewedAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */; };
@@ -532,7 +531,6 @@
 		88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IQKeyboardManagerSwift.xcframework; path = Carthage/Build/IQKeyboardManagerSwift.xcframework; sourceTree = "<group>"; };
 		880B9B0625582ABC0070D7CD /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
 		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
-		880B9B0A255840C10070D7CD /* Villa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Villa.swift; sourceTree = "<group>"; };
 		880B9B0C255845B10070D7CD /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
 		882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOptionsViewController.swift; sourceTree = "<group>"; };
 		882AD4CC25515A5700F0FCDE /* RecentlyViewedAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyViewedAPIManager.swift; sourceTree = "<group>"; };
@@ -852,7 +850,6 @@
 				880B9B0C255845B10070D7CD /* Gift.swift */,
 				880B9B0625582ABC0070D7CD /* Hotel.swift */,
 				164332CBD01DAAB3FC14056B /* User.swift */,
-				880B9B0A255840C10070D7CD /* Villa.swift */,
 				880B9B0825582E350070D7CD /* Yacht.swift */,
 				9ABCF5C02163DDCD00D062C9 /* Aviation */,
 				1DBC9BF6235F4FA700F0F133 /* Bookings */,
@@ -2564,7 +2561,6 @@
 				557BB5EC231599F500744188 /* MainTabBarController.swift in Sources */,
 				8868754E27A6CC9300563CDC /* CustomMessagesFlowLayout.swift in Sources */,
 				888A307926461984008754AD /* PreferencesAPIManager.swift in Sources */,
-				880B9B0B255840C10070D7CD /* Villa.swift in Sources */,
 				1D88012C233E49630039DEA6 /* DiningCategorySlider.swift in Sources */,
 				88872118266F806100854099 /* PrefImageCollViewCell.swift in Sources */,
 				8887210E266F7FE100854099 /* PrefImagesCollViewController.swift in Sources */,

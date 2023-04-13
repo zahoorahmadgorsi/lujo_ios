@@ -16,8 +16,8 @@ class DiningViewCell: UICollectionViewCell {
     @IBOutlet var name: UILabel!
     @IBOutlet var location: UILabel!
     @IBOutlet var locationContainerView: UIView!
-    @IBOutlet var starCountLabel: UILabel!
-    @IBOutlet var starImageContainerView: UIView!
+//    @IBOutlet var starCountLabel: UILabel!
+//    @IBOutlet var starImageContainerView: UIView!
     @IBOutlet weak var viewHeart: UIView!
     @IBOutlet weak var imgHeart: UIImageView!
     
@@ -36,8 +36,8 @@ class DiningViewCell: UICollectionViewCell {
         name.text = ""
         location.text = ""
         locationContainerView.isHidden = false
-        starCountLabel.text = ""
-        starImageContainerView.isHidden = false
+//        starCountLabel.text = ""
+//        starImageContainerView.isHidden = false
         
     }
 }

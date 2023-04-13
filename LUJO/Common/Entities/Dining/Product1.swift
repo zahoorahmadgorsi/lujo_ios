@@ -121,14 +121,14 @@ struct DiningHomeObjects: Codable {
         return list
     }
 
-    func getFeaturedStars() -> [String] {
-        var list = [String]()
-        for feature in slider ?? [] {
-            list.append(feature.michelinStar?.first?.name ?? "")
-        }
-
-        return list
-    }
+//    func getFeaturedStars() -> [String] {
+//        var list = [String]()
+//        for feature in slider ?? [] {
+//            list.append(feature.michelinStar?.first?.name ?? "")
+//        }
+//
+//        return list
+//    }
 
     func getFeaturedLocations() -> [String] {
         var list = [String]()

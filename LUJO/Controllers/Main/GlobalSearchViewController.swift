@@ -91,16 +91,16 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var restaurant1NameLabel: UILabel!
     @IBOutlet weak var restaurant1locationLabel: UILabel!
     @IBOutlet weak var restaurant1locationContainerView: UIView!
-    @IBOutlet weak var restaurant1starCountLabel: UILabel!
-    @IBOutlet weak var restaurant1starImageContainerView: UIView!
+//    @IBOutlet weak var restaurant1starCountLabel: UILabel!
+//    @IBOutlet weak var restaurant1starImageContainerView: UIView!
     
     @IBOutlet weak var restaurant2ContainerView: UIView!
     @IBOutlet weak var restaurant2ImageView: UIImageView!
     @IBOutlet weak var restaurant2NameLabel: UILabel!
     @IBOutlet weak var restaurant2locationLabel: UILabel!
     @IBOutlet weak var restaurant2locationContainerView: UIView!
-    @IBOutlet weak var restaurant2starCountLabel: UILabel!
-    @IBOutlet weak var restaurant2starImageContainerView: UIView!
+//    @IBOutlet weak var restaurant2starCountLabel: UILabel!
+//    @IBOutlet weak var restaurant2starImageContainerView: UIView!
     
     @IBOutlet weak var restaurantMoreContainerView: UIView!
     @IBOutlet weak var restaurantMoreLabel: UILabel!
@@ -383,12 +383,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     restaurant1locationContainerView.isHidden = true
                 }
                 
-                if let star = restaurant.michelinStar?.first {
-                    restaurant1starImageContainerView.isHidden = false
-                    restaurant1starCountLabel.text = star.name.uppercased()
-                } else {
-                    restaurant1starImageContainerView.isHidden = true
-                }
+//                if let star = restaurant.michelinStar?.first {
+//                    restaurant1starImageContainerView.isHidden = false
+//                    restaurant1starCountLabel.text = star.name.uppercased()
+//                } else {
+//                    restaurant1starImageContainerView.isHidden = true
+//                }
                 
             } else if index == 1 {
                 restaurant2NameLabel.text = restaurant.name
@@ -404,12 +404,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     restaurant2locationContainerView.isHidden = true
                 }
                 
-                if let star = restaurant.michelinStar?.first {
-                    restaurant2starImageContainerView.isHidden = false
-                    restaurant2starCountLabel.text = star.name.uppercased()
-                } else {
-                    restaurant2starImageContainerView.isHidden = true
-                }
+//                if let star = restaurant.michelinStar?.first {
+//                    restaurant2starImageContainerView.isHidden = false
+//                    restaurant2starCountLabel.text = star.name.uppercased()
+//                } else {
+//                    restaurant2starImageContainerView.isHidden = true
+//                }
             }
         }
         

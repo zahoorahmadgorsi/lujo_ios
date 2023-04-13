@@ -235,12 +235,12 @@ extension RestaurantSearchViewController: UICollectionViewDataSource, UICollecti
             cell.locationContainerView.isHidden = true
         }
         
-        if let star = model.michelinStar?.first {
-            cell.starImageContainerView.isHidden = false
-            cell.starCountLabel.text = star.name.uppercased()
-        } else {
-            cell.starImageContainerView.isHidden = true
-        }
+//        if let star = model.michelinStar?.first {
+//            cell.starImageContainerView.isHidden = false
+//            cell.starCountLabel.text = star.name.uppercased()
+//        } else {
+//            cell.starImageContainerView.isHidden = true
+//        }
         
         return cell
     }

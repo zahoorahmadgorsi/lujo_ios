@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,10 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DiningViewCell" customModule="LUJO" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="150" height="196"/>
+            <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="150" height="196"/>
+                <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Myx-PC-Omx">
@@ -84,7 +84,7 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="X6o-J1-0CM">
-                        <rect key="frame" x="0.0" y="159" width="150" height="37"/>
+                        <rect key="frame" x="0.0" y="159" width="150" height="21"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmr-WU-jp4">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="21"/>
@@ -115,44 +115,13 @@
                                     <constraint firstAttribute="bottom" secondItem="wgg-zG-Bcp" secondAttribute="bottom" constant="5" id="W7M-ez-xpq"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MEO-1j-neG">
-                                <rect key="frame" x="0.0" y="21" width="150" height="16"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jlc-gg-mjz">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="16"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Michelin Star Icon" translatesAutoresizingMaskIntoConstraints="NO" id="jX6-ge-Vkk">
-                                                <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                                                <color key="tintColor" name="White Text"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="16" id="Hx0-fn-Ymd"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 Michelin stars" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="tQc-DK-PbI">
-                                                <rect key="frame" x="24" y="0.0" width="126" height="16"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                <color key="textColor" name="Palette - Placeholder Text"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="Jlc-gg-mjz" firstAttribute="leading" secondItem="MEO-1j-neG" secondAttribute="leading" id="3sp-en-TKm"/>
-                                    <constraint firstItem="Jlc-gg-mjz" firstAttribute="top" secondItem="MEO-1j-neG" secondAttribute="top" id="5EM-R6-Xwf"/>
-                                    <constraint firstAttribute="bottom" secondItem="Jlc-gg-mjz" secondAttribute="bottom" id="Tbp-Pw-WpX"/>
-                                    <constraint firstAttribute="trailing" secondItem="Jlc-gg-mjz" secondAttribute="trailing" id="bBZ-Vr-XCT"/>
-                                    <constraint firstAttribute="height" constant="16" id="dK4-Sf-TDe"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Bs-16-gL9">
-                                <rect key="frame" x="0.0" y="37" width="150" height="0.0"/>
+                                <rect key="frame" x="0.0" y="21" width="150" height="0.0"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="37" id="aXp-tD-mLj"/>
+                            <constraint firstAttribute="height" constant="21" id="aXp-tD-mLj"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -177,8 +146,6 @@
                 <outlet property="locationContainerView" destination="lmr-WU-jp4" id="wYF-Sc-YP6"/>
                 <outlet property="name" destination="aSP-iY-0EL" id="ip9-s0-W6S"/>
                 <outlet property="primaryImage" destination="9Xh-bO-zuV" id="BBk-I6-jDB"/>
-                <outlet property="starCountLabel" destination="tQc-DK-PbI" id="VDs-Hu-IlM"/>
-                <outlet property="starImageContainerView" destination="MEO-1j-neG" id="2MO-LZ-Uux"/>
                 <outlet property="viewHeart" destination="oR8-wA-cke" id="d38-ws-LTa"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="153.82308845577214"/>
@@ -186,7 +153,6 @@
     </objects>
     <resources>
         <image name="Location White" width="12" height="16"/>
-        <image name="Michelin Star Icon" width="16.5" height="18"/>
         <image name="heart_white" width="22" height="19.5"/>
         <image name="placeholder-img" width="600" height="400"/>
         <namedColor name="Palette - Placeholder Text">

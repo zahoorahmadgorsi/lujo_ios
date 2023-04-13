@@ -20,8 +20,8 @@ class ImageCarouselCell: UICollectionViewCell {
     @IBOutlet var tagLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var locationContainerView: UIView!
-    @IBOutlet var starsLabel: UILabel!
-    @IBOutlet var starsContainerView: UIView!
+//    @IBOutlet var starsLabel: UILabel!
+//    @IBOutlet var starsContainerView: UIView!
     @IBOutlet var gradientImageView: UIImageView!
     @IBOutlet weak var imgHeart: UIImageView!
     
@@ -41,8 +41,8 @@ class ImageCarouselCell: UICollectionViewCell {
         categoryLabel.text = ""
         locationLabel.text = ""
         locationContainerView.isHidden = false
-        starsLabel.text = ""
-        starsContainerView.isHidden = false
+//        starsLabel.text = ""
+//        starsContainerView.isHidden = false
         tagsContainerView.alpha = 0
     }
 }

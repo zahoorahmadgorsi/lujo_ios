@@ -239,6 +239,7 @@ class EEAPIManager {
     
     func getGoods(term: String?, giftCategoryId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int , completion: @escaping ([Product], Error?) -> Void) {
         Alamofire.request(EERouter.goods(term, giftCategoryId, productId, filtersToApply, page, perPage)).responseJSON { response in
+            print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -263,14 +264,16 @@ class EEAPIManager {
                     var products = [Product]()
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
                     completion(products, nil)
-                }else if let id = giftCategoryId , !id.isEmpty{
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<PerCityObjects>.self, from: response.data!)
-                    else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
-                        return
-                    }
-                    completion(result.content.categories?[0].items ?? [], nil)
-                }else{
+                }
+//                else if let id = giftCategoryId , !id.isEmpty{
+//                    guard let result = try? JSONDecoder().decode(LujoServerResponse<PerCityObjects>.self, from: response.data!)
+//                    else {
+//                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+//                        return
+//                    }
+//                    completion(result.content.categories?[0].items ?? [], nil)
+//                }
+                else{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self, from: response.data!)
                     else {
                         completion([], BackendError.parsing(reason: "Unable to parse response"))
@@ -382,8 +385,8 @@ class EEAPIManager {
         }
     }
     
-    func getTopRated(type: String?, term: String?, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.topRated( type: type,  term:term)).responseJSON { response in
+    func getTopRated(type: String?, term: String?, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+        Alamofire.request(EERouter.topRated( type: type,  term:term, page,perPage)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return

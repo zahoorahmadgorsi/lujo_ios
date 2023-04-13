@@ -208,8 +208,6 @@ class AccountViewController: UIViewController {
         }
         if (currentUser.email == "sahleg@golujo.com"
             || currentUser.email == "zahoor.gorsi@gmail.com"
-            || currentUser.email == "zahoor.ahmad@live.com"
-            || currentUser.email == "shuja@baroque-group.com"
             || currentUser.email == "thearchitectxy@gmail.com"
         ){
             let viewController = GenerateReferralCodeViewController.instantiate()
