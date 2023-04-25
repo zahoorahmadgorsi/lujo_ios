@@ -153,11 +153,9 @@ extension GiftsCollectionFilter : UICollectionViewDataSource {
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //when tapped on the cell it should be removed in case of tags, event category, villa lifestyle etc
-        self.collectionView.deleteItems(at: [indexPath])
-        self.pickedItems.remove(at: indexPath.row)
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.pickedItems.remove(at: indexPath.row)
+//    }
 }
 
 extension GiftsCollectionFilter: UICollectionViewDelegateFlowLayout {

@@ -97,7 +97,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         categorySlider.delegate = self
         
         locationContainerView.isHidden = true
-        noNearbyRestaurantsContainerView.isHidden = true
+//        noNearbyRestaurantsContainerView.isHidden = true
         myLocationCityView.isHidden = true
         
 //        getDiningInformation(showActivity: true)  now we are loading in viewAppear
@@ -113,9 +113,9 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         }
     }
     
-    @IBAction func noNearbyRestaurantsDismissButton_onClick(_ sender: Any) {
-        noNearbyRestaurantsContainerView.removeFromSuperview()
-    }
+//    @IBAction func noNearbyRestaurantsDismissButton_onClick(_ sender: Any) {
+//        noNearbyRestaurantsContainerView.removeFromSuperview()
+//    }
     
     @IBAction func enableLocationButton_onClick(_ sender: Any) {
         let status = CLLocationManager.authorizationStatus()
@@ -198,9 +198,9 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             locationRestaurants = []
             updatePopularCities()
         }
-        if !(noNearbyRestaurantsContainerView?.isHidden ?? true), !isLocationEnabled {
-            noNearbyRestaurantsContainerView?.isHidden = true
-        }
+//        if !(noNearbyRestaurantsContainerView?.isHidden ?? true), !isLocationEnabled {
+//            noNearbyRestaurantsContainerView?.isHidden = true
+//        }
         if isLocationEnabled {
             locationManager.startUpdatingLocation()
         }
@@ -230,7 +230,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
 //        print(restaurants)
         locationRestaurants = restaurants
         myLocationCityView.isHidden = restaurants.count == 0
-        noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
+//        noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
         if let termId = restaurants.first?.locations?.city?.termId, let name = restaurants.first?.locations?.city?.name {
             self.myLocationCityView.city = Cities(termId: termId, name: name, itemsNum: 2, items: self.locationRestaurants)
             myLocationCityView.delegate = self
@@ -348,7 +348,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
                     Crashlytics.crashlytics().record(error: error)
                     // NEED TO BE REPLACED WITH UI VIEW
                     self.myLocationCityView.isHidden = true
-                    self.noNearbyRestaurantsContainerView?.isHidden = false
+//                    self.noNearbyRestaurantsContainerView?.isHidden = false
                     self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"))
                 } else {
                     if let information = information {
@@ -358,7 +358,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
                         // NEED TO BE REPLACED WITH UI VIEW
                         self.showFeedback("No nearby Places available")
                         self.myLocationCityView.isHidden = true
-                        self.noNearbyRestaurantsContainerView?.isHidden = false
+//                        self.noNearbyRestaurantsContainerView?.isHidden = false
 
                     }
                 }

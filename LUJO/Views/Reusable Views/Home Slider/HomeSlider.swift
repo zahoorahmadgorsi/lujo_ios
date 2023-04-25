@@ -9,14 +9,14 @@
 import UIKit
 import AVFoundation
 
-protocol DidSelectSliderItemProtocol: class {
+protocol DidSelectSliderItemProtocol: AnyObject {
     func didSelectSliderItemAt(indexPath: IndexPath, sender: HomeSlider)
     func didTappedOnHeartAt(index: Int, sender: HomeSlider)
 }
 
 class HomeSlider: UIView {
     var itemWidth:Int = 175
-    var itemHeight:Int = 172
+    var itemHeight:Int = 174
 //    var giftItemHeight:Int = 148
     var itemMargin:Int = 16
     var timer: Timer?
@@ -208,7 +208,56 @@ extension HomeSlider: UICollectionViewDataSource {
         } else {
             cell.tagContainerView.isHidden = true
         }
-
+        
+        print("model.type:\(model.type)")
+        if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+            cell.viewMeasurements.isHidden = false
+            if model.type == "villa"{
+                
+                cell.viewLength.isHidden = true     //villa dont have length
+                if let val = model.numberOfGuests, val > 0{
+                    cell.viewNumberOfGuests.isHidden = false
+                    cell.lblNumberOfGuests.text = String(val)
+                }else{
+                    cell.viewNumberOfGuests.isHidden = true
+                }
+                if let val = model.numberOfBedrooms, val > 0{
+                    cell.viewCabins.isHidden = false
+                    cell.lblCabins.text = String(val)
+                }else{
+                    cell.viewCabins.isHidden = true
+                }
+                if let val = model.numberOfBathrooms, val > 0{
+                    cell.viewWashrooms.isHidden = false
+                    cell.lblWashrooms.text = String(val)
+                }else{
+                    cell.viewWashrooms.isHidden = true
+                }
+            }else if model.type == "yacht"{
+                cell.viewWashrooms.isHidden = true      //yacht dont have washroom
+                if let val = model.lengthM, val.count > 0{
+                    cell.viewLength.isHidden = false
+                    cell.lblLength.text = val
+                }else{
+                    cell.viewLength.isHidden = true
+                }
+                if let val = model.guestsNumber, val.count > 0{
+                    cell.viewNumberOfGuests.isHidden = false
+                    cell.lblNumberOfGuests.text = val
+                }else{
+                    cell.viewNumberOfGuests.isHidden = true
+                }
+                if let val = model.cabinNumber, val.count > 0{
+                    cell.viewCabins.isHidden = false
+                    cell.lblCabins.text = val
+                }else{
+                    cell.viewCabins.isHidden = true
+                }
+                
+            }
+        }else{
+            cell.viewMeasurements.isHidden = true
+        }
         return cell
         // swiftlint:enable force_cast
     }

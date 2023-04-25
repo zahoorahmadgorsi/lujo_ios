@@ -300,7 +300,7 @@ class FiltersViewController: UIViewController {
         // Sort By
         //**********
         let giftCell = GiftFilterCell()
-        let sortByFilter = GiftsCollectionFilter(cell: giftCell, cellWidth: 400, cellHeight: 36, leftImageName: "", rightImageName: "filters_uncheck", filterCellType: FilterCellType.SortBy)
+        let sortByFilter = GiftsCollectionFilter(cell: giftCell, cellWidth: Int(UIScreen.main.bounds.width) - 32, cellHeight: 36, leftImageName: "", rightImageName: "filters_uncheck", filterCellType: FilterCellType.SortBy)
         sortByFilter.lblTitle.text = "Sort By"
 
         let sortByFilters = self.filters.filter({$0.key == "Sort By"})
@@ -327,7 +327,7 @@ class FiltersViewController: UIViewController {
     func updateGiftsFilterByFilter(index:Int){
         let filterByCell = GiftFilterCell()
         
-        let filterByView = GiftsCollectionFilter(cell: filterByCell, cellWidth: 400, cellHeight: 36, leftImageName: "", rightImageName: "filter_right_arrow", filterCellType: FilterCellType.FilterBy)
+        let filterByView = GiftsCollectionFilter(cell: filterByCell, cellWidth: Int(UIScreen.main.bounds.width) - 32, cellHeight: 36, leftImageName: "", rightImageName: "filter_right_arrow", filterCellType: FilterCellType.FilterBy)
         filterByView.lblTitle.text = "Filter By"
 
         let filterBy = self.filters.filter({$0.key == "filter by"})

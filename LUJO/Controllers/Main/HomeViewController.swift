@@ -161,7 +161,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
 
         locationEventContainerView.isHidden = true
         locationContainerView.isHidden = true
-        noNearbyEventsContainerView.isHidden = true
+//        noNearbyEventsContainerView.isHidden = true
         
         //tap gesture on location based event's see all
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(btnLocationEventsSeeAllTapped))
@@ -302,9 +302,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     private let locationManager = CLLocationManager()
     
-    @IBAction func noNearbyEventsDismissButton_onClick(_ sender: Any) {
-        noNearbyEventsContainerView.removeFromSuperview()
-    }
+//    @IBAction func noNearbyEventsDismissButton_onClick(_ sender: Any) {
+//        noNearbyEventsContainerView.removeFromSuperview()
+//    }
     
     func checkLocationAuthorizationStatus() {
         updateUIforAuthorizationStatus(CLLocationManager.authorizationStatus())
@@ -360,9 +360,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         if !locationEventContainerView.isHidden, !isLocationEnabled {
             locationEventContainerView.isHidden = true
         }
-        if !(noNearbyEventsContainerView?.isHidden ?? true), !isLocationEnabled {
-            noNearbyEventsContainerView?.isHidden = true
-        }
+//        if !(noNearbyEventsContainerView?.isHidden ?? true), !isLocationEnabled {
+//            noNearbyEventsContainerView?.isHidden = true
+//        }
         if isLocationEnabled {
             locationManager.startUpdatingLocation()
         }
@@ -373,7 +373,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         locationEvents = events
         locationEventContainerView.isHidden = events.count == 0
         locationEventSlider.itemsList = Array(events.prefix(5))
-        noNearbyEventsContainerView?.isHidden = events.count > 0
+//        noNearbyEventsContainerView?.isHidden = events.count > 0
 //        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? "your city")"
 //        locationEventTitleLabel.text = "Upcoming in \(events.first?.location?.first?.city?.name ?? (events.first?.location?.first?.country.name ?? "your city"))"
         let location = "Upcoming in \(events.first?.locations?.city?.name ?? (events.first?.locations?.country.name ?? "your city"))"
@@ -1114,7 +1114,7 @@ extension HomeViewController {
                     Crashlytics.crashlytics().record(error: error)
                     // NEED TO BE REPLACED WITH UI VIEW
                     self.locationEventContainerView.isHidden = true
-                    self.noNearbyEventsContainerView?.isHidden = false
+//                    self.noNearbyEventsContainerView?.isHidden = false
                     self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"), "Location")
                 } else {
                     if let info = information , info.count > 0{
@@ -1124,7 +1124,7 @@ extension HomeViewController {
                         // NEED TO BE REPLACED WITH UI VIEW
 //                        self.showFeedback("No nearby Places available")
                         self.locationEventContainerView.isHidden = true
-                        self.noNearbyEventsContainerView?.isHidden = false
+//                        self.noNearbyEventsContainerView?.isHidden = false
                         
                     }
                 }

@@ -67,4 +67,6 @@ class GiftFilterCell: UICollectionViewCell, GiftFilterProtocol {
     @objc func didTappedOnMainView(_ sender: Any) {
         delegate?.didTappedOnItem(at: self.mainView.tag, filterCellType: self.filterCellType)
     }
+    
+    
 }
