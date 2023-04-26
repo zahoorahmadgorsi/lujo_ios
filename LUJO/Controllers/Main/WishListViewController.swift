@@ -160,121 +160,11 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         for view in self.stackView.subviews {
             view.removeFromSuperview()
         }
-        //*******
-        // EVENTS
-        //*******
-        var count = (wishListInformations?.events?.count ?? 0)
-        if count > 0 , let items = wishListInformations?.events{
-            let wishListView = WishListView()
-            wishListView.delegate = self
-            wishListView.itemType = .event
-            wishListView.imgTitle.image = UIImage(named: "Event Icon White")
-            wishListView.lblTitle.text = "Event"
-            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                                            , name: item.name
-//                                            , description: item.description
-//                                            , primaryMedia:item.thumbnail
-//                                            , locations: item.locations
-//                                            , isFavourite: item.isFavourite
-//                                            , type: item.type
-//                                            , lengthM: item.lengthM
-//                                            , numberOfBedrooms: item.numberOfBedrooms
-//                                            , numberOfBathrooms: item.numberOfBathrooms
-//                                            , numberOfGuests: item.numberOfGuests
-//                                            , cabinNumber: item.cabinNumber
-//                                            , guestsNumber: item.guestsNumber))
-//            }
-//
-//            wishListView.itemsList = itemsList
-            wishListView.itemsList = items
-            stackView.addArrangedSubview(wishListView)
-            
-            //applying constraints on wishListView
-            setupWishListLayout(wishListView: wishListView)
-        }
-        //***********
-        // EXPERIENCE
-        //***********
-        count = (wishListInformations?.experiences?.count ?? 0)
-        if count > 0 , let items = wishListInformations?.experiences{
-            let wishListView: WishListView = {
-                let tv = WishListView()
-                tv.translatesAutoresizingMaskIntoConstraints = false
-                return tv
-            }()
-            
-            wishListView.delegate = self
-            wishListView.itemType = .experience
-            wishListView.imgTitle.image = UIImage(named: "Experience Icon White")
-            wishListView.lblTitle.text = "Experience"
-            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                                            , name: item.name
-//                                            , description: item.description
-//                                            , primaryMedia:item.thumbnail
-//                                            , locations: item.locations
-//                                            , isFavourite: item.isFavourite
-//                                            , type: item.type
-//                                            , lengthM: item.lengthM
-//                                            , numberOfBedrooms: item.numberOfBedrooms
-//                                            , numberOfBathrooms: item.numberOfBathrooms
-//                                            , numberOfGuests: item.numberOfGuests
-//                                            , cabinNumber: item.cabinNumber
-//                                            , guestsNumber: item.guestsNumber))
-//            }
-//            wishListView.itemsList = itemsList
-            wishListView.itemsList = items
-            stackView.addArrangedSubview(wishListView)
-            //applying constraints on wishListView
-            setupWishListLayout(wishListView: wishListView)
-        }
-        //**************
-        // Special Event
-        //**************
-        count = (wishListInformations?.specialEvents?.count ?? 0)
-        if count > 0 , let items = wishListInformations?.specialEvents{
-            let wishListView: WishListView = {
-                let tv = WishListView()
-                tv.translatesAutoresizingMaskIntoConstraints = false
-                return tv
-            }()
-            
-            wishListView.delegate = self
-            wishListView.itemType = .specialEvent
-            wishListView.imgTitle.image = UIImage(named: "Event Icon White")
-            wishListView.lblTitle.text = "Special Event"
-            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                                            , name: item.name
-//                                            , description: item.description
-//                                            , primaryMedia:item.thumbnail
-//                                            , locations: item.locations
-//                                            , isFavourite: item.isFavourite
-//                                            , type: item.type
-//                                            , lengthM: item.lengthM
-//                                            , numberOfBedrooms: item.numberOfBedrooms
-//                                            , numberOfBathrooms: item.numberOfBathrooms
-//                                            , numberOfGuests: item.numberOfGuests
-//                                            , cabinNumber: item.cabinNumber
-//                                            , guestsNumber: item.guestsNumber))
-//            }
-//            wishListView.itemsList = itemsList
-            wishListView.itemsList = items
-            stackView.addArrangedSubview(wishListView)
-            //applying constraints on wishListView
-            setupWishListLayout(wishListView: wishListView)
-        }
+        
         //******************
         // Restaurant/Dining
         //******************
-        count = (wishListInformations?.restaurants?.count ?? 0)
+        var count = (wishListInformations?.restaurants?.count ?? 0)
         if count > 0 , let items = wishListInformations?.restaurants{
             let wishListView: WishListView = {
                 let tv = WishListView()
@@ -286,59 +176,12 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.itemType = .restaurant
             wishListView.imgTitle.image = UIImage(named: "dining grey icon")
             wishListView.lblTitle.text = "Dining"
-            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                                            , name: item.name
-//                                            , description: item.description
-//                                            , primaryMedia:item.thumbnail
-//                                            , locations: item.locations
-//                                            , isFavourite: item.isFavourite
-//                                            , type: item.type
-//                                            , lengthM: item.lengthM
-//                                            , numberOfBedrooms: item.numberOfBedrooms
-//                                            , numberOfBathrooms: item.numberOfBathrooms
-//                                            , numberOfGuests: item.numberOfGuests
-//                                            , cabinNumber: item.cabinNumber
-//                                            , guestsNumber: item.guestsNumber))
-//            }
-//            wishListView.itemsList = itemsList
             wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
         }
-//        //******************
-//        // Hotel
-//        //******************
-//        count = (wishListInformations?.hotels?.count ?? 0)
-//        if count > 0 , let items = wishListInformations?.hotels{
-//            let wishListView: WishListView = {
-//                let tv = WishListView()
-//                tv.translatesAutoresizingMaskIntoConstraints = false
-//                return tv
-//            }()
-//
-//            wishListView.delegate = self
-//            wishListView.itemType = .hotel
-//            wishListView.imgTitle.image = UIImage(named: "travel grey icon")
-//            wishListView.lblTitle.text = "Hotel"
-//            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                    , name: item.name
-//                    , description: item.description
-//                    , primaryMedia:item.primaryMedia
-//                    , locations: item.locations
-//                    , isFavourite: item.isFavourite))
-//            }
-//            wishListView.itemsList = itemsList
-//            stackView.addArrangedSubview(wishListView)
-//            //applying constraints on wishListView
-//            setupWishListLayout(wishListView: wishListView)
-//        }
+        
         //******************
         // Villa
         //******************
@@ -354,29 +197,29 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.itemType = .villa
             wishListView.imgTitle.image = UIImage(named: "villa grey icon")
             wishListView.lblTitle.text = "Properties"
-            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                                            , name: item.name
-//                                            , description: item.description
-//                                            , primaryMedia:item.thumbnail
-//                                            , locations: item.locations
-//                                            , isFavourite: item.isFavourite
-//                                            , type: item.type
-//                                            , lengthM: item.lengthM
-//                                            , numberOfBedrooms: item.numberOfBedrooms
-//                                            , numberOfBathrooms: item.numberOfBathrooms
-//                                            , numberOfGuests: item.numberOfGuests
-//                                            , cabinNumber: item.cabinNumber
-//                                            , guestsNumber: item.guestsNumber))
-//            }
-//            wishListView.itemsList = itemsList
             wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
         }
+        
+        //*******
+        // EVENTS
+        //*******
+        count = (wishListInformations?.events?.count ?? 0)
+        if count > 0 , let items = wishListInformations?.events{
+            let wishListView = WishListView()
+            wishListView.delegate = self
+            wishListView.itemType = .event
+            wishListView.imgTitle.image = UIImage(named: "Event Icon White")
+            wishListView.lblTitle.text = "Event"
+            wishListView.itemsList = items
+            stackView.addArrangedSubview(wishListView)
+            
+            //applying constraints on wishListView
+            setupWishListLayout(wishListView: wishListView)
+        }
+        
         //******************
         // Yacht
         //******************
@@ -392,29 +235,12 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.itemType = .yacht
             wishListView.imgTitle.image = UIImage(named: "yacht grey icon")
             wishListView.lblTitle.text = "Yacht"
-            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                                            , name: item.name
-//                                            , description: item.description
-//                                            , primaryMedia:item.thumbnail
-//                                            , locations: item.locations
-//                                            , isFavourite: item.isFavourite
-//                                            , type: item.type
-//                                            , lengthM: item.lengthM
-//                                            , numberOfBedrooms: item.numberOfBedrooms
-//                                            , numberOfBathrooms: item.numberOfBathrooms
-//                                            , numberOfGuests: item.numberOfGuests
-//                                            , cabinNumber: item.cabinNumber
-//                                            , guestsNumber: item.guestsNumber))
-//            }
-//            wishListView.itemsList = itemsList
             wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
         }
+
         //******************
         // Gifts
         //******************
@@ -430,24 +256,48 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.itemType = .gift
             wishListView.imgTitle.image = UIImage(named: "gift grey icon")
             wishListView.lblTitle.text = "Gifts"
-            //preparing data of collection view
-//            var itemsList = [Favourite]()
-//            for item in items{
-//                itemsList.append( Favourite(id: item.id
-//                                            , name: item.name
-//                                            , description: item.description
-//                                            , primaryMedia:item.thumbnail
-//                                            , locations: item.locations
-//                                            , isFavourite: item.isFavourite
-//                                            , type: item.type
-//                                            , lengthM: item.lengthM
-//                                            , numberOfBedrooms: item.numberOfBedrooms
-//                                            , numberOfBathrooms: item.numberOfBathrooms
-//                                            , numberOfGuests: item.numberOfGuests
-//                                            , cabinNumber: item.cabinNumber
-//                                            , guestsNumber: item.guestsNumber))
-//            }
-//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
+            stackView.addArrangedSubview(wishListView)
+            //applying constraints on wishListView
+            setupWishListLayout(wishListView: wishListView)
+        }
+        
+        //***********
+        // EXPERIENCE
+        //***********
+        count = (wishListInformations?.experiences?.count ?? 0)
+        if count > 0 , let items = wishListInformations?.experiences{
+            let wishListView: WishListView = {
+                let tv = WishListView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            
+            wishListView.delegate = self
+            wishListView.itemType = .experience
+            wishListView.imgTitle.image = UIImage(named: "Experience Icon White")
+            wishListView.lblTitle.text = "Experience"
+            wishListView.itemsList = items
+            stackView.addArrangedSubview(wishListView)
+            //applying constraints on wishListView
+            setupWishListLayout(wishListView: wishListView)
+        }
+        
+        //**************
+        // Special Event
+        //**************
+        count = (wishListInformations?.specialEvents?.count ?? 0)
+        if count > 0 , let items = wishListInformations?.specialEvents{
+            let wishListView: WishListView = {
+                let tv = WishListView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            
+            wishListView.delegate = self
+            wishListView.itemType = .specialEvent
+            wishListView.imgTitle.image = UIImage(named: "Event Icon White")
+            wishListView.lblTitle.text = "Special Event"
             wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
