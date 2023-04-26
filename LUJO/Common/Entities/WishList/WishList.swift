@@ -9,31 +9,6 @@
 import Foundation
 import FirebaseCrashlytics
 
-class Favourite{
-    internal init(id: String? = nil, name: String? = nil, description: String? = nil, primaryMedia: Gallery? = nil, locations: TaxonomyLocation? = nil, isFavourite: Bool? = nil
-                  , gallery: [Gallery]? = nil) {
-        self.id = id
-        self.name = name
-        self.description = description
-        self.primaryMedia = primaryMedia
-        self.locations = locations
-        self.isFavourite = isFavourite
-        self.gallery = gallery
-    }
-    
-    var id: String?
-    var name: String?
-    var description: String?
-    var primaryMedia: Gallery?
-    var locations: TaxonomyLocation?
-    var isFavourite: Bool?
-    let gallery: [Gallery]?
- 
-    func getGalleryImagesURL() -> [String] {
-        return gallery?.filter({ $0.type == "image" }).map({ $0.mediaUrl }) ?? []
-    }
-}
-
 struct WishListObjects: Codable {
     var events: [Product]?
     var experiences: [Product]?

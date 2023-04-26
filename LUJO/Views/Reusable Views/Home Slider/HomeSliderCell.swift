@@ -15,12 +15,16 @@ class HomeSliderCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet var primaryImage: UIImageView!
     @IBOutlet var name: UILabel!
+    
     @IBOutlet weak var imgDate: UIImageView!
     @IBOutlet var date: UILabel!
     @IBOutlet var dateContainerView: UIView!
     @IBOutlet var tagContainerView: UIView!
     @IBOutlet var tagLabel: UILabel!
     @IBOutlet var primaryImageHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var viewTitle: UIView!
+    @IBOutlet weak var viewTitleHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var viewHeart: UIView!
     @IBOutlet weak var imgHeart: UIImageView!
     
@@ -37,7 +41,7 @@ class HomeSliderCell: UICollectionViewCell {
     
     @IBOutlet weak var viewWashrooms: UIView!
     @IBOutlet weak var lblWashrooms: UILabel!
-    
+    @IBOutlet weak var viewEmpty: UIView!
     
     
     override func awakeFromNib() {

@@ -21,7 +21,7 @@ class HomeEventCell: UICollectionViewCell {
             name.text = event.name
             priceLabel.text = event.priceRange?.first?.name ?? "-"
 
-            let locationText = event.getLocation()
+            let locationText = event.getCityCountry()
             location.text = locationText.uppercased()
             dateContainerView.isHidden = false
 
@@ -62,7 +62,7 @@ class HomeEventCell: UICollectionViewCell {
             name.text = experience.name
             priceLabel.text = experience.priceRange?.first?.name ?? "-"
 
-            let locationText = experience.getLocation()
+            let locationText = experience.getCityCountry()
             location.text = locationText.uppercased()
 
             dateContainerView.isHidden = true

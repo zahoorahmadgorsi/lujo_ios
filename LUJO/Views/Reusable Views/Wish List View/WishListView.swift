@@ -22,7 +22,7 @@ enum FavouriteType {
 
 enum CollectionSize:Int{
     case itemWidth = 175
-    case itemHeight = 150
+    case itemHeight = 172
     case itemMargin = 16
 }
 
@@ -40,7 +40,8 @@ class WishListView: UIView {
         let contentView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         contentView.dataSource = self
         contentView.delegate = self
-        contentView.register(UINib(nibName: FavouriteCell.identifier, bundle: nil), forCellWithReuseIdentifier: FavouriteCell.identifier)
+        //contentView.register(UINib(nibName: FavouriteCell.identifier, bundle: nil), forCellWithReuseIdentifier: FavouriteCell.identifier)
+        contentView.register(UINib(nibName: HomeSliderCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeSliderCell.identifier)
         contentView.backgroundColor = .clear
         contentView.showsHorizontalScrollIndicator = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +58,14 @@ class WishListView: UIView {
     var timer = Timer()
     @IBOutlet weak var viewSeeAll: UIView!
     
-    var itemsList: [Favourite] = [] {
+//    var itemsList: [Favourite] = [] {
+//        didSet {
+//            collectionView.reloadData()
+//            collectionView.layoutIfNeeded() //forces the reload to happen immediately instead of on the next runloop cycle.
+//        }
+//    }
+    
+    var itemsList: [Product] = [] {
         didSet {
             collectionView.reloadData()
             collectionView.layoutIfNeeded() //forces the reload to happen immediately instead of on the next runloop cycle.
@@ -162,38 +170,90 @@ extension WishListView: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavouriteCell.identifier, for: indexPath) as! FavouriteCell
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavouriteCell.identifier, for: indexPath) as! FavouriteCell
+        
+//        let model = itemsList[indexPath.row]
+//        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.mediaType == "image" {
+//            cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+//        }//Zahoor started 20201026
+//        else if let firstImageLink = model.getGalleryImagesURL().first {
+//            cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+//        }
+//        //Zahoor started 20201026
+//        cell.primaryImage.isHidden = false;
+//        cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
+//        var avPlayer: AVPlayer!
+//        if( model.primaryMedia?.mediaType == "video"){
+//            //Playing the video
+//            if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+//                cell.primaryImage.isHidden = true;
+//
+//                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+//                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+//                avPlayerLayer.name = "videoPlayer"
+//                avPlayerLayer.frame = cell.containerView.bounds
+//                avPlayerLayer.videoGravity = .resizeAspectFill
+//                cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
+//                avPlayer.play()
+//                avPlayer.isMuted = true // To mute the sound
+//                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+//                    avPlayer?.seek(to: CMTime.zero)
+//                    avPlayer?.play()
+//                }
+//            }else
+//                if let mediaLink = model.primaryMedia?.thumbnail {
+//                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+//            }
+//        }
+//        //checking favourite image red or white
+//        if (model.isFavourite ?? false){
+//            cell.imgHeart.image = UIImage(named: "heart_red")
+//        }else{
+//            cell.imgHeart.image = UIImage(named: "heart_white")
+//        }
+//        //Add tap gesture on favourite
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(WishListView.tappedOnHeart(_:)))
+//        cell.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
+//        cell.viewHeart.tag = indexPath.row
+//        cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
+//
+//        //Zahoor end
+//
+//        cell.name.text = model.name
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSliderCell.identifier,
+                                                      for: indexPath) as! HomeSliderCell
         
         let model = itemsList[indexPath.row]
-        if let mediaLink = model.primaryMedia?.mediaUrl, model.primaryMedia?.mediaType == "image" {
+        if let mediaLink = model.thumbnail?.mediaUrl, model.thumbnail?.mediaType == "image" {
             cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }//Zahoor started 20201026
         else if let firstImageLink = model.getGalleryImagesURL().first {
             cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }
-        //Zahoor started 20201026
         cell.primaryImage.isHidden = false;
-        cell.imgContainerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
-        if( model.primaryMedia?.mediaType == "video"){
+        if( model.thumbnail?.mediaType == "video"){
             //Playing the video
-            if let videoLink = URL(string: model.primaryMedia?.mediaUrl ?? ""){
+            if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
                 cell.primaryImage.isHidden = true;
 
                 avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
                 let avPlayerLayer = AVPlayerLayer(player: avPlayer)
                 avPlayerLayer.name = "videoPlayer"
-                avPlayerLayer.frame = cell.imgContainerView.bounds
+                avPlayerLayer.frame = cell.containerView.bounds
                 avPlayerLayer.videoGravity = .resizeAspectFill
-                cell.imgContainerView.layer.insertSublayer(avPlayerLayer, at: 0)
+                cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
                 avPlayer.play()
                 avPlayer.isMuted = true // To mute the sound
+
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                     avPlayer?.seek(to: CMTime.zero)
                     avPlayer?.play()
                 }
             }else
-                if let mediaLink = model.primaryMedia?.thumbnail {
+                if let mediaLink = model.thumbnail?.thumbnail {
                 cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
         }
@@ -204,18 +264,110 @@ extension WishListView: UICollectionViewDataSource {
             cell.imgHeart.image = UIImage(named: "heart_white")
         }
         //Add tap gesture on favourite
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(WishListView.tappedOnHeart(_:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeSlider.tappedOnHeart(_:)))
         cell.viewHeart.isUserInteractionEnabled = true   //can also be enabled from IB
         cell.viewHeart.tag = indexPath.row
         cell.viewHeart.addGestureRecognizer(tapGestureRecognizer)
-
         //Zahoor end
         
-        cell.lblTitle.text = model.name
-        
+        cell.name.text = model.name
 
+        if model.type == "event" {  //showing start - end date in case of event
+            cell.dateContainerView.isHidden = false
+
+            let startDateText = ProductDetailsViewController.convertDateFormate(date: model.startDate!)
+            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: model.startDate!)
+
+            var endDateText = ""
+            if let eventEndDate = model.endDate {
+                endDateText = ProductDetailsViewController.convertDateFormate(date: eventEndDate)
+            }
+            
+            if let timezone = model.timezone {
+                startTimeText = "\(startTimeText) (\(timezone))"
+            }
+
+            cell.date.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
+            cell.imgDate.image = UIImage(named: "calendar_home_white")
+        } else { //showing location if available
+            //cell.dateContainerView.isHidden = true
+            let locationText = model.getCityCountry()
+            cell.date.text = locationText.uppercased()
+            cell.dateContainerView.isHidden = locationText.isEmpty
+            cell.imgDate.image = UIImage(named: "Location White")
+        }
+
+        if model.tags?.count ?? 0 > 0, let fistTag = model.tags?[0] {
+            cell.tagContainerView.isHidden = false
+            cell.tagLabel.text = fistTag.name.uppercased()
+        } else {
+            cell.tagContainerView.isHidden = true
+        }
+        
+        print("model.type:\(model.type)")
+        if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+            cell.viewMeasurements.isHidden = false
+//            if let constraint = cell.viewTitleHeightConstraint{
+//                cell.viewTitle.addConstraint(constraint)
+//                cell.viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
+//            }
+            
+            if model.type == "villa"{
+                
+                cell.viewLength.isHidden = true     //villa dont have length
+                if let val = model.numberOfGuests, val > 0{
+                    cell.viewNumberOfGuests.isHidden = false
+                    cell.lblNumberOfGuests.text = String(val)
+                }else{
+                    cell.viewNumberOfGuests.isHidden = true
+                }
+                if let val = model.numberOfBedrooms, val > 0{
+                    cell.viewCabins.isHidden = false
+                    cell.lblCabins.text = String(val)
+                }else{
+                    cell.viewCabins.isHidden = true
+                }
+                if let val = model.numberOfBathrooms, val > 0{
+                    cell.viewWashrooms.isHidden = false
+                    cell.lblWashrooms.text = String(val)
+                }else{
+                    cell.viewWashrooms.isHidden = true
+                }
+            }else if model.type == "yacht"{
+                cell.viewWashrooms.isHidden = true      //yacht dont have washroom
+                if let val = model.lengthM, val.count > 0{
+                    cell.viewLength.isHidden = false
+                    cell.lblLength.text = val
+                }else{
+                    cell.viewLength.isHidden = true
+                }
+                if let val = model.guestsNumber, val.count > 0{
+                    cell.viewNumberOfGuests.isHidden = false
+                    cell.lblNumberOfGuests.text = val
+                }else{
+                    cell.viewNumberOfGuests.isHidden = true
+                }
+                if let val = model.cabinNumber, val.count > 0{
+                    cell.viewCabins.isHidden = false
+                    cell.lblCabins.text = val
+                }else{
+                    cell.viewCabins.isHidden = true
+                }
+                
+            }
+        }else {
+            cell.viewMeasurements.isHidden = true   //measurements arent required other then yachts and properties
+//            if model.type == "gift"{    //gifts dont have location and/or measurements so let it's title grow in height
+//                //it will make the viewTitle grow to show multilines title for gifts especially
+//                if let constraint = cell.viewTitleHeightConstraint{
+//                    cell.viewTitle.removeConstraint(constraint)
+//                    cell.viewEmpty.isHidden = true  //other wise viewempty will grow bigger instead of viewTitle
+//                }
+//            }
+        }
         return cell
-        // swiftlint:enable force_cast
+        
+        
     }
     
     

@@ -88,20 +88,19 @@ class ProductsViewController: UIViewController {
         currentLayout = collectionView.collectionViewLayout as? LiftLayout
         switch category! {
             case .event:
-                currentLayout?.setCustomCellHeight(170)
-//                currentLayout?.setCustomCellHeight(400)
+                currentLayout?.setCustomCellHeight(160)
             case .experience:
-                currentLayout?.setCustomCellHeight(170)
+                currentLayout?.setCustomCellHeight(160)
             case .villa:
-                currentLayout?.setCustomCellHeight(174)
+                currentLayout?.setCustomCellHeight(172)
             case .gift:
-                currentLayout?.setCustomCellHeight(150)
+                currentLayout?.setCustomCellHeight(160)
             case .yacht:
-                currentLayout?.setCustomCellHeight(174)
+                currentLayout?.setCustomCellHeight(172)
             case .recent:
-                currentLayout?.setCustomCellHeight(174)
+                currentLayout?.setCustomCellHeight(172)
             case .topRated:
-                currentLayout?.setCustomCellHeight(174)
+                currentLayout?.setCustomCellHeight(172)
         }
         
         collectionView.register(UINib(nibName: HomeSliderCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeSliderCell.identifier)
@@ -329,7 +328,7 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
             cell.date.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
         }else { //showing location if available
             //cell.dateContainerView.isHidden = true
-            let locationText = model.getLocation()
+            let locationText = model.getCityCountry()
             cell.date.text = locationText.uppercased()
             cell.dateContainerView.isHidden = locationText.isEmpty
             cell.imgDate.image = UIImage(named: "Location White")
@@ -344,6 +343,11 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
         print("model.type:\(model.type)")
         if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
             cell.viewMeasurements.isHidden = false
+            cell.viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
+            if let constraint = cell.viewTitleHeightConstraint{
+                cell.viewTitle.addConstraint(constraint)
+            }
+            
             if model.type == "villa"{
                 
                 cell.viewLength.isHidden = true     //villa dont have length
@@ -389,6 +393,11 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
             }
         }else{
             cell.viewMeasurements.isHidden = true
+            //it will make the viewTitle grow to show multilines title for gifts especially
+//            cell.viewEmpty.isHidden = true  //other wise viewempty will grow bigger instead of viewTitle
+//            if let constraint = cell.viewTitleHeightConstraint{
+//                cell.viewTitle.removeConstraint(constraint)
+//            }
         }
         return cell
     }

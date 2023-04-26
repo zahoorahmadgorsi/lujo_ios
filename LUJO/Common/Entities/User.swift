@@ -143,7 +143,7 @@ struct LujoUserProfile: Codable {
     let referralCode: [String]
     let points: Int
     let membershipPlan: Membership?
-    var sfid: String?
+    var sfid: String
     let membershipPlanExpiration: Int?
     let isEmailVerified: Bool
     

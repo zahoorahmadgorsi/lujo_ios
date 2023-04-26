@@ -8504,8 +8504,8 @@ New York, NY 10011 USA</string>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZz-Cq-GbK">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Fch-I8-Oui">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="302"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Fch-I8-Oui">
+                                        <rect key="frame" x="0.0" y="16" width="414" height="286"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GxF-f2-yKu">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -8564,7 +8564,7 @@ New York, NY 10011 USA</string>
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVv-hA-4u4">
-                                                <rect key="frame" x="0.0" y="66" width="414" height="48"/>
+                                                <rect key="frame" x="0.0" y="58" width="414" height="48"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Ieb-sl-CMj">
                                                         <rect key="frame" x="16" y="0.0" width="382" height="48"/>
@@ -8630,7 +8630,7 @@ New York, NY 10011 USA</string>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cy9-SS-CkE" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="130" width="414" height="172"/>
+                                                <rect key="frame" x="0.0" y="114" width="414" height="172"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="172" id="UCs-Lr-7KT"/>
@@ -9569,7 +9569,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

@@ -42,7 +42,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
 //    var totalAnimationOnScreen:Int = 8
     
     // B2 - 5
-    var selectedCell: FavouriteCell?
+    var selectedCell: HomeSliderCell?
     var selectedCellImageViewSnapshot: UIView? //it’s a view that has a current rendered appearance of a view. Think of it as you would take a screenshot of your screen, but it will be one single view without any subviews.
     // B2 - 15
     var wishListAnimator: WishListSliderAnimator?
@@ -171,16 +171,25 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.imgTitle.image = UIImage(named: "Event Icon White")
             wishListView.lblTitle.text = "Event"
             //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.thumbnail
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                                            , name: item.name
+//                                            , description: item.description
+//                                            , primaryMedia:item.thumbnail
+//                                            , locations: item.locations
+//                                            , isFavourite: item.isFavourite
+//                                            , type: item.type
+//                                            , lengthM: item.lengthM
+//                                            , numberOfBedrooms: item.numberOfBedrooms
+//                                            , numberOfBathrooms: item.numberOfBathrooms
+//                                            , numberOfGuests: item.numberOfGuests
+//                                            , cabinNumber: item.cabinNumber
+//                                            , guestsNumber: item.guestsNumber))
+//            }
+//
+//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             
             //applying constraints on wishListView
@@ -202,16 +211,24 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.imgTitle.image = UIImage(named: "Experience Icon White")
             wishListView.lblTitle.text = "Experience"
             //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.thumbnail
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                                            , name: item.name
+//                                            , description: item.description
+//                                            , primaryMedia:item.thumbnail
+//                                            , locations: item.locations
+//                                            , isFavourite: item.isFavourite
+//                                            , type: item.type
+//                                            , lengthM: item.lengthM
+//                                            , numberOfBedrooms: item.numberOfBedrooms
+//                                            , numberOfBathrooms: item.numberOfBathrooms
+//                                            , numberOfGuests: item.numberOfGuests
+//                                            , cabinNumber: item.cabinNumber
+//                                            , guestsNumber: item.guestsNumber))
+//            }
+//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
@@ -232,16 +249,24 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.imgTitle.image = UIImage(named: "Event Icon White")
             wishListView.lblTitle.text = "Special Event"
             //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.thumbnail
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                                            , name: item.name
+//                                            , description: item.description
+//                                            , primaryMedia:item.thumbnail
+//                                            , locations: item.locations
+//                                            , isFavourite: item.isFavourite
+//                                            , type: item.type
+//                                            , lengthM: item.lengthM
+//                                            , numberOfBedrooms: item.numberOfBedrooms
+//                                            , numberOfBathrooms: item.numberOfBathrooms
+//                                            , numberOfGuests: item.numberOfGuests
+//                                            , cabinNumber: item.cabinNumber
+//                                            , guestsNumber: item.guestsNumber))
+//            }
+//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
@@ -262,16 +287,24 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.imgTitle.image = UIImage(named: "dining grey icon")
             wishListView.lblTitle.text = "Dining"
             //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.thumbnail
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                                            , name: item.name
+//                                            , description: item.description
+//                                            , primaryMedia:item.thumbnail
+//                                            , locations: item.locations
+//                                            , isFavourite: item.isFavourite
+//                                            , type: item.type
+//                                            , lengthM: item.lengthM
+//                                            , numberOfBedrooms: item.numberOfBedrooms
+//                                            , numberOfBathrooms: item.numberOfBathrooms
+//                                            , numberOfGuests: item.numberOfGuests
+//                                            , cabinNumber: item.cabinNumber
+//                                            , guestsNumber: item.guestsNumber))
+//            }
+//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
@@ -322,16 +355,24 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.imgTitle.image = UIImage(named: "villa grey icon")
             wishListView.lblTitle.text = "Properties"
             //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.thumbnail
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                                            , name: item.name
+//                                            , description: item.description
+//                                            , primaryMedia:item.thumbnail
+//                                            , locations: item.locations
+//                                            , isFavourite: item.isFavourite
+//                                            , type: item.type
+//                                            , lengthM: item.lengthM
+//                                            , numberOfBedrooms: item.numberOfBedrooms
+//                                            , numberOfBathrooms: item.numberOfBathrooms
+//                                            , numberOfGuests: item.numberOfGuests
+//                                            , cabinNumber: item.cabinNumber
+//                                            , guestsNumber: item.guestsNumber))
+//            }
+//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
@@ -352,16 +393,24 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.imgTitle.image = UIImage(named: "yacht grey icon")
             wishListView.lblTitle.text = "Yacht"
             //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.thumbnail
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                                            , name: item.name
+//                                            , description: item.description
+//                                            , primaryMedia:item.thumbnail
+//                                            , locations: item.locations
+//                                            , isFavourite: item.isFavourite
+//                                            , type: item.type
+//                                            , lengthM: item.lengthM
+//                                            , numberOfBedrooms: item.numberOfBedrooms
+//                                            , numberOfBathrooms: item.numberOfBathrooms
+//                                            , numberOfGuests: item.numberOfGuests
+//                                            , cabinNumber: item.cabinNumber
+//                                            , guestsNumber: item.guestsNumber))
+//            }
+//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
@@ -382,16 +431,24 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.imgTitle.image = UIImage(named: "gift grey icon")
             wishListView.lblTitle.text = "Gifts"
             //preparing data of collection view
-            var itemsList = [Favourite]()
-            for item in items{
-                itemsList.append( Favourite(id: item.id
-                    , name: item.name
-                    , description: item.description
-                    , primaryMedia:item.thumbnail
-                    , locations: item.locations
-                    , isFavourite: item.isFavourite))
-            }
-            wishListView.itemsList = itemsList
+//            var itemsList = [Favourite]()
+//            for item in items{
+//                itemsList.append( Favourite(id: item.id
+//                                            , name: item.name
+//                                            , description: item.description
+//                                            , primaryMedia:item.thumbnail
+//                                            , locations: item.locations
+//                                            , isFavourite: item.isFavourite
+//                                            , type: item.type
+//                                            , lengthM: item.lengthM
+//                                            , numberOfBedrooms: item.numberOfBedrooms
+//                                            , numberOfBathrooms: item.numberOfBathrooms
+//                                            , numberOfGuests: item.numberOfGuests
+//                                            , cabinNumber: item.cabinNumber
+//                                            , guestsNumber: item.guestsNumber))
+//            }
+//            wishListView.itemsList = itemsList
+            wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
@@ -409,7 +466,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         //let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2+64   // 64 is height of "see all" control
 //        var itemHeight = wishListView.collectionView.collectionViewLayout.collectionViewContentSize.height
 //        print(itemHeight)
-        let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2+64 // 64 is height of "see all" control
+        let itemHeight = CollectionSize.itemHeight.rawValue + CollectionSize.itemMargin.rawValue*2 + 48 // 48 is height of "see all" control
 //        print(itemHeight)
         wishListView.heightAnchor.constraint(equalToConstant: CGFloat(itemHeight)).isActive = true
         //Starting the animation
@@ -472,7 +529,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
-                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
                     // B2 - 7
                     selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
@@ -484,7 +541,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
-                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
                     // B2 - 7
                     selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
@@ -496,7 +553,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
-                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
                     // B2 - 7
                     selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
@@ -508,7 +565,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
-                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
                     // B2 - 7
                     selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
@@ -520,7 +577,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
-                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
                     // B2 - 7
                     selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
@@ -532,7 +589,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
-                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
                     // B2 - 7
                     selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
@@ -544,7 +601,7 @@ class WishListViewController: UIViewController, WishListViewProtocol{
                     viewController.transitioningDelegate = self
                     viewController.modalPresentationStyle = .overFullScreen
                     // B2 - 6
-                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? FavouriteCell
+                    selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
                     // B2 - 7
                     selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 

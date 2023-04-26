@@ -96,7 +96,7 @@ class YachtViewController: UIViewController {
             self.lenghtLabel.text = product.lengthM
             
             //Setting location
-            let locationText = product.getLocation()
+            let locationText = product.getCityCountry()
             destinationTextField.text = locationText
  
         }

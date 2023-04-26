@@ -16,7 +16,7 @@ protocol DidSelectSliderItemProtocol: AnyObject {
 
 class HomeSlider: UIView {
     var itemWidth:Int = 175
-    var itemHeight:Int = 174
+    var itemHeight:Int = 172
 //    var giftItemHeight:Int = 148
     var itemMargin:Int = 16
     var timer: Timer?
@@ -196,7 +196,7 @@ extension HomeSlider: UICollectionViewDataSource {
             cell.imgDate.image = UIImage(named: "calendar_home_white")
         } else { //showing location if available
             //cell.dateContainerView.isHidden = true
-            let locationText = model.getLocation()
+            let locationText = model.getCityCountry()
             cell.date.text = locationText.uppercased()
             cell.dateContainerView.isHidden = locationText.isEmpty
             cell.imgDate.image = UIImage(named: "Location White")
@@ -212,6 +212,11 @@ extension HomeSlider: UICollectionViewDataSource {
         print("model.type:\(model.type)")
         if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
             cell.viewMeasurements.isHidden = false
+//            if let constraint = cell.viewTitleHeightConstraint{
+//                cell.viewTitle.addConstraint(constraint)
+//                cell.viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
+//            }
+            
             if model.type == "villa"{
                 
                 cell.viewLength.isHidden = true     //villa dont have length
@@ -255,8 +260,15 @@ extension HomeSlider: UICollectionViewDataSource {
                 }
                 
             }
-        }else{
-            cell.viewMeasurements.isHidden = true
+        }else {
+            cell.viewMeasurements.isHidden = true   //measurements arent required other then yachts and properties
+//            if model.type == "gift"{    //gifts dont have location and/or measurements so let it's title grow in height
+//                //it will make the viewTitle grow to show multilines title for gifts especially
+//                if let constraint = cell.viewTitleHeightConstraint{
+//                    cell.viewTitle.removeConstraint(constraint)
+//                    cell.viewEmpty.isHidden = true  //other wise viewempty will grow bigger instead of viewTitle
+//                }
+//            }
         }
         return cell
         // swiftlint:enable force_cast

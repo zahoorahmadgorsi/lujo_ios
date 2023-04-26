@@ -360,8 +360,9 @@ extension ProductDetailsViewController {
             self.imgHeart.image = UIImage(named: "heart_white")
         }
         
-        var locationText = product.address ?? ""  //in case of restaurant , it will have exact address
-        locationText = locationText.count > 0 ? locationText + ", " + product.getLocation() : product.getLocation()
+//        var locationText = product.address ?? ""  //in case of restaurant , it will have exact address
+//        locationText = locationText.count > 0 ? locationText + ", " + product.getLocation() : product.getLocation()
+        var locationText = product.getCompleteAddress()
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         
@@ -440,7 +441,7 @@ extension ProductDetailsViewController {
             self.imgHeart.image = UIImage(named: "heart_white")
         }
         
-        let locationText = product.getLocation()
+        let locationText = product.getCompleteAddress()
         locationLabel.text = locationText.uppercased()
         locationContainerView.isHidden = locationText.isEmpty
         
@@ -619,7 +620,7 @@ extension ProductDetailsViewController {
         }else{
             self.imgHeart.image = UIImage(named: "heart_white")
         }
-        let locationText = product.getLocation()
+        let locationText = product.getCompleteAddress()
         locationLabel.text = locationText.uppercased()
         
         dateContainerView.isHidden = true

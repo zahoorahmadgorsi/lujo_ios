@@ -222,7 +222,7 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
             cell.date.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
         }else { //showing location if available
             //cell.dateContainerView.isHidden = true
-            let locationText = model.getLocation()
+            let locationText = model.getCityCountry()
             cell.date.text = locationText.uppercased()
             cell.dateContainerView.isHidden = locationText.isEmpty
             cell.imgDate.image = UIImage(named: "Location White")

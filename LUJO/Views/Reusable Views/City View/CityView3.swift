@@ -31,6 +31,17 @@ class CityView3: UIView {
     @IBOutlet weak var viewHeart1: UIView!
     @IBOutlet weak var imgHeart1: UIImageView!
     
+    @IBOutlet weak var viewMeasurements1: UIView!
+    @IBOutlet weak var viewLength1: UIView!
+    @IBOutlet weak var lblLength1: UILabel!
+    @IBOutlet weak var viewNumberOfGuests1: UIView!
+    @IBOutlet weak var lblNumberOfGuests1: UILabel!
+    @IBOutlet weak var viewCabins1: UIView!
+    @IBOutlet weak var lblCabins1: UILabel!
+    @IBOutlet weak var viewWashrooms1: UIView!
+    @IBOutlet weak var lblWashrooms1: UILabel!
+    @IBOutlet weak var viewEmpty1: UIView!
+    
     @IBOutlet weak var product2ContainerView: UIStackView!
     @IBOutlet weak var product2ImageContainer: UIView!
     @IBOutlet weak var product2ImageView: UIImageView!
@@ -41,6 +52,17 @@ class CityView3: UIView {
     @IBOutlet weak var viewHeart2: UIView!
     @IBOutlet weak var imgHeart2: UIImageView!
     
+    @IBOutlet weak var viewMeasurements2: UIView!
+    @IBOutlet weak var viewLength2: UIView!
+    @IBOutlet weak var lblLength2: UILabel!
+    @IBOutlet weak var viewNumberOfGuests2: UIView!
+    @IBOutlet weak var lblNumberOfGuests2: UILabel!
+    @IBOutlet weak var viewCabins2: UIView!
+    @IBOutlet weak var lblCabins2: UILabel!
+    @IBOutlet weak var viewWashrooms2: UIView!
+    @IBOutlet weak var lblWashrooms2: UILabel!
+    @IBOutlet weak var viewEmpty2: UIView!
+    
     @IBOutlet weak var product3ContainerView: UIStackView!
     @IBOutlet weak var product3ImageContainer: UIView!
     @IBOutlet weak var product3ImageView: UIImageView!
@@ -50,6 +72,17 @@ class CityView3: UIView {
     @IBOutlet weak var imgProduct3Date: UIImageView!
     @IBOutlet weak var viewHeart3: UIView!
     @IBOutlet weak var imgHeart3: UIImageView!
+    
+    @IBOutlet weak var viewMeasurements3: UIView!
+    @IBOutlet weak var viewLength3: UIView!
+    @IBOutlet weak var lblLength3: UILabel!
+    @IBOutlet weak var viewNumberOfGuests3: UIView!
+    @IBOutlet weak var lblNumberOfGuests3: UILabel!
+    @IBOutlet weak var viewCabins3: UIView!
+    @IBOutlet weak var lblCabins3: UILabel!
+    @IBOutlet weak var viewWashrooms3: UIView!
+    @IBOutlet weak var lblWashrooms3: UILabel!
+    @IBOutlet weak var viewEmpty3: UIView!
     
     weak var delegate: CityViewProtocol?
     
@@ -165,7 +198,7 @@ class CityView3: UIView {
                     lblProduct1Dates.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
                 }else { //showing location if available
                     //cell.dateContainerView.isHidden = true
-                    let locationText = product.getLocation()
+                    let locationText = product.getCityCountry()
                     lblProduct1Dates.text = locationText.uppercased()
                     svProduct1Dates.isHidden = locationText.isEmpty
                     imgProduct1Date.image = UIImage(named: "Location White")
@@ -179,6 +212,69 @@ class CityView3: UIView {
                 //setting indecies to handle the tap events
                 product1ContainerView.tag = index
                 viewHeart1.tag = index
+                
+                if  product.type == "villa" || product.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+                    svProduct1Dates.isHidden = true     //hiding dates
+                    viewMeasurements1.isHidden = false   //showing measurements
+        //            if let constraint = viewTitleHeightConstraint{
+        //                viewTitle.addConstraint(constraint)
+        //                viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
+        //            }
+                    
+                    if product.type == "villa"{
+                        
+                        viewLength1.isHidden = true     //villa dont have length
+                        if let val = product.numberOfGuests, val > 0{
+                            viewNumberOfGuests1.isHidden = false
+                            lblNumberOfGuests1.text = String(val)
+                        }else{
+                            viewNumberOfGuests1.isHidden = true
+                        }
+                        if let val = product.numberOfBedrooms, val > 0{
+                            viewCabins1.isHidden = false
+                            lblCabins1.text = String(val)
+                        }else{
+                            viewCabins1.isHidden = true
+                        }
+                        if let val = product.numberOfBathrooms, val > 0{
+                            viewWashrooms1.isHidden = false
+                            lblWashrooms1.text = String(val)
+                        }else{
+                            viewWashrooms1.isHidden = true
+                        }
+                    }else if product.type == "yacht"{
+                        viewWashrooms1.isHidden = true      //yacht dont have washroom
+                        if let val = product.lengthM, val.count > 0{
+                            viewLength1.isHidden = false
+                            lblLength1.text = val
+                        }else{
+                            viewLength1.isHidden = true
+                        }
+                        if let val = product.guestsNumber, val.count > 0{
+                            viewNumberOfGuests1.isHidden = false
+                            lblNumberOfGuests1.text = val
+                        }else{
+                            viewNumberOfGuests1.isHidden = true
+                        }
+                        if let val = product.cabinNumber, val.count > 0{
+                            viewCabins1.isHidden = false
+                            lblCabins1.text = val
+                        }else{
+                            viewCabins1.isHidden = true
+                        }
+                        
+                    }
+                }else {
+//                    svProduct1Dates.isHidden = false    //showing dates
+                    viewMeasurements1.isHidden = true   //measurements arent required other then yachts and properties
+        //            if product.type == "gift"{    //gifts dont have location and/or measurements so let it's title grow in height
+        //                //it will make the viewTitle grow to show multilines title for gifts especially
+        //                if let constraint = viewTitleHeightConstraint{
+        //                    viewTitle.removeConstraint(constraint)
+        //                    viewEmpty.isHidden = true  //other wise viewempty will grow bigger instead of viewTitle
+        //                }
+        //            }
+                }
             }
             else if index == 1 {
                 if (product.thumbnail?.mediaType == "image"){
@@ -239,7 +335,7 @@ class CityView3: UIView {
                     lblProduct2Dates.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
                 }else { //showing location if available
                     //cell.dateContainerView.isHidden = true
-                    let locationText = product.getLocation()
+                    let locationText = product.getCityCountry()
                     lblProduct2Dates.text = locationText.uppercased()
                     svProduct2Dates.isHidden = locationText.isEmpty
                     imgProduct2Date.image = UIImage(named: "Location White")
@@ -253,6 +349,69 @@ class CityView3: UIView {
                 //setting indecies to handle the tap events
                 product2ContainerView.tag = index
                 viewHeart2.tag = index
+                
+                if  product.type == "villa" || product.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+                    svProduct2Dates.isHidden = true     //hiding dates
+                    viewMeasurements2.isHidden = false   //showing measurements
+        //            if let constraint = viewTitleHeightConstraint{
+        //                viewTitle.addConstraint(constraint)
+        //                viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
+        //            }
+                    
+                    if product.type == "villa"{
+                        
+                        viewLength2.isHidden = true     //villa dont have length
+                        if let val = product.numberOfGuests, val > 0{
+                            viewNumberOfGuests2.isHidden = false
+                            lblNumberOfGuests2.text = String(val)
+                        }else{
+                            viewNumberOfGuests2.isHidden = true
+                        }
+                        if let val = product.numberOfBedrooms, val > 0{
+                            viewCabins2.isHidden = false
+                            lblCabins2.text = String(val)
+                        }else{
+                            viewCabins2.isHidden = true
+                        }
+                        if let val = product.numberOfBathrooms, val > 0{
+                            viewWashrooms2.isHidden = false
+                            lblWashrooms2.text = String(val)
+                        }else{
+                            viewWashrooms2.isHidden = true
+                        }
+                    }else if product.type == "yacht"{
+                        viewWashrooms2.isHidden = true      //yacht dont have washroom
+                        if let val = product.lengthM, val.count > 0{
+                            viewLength2.isHidden = false
+                            lblLength2.text = val
+                        }else{
+                            viewLength2.isHidden = true
+                        }
+                        if let val = product.guestsNumber, val.count > 0{
+                            viewNumberOfGuests2.isHidden = false
+                            lblNumberOfGuests2.text = val
+                        }else{
+                            viewNumberOfGuests2.isHidden = true
+                        }
+                        if let val = product.cabinNumber, val.count > 0{
+                            viewCabins2.isHidden = false
+                            lblCabins2.text = val
+                        }else{
+                            viewCabins2.isHidden = true
+                        }
+                        
+                    }
+                }else {
+//                    svProduct2Dates.isHidden = false    //showing dates
+                    viewMeasurements2.isHidden = true   //measurements arent required other then yachts and properties
+        //            if product.type == "gift"{    //gifts dont have location and/or measurements so let it's title grow in height
+        //                //it will make the viewTitle grow to show multilines title for gifts especially
+        //                if let constraint = viewTitleHeightConstraint{
+        //                    viewTitle.removeConstraint(constraint)
+        //                    viewEmpty.isHidden = true  //other wise viewempty will grow bigger instead of viewTitle
+        //                }
+        //            }
+                }
             }else if index == 2 {
                 if (product.thumbnail?.mediaType == "image"){
                     if let mediaLink = product.thumbnail?.mediaUrl {
@@ -313,7 +472,7 @@ class CityView3: UIView {
                     lblProduct3Dates.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
                 }else { //showing location if available
                     //cell.dateContainerView.isHidden = true
-                    let locationText = product.getLocation()
+                    let locationText = product.getCityCountry()
                     lblProduct3Dates.text = locationText.uppercased()
                     svProduct3Dates.isHidden = locationText.isEmpty
                     imgProduct3Date.image = UIImage(named: "Location White")
@@ -327,6 +486,69 @@ class CityView3: UIView {
                 //setting indecies to handle the tap events
                 product3ContainerView.tag = index
                 viewHeart3.tag = index
+                
+                if  product.type == "villa" || product.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+                    svProduct3Dates.isHidden = true     //hiding dates
+                    viewMeasurements3.isHidden = false   //showing measurements
+        //            if let constraint = viewTitleHeightConstraint{
+        //                viewTitle.addConstraint(constraint)
+        //                viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
+        //            }
+                    
+                    if product.type == "villa"{
+                        
+                        viewLength3.isHidden = true     //villa dont have length
+                        if let val = product.numberOfGuests, val > 0{
+                            viewNumberOfGuests3.isHidden = false
+                            lblNumberOfGuests3.text = String(val)
+                        }else{
+                            viewNumberOfGuests3.isHidden = true
+                        }
+                        if let val = product.numberOfBedrooms, val > 0{
+                            viewCabins3.isHidden = false
+                            lblCabins3.text = String(val)
+                        }else{
+                            viewCabins3.isHidden = true
+                        }
+                        if let val = product.numberOfBathrooms, val > 0{
+                            viewWashrooms3.isHidden = false
+                            lblWashrooms3.text = String(val)
+                        }else{
+                            viewWashrooms3.isHidden = true
+                        }
+                    }else if product.type == "yacht"{
+                        viewWashrooms3.isHidden = true      //yacht dont have washroom
+                        if let val = product.lengthM, val.count > 0{
+                            viewLength3.isHidden = false
+                            lblLength3.text = val
+                        }else{
+                            viewLength3.isHidden = true
+                        }
+                        if let val = product.guestsNumber, val.count > 0{
+                            viewNumberOfGuests3.isHidden = false
+                            lblNumberOfGuests3.text = val
+                        }else{
+                            viewNumberOfGuests3.isHidden = true
+                        }
+                        if let val = product.cabinNumber, val.count > 0{
+                            viewCabins3.isHidden = false
+                            lblCabins3.text = val
+                        }else{
+                            viewCabins3.isHidden = true
+                        }
+                        
+                    }
+                }else {
+//                    svProduct3Dates.isHidden = false    //showing dates
+                    viewMeasurements3.isHidden = true   //measurements arent required other then yachts and properties
+        //            if product.type == "gift"{    //gifts dont have location and/or measurements so let it's title grow in height
+        //                //it will make the viewTitle grow to show multilines title for gifts especially
+        //                if let constraint = viewTitleHeightConstraint{
+        //                    viewTitle.removeConstraint(constraint)
+        //                    viewEmpty.isHidden = true  //other wise viewempty will grow bigger instead of viewTitle
+        //                }
+        //            }
+                }
             }
         }
     }

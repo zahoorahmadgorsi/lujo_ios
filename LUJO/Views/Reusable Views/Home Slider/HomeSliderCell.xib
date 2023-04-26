@@ -13,14 +13,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HomeSliderCell" customModule="LUJO" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="175" height="174"/>
+            <rect key="frame" x="0.0" y="0.0" width="175" height="172"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="175" height="174"/>
+                <rect key="frame" x="0.0" y="0.0" width="175" height="172"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KKQ-3M-FPU">
-                        <rect key="frame" x="0.0" y="0.0" width="175" height="174"/>
+                        <rect key="frame" x="0.0" y="0.0" width="175" height="172"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hhc-rz-FLL">
                                 <rect key="frame" x="0.0" y="0.0" width="175" height="100"/>
@@ -70,16 +70,16 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Z9Q-oq-T8g">
-                                <rect key="frame" x="0.0" y="106" width="175" height="68"/>
+                                <rect key="frame" x="0.0" y="106" width="175" height="66"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93v-RB-xhI">
                                         <rect key="frame" x="0.0" y="0.0" width="175" height="22"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dRT-GE-9UP">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="dRT-GE-9UP">
                                                 <rect key="frame" x="0.0" y="0.0" width="175" height="22"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's fifteen LUJO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKf-h4-LMA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="153" height="22"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Jamie Olivers's fifteen LUJO" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKf-h4-LMA">
+                                                        <rect key="frame" x="0.0" y="0.0" width="151" height="22"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                         <color key="textColor" name="White Text"/>
                                                         <nil key="highlightedColor"/>
@@ -97,9 +97,9 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="ylD-NW-kPu" firstAttribute="centerY" secondItem="0lZ-55-xJV" secondAttribute="centerY" id="NBD-6e-yKp"/>
+                                                            <constraint firstItem="ylD-NW-kPu" firstAttribute="top" secondItem="0lZ-55-xJV" secondAttribute="top" constant="2" id="LzU-M8-t8C"/>
                                                             <constraint firstAttribute="trailing" secondItem="ylD-NW-kPu" secondAttribute="trailing" id="TXo-7L-FzX"/>
-                                                            <constraint firstAttribute="width" secondItem="0lZ-55-xJV" secondAttribute="height" multiplier="1:1" id="uzb-Nj-ucd"/>
+                                                            <constraint firstAttribute="width" constant="22" id="aAl-ym-76p"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -145,11 +145,11 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5f-5g-aU7">
-                                        <rect key="frame" x="0.0" y="44" width="175" height="2"/>
+                                        <rect key="frame" x="0.0" y="44" width="175" height="0.0"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pSR-Is-6ne">
-                                        <rect key="frame" x="0.0" y="46" width="175" height="22"/>
+                                        <rect key="frame" x="0.0" y="44" width="175" height="22"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="lEM-2s-GAm">
                                                 <rect key="frame" x="0.0" y="0.0" width="252" height="22"/>
@@ -314,10 +314,13 @@
                 <outlet property="tagContainerView" destination="CnM-B5-LHc" id="GSb-iW-hM8"/>
                 <outlet property="tagLabel" destination="Wy3-5b-yfR" id="bFt-Jr-Bzb"/>
                 <outlet property="viewCabins" destination="wxX-vc-wh5" id="WZG-AU-jCb"/>
+                <outlet property="viewEmpty" destination="R5f-5g-aU7" id="6hf-sS-rtz"/>
                 <outlet property="viewHeart" destination="0lZ-55-xJV" id="Elg-15-4WZ"/>
                 <outlet property="viewLength" destination="9fi-7h-Dnx" id="ahJ-14-eHm"/>
                 <outlet property="viewMeasurements" destination="pSR-Is-6ne" id="IrJ-qs-48g"/>
                 <outlet property="viewNumberOfGuests" destination="CoY-s5-Yab" id="pmh-kY-14R"/>
+                <outlet property="viewTitle" destination="93v-RB-xhI" id="e6I-5Y-ugc"/>
+                <outlet property="viewTitleHeightConstraint" destination="WKt-AM-c4Q" id="qq0-jm-haw"/>
                 <outlet property="viewWashrooms" destination="sJ3-wN-BfX" id="jbF-8Q-A4j"/>
             </connections>
             <point key="canvasLocation" x="-174" y="-175"/>
