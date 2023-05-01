@@ -170,7 +170,8 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         }
 //        print("Product: \(product)")
         if (product.type == "event"){
-            EEAPIManager().getEvents(past: false, term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
+            //EEAPIManager().getEvents(past: false, term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
+            EEAPIManager().getEvents(past: false, term: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
                     let error = BackendError.parsing(reason: "Could not obtain Events information")
@@ -180,20 +181,22 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                 completion(list[0], error)
             }
         }else if (product.type == "experience"){
-            EEAPIManager().getExperiences( term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
+            //EEAPIManager().getExperiences( term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
+            EEAPIManager().getExperiences( term: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Experience could not be loaded")
+                    let error = BackendError.parsing(reason: "Experiences could not be loaded")
                     completion(nil, error)
                     return
                 }
                 completion(list[0], error)
             }
         }else if (product.type == "villa"){
-            EEAPIManager().getVillas(term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
+            //EEAPIManager().getVillas(term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
+            EEAPIManager().getVillas(term: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Villa could not be loaded")
+                    let error = BackendError.parsing(reason: "Properties could not be loaded")
                     completion(nil, error)
                     return
                 }
@@ -203,7 +206,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getGoods( term: nil, giftCategoryId: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Gift could not be loaded")
+                    let error = BackendError.parsing(reason: "Gifts could not be loaded")
                     completion(nil, error)
                     return
                 }

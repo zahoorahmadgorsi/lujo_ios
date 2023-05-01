@@ -40,6 +40,7 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
 
     //this function validates captcha and if validated it sends call for user login
     func validateCaptchaThenOTPRequest() {
+        showNetworkActivity()
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             if let captchaToken = try? result.dematerialize(){
@@ -108,6 +109,7 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
             self?.captchaWebView = webview
         }
         hcaptcha?.onEvent { (event, data) in
+            self.hideNetworkActivity()
             if event == .open {
                 print("captcha open")
             }else if event == .close{

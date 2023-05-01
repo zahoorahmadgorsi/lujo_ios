@@ -27,13 +27,16 @@ enum EERouter: URLRequestConvertible {
     }()
 
     case home
-    case events(Bool, String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
-    case experiences( String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
+    //case events(Bool, String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
+//    case experiences( String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
+    case events(Bool, String?, String?, AppliedFilters?, Int, Int)
+    case experiences( String?, String?, AppliedFilters?, Int, Int)
     case salesforce(SalesforceRequest, String?)
     case geopoint(type: String, latitude: Float, longitude: Float)
     case citySearch(token: String, searchTerm: String)
     case cityInfo(cityId: String)
-    case villas(String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
+    //case villas(String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
+    case villas(String?, String?, AppliedFilters?, Int, Int)
     case goods(String?, String?, String?, AppliedFilters?, Int, Int)
     case yachts( String?, String?, String?, AppliedFilters?, Int, Int)
     case restaurants(String)    //get restauurant by id
@@ -73,10 +76,10 @@ enum EERouter: URLRequestConvertible {
         case .home:
             return .get
         
-        case let .events(_, _, _, _, id, _, _, _):      fallthrough
-        case let .experiences(_, _,_, id, _, _, _):    fallthrough
+        case let .events(_, _, id, _, _, _):      fallthrough
+        case let .experiences(_, id, _, _, _):    fallthrough
         case let .yachts(_, _, id, _, _, _):         fallthrough
-        case let .villas(_, _,_, id, _, _, _):
+        case let .villas(_, id, _, _, _):
             if let id = id , id.count > 0 {  //if event is search by id then use different API
                 return .get
             }else{
@@ -126,19 +129,19 @@ enum EERouter: URLRequestConvertible {
         switch self {
             case .home:
                 newURLComponents.path.append("/home")
-        case let .events(_, _, _, _, id, _, _, _):
+        case let .events(_, _, id, _, _, _):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/events/detail/" + productId)
                 }else{
                     newURLComponents.path.append("/events/search")
                 }
-            case let .experiences(_, _,_, id, _, _, _):
+            case let .experiences(_, id, _, _, _):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/experiences/detail/" + productId)
                     }else{
                         newURLComponents.path.append("/experiences/search")
                     }
-            case let .villas(_, _,_, id, _, _, _):
+            case let .villas(_, id, _, _, _):
                 if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
                         newURLComponents.path.append("/villas/detail/" + productId)
                 }else{
@@ -270,24 +273,28 @@ enum EERouter: URLRequestConvertible {
         case .home: fallthrough
         case .restaurants:
             return nil
-        case let .events(past, search, latitude, longitude, id, filters, page, perPage):
+        //case let .events(past, search, latitude, longitude, id, filters, page, perPage):
+        case let .events(past, search, id, filters, page, perPage):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getEventsSearchDataAsJSONData(past, search, latitude, longitude, filters, page: page, perPage:perPage)
+                return getEventsSearchDataAsJSONData(past, search, filters, page: page, perPage:perPage)
             }
-        case let .experiences(search,  latitude, longitude, id, filters, page, perPage):
+        //case let .experiences(search,  latitude, longitude, id, filters, page, perPage):
+        case let .experiences(search, id, filters, page, perPage):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getExperiencesSearchDataAsJSONData(search,  latitude, longitude, filters, page: page, perPage:perPage)
+                //return getExperiencesSearchDataAsJSONData(search,  latitude, longitude, filters, page: page, perPage:perPage)
+                return getExperiencesSearchDataAsJSONData(search, filters, page: page, perPage:perPage)
             }
             
-        case let .villas(term, latitude, longitude,productId, filters, page, perPage):
+        //case let .villas(term, latitude, longitude,productId, filters, page, perPage):
+        case let .villas(term, productId, filters, page, perPage):
             if let id = productId , id.count > 0 {  //if event is search by id then user different API
                 return nil
             }else{
-                return getVillasDataAsJSONData(search: term, latitude, longitude, id: productId, filters, page: page, perPage:perPage)
+                return getVillasDataAsJSONData(search: term, id: productId, filters, page: page, perPage:perPage)
             }
         case let .goods(search, giftCategoryId, id, filters, page, perPage):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
@@ -326,10 +333,10 @@ enum EERouter: URLRequestConvertible {
     }
     
     fileprivate func getEventsSearchDataAsJSONData(_ past: Bool,
-                                                   _ search: String?,
-                                                   _ latitude:Double?,
-                                                   _ longitude:Double?,
-                                                   _ filters:AppliedFilters?,
+                                                   _ search: String?
+//                                                   _ latitude:Double?,
+//                                                   _ longitude:Double?,
+                                                   ,_ filters:AppliedFilters?,
                                                    page: Int,
                                                    perPage: Int) -> Data? {
         var body: [String: Any] = ["status": "Published"]
@@ -341,10 +348,12 @@ enum EERouter: URLRequestConvertible {
 //        if let location = location, !location.isEmpty  {
 //            body["location"] = location     //e.g. dubai events, then it will contain dubai _id
 //        }
-        if let _latitude = latitude, let _longitude = longitude, _latitude != 0, _longitude != 0   {
-            body["latitude"] = _latitude
-            body["longitude"] = _longitude
-        }
+        
+//        if let _latitude = latitude, let _longitude = longitude, _latitude != 0, _longitude != 0   {
+//            body["latitude"] = _latitude
+//            body["longitude"] = _longitude
+//        }
+        
         if past{
             body["show_past"] = true
         }
@@ -376,8 +385,8 @@ enum EERouter: URLRequestConvertible {
     }
     
     fileprivate func getExperiencesSearchDataAsJSONData(_ search: String?,
-                                                        _ latitude: Double?,
-                                                        _ longitude: Double?,
+//                                                        _ latitude: Double?,
+//                                                        _ longitude: Double?,
                                                         _ filters:AppliedFilters?,
                                                         page: Int,
                                                         perPage: Int) -> Data? {
@@ -390,10 +399,10 @@ enum EERouter: URLRequestConvertible {
 //        if let location = location, !location.isEmpty  {
 //            body["location"] = location
 //        }
-        if let _latitude = latitude, let _longitude = longitude, _latitude != 0, _longitude != 0   {
-            body["latitude"] = _latitude
-            body["longitude"] = _longitude
-        }
+//        if let _latitude = latitude, let _longitude = longitude, _latitude != 0, _longitude != 0   {
+//            body["latitude"] = _latitude
+//            body["longitude"] = _longitude
+//        }
         //filters
         if let items = filters?.featuredCities, items.count > 0{
             body["cities"] = items
@@ -474,8 +483,8 @@ enum EERouter: URLRequestConvertible {
     
     
     fileprivate func getVillasDataAsJSONData( search: String?,
-                                              _ latitude:Double?,
-                                              _ longitude:Double?,
+//                                              _ latitude:Double?,
+//                                              _ longitude:Double?,
                                               id:String?,_ filters:AppliedFilters?,
                                               page: Int,
                                               perPage: Int) -> Data? {
@@ -490,10 +499,10 @@ enum EERouter: URLRequestConvertible {
 //        if let location = location , !location.isEmpty {
 //            body["location"] = location     //we are sending lat/long instead of location
 //        }
-        if let _latitude = latitude, let _longitude = longitude, _latitude != 0, _longitude != 0   {
-            body["latitude"] = _latitude
-            body["longitude"] = _longitude
-        }
+//        if let _latitude = latitude, let _longitude = longitude, _latitude != 0, _longitude != 0   {
+//            body["latitude"] = _latitude
+//            body["longitude"] = _longitude
+//        }
         if let id = id , !id.isEmpty {
             body["id"] = id
         }

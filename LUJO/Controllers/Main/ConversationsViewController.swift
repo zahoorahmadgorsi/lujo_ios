@@ -84,6 +84,7 @@ class ConversationsViewController: UIViewController {
 //        Change the color of the text field inside the search bar:
         let searchTextField = self.searchBar.searchTextField
         searchTextField.textColor = UIColor.white
+        searchTextField.placeHolderColor = .lightGray
 //        searchTextField.clearButtonMode = .never
 //        Hide or show the Cancel button on the right side of search bar:
 //        self.searchBar.showsCancelButton = true

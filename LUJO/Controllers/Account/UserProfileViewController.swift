@@ -106,6 +106,7 @@ class UserProfileViewController: UIViewController {
             self?.captchaWebView = webview
         }
         hcaptcha?.onEvent { (event, data) in
+            self.hideNetworkActivity()
             if event == .open {
                 print("captcha open")
             }else if event == .close{
@@ -255,6 +256,7 @@ class UserProfileViewController: UIViewController {
     }
     
     func validateCaptchaThenUpdate(_ firstName:String,_ lastName:String, email:String,_ newNumber:PhoneNumber) {
+        showNetworkActivity()
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             self?.captchaWebView?.removeFromSuperview()

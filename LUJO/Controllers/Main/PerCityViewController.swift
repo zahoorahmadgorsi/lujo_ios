@@ -35,6 +35,7 @@ class PerCityViewController: UIViewController {
     private(set) var category: ProductCategory!
     private var city: Cities?
     
+    @IBOutlet weak var svTopRated: UIStackView!
     @IBOutlet weak var collContainerView: UIView!
     
     lazy var collectionView: UICollectionView = {
@@ -305,6 +306,7 @@ class PerCityViewController: UIViewController {
     
     fileprivate func updateContent() {
         homeTopRatedSlider.itemsList = homeObjects?.topRated ?? []
+        svTopRated.isHidden = homeTopRatedSlider.itemsList.count == 0
         updatePopularCities()
     }
     

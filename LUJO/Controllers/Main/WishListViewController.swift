@@ -160,11 +160,11 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         for view in self.stackView.subviews {
             view.removeFromSuperview()
         }
-        
+        var count = 0
         //******************
         // Restaurant/Dining
         //******************
-        var count = (wishListInformations?.restaurants?.count ?? 0)
+        count = (wishListInformations?.restaurants?.count ?? 0)
         if count > 0 , let items = wishListInformations?.restaurants{
             let wishListView: WishListView = {
                 let tv = WishListView()
@@ -240,27 +240,6 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             //applying constraints on wishListView
             setupWishListLayout(wishListView: wishListView)
         }
-
-        //******************
-        // Gifts
-        //******************
-        count = (wishListInformations?.gifts?.count ?? 0)
-        if count > 0 , let items = wishListInformations?.gifts{
-            let wishListView: WishListView = {
-                let tv = WishListView()
-                tv.translatesAutoresizingMaskIntoConstraints = false
-                return tv
-            }()
-            
-            wishListView.delegate = self
-            wishListView.itemType = .gift
-            wishListView.imgTitle.image = UIImage(named: "gift grey icon")
-            wishListView.lblTitle.text = "Gifts"
-            wishListView.itemsList = items
-            stackView.addArrangedSubview(wishListView)
-            //applying constraints on wishListView
-            setupWishListLayout(wishListView: wishListView)
-        }
         
         //***********
         // EXPERIENCE
@@ -298,6 +277,27 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             wishListView.itemType = .specialEvent
             wishListView.imgTitle.image = UIImage(named: "Event Icon White")
             wishListView.lblTitle.text = "Special Event"
+            wishListView.itemsList = items
+            stackView.addArrangedSubview(wishListView)
+            //applying constraints on wishListView
+            setupWishListLayout(wishListView: wishListView)
+        }
+        
+        //******************
+        // Gifts
+        //******************
+        count = (wishListInformations?.gifts?.count ?? 0)
+        if count > 0 , let items = wishListInformations?.gifts{
+            let wishListView: WishListView = {
+                let tv = WishListView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            
+            wishListView.delegate = self
+            wishListView.itemType = .gift
+            wishListView.imgTitle.image = UIImage(named: "gift grey icon")
+            wishListView.lblTitle.text = "Gifts"
             wishListView.itemsList = items
             stackView.addArrangedSubview(wishListView)
             //applying constraints on wishListView

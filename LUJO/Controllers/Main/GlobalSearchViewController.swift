@@ -33,12 +33,34 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var property1TagContainerView: UIView!
     @IBOutlet weak var property1TagLabel: UILabel!
     
+    @IBOutlet weak var property1viewMeasurements: UIView!
+    @IBOutlet weak var property1viewLength: UIView!
+    @IBOutlet weak var property1lblLength: UILabel!
+    @IBOutlet weak var property1viewNumberOfGuests: UIView!
+    @IBOutlet weak var property1lblNumberOfGuests: UILabel!
+    @IBOutlet weak var property1viewCabins: UIView!
+    @IBOutlet weak var property1lblCabins: UILabel!
+    @IBOutlet weak var property1viewWashrooms: UIView!
+    @IBOutlet weak var property1lblWashrooms: UILabel!
+    @IBOutlet weak var property1viewEmpty: UIView!
+    
     @IBOutlet weak var property2ContainerView: UIView!
     @IBOutlet weak var property2ImageView: UIImageView!
     @IBOutlet weak var property2NameLabel: UILabel!
     @IBOutlet weak var property2DateLabel: UILabel!
     @IBOutlet weak var property2TagContainerView: UIView!
     @IBOutlet weak var property2TagLabel: UILabel!
+    
+    @IBOutlet weak var property2viewMeasurements: UIView!
+    @IBOutlet weak var property2viewLength: UIView!
+    @IBOutlet weak var property2lblLength: UILabel!
+    @IBOutlet weak var property2viewNumberOfGuests: UIView!
+    @IBOutlet weak var property2lblNumberOfGuests: UILabel!
+    @IBOutlet weak var property2viewCabins: UIView!
+    @IBOutlet weak var property2lblCabins: UILabel!
+    @IBOutlet weak var property2viewWashrooms: UIView!
+    @IBOutlet weak var property2lblWashrooms: UILabel!
+    @IBOutlet weak var property2viewEmpty: UIView!
     
     @IBOutlet weak var propertyMoreContainerView: UIView!
     @IBOutlet weak var propertyMoreLabel: UILabel!
@@ -73,12 +95,34 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var yacht1TagContainerView: UIView!
     @IBOutlet weak var yacht1TagLabel: UILabel!
     
+    @IBOutlet weak var yacht1viewMeasurements: UIView!
+    @IBOutlet weak var yacht1viewLength: UIView!
+    @IBOutlet weak var yacht1lblLength: UILabel!
+    @IBOutlet weak var yacht1viewNumberOfGuests: UIView!
+    @IBOutlet weak var yacht1lblNumberOfGuests: UILabel!
+    @IBOutlet weak var yacht1viewCabins: UIView!
+    @IBOutlet weak var yacht1lblCabins: UILabel!
+    @IBOutlet weak var yacht1viewWashrooms: UIView!
+    @IBOutlet weak var yacht1lblWashrooms: UILabel!
+    @IBOutlet weak var yacht1viewEmpty: UIView!
+    
     @IBOutlet weak var yacht2ContainerView: UIView!
     @IBOutlet weak var yacht2ImageView: UIImageView!
     @IBOutlet weak var yacht2NameLabel: UILabel!
     @IBOutlet weak var yacht2DateLabel: UILabel!
     @IBOutlet weak var yacht2TagContainerView: UIView!
     @IBOutlet weak var yacht2TagLabel: UILabel!
+    
+    @IBOutlet weak var yacht2viewMeasurements: UIView!
+    @IBOutlet weak var yacht2viewLength: UIView!
+    @IBOutlet weak var yacht2lblLength: UILabel!
+    @IBOutlet weak var yacht2viewNumberOfGuests: UIView!
+    @IBOutlet weak var yacht2lblNumberOfGuests: UILabel!
+    @IBOutlet weak var yacht2viewCabins: UIView!
+    @IBOutlet weak var yacht2lblCabins: UILabel!
+    @IBOutlet weak var yacht2viewWashrooms: UIView!
+    @IBOutlet weak var yacht2lblWashrooms: UILabel!
+    @IBOutlet weak var yacht2viewEmpty: UIView!
     
     @IBOutlet weak var yachtMoreContainerView: UIView!
     @IBOutlet weak var yachtMoreLabel: UILabel!
@@ -91,16 +135,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var restaurant1NameLabel: UILabel!
     @IBOutlet weak var restaurant1locationLabel: UILabel!
     @IBOutlet weak var restaurant1locationContainerView: UIView!
-//    @IBOutlet weak var restaurant1starCountLabel: UILabel!
-//    @IBOutlet weak var restaurant1starImageContainerView: UIView!
     
     @IBOutlet weak var restaurant2ContainerView: UIView!
     @IBOutlet weak var restaurant2ImageView: UIImageView!
     @IBOutlet weak var restaurant2NameLabel: UILabel!
     @IBOutlet weak var restaurant2locationLabel: UILabel!
     @IBOutlet weak var restaurant2locationContainerView: UIView!
-//    @IBOutlet weak var restaurant2starCountLabel: UILabel!
-//    @IBOutlet weak var restaurant2starImageContainerView: UIView!
     
     @IBOutlet weak var restaurantMoreContainerView: UIView!
     @IBOutlet weak var restaurantMoreLabel: UILabel!
@@ -183,32 +223,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         property2ContainerView.alpha = informations.property.items.count < 2 ? 0 : 1
         
         for (index,property) in informations.property.items.enumerated() {
-            
-//            let startDateText = ProductDetailsViewController.convertDateFormate(date: property.startDate!)
-//            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: property.startDate!)
-//
-//            var endDateText = ""
-//            if let propertyEndDate = property.endDate {
-//                endDateText = ProductDetailsViewController.convertDateFormate(date: propertyEndDate)
-//            }
-//
-//            if let timezone = property.timezone {
-//                startTimeText = "\(startTimeText) (\(timezone))"
-//            }
-            
             if index == 0 {
                 property1NameLabel.text = property.name
-                
-//                property1DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
-                
                 if let city = property.locations?.city {
-//                    restaurant1locationContainerView.isHidden = false
                     property1DateLabel.text = city.name.uppercased()
                 }
-//                else {
-//                    restaurant1locationContainerView.isHidden = true
-//                }
-                
+
                 if property.tags?.count ?? 0 > 0, let fistTag = property.tags?[0] {
                     property1ContainerView.isHidden = false
                     property1TagLabel.text = fistTag.name.uppercased()
@@ -219,19 +239,33 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                 if let mediaLink = property.thumbnail?.mediaUrl, property.thumbnail?.mediaType == "image" {
                     property1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
+                
+                //Updateing the measurements
+                property1viewLength.isHidden = true     //villa dont have length
+                if let val = property.numberOfGuests, val > 0{
+                    property1viewNumberOfGuests.isHidden = false
+                    property1lblNumberOfGuests.text = String(val)
+                }else{
+                    property1viewNumberOfGuests.isHidden = true
+                }
+                if let val = property.numberOfBedrooms, val > 0{
+                    property1viewCabins.isHidden = false
+                    property1lblCabins.text = String(val)
+                }else{
+                    property1viewCabins.isHidden = true
+                }
+                if let val = property.numberOfBathrooms, val > 0{
+                    property1viewWashrooms.isHidden = false
+                    property1lblWashrooms.text = String(val)
+                }else{
+                    property1viewWashrooms.isHidden = true
+                }
             } else if index == 1 {
                 property2NameLabel.text = property.name
-                
-//                property2DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
-//
                 if let city = property.locations?.city {
-//                    restaurant1locationContainerView.isHidden = false
                     property2DateLabel.text = city.name.uppercased()
                 }
-//                else {
-//                    restaurant1locationContainerView.isHidden = true
-//                }
-                
+
                 if property.tags?.count ?? 0 > 0, let fistTag = property.tags?[0] {
                     property2ContainerView.isHidden = false
                     property2TagLabel.text = fistTag.name.uppercased()
@@ -241,6 +275,27 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                 
                 if let mediaLink = property.thumbnail?.mediaUrl, property.thumbnail?.mediaType == "image" {
                     property2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                }
+                
+                //Updateing the measurements
+                property2viewLength.isHidden = true     //villa dont have length
+                if let val = property.numberOfGuests, val > 0{
+                    property2viewNumberOfGuests.isHidden = false
+                    property2lblNumberOfGuests.text = String(val)
+                }else{
+                    property2viewNumberOfGuests.isHidden = true
+                }
+                if let val = property.numberOfBedrooms, val > 0{
+                    property2viewCabins.isHidden = false
+                    property2lblCabins.text = String(val)
+                }else{
+                    property2viewCabins.isHidden = true
+                }
+                if let val = property.numberOfBathrooms, val > 0{
+                    property2viewWashrooms.isHidden = false
+                    property2lblWashrooms.text = String(val)
+                }else{
+                    property2viewWashrooms.isHidden = true
                 }
             }
         }
@@ -301,32 +356,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         yacht2ContainerView.alpha = informations.yacht.items.count < 2 ? 0 : 1
         
         for (index,yacht) in informations.yacht.items.enumerated() {
-            
-//            let startDateText = ProductDetailsViewController.convertDateFormate(date: yacht.startDate!)
-//            var startTimeText = ProductDetailsViewController.timeFormatter.string(from: yacht.startDate!)
-            
-//            var endDateText = ""
-//            if let yachtEndDate = yacht.endDate {
-//                endDateText = ProductDetailsViewController.convertDateFormate(date: yachtEndDate)
-//            }
-            
-//            if let timezone = yacht.timezone {
-//                startTimeText = "\(startTimeText) (\(timezone))"
-//            }
-            
             if index == 0 {
                 yacht1NameLabel.text = yacht.name
-                
-//                yacht1DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
-                
+
                 if let city = yacht.locations?.city {
-//                    restaurant1locationContainerView.isHidden = false
                     yacht1DateLabel.text = city.name.uppercased()
                 }
-//                else {
-//                    restaurant1locationContainerView.isHidden = true
-//                }
-                
                 if yacht.tags?.count ?? 0 > 0, let fistTag = yacht.tags?[0] {
                     yacht1ContainerView.isHidden = false
                     yacht1TagLabel.text = fistTag.name.uppercased()
@@ -337,18 +372,33 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                 if let mediaLink = yacht.thumbnail?.mediaUrl, yacht.thumbnail?.mediaType == "image" {
                     yacht1ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
+                //updating yacht's measurements
+                yacht1viewWashrooms.isHidden = true      //yacht dont have washroom
+                if let val = yacht.lengthM, val.count > 0{
+                    yacht1viewLength.isHidden = false
+                    yacht1lblLength.text = val
+                }else{
+                    yacht1viewLength.isHidden = true
+                }
+                if let val = yacht.guestsNumber, val.count > 0{
+                    yacht1viewNumberOfGuests.isHidden = false
+                    yacht1lblNumberOfGuests.text = val
+                }else{
+                    yacht1viewNumberOfGuests.isHidden = true
+                }
+                if let val = yacht.cabinNumber, val.count > 0{
+                    yacht1viewCabins.isHidden = false
+                    yacht1lblCabins.text = val
+                }else{
+                    yacht1viewCabins.isHidden = true
+                }
             } else if index == 1 {
                 yacht2NameLabel.text = yacht.name
-//                yacht2DateLabel.text = endDateText != "" ? "\(startDateText) - \(endDateText)" : "\(startDateText) \(startTimeText)"
                 
                 if let city = yacht.locations?.city {
-//                    restaurant1locationContainerView.isHidden = false
                     yacht1DateLabel.text = city.name.uppercased()
                 }
-//                else {
-//                    restaurant1locationContainerView.isHidden = true
-//                }
-                
+
                 if yacht.tags?.count ?? 0 > 0, let fistTag = yacht.tags?[0] {
                     yacht2ContainerView.isHidden = false
                     yacht2TagLabel.text = fistTag.name.uppercased()
@@ -358,6 +408,26 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                 
                 if let mediaLink = yacht.thumbnail?.mediaUrl, yacht.thumbnail?.mediaType == "image" {
                     yacht2ImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+                }
+                //updating yacht's measurements
+                yacht2viewWashrooms.isHidden = true      //yacht dont have washroom
+                if let val = yacht.lengthM, val.count > 0{
+                    yacht2viewLength.isHidden = false
+                    yacht2lblLength.text = val
+                }else{
+                    yacht2viewLength.isHidden = true
+                }
+                if let val = yacht.guestsNumber, val.count > 0{
+                    yacht2viewNumberOfGuests.isHidden = false
+                    yacht2lblNumberOfGuests.text = val
+                }else{
+                    yacht2viewNumberOfGuests.isHidden = true
+                }
+                if let val = yacht.cabinNumber, val.count > 0{
+                    yacht2viewCabins.isHidden = false
+                    yacht2lblCabins.text = val
+                }else{
+                    yacht2viewCabins.isHidden = true
                 }
             }
         }
@@ -383,13 +453,6 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                     restaurant1locationContainerView.isHidden = true
                 }
                 
-//                if let star = restaurant.michelinStar?.first {
-//                    restaurant1starImageContainerView.isHidden = false
-//                    restaurant1starCountLabel.text = star.name.uppercased()
-//                } else {
-//                    restaurant1starImageContainerView.isHidden = true
-//                }
-                
             } else if index == 1 {
                 restaurant2NameLabel.text = restaurant.name
                 
@@ -403,13 +466,6 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
                 } else {
                     restaurant2locationContainerView.isHidden = true
                 }
-                
-//                if let star = restaurant.michelinStar?.first {
-//                    restaurant2starImageContainerView.isHidden = false
-//                    restaurant2starCountLabel.text = star.name.uppercased()
-//                } else {
-//                    restaurant2starImageContainerView.isHidden = true
-//                }
             }
         }
         

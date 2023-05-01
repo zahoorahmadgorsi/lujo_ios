@@ -166,6 +166,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
             self?.captchaWebView = webview
         }
         hcaptcha?.onEvent { (event, data) in
+            self.hideNetworkActivity()
             if event == .open {
                 print("captcha open")
             }else if event == .close{
@@ -181,6 +182,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
 
     //this function validates the captcha and if validated sends call for registration
     func validateCaptchaThenSignup() {
+        showNetworkActivity()
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             self?.captchaWebView?.removeFromSuperview()

@@ -145,7 +145,8 @@ class ProductsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if dataSource.isEmpty {
-            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
+//            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
+            getInformation(for: category, past: false, term: nil, cityId: city?.termId, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
         }
     }
     
@@ -162,11 +163,13 @@ class ProductsViewController: UIViewController {
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
-        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
+//        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
+        getInformation(for: category, past: false, term: nil, cityId: nil, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
     }
     
     @IBAction func eventTypeChanged(_ sender: Any) {
-        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: nil, longitude:nil,filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
+//        getInformation(for: category, past: false, term: nil, cityId: nil, latitude: nil, longitude:nil,filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
+        getInformation(for: category, past: false, term: nil, cityId: nil,filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize)
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
@@ -423,18 +426,21 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
             print("load next set")
             self.pageNumber += 1
 //            self.pageSize += self.pageSize
-            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize, isSilentFetch: true)
+//            getInformation(for: category, past: false, term: nil, cityId: city?.termId, latitude: city?.latitude, longitude:city?.longitude, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize, isSilentFetch: true)
+            getInformation(for: category, past: false, term: nil, cityId: city?.termId, filtersToApply: self.applyFilters, page: self.pageNumber, perPage: self.pageSize, isSilentFetch: true)
         }
     }
 }
 
 extension ProductsViewController {
     
-    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, isSilentFetch: Bool = false) {
+//    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, isSilentFetch: Bool = false) {
+    func getInformation(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, isSilentFetch: Bool = false) {
         if !isSilentFetch{
             showNetworkActivity()
         }
-        getList(for: category, past: past, term: term, cityId: cityId,latitude: latitude,longitude:longitude, filtersToApply:filtersToApply, page: page, perPage: perPage) { items, error in
+//        getList(for: category, past: past, term: term, cityId: cityId,latitude: latitude,longitude:longitude, filtersToApply:filtersToApply, page: page, perPage: perPage) { items, error in
+        getList(for: category, past: past, term: term, cityId: cityId, filtersToApply:filtersToApply, page: page, perPage: perPage) { items, error in
             self.hideNetworkActivity()
             // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
             self.refreshControl.endRefreshing()
@@ -446,17 +452,25 @@ extension ProductsViewController {
         }
     }
     
-    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int,
-                 completion: @escaping ([Product], Error?) -> Void) {
-//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-//            completion([], LoginError.errorLogin(description: "User does not exist or is not verified"))
-//            return
-//        }
+//    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+        
+        //if user is searching by cityId then appending its id with the filters object
+        var filters = filtersToApply
+        if let _cityId = cityId{    //if cityId has been passed to apply filter
+            if filters != nil{  //if filters are passed
+                filters?.featuredCities.append(_cityId)
+            }else{      //filters were not passed so create it
+                filters = AppliedFilters(featuredCities: [_cityId])
+            }
+        }
         
         switch category {
             case .event:
-            EEAPIManager().getEvents( past: past, term: term, latitude: latitude, longitude: longitude, productId: nil,
-                                      filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
+//            EEAPIManager().getEvents( past: past, term: term, latitude: latitude, longitude: longitude, productId: nil,
+//                                      filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
+            EEAPIManager().getEvents( past: past, term: term, productId: nil,
+                                      filtersToApply: filters, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Events information")
@@ -466,8 +480,8 @@ extension ProductsViewController {
                     completion(list, error)
                 }
             case .experience:
-                EEAPIManager().getExperiences( term: term, latitude: latitude, longitude: longitude, productId: nil,
-                                               filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
+                //EEAPIManager().getExperiences( term: term, latitude: latitude, longitude: longitude, productId: nil, filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
+            EEAPIManager().getExperiences( term: term, productId: nil, filtersToApply: filters, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experience information")
@@ -478,7 +492,7 @@ extension ProductsViewController {
                 }
             case .yacht:
                 EEAPIManager().getYachts( term: term, cityId: cityId, productId: nil,
-                                          filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
+                                          filtersToApply: filters, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
@@ -488,8 +502,8 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .villa:
-                EEAPIManager().getVillas(term: term, latitude: latitude, longitude: longitude, productId: nil,
-                                         filtersToApply: filtersToApply, page:page, perPage: perPage) { list, error in
+                //EEAPIManager().getVillas(term: term, latitude: latitude, longitude: longitude, productId: nil, filtersToApply: filtersToApply, page:page, perPage: perPage) { list, error in
+            EEAPIManager().getVillas(term: term, productId: nil, filtersToApply: filters, page:page, perPage: perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain properties information")
@@ -501,7 +515,7 @@ extension ProductsViewController {
             case .gift:
                 //sending category_term_id in case of gifts in the paraeter cityid
                 EEAPIManager().getGoods( term: term, giftCategoryId: cityId, productId: nil,
-                                         filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
+                                         filtersToApply: filters, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")

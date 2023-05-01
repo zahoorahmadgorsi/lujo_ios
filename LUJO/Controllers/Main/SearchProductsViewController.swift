@@ -302,7 +302,8 @@ extension SearchProductsViewController {
         switch category {
             case .event:
                 Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
-            EEAPIManager().getEvents(past: past, term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
+            //EEAPIManager().getEvents(past: past, term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
+            EEAPIManager().getEvents(past: past, term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain events information")
@@ -314,7 +315,8 @@ extension SearchProductsViewController {
             case .experience:
                 Mixpanel.mainInstance().track(event: "ExperienceSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                EEAPIManager().getExperiences(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
+                //EEAPIManager().getExperiences(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
+            EEAPIManager().getExperiences(term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experiences information")
@@ -326,7 +328,8 @@ extension SearchProductsViewController {
             case .villa:
                 Mixpanel.mainInstance().track(event: "VillaSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-            EEAPIManager().getVillas(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
+            //EEAPIManager().getVillas(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
+            EEAPIManager().getVillas(term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain villas information")

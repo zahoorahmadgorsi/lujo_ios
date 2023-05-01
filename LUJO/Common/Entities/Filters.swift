@@ -23,18 +23,18 @@ struct filterOption:Codable{
 
 struct AppliedFilters{
     var featuredCities:[String]
-    var productName: String
+    var productName: String?
     var countryId: [String]?
-    var categoryIds: [String]
+    var categoryIds: [String]?
     var price: ProductPrice?
-    var tagIds: [String]
-    var yachtStatus: String
-    var yachtCharter: String
+    var tagIds: [String]?
+    var yachtStatus: String?
+    var yachtCharter: String?
     var regionId: String?
     var guests: AnyRange?
     var yachtLength: YachtLength?
-    var yachtType: String
-    var yachtBuiltAfter: String
+    var yachtType: String?
+    var yachtBuiltAfter: String?
     var villaSaleType: VillaSaleType?
     var villaTypes: [String]?
     var villaLifeStyle: [String]?
@@ -78,6 +78,36 @@ struct AppliedFilters{
         self.giftCategories = giftCategories
         self.giftSubCategoriess = giftSubCategoriess
         self.giftColors = giftColors
+    }
+    
+    init(featuredCities: [String]/*, productName:String, selectedCountry:[String]?, categoryIds: [String], price:ProductPrice?, tagIds: [String], yachtStatus: String, yachtCharter: String, selectedRegion:String?, guests:AnyRange?, yachtLength: YachtLength?,yachtType: String, yachtBuiltAfter:String, villaSaleType: VillaSaleType?, villaTypes: [String]?, villaLifeStyle: [String]? , bedRooms: AnyRange? , bathRooms: AnyRange?, isFeature:Bool?, orderByName: String?, orderByPrice: String?, giftBrands:[String]?, giftCategories:[String]?, giftSubCategoriess:[String]?, giftColors:[String]?*/) {
+        
+        self.featuredCities = featuredCities
+//        self.productName = productName
+//        self.countryId = selectedCountry
+//        self.categoryIds = categoryIds
+//        self.price = price
+//        self.tagIds = tagIds
+//        self.yachtStatus = yachtStatus
+//        self.yachtCharter = yachtCharter
+//        self.regionId = selectedRegion
+//        self.guests = guests
+//        self.yachtLength = yachtLength
+//        self.yachtType = yachtType
+//        self.yachtBuiltAfter = yachtBuiltAfter
+//        self.villaSaleType = villaSaleType
+//        self.villaTypes = villaTypes
+//        self.villaLifeStyle = villaLifeStyle
+//        self.bedRooms = bedRooms
+//        self.bathRooms = bathRooms
+//        //gift
+//        self.isFeature = isFeature
+//        self.orderByName = orderByName
+//        self.orderByPrice = orderByPrice
+//        self.giftBrands = giftBrands
+//        self.giftCategories = giftCategories
+//        self.giftSubCategoriess = giftSubCategoriess
+//        self.giftColors = giftColors
     }
 }
 

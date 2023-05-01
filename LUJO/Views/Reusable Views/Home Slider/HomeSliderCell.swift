@@ -29,16 +29,12 @@ class HomeSliderCell: UICollectionViewCell {
     @IBOutlet weak var imgHeart: UIImageView!
     
     @IBOutlet weak var viewMeasurements: UIView!
-    
     @IBOutlet weak var viewLength: UIView!
     @IBOutlet weak var lblLength: UILabel!
-    
     @IBOutlet weak var viewNumberOfGuests: UIView!
     @IBOutlet weak var lblNumberOfGuests: UILabel!
-    
     @IBOutlet weak var viewCabins: UIView!
     @IBOutlet weak var lblCabins: UILabel!
-    
     @IBOutlet weak var viewWashrooms: UIView!
     @IBOutlet weak var lblWashrooms: UILabel!
     @IBOutlet weak var viewEmpty: UIView!

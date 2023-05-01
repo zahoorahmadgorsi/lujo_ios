@@ -95,9 +95,10 @@ class EEAPIManager {
             }
     }
 
-    func getEvents( past: Bool, term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int,
-                    completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.events(past, term, latitude, longitude, productId, filtersToApply, page, perPage)).responseJSON { response in
+//    func getEvents( past: Bool, term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getEvents( past: Bool, term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+        //Alamofire.request(EERouter.events(past, term, latitude, longitude, productId, filtersToApply, page, perPage)).responseJSON { response in
+        Alamofire.request(EERouter.events(past, term, productId, filtersToApply, page, perPage)).responseJSON { response in
             print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
 
             guard response.result.error == nil else {
@@ -145,8 +146,10 @@ class EEAPIManager {
     }
 
 
-    func getExperiences( term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.experiences( term, latitude, longitude, productId, filtersToApply, page, perPage)).responseJSON { response in
+//    func getExperiences( term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getExperiences( term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+       // Alamofire.request(EERouter.experiences( term, latitude, longitude, productId, filtersToApply, page, perPage)).responseJSON { response in
+        Alamofire.request(EERouter.experiences( term, productId, filtersToApply, page, perPage)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
@@ -191,8 +194,10 @@ class EEAPIManager {
         }
     }
     
-    func getVillas(term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
-        Alamofire.request(EERouter.villas( term, latitude, longitude, productId,filtersToApply, page, perPage)).responseJSON { response in
+//    func getVillas(term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getVillas(term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+        //Alamofire.request(EERouter.villas( term, latitude, longitude, productId,filtersToApply, page, perPage)).responseJSON { response in
+        Alamofire.request(EERouter.villas( term, productId,filtersToApply, page, perPage)).responseJSON { response in
             guard response.result.error == nil else {
                 completion([], response.result.error!)
                 return
