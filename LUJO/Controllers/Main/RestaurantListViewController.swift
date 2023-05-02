@@ -91,14 +91,10 @@ class RestaurantListViewController: UIViewController {
     }
     
     func getInformation(showActivity: Bool, for city: Cities) {
-//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-//            showFeedback("User does not exist or is not verified")
-//            return
-//        }
         if (showActivity){
             showNetworkActivity()
         }
-        GoLujoAPIManager().search(term: nil, latitude: city.latitude, longitude: city.longitude, cuisineCategoryId: nil) { restaurants, error in
+        GoLujoAPIManager().search(term: nil, cityId: city.termId == nil ? nil : [city.termId ?? ""], cuisineCategoryId: nil) { restaurants, error in
             self.hideNetworkActivity()
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)

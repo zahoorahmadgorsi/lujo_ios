@@ -60,10 +60,9 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func search( term: String?, latitude: Double?, longitude:Double?, cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
+    func search( term: String?, cityId: [String]?,  cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
         Alamofire.request(DiningRouter.search(term,
-                                              latitude,
-                                              longitude,
+                                              cityId,
                                               cuisineCategoryId))
             .responseJSON { response in
                 guard response.result.error == nil else {

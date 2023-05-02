@@ -81,7 +81,7 @@ class RestaurantSearchViewController: UIViewController {
 //            searchTextField.text = _cuisineCategory.name
             keyword = _cuisineCategory.name
             //search cuisine by category id
-            searchRestaurants(term: nil, latitude: nil, longitude: nil, cuisineCategoryId: _cuisineCategory.termId)
+            searchRestaurants(term: nil, cityId: nil, cuisineCategoryId: _cuisineCategory.termId)
         }else {
             searchTextField.becomeFirstResponder()
         }
@@ -258,8 +258,7 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
             
             self.searchRestaurants(term: keyword,
-                                   latitude: nil ,
-                                   longitude: nil,
+                                   cityId: nil,
                                    cuisineCategoryId: self.cuisineCategory?.termId )
             return true
         }
@@ -272,11 +271,10 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
 
 extension RestaurantSearchViewController {
 
-    func searchRestaurants(term: String?, latitude: Double?, longitude: Double?, cuisineCategoryId: String?) {
+    func searchRestaurants(term: String?, cityId: [String]?, cuisineCategoryId: String?) {
         self.showNetworkActivity()
         self.searchRestaurants(term: term,
-                               latitude: latitude,
-                               longitude: longitude,
+                               cityId: cityId,
                                cuisineCategoryId: cuisineCategoryId) { information, error in
             self.hideNetworkActivity()
             if let error = error {
@@ -286,18 +284,12 @@ extension RestaurantSearchViewController {
         }
     }
     
-    func searchRestaurants(term: String?, latitude: Double?, longitude: Double?, cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
-//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-//            completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
-//            return
-//        }
-        
+    func searchRestaurants(term: String?, cityId: [String]?, cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
         Mixpanel.mainInstance().track(event: "RestaurantSearched",
               properties: ["SearchedText" : term])
         
         GoLujoAPIManager().search(term: term,
-                                  latitude: latitude,
-                                  longitude: longitude,
+                                  cityId: cityId,
                                   cuisineCategoryId: cuisineCategoryId) { restaurants, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)

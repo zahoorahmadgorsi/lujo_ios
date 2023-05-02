@@ -387,11 +387,12 @@ enum GoLujoRouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: credentials, options: [])
     }
 
-    fileprivate func getPhoneNumberAsJSONData(_ prefix: PhoneCountryCode, _ number: String, _ captchaToken:String) -> Data? {
+    fileprivate func getPhoneNumberAsJSONData(_ phoneCountryCode: PhoneCountryCode, _ number: String, _ captchaToken:String) -> Data? {
         let credentials: [String: String] = [
-            "phone_prefix": prefix.phonePrefix,
+            "phone_prefix": phoneCountryCode.phonePrefix,
             "phone": number,
             "captcha_token" : captchaToken
+            ,"country_code" : phoneCountryCode.alpha2Code
         ]
         return try? JSONSerialization.data(withJSONObject: credentials, options: [])
     }
