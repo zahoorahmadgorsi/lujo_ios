@@ -495,7 +495,7 @@ extension PerCityViewController: CityViewProtocol {
             // B2 - 6
             //Finding UIImageView of restaurant where user has tapped so that we can animate this image
             //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
-        if let cities = homeObjects?.cities {
+        if let cities = homeObjects?.cities ?? homeObjects?.categories {    //cities for all verticals except gifts and categories for gifts only
             //for (index,city) in cities.enumerated()  {
             outerLoop: for city in cities  {
                 switch city.itemsNum {
@@ -640,69 +640,7 @@ extension PerCityViewController: CityViewProtocol {
         
         var secondFilterTermId = "" , fourthFilterTermId = "", fifthFilterTermId = "", sixthFilterTermId = "", eighthFilterTermId = "", ninthFilterTermId = "", tenthFilterTermId = ""
         
-//        var dictFilter = [String: String]() //used for mixpanle logging
-//        if (firstFilter.count > 0){
-//            dictFilter["Filter First (Name)"] = firstFilter
-//        }
-//        if secondFilter.count > 0{
-//            let ids = secondFilter.map { $0.termId }
-//            secondFilterTermId = (ids.map{String($0)}).joined(separator: ",")
-//
-//            let names = secondFilter.map{($0.name)}
-//            dictFilter["Filter Second"] = names.joined(separator: ",")
-//        }
-//        if (thirdFilter.count > 0){
-//            dictFilter["Filter Third"] = thirdFilter
-//        }
-//        if let filter = fourthFilter{
-//            fourthFilterTermId = String(filter.termId)
-//            dictFilter["Filter Fourth (Length In Feet)"] = filter.name
-//        }
-//        if let filter = fifthFilter{
-//            fifthFilterTermId = String(filter.termId)
-//            dictFilter["Filter Fifth (Length In Meters)"] = filter.name
-//        }
-//
-//        if sixthFilter.count > 0{
-//            let ids = sixthFilter.map { $0.termId }
-//            sixthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
-//
-//            let names = sixthFilter.map{($0.name)}
-//            dictFilter["Filter Sixth"] = names.joined(separator: ",")
-//        }
-//
-//        if (seventhFilter.count > 0){
-//            dictFilter["Filter Seventh"] = seventhFilter
-//        }
-//        if let filter = eighthFilter{
-//            eighthFilterTermId = String(filter.termId)
-//            dictFilter["Filter Eighth"] = filter.name
-//        }
-//
-//        if ninthFilter.count > 0{
-//            let ids = ninthFilter.map { $0.termId }
-//            ninthFilterTermId = (ids.map{String($0)}).joined(separator: ",")
-//
-//            let names = ninthFilter.map{($0.name)}
-//            dictFilter["Ninth Sixth"] = names.joined(separator: ",")
-//        }
-//
-//        if let filter = tenthFilter{
-//            tenthFilterTermId = String(filter.termId)
-//            dictFilter["Filter Tenth"] = filter.name
-//        }
-//        if (eleventhFilter.count > 0){
-//            dictFilter["Filter Eleventh (Min Price)"] = eleventhFilter
-//        }
-//        if (twelvethFilter.count > 0){
-//            dictFilter["Filter Twelveth (Max Price)"] = twelvethFilter
-//        }
-//        if (dictFilter.count > 0){
-//            Mixpanel.mainInstance().track(event: "Filters Applied On \(category.rawValue)",
-//                                          properties: dictFilter)
-//        }
-//
-//
+
         EEAPIManager().getPerCity(type: categoryType
                                   , yachtName: firstFilter
                                   , yachtCharter: secondFilterTermId
@@ -825,7 +763,9 @@ extension PerCityViewController: DidSelectSliderItemProtocol {
         // B2 - 6
         selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
         // B2 - 7
+        print("Allah ho akbar","selectedCell?.name:\(selectedCell?.name.text)")
         selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
+        animationtype = .slider //tapped on top rated slider's item
         viewController.transitioningDelegate = self
         viewController.modalPresentationStyle = .overFullScreen
         present(viewController, animated: true)
@@ -880,67 +820,3 @@ extension PerCityViewController: UIViewControllerTransitioningDelegate {
         }
     }
 }
-
-//extension PerCityViewController: FiltersVCProtocol{
-//    func setCities(cities: [String]) {
-//        self.cities = cities
-//    }
-    
-//    func setFirstFilter(filter: String) {
-//        self.firstFilter = filter
-//    }
-//
-//    func setSecondFilter(filter: Taxonomy?) {
-//        self.secondFilter = []  //from filter multiple selection isnt allowed
-//        if let filt = filter{
-//            self.secondFilter.append(filt)
-//        }
-//
-//    }
-//
-//    func setThirdFilter(filter: String) {
-//        self.thirdFilter = filter
-//    }
-//
-//    func setFourthFilter(filter: Taxonomy?) {
-//        self.fourthFilter = filter
-//    }
-//
-//    func setFifthFilter(filter: Taxonomy?) {
-//        self.fifthFilter = filter
-//    }
-//
-//    func setSixthFilter(filter: Taxonomy?) {
-//        self.sixthFilter = []  //from filter multiple selection isnt allowed
-//        if let filt = filter{
-//            self.sixthFilter.append(filt)
-//        }
-//    }
-//
-//    func setSeventhFilter(filter: String) {
-//        self.seventhFilter = filter
-//    }
-//
-//    func setEighthFilter(filter: Taxonomy?) {
-//        self.eighthFilter = filter
-//    }
-//
-//    func setNinthFilter(filter: Taxonomy?) {
-//        self.ninthFilter = []  //from filter multiple selection isnt allowed
-//        if let filt = filter{
-//            self.ninthFilter.append(filt)
-//        }
-//    }
-//
-//    func setTenthFilter(filter: Taxonomy?) {
-//        self.tenthFilter = filter
-//    }
-//
-//    func setEleventhFilter(filter: String) {
-//        self.eleventhFilter = filter
-//    }
-//
-//    func setTwelvethFilter(filter: String) {
-//        self.twelvethFilter = filter
-//    }
-//}

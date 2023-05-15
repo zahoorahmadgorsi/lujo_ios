@@ -8,11 +8,6 @@
 
 import UIKit
 
-
-protocol FiltersVCProtocol:class {
-    func setCities(cities:[String])
-}
-
 enum FilterType: Int {
     case FeaturedEvents = 1, EventName, EventLocation, EventCategory, EventPrice, EventTags, ExperienceCategory, ExperienceTags,
         YachtPopularLocations, YachtName, YachtStatus, YachtCharter, YachtRegion, YachtGuests, YachtLength, YachtType, YachtBuiltAfter, YachtPrice, YachtTags,
@@ -35,7 +30,6 @@ class FiltersViewController: UIViewController {
     private var giftCategories:[Taxonomy] = []
     private var giftSubCategoriess:[Taxonomy] = []
     private var giftColors:[Taxonomy] = []
-//    var delegate:FiltersVCProtocol?     //used to set the filters
     
     /// Init method that will init and return view controller.
     class func instantiate(filters: [Filters], category: ProductCategory) -> FiltersViewController {

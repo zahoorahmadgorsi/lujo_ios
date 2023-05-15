@@ -179,18 +179,18 @@ struct LujoServerResponse<T: Codable>: Codable {
 }
 
 struct PhoneCountryCode: Codable {
-    let id: Int
+//    let id: Int
     let alpha2Code: String
     let phonePrefix: String
-    let nationality: String
+//    let nationality: String
     let country: TaxonomyCountry
     let flag: String?
 
     enum CodingKeys: String, CodingKey {
-        case id
+//        case id
         case alpha2Code
         case phonePrefix
-        case nationality
+//        case nationality
         case country
         case flag = "image"
     }

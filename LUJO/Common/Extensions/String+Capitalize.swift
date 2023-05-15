@@ -32,6 +32,18 @@ extension String {
         }
         return NSMutableAttributedString()
     }
+    
+    func convertToAttributedString(foregroundColor: UIColor? = UIColor.white) -> NSAttributedString {
+        let range = NSRange(location: 0, length: self.unicodeScalars.count) //unicodeScalars will count \n and \r as well.
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 10
+        let stringWithAttribute = NSMutableAttributedString(string: self)
+        stringWithAttribute.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 15, weight: .light), range: range)
+        stringWithAttribute.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
+        stringWithAttribute.addAttribute(NSAttributedString.Key.foregroundColor, value: foregroundColor, range: range)
+//        aString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
+        return stringWithAttribute
+    }
 }
 
 extension String {

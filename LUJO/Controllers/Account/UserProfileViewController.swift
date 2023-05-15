@@ -72,8 +72,8 @@ class UserProfileViewController: UIViewController {
     
         firstNameTF.text = user.firstName
         lastNameTF.text = user.lastName
-        phonePrefix = LujoSetup().getCode(for: user.phoneNumber.countryCode) ??
-            PhoneCountryCode(id: 238, alpha2Code: "US", phonePrefix: "+1", nationality: "American", country: TaxonomyCountry( _id : "238" , name: "United States of America"), flag: "https://seeklogo.net/wp-content/uploads/2013/05/flag-of-serbia-vector-logo.png")
+        phonePrefix = LujoSetup().getCode(for: user.phoneNumber.countryCode) ?? Utility.getCountryCode()
+//            PhoneCountryCode(id: 238, alpha2Code: "US", phonePrefix: "+1", nationality: "American", country: TaxonomyCountry( _id : "238" , name: "United States of America"), flag: "https://seeklogo.net/wp-content/uploads/2013/05/flag-of-serbia-vector-logo.png")
         
         phoneNumberTF.text = user.phoneNumber.number
         emailAddressTF.text = user.email
@@ -257,6 +257,9 @@ class UserProfileViewController: UIViewController {
     
     func validateCaptchaThenUpdate(_ firstName:String,_ lastName:String, email:String,_ newNumber:PhoneNumber) {
         showNetworkActivity()
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.view.endEditing(true)
+        
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             self?.captchaWebView?.removeFromSuperview()

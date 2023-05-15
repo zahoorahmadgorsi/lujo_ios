@@ -176,8 +176,8 @@ extension HomeSlider: UICollectionViewDataSource {
         //Zahoor end
         
         cell.name.text = model.name
-
-        if model.type == "event" {  //showing start - end date in case of event
+        print("model.type:\(model.type)")
+        if model.type == "event" || model.type == "special-event" {  //showing start - end date in case of event
             cell.dateContainerView.isHidden = false
 
             let startDateText = ProductDetailsViewController.convertDateFormate(date: model.startDate!)

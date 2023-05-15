@@ -33,7 +33,8 @@ enum EERouter: URLRequestConvertible {
     case experiences( String?, String?, AppliedFilters?, Int, Int)
     case salesforce(SalesforceRequest, String?)
     case geopoint(type: String, latitude: Float, longitude: Float)
-    case citySearch(token: String, searchTerm: String)
+//    case citySearch(token: String, searchTerm: String)  //search cities from google
+    case searchCity(searchTerm: String)  //search cities from our backend
     case cityInfo(cityId: String)
     //case villas(String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
     case villas(String?, String?, AppliedFilters?, Int, Int)
@@ -91,8 +92,9 @@ enum EERouter: URLRequestConvertible {
             return .post
         case .geopoint:
             return .post
-        case .citySearch:
-            return .get
+//        case .citySearch:
+//            return .get
+        case .searchCity:   fallthrough
         case .cityInfo:
             return .get
         case let .goods(_, giftCategoryId, id,_, _, _):
@@ -191,17 +193,24 @@ enum EERouter: URLRequestConvertible {
             }else if type == "experience"{
                 newURLComponents.path.append("/experiences/search")
             }
-            case let .citySearch(token, searchTerm):
-                newURLComponents.path.append("/search-cities")
-                newURLComponents.queryItems = [
-                    URLQueryItem(name: "token", value: token),
-                    URLQueryItem(name: "search", value: searchTerm)
-                ]
-                
+//            case let .citySearch(token, searchTerm):
+//                newURLComponents.path.append("/search-cities")
+//                newURLComponents.queryItems = [
+//                    URLQueryItem(name: "token", value: token),
+//                    URLQueryItem(name: "search", value: searchTerm)
+//                ]
+        case let .searchCity(searchTerm):
+            newURLComponents.path.append("/restaurants/city/search")
+            newURLComponents.queryItems = [
+                URLQueryItem(name: "page", value: "1")
+                ,URLQueryItem(name: "limit", value: "30")
+                ,URLQueryItem(name: "search", value: searchTerm)
+            ]
             case let .cityInfo(cityId):
                 newURLComponents.path.append("/discover")
                 newURLComponents.queryItems = [
-                    URLQueryItem(name: "place_id", value: cityId)
+                    //URLQueryItem(name: "place_id", value: cityId)
+                    URLQueryItem(name: "city", value: cityId)
                 ]
             case let .perCity(type, yachtName, yachtCharter, yachtGuests, yachtLengthFeet, yachtLengthMeters, yachtType, yachtBuiltAfter, yachtTag, yachtStatus, region, minPrice, MaxPrice):
                 
@@ -321,12 +330,11 @@ enum EERouter: URLRequestConvertible {
             return getSalesforceDataAsJSONData(salesforceRequest,conversationId)
         case let .geopoint(_, latitude, longitude):
             return getGeopointDataAsJSONData(latitude: latitude, longitude: longitude)
-        case .citySearch:
-            return nil
-        case .cityInfo:
-            return nil
-        case .perCity:
-            return nil  //now it will have some data
+//        case .citySearch:
+//            return nil
+        case .searchCity:   fallthrough
+        case .cityInfo:     fallthrough
+        case .perCity:      fallthrough
         case .filters:
             return nil
         }

@@ -111,7 +111,7 @@ extension ProductDetailView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductDetailCell.identifier, for: indexPath) as! ProductDetailCell
         
         let model = itemsList[indexPath.row]
-        print("model.value=\(model.value)")
+//        print("model.value=\(model.value)")
         if let val = model.value, val.contains("$") || val.contains("PRICE ON REQUEST"){
             //if value already contais $ symbol then hide the lable USD
             cell.lblUSD.isHidden  = true

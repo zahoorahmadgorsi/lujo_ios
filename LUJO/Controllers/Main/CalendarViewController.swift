@@ -92,7 +92,7 @@ class CalendarViewController: UIViewController {
             // Ako ocemo po design-u ovom state.selectedPosition() != .middle ? UIColor.actionButtonText : UIColor.whiteText
             validCell.dateLabel.textColor = UIColor.actionButtonText
         } else {
-            if state.dateBelongsTo == .thisMonth, state.date.isInThePast(), state.date >= firstValidDate ?? Date() {
+            if state.dateBelongsTo == .thisMonth, !state.date.isInThePast(), state.date > firstValidDate ?? Date().utcToLocal() {
                 validCell.dateLabel.textColor = UIColor.paragraphWhite
             } else if state.dateBelongsTo != .thisMonth {
                 validCell.dateLabel.textColor = UIColor.separator
@@ -103,11 +103,21 @@ class CalendarViewController: UIViewController {
     }
     
     @IBAction func acceptSelectedDates(_: Any) {
-        guard let startDate = calendar.selectedDates.first else {
+        guard var startDate = calendar.selectedDates.first else {
             return
         }
 //        print (startDate)
-        delegate?.tripDatesSelected(departure: oneWay ? startDate : self.firstValidDate!, return: !oneWay ? startDate : nil)
+        print("Actual date: \(startDate)")
+        //adding one day to date because this control is always returning one day less than the selected date
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
+        print("Modified date: \(modifiedDate)")
+        
+        let dateToCompare = oneWay ? Date().utcToLocal() : ( firstValidDate ?? Date().utcToLocal())
+        if ( modifiedDate < dateToCompare ){
+            startDate = dateToCompare  //if user has selected some past date then convert it to todate
+        }
+        delegate?.tripDatesSelected(departure: oneWay ? startDate : self.firstValidDate!,
+                                    return: !oneWay ? startDate : nil)
         
         dismiss(animated: true, completion: nil)
     }
@@ -168,46 +178,24 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
         handleTextColor(for: cell, with: cellState)
     }
     
-    func calendar(_: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        guard date >= (firstValidDate ?? Date()) else { return }
+    func calendar(_: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState){
         
-//        if !oneWay {
-//            if firstDate != nil {
-//                var initialDate = firstDate!
-//                var finalDate = date
-//
-//                if date < firstDate! {
-//                    initialDate = date
-//                    finalDate = firstDate!
-//                }
-//
-//                calendar.selectDates(from: initialDate,
-//                                     to: finalDate,
-//                                     triggerSelectionDelegate: false,
-//                                     keepSelectionIfMultiSelectionAllowed: true)
-//            } else {
-//                firstDate = date
-//            }
-//        }
+        print("Actual date: \(date)")
+        //adding one day to date because this control is always returning one day less then the selected date
+        let selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+        print("Selected Date: \(selectedDate)")
         
+        //If one way trip, then user must not tap on past date
+        //If two way trip, then user must not tap on date less the departure date
+        if (self.oneWay ? selectedDate.isInThePast() : selectedDate < firstValidDate?.utcToLocal() ?? Date().utcToLocal()){
+            print("User has tapped on some past date or in case of 2 way date less then departure date")
+            return
+        }
         handleSelectionColor(for: cell, with: cellState)
         handleTextColor(for: cell, with: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-//        if !oneWay, calendar.selectedDates.count > 2 {
-//            guard let initialDate = calendar.selectedDates.first else { return }
-//            guard let finalDate = calendar.selectedDates.last else { return }
-//            
-//            if initialDate < date, finalDate > date {
-//                calendar.deselectDates(from: date, to: finalDate, triggerSelectionDelegate: false)
-//                calendar.selectDates(from: firstDate!,
-//                                     to: date,
-//                                     triggerSelectionDelegate: false,
-//                                     keepSelectionIfMultiSelectionAllowed: true)
-//            }
-//        }
-        
         handleSelectionColor(for: cell, with: cellState)
         handleTextColor(for: cell, with: cellState)
     }

@@ -411,7 +411,8 @@ extension ProductDetailsViewController {
         
         let desc = product.description
         print("isHtml:\(desc.isHtml())")
-        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
+        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML().string.convertToAttributedString() : desc.convertToAttributedString()
+//        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML() : convertToAttributedString(desc)
         
         chatButton.isEnabled = !isEventPast
         requestButton.isEnabled = !isEventPast
@@ -457,7 +458,7 @@ extension ProductDetailsViewController {
         
         let desc = product.description
         print("isHtml:\(desc.isHtml())")
-        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
+        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML().string.convertToAttributedString() : desc.convertToAttributedString()
         
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
@@ -600,7 +601,8 @@ extension ProductDetailsViewController {
         }
         let desc = product.description
         print("isHtml:\(desc.isHtml())")
-        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
+        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML().string.convertToAttributedString() : desc.convertToAttributedString()
+//        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML() : convertToAttributedString(desc)
         
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
@@ -771,7 +773,7 @@ extension ProductDetailsViewController {
         }
         let desc = product.description
         print("isHtml:\(desc.isHtml())")
-        descriptionTextView.attributedText = desc.isHtml() ? convertToAttributedString(desc.parseHTML().string) : convertToAttributedString(desc)
+        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML().string.convertToAttributedString() : desc.convertToAttributedString()
         
         requestButton.setTitle("R E Q U E S T", for: .normal)
     }
@@ -835,19 +837,7 @@ extension ProductDetailsViewController {
         return dateDay! + " " + newDate
     }
     
-    private func convertToAttributedString(_ text: String) -> NSAttributedString {
-//        let range = NSRange(location: 0, length: text.count)
-        print(text.count,text.unicodeScalars.count)
-        let range = NSRange(location: 0, length: text.unicodeScalars.count) //unicodeScalars will count \n and \r as well.
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10
-        let aString = NSMutableAttributedString(string: text)
-        aString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 15, weight: .light), range: range)
-        aString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
-        aString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
-//        aString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
-        return aString
-    }
+
     
     func setupGalleryLayout(galleryView:GalleryView1){
         galleryView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true

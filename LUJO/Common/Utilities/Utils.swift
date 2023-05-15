@@ -93,9 +93,7 @@ struct Utility
                 attribute["device_timezone"] = TimeZone.current.abbreviation()
                 if let network = CTTelephonyNetworkInfo().serviceCurrentRadioAccessTechnology?.first?.value {
                     attribute["device_connection"] = network.localizedLowercase
-                    
                 }
-                
             }
         }
         return attribute
@@ -133,5 +131,46 @@ struct Utility
             hasMembership = true
         }
         return hasMembership
+    }
+    
+    // If user mobile has One SIM. If it has more than 1 SIM then randomly first SIM would be picked. And used its ISO Country Code
+    // If mobile don't have SIM then device locale would be used.
+//    ["0000000100000002": CTCarrier (0x282efa3a0) {
+//        Carrier name: [du]
+//        Mobile Country Code: [424]
+//        Mobile Network Code:[03]  // because i am on roaming
+//        ISO Country Code:[ae]
+//        Allows VOIP? [YES]
+//    }
+//    , "0000000100000001": CTCarrier (0x282e54f30) {
+//        Carrier name: [Ufone]
+//        Mobile Country Code: [410]
+//        Mobile Network Code:[03]
+//        ISO Country Code:[pk]
+//        Allows VOIP? [YES]
+//    }
+//    ]
+    static func getCountryCode() -> PhoneCountryCode{
+        var hardCodedCountryCode = PhoneCountryCode(
+                                                    alpha2Code: "US",
+                                                    phonePrefix: "+1",
+                                                    country: TaxonomyCountry( _id : "238" , name: "United States of America"),
+                                                    flag: "https://bit.ly/2Vrjgrk")
+        
+        print("Cellular ISO country code :\(CTTelephonyNetworkInfo().serviceSubscriberCellularProviders)" , "Locale region code:\(Locale.current.regionCode)")
+        
+        if let networkOrLocaleCountryCode = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders?.first?.value.isoCountryCode{//} ?? Locale.current.regionCode{
+            if let countryCodes = LujoSetup().getCountryCodes(), countryCodes.count > 0{
+                if let countryCode = countryCodes.first(where: ({$0.alpha2Code.lowercased() == networkOrLocaleCountryCode.lowercased()})){
+                    hardCodedCountryCode = PhoneCountryCode(
+                        alpha2Code: countryCode.alpha2Code,
+                        phonePrefix: countryCode.phonePrefix,
+                        country: TaxonomyCountry( _id : "238asdf" , name: countryCode.alpha2Code),
+                        flag: "https://bit.ly/2Vrjgrk")
+                }
+            }
+        }
+        
+        return hardCodedCountryCode
     }
 }

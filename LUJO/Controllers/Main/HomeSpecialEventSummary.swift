@@ -48,6 +48,10 @@ class HomeSpecialEventSummary: UIView {
 //            specialEvent = event
             if let mediaLink = event.thumbnail?.mediaUrl, event.thumbnail?.mediaType == "image" {
                 primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }else if let firstImageLink = event.getGalleryImagesURL().first {
+                primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+            }else{
+                print("Image not found")
             }
             
             name.text = event.name

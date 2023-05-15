@@ -41,6 +41,9 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
     //this function validates captcha and if validated it sends call for user login
     func validateCaptchaThenOTPRequest() {
         showNetworkActivity()
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.view.endEditing(true)
+        
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             if let captchaToken = try? result.dematerialize(){

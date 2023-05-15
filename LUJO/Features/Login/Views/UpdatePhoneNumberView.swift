@@ -36,12 +36,13 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     @IBOutlet weak var errorLabel: UILabel!
     
     var isChanging: Bool = true
-    private var phoneCountryCode = PhoneCountryCode(id: 238,
-                                               alpha2Code: "US",
-                                               phonePrefix: "+1",
-                                               nationality: "American",
-                                                    country: TaxonomyCountry( _id : "238" , name: "United States of America"),
-                                               flag: "https://bit.ly/2Vrjgrk")
+    var phoneCountryCode = Utility.getCountryCode()
+//    private var phoneCountryCode = PhoneCountryCode(id: 238,
+//                                               alpha2Code: "US",
+//                                               phonePrefix: "+1",
+//                                               nationality: "American",
+//                                                    country: TaxonomyCountry( _id : "238" , name: "United States of America"),
+//                                               flag: "https://bit.ly/2Vrjgrk")
 
     let hcaptcha = try? HCaptcha(
         apiKey: Constants.hCaptchaKey,
@@ -196,6 +197,9 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     func validateCaptcha( phonenNumber: String) {
 //    func validateCaptchaThenLogin() {
         showNetworkActivity()
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.view.endEditing(true)
+        
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             if let captchaToken = try? result.dematerialize(){

@@ -240,12 +240,12 @@ class ProductsViewController: UIViewController {
         }else {  //paging is being applied
             if objects.count > 0{
                 for item in objects{
-                    //incase of gifts we dont have paging so same item would be added again and again so if found then replace
-//                    if let row = self.dataSource.firstIndex(where: {$0.id == item.id}) {
-//                        dataSource[row] = item
-//                    }else{
+                    //if found then replace, this happens when grid is reloaded incase of set/usset favourite
+                    if let row = self.dataSource.firstIndex(where: {$0.id == item.id}) {
+                        dataSource[row] = item
+                    }else{
                         dataSource.append(item)
-//                    }
+                    }
                 }
             }else{
                 return  //stop it from executing collectionView.reloadData

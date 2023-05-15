@@ -27,12 +27,7 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
 
     @IBOutlet var termsLabel: ActiveLabel!
 
-    var phoneCountryCode = PhoneCountryCode(id: 238,
-                                       alpha2Code: "US",
-                                       phonePrefix: "+1",
-                                       nationality: "American",
-                                            country: TaxonomyCountry( _id : "238" , name: "United States of America"),
-                                       flag: "https://bit.ly/2Vrjgrk")
+    var phoneCountryCode = Utility.getCountryCode()
 
     var termsAgreement: M13Checkbox = {
         let checkbox = M13Checkbox(frame: CGRect.zero)
@@ -178,11 +173,16 @@ class RegisterView: UIViewController, LoginViewProtocol, CountrySelectionDelegat
                 self.captchaWebView?.removeFromSuperview()
             }
         }
+        
+//        LujoSetup().getCountryCodes()   zahoor
     }
 
     //this function validates the captcha and if validated sends call for registration
     func validateCaptchaThenSignup() {
         showNetworkActivity()
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.view.endEditing(true)
+        
         hcaptcha?.validate(on: view) { [weak self] (result: HCaptchaResult) in
 //            print(try? result.dematerialize() as Any)
             self?.captchaWebView?.removeFromSuperview()

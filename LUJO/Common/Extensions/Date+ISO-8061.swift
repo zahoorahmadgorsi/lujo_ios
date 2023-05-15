@@ -41,7 +41,10 @@ public extension Date {
     }
 
     func isInThePast() -> Bool {
-        return compare(Date()) == .orderedDescending
+        //return compare(Date().utcToLocal()) == .orderedDescending
+        print(self, Date().utcToLocal())
+//        print(compare(Date().utcToLocal()) == .orderedAscending)
+        return compare(Date().utcToLocal()) == .orderedAscending
     }
 
     func asDateAndTime() -> [String: String] {
@@ -99,6 +102,19 @@ public extension Date {
         let date = Calendar.current.date(from: components)
         return date!
     }
+    
+    // Convert local time to UTC (or GMT)
+    func localToUTC() -> Date {
+        let timezone = TimeZone.current
+        let seconds = -TimeInterval(timezone.secondsFromGMT(for: self))
+        return Date(timeInterval: seconds, since: self)
+    }
 
+    // Convert UTC (or GMT) to local time
+    func utcToLocal() -> Date {
+        let timezone = TimeZone.current
+        let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
+        return Date(timeInterval: seconds, since: self)
+    }
     
 }

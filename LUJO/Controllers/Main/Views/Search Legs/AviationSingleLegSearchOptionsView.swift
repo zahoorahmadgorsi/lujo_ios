@@ -4,7 +4,7 @@ struct AviationSegmentInformation {
     var startAirport: Airport?
     var endAirport: Airport?
     var departureDateTime: SearchTime
-    var returnDate: SearchTime?
+    var returnDateTime: SearchTime?
     var passengers: Int
     var luggage: AviationLuggage?
 }
@@ -14,7 +14,7 @@ extension AviationSegmentInformation {
         self.init(startAirport: segment.startAirport,
                   endAirport: segment.endAirport,
                   departureDateTime: segment.dateTime,
-                  returnDate: segment.returnDate,
+                  returnDateTime: segment.returnDate,
                   passengers: segment.passengers.adults,
                   luggage: segment.luggage)
     }
@@ -56,7 +56,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
     var segmentData = AviationSegmentInformation(startAirport: nil,
                                                  endAirport: nil,
                                                  departureDateTime: SearchTime(date: "", time: ""),
-                                                 returnDate: nil,
+                                                 returnDateTime: nil,
                                                  passengers: 1,
                                                  luggage: nil) {
         didSet { updateAllLabels() }
@@ -161,7 +161,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
                 // Fallback on earlier versions
             }
             destinTimePicker.addTarget(self, action: #selector(returnTimeChanged(picker:)), for: .valueChanged)
-            if let returnTime = segmentData.returnDate?.time {
+            if let returnTime = segmentData.returnDateTime?.time {
                 destinTimePicker.date = timeFormatter.date(from: returnTime) ?? Date()
             } else {
                 destinTimePicker.date = Date()
@@ -260,7 +260,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
         datesLabel.text = segmentData.departureDateTime.date
 
-        guard let returnDate = segmentData.returnDate?.date, !returnDate.isEmpty else { return }
+        guard let returnDate = segmentData.returnDateTime?.date, !returnDate.isEmpty else { return }
 
         returnDateLabel.text = returnDate
     }
@@ -288,7 +288,7 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
         timesLabel.text = segmentData.departureDateTime.time
 
-        guard let returnTime = segmentData.returnDate?.time, !returnTime.isEmpty else { return }
+        guard let returnTime = segmentData.returnDateTime?.time, !returnTime.isEmpty else { return }
 
         returnTimeLabel.text = returnTime
     }
@@ -318,10 +318,10 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
         segmentData.startAirport = startAirport
         segmentData.endAirport = endAirport
 
-        var dayComponent    = DateComponents()
-        dayComponent.day    = 7 // For removing one day (yesterday): -1
-        let theCalendar     = Calendar.current
-        if let nextDate        = theCalendar.date(byAdding: dayComponent, to: Date()){
+        var dayComponent = DateComponents()
+        dayComponent.day = 0 // 0 mean today. For removing one day (yesterday): -1
+        let theCalendar = Calendar.current
+        if let nextDate = theCalendar.date(byAdding: dayComponent, to: Date()){
             segmentData.departureDateTime.date = formatter.string(from: nextDate)
             segmentData.departureDateTime.time =  timeFormatter.string(from: nextDate)
         }
@@ -355,10 +355,16 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
     func set(departure: Date, returnDate: Date?) {
         segmentData.departureDateTime.date = formatter.string(from: departure)
+        print(segmentData.departureDateTime.date)
         if let returnDate = returnDate {
-            segmentData.returnDate?.date = formatter.string(from: returnDate)
+            if(segmentData.returnDateTime == nil){
+                //initializing empty object of return date time
+                let _returnDateTime = SearchTime(date: "", time:  "")
+                segmentData.returnDateTime = _returnDateTime
+            }
+            segmentData.returnDateTime?.date = formatter.string(from: returnDate)
         } else {
-            segmentData.returnDate?.date = ""
+            segmentData.returnDateTime?.date = ""
         }
     }
 
@@ -411,13 +417,19 @@ class AviationSingleLegSearchOptionsView: UIView, SearchCriteriaDelegate {
 
         if tripType == .roundTrip {
             guard
-                let returnDate = segmentData.returnDate , !returnDate.isDateEmpty else {
+                let returnDate = segmentData.returnDateTime , !returnDate.isDateEmpty else {
                 let error = AviationError.general(description: "Please provide a valid return date.")
                 aviationSearchCriteriaDelegate?.showError(error: error)
                 return
             }
             guard !returnDate.isTimeEmpty else {
                 let error = AviationError.general(description: "Valid return time is required.")
+                aviationSearchCriteriaDelegate?.showError(error: error)
+                return
+            }
+            if let _returnDate = returnDate.toDate, let _departureDate = segmentData.departureDateTime.toDate ,
+                _returnDate <= _departureDate{
+                let error = AviationError.general(description: "Return date time must be ahead of departure date time.")
                 aviationSearchCriteriaDelegate?.showError(error: error)
                 return
             }
@@ -467,11 +479,11 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
     @IBAction func selectDepartureDate(sender: UIGestureRecognizer) {
   
         //if tripType == .roundTrip, segmentData.returnDate == nil {
-        if segmentData.returnDate == nil {
+        if segmentData.returnDateTime == nil {
         //zahoor end
-            segmentData.returnDate = SearchTime(date: "", time: "")
+            segmentData.returnDateTime = SearchTime(date: "", time: "")
         }
-        aviationSearchCriteriaDelegate?.getTripDates(from: Date(), isReturnDate: false)
+        aviationSearchCriteriaDelegate?.getTripDates(from: Date().utcToLocal().stripTime(), isReturnDate: false)
     }
     
     @IBAction func selectReturnDate(sender: UIGestureRecognizer) {
@@ -479,7 +491,8 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
             showCardAlertWith(title: "Info", body: "You must first select departure date.")
             return
         }
-        aviationSearchCriteriaDelegate?.getTripDates(from: segmentData.departureDateTime.toDate, isReturnDate: true)
+//        print(segmentData.departureDateTime.toDate , segmentData.departureDateTime.toDate?.utcToLocal())
+        aviationSearchCriteriaDelegate?.getTripDates(from: segmentData.departureDateTime.toDate?.stripTime(), isReturnDate: true)
     }
 
     @IBAction func selectTimes(sender: UIGestureRecognizer) {
@@ -514,7 +527,7 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
     @IBAction func doneOriginDatePicker() {
         if let time = newOriginTime { segmentData.departureDateTime.time = timeFormatter.string(from: time) }
         if tripType == .roundTrip {
-            if let time = newReturnTime { segmentData.returnDate?.time = timeFormatter.string(from: time) }
+            if let time = newReturnTime { segmentData.returnDateTime?.time = timeFormatter.string(from: time) }
         }
         originTimePickerView.isHidden = true
     }
@@ -526,7 +539,7 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
     @IBAction func destinationDoneDatePicker() {
         if let time = newOriginTime { segmentData.departureDateTime.time = timeFormatter.string(from: time) }
         if tripType == .roundTrip {
-            if let time = newReturnTime { segmentData.returnDate?.time = timeFormatter.string(from: time) }
+            if let time = newReturnTime { segmentData.returnDateTime?.time = timeFormatter.string(from: time) }
         }
         destinationTimePickerView.isHidden = true
     }
@@ -545,7 +558,7 @@ extension AviationSingleLegSearchOptionsView {
         segmentData = AviationSegmentInformation(startAirport: airport,
                                                  endAirport: nil,
                                                  departureDateTime: SearchTime(date: "", time: ""),
-                                                 returnDate: nil,
+                                                 returnDateTime: nil,
                                                  passengers: 1,
                                                  luggage: nil)
         departureLabel.isUserInteractionEnabled = false
@@ -555,7 +568,7 @@ extension AviationSingleLegSearchOptionsView {
         segmentData = AviationSegmentInformation(startAirport: nil,
                                                  endAirport: nil,
                                                  departureDateTime: SearchTime(date: "", time: ""),
-                                                 returnDate: nil,
+                                                 returnDateTime: nil,
                                                  passengers: 1,
                                                  luggage: nil)
         departureLabel.isUserInteractionEnabled = true

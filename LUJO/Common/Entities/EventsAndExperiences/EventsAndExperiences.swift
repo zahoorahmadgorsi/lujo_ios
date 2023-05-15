@@ -292,30 +292,6 @@ struct Location: Codable {
     }
 }
 
-
-struct City: Codable {
-    let cityName: String
-    let placeId: String
-    
-    enum CodingKeys: String, CodingKey {
-        case cityName = "city_name"
-        case placeId = "place_id"
-    }
-    
-    init(from decoder: Decoder) throws {
-        do {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            
-            cityName = try values.decode(String.self, forKey: .cityName)
-            placeId = try values.decode(String.self, forKey: .placeId)
-            
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-            throw error
-        }
-    }
-}
-
 struct CityInfo: Codable {
     let topRated: [Product]
     let featuredProducts: DiscoverCityFeatured
@@ -392,7 +368,9 @@ struct Product: Codable {
     var priceRange: [Taxonomy]?
     var locations: TaxonomyLocation?  //city country
     var isFavourite: Bool?
+    var address: String?
     var streetAddress: String?
+    var locationText: String?
     //Gifts related
     var giftCategory: Taxonomy?
     var giftSubCategory : Taxonomy?
@@ -431,7 +409,6 @@ struct Product: Codable {
     var charterPriceHighSeasonPerDay: Price?
 //    Restaurant related
     var tripadvisor: String?
-    var address: String?
     var website: [String]?
     var cuisineCategory: [Taxonomy]?
     
@@ -456,6 +433,8 @@ struct Product: Codable {
         case locations
         case isFavourite = "is_favorite"
         case streetAddress = "street_address"
+        case locationText = "location_text"
+        case address
         //Gifts related
         case giftCategory = "gift_category"
         //Villas related
@@ -492,7 +471,6 @@ struct Product: Codable {
         case charterPriceHighSeasonPerDay = "charter_price_high_season_per_day"
         //    Restaurant related
         case tripadvisor
-        case address
         case website
         case cuisineCategory = "cuisine_category"
         //gift
@@ -505,19 +483,19 @@ struct Product: Codable {
     }
     
     func getCompleteAddress() -> String{
-        var locationText = streetAddress ?? ""
+        var completeAddress = streetAddress ?? ""
         if type == "gift"{  //gift don't have address
             return ""
         }else if type == "villa" || type == "yacht"{    //villa and yacht dont have street address
-            locationText += getCityCountry()
+            completeAddress += getCityCountry()
         }else {
-            locationText = streetAddress ?? ""
-            if let add = address, add.count > 0{
-                locationText = locationText.count > 0 ? "\(locationText),\(add)" : "\(add)"
+            //if let add = address, add.count > 0{
+            if let add = locationText, add.count > 0{
+                completeAddress = completeAddress.count > 0 ? "\(completeAddress) - \(add)" : "\(add)"
             }
         }
-        print("locationText: \(locationText)")
-        return locationText
+        print("locationText: \(completeAddress)")
+        return completeAddress
     }
     
     func getCityCountry() ->String{
@@ -588,8 +566,10 @@ extension Product {
             timezone = try values.decodeIfPresent(String.self, forKey: .timezone)
             thumbnail = try values.decodeIfPresent(Gallery.self, forKey: .thumbnail)
             gallery = try values.decodeIfPresent([Gallery].self, forKey: .gallery)
+            address = try values.decodeIfPresent(String.self, forKey: .address)
             streetAddress = try values.decodeIfPresent(String.self, forKey: .streetAddress)
-            print("streetAddress,name:\(streetAddress),\(name)")
+            locationText = try values.decodeIfPresent(String.self, forKey: .locationText)
+//            print("locationText: \(locationText)")
             eventCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .eventCategory)
             experienceCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .experienceCategory)
             giftCategory = try values.decodeIfPresent(Taxonomy.self, forKey: .giftCategory)
@@ -634,7 +614,6 @@ extension Product {
             charterPriceHighSeasonPerDay = try values.decodeIfPresent(Price.self, forKey: .charterPriceHighSeasonPerDay)
             //    Restaurant related
             tripadvisor = try values.decodeIfPresent(String.self, forKey: .tripadvisor)
-            address = try values.decodeIfPresent(String.self, forKey: .address)
             website = try values.decodeIfPresent([String].self, forKey: .website)
             cuisineCategory = try values.decodeIfPresent([Taxonomy].self, forKey: .cuisineCategory)
         }catch {

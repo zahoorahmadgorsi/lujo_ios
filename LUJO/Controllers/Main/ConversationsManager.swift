@@ -21,7 +21,7 @@ protocol ConversationsManagerDelegate: AnyObject {
 }
 
 class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
-//    let TOKEN_URL = "https://seashell-snowshoe-5113.twil.io/chat-token"   (project go lujo SMS project)
+//    let TOKEN_URL = "https://seashell-snowshoe-5113.twil.io/chat-token"   //(project go lujo SMS project)
     let TOKEN_URL = "https://boysenberry-flamingo-2375.twil.io/chat-token"  //(project name baroque-group)
     
 
@@ -403,11 +403,12 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                             var participantEmails = result.content.map({$0.email})
 //                            participantEmails = []
 //                            participantEmails.append("varun.kumar@qualhon.com")
-//                            participantEmails.append("zahoor.gorsi@gmail.com")
-//                            participantEmails.append("zahoor.ahmad@live.com")
+                            participantEmails.append("zahoor.gorsi@gmail.com")
+                            participantEmails.append("zahoor.ahmad@live.com")
                             for participantEmail in participantEmails{
                                 print("Twilio: Participant Email \(participantEmail)")
                                 convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
+                                    //this result.isSuccessful isn't reliable
                                     if result.isSuccessful == false {
                                         print("Twilio: \(participantEmail) could not added.")
                                     }else{

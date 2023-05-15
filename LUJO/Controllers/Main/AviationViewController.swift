@@ -286,7 +286,9 @@ class AviationViewController: UIViewController, LuggageSelectionViewDelegate, Av
     }
     
     func getTripDates(from date: Date?, isReturnDate: Bool) {
-        let viewController = CalendarViewController.instantiate(firstValidDate: date, oneWay: !isReturnDate, customTitle: isReturnDate ? "Return date" : "Departure date")
+        let viewController = CalendarViewController.instantiate(firstValidDate: date,    //this date must be injected as utc to local
+                                                                oneWay: !isReturnDate,
+                                                                customTitle: isReturnDate ? "Return date" : "Departure date")
         viewController.delegate = self
         present(viewController, animated: true, completion: nil)
     }

@@ -173,11 +173,17 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK:- Globals
     
-    private var dataSource: [City] = [] {
+//    private var dataSource: [City] = [] {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
+    private var dataSource: [Taxonomy] = [] {
         didSet {
             tableView.reloadData()
         }
     }
+    
     private var cityInformation: CityInfo?
     
     private var previousRun = Date()
@@ -599,7 +605,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier, for: indexPath) as! CityCell
-        cell.cityNameLabel.text = dataSource[indexPath.row].cityName
+        cell.cityNameLabel.text = dataSource[indexPath.row].name
         let colorView = UIView()
         colorView.backgroundColor = UIColor.clear
         UITableViewCell.appearance().selectedBackgroundView = colorView
@@ -610,7 +616,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(dataSource[indexPath.row].cityName)
         let city = dataSource[indexPath.row]
-        searchTextField.text = city.cityName
+        searchTextField.text = city.name
         searchTextField.resignFirstResponder()
         fetchDataForCity(city)
     }
@@ -674,8 +680,9 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         
         Mixpanel.mainInstance().track(event: "GlobalSearch",
               properties: ["SearchedText" : text])
-        
-        EEAPIManager().search(token: token, searchText: text) { (cities, error) in
+        // this api is searching cities from google
+        //EEAPIManager().search(token: token, searchText: text) { (cities, error) in
+        EEAPIManager().searchCities(searchText: text) { (cities, error) in
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)
                 self.showFeedback(error.localizedDescription)
@@ -685,15 +692,27 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func fetchDataForCity(_ city: City) {
-//        guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
-//            showFeedback("User does not exist or is not verified")
-//            return
+//    func fetchDataForCity(_ city: City) {
+//        showNetworkActivity()
+//
+//        EEAPIManager().getInfoForCity( cityId: city.placeId) { (informations, error) in
+//            self.hideNetworkActivity()
+//
+//            if let error = error {
+//                Crashlytics.crashlytics().record(error: error)
+//                self.showFeedback(error.localizedDescription)
+//            } else if let informations = informations {
+//                self.updateUI(informations: informations)
+//            } else {
+//                self.showFeedback("There is no content for this city.")
+//            }
 //        }
-        
+//    }
+    
+    func fetchDataForCity(_ city: Taxonomy) {
         showNetworkActivity()
         
-        EEAPIManager().getInfoForCity( cityId: city.placeId) { (informations, error) in
+        EEAPIManager().getInfoForCity( cityId: city.termId) { (informations, error) in
             self.hideNetworkActivity()
             
             if let error = error {

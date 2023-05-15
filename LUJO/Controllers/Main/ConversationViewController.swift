@@ -663,7 +663,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
             let currentSender:ChatUser = ChatUser(senderId: message.participant?.sid ?? "000", displayName: "Customer Support")
             if let messageBody = message.body {
                 if messageBody.isHtml(){
-                    let attributedString = messageBody.parseHTML()
+                    let attributedString = messageBody.parseHTML()//.string.convertToAttributedString(foregroundColor: UIColor.black)
 //                    print(attributedString)
                     let msg = ChatMessage(attributedText: attributedString, user: currentSender, messageId: message.sid ?? UUID().uuidString, date: message.dateCreatedAsDate ?? Date(), messageIndex: message.index ?? 0)
                     return msg
