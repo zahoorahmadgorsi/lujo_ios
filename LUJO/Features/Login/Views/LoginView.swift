@@ -64,7 +64,7 @@ class LoginView: UIViewController, LoginViewProtocol {
         if segue.identifier == "EnterPhone" {
             guard let enterPhoneVC = segue.destination as? UpdatePhoneNumberView else { return }
             enterPhoneVC.presenter = presenter
-            enterPhoneVC.isChanging = false
+            enterPhoneVC.isChangingPhoneNumber = false
             return
         }
     }

@@ -60,7 +60,7 @@ class ConfirmationView: UIViewController, LoginViewProtocol, UITextFieldDelegate
     }
     
     @IBAction func updateNumberButton_onClick(_ sender: Any) {
-        showView("ShowUpdatePhoneNumber", data: nil)
+        showView("ShowUpdatePhoneNumber", data: nil)    //update phone number is basically change phone number
     }
 
     override func viewWillAppear(_ animated: Bool) {

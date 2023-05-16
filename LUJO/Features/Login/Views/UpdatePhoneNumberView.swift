@@ -35,7 +35,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     /// Hidden on view load.
     @IBOutlet weak var errorLabel: UILabel!
     
-    var isChanging: Bool = true
+    var isChangingPhoneNumber: Bool = true
     var phoneCountryCode = Utility.getCountryCode()
 //    private var phoneCountryCode = PhoneCountryCode(id: 238,
 //                                               alpha2Code: "US",
@@ -56,12 +56,12 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     }
 
     fileprivate func updateUI() {
-        supportTextView.isHidden = isChanging
-        descriptionLabel.text = isChanging ? "Change the phone number" : "Dear LUJO Member, please enter your phone number so we can send you a verification code."
-        confirmButton.setTitle(isChanging ? "CONFIRM & RESEND CODE" : "SEND VERIFICATION CODE", for: .normal)
+        supportTextView.isHidden = isChangingPhoneNumber
+        descriptionLabel.text = isChangingPhoneNumber ? "Change the phone number" : "Dear LUJO Member, please enter your phone number so we can send you a verification code."
+        confirmButton.setTitle(isChangingPhoneNumber ? "CONFIRM & RESEND CODE" : "SEND VERIFICATION CODE", for: .normal)
         confirmButton.setDisabled()
-        title = isChanging ? "Change phone number" : "Member login"
-        newPhoneNumber.placeholder = isChanging ? "New number" : "Phone number"
+        title = isChangingPhoneNumber ? "Change phone number" : "Member login"
+        newPhoneNumber.placeholder = isChangingPhoneNumber ? "New number" : "Phone number"
 
         if UIDevice.isiPhone4 || UIDevice.isiPhone5 || UIDevice.isIphone6Zoomed {
             stackView.spacing = 35
@@ -147,7 +147,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     
     @IBAction func btnAlreadyHaveTheCodeTapped(_ sender: Any) {
         guard let number = newPhoneNumber.text, !number.isEmpty else {
-            showError(LoginError.errorLogin(description: isChanging ? "You need to set a new number" : "Please, enter your phone number"))
+            showError(LoginError.errorLogin(description: isChangingPhoneNumber ? "You need to set a new number" : "Please, enter your phone number"))
             return
         }
 
@@ -171,7 +171,7 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
     
     @IBAction func verifyNewNumber(_ sender: Any) {
         guard let number = newPhoneNumber.text, !number.isEmpty else {
-            showError(LoginError.errorLogin(description: isChanging ? "You need to set a new number" : "Please, enter your phone number"))
+            showError(LoginError.errorLogin(description: isChangingPhoneNumber ? "You need to set a new number" : "Please, enter your phone number"))
             return
         }
 
@@ -180,21 +180,11 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
             showError(error)
             return
         }
-        validateCaptcha(phonenNumber:number)
-//        if isChanging {
-//            if let prefix = LujoSetup().getCurrentUser()?.prefix, let oldNumber = LujoSetup().getCurrentUser()?.phone {
-//                presenter?.updateUserPhone(oldPrefix: prefix, oldNumber: oldNumber, newPrefix: phonePrefix.phonePrefix, newNumber: number)
-//            } else {
-//                showFeedback("Can't change phone number because old number is not available.")
-//            }
-//        } else {
-//            validateCaptchaThenLogin(phonenNumber:number)
-////            presenter?.requestOTPLogin(prefix: phonePrefix, number: number)
-//        }
+        validateCaptcha(phoneNumber:number)
     }
 
     //this function validates captcha and if validated it sends call for user login or user phone update
-    func validateCaptcha( phonenNumber: String) {
+    func validateCaptcha( phoneNumber: String) {
 //    func validateCaptchaThenLogin() {
         showNetworkActivity()
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -205,24 +195,11 @@ class UpdatePhoneNumberView: UIViewController, LoginViewProtocol, CountrySelecti
             if let captchaToken = try? result.dematerialize(){
 
                 self?.captchaWebView?.removeFromSuperview()
-                //After successful validation signup the user or change the phone number
-
-                if let isChanging = self?.isChanging, isChanging == true {
-                    if let oldPrefix = LujoSetup().getCurrentUser()?.prefix
-                        , let oldNumber = LujoSetup().getCurrentUser()?.phone
-                        ,let newPrefix = self?.phoneCountryCode.phonePrefix{
-                        self?.presenter?.updateUserPhone(oldPrefix: oldPrefix, oldNumber: oldNumber, newPrefix: newPrefix, newNumber: phonenNumber,captchaToken:captchaToken)
-                    } else {
-                        self?.showFeedback("Can't change phone number because old number is not available.")
-                    }
-                } else if let phoneCountryCode = self?.phoneCountryCode{
+                if let phoneCountryCode = self?.phoneCountryCode{
                     //User is coming for login
-                    self?.presenter?.requestOTPLogin(phoneCountryCode: phoneCountryCode, number: phonenNumber, captchaToken: captchaToken)
+                    self?.presenter?.requestOTPLogin(phoneCountryCode: phoneCountryCode, number: phoneNumber, captchaToken: captchaToken)
                 }
-                
-//                self?.presenter?.requestOTPLogin(prefix: self?.phonePrefix, number: phonenNumber,captchaToken:captchaToken)
             }
-            
         }
     }
     
