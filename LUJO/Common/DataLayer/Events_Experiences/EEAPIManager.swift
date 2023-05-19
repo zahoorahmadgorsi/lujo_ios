@@ -597,6 +597,10 @@ class EEAPIManager {
         }
         
         Alamofire.request(EERouter.salesforce(salesforceRequest,conversationId)).responseJSON { response in
+            
+            print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
+
+            
             guard response.result.error == nil else {
                 print("***ERROR***: \(response.result.error?.localizedDescription ?? "UNKNOWN ERROR")")
                 return

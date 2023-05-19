@@ -688,6 +688,10 @@ enum EERouter: URLRequestConvertible {
             body["yacht_destination"] = yacht_destination
         }
         
+        if let yacht_region = salesforceRequest.yacht_region , yacht_region != -1{
+            body["yacht_region"] = yacht_region
+        }
+        
         if let yacht_date_from = salesforceRequest.yacht_date_from , !yacht_date_from.isEmpty{
             body["yacht_date_from"] = yacht_date_from
         }

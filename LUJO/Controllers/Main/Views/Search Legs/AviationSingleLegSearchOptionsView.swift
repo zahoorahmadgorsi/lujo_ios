@@ -495,8 +495,7 @@ extension AviationSingleLegSearchOptionsView: UIGestureRecognizerDelegate {
         aviationSearchCriteriaDelegate?.getTripDates(from: segmentData.departureDateTime.toDate?.stripTime(), isReturnDate: true)
     }
 
-    @IBAction func selectTimes(sender: UIGestureRecognizer) {
-        if newOriginTime == nil {
+    @IBAction func selectTimes(sender: UIGestureRecognizer) {        if newOriginTime == nil {
             newOriginTime = Date()
         }
 

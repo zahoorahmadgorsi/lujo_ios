@@ -113,68 +113,7 @@ class VillaViewController: UIViewController {
         guestsCount += 1
     }
     
-//    @IBAction func dropDownButton_onClick(_ sender: UIButton) {
-//        self.view.endEditing(true)
-//
-//        if typeDataPicker == nil {
-//            let dataSource: [[String]] = [["Any", "Motorboat", "Sailboat"]]
-//            typeDataPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select villa type", dataSource: dataSource, callback: { values in
-//                self.selectedVillaType = values[0]
-//                self.villaTypeLabel.text = values[0]
-//            })
-//        }
-//
-//        typeDataPicker?.present()
-//    }
-    
-//    @IBAction func budgetPickerButton_onClick(_ sender: UIButton) {
-//        self.view.endEditing(true)
-//
-//        if budgetPicker == nil {
-//            let dataSource: [[String]] = [["10,000 - 30,000" ,"30,000 - 60,000", "60,000 - 100,000", "100,000 - 150,000", "150,000 - 200,000", "200,000 - 300,000" , "300,00+"]]
-//            budgetPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select budget for the villa charter", dataSource: dataSource, callback: { values in
-//                self.selectedVillaBudget = values[0]
-//                self.villaBudgetLabel.text = values[0]
-//            })
-//        }
-//
-//        budgetPicker?.present()
-//    }
-    
-//    @IBAction func villaCharterButton_onClick(_ sender: UIButton) {
-//        self.view.endEditing(true)
-//
-//        if charterPicker == nil {
-//            let dataSource: [[String]] = [["Day charter" ,"Multi Days/Week charter"]]
-//            charterPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select villa charter", dataSource: dataSource, callback: { [self] values in
-//                //print(values[0],dataSource[0][0])
-//                self.selectedVillaCharter = values[0]
-//                self.villaCharterLabel.text = values[0]
-//                if(values[0] == dataSource[0][0]){  //hiding checkin date label if one day charter is selected
-//                    self.toDateLabel.isHidden = true
-//                }else{
-//                    self.toDateLabel.isHidden = false
-//                }
-//            })
-//        }
-//
-//        charterPicker?.present()
-//    }
-    
-    
-//    @IBAction func lenghtButton_onClick(_ sender: UIButton) {
-//        self.view.endEditing(true)
-//
-//        if lenghtDataPicker == nil {
-//            let dataSource: [[String]] = [["1-20", "20-35", "35-75", "75-90", "90+"]]
-//            lenghtDataPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select villa lenght(m)", dataSource: dataSource, callback: { values in
-//                self.selectedVillaLenght = values[0]
-//                self.lenghtLabel.text = values[0]
-//            })
-//        }
-//
-//        lenghtDataPicker?.present()
-//    }
+
     
     @IBAction func requestButton_onClick(_ sender: Any) {
         

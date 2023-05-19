@@ -10,6 +10,11 @@ import UIKit
 import JGProgressHUD
 import Mixpanel
 
+enum YachtRequestType: String, Codable, CaseIterable {
+    case daily = "day"
+    case weekly = "weekly"
+}
+
 class YachtViewController: UIViewController {
     
     //MARK:- Init
@@ -45,7 +50,7 @@ class YachtViewController: UIViewController {
     private var selectedYachtType: String?
     private var selectedYachtLenght: String?
     private var selectedYachtBudget: String?
-    private var selectedYachtCharter: String?
+    private var selectedYachtCharter: YachtRequestType?
     
     private var guestsCount: Int = 0 {
         didSet {
@@ -70,6 +75,7 @@ class YachtViewController: UIViewController {
         return formatter
     }()
     
+    var selectedItem:Taxonomy?    //for region
     //MARK:- Life cicyle
     
     override func viewDidLoad() {
@@ -90,19 +96,24 @@ class YachtViewController: UIViewController {
         guestsCount = 2
         
         addGestureRecognizers()
+        
         if let product = self.product{
             self.yachtNameTextField.text = product.name
             selectedYachtLenght = product.lengthM
             self.lenghtLabel.text = product.lengthM
             
+            //we have changed this to picker, so no need to pre fill the text
             //Setting location
-            let locationText = product.getCityCountry()
-            destinationTextField.text = locationText
- 
+//            let locationText = product.getCityCountry()
+//            destinationTextField.text = locationText
+            destinationTextField.placeholder = "Select a destination"
         }
+        
         viewDestination.layer.masksToBounds = true
         viewDestination.layer.borderColor = UIColor.lightGray.cgColor //yourColor.CGColor
         viewDestination.layer.borderWidth = 1.0
+        
+        destinationTextField.delegate = self //to make it uneditable
     }
 
     //MARK: - User interaction
@@ -127,8 +138,10 @@ class YachtViewController: UIViewController {
         if typeDataPicker == nil {
             let dataSource: [[String]] = [["Any", "Motorboat", "Sailboat"]]
             typeDataPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select yacht type", dataSource: dataSource, callback: { values in
-                self.selectedYachtType = values[0]
-                self.yachtTypeLabel.text = values[0]
+                if values.count > 0{
+                    self.selectedYachtType = values[0]
+                    self.yachtTypeLabel.text = values[0]
+                }
             })
         }
         
@@ -141,8 +154,10 @@ class YachtViewController: UIViewController {
         if budgetPicker == nil {
             let dataSource: [[String]] = [["10,000 - 30,000" ,"30,000 - 60,000", "60,000 - 100,000", "100,000 - 150,000", "150,000 - 200,000", "200,000 - 300,000" , "300,00+"]]
             budgetPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select budget for the yacht charter", dataSource: dataSource, callback: { values in
-                self.selectedYachtBudget = values[0]
-                self.yachtBudgetLabel.text = values[0]
+                if values.count > 0{
+                    self.selectedYachtBudget = values[0]
+                    self.yachtBudgetLabel.text = values[0]
+                }
             })
         }
         
@@ -155,14 +170,19 @@ class YachtViewController: UIViewController {
         if charterPicker == nil {
             let dataSource: [[String]] = [["Day charter" ,"Multi Days/Week charter"]]
             charterPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select yacht charter", dataSource: dataSource, callback: { [self] values in
-                //print(values[0],dataSource[0][0])
-                self.selectedYachtCharter = values[0]
-                self.yachtCharterLabel.text = values[0]
-                if(values[0] == dataSource[0][0]){  //hiding to date label if one day charter is selected
-                    self.toDateLabel.isHidden = true
+                if values.count > 0{
+                    print(values[0],dataSource[0][0])
+                    self.selectedYachtCharter = values[0] == dataSource[0][0] ? .daily :  .weekly
+                    self.yachtCharterLabel.text = values[0]
+                    if(values[0] == dataSource[0][0]){  //hiding to date label if one day charter is selected
+                        self.toDateLabel.isHidden = true
+                    }else{
+                        self.toDateLabel.isHidden = false
+                    }
                 }else{
-                    self.toDateLabel.isHidden = false
+                    print("No item is selected")
                 }
+                
             })
         }
         
@@ -176,8 +196,10 @@ class YachtViewController: UIViewController {
         if lenghtDataPicker == nil {
             let dataSource: [[String]] = [["1-20", "20-35", "35-75", "75-90", "90+"]]
             lenghtDataPicker = ikDataPickerManger.create(owner: self, sourceView: sender, title: "Select yacht lenght(m)", dataSource: dataSource, callback: { values in
-                self.selectedYachtLenght = values[0]
-                self.lenghtLabel.text = values[0]
+                if values.count > 0{
+                    self.selectedYachtLenght = values[0]
+                    self.lenghtLabel.text = values[0]
+                }
             })
         }
         
@@ -186,12 +208,15 @@ class YachtViewController: UIViewController {
     
     @IBAction func requestButton_onClick(_ sender: Any) {
         
-        guard let yachtCharter = selectedYachtCharter, !yachtCharter.isEmpty else {
+        let _destination = self.destinationTextField.text ?? ""
+        //guard let yachtCharter = selectedYachtCharter, !yachtCharter.isEmpty else {
+        guard let yachtCharter = selectedYachtCharter else {
             showInformationPopup(withTitle: "Info", message:"Please choose yacht charter.")
             return
         }
         
-        guard let destination = destinationTextField.text, !destination.isEmpty else {
+        //guard let destination = destinationTextField.text, !destination.isEmpty else {
+        guard let destination = self.selectedItem else {
             showInformationPopup(withTitle: "Info", message:"Please enter you destination.")
             return
         }
@@ -212,7 +237,7 @@ class YachtViewController: UIViewController {
         }
         
         if let yachtCharter = selectedYachtCharter{
-            if yachtCharter != "Day charter"{
+            if yachtCharter != .daily{
                 guard !returnDateTime.date.isEmpty else{
                     showInformationPopup(withTitle: "Info", message:"Please select disembarkation date.")
                     return
@@ -228,7 +253,7 @@ class YachtViewController: UIViewController {
         
         var returnDateString = ""
         if let yachtCharter = selectedYachtCharter{
-            if yachtCharter != "Day charter"{
+            if yachtCharter != .daily{
                 guard let returnDateStr = returnDateTime.formatedDateForServer else {
                     showInformationPopup(withTitle: "Info", message:"Return date is not in correct format.")
                     return
@@ -243,7 +268,7 @@ class YachtViewController: UIViewController {
         let initialMessage = """
         Hi Concierge team,
 
-        I would like to \(yachtCharter.lowercased()) a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name \(yachtNameTextField.text!) " : "")to travel to \(destination) from \(dateString) to \(returnDateString). I need it for \(guestsCount) \(guestsCount > 1 ? "people" : "person"), can you please assist me?
+        I would like to '\(yachtCharterLabel.text?.lowercased() ?? "charter")' a \(selectedYachtType != nil ? "\(selectedYachtType!.lowercased())\(selectedYachtType!.lowercased() == "sailboat" ? "" : " yacht")" : "yacht") \(yachtNameTextField.text?.count ?? 0 > 0 ? "name '\(yachtNameTextField.text ?? "")' " : "")to travel to '\(_destination)' from '\(dateString)' to '\(returnDateString)'. I need it for '\(guestsCount)' \(guestsCount > 1 ? "people" : "person"), can you please assist me?
 
         \(LujoSetup().getLujoUser()?.firstName ?? "User")
         """
@@ -252,12 +277,23 @@ class YachtViewController: UIViewController {
             //Checking if user is able to logged in to Twilio or not, if not then getClient will login
             if ConversationsManager.sharedConversationsManager.getClient() != nil
             {
+                var _yachtRegion: Int? = -1
+                var _yachtDestination = ""
+                
+                if let _selectedItem = self.selectedItem, let _selectedItemRegion = _selectedItem.yachtRegion{     //if region exist then user has searched a destination/country else region
+                    _yachtDestination = _selectedItem.termId
+                    _yachtRegion = _selectedItemRegion.id
+                }else if let _selectedItem = self.selectedItem{ //it only contains a region and not a destination/country
+                    _yachtRegion = _selectedItem.id
+                }
+                
                 let viewController = AdvanceChatViewController()
                 let sfRequest = SalesforceRequest(id: self.product.id
                                                   ,type: self.product.type
                                                   ,name: self.product.name
-                                                  ,yacht_charter: yachtCharter
-                                                  ,yacht_destination: destination
+                                                  ,yacht_charter: self.selectedYachtCharter?.rawValue
+                                                  ,yacht_destination: _yachtDestination
+                                                  ,yacht_region: _yachtRegion
                                                   ,yacht_date_from: dateString
                                                   ,yacht_date_to: returnDateString
                                                   ,yacht_guests: self.guestsCount
@@ -343,4 +379,24 @@ extension YachtViewController: CalendarViewDelegate {
         guard !returnDateTime.date.isEmpty else { return }
         toDateLabel.text = returnDateTime.date
     }
+}
+
+extension YachtViewController:  UITextFieldDelegate{
+    //making preffered destination field uneditable
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let viewController = DestinationSelectionViewController.instantiate(prefInformationType: .yachtPreferredRegions)
+        viewController.delegate = self
+        present(viewController, animated: true, completion: nil)
+        return false
+
+    }
+}
+
+extension YachtViewController: DestinationSearchViewDelegate{
+    func select(_ destination: Taxonomy) {
+        self.selectedItem = destination
+        self.destinationTextField.text = destination.name + "\(destination.yachtRegion != nil ? ", " + (destination.yachtRegion?.name ?? "") : "")"
+    }
+    
+    
 }

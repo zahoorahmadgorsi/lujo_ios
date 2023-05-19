@@ -18,6 +18,7 @@ struct SalesforceRequest {
     var dingingRequestPersons: Int?
     //yacht
     var yacht_charter: String?
+    var yacht_region: Int?
     var yacht_destination: String?
     var yacht_date_from: String?
     var yacht_date_to: String?
@@ -57,7 +58,7 @@ struct SalesforceRequest {
     }
     
     //yacht
-    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL, yacht_charter:String? = nil , yacht_destination:String? = nil , yacht_date_from:String? = nil, yacht_date_to:String? = nil, yacht_guests:Int? = nil){
+    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL, yacht_charter:String? = nil , yacht_destination:String? = nil, yacht_region:Int? = nil , yacht_date_from:String? = nil, yacht_date_to:String? = nil, yacht_guests:Int? = nil){
         self.productId = id
         self.productType = type
         self.productName =  name
@@ -65,6 +66,7 @@ struct SalesforceRequest {
         //below params are only going to use for dining request
         self.yacht_charter = yacht_charter
         self.yacht_destination = yacht_destination
+        self.yacht_region = yacht_region
         self.yacht_date_from =  yacht_date_from
         self.yacht_date_to = yacht_date_to
         self.yacht_guests = yacht_guests
@@ -166,6 +168,7 @@ struct TaxonomyYachtRegion: Codable{
     let _id: String?
     let name: String?
     let description: String?
+    let id: Int?
 }
 
 struct TaxonomyDocs: Codable{
@@ -183,6 +186,7 @@ struct Taxonomy: Codable {
     
     var stateName: String?          //used in /restaurants/preferred_location/search
     var country: TaxonomyCountry?   //used in /restaurants/preferred_location/search
+    var id: Int?    //in case if this taxonomy is a region then id would contain regionid, used in region filter
     var yachtRegion: TaxonomyYachtRegion?    //used in yacht country/region search
     var code: String?       //used in case of currency (code)
     var isSelected: Bool?
@@ -197,6 +201,7 @@ struct Taxonomy: Codable {
         case stateName
         case country
         case yachtRegion = "yacht_region"
+        case id
     }
     
     init(from decoder: Decoder) throws {
@@ -212,6 +217,7 @@ struct Taxonomy: Codable {
             stateName = try values.decodeIfPresent(String.self, forKey: .stateName)
             country = try values.decodeIfPresent(TaxonomyCountry.self, forKey: .country)
             yachtRegion = try values.decodeIfPresent(TaxonomyYachtRegion.self, forKey: .yachtRegion)
+            id = try values.decodeIfPresent(Int.self, forKey: .id)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error

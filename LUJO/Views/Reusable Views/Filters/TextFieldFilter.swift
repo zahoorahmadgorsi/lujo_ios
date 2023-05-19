@@ -77,9 +77,6 @@ class TextFieldFilter: UIView {
         }
         picker?.present()
     }
-    
- 
-
 }
 
 extension TextFieldFilter:  UITextFieldDelegate{
