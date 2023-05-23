@@ -18,6 +18,8 @@
 	<string>$(BACKEND_CONNECTION_SCHEME)</string>
 	<key>BACKEND_URL</key>
 	<string>$(BACKEND_SERVER)</string>
+	<key>ONE_SIGNAL_APP_ID</key>
+	<string>$(ONE_SIGNAL)</string>
 	<key>CARDCONNECT_ID</key>
 	<string>$(CARDCONNECT_MERCHANT_ID)</string>
 	<key>CARDCONNECT_PASSWORD</key>

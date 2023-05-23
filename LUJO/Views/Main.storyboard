@@ -268,17 +268,10 @@
                                 <rect key="frame" x="0.0" y="92" width="414" height="1825"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="JyT-3i-xEo">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="1332"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="1094"/>
                                         <subviews>
-                                            <view tag="999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gxa-c2-SUj" customClass="DiningCityView" customModule="LUJO" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="226"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="226" id="318-pc-hmR"/>
-                                                </constraints>
-                                            </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XZR-0W-RZW">
-                                                <rect key="frame" x="0.0" y="232" width="414" height="32"/>
+                                                <rect key="frame" x="0.0" y="-32" width="414" height="32"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4mX-sD-PgR">
                                                         <rect key="frame" x="16" y="0.0" width="382" height="32"/>
@@ -303,7 +296,6 @@
                                                                         </state>
                                                                         <connections>
                                                                             <action selector="noNearbyEventsDismissButton_onClick:" destination="diB-LJ-Odk" eventType="touchUpInside" id="X8I-rr-7UY"/>
-                                                                            <action selector="noNearbyRestaurantsDismissButton_onClick:" destination="vdk-aC-30x" eventType="touchUpInside" id="6D9-JU-r2b"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -332,7 +324,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8W-HU-nk3">
-                                                <rect key="frame" x="0.0" y="238" width="414" height="120"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hE-WG-dVo">
                                                         <rect key="frame" x="16" y="0.0" width="382" height="120"/>
@@ -397,7 +389,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDa-gD-hz9">
-                                                <rect key="frame" x="0.0" y="370" width="414" height="157"/>
+                                                <rect key="frame" x="0.0" y="132" width="414" height="157"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fX1-K4-7rd">
                                                         <rect key="frame" x="16" y="0.0" width="115" height="46"/>
@@ -424,7 +416,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r6N-BS-Jh8">
-                                                <rect key="frame" x="0.0" y="539" width="414" height="388.5"/>
+                                                <rect key="frame" x="0.0" y="301" width="414" height="388.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Featured Worldwide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAg-Zd-uw9">
                                                         <rect key="frame" x="16" y="16" width="211" height="30"/>
@@ -548,7 +540,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nbe-1L-T5g">
-                                                <rect key="frame" x="0.0" y="939.5" width="414" height="310.5"/>
+                                                <rect key="frame" x="0.0" y="701.5" width="414" height="310.5"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-img" translatesAutoresizingMaskIntoConstraints="NO" id="PXi-sY-E6e">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="310.5"/>
@@ -676,7 +668,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Up3-m4-bTY">
-                                                <rect key="frame" x="0.0" y="1262" width="414" height="70"/>
+                                                <rect key="frame" x="0.0" y="1024" width="414" height="70"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Popular cities" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIR-ve-B42">
                                                         <rect key="frame" x="16" y="16" width="382" height="38"/>
@@ -696,7 +688,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yiY-VX-tpA">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1348"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1110"/>
                                         <color key="backgroundColor" white="0.070000000000000007" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -800,7 +792,6 @@
                         <outlet property="gradientView" destination="fPW-my-3dG" id="o9O-BI-KqR"/>
                         <outlet property="locationContainerView" destination="W8W-HU-nk3" id="N0b-Pw-3NE"/>
                         <outlet property="membershipView" destination="Xsf-1W-0Q1" id="hNg-Td-msP"/>
-                        <outlet property="myLocationCityView" destination="Gxa-c2-SUj" id="gho-1c-ALZ"/>
                         <outlet property="noNearbyRestaurantsContainerView" destination="XZR-0W-RZW" id="IJZ-ov-NOS"/>
                         <outlet property="restaurantName" destination="0Es-Gf-kNJ" id="Vmp-hJ-yGI"/>
                         <outlet property="scrollView" destination="7of-tm-u6E" id="NqX-tm-duv"/>
@@ -9971,7 +9962,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>

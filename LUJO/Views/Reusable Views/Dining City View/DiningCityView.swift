@@ -96,10 +96,8 @@ class DiningCityView: UIView {
                 restaurant1NameLabel.text = restaurant.name
                 restaurant1locationContainerView.isHidden = restaurant.locations == nil
                 restaurant1locationLabel.text = restaurant.locations?.city?.name.uppercased()
-//                restaurant1starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
-//                restaurant1starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
-                //Zahoor
                 //checking favourite image red or white
+
                 if (restaurant.isFavourite ?? false){
                     imgHeart1.image = UIImage(named: "heart_red")
                 }else{
@@ -116,9 +114,6 @@ class DiningCityView: UIView {
                 restaurant2NameLabel.text = restaurant.name
                 restaurant2locationContainerView.isHidden = restaurant.locations == nil
                 restaurant2locationLabel.text = restaurant.locations?.city?.name.uppercased()
-//                restaurant2starImageContainerView.isHidden = restaurant.michelinStar?.count ?? 0 == 0
-//                restaurant2starCountLabel.text = restaurant.michelinStar?.first?.name.uppercased()
-                //Zahoor
                 //checking favourite image red or white
                 if (restaurant.isFavourite ?? false){
                     imgHeart2.image = UIImage(named: "heart_red")

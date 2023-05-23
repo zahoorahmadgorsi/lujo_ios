@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var navigationController: UINavigationController!
     var isBackground: Bool!
 
+    let oneSignalAppId: String = {
+        guard let urlString = Bundle.main.object(forInfoDictionaryKey: "ONE_SIGNAL_APP_ID") as? String else {
+            return "eae6e09f-04c0-439f-ac65-6a000e8f77f6"   //BY DEFAULT PRODUCTION APP
+        }
+        return urlString
+    }()
+    
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print(launchOptions as Any)
         isBackground = false
@@ -64,17 +71,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         Mixpanel.initialize(token: "974677a8bc1707f564ce3ac082c3cb62", trackAutomaticEvents: false)
         
+        //***********
+        // ONE SIGNAL
+        //***********
         // Remove this method to stop OneSignal Debugging
         OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
-
         // OneSignal initialization
         OneSignal.initWithLaunchOptions(launchOptions)
-        OneSignal.setAppId("eae6e09f-04c0-439f-ac65-6a000e8f77f6")
-
+        OneSignal.setAppId(oneSignalAppId)
+        print("oneSignalAppId: \(oneSignalAppId)")
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         OneSignal.promptForPushNotifications(userResponse: { accepted in
-        print("User accepted notifications: \(accepted)")
+            print("User accepted notifications: \(accepted)")
         })
         
         loginToTwilio()

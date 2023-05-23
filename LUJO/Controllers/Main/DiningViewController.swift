@@ -35,7 +35,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     @IBOutlet weak var membershipView: UIView!
     
     @IBOutlet weak var searchBarButton: UIBarButtonItem!
-    @IBOutlet weak var myLocationCityView: DiningCityView!
     
     @IBOutlet weak var locationContainerView: UIView!
     @IBOutlet weak var noNearbyRestaurantsContainerView: UIView!
@@ -97,10 +96,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         categorySlider.delegate = self
         
         locationContainerView.isHidden = true
-//        noNearbyRestaurantsContainerView.isHidden = true
-        myLocationCityView.isHidden = true
-        
-//        getDiningInformation(showActivity: true)  now we are loading in viewAppear
         
         locationManager.delegate = self
         
@@ -166,11 +161,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             searchBarButton.isEnabled = false   //incase of no membership plan just hide the search button
         }
         
-        if diningInformations == nil{   //information could not loaded on onLoad
-            getDiningInformation(showActivity: true)
-        }else{
-            getDiningInformation(showActivity: false)
-        }
+        self.refresh(self)
         
         checkLocationAuthorizationStatus()
         startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
@@ -193,14 +184,10 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     
     private func updateUIforAuthorizationStatus(_ status: CLAuthorizationStatus) {
         locationContainerView.isHidden = isLocationEnabled
-        if !myLocationCityView.isHidden, !isLocationEnabled {
-            myLocationCityView.isHidden = true
+        if !isLocationEnabled {
             locationRestaurants = []
             updatePopularCities()
         }
-//        if !(noNearbyRestaurantsContainerView?.isHidden ?? true), !isLocationEnabled {
-//            noNearbyRestaurantsContainerView?.isHidden = true
-//        }
         if isLocationEnabled {
             locationManager.startUpdatingLocation()
         }
@@ -227,13 +214,19 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     }
     
     func updateMyRestaurants(_ restaurants: [Product]) {
-//        print(restaurants)
         locationRestaurants = restaurants
-        myLocationCityView.isHidden = restaurants.count == 0
-//        noNearbyRestaurantsContainerView?.isHidden = restaurants.count > 0
-        if let termId = restaurants.first?.locations?.city?.termId, let name = restaurants.first?.locations?.city?.name {
-            self.myLocationCityView.city = Cities(termId: termId, name: name, itemsNum: 2, items: self.locationRestaurants)
-            myLocationCityView.delegate = self
+        if let city = restaurants.first?.locations?.city{
+            
+            if let cityView = stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) as? DiningCityView{
+                cityView.removeFromSuperview()  //removing from bottom
+                cityView.city = Cities(termId: city.termId, name: city.name, itemsNum: 2, items: self.locationRestaurants)    //incase this refresh is due to favourite icon tap
+                stackView.insertArrangedSubview(cityView, at: 0)    //adding at index 0, right at the top
+            }else{
+                let cityView = DiningCityView()
+                cityView.city = Cities(termId: city.termId, name: city.name, itemsNum: 2, items: self.locationRestaurants)
+                cityView.delegate = self
+                stackView.insertArrangedSubview(cityView, at: 0)// adding current location view at the top
+            }
             updatePopularCities()
         }
     }
@@ -269,17 +262,42 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     }
     
     func updatePopularCities() {
-        for city in diningInformations?.cities ?? [] {
-            if let cityView = stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
-                if city.termId == locationRestaurants.first?.locations?.city?.termId {
+        //if a city is removed from the featured city from the backend then need to remove it from the UI as well
+        //if a cityView is there but that citeView.city isn't in the API response which mean it has been removed from the backend so remove it.
+        // and that city which is to be removed should not be of current location, as current location is coming at the top, not at the bottom as a featured city
+        for view in stackView.arrangedSubviews {
+            if let cityView = view as? DiningCityView, let cityViewCity = cityView.city{
+                if let apiCities = diningInformations?.cities
+                    , !apiCities.contains(where: ({$0.termId == cityViewCity.termId}))
+                    && locationRestaurants.first?.locations?.city?.termId != cityViewCity.termId{
                     cityView.removeFromSuperview()
                 }
-            } else if !(city.termId == locationRestaurants.first?.locations?.city?.termId) && city.itemsNum ?? 0 > 0{  //no need to add a city with 0 restaurant
+            }
+        }
+        
+        for city in diningInformations?.cities ?? [] {
+            //if city contains some restaurant and that city is not already added
+            if city.itemsNum ?? 0 > 0
+                && stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) == nil
+                && locationRestaurants.first?.locations?.city?.termId != city.termId{
                 let cityView = DiningCityView()
                 cityView.city = city
                 cityView.delegate = self
                 stackView.addArrangedSubview(cityView)
             }
+//            if let cityView = stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
+//                if city.termId == locationRestaurants.first?.locations?.city?.termId {
+//                    cityView.removeFromSuperview()
+//                }
+////                else if cityView.isHidden == true{ //if cityView was hidden due to the reason that at first cityView was added but in the backend this featured city was removed, hence we hide it from the UI but now if that featured city is added again in the backend again so making it unhide
+////                    cityView.isHidden = false
+////                }
+//            } else if !(city.termId == locationRestaurants.first?.locations?.city?.termId) && city.itemsNum ?? 0 > 0{  //no need to add a city with 0 restaurant
+//                            let cityView = DiningCityView()
+//                            cityView.city = city
+//                            cityView.delegate = self
+//                            stackView.addArrangedSubview(cityView)
+//            }
         }
     }
     
@@ -347,8 +365,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
                 if let error = error {
                     Crashlytics.crashlytics().record(error: error)
                     // NEED TO BE REPLACED WITH UI VIEW
-                    self.myLocationCityView.isHidden = true
-//                    self.noNearbyRestaurantsContainerView?.isHidden = false
                     self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"))
                 } else {
                     if let information = information {
@@ -357,9 +373,6 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
                     } else {
                         // NEED TO BE REPLACED WITH UI VIEW
                         self.showFeedback("No nearby Places available")
-                        self.myLocationCityView.isHidden = true
-//                        self.noNearbyRestaurantsContainerView?.isHidden = false
-
                     }
                 }
             }
@@ -378,7 +391,9 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     /// Refresh control target action that will trigger once user pull to refresh scroll view.
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
-        getDiningInformation(showActivity: false)
+        getDiningInformation(showActivity: diningInformations == nil ? true : false)
+        // refresh location data
+        enableLocationButton_onClick(sender)
     }
     
     func showError(_ error: Error) {
@@ -458,11 +473,7 @@ extension DiningViewController: ImageCarouselDelegate {
             }
             
             if let informations = information {
-                var restaurants = self.featured.restaurantsList
-                restaurants[index].isFavourite = !(restaurants[index].isFavourite ?? false)
-                sender.restaurantsList = restaurants
-                // Store data for later use inside preload reference.
-//                        PreloadDataManager.HomeScreen.scrollViewData = information
+                self.refresh(sender)
                 print("ItemID:\(item.id)" + ", ServerResponse:" + informations)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
@@ -516,14 +527,15 @@ extension DiningViewController {
             return
         }
         
-        GoLujoAPIManager().home() { restaurants, error in
+        GoLujoAPIManager().home() { response, error in
+            
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
                 let error = BackendError.parsing(reason: "Could not obtain dining information")
                 completion(nil, error)
                 return
             }
-            completion(restaurants, error)
+            completion(response, error)
         }
     }
     
@@ -540,7 +552,7 @@ extension DiningViewController {
         // B2 - 6
         //Finding UIImageView of restaurant where user has tapped so that we can animate this image
         //finding current cityview from the stackview, user has tapped on 1 out of 2 restaurants of this city
-        if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.locations?.city?.termId && $0.tag != 999 }) ?? self.myLocationCityView{//(also checking my current location)
+        if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId ==  restaurant.locations?.city?.termId && $0.tag != 999 }){//(also checking my current location)
             //Finding restaurant which user has just tapped
             if let tappedRestaurant = (cityView as? DiningCityView)?.city?.items?.enumerated().first(where: {$0.element.id == restaurant.id}) {
                 if (tappedRestaurant.offset == 0){
@@ -565,6 +577,7 @@ extension DiningViewController {
         //setting the favourite
         self.showNetworkActivity()
         setUnSetFavourites(type: sender.type ,id: sender.id ,isUnSetFavourite: sender.isFavourite ?? false) {information, error in
+            
             self.hideNetworkActivity()
 
             if let error = error {
@@ -573,39 +586,7 @@ extension DiningViewController {
             }
 
             if let informations = information {
-                //**************************************************
-                //all restaurants on this page other then myLocation
-                //**************************************************
-                if let allCitiesAtDining = self.diningInformations?.cities{
-                    for i in 0..<allCitiesAtDining.count {  //looping all cities on dining page
-                        //Finding restaurant which user has just favourited/unfavourited
-                        if let itemRestaurant = allCitiesAtDining[i].items?.enumerated().first(where: {$0.element.id == sender.id}) {
-                            //Just got the city by value else we can also use long like like self.diningInformations?.cities[i]
-                            if let city = self.diningInformations?.cities[i]{
-                                //toggling the isFavourite value
-                                self.diningInformations?.cities[i].items?[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
-                                //finding current cityview from the stackview, to remove and then again adding updated by red/white heart
-                                if let cityView = self.stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) {
-                                    if let termId = sender.locations?.city?.termId, let name = sender.locations?.city?.name {
-                                        (cityView as? DiningCityView)?.city = Cities(termId: termId, name: name, itemsNum: 2, items: (self.diningInformations?.cities[i].items)! )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                //*****************************
-                //all restaurants on myLocation
-                //*****************************
-                //Finding restaurant which user has just favourited/unfavourited
-                if let itemRestaurant = self.locationRestaurants.enumerated().first(where: {$0.element.id == sender.id}) {
-                    //toggling the isFavourite value
-                    self.locationRestaurants[itemRestaurant.offset].isFavourite = !(itemRestaurant.element.isFavourite ?? false)
-                    if let termId = sender.locations?.city?.termId, let name = sender.locations?.city?.name {
-                        self.myLocationCityView.city = Cities(termId: termId, name: name, itemsNum: 2, items: self.locationRestaurants)
-                    }
-                }
-//                print(" ServerResponse:" + informations)
+                self.refresh(self)
             } else {
                 let error = BackendError.parsing(reason: "Could not obtain tap on heart information")
                 self.showError(error)
@@ -639,10 +620,6 @@ extension DiningViewController: UIViewControllerTransitioningDelegate {
             featuredDiningToDetailAnimator = DiningFeaturedAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
             return featuredDiningToDetailAnimator
         }
-//        else if animationtype == .specialEvent{
-//            diningCheffAnimator = DiningCheffAnimator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-//            return diningCheffAnimator
-//        }
         else {
             return nil
         }

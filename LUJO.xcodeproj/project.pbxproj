@@ -2859,6 +2859,7 @@
 				);
 				LUJO_API_VERSION = v1;
 				MARKETING_VERSION = 1.0;
+				ONE_SIGNAL = "0c5afe65-5cf1-4ca9-a8f7-9b4def559aed";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2914,6 +2915,7 @@
 				);
 				LUJO_API_VERSION = v1;
 				MARKETING_VERSION = 1.0;
+				ONE_SIGNAL = "eae6e09f-04c0-439f-ac65-6a000e8f77f6";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3116,6 +3118,7 @@
 				);
 				LUJO_API_VERSION = v1;
 				MARKETING_VERSION = 1.0;
+				ONE_SIGNAL = "0c5afe65-5cf1-4ca9-a8f7-9b4def559aed";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend;
