@@ -560,7 +560,7 @@ extension AviationSingleLegSearchOptionsView {
                                                  returnDateTime: nil,
                                                  passengers: 1,
                                                  luggage: nil)
-        departureLabel.isUserInteractionEnabled = false
+        //departureLabel.isUserInteractionEnabled = false   //let user edit departure airport in case of multi leg
     }
 
     func resetValues() {

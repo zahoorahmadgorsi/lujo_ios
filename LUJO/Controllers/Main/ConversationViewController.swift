@@ -144,7 +144,9 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                 self.messageList.append(chatMessage)
             }
             showNetworkActivity()
-            ConversationsManager.sharedConversationsManager.createConversation(uniqueChannelName: channelUniqueName, friendlyName: channelFriendlyName, customAttribute: attribute, { channelResult, channel in
+            ConversationsManager.sharedConversationsManager.createConversation(uniqueChannelName: channelUniqueName,
+                                                                               friendlyName: channelFriendlyName,
+                                                                               customAttribute: attribute, { channelResult, channel in
                     if let location = self.currentLocation { //updating location (if user has enabled) and other attributes
                         var attributes = Utility.getAttributes(onlyRelatedToUser: false)
                         attributes["device_latitude"] = String(location.coordinate.latitude)
@@ -629,6 +631,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
 //                        inputBar.inputTextView.becomeFirstResponder()   //brining focus for next message type
                     } else {
 //                        self.displayErrorMessage("Unable to send message")
+                        print("Twilio: \(result.description)")
                         let error = BackendError.parsing(reason: "Unable to send message")
                         self.showError(error)
                     }

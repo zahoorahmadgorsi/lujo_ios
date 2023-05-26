@@ -684,19 +684,19 @@ enum EERouter: URLRequestConvertible {
             body["yacht_charter"] = yacht_charter
         }
         
-        if let yacht_destination = salesforceRequest.yacht_destination , !yacht_destination.isEmpty{
+        if let yacht_destination = salesforceRequest.yacht_destination, yacht_destination != -1{
             body["yacht_destination"] = yacht_destination
         }
         
-        if let yacht_region = salesforceRequest.yacht_region , yacht_region != -1{
+        if let yacht_region = salesforceRequest.yacht_region, yacht_region != -1{
             body["yacht_region"] = yacht_region
         }
         
-        if let yacht_date_from = salesforceRequest.yacht_date_from , !yacht_date_from.isEmpty{
+        if let yacht_date_from = salesforceRequest.yacht_date_from, !yacht_date_from.isEmpty{
             body["yacht_date_from"] = yacht_date_from
         }
         
-        if let yacht_date_to = salesforceRequest.yacht_date_to , !yacht_date_to.isEmpty{
+        if let yacht_date_to = salesforceRequest.yacht_date_to, !yacht_date_to.isEmpty{
             body["yacht_date_to"] = yacht_date_to
         }
         
@@ -704,29 +704,29 @@ enum EERouter: URLRequestConvertible {
             body["yacht_guests"] = yacht_guests
         }
 //        villa
-        if let villa_check_in = salesforceRequest.villa_check_in , !villa_check_in.isEmpty{
+        if let villa_check_in = salesforceRequest.villa_check_in, !villa_check_in.isEmpty{
             body["villa_check_in"] = villa_check_in
         }
-        if let villa_check_out = salesforceRequest.villa_check_out , !villa_check_out.isEmpty{
+        if let villa_check_out = salesforceRequest.villa_check_out, !villa_check_out.isEmpty{
             body["villa_check_out"] = villa_check_out
         }
         if let villa_guests = salesforceRequest.villa_guests{
             body["villa_guests"] = villa_guests
         }
 //        hotel
-        if let hotel_name = salesforceRequest.hotel_name , !hotel_name.isEmpty{
+        if let hotel_name = salesforceRequest.hotel_name, !hotel_name.isEmpty{
             body["hotel_name"] = hotel_name
         }
-        if let hotel_neighborhood = salesforceRequest.hotel_neighborhood , !hotel_neighborhood.isEmpty{     //it cant be empty as there is a check on front end
+        if let hotel_neighborhood = salesforceRequest.hotel_neighborhood, !hotel_neighborhood.isEmpty{     //it cant be empty as there is a check on front end
             body["hotel_neighborhood"] = hotel_neighborhood
         }
         if let hotel_radius = salesforceRequest.hotel_radius{
             body["hotel_radius"] = hotel_radius
         }
-        if let hotel_check_in_date = salesforceRequest.hotel_check_in_date , !hotel_check_in_date.isEmpty{  //it cant be empty as there is a check on front end
+        if let hotel_check_in_date = salesforceRequest.hotel_check_in_date, !hotel_check_in_date.isEmpty{  //it cant be empty as there is a check on front end
             body["hotel_check_in_date"] = hotel_check_in_date
         }
-        if let hotel_check_out_date = salesforceRequest.hotel_check_out_date , !hotel_check_out_date.isEmpty{   //it cant be empty as there is a check on front end
+        if let hotel_check_out_date = salesforceRequest.hotel_check_out_date, !hotel_check_out_date.isEmpty{   //it cant be empty as there is a check on front end
             body["hotel_check_out_date"] = hotel_check_out_date
         }
         if let hotel_guests = salesforceRequest.hotel_guests{

@@ -180,6 +180,7 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                 }
             }else{
                 print("Twilio: Conversation could not created")
+                completion(result.isSuccessful, nil)
             }
         }
     }
@@ -410,10 +411,11 @@ class ConversationsManager: NSObject, TwilioConversationsClientDelegate {
                                 convers.addParticipant(byIdentity: participantEmail, attributes: nil, completion: { (result) in
                                     //this result.isSuccessful isn't reliable
                                     if result.isSuccessful == false {
-                                        print("Twilio: \(participantEmail) could not added.")
-                                    }else{
-                                        print("Twilio: \(participantEmail) added successfully.")
+                                        print("Twilio: \(participantEmail) could not added due to '\(result.debugDescription)")
                                     }
+//                                    else{
+//                                        print("Twilio: \(participantEmail) added successfully.")
+//                                    }
                                 })
                             }
                         default: // 500 or bigger, Server Error

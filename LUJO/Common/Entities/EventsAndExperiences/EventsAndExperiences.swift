@@ -19,7 +19,7 @@ struct SalesforceRequest {
     //yacht
     var yacht_charter: String?
     var yacht_region: Int?
-    var yacht_destination: String?
+    var yacht_destination: Int?
     var yacht_date_from: String?
     var yacht_date_to: String?
     var yacht_guests: Int?
@@ -58,7 +58,7 @@ struct SalesforceRequest {
     }
     
     //yacht
-    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL, yacht_charter:String? = nil , yacht_destination:String? = nil, yacht_region:Int? = nil , yacht_date_from:String? = nil, yacht_date_to:String? = nil, yacht_guests:Int? = nil){
+    init(id:String, type:String, name:String = "", sfRequestType: SalesforceRequestType = .GENERAL, yacht_charter:String? = nil , yacht_destination:Int? = nil, yacht_region:Int? = nil , yacht_date_from:String? = nil, yacht_date_to:String? = nil, yacht_guests:Int? = nil){
         self.productId = id
         self.productType = type
         self.productName =  name

@@ -278,10 +278,10 @@ class YachtViewController: UIViewController {
             if ConversationsManager.sharedConversationsManager.getClient() != nil
             {
                 var _yachtRegion: Int? = -1
-                var _yachtDestination = ""
+                var _yachtDestination = -1
                 
                 if let _selectedItem = self.selectedItem, let _selectedItemRegion = _selectedItem.yachtRegion{     //if region exist then user has searched a destination/country else region
-                    _yachtDestination = _selectedItem.termId
+                    _yachtDestination = _selectedItem.id ?? -1
                     _yachtRegion = _selectedItemRegion.id
                 }else if let _selectedItem = self.selectedItem{ //it only contains a region and not a destination/country
                     _yachtRegion = _selectedItem.id
