@@ -352,6 +352,7 @@ struct DiscoverCity: Codable {
 
 struct DiscoverSearchResponse:Codable{
     let docs: [Product]
+    let totalDocs: Int
 }
 //it could be an event, experience, gift, villa or yacht
 struct Product: Codable {

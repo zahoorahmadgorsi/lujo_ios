@@ -95,180 +95,193 @@ class EEAPIManager {
             }
     }
 
-//    func getEvents( past: Bool, term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
-    func getEvents( past: Bool, term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+
+    func getEvents( past: Bool, term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
+        
         //Alamofire.request(EERouter.events(past, term, latitude, longitude, productId, filtersToApply, page, perPage)).responseJSON { response in
         Alamofire.request(EERouter.events(past, term, productId, filtersToApply, page, perPage)).responseJSON { response in
             print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
 
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
                 if let id = productId , !id.isEmpty{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
+                    
                     var products = [Product]()
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
-                    completion(products, nil)
+                    
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
+                    completion(_discoverSearchResponse, nil)
                 }else{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content.docs, nil)
+                    completion(result.content, nil)
                 }
                 
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }
 
-
-//    func getExperiences( term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
-    func getExperiences( term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getExperiences( term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
        // Alamofire.request(EERouter.experiences( term, latitude, longitude, productId, filtersToApply, page, perPage)).responseJSON { response in
         Alamofire.request(EERouter.experiences( term, productId, filtersToApply, page, perPage)).responseJSON { response in
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
                 if let id = productId , !id.isEmpty{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
                     var products = [Product]()
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
-                    completion(products, nil)
+                    //                    completion(products, nil)
+                                        
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
+                    completion(_discoverSearchResponse, nil)
                 }else{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content.docs, nil)
+                    completion(result.content, nil)
                 
                 }
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }
     
 //    func getVillas(term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
-    func getVillas(term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getVillas(term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         //Alamofire.request(EERouter.villas( term, latitude, longitude, productId,filtersToApply, page, perPage)).responseJSON { response in
         Alamofire.request(EERouter.villas( term, productId,filtersToApply, page, perPage)).responseJSON { response in
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
                 if let id = productId , !id.isEmpty{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
                     var products = [Product]()
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
-                    completion(products, nil)
+                    //                    completion(products, nil)
+                                        
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
+                    completion(_discoverSearchResponse, nil)
                 }else{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
                                                                  from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse the response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse the response"))
                         return
                     }
-                    completion(result.content, nil)
+//                    completion(result.content, nil)
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: result.content, totalDocs: 100)
+                    completion(_discoverSearchResponse, nil)
                 }
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }
     
-    func getGoods(term: String?, giftCategoryId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int , completion: @escaping ([Product], Error?) -> Void) {
+    func getGoods(term: String?, giftCategoryId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int , completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         Alamofire.request(EERouter.goods(term, giftCategoryId, productId, filtersToApply, page, perPage)).responseJSON { response in
             print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
                 if let id = productId , !id.isEmpty{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
                     var products = [Product]()
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
-                    completion(products, nil)
+                    //                    completion(products, nil)
+                                        
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
+                    completion(_discoverSearchResponse, nil)
                 }
 //                else if let id = giftCategoryId , !id.isEmpty{
 //                    guard let result = try? JSONDecoder().decode(LujoServerResponse<PerCityObjects>.self, from: response.data!)
@@ -281,95 +294,105 @@ class EEAPIManager {
                 else{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content.docs, nil)
+                    completion(result.content, nil)
                 
                 }
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }
     
-    func getYachts(term: String?, cityId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getYachts(term: String?, cityId: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         Alamofire.request(EERouter.yachts(term, cityId, productId, filtersToApply, page, perPage)).responseJSON { response in
+            
+            print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
+            
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
                 if let id = productId , !id.isEmpty{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
                     var products = [Product]()
                     products.append(result.content) //result.content would be an object, but completion is expecting an array
-                    completion(products, nil)
+                    //                    completion(products, nil)
+                                        
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
+                    completion(_discoverSearchResponse, nil)
                 }else{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
                                                                  from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content, nil)
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: result.content, totalDocs: 100)
+                    completion(_discoverSearchResponse, nil)
                 }
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }
     
-    func getRestaurant(productId: String, completion: @escaping ([Product], Error?) -> Void) {
+    func getRestaurant(productId: String, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         Alamofire.request(EERouter.restaurants(productId)).responseJSON { response in
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
 //                if let id = productId , !id.isEmpty{
                     guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
                     else {
-                        completion([], BackendError.parsing(reason: "Unable to parse response"))
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    var products = [Product]()
-                    products.append(result.content) //result.content would be an object, but completion is expecting an array
-                    completion(products, nil)
+                var products = [Product]()
+                products.append(result.content) //result.content would be an object, but completion is expecting an array
+                //                    completion(products, nil)
+                                    
+                let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
+                completion(_discoverSearchResponse, nil)
 //                }else{
 //                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
 //                                                                 from: response.data!)
@@ -381,81 +404,83 @@ class EEAPIManager {
 //                }
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }
     
-    func getTopRated(type: String?, term: String?, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getTopRated(type: String?, term: String?, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         Alamofire.request(EERouter.topRated( type: type,  term:term, page,perPage)).responseJSON { response in
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
                 guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
                                                              from: response.data!)
                 else {
-                    completion([], BackendError.parsing(reason: "Unable to parse response"))
+                    completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                     return
                 }
-                completion(result.content, nil)
+//                completion(result.content, nil)
+                let _discoverSearchResponse = DiscoverSearchResponse(docs: result.content, totalDocs: 100)
+                completion(_discoverSearchResponse, nil)
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }
     
-    func getRecents( limit: String?, type: String?, completion: @escaping ([Product], Error?) -> Void) {
+    func getRecents( limit: String?, type: String?, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         Alamofire.request(EERouter.recents(limit, type)).responseJSON { response in
             guard response.result.error == nil else {
-                completion([], response.result.error!)
+                completion(nil, response.result.error!)
                 return
             }
 
             // Special case where status code is not received, should never happen
             guard let statusCode = response.response?.statusCode else {
-                completion([], BackendError.unhandledStatus)
+                completion(nil, BackendError.unhandledStatus)
                 return
             }
 
             switch statusCode {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
+                guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self,
                                                              from: response.data!)
                 else {
-                    completion([], BackendError.parsing(reason: "Unable to parse response"))
+                    completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                     return
                 }
                 completion(result.content, nil)
                 return
             case 300 ... 399: // Redirection: Unexpected
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             case 400 ... 499: // Client Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             default: // 500 or bigger, Server Error
-                completion([], self.handleError(response, statusCode))
+                completion(nil, self.handleError(response, statusCode))
             }
         }
     }

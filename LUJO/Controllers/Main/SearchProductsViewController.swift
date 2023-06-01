@@ -50,6 +50,7 @@ class SearchProductsViewController: UIViewController {
     //for paginations
     var pageNumber = 1
     let pageSize = 20
+    var discoverSearchResponse: DiscoverSearchResponse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,21 +114,34 @@ class SearchProductsViewController: UIViewController {
     }
     
     func update(listOf objects: [Product]) {
-        if dataSource.isEmpty{
-            dataSource = objects
-            DispatchQueue.main.async(execute: collectionView.reloadData)
-        }else {  //paging is being applied
-            if objects.count > 0{
-                for item in objects{
-                    dataSource.append(item)
-                }
-            }else{
-                return  //stop it from executing collectionView.reloadData
-            }
+        //if both dataSource and objects are empty then refreshing grid is throwin exception
+        //Terminating app due to uncaught exception 'CALayerInvalidGeometry', reason: 'CALayer position contains NaN
+        if dataSource.isEmpty && objects.isEmpty {
+            return
         }
-        //        print("Found \(dataSource.count) items")
-        currentLayout?.clearCache()
+        
+        dataSource = objects
         DispatchQueue.main.async(execute: collectionView.reloadData)
+        
+//        if dataSource.isEmpty && !objects.isEmpty{
+//            dataSource = objects
+//            DispatchQueue.main.async(execute: collectionView.reloadData)
+//        }else {  //paging is being applied
+//            if objects.count > 0{
+//                for item in objects{
+//                    if !dataSource.contains(where: {$0.id == item.id}) {
+//                        dataSource.append(item)
+//                    }
+//                }
+//            }else if objects.count == 0 && self.pageNumber == 0{
+//                dataSource = [] //user is searching for more then 1 time, and in this search no record is found so empty the records
+//            } else{
+//                return  //stop it from executing collectionView.reloadData
+//            }
+//        }
+//        //        print("Found \(dataSource.count) items")
+//        currentLayout?.clearCache()
+//        DispatchQueue.main.async(execute: collectionView.reloadData)
 
     }
     
@@ -235,6 +249,60 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
             cell.tagContainerView.isHidden = true
         }
 
+        print("model.type:\(model.type)")
+        if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+            cell.viewMeasurements.isHidden = false
+            cell.viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
+            if let constraint = cell.viewTitleHeightConstraint{
+                cell.viewTitle.addConstraint(constraint)
+            }
+            
+            if model.type == "villa"{
+                
+                cell.viewLength.isHidden = true     //villa dont have length
+                if let val = model.numberOfGuests, val > 0{
+                    cell.viewNumberOfGuests.isHidden = false
+                    cell.lblNumberOfGuests.text = String(val)
+                }else{
+                    cell.viewNumberOfGuests.isHidden = true
+                }
+                if let val = model.numberOfBedrooms, val > 0{
+                    cell.viewCabins.isHidden = false
+                    cell.lblCabins.text = String(val)
+                }else{
+                    cell.viewCabins.isHidden = true
+                }
+                if let val = model.numberOfBathrooms, val > 0{
+                    cell.viewWashrooms.isHidden = false
+                    cell.lblWashrooms.text = String(val)
+                }else{
+                    cell.viewWashrooms.isHidden = true
+                }
+            }else if model.type == "yacht"{
+                cell.viewWashrooms.isHidden = true      //yacht dont have washroom
+                if let val = model.lengthM, val.count > 0{
+                    cell.viewLength.isHidden = false
+                    cell.lblLength.text = val + "m"
+                }else{
+                    cell.viewLength.isHidden = true
+                }
+                if let val = model.guestsNumber, val.count > 0{
+                    cell.viewNumberOfGuests.isHidden = false
+                    cell.lblNumberOfGuests.text = val
+                }else{
+                    cell.viewNumberOfGuests.isHidden = true
+                }
+                if let val = model.cabinNumber, val.count > 0{
+                    cell.viewCabins.isHidden = false
+                    cell.lblCabins.text = val
+                }else{
+                    cell.viewCabins.isHidden = true
+                }
+                
+            }
+        }else{
+            cell.viewMeasurements.isHidden = true
+        }
         return cell
     }
 
@@ -252,7 +320,9 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print(indexPath.row,collectionView.numberOfItems(inSection: indexPath.section))
-        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2  {   //if half data has been loaded then load rest silently
+        print("totalDocs:\(discoverSearchResponse?.totalDocs)" , "Loaded docs: \((self.pageNumber+1)*self.pageSize)")
+        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2 ,
+           let totalDocs = discoverSearchResponse?.totalDocs, totalDocs > (self.pageSize * (self.pageNumber+1)){   //if half data has been loaded then load rest silently
             print("load next set")
             self.pageNumber += 1
 //            self.pageSize += self.pageSize
@@ -264,16 +334,33 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
 extension SearchProductsViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.text?.count ?? 0 > 1 {
+        if textField.text?.count ?? 0 > 2 {
             textField.resignFirstResponder()
+            self.pageNumber = 1     //when ever there is a change in text in searchtext then start searching from first page
+//            txtSearch = textField.text ?? ""
             self.getInformation(for: category, past: false, term: textField.text, page: self.pageNumber, perPage: self.pageSize)
             return true
         }
         
-        showInformationPopup(withTitle: "Info", message: "Please, enter minimum 2 characters for search.")
+        showInformationPopup(withTitle: "Info", message: "Please, enter minimum 3 characters for search.")
         return false
     }
     
+//    func textField(_ textField: UITextField,
+//                   shouldChangeCharactersIn range: NSRange,
+//                   replacementString string: String) -> Bool {
+//
+//        if textField.text?.count == 0{  //user has erased all text, so reset the page number
+//            self.pageNumber = 0
+//        }
+//        return true
+//    }
+    
+    //when cross button is tapped, we need to clear the paging
+//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+//        self.pageNumber = 0
+//        return true
+//    }
 }
 
 extension SearchProductsViewController {
@@ -283,11 +370,25 @@ extension SearchProductsViewController {
             showNetworkActivity()
         }
         getList(for: category, past: past, term: term, page:page, perPage: perPage) { items, error in
+            var _oldData = self.dataSource
+            var _newData = items
+            
             self.hideNetworkActivity()
             if let error = error {
                 self.showError(error, category.rawValue)
             }
-            self.update(listOf: items)  //incase of error items would have []
+            
+            // if user is fetching next page data so append new data to old data
+            if page > 1 {
+                for item in _newData{
+                    if !_oldData.contains(where: {$0.id == item.id}) {
+                        _oldData.append(item)
+                    }
+                }
+            }else{  //for first page newData is current data
+                _oldData = _newData
+            }
+            self.update(listOf: _oldData)  //incase of error items would have []
         }
     }
     
@@ -310,8 +411,9 @@ extension SearchProductsViewController {
                         completion([], error)
                         return
                     }
-                    completion(list, error)
-                }
+                self.discoverSearchResponse = list
+                completion(list?.docs ?? [], error)
+            }
             case .experience:
                 Mixpanel.mainInstance().track(event: "ExperienceSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
@@ -323,7 +425,8 @@ extension SearchProductsViewController {
                         completion([], error)
                         return
                     }
-                    completion(list, error)
+                self.discoverSearchResponse = list
+                completion(list?.docs ?? [], error)
                 }
             case .villa:
                 Mixpanel.mainInstance().track(event: "VillaSearched",
@@ -336,7 +439,8 @@ extension SearchProductsViewController {
                         completion([], error)
                         return
                     }
-                    completion(list, error)
+                self.discoverSearchResponse = list
+                completion(list?.docs ?? [], error)
                 }
             case .gift:
                 Mixpanel.mainInstance().track(event: "GiftSearched",
@@ -348,7 +452,8 @@ extension SearchProductsViewController {
                         completion([], error)
                         return
                     }
-                    completion(list, error)
+                    self.discoverSearchResponse = list
+                    completion(list?.docs ?? [], error)
             }
             case .yacht:
                 Mixpanel.mainInstance().track(event: "YachtSearched",
@@ -360,7 +465,8 @@ extension SearchProductsViewController {
                         completion([], error)
                         return
                     }
-                    completion(list, error)
+                    self.discoverSearchResponse = list
+                    completion(list?.docs ?? [], error)
             }
             case .topRated:
                 Mixpanel.mainInstance().track(event: "TopRatedSearched",
@@ -387,7 +493,8 @@ extension SearchProductsViewController {
                         completion([], error)
                         return
                     }
-                    completion(list, error)
+                    self.discoverSearchResponse = list
+                    completion(list?.docs ?? [], error)
             }
             case .recent:   //it will never be called
                 EEAPIManager().getYachts( term: term, cityId: nil, productId: nil, page:page, perPage:perPage) { list, error in
@@ -397,7 +504,8 @@ extension SearchProductsViewController {
                         completion([], error)
                         return
                     }
-                    completion(list, error)
+                    self.discoverSearchResponse = list
+                    completion(list?.docs ?? [], error)
             }
                 
         }

@@ -61,6 +61,7 @@ class ProductsViewController: UIViewController {
     //for paginations
     var pageNumber = 1
     let pageSize = 20
+    var discoverSearchResponse: DiscoverSearchResponse?
     
     // B2 - 5
     var selectedCell: HomeSliderCell?
@@ -396,11 +397,6 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
             }
         }else{
             cell.viewMeasurements.isHidden = true
-            //it will make the viewTitle grow to show multilines title for gifts especially
-//            cell.viewEmpty.isHidden = true  //other wise viewempty will grow bigger instead of viewTitle
-//            if let constraint = cell.viewTitleHeightConstraint{
-//                cell.viewTitle.removeConstraint(constraint)
-//            }
         }
         return cell
     }
@@ -422,7 +418,8 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print(indexPath.row,collectionView.numberOfItems(inSection: indexPath.section))
-        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2  {   //if half data has been loaded then load rest silently
+        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2,
+           let totalDocs = discoverSearchResponse?.totalDocs, totalDocs > (self.pageSize * (self.pageNumber+1))  {   //if half data has been loaded then load rest silently
             print("load next set")
             self.pageNumber += 1
 //            self.pageSize += self.pageSize
@@ -440,20 +437,20 @@ extension ProductsViewController {
             showNetworkActivity()
         }
 //        getList(for: category, past: past, term: term, cityId: cityId,latitude: latitude,longitude:longitude, filtersToApply:filtersToApply, page: page, perPage: perPage) { items, error in
-        getList(for: category, past: past, term: term, cityId: cityId, filtersToApply:filtersToApply, page: page, perPage: perPage) { items, error in
+        getList(for: category, past: past, term: term, cityId: cityId, filtersToApply:filtersToApply, page: page, perPage: perPage) { docsResponse, error in
             self.hideNetworkActivity()
             // Stop refresh control animation and allow scroll to sieze back refresh control space by scrolling up.
             self.refreshControl.endRefreshing()
             if let error = error {
                 self.showError(error, category.rawValue == "Villas" ? "Properties" :category.rawValue)
             } else {
-                self.update(listOf: items)
+                self.update(listOf: docsResponse?.docs ?? [])
             }
         }
     }
     
 //    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, latitude: Double?, longitude:Double?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
-    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
+    func getList(for category: ProductCategory, past: Bool, term: String?, cityId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         
         //if user is searching by cityId then appending its id with the filters object
         var filters = filtersToApply
@@ -474,31 +471,34 @@ extension ProductsViewController {
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain Events information")
-                        completion([], error)
+                        completion(nil, error)
                         return
                     }
-                    completion(list, error)
-                }
+                self.discoverSearchResponse = list
+                completion(list, error)
+            }
             case .experience:
                 //EEAPIManager().getExperiences( term: term, latitude: latitude, longitude: longitude, productId: nil, filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
             EEAPIManager().getExperiences( term: term, productId: nil, filtersToApply: filters, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain experience information")
-                        completion([], error)
+                        completion(nil, error)
                         return
                     }
-                    completion(list, error)
-                }
+                self.discoverSearchResponse = list
+                completion(list, error)
+            }
             case .yacht:
                 EEAPIManager().getYachts( term: term, cityId: cityId, productId: nil,
                                           filtersToApply: filters, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain yachts information")
-                        completion([], error)
+                        completion(nil, error)
                         return
                     }
+                self.discoverSearchResponse = list
                 completion(list, error)
             }
             case .villa:
@@ -507,11 +507,12 @@ extension ProductsViewController {
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain properties information")
-                        completion([], error)
+                        completion(nil, error)
                         return
                     }
-                    completion(list, error)
-                }
+                self.discoverSearchResponse = list
+                completion(list, error)
+            }
             case .gift:
                 //sending category_term_id in case of gifts in the paraeter cityid
                 EEAPIManager().getGoods( term: term, giftCategoryId: cityId, productId: nil,
@@ -519,9 +520,10 @@ extension ProductsViewController {
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain gifts information")
-                        completion([], error)
+                        completion(nil, error)
                         return
                     }
+                self.discoverSearchResponse = list
                 completion(list, error)
             }
 
@@ -530,9 +532,10 @@ extension ProductsViewController {
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain top rated items")
-                        completion([], error)
+                        completion(nil, error)
                         return
                     }
+                self.discoverSearchResponse = list
                 completion(list, error)
             }
             case .recent:
@@ -540,9 +543,10 @@ extension ProductsViewController {
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
                         let error = BackendError.parsing(reason: "Could not obtain home recently viewed items")
-                        completion([], error)
+                        completion(nil, error)
                         return
                     }
+                self.discoverSearchResponse = list
                 completion(list, error)
             }
         }

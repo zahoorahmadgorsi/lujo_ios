@@ -113,6 +113,9 @@ enum DiningRouter: URLRequestConvertible {
 //        if let long = longitude {
 //            body["longitude"] = long
 //        }
+        if let _search = search, _search.count > 0{
+            body["search"] = _search
+        }
         if let _citieId = citieId, _citieId.count > 0, _citieId[0].count > 0{
             body["cities"] = _citieId
         }

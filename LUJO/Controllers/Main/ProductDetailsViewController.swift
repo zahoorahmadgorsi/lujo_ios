@@ -178,7 +178,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     completion(nil, error)
                     return
                 }
-                completion(list[0], error)
+                completion(list?.docs[0], error)
             }
         }else if (product.type == "experience"){
             //EEAPIManager().getExperiences( term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
@@ -189,7 +189,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     completion(nil, error)
                     return
                 }
-                completion(list[0], error)
+                completion(list?.docs[0], error)
             }
         }else if (product.type == "villa"){
             //EEAPIManager().getVillas(term: nil, latitude: nil, longitude: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
@@ -200,7 +200,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     completion(nil, error)
                     return
                 }
-                completion(list[0], error)
+                completion(list?.docs[0], error)
             }
         }else if (product.type == "gift"){
             EEAPIManager().getGoods( term: nil, giftCategoryId: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
@@ -210,7 +210,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     completion(nil, error)
                     return
                 }
-                completion(list[0], error)
+                completion(list?.docs[0], error)
             }
         }else if (product.type == "yacht"){
             EEAPIManager().getYachts( term: nil, cityId: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
@@ -220,7 +220,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     completion(nil, error)
                     return
                 }
-                completion(list[0], error)
+                completion(list?.docs[0], error)
             }
         }else if (product.type == "restaurant"){
             EEAPIManager().getRestaurant( productId: product.id) { list, error in
@@ -230,7 +230,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
                     completion(nil, error)
                     return
                 }
-                completion(list[0], error)
+                completion(list?.docs[0], error)
             }
         }
     }
