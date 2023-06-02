@@ -190,7 +190,8 @@ class UserProfileViewController: UIViewController {
                 if let error = error {
                     self.showError(error)
                 }else{
-                    self.logoutUser()
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
                 }
             }
         }
@@ -357,35 +358,6 @@ extension UserProfileViewController: CountrySelectionDelegate {
 }
 
 extension UserProfileViewController {
-    
-    func logoutUser() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //deleting every thing from user defaults
-        let appDomain = Bundle.main.bundleIdentifier!
-        //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
-        UserDefaults.standard.removePersistentDomain(forName: appDomain)
-
-        guard let userId = LujoSetup().getLujoUser()?.id else {
-//            print("NO USER ID ERROR!!!")
-            // Present login view controller using VIPER.
-            appDelegate.windowRouter.navigate(from: "/", data: [:])
-            return
-        }
-        
-        showNetworkActivity()
-        logoutUser { _ in
-            self.hideNetworkActivity()
-            appDelegate.removePushToken(userId: userId)
-            // Present login view controller using VIPER.
-            appDelegate.windowRouter.navigate(from: "/", data: [:])
-        }
-    }
-    
-    func logoutUser(completion: @escaping (Error?) -> Void) {
-        LujoSetup().deleteCurrentUser()
-        completion(nil)
-    }
-    
     @IBAction func btnSendEmailVerificationLinkTapped(_ sender: Any) {
         GoLujoAPIManager().resendEmailVerificationLink(){ stringResponse, error in
             if error == nil{

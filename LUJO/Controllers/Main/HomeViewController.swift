@@ -1147,6 +1147,7 @@ extension HomeViewController {
             
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)
+                print(error.localizedDescription)
                 self.showError(BackendError.parsing(reason: "Could not obtain Home information"), "Home")
             } else {
                 if let information = information {

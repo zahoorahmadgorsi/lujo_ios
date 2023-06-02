@@ -92,6 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         setAudioMix()
         
+        //app version testing
+        //withConfirmation: true will make this call for also adding the confirmation button
+        //call it withConfirmation: false to have the force update option on
+        AppUpdater.shared.showUpdate(withConfirmation: false)
+
         return true
     }
 
@@ -284,5 +289,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print(parameters)
         }
         return true
+    }
+    
+    func logoutUser() {
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //deleting every thing from user defaults
+        let appDomain = Bundle.main.bundleIdentifier!
+        //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
+        UserDefaults.standard.removePersistentDomain(forName: appDomain)
+
+        guard let userId = LujoSetup().getLujoUser()?.id else {
+//            print("NO USER ID ERROR!!!")
+            // Present login view controller using VIPER.
+            self.windowRouter.navigate(from: "/", data: [:])
+            return
+        }
+
+        logoutUser { _ in
+            self.removePushToken(userId: userId)
+
+            // Present login view controller using VIPER.
+            self.windowRouter.navigate(from: "/", data: [:])
+        }
+
+    }
+
+    private func logoutUser(completion: @escaping (Error?) -> Void) {
+        LujoSetup().deleteCurrentUser()
+        completion(nil)
     }
 }

@@ -89,6 +89,7 @@
 		42AFD12D29538BD60098A25C /* MultiLineCollectionFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */; };
 		42AFD12F29538BE70098A25C /* MultiLineCollectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */; };
 		42C145B028ACFA2C007436F6 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C145AF28ACFA2C007436F6 /* Notification.swift */; };
+		42DA64C82A29F53000E479E0 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DA64C72A29F53000E479E0 /* AppUpdater.swift */; };
 		5527641F23165CFE00380BEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527641E23165CFE00380BEB /* HomeViewController.swift */; };
 		5527642123165D1800380BEB /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642023165D1800380BEB /* ProductsViewController.swift */; };
 		5527642323165D2500380BEB /* SearchProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5527642223165D2500380BEB /* SearchProductsViewController.swift */; };
@@ -499,6 +500,7 @@
 		42AFD12C29538BD60098A25C /* MultiLineCollectionFilter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiLineCollectionFilter.xib; sourceTree = "<group>"; };
 		42AFD12E29538BE70098A25C /* MultiLineCollectionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiLineCollectionFilter.swift; sourceTree = "<group>"; };
 		42C145AF28ACFA2C007436F6 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		42DA64C72A29F53000E479E0 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		5527641E23165CFE00380BEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5527642023165D1800380BEB /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		5527642223165D2500380BEB /* SearchProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductsViewController.swift; sourceTree = "<group>"; };
@@ -1330,6 +1332,7 @@
 			children = (
 				88C5EEE626C5D61E00052CE5 /* Utils.swift */,
 				4215E26D2900297F0087DE91 /* Constants.swift */,
+				42DA64C72A29F53000E479E0 /* AppUpdater.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2398,6 +2401,7 @@
 				9ABAAC9022560FF300C756A3 /* UIColor.swift in Sources */,
 				88C083C92635CCB400204475 /* WishListViewController.swift in Sources */,
 				9A6583C3221C4E6A00EB8EEA /* CountryCodeSelectionView.swift in Sources */,
+				42DA64C82A29F53000E479E0 /* AppUpdater.swift in Sources */,
 				88EA9F972554550D00514626 /* WishListRouter.swift in Sources */,
 				9AF422672265DF4F003CE562 /* BookingStep2.swift in Sources */,
 				9AC6DA6D217D8F700098B016 /* Lift.swift in Sources */,
@@ -2622,7 +2626,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2631,10 +2635,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.debug.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.debug.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2649,7 +2653,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2658,9 +2662,9 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.1;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2675,7 +2679,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2684,9 +2688,9 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.1;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2821,7 +2825,7 @@
 			baseConfigurationReference = FD4FD4B4C80AFB84327195BC /* Pods-LUJO.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				APP_DISPLAY_NAME = "Lujo New STG";
+				APP_DISPLAY_NAME = "Lujo STG";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				AVIATION_API_TOKEN = "c108cdbd-9330-1d33-ee0f-08c63c42e68b";
 				AVIATION_API_VERSION = V1;
@@ -2840,7 +2844,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2858,10 +2862,10 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.1;
 				ONE_SIGNAL = "0c5afe65-5cf1-4ca9-a8f7-9b4def559aed";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend.debug;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LUJO/LUJO-Bridging-Header.h";
@@ -2878,7 +2882,7 @@
 			baseConfigurationReference = 1EEC38FEF7A931598437DB9C /* Pods-LUJO.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				APP_DISPLAY_NAME = "Lujo New";
+				APP_DISPLAY_NAME = Lujo;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				AVIATION_API_TOKEN = "c108cdbd-9330-1d33-ee0f-08c63c42e68b";
 				AVIATION_API_VERSION = V1;
@@ -2897,7 +2901,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJORelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2914,10 +2918,10 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.1;
 				ONE_SIGNAL = "eae6e09f-04c0-439f-ac65-6a000e8f77f6";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LUJO/LUJO-Bridging-Header.h";
@@ -3081,7 +3085,7 @@
 			baseConfigurationReference = CCB4D180578D31E0646834A3 /* Pods-LUJO.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				APP_DISPLAY_NAME = "Lujo New";
+				APP_DISPLAY_NAME = Lujo;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				AVIATION_API_TOKEN = "c108cdbd-9330-1d33-ee0f-08c63c42e68b";
 				AVIATION_API_VERSION = V1;
@@ -3100,7 +3104,7 @@
 				CODE_SIGN_ENTITLEMENTS = LUJO/LUJO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = GC4WP25589;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3117,11 +3121,11 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 6.1;
 				ONE_SIGNAL = "0c5afe65-5cf1-4ca9-a8f7-9b4def559aed";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.newbackend;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "LUJO/LUJO-Bridging-Header.h";

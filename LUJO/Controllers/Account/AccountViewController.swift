@@ -225,29 +225,11 @@ class AccountViewController: UIViewController {
     
     @objc func requestLogout() {
         showCardAlertWith(title: "Log out", body: "Are you sure you want to log out?", buttonTitle: "Yes", cancelButtonTitle: "No") {
-             self.logoutUser()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.logoutUser()
         }
     }
-//
-//    @objc func deleteAccount() {
-//        showCardAlertWith(title: "Delete Account Confirmation", body: "Are you sure you want to delete your account?", buttonTitle: "Yes", cancelButtonTitle: "No") {
-//            guard LujoSetup().getLujoUser() != nil else {
-//                let error = LoginError.errorLogin(description: "No user exist")
-//                self.showError(error)
-//                return
-//            }
-//            self.showNetworkActivity()
-//            GoLujoAPIManager().deleteAccount() { response, error in
-//                self.hideNetworkActivity()
-//
-//                if let error = error {
-//                    self.showError(error)
-//                }else{
-//                    self.logoutUser()
-//                }
-//            }
-//        }
-//    }
+
     
     func showError(_ error: Error) {
         showErrorPopup(withTitle: "Account Error", error: error)
@@ -309,39 +291,4 @@ extension AccountViewController: UINavigationControllerDelegate, UIImagePickerCo
             self.userImage.contentMode = .scaleAspectFill
         }
     }
-}
-
-extension AccountViewController {
-
-    func logoutUser() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //deleting every thing from user defaults
-        let appDomain = Bundle.main.bundleIdentifier!
-        //Calling this method is equivalent to initializing a user defaults object with init(suiteName:) passing domainName, and calling the removeObject(forKey:) method on each of its keys.
-        UserDefaults.standard.removePersistentDomain(forName: appDomain)
-
-        guard let userId = LujoSetup().getLujoUser()?.id else {
-//            print("NO USER ID ERROR!!!")
-            // Present login view controller using VIPER.
-            appDelegate.windowRouter.navigate(from: "/", data: [:])
-            return
-        }
-
-        showNetworkActivity()
-        logoutUser { _ in
-            self.hideNetworkActivity()
-
-            appDelegate.removePushToken(userId: userId)
-
-            // Present login view controller using VIPER.
-            appDelegate.windowRouter.navigate(from: "/", data: [:])
-        }
-
-    }
-
-    func logoutUser(completion: @escaping (Error?) -> Void) {
-        LujoSetup().deleteCurrentUser()
-        completion(nil)
-    }
-
 }

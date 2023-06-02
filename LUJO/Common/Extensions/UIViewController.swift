@@ -4,6 +4,7 @@ import UIKit
 import SwiftMessages
 
 extension UIViewController {
+    
     func canPerformSegue(withIdentifier identifier: String) -> Bool {
         guard let identifiers = value(forKey: "storyboardSegueTemplates") as? [NSObject] else { return false }
 
