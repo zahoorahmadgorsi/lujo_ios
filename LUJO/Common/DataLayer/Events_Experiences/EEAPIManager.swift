@@ -231,15 +231,13 @@ class EEAPIManager {
                     let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
                     completion(_discoverSearchResponse, nil)
                 }else{
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse the response"))
                         return
                     }
-//                    completion(result.content, nil)
-                    let _discoverSearchResponse = DiscoverSearchResponse(docs: result.content, totalDocs: 100)
-                    completion(_discoverSearchResponse, nil)
+                    completion(result.content, nil)
                 }
                 return
             case 300 ... 399: // Redirection: Unexpected
@@ -344,14 +342,13 @@ class EEAPIManager {
                     let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
                     completion(_discoverSearchResponse, nil)
                 }else{
-                    guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self,
                                                                  from: response.data!)
                     else {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    let _discoverSearchResponse = DiscoverSearchResponse(docs: result.content, totalDocs: 100)
-                    completion(_discoverSearchResponse, nil)
+                    completion(result.content, nil)
                 }
                 return
             case 300 ... 399: // Redirection: Unexpected
@@ -430,15 +427,13 @@ class EEAPIManager {
             case 1 ... 199: // Transfer protoco-level information: Unexpected
                 completion(nil, self.handleError(response, statusCode))
             case 200 ... 299: // Success
-                guard let result = try? JSONDecoder().decode(LujoServerResponse<[Product]>.self,
+                guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self,
                                                              from: response.data!)
                 else {
                     completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                     return
                 }
-//                completion(result.content, nil)
-                let _discoverSearchResponse = DiscoverSearchResponse(docs: result.content, totalDocs: 100)
-                completion(_discoverSearchResponse, nil)
+                completion(result.content, nil)
                 return
             case 300 ... 399: // Redirection: Unexpected
                 completion(nil, self.handleError(response, statusCode))
