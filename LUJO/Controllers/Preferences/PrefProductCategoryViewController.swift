@@ -231,8 +231,14 @@ class PrefProductCategoryViewController: UIViewController {
                 GoLujoAPIManager().getAviationCategories() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -372,8 +378,14 @@ class PrefProductCategoryViewController: UIViewController {
                     GoLujoAPIManager().setAviationAircraftCategory(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -389,8 +401,14 @@ class PrefProductCategoryViewController: UIViewController {
                     GoLujoAPIManager().setYachtLength(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the yacht length preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the yacht length preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)

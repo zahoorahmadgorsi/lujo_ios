@@ -216,9 +216,14 @@ class AddressViewController: UIViewController {
                     self.hideNetworkActivity()
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let description = error?.localizedDescription ?? "Address could not be added."
-                        let error = BackendError.parsing(reason: description)
-                        self.showError(error)
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let description = error?.localizedDescription ?? "Address could not be added."
+                            let error = BackendError.parsing(reason: description)
+                            self.showError(error)
+                        }
                         return
                     }
                     //pop in case of success, and on previous UI latest data would be shown
@@ -235,9 +240,14 @@ class AddressViewController: UIViewController {
                     self.hideNetworkActivity()
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let description = error?.localizedDescription ?? "Address could not be updated."
-                        let error = BackendError.parsing(reason: description)
-                        self.showError(error)
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let description = error?.localizedDescription ?? "Address could not be updated."
+                            let error = BackendError.parsing(reason: description)
+                            self.showError(error)
+                        }
                         return
                     }
                     //pop in case of success, and on previous UI latest data would be shown

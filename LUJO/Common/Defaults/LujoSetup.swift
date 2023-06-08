@@ -100,6 +100,11 @@ class LujoSetup: LoginDataStorable, AppDefaults {
         dataLayer.getDefaults { result, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }
                 return
             }
             self.storeDefaults(result)
@@ -110,6 +115,11 @@ class LujoSetup: LoginDataStorable, AppDefaults {
         dataLayer.getDefaults { result, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }
                 return
             }
             self.storeDefaults(result)

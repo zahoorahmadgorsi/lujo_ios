@@ -573,7 +573,12 @@ extension AdvanceChatViewController: ConversationsManagerDelegate {
             self.hideNetworkActivity()
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    BackendError.parsing(reason: "Could not obtain the salesforce_id")
+                }
                 return
             }
             Mixpanel.mainInstance().track(event: "Product Request",

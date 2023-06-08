@@ -92,8 +92,13 @@ class GenerateReferralCodeViewController: UIViewController {
                     self.itemsList = informations
                 }
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain the list of referral options")
-                self.showError(error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain the list of referral options")
+                    self.showError(error)
+                }
             }
         }
     }
@@ -102,8 +107,13 @@ class GenerateReferralCodeViewController: UIViewController {
         GoLujoAPIManager().getReferralTypes() { referralCodes, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain the list of referral options")
-                completion(nil, error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain the list of referral options")
+                    completion(nil, error)
+                }
                 return
             }
             completion(referralCodes, error)
@@ -118,7 +128,12 @@ class GenerateReferralCodeViewController: UIViewController {
                 self.hideNetworkActivity()
                 guard error == nil , let code = ReferralCode?.referralCode else {
                     Crashlytics.crashlytics().record(error: error!)
-                    BackendError.parsing(reason: "Could not obtain the list of referral code")
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        BackendError.parsing(reason: "Could not obtain the list of referral code")
+                    }
                     return
                 }
                 let viewController = ShareReferralCodeViewController.instantiate(code, selected.title)

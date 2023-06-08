@@ -656,8 +656,13 @@ extension PerCityViewController: CityViewProtocol {
                                   , maxPrice: twelvethFilter) { list, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: category.rawValue + " could not be obtained" )
-                completion(nil, error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: category.rawValue + " could not be obtained" )
+                    completion(nil, error)
+                }
                 return
             }
             completion(list, error)
@@ -686,8 +691,13 @@ extension PerCityViewController: CityViewProtocol {
         EEAPIManager().getFilters(type: categoryType) { list, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain filters on per city")
-                completion(nil, error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain filters on per city")
+                    completion(nil, error)
+                }
                 return
             }
             completion(list, error)
@@ -704,8 +714,13 @@ extension PerCityViewController: CityViewProtocol {
         GoLujoAPIManager().setUnSetFavourites(type,id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not set/unset favorites")
-                completion(nil, error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not set/unset favorites")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)

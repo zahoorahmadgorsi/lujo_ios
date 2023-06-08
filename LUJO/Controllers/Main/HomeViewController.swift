@@ -242,6 +242,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         checkLocationAuthorizationStatus()
         
         startPauseAnimation(isPausing: false)    //will start animating at 0 seconds
+//        //animation might be disturbed if we load data in viewWillAppear
+//        getHomeInformation()//reloading the data silenlty
     }
     
 
@@ -284,8 +286,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         GoLujoAPIManager().getAllPreferences() { Preferences, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not fetch user preferences")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not fetch user preferences")
+                    completion(nil, error)
+                }
                 return
             }
             completion(Preferences, error)
@@ -839,8 +847,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         GoLujoAPIManager().setUnSetFavourites(type,id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not set/unset favorites")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not set/unset favorites")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)
@@ -1107,7 +1121,7 @@ extension HomeViewController {
             
             //25.2048,55.2708   //dubai lat, long
             print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
-            EEAPIManager().geopoint( type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude)) { information, error in
+            EEAPIManager().geopoint( type: "event", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), page: 1, perPage: Constants.pageSize) { information, error in
                 self.canSendRequest = true
                 
                 if let error = error {
@@ -1115,11 +1129,17 @@ extension HomeViewController {
                     // NEED TO BE REPLACED WITH UI VIEW
                     self.locationEventContainerView.isHidden = true
 //                    self.noNearbyEventsContainerView?.isHidden = false
-                    self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"), "Location")
+                    //if user token is not authorized then server is returning 403, so making user log out
+                    if error._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"), "Location")
+                    }
                 } else {
-                    if let info = information , info.count > 0{
+                    if let info = information , info.docs.count > 0{
                         // NEED TO BE REPLACED WITH UI VIEW
-                        self.updateEventsByGeoLocation(info)
+                        self.updateEventsByGeoLocation(info.docs)
                     } else {
                         // NEED TO BE REPLACED WITH UI VIEW
 //                        self.showFeedback("No nearby Places available")
@@ -1147,8 +1167,13 @@ extension HomeViewController {
             
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)
-                print(error.localizedDescription)
-                self.showError(BackendError.parsing(reason: "Could not obtain Home information"), "Home")
+                //if user token is not authorized then server is returning 403, so making user log out
+                if error._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    self.showError(BackendError.parsing(reason: "Could not obtain Home information"), "Home")
+                }
             } else {
                 if let information = information {
                     self.update(information)

@@ -22,7 +22,7 @@ class RestaurantListViewController: UIViewController {
     class func instantiate(dataSource: [Product] = [], city: Cities? = nil) -> RestaurantListViewController {
         let viewController = UIStoryboard.main.instantiate(identifier) as! RestaurantListViewController
         viewController.dataSource = dataSource
-        viewController.city = city
+        viewController.city = city      //if coming from discover screen
         return viewController
     }
     
@@ -34,6 +34,9 @@ class RestaurantListViewController: UIViewController {
     
     private let naHUD = JGProgressHUD(style: .dark)
     private var currentLayout: LiftLayout?
+    //for paginations
+    var pageNumber = 1
+    var discoverSearchResponse: DiscoverSearchResponse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +52,7 @@ class RestaurantListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
 //        if dataSource.isEmpty, let city = city {
         if let city = city {
-            getInformation(showActivity: dataSource.isEmpty, for: city)
+            getInformation(showActivity: dataSource.isEmpty, for: city, page: self.pageNumber, perPage: Constants.pageSize)
         }
     }
     
@@ -64,7 +67,8 @@ class RestaurantListViewController: UIViewController {
     }
     
     fileprivate func updateContentUI() {
-        title = dataSource.count > 0 ? "\(dataSource[0].locations?.city?.name ?? "") dining spots" : "\(city?.name ?? "") dining spots"
+//        title = dataSource.count > 0 ? "\(dataSource[0].locations?.city?.name ?? "") dining spots" : "\(city?.name ?? "") dining spots"
+        title = "\(city?.name ?? "") dining spots"
     }
     
     func showError(_ error: Error) {
@@ -83,24 +87,50 @@ class RestaurantListViewController: UIViewController {
         naHUD.dismiss()
     }
     
+//    func update(listOf objects: [Product]) {
+//        dataSource = objects
+////        print("Found \(dataSource.count) items")
+//        currentLayout?.clearCache()
+//        collectionView.reloadData()
+//    }
+    
     func update(listOf objects: [Product]) {
-        dataSource = objects
-//        print("Found \(dataSource.count) items")
+        if dataSource.isEmpty{
+            dataSource = objects
+            DispatchQueue.main.async(execute: collectionView.reloadData)
+        }else {  //paging is being applied
+            if objects.count > 0{
+                for item in objects{
+                    //if found then replace, this happens when grid is reloaded incase of set/usset favourite
+                    if let row = self.dataSource.firstIndex(where: {$0.id == item.id}) {
+                        dataSource[row] = item
+                    }else{
+                        dataSource.append(item)
+                    }
+                }
+            }else{
+                return  //stop it from executing collectionView.reloadData
+            }
+            
+        }
+        //        print("Found \(dataSource.count) items")
         currentLayout?.clearCache()
-        collectionView.reloadData()
+        DispatchQueue.main.async(execute: collectionView.reloadData)
     }
     
-    func getInformation(showActivity: Bool, for city: Cities) {
+    
+    func getInformation(showActivity: Bool, for city: Cities, page: Int, perPage: Int) {
         if (showActivity){
             showNetworkActivity()
         }
-        GoLujoAPIManager().search(term: nil, cityId: city.termId == nil ? nil : [city.termId ?? ""], cuisineCategoryId: nil) { restaurants, error in
+        DiningAPIManager().search(term: nil, cityId: city.termId == nil ? nil : [city.termId ?? ""], cuisineCategoryId: nil, page:page, perPage:perPage) { list, error in
             self.hideNetworkActivity()
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)
                 self.showError(error)
             } else {
-                self.update(listOf: restaurants ?? [])
+                self.discoverSearchResponse = list
+                self.update(listOf: list?.docs ?? [])
             }
         }
     }
@@ -167,16 +197,9 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
             cell.locationContainerView.isHidden = true
         }
 
-//        if let star = model.michelinStar?.first {
-//            cell.starImageContainerView.isHidden = false
-//            cell.starCountLabel.text = star.name.uppercased()
-//        } else {
-//            cell.starImageContainerView.isHidden = true
-//        }
-
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewController = ProductDetailsViewController.instantiate(product: dataSource[indexPath.row])
         present(viewController, animated: true, completion: nil)
@@ -209,7 +232,19 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
             }
         }
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath.row,collectionView.numberOfItems(inSection: indexPath.section))
+        print("Total Docs: \(self.city?.itemsNum)", "Loaded Docs: \((Constants.pageSize * (self.pageNumber)))")
+        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2,
+           let totalDocs = self.city?.itemsNum, totalDocs > (Constants.pageSize * (self.pageNumber)),
+           let _city = self.city {   //if half data has been loaded then load rest silently
+            print("load next set")
+            self.pageNumber += 1
+            getInformation(showActivity: dataSource.isEmpty, for: _city, page: self.pageNumber, perPage: Constants.pageSize)
+        }
+    }
+    
     func setUnSetFavourites(type:String, id:String, isUnSetFavourite: Bool ,completion: @escaping (String?, Error?) -> Void) {
         guard let currentUser = LujoSetup().getCurrentUser(), let token = currentUser.token, !token.isEmpty else {
             completion(nil, LoginError.errorLogin(description: "User does not exist or is not verified"))
@@ -219,8 +254,14 @@ extension RestaurantListViewController: UICollectionViewDataSource, UICollection
         GoLujoAPIManager().setUnSetFavourites(type,id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not update favorites information at dining")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not update favorites information at dining")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)

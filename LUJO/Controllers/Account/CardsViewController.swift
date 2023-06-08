@@ -110,8 +110,13 @@ class CardsViewController: UIViewController {
                     self.tblView.reloadData()
                 }
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain the list of cards")
-                self.showError(error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain the list of cards")
+                    self.showError(error)
+                }
             }
         }
     }
@@ -120,9 +125,14 @@ class CardsViewController: UIViewController {
         GoLujoAPIManager().getCards() { cards, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let description = error?.localizedDescription ?? "Could not obtain the list of cards"
-                let error = BackendError.parsing(reason: description)
-                completion(nil, error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let description = error?.localizedDescription ?? "Could not obtain the list of cards"
+                    let error = BackendError.parsing(reason: description)
+                    completion(nil, error)
+                }
                 return
             }
             completion(cards, error)
@@ -201,9 +211,14 @@ class CardsViewController: UIViewController {
                     self.hideNetworkActivity()
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let description = error?.localizedDescription ?? "Card could not be added."
-                        let error = BackendError.parsing(reason: description)
-                        self.showError(error)
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let description = error?.localizedDescription ?? "Card could not be added."
+                            let error = BackendError.parsing(reason: description)
+                            self.showError(error)
+                        }
                         return
                     }
                     //refreshing the data, not doing locally because backend has some processing on this
@@ -310,9 +325,14 @@ extension CardsViewController: UITableViewDelegate, UITableViewDataSource{
                 self.hideNetworkActivity()
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let description = error?.localizedDescription ?? "Card could not be updated."
-                    let error = BackendError.parsing(reason: description)
-                    self.showError(error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let description = error?.localizedDescription ?? "Card could not be updated."
+                        let error = BackendError.parsing(reason: description)
+                        self.showError(error)
+                    }
                     return
                 }
                 self.getCards(showActivity: false)

@@ -11,7 +11,7 @@ import FirebaseCrashlytics
 import UIKit
 import CoreLocation
 
-extension GoLujoAPIManager  {
+class DiningAPIManager  {
     func home( completion: @escaping (DiningHomeObjects?, Error?) -> Void) {
         Alamofire.request(DiningRouter.home)
             .responseJSON { response in
@@ -63,10 +63,12 @@ extension GoLujoAPIManager  {
             }
     }
 
-    func search( term: String?, cityId: [String]?,  cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
+    func search( term: String?, cityId: [String]?,  cuisineCategoryId: String?, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         Alamofire.request(DiningRouter.search(term,
                                               cityId,
-                                              cuisineCategoryId))
+                                              cuisineCategoryId,
+                                              page,
+                                              perPage))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -89,7 +91,7 @@ extension GoLujoAPIManager  {
                         completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                         return
                     }
-                    completion(result.content.docs, nil)
+                    completion(result.content, nil)
                     return
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))
@@ -101,8 +103,8 @@ extension GoLujoAPIManager  {
             }
     }
     
-    func geopoint(type: String, latitude: Float, longitude: Float, completion: @escaping ([Product]?, Error?) -> Void) {
-        Alamofire.request(EERouter.geopoint( type: type, latitude: latitude, longitude: longitude))
+    func geopoint(type: String, latitude: Float, longitude: Float,page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
+        Alamofire.request(EERouter.geopoint( type: type, latitude: latitude, longitude: longitude,page,perPage))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     completion(nil, response.result.error!)
@@ -126,8 +128,7 @@ extension GoLujoAPIManager  {
                             completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                             return
                     }
-                    completion(result.content.docs, nil)
-//                    completion(result.content, nil)
+                    completion(result.content, nil)
                     return
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))
@@ -148,19 +149,20 @@ extension GoLujoAPIManager  {
         } catch {
             serverError = "Unknown server error"
         }
-        reportError(statusCode, response)
-        return BackendError.unexpectedCode(description: serverError)
+        let _error = reportError(statusCode, response)
+        return _error
     }
 
-    fileprivate func reportError(_ statusCode: Int, _ response: DataResponse<Any>) {
+    fileprivate func reportError(_ statusCode: Int, _ response: DataResponse<Any>) -> Error{
         let sourceURL = String(describing: response.request?.url)
         let error = NSError(domain: NSURLErrorDomain,
-                            code: NSURLErrorBadServerResponse,
+                            code: statusCode,
                             userInfo: [
                                 NSLocalizedDescriptionKey: "Unexpected \(statusCode) received on \(sourceURL)",
                                 NSLocalizedFailureReasonErrorKey: "Expected code 20X, 40X or 50X",
                             ])
         Crashlytics.crashlytics().record(error: error)
+        return error
     }
     
 //    this function has been moved to EEAPIManager

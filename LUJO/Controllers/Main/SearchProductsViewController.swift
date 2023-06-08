@@ -49,7 +49,6 @@ class SearchProductsViewController: UIViewController {
     var searchAnimator: SearchAnimator?
     //for paginations
     var pageNumber = 1
-    let pageSize = 20
     var discoverSearchResponse: DiscoverSearchResponse?
     
     override func viewDidLoad() {
@@ -119,29 +118,8 @@ class SearchProductsViewController: UIViewController {
         if dataSource.isEmpty && objects.isEmpty {
             return
         }
-        
         dataSource = objects
         DispatchQueue.main.async(execute: collectionView.reloadData)
-        
-//        if dataSource.isEmpty && !objects.isEmpty{
-//            dataSource = objects
-//            DispatchQueue.main.async(execute: collectionView.reloadData)
-//        }else {  //paging is being applied
-//            if objects.count > 0{
-//                for item in objects{
-//                    if !dataSource.contains(where: {$0.id == item.id}) {
-//                        dataSource.append(item)
-//                    }
-//                }
-//            }else if objects.count == 0 && self.pageNumber == 0{
-//                dataSource = [] //user is searching for more then 1 time, and in this search no record is found so empty the records
-//            } else{
-//                return  //stop it from executing collectionView.reloadData
-//            }
-//        }
-//        //        print("Found \(dataSource.count) items")
-//        currentLayout?.clearCache()
-//        DispatchQueue.main.async(execute: collectionView.reloadData)
 
     }
     
@@ -320,13 +298,13 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print(indexPath.row,collectionView.numberOfItems(inSection: indexPath.section))
-        print("totalDocs:\(discoverSearchResponse?.totalDocs)" , "Loaded docs: \((self.pageNumber+1)*self.pageSize)")
+        print("totalDocs:\(discoverSearchResponse?.totalDocs)" , "Loaded docs: \((self.pageNumber) * Constants.pageSize)")
         if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2 ,
-           let totalDocs = discoverSearchResponse?.totalDocs, totalDocs > (self.pageSize * (self.pageNumber+1)){   //if half data has been loaded then load rest silently
+           let totalDocs = discoverSearchResponse?.totalDocs, totalDocs > (Constants.pageSize * (self.pageNumber)){   //if half data has been loaded then load rest silently
             print("load next set")
             self.pageNumber += 1
 //            self.pageSize += self.pageSize
-            self.getInformation(for: category, past: false, term: self.searchTextField.text, page: self.pageNumber, perPage: self.pageSize, isSilentFetch: true)
+            self.getInformation(for: category, past: false, term: self.searchTextField.text, page: self.pageNumber, perPage: Constants.pageSize, isSilentFetch: true)
         }
     }
 }
@@ -338,7 +316,7 @@ extension SearchProductsViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
             self.pageNumber = 1     //when ever there is a change in text in searchtext then start searching from first page
 //            txtSearch = textField.text ?? ""
-            self.getInformation(for: category, past: false, term: textField.text, page: self.pageNumber, perPage: self.pageSize)
+            self.getInformation(for: category, past: false, term: textField.text, page: self.pageNumber, perPage: Constants.pageSize)
             return true
         }
         
@@ -407,8 +385,14 @@ extension SearchProductsViewController {
             EEAPIManager().getEvents(past: past, term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain events information")
-                        completion([], error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain events information")
+                            completion([], error)
+                        }
                         return
                     }
                 self.discoverSearchResponse = list
@@ -421,8 +405,14 @@ extension SearchProductsViewController {
             EEAPIManager().getExperiences(term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain experiences information")
-                        completion([], error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain experiences information")
+                            completion([], error)
+                        }
                         return
                     }
                 self.discoverSearchResponse = list
@@ -435,8 +425,14 @@ extension SearchProductsViewController {
             EEAPIManager().getVillas(term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain villas information")
-                        completion([], error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain villas information")
+                            completion([], error)
+                        }
                         return
                     }
                 self.discoverSearchResponse = list
@@ -448,8 +444,14 @@ extension SearchProductsViewController {
                 EEAPIManager().getGoods( term: term, giftCategoryId: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain gifts information")
-                        completion([], error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain gifts information")
+                            completion([], error)
+                        }
                         return
                     }
                     self.discoverSearchResponse = list
@@ -461,8 +463,14 @@ extension SearchProductsViewController {
                 EEAPIManager().getYachts( term: term, cityId: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain yachts information")
-                        completion([], error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain yachts information")
+                            completion([], error)
+                        }
                         return
                     }
                     self.discoverSearchResponse = list
@@ -489,8 +497,14 @@ extension SearchProductsViewController {
                 EEAPIManager().getTopRated( type: subCatParam, term: term, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain top rated information")
-                        completion([], error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain top rated information")
+                            completion([], error)
+                        }
                         return
                     }
                     self.discoverSearchResponse = list
@@ -500,8 +514,14 @@ extension SearchProductsViewController {
                 EEAPIManager().getYachts( term: term, cityId: nil, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")
-                        completion([], error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain home recently viewed information")
+                            completion([], error)
+                        }
                         return
                     }
                     self.discoverSearchResponse = list
@@ -549,8 +569,14 @@ extension SearchProductsViewController {
         GoLujoAPIManager().setUnSetFavourites(type,id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not set/unset favorites")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not set/unset favorites")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)

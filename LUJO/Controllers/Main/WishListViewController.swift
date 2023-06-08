@@ -332,8 +332,14 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         GoLujoAPIManager().getFavourites() { favourites, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain the wish list information")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain the wish list information")
+                    completion(nil, error)
+                }
                 return
             }
             completion(favourites, error)
@@ -568,8 +574,14 @@ class WishListViewController: UIViewController, WishListViewProtocol{
         GoLujoAPIManager().setUnSetFavourites(type, id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain wish list information")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain wish list information")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)

@@ -141,8 +141,14 @@ class NotificationsViewController:UIViewController{
         GoLujoAPIManager().getPushNotifications( pageSize: self.increasedLimit , type: self.selectedProduct.rawValue) { data, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain the push notifications")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain the push notifications")
+                    completion(nil, error)
+                }
                 return
             }
             self.isLoadingNextPage = false
@@ -376,8 +382,14 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
             self.hideNetworkActivity()
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not set read to the push notifications")
-                self.showError(error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not set read to the push notifications")
+                    self.showError(error)
+                }
                 return
             }
 //            print (responseString)
@@ -458,8 +470,14 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
                 self.hideNetworkActivity()
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not delete the push notifications")
-                    self.showError(error)
+                    //unauthorized token, so forcefully signout the user
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not delete the push notifications")
+                        self.showError(error)
+                    }
                     return
                 }
                 print (notification.message)

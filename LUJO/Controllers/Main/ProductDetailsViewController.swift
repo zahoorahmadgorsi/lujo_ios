@@ -174,8 +174,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getEvents(past: false, term: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain Events information")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not obtain Events information")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(list?.docs[0], error)
@@ -185,8 +190,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getExperiences( term: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Experiences could not be loaded")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Experiences could not be loaded")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(list?.docs[0], error)
@@ -196,8 +206,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getVillas(term: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Properties could not be loaded")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Properties could not be loaded")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(list?.docs[0], error)
@@ -206,8 +221,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getGoods( term: nil, giftCategoryId: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Gifts could not be loaded")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Gifts could not be loaded")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(list?.docs[0], error)
@@ -216,8 +236,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getYachts( term: nil, cityId: nil, productId: product.id, page: 1 , perPage: 1) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Yacht could not be loaded")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Yacht could not be loaded")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(list?.docs[0], error)
@@ -226,8 +251,13 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             EEAPIManager().getRestaurant( productId: product.id) { list, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Restaurant could not be loaded")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Restaurant could not be loaded")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(list?.docs[0], error)
@@ -1013,8 +1043,13 @@ extension ProductDetailsViewController {
         GoLujoAPIManager().setUnSetFavourites(type, id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not set/unset favorites")
-                completion(nil, error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not set/unset favorites")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)

@@ -32,7 +32,7 @@ enum EERouter: URLRequestConvertible {
     case events(Bool, String?, String?, AppliedFilters?, Int, Int)
     case experiences( String?, String?, AppliedFilters?, Int, Int)
     case salesforce(SalesforceRequest, String?)
-    case geopoint(type: String, latitude: Float, longitude: Float)
+    case geopoint(type: String, latitude: Float, longitude: Float, Int, Int)
 //    case citySearch(token: String, searchTerm: String)  //search cities from google
     case searchCity(searchTerm: String)  //search cities from our backend
     case cityInfo(cityId: String)
@@ -185,7 +185,7 @@ enum EERouter: URLRequestConvertible {
             case .salesforce:
                 newURLComponents.path.append("/request")
 
-        case let .geopoint(type,_,_):
+        case let .geopoint(type,_,_,_,_):
             if type == "event"{
                 newURLComponents.path.append("/events/search")
             }else if type == "restaurant"{
@@ -328,8 +328,8 @@ enum EERouter: URLRequestConvertible {
             return nil
         case let .salesforce(salesforceRequest, conversationId):
             return getSalesforceDataAsJSONData(salesforceRequest,conversationId)
-        case let .geopoint(_, latitude, longitude):
-            return getGeopointDataAsJSONData(latitude: latitude, longitude: longitude)
+        case let .geopoint(_, latitude, longitude, page, perPage):
+            return getGeopointDataAsJSONData(latitude: latitude, longitude: longitude, page: page, perPage: perPage)
 //        case .citySearch:
 //            return nil
         case .searchCity:   fallthrough
@@ -652,11 +652,14 @@ enum EERouter: URLRequestConvertible {
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     
-    fileprivate func getGeopointDataAsJSONData( latitude: Float, longitude: Float) -> Data? {
-        let body: [String: Any] = [
+    fileprivate func getGeopointDataAsJSONData( latitude: Float, longitude: Float,page: Int,
+                                                perPage: Int ) -> Data? {
+        var body: [String: Any] = [
             "latitude": latitude,
             "longitude": longitude
         ]
+        body["page"] = page
+        body["per_page"] = perPage
         return try? JSONSerialization.data(withJSONObject: body, options: [])
     }
     

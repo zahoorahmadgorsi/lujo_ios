@@ -347,6 +347,7 @@ struct DiscoverCityFeatured: Codable{
 
 struct DiscoverCity: Codable {
     let num: Int
+    let totalCount: Int?
     let items: [Product]
 }
 

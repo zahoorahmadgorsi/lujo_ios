@@ -494,8 +494,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getGiftHabbits() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -509,8 +515,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getGiftCategories() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -524,8 +536,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getGiftPreferences() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -545,8 +563,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain aviation cuisines")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain aviation cuisines")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -560,8 +584,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getAviationBeverages() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the aviation bevereges")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the aviation bevereges")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -581,8 +611,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain yacht cuisines")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain yacht cuisines")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -596,8 +632,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getOtherInterests() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -617,8 +659,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningCuisines() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain dining cuisines information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain dining cuisines information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -632,8 +680,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningAllergies() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain dining allergies information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain dining allergies information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -647,8 +701,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningPreferences() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain dining preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain dining preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -662,8 +722,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningTimings() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain dining timings information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain dining timings information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -677,8 +743,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningBeverages() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain dining beverages information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain dining beverages information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -692,8 +764,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningSeatings() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain dining seatings information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain dining seatings information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -712,8 +790,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getEventCategory() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain event category information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain event category information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -727,8 +811,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getEventLocation() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain event location information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain event location information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -747,8 +837,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getTravelAmenities() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain amenities information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain amenities information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     
@@ -770,8 +866,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningPreferences() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain airline meals information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain airline meals information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -785,8 +887,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getTravelMedicalMeals() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain airline medical meals information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain airline medical meals information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     
@@ -807,8 +915,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().getDiningAllergies() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain airline allergies information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain airline allergies information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     //caching master data into userdefaults
@@ -827,8 +941,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().getVillaAmenities() { stringArray, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not obtain villa amenities information")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not obtain villa amenities information")
+                                completion(nil, error)
+                            }
                             return
                         }
                         //caching master data into userdefaults
@@ -847,8 +967,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().getVillaAccomodation() { stringArray, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not obtain villa accomodation information")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not obtain villa accomodation information")
+                                completion(nil, error)
+                            }
                             return
                         }
                         //caching master data into userdefaults
@@ -1365,8 +1491,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftHabbits( commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the gift habbits preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the gift habbits preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1375,8 +1507,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftCategories(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the gift categories preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the gift categories preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1385,8 +1523,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setGiftPreferences(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the gift preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the gift preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1401,8 +1545,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationHaveCharteredBefore(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the aviation charter preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the aviation charter preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1411,8 +1561,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationInterestedIn(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the aviation interest preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the aviation interest preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1421,8 +1577,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredCharter(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the aviation preferred charter preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the aviation preferred charter preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1431,8 +1593,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredCuisines(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the aviation cuisine preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the aviation cuisine preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1442,8 +1610,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setAviationPreferredBeverages(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the aviation bevereges preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the aviation bevereges preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1458,8 +1632,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtHaveCharteredBefore(yesOrNo: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the yacht charter before information")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the yacht charter before information")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1468,8 +1648,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtInterestedIn(charterPurchaseOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the yacht interest information")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the yacht interest information")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1478,8 +1664,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setYachtType(motorSailOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the yacht type preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the yacht type preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1488,8 +1680,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setYachtStyle(modernClassicOrBoth: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the yacht style preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the yacht style preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1498,8 +1696,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtPreferredCuisines(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the preferred yacht cuisines")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the preferred yacht cuisines")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1509,8 +1713,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setYachtOtherInterests(commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the yacht others interest information")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the yacht others interest information")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1525,8 +1735,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningCuisines(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the dining cuisines preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the dining cuisines preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1535,8 +1751,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningAllergies(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the dining allergies preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the dining allergies preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1545,8 +1767,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningPreferences(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the dining preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the dining preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1555,8 +1783,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningTimings(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the dining timing preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the dining timing preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1565,8 +1799,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningBeverages(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the dining bevereges preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the dining bevereges preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1575,8 +1815,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setDiningSeatings(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the dining seating preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the dining seating preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1591,8 +1837,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setEventCategory(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not save the types of event/experience preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not save the types of event/experience preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1601,8 +1853,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setEventLocation(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the event locations preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the event locations preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1617,8 +1875,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelAmenities(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the travel/hotel amenities preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the travel/hotel amenities preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1627,8 +1891,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelAirplaneSeat( airplaneSeat: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the airplan seating preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the airplan seating preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1637,8 +1907,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelMeals( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the travel meals preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the travel meals preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1647,8 +1923,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelMedicalMeals( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the travel medical meal preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the travel medical meal preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1657,8 +1939,14 @@ class PrefCollectionsViewController: UIViewController {
                 GoLujoAPIManager().setTravelAllergies( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the travel allergies preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the travel allergies preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -1672,8 +1960,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setVillaAmenities( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the villa amenities preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the villa amenities preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
@@ -1682,8 +1976,14 @@ class PrefCollectionsViewController: UIViewController {
                     GoLujoAPIManager().setVillaAccomodation( commaSeparatedString: commaSeparatedString) { (contentString, error) in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not set the villa accomodation preferences")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not set the villa accomodation preferences")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)

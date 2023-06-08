@@ -4,8 +4,8 @@ import UIKit
 
 class EEAPIManager {
     
-    func geopoint(type: String, latitude: Float, longitude: Float, completion: @escaping ([Product]?, Error?) -> Void) {
-        Alamofire.request(EERouter.geopoint(type: type, latitude: latitude, longitude: longitude))
+    func geopoint(type: String, latitude: Float, longitude: Float,page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
+        Alamofire.request(EERouter.geopoint(type: type, latitude: latitude, longitude: longitude,page,perPage))
             .responseJSON { response in
                 print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
 
@@ -31,8 +31,7 @@ class EEAPIManager {
                             completion(nil, BackendError.parsing(reason: "Unable to parse response"))
                             return
                     }
-                    completion(result.content.docs, nil)
-//                    completion(result.content, nil)
+                    completion(result.content, nil)
                     return
                 case 300 ... 399: // Redirection: Unexpected
                     completion(nil, self.handleError(response, statusCode))
@@ -588,26 +587,28 @@ class EEAPIManager {
 
     func handleError(_ response: DataResponse<Any>,
                                  _ statusCode: Int) -> Error {
-        var serverError: String!
+        var strServerError: String!
         do {
             let errorResult = try JSONDecoder().decode(LujoServerResponse<String>.self, from: response.data!)
-            serverError = errorResult.content
+            strServerError = errorResult.content
         } catch {
-            serverError = "Unknown server error"
+            strServerError = "Unknown server error"
         }
-        reportError(statusCode, response)
-        return BackendError.unexpectedCode(description: serverError)
+        let _error = reportError(statusCode, response)
+        return _error
     }
 
-    fileprivate func reportError(_ statusCode: Int, _ response: DataResponse<Any>) {
+    fileprivate func reportError(_ statusCode: Int, _ response: DataResponse<Any>) -> Error{
+
         let sourceURL = String(describing: response.request?.url)
         let error = NSError(domain: NSURLErrorDomain,
-                            code: NSURLErrorBadServerResponse,
+                            code: statusCode,
                             userInfo: [
                                 NSLocalizedDescriptionKey: "Unexpected \(statusCode) received on \(sourceURL)",
                                 NSLocalizedFailureReasonErrorKey: "Expected code 20X, 40X or 50X",
                             ])
         Crashlytics.crashlytics().record(error: error)
+        return error
     }
     
     func sendSalesForceRequest(salesforceRequest: SalesforceRequest, conversationId: String? = nil, type: String, completion: @escaping (CustomBookingResponse?, Error?) -> Void) {

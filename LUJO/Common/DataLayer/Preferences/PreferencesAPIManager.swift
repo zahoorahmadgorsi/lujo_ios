@@ -2729,19 +2729,22 @@ extension GoLujoAPIManager  {
         } catch {
             serverError = "Unknown server error"
         }
-        reportError(statusCode, response)
-        return BackendError.unexpectedCode(description: serverError)
+//        reportError(statusCode, response)
+//        return BackendError.unexpectedCode(description: strServerError)
+        let _error = reportError(statusCode, response)
+        return _error
     }
 
-    fileprivate func reportError(_ statusCode: Int, _ response: DataResponse<Any>) {
+    fileprivate func reportError(_ statusCode: Int, _ response: DataResponse<Any>) -> Error{
         let sourceURL = String(describing: response.request?.url)
         let error = NSError(domain: NSURLErrorDomain,
-                            code: NSURLErrorBadServerResponse,
+                            code: statusCode,
                             userInfo: [
                                 NSLocalizedDescriptionKey: "Unexpected \(statusCode) received on \(sourceURL)",
                                 NSLocalizedFailureReasonErrorKey: "Expected code 20X, 40X or 50X",
                             ])
         Crashlytics.crashlytics().record(error: error)
+        return error
     }
     
     

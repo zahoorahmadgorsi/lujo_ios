@@ -210,8 +210,13 @@ class BrandsViewController: UIViewController {
                 
                 self.tblView.reloadData()
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain push notifications")
-                self.showError(error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain push notifications")
+                    self.showError(error)
+                }
             }
               //making it false at the last so that if its success or failure loading should become false
         }
@@ -227,8 +232,13 @@ class BrandsViewController: UIViewController {
             GoLujoAPIManager().getBrands() { data, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain the gift brands")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not obtain the gift brands")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(data, error)
@@ -237,8 +247,14 @@ class BrandsViewController: UIViewController {
             GoLujoAPIManager().getCategories() { data, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain the gift categories")
-                    completion(nil, error)
+                    //unauthorized token, so forcefully signout the user
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not obtain the gift categories")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(data, error)
@@ -246,9 +262,15 @@ class BrandsViewController: UIViewController {
         }else if currentFilterType == .colors{
             GoLujoAPIManager().getColors() { data, error in
                 guard error == nil else {
+                    //unauthorized token, so forcefully signout the user
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not obtain the gift colors")
-                    completion(nil, error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not obtain the gift colors")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(data, error)

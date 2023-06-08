@@ -212,8 +212,14 @@ class TwoSliderPrefViewController: UIViewController {
                 GoLujoAPIManager().setAviationCharterFrequency(corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -227,8 +233,14 @@ class TwoSliderPrefViewController: UIViewController {
                 GoLujoAPIManager().setYachtCharterFrequency(corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -242,8 +254,14 @@ class TwoSliderPrefViewController: UIViewController {
                 GoLujoAPIManager().setTravelFrequency( corporateFrequency: corporateFrequency , leisureFrequency: leisureFrequency) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -252,8 +270,14 @@ class TwoSliderPrefViewController: UIViewController {
                 GoLujoAPIManager().setTravelCabinClass(cabinClass: corporateFrequency, leisureClass: leisureFrequency) { (contentString, error) in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain the preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain the preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)

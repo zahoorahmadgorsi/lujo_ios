@@ -224,8 +224,8 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         experienceContainerView.isHidden = informations.experience.items.isEmpty
         
         //properties
-        propertyMoreContainerView.isHidden = informations.property.num < 3
-        propertyMoreLabel.text = "+ \(informations.property.num - 2) more"
+        propertyMoreContainerView.isHidden = informations.property.totalCount ?? 0 < 3
+        propertyMoreLabel.text = "+ \(informations.property.totalCount ?? 0 - 2) more"
         property2ContainerView.alpha = informations.property.items.count < 2 ? 0 : 1
         
         for (index,property) in informations.property.items.enumerated() {
@@ -307,8 +307,8 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         //events
-        eventMoreContainerView.isHidden = informations.event.num < 3
-        eventMoreLabel.text = "+ \(informations.event.num - 2) more"
+        eventMoreContainerView.isHidden = informations.event.totalCount ?? 0 < 3
+        eventMoreLabel.text = "+ \((informations.event.totalCount ?? 0) - 2) more"
         event2ContainerView.alpha = informations.event.items.count < 2 ? 0 : 1
         
         for (index,event) in informations.event.items.enumerated() {
@@ -357,8 +357,8 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         //yachts
-        yachtMoreContainerView.isHidden = informations.yacht.num < 3
-        yachtMoreLabel.text = "+ \(informations.yacht.num - 2) more"
+        yachtMoreContainerView.isHidden = informations.yacht.totalCount ?? 0 < 3
+        yachtMoreLabel.text = "+ \((informations.yacht.totalCount ?? 0) - 2) more"
         yacht2ContainerView.alpha = informations.yacht.items.count < 2 ? 0 : 1
         
         for (index,yacht) in informations.yacht.items.enumerated() {
@@ -439,8 +439,9 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         // restaurant
-        restaurantMoreContainerView.isHidden = informations.restaurant.num < 3
-        restaurantMoreLabel.text = "+ \(informations.restaurant.num - 2) more"
+        restaurantMoreContainerView.isHidden = informations.restaurant.totalCount ?? 0 < 3
+        print("Total Count: \(informations.restaurant.totalCount)")
+        restaurantMoreLabel.text = "+ \((informations.restaurant.totalCount ?? 0) - 2) more"
         restaurant2ContainerView.alpha = informations.restaurant.items.count < 2 ? 0 : 1
         
         for (index,restaurant) in informations.restaurant.items.enumerated() {
@@ -476,8 +477,8 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         // experience
-        experienceMoreContainerView.isHidden = informations.experience.num < 3
-        experienceMoreLabel.text = "+ \(informations.experience.num - 2) more"
+        experienceMoreContainerView.isHidden = informations.experience.totalCount ?? 0 < 3
+        experienceMoreLabel.text = "+ \((informations.experience.totalCount ?? 0) - 2) more"
         experience2ContainerView.alpha = informations.experience.items.count < 2 ? 0 : 1
         
         for (index,experience) in informations.experience.items.enumerated() {
@@ -533,7 +534,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func seeAllVillaButton_onClick(_ sender: Any) {
         if let termId = cityInformation?.property.items.first?.locations?.city?.termId {
-            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .villa, dataSource: [], city: Cities(termId: termId, name: cityInformation?.property.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.property.num ?? 0, items: [])), animated: true)
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .villa, dataSource: [], city: Cities(termId: termId, name: cityInformation?.property.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.property.totalCount ?? 0 ?? 0, items: [])), animated: true)
         }
     }
     
@@ -547,7 +548,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func seeAllEventsButton_onClick(_ sender: Any) {
         if let termId = cityInformation?.event.items.first?.locations?.city?.termId {
-            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .event, dataSource: [], city: Cities(termId: termId, name: cityInformation?.event.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.event.num ?? 0, items: [])), animated: true)
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .event, dataSource: [], city: Cities(termId: termId, name: cityInformation?.event.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.event.totalCount ?? 0 ?? 0, items: [])), animated: true)
         }
     }
     
@@ -561,7 +562,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func seeAllYachtButton_onClick(_ sender: Any) {
         if let termId = cityInformation?.yacht.items.first?.locations?.city?.termId {
-            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .yacht, dataSource: [], city: Cities(termId: termId, name: cityInformation?.yacht.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.yacht.num ?? 0, items: [])), animated: true)
+            self.navigationController?.pushViewController(ProductsViewController.instantiate(category: .yacht, dataSource: [], city: Cities(termId: termId, name: cityInformation?.yacht.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.yacht.totalCount ?? 0 ?? 0, items: [])), animated: true)
         }
     }
     
@@ -575,7 +576,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func seeAllRestaurantsButton_onClick(_ sender: Any) {
         if let termId = cityInformation?.restaurant.items.first?.locations?.city?.termId {
-            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: Cities(termId: termId, name: cityInformation?.restaurant.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.restaurant.num ?? 0, items: [])), animated: true)
+            self.navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource: [], city: Cities(termId: termId, name: cityInformation?.restaurant.items.first?.locations?.city?.name ?? "", itemsNum: cityInformation?.restaurant.totalCount ?? 0 ?? 0, items: [])), animated: true)
         }
     }
     
@@ -717,7 +718,12 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
             
             if let error = error {
                 Crashlytics.crashlytics().record(error: error)
-                self.showFeedback(error.localizedDescription)
+                if error._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    self.showFeedback(error.localizedDescription)
+                }
             } else if let informations = informations {
                 self.updateUI(informations: informations)
             } else {

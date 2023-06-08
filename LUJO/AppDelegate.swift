@@ -232,7 +232,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         GoLujoAPIManager().getUnReadPushNotificationsCount() { count, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain the unread push notifications count")
+                if error?._code == 403{
+                    self.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain the unread push notifications count")
+                }
                 return
             }
             if let _count = count, _count > 0{

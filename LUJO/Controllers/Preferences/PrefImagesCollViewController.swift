@@ -274,8 +274,14 @@ class PrefImagesCollViewController: UIViewController {
                 GoLujoAPIManager().getTravelHotelGroups() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain travel information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain travel information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     
@@ -295,8 +301,14 @@ class PrefImagesCollViewController: UIViewController {
                 GoLujoAPIManager().getTravelActivities() { taxonomies, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not obtain travel information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not obtain travel information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     
@@ -484,8 +496,14 @@ class PrefImagesCollViewController: UIViewController {
                 GoLujoAPIManager().setTravelDestinationType(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the travel destination types preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the travel destination types preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -494,8 +512,14 @@ class PrefImagesCollViewController: UIViewController {
                 GoLujoAPIManager().setTravelHotelGroups(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the hotel groups preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the hotel groups preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -504,8 +528,14 @@ class PrefImagesCollViewController: UIViewController {
                 GoLujoAPIManager().setTravelActivities(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the travel activities preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the travel activities preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -514,8 +544,14 @@ class PrefImagesCollViewController: UIViewController {
                 GoLujoAPIManager().setTravelAirlines(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the traveling airlines preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the traveling airlines preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -524,8 +560,14 @@ class PrefImagesCollViewController: UIViewController {
                 GoLujoAPIManager().setTravelHotelStyles(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not set the hotel styles preferences")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not set the hotel styles preferences")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -537,8 +579,14 @@ class PrefImagesCollViewController: UIViewController {
             GoLujoAPIManager().setProfilePreferences(commaSeparatedString: commaSeparatedString) { contentString, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not set the profile preferences")
-                    completion(nil, error)
+                    //unauthorized token, so forcefully signout the user
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not set the profile preferences")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(contentString, error)

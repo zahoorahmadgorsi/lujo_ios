@@ -1,12 +1,14 @@
 import Foundation
 
 enum BackendError: Error {
+    
     case unhandledStatus
     case parsing(reason: String)
-    case unexpectedCode(description: String)
+    case unexpectedCode(description: String )
 }
 
 extension BackendError: LocalizedError {
+    
     public var errorDescription: String? {
         switch self {
         case .unhandledStatus:
@@ -17,4 +19,6 @@ extension BackendError: LocalizedError {
             return NSLocalizedString(description, comment: "")
         }
     }
+    
+    
 }

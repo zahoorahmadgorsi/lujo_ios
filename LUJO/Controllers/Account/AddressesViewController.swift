@@ -71,8 +71,13 @@ class AddressesViewController: UIViewController {
                     self.tblView.reloadData()
                 }
             } else {
-                let error = BackendError.parsing(reason: "Could not obtain the list of addresses")
-                self.showError(error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain the list of addresses")
+                    self.showError(error)
+                }
             }
         }
     }
@@ -81,9 +86,14 @@ class AddressesViewController: UIViewController {
         GoLujoAPIManager().getAddresses() { addresses, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let description = error?.localizedDescription ?? "Could not obtain the list of addresses"
-                let error = BackendError.parsing(reason: description)
-                completion(nil, error)
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let description = error?.localizedDescription ?? "Could not obtain the list of addresses"
+                    let error = BackendError.parsing(reason: description)
+                    completion(nil, error)
+                }
                 return
             }
             completion(addresses, error)
@@ -216,9 +226,14 @@ extension AddressesViewController: UITableViewDelegate, UITableViewDataSource{
                 self.hideNetworkActivity()
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let description = error?.localizedDescription ?? "Address could not be updated."
-                    let error = BackendError.parsing(reason: description)
-                    self.showError(error)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let description = error?.localizedDescription ?? "Address could not be updated."
+                        let error = BackendError.parsing(reason: description)
+                        self.showError(error)
+                    }
                     return
                 }
                 self.getAddresses(showActivity: false)

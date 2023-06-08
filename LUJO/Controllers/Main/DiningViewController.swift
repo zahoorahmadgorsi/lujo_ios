@@ -53,7 +53,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     @IBOutlet var starsLabel: UILabel!
     @IBOutlet var chefNameLabel: UILabel!
     
-    var locationRestaurants: [Product] = []
+    var locationRestaurants: DiscoverSearchResponse?
     private var canSendRequest: Bool = true
     
     /// Refresh control view. Used to display network activity when user pull scroll view down
@@ -185,7 +185,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
     private func updateUIforAuthorizationStatus(_ status: CLAuthorizationStatus) {
         locationContainerView.isHidden = isLocationEnabled
         if !isLocationEnabled {
-            locationRestaurants = []
+            locationRestaurants = DiscoverSearchResponse(docs: [], totalDocs: 0)
             updatePopularCities()
         }
         if isLocationEnabled {
@@ -213,17 +213,17 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             // -------------------------------------------------------------------------------------
     }
     
-    func updateMyRestaurants(_ restaurants: [Product]) {
-        locationRestaurants = restaurants
-        if let city = restaurants.first?.locations?.city{
+    func updateMyRestaurants(_ discoverSearchResponse: DiscoverSearchResponse) {
+        locationRestaurants = discoverSearchResponse
+        if let city = locationRestaurants?.docs.first?.locations?.city{
             
             if let cityView = stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) as? DiningCityView{
                 cityView.removeFromSuperview()  //removing from bottom
-                cityView.city = Cities(termId: city.termId, name: city.name, itemsNum: 2, items: self.locationRestaurants)    //incase this refresh is due to favourite icon tap
+                cityView.city = Cities(termId: city.termId, name: city.name, itemsNum: self.locationRestaurants?.totalDocs, items: self.locationRestaurants?.docs)    //incase this refresh is due to favourite icon tap
                 stackView.insertArrangedSubview(cityView, at: 0)    //adding at index 0, right at the top
             }else{
                 let cityView = DiningCityView()
-                cityView.city = Cities(termId: city.termId, name: city.name, itemsNum: 2, items: self.locationRestaurants)
+                cityView.city = Cities(termId: city.termId, name: city.name, itemsNum: self.locationRestaurants?.totalDocs, items: self.locationRestaurants?.docs)
                 cityView.delegate = self
                 stackView.insertArrangedSubview(cityView, at: 0)// adding current location view at the top
             }
@@ -269,7 +269,7 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             if let cityView = view as? DiningCityView, let cityViewCity = cityView.city{
                 if let apiCities = diningInformations?.cities
                     , !apiCities.contains(where: ({$0.termId == cityViewCity.termId}))
-                    && locationRestaurants.first?.locations?.city?.termId != cityViewCity.termId{
+                    && locationRestaurants?.docs.first?.locations?.city?.termId != cityViewCity.termId{
                     cityView.removeFromSuperview()
                 }
             }
@@ -279,7 +279,9 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             //if city contains some restaurant and that city is not already added
             if city.itemsNum ?? 0 > 0
                 && stackView.arrangedSubviews.first(where: { ($0 as? DiningCityView)?.city?.termId == city.termId && $0.tag != 999 }) == nil
-                && locationRestaurants.first?.locations?.city?.termId != city.termId{
+                && locationRestaurants?.docs.first?.locations?.city?.termId != city.termId{
+                
+                print(city.items?.count,city.itemsNum)
                 let cityView = DiningCityView()
                 cityView.city = city
                 cityView.delegate = self
@@ -359,13 +361,19 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
             //37.939998626709
             //23.639999389648
 //            print("Latitude:\(Float(location.coordinate.latitude))" , "Longitude:\(Float(location.coordinate.longitude))")
-            GoLujoAPIManager().geopoint(type: "restaurant", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude)) { information, error in
+            DiningAPIManager().geopoint(type: "restaurant", latitude: Float(location.coordinate.latitude), longitude: Float(location.coordinate.longitude), page: 1, perPage: Constants.pageSize) { information, error in
                 self.canSendRequest = true
                 
                 if let error = error {
                     Crashlytics.crashlytics().record(error: error)
-                    // NEED TO BE REPLACED WITH UI VIEW
-                    self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"))
+                    //if user token is not authorized then server is returning 403, so making user log out
+                    if error._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        // NEED TO BE REPLACED WITH UI VIEW
+                        self.showError(BackendError.parsing(reason: "Could not obtain Nearby Places"))
+                    }
                 } else {
                     if let information = information {
                         // NEED TO BE REPLACED WITH UI VIEW
@@ -448,8 +456,14 @@ class DiningViewController: UIViewController, CLLocationManagerDelegate, DiningC
         GoLujoAPIManager().setUnSetFavourites(type,id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not update favourites information at dining")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not update favourites information at dining")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)
@@ -527,12 +541,18 @@ extension DiningViewController {
             return
         }
         
-        GoLujoAPIManager().home() { response, error in
+        DiningAPIManager().home() { response, error in
             
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not obtain dining information")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not obtain dining information")
+                    completion(nil, error)
+                }
                 return
             }
             completion(response, error)
@@ -542,9 +562,11 @@ extension DiningViewController {
     func seeAllRestaurantsForCity(city: Cities, view: DiningCityView) {
         //if data source has something then that data would be loaded immediately and rest of the data would be loaded silenlty
         //we need to pass data from here as on locationView we are loading only 2 records so those 2 would be loaded immediately and rest would be loaded silently, if we dont want to load silent data then have to ask API to not to send only 2 records but all.
-        navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource:  locationRestaurants.isEmpty == true ? (city.items ?? []) : locationRestaurants,
-                                                city: city),
-                                                animated: true)
+        print(city.name,city.itemsNum)
+//        navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource:  locationRestaurants.isEmpty == true ? (city.items ?? []) : locationRestaurants,
+//                                                city: city),
+//                                                animated: true)
+        navigationController?.pushViewController(RestaurantListViewController.instantiate(dataSource:  city.items ?? [], city: city), animated: true)
     }
     
     func didTappedOnRestaurantAt(index: Int,restaurant: Product) {

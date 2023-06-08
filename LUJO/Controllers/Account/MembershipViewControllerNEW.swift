@@ -341,7 +341,12 @@ extension MembershipViewControllerNEW: UITextFieldDelegate {
                         self.hideNetworkActivity()
                         guard error == nil  else {
                             Crashlytics.crashlytics().record(error: error!)
-                            BackendError.parsing(reason: "Referral code is not valid.")
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                BackendError.parsing(reason: "Referral code is not valid.")
+                            }
                             return
                         }
                         

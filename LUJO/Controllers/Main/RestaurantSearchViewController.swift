@@ -52,6 +52,10 @@ class RestaurantSearchViewController: UIViewController {
 //    private var searchTerm: String?
     var cuisineCategory:Cuisine?
     private var currentLocation: CLLocation?
+    //for paginations
+    var pageNumber = 1
+    var discoverSearchResponse: DiscoverSearchResponse?
+
     
     private var keyword: String = "" {
         didSet {
@@ -81,7 +85,7 @@ class RestaurantSearchViewController: UIViewController {
 //            searchTextField.text = _cuisineCategory.name
             keyword = _cuisineCategory.name
             //search cuisine by category id
-            searchRestaurants(term: nil, cityId: nil, cuisineCategoryId: _cuisineCategory.termId)
+            searchRestaurants(term: nil, cityId: nil, cuisineCategoryId: _cuisineCategory.termId, page: self.pageNumber, perPage: Constants.pageSize)
         }else {
             searchTextField.becomeFirstResponder()
         }
@@ -160,11 +164,20 @@ class RestaurantSearchViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func updateSearch(_ information: [Product]?) {
-        dataSource = information ?? []
-        currentLayout?.clearCache()
-        collectionView.reloadData()
-        noResultsContainerView.isHidden = !dataSource.isEmpty
+    func updateSearch(_ objects: [Product]?) {
+//        dataSource = information ?? []
+//        currentLayout?.clearCache()
+//        collectionView.reloadData()
+//        noResultsContainerView.isHidden = !dataSource.isEmpty
+        
+        //if both dataSource and objects are empty then refreshing grid is throwin exception
+        //Terminating app due to uncaught exception 'CALayerInvalidGeometry', reason: 'CALayer position contains NaN
+        if dataSource.isEmpty,  let _objects = objects, _objects.isEmpty {
+            return
+        }
+        dataSource = objects ?? []
+        DispatchQueue.main.async(execute: collectionView.reloadData)
+                                 
     }
     
     func showNetworkActivity() {
@@ -234,16 +247,25 @@ extension RestaurantSearchViewController: UICollectionViewDataSource, UICollecti
         } else {
             cell.locationContainerView.isHidden = true
         }
-        
-//        if let star = model.michelinStar?.first {
-//            cell.starImageContainerView.isHidden = false
-//            cell.starCountLabel.text = star.name.uppercased()
-//        } else {
-//            cell.starImageContainerView.isHidden = true
-//        }
-        
+
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath.row,collectionView.numberOfItems(inSection: indexPath.section))
+        print("totalDocs:\(discoverSearchResponse?.totalDocs)" , "Loaded docs: \((self.pageNumber) * Constants.pageSize)")
+        if indexPath.row == collectionView.numberOfItems(inSection: indexPath.section) / 2 ,
+           let totalDocs = discoverSearchResponse?.totalDocs, totalDocs > (Constants.pageSize * (self.pageNumber)){   //if half data has been loaded then load rest silently
+            print("load next set")
+            self.pageNumber += 1
+            self.searchRestaurants(term: keyword
+                                   ,cityId: nil
+                                   ,cuisineCategoryId: self.cuisineCategory?.termId
+                                   , page: self.pageNumber
+                                   , perPage: Constants.pageSize)
+        }
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presentRestaurantDetailViewController(restaurant: dataSource[indexPath.row])
@@ -256,10 +278,12 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
         keyword = textField.text!
         if keyword.count > 1 {
             textField.resignFirstResponder()
-            
+            self.pageNumber = 1     //when ever there is a change in text in searchtext then start searching from first page
             self.searchRestaurants(term: keyword,
                                    cityId: nil,
-                                   cuisineCategoryId: self.cuisineCategory?.termId )
+                                   cuisineCategoryId: self.cuisineCategory?.termId
+                                   ,page: self.pageNumber
+                                   ,perPage: Constants.pageSize)
             return true
         }
         
@@ -271,33 +295,60 @@ extension RestaurantSearchViewController: UITextFieldDelegate {
 
 extension RestaurantSearchViewController {
 
-    func searchRestaurants(term: String?, cityId: [String]?, cuisineCategoryId: String?) {
+    func searchRestaurants(term: String?, cityId: [String]?, cuisineCategoryId: String?, page: Int, perPage: Int) {
         self.showNetworkActivity()
         self.searchRestaurants(term: term,
                                cityId: cityId,
-                               cuisineCategoryId: cuisineCategoryId) { information, error in
+                               cuisineCategoryId: cuisineCategoryId
+                               ,page: self.pageNumber
+                               ,perPage: Constants.pageSize) { items, error in
             self.hideNetworkActivity()
+            
+            var _oldData = self.dataSource
+            var _newData = items ?? []
+            
             if let error = error {
                 self.showError(error)
             }
-            self.updateSearch(information)
+            
+            // if user is fetching next page data so append new data to old data
+            if page > 1 {
+                for item in _newData{
+                    if !_oldData.contains(where: {$0.id == item.id}) {
+                        _oldData.append(item)
+                    }
+                }
+            }else{  //for first page newData is current data
+                _oldData = _newData
+            }
+            
+            self.updateSearch(_oldData)
         }
     }
     
-    func searchRestaurants(term: String?, cityId: [String]?, cuisineCategoryId: String?, completion: @escaping ([Product]?, Error?) -> Void) {
+    func searchRestaurants(term: String?, cityId: [String]?, cuisineCategoryId: String?, page: Int, perPage: Int, completion: @escaping ([Product]?, Error?) -> Void) {
         Mixpanel.mainInstance().track(event: "RestaurantSearched",
               properties: ["SearchedText" : term])
         
-        GoLujoAPIManager().search(term: term,
+        DiningAPIManager().search(term: term,
                                   cityId: cityId,
-                                  cuisineCategoryId: cuisineCategoryId) { restaurants, error in
+                                  cuisineCategoryId: cuisineCategoryId
+                                  ,page: page
+                                  ,perPage: perPage) { list, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not search dining information")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not search dining information")
+                    completion(nil, error)
+                }
                 return
             }
-            completion(restaurants, error)
+            self.discoverSearchResponse = list
+            completion(list?.docs ?? [], error)
         }
     }
     
@@ -339,8 +390,14 @@ extension RestaurantSearchViewController {
         GoLujoAPIManager().setUnSetFavourites(type, id, isUnSetFavourite) { strResponse, error in
             guard error == nil else {
                 Crashlytics.crashlytics().record(error: error!)
-                let error = BackendError.parsing(reason: "Could not set/unset favorites")
-                completion(nil, error)
+                //unauthorized token, so forcefully signout the user
+                if error?._code == 403{
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.logoutUser()
+                }else{
+                    let error = BackendError.parsing(reason: "Could not set/unset favorites")
+                    completion(nil, error)
+                }
                 return
             }
             completion(strResponse, error)

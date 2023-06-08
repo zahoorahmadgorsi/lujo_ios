@@ -285,8 +285,14 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 GoLujoAPIManager().setAviationPreferredDestinations(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not save the preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not save the preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -295,8 +301,14 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
             GoLujoAPIManager().setAviationPreferredAirports(commaSeparatedString: commaSeparatedString) { contentString, error in
                 guard error == nil else {
                     Crashlytics.crashlytics().record(error: error!)
-                    let error = BackendError.parsing(reason: "Could not save the Preferences information")
-                    completion(nil, error)
+                    //unauthorized token, so forcefully signout the user
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not save the Preferences information")
+                        completion(nil, error)
+                    }
                     return
                 }
                 completion(contentString, error)
@@ -311,8 +323,14 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 GoLujoAPIManager().setYachtPreferredRegions(commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not save the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not save the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -327,8 +345,14 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                 GoLujoAPIManager().setTravelDestinations( commaSeparatedString: commaSeparatedString) { contentString, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
-                        let error = BackendError.parsing(reason: "Could not save the Preferences information")
-                        completion(nil, error)
+                        //unauthorized token, so forcefully signout the user
+                        if error?._code == 403{
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.logoutUser()
+                        }else{
+                            let error = BackendError.parsing(reason: "Could not save the Preferences information")
+                            completion(nil, error)
+                        }
                         return
                     }
                     completion(contentString, error)
@@ -343,8 +367,14 @@ class PreferredDestinationaViewController: UIViewController, UITextFieldDelegate
                     GoLujoAPIManager().setVillaDestinations( commaSeparatedString: commaSeparatedString) { contentString, error in
                         guard error == nil else {
                             Crashlytics.crashlytics().record(error: error!)
-                            let error = BackendError.parsing(reason: "Could not save the Preferences information")
-                            completion(nil, error)
+                            //unauthorized token, so forcefully signout the user
+                            if error?._code == 403{
+                                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                                appDelegate.logoutUser()
+                            }else{
+                                let error = BackendError.parsing(reason: "Could not save the Preferences information")
+                                completion(nil, error)
+                            }
                             return
                         }
                         completion(contentString, error)
