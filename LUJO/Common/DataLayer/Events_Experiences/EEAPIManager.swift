@@ -411,6 +411,9 @@ class EEAPIManager {
     
     func getTopRated(type: String?, term: String?, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         Alamofire.request(EERouter.topRated( type: type,  term:term, page,perPage)).responseJSON { response in
+            
+            print("Request URL: \(String(describing: response.request)) \nRequest Body: \(String(data: response.request?.httpBody ?? Data(), encoding: .utf8)!) \nResponse Body: \(String(data: response.data ?? Data(), encoding: .utf8)!)")
+            
             guard response.result.error == nil else {
                 completion(nil, response.result.error!)
                 return

@@ -75,6 +75,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBOutlet weak var yachtViewSeeAll: UIView!
     @IBOutlet weak var experienceViewSeeAll: UIView!
     
+    @IBOutlet weak var viewRecentTitle: UIView!
     @IBOutlet var homeRecentSlider: HomeSlider!
     @IBOutlet var homeTopRatedSlider: HomeSlider!
     @IBOutlet var homeGiftsSlider: HomeSlider!
@@ -440,6 +441,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @objc func refresh(_ sender: AnyObject) {
         // Force data fetch.
         getHomeInformation()
+        
+        // refresh location data
+        enableLocationButton_onClick(sender)
     }
     
     @IBAction func searchBarButton_onClick(_ sender: Any) {
@@ -731,8 +735,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             currentImageNum.text = "1"
         }
         
-        featured.itemsList = homeObjects?.slider ?? [] 
+        featured.itemsList = homeObjects?.slider ?? []
+        
         homeRecentSlider.itemsList = homeObjects?.recent ?? []
+        viewRecentTitle.isHidden = homeRecentSlider.itemsList.count == 0
+        homeRecentSlider.isHidden = homeRecentSlider.itemsList.count == 0
+        
         homeTopRatedSlider.itemsList = homeObjects?.topRated ?? []
         homeGiftsSlider.itemsList = homeObjects?.gifts ?? []
         homeVillasSlider.itemsList = homeObjects?.villas ?? []

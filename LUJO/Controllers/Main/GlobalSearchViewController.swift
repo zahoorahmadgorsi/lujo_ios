@@ -606,7 +606,7 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier, for: indexPath) as! CityCell
-        cell.cityNameLabel.text = dataSource[indexPath.row].name
+        cell.cityNameLabel.text = Utility.getCityStateCountryName(from: dataSource[indexPath.row])
         let colorView = UIView()
         colorView.backgroundColor = UIColor.clear
         UITableViewCell.appearance().selectedBackgroundView = colorView
@@ -616,10 +616,11 @@ class GlobalSearchViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(dataSource[indexPath.row].cityName)
-        let city = dataSource[indexPath.row]
-        searchTextField.text = city.name
+        let model = dataSource[indexPath.row]
+        
+        searchTextField.text = Utility.getCityStateCountryName(from:model)
         searchTextField.resignFirstResponder()
-        fetchDataForCity(city)
+        fetchDataForCity(model)
     }
     
     //MARK:- TextField delegate methods

@@ -485,6 +485,8 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
                 // Note that indexPath is wrapped in an array:  [indexPath]
                 self.tblView.deleteRows(at: [indexPath], with: .automatic)
                 self.deleteIndexPath = nil
+                //reload the count
+                self.appDelegate.getUnReadPushNotificationsCount()   //user has read the notification now update the badge.
             }
             
         }

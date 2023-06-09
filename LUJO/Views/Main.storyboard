@@ -327,19 +327,19 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hE-WG-dVo">
-                                                        <rect key="frame" x="16" y="0.0" width="382" height="120"/>
+                                                        <rect key="frame" x="16" y="4" width="382" height="112"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hEg-Jm-hkE">
-                                                                <rect key="frame" x="0.0" y="16" width="382" height="88"/>
+                                                                <rect key="frame" x="0.0" y="16" width="382" height="80"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enable location to see if there are restaurants in your city" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gov-hn-0IE">
-                                                                        <rect key="frame" x="28.5" y="0.0" width="325" height="42"/>
+                                                                        <rect key="frame" x="28.5" y="0.0" width="325" height="34"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DaI-ev-49p">
-                                                                        <rect key="frame" x="113" y="58" width="156" height="30"/>
+                                                                        <rect key="frame" x="113" y="50" width="156" height="30"/>
                                                                         <color key="backgroundColor" name="Action Button"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="30" id="jfH-n5-hrr"/>
@@ -356,16 +356,16 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                         <connections>
                                                                             <action selector="enableLocationButton_onClick:" destination="vdk-aC-30x" eventType="touchUpInside" id="9BA-gM-1ju"/>
-                                                                            <action selector="enableLocationButton_onClick:" destination="diB-LJ-Odk" eventType="touchUpInside" id="UeH-Qm-lsT"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstItem="Gov-hn-0IE" firstAttribute="width" secondItem="hEg-Jm-hkE" secondAttribute="width" multiplier="0.85" id="r7r-LG-NAw"/>
                                                                 </constraints>
                                                             </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="hEg-Jm-hkE" firstAttribute="top" secondItem="5hE-WG-dVo" secondAttribute="top" constant="16" id="6Gs-kr-4yL"/>
                                                             <constraint firstAttribute="bottom" secondItem="hEg-Jm-hkE" secondAttribute="bottom" constant="16" id="c1i-HD-6zr"/>
@@ -381,9 +381,9 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="5hE-WG-dVo" secondAttribute="bottom" id="Hee-Bx-9G0"/>
+                                                    <constraint firstAttribute="bottom" secondItem="5hE-WG-dVo" secondAttribute="bottom" constant="4" id="Hee-Bx-9G0"/>
                                                     <constraint firstAttribute="trailing" secondItem="5hE-WG-dVo" secondAttribute="trailing" constant="16" id="MlA-3X-cXJ"/>
-                                                    <constraint firstItem="5hE-WG-dVo" firstAttribute="top" secondItem="W8W-HU-nk3" secondAttribute="top" id="he7-Od-YVf"/>
+                                                    <constraint firstItem="5hE-WG-dVo" firstAttribute="top" secondItem="W8W-HU-nk3" secondAttribute="top" constant="4" id="he7-Od-YVf"/>
                                                     <constraint firstItem="5hE-WG-dVo" firstAttribute="leading" secondItem="W8W-HU-nk3" secondAttribute="leading" constant="16" id="qpP-Fm-tnU"/>
                                                     <constraint firstAttribute="height" constant="120" id="uR5-9g-LpX"/>
                                                 </constraints>
@@ -2203,7 +2203,7 @@
                                                         <rect key="frame" x="0.0" y="244" width="414" height="120"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UoV-ar-PE3">
-                                                                <rect key="frame" x="16" y="8" width="382" height="112"/>
+                                                                <rect key="frame" x="16" y="4" width="382" height="112"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RHa-QM-lgx">
                                                                         <rect key="frame" x="0.0" y="16" width="382" height="80"/>
@@ -2256,11 +2256,11 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="UoV-ar-PE3" secondAttribute="bottom" id="CMs-yY-Ef4"/>
+                                                            <constraint firstAttribute="bottom" secondItem="UoV-ar-PE3" secondAttribute="bottom" constant="4" id="CMs-yY-Ef4"/>
                                                             <constraint firstItem="UoV-ar-PE3" firstAttribute="leading" secondItem="zS8-a3-gbq" secondAttribute="leading" constant="16" id="CwG-6s-sdj"/>
                                                             <constraint firstAttribute="trailing" secondItem="UoV-ar-PE3" secondAttribute="trailing" constant="16" id="Fsl-8d-cvd"/>
                                                             <constraint firstAttribute="height" constant="120" id="JMW-hh-q4L"/>
-                                                            <constraint firstItem="UoV-ar-PE3" firstAttribute="top" secondItem="zS8-a3-gbq" secondAttribute="top" constant="8" id="fEY-IY-NMJ"/>
+                                                            <constraint firstItem="UoV-ar-PE3" firstAttribute="top" secondItem="zS8-a3-gbq" secondAttribute="top" constant="4" id="fEY-IY-NMJ"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhd-qr-rVw">
@@ -3219,6 +3219,7 @@
                         <outlet property="splashView" destination="cGa-dC-oIZ" id="Fyr-wT-3vl"/>
                         <outlet property="topRatedViewSeeAll" destination="ARf-Pe-ntM" id="ced-Jr-x45"/>
                         <outlet property="viewCallToAction" destination="mL5-em-HIW" id="96U-Q9-KBN"/>
+                        <outlet property="viewRecentTitle" destination="S5a-dF-Gvi" id="DDL-rc-U5F"/>
                         <outlet property="villaViewSeeAll" destination="LAS-Gg-HPI" id="aOE-Sr-1e9"/>
                         <outlet property="welcomeLabel" destination="OtM-GO-qKR" id="YtV-3Q-GYj"/>
                         <outlet property="yachtViewSeeAll" destination="fwQ-7l-Kkd" id="uvA-Gl-WVl"/>

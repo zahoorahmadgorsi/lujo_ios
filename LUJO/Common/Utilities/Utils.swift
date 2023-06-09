@@ -173,4 +173,16 @@ struct Utility
         
         return hardCodedCountryCode
     }
+    
+    static func getCityStateCountryName(from taxonomy: Taxonomy) -> String{
+        var destinationName = taxonomy.name
+        if let country = taxonomy.country{
+            if let state = taxonomy.stateName{
+                destinationName +=  ", " + state + ", " + country.name
+            }else{
+                destinationName +=   ", " + country.name
+            }
+        }
+        return destinationName
+    }
 }
