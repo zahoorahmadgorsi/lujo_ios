@@ -273,16 +273,16 @@ struct BaroqueAviationCategory: Codable {
 }
 
 struct Gallery: Codable {
-    let type: String
+    let type: String        //incase of gallery type will contain "image" or "video"
     let mediaType: String?   //used for thumbnail
     let mediaUrl: String
-    let thumbnail: String?  //thumbnail in case of the video
+    let videoThumbnail: String?  //thumbnail in case of the video
 
     enum CodingKeys: String, CodingKey {
         case type
         case mediaType = "media_type"
         case mediaUrl = "url"
-        case thumbnail = "thumbnail"
+        case videoThumbnail = "thumbnail"
     }
 }
 
@@ -487,7 +487,9 @@ struct Product: Codable {
     }
 
     func getGalleryImagesURL() -> [String] {
-        return gallery?.filter({ $0.type == "image" }).map({ $0.mediaUrl }) ?? []
+        let galleryItemsURLs = gallery?.filter({ $0.type == "image" || $0.type == "video" }).map({ $0.mediaUrl }) ?? []
+        print(galleryItemsURLs)
+        return galleryItemsURLs
     }
     
     func getCompleteAddress() -> String{

@@ -1097,6 +1097,7 @@ extension HomeViewController: DidSelectSliderItemProtocol {
         // B2 - 6
         selectedCell = sender.collectionView.cellForItem(at: indexPath) as? HomeSliderCell
         // B2 - 7
+        //in case of video, primaryImage has nothing
         selectedCellImageViewSnapshot = selectedCell?.primaryImage.snapshotView(afterScreenUpdates: false)
 
         let viewController = ProductDetailsViewController.instantiate(product: product)

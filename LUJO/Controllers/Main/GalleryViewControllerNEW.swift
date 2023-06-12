@@ -15,10 +15,12 @@ class GalleryViewControllerNEW: UIViewController {
     /// Class storyboard identifier.
     class var identifier: String { return "GalleryViewControllerNEW" }
     var scrollToItem:Int = 0
+    var product: Product?
     
     /// Init method that will init and return view controller.
-    class func instantiate(dataSource: [String], scrollToItem:Int = 0) -> GalleryViewControllerNEW {
+    class func instantiate(product: Product?, dataSource: [String], scrollToItem:Int = 0) -> GalleryViewControllerNEW {
         let viewController = UIStoryboard.main.instantiate(identifier) as! GalleryViewControllerNEW
+        viewController.product = product
         viewController.dataSource = dataSource
         viewController.scrollToItem = scrollToItem
         return viewController
@@ -36,6 +38,7 @@ class GalleryViewControllerNEW: UIViewController {
         super.viewDidLoad()
         imageCarousel.shouldRemoveOverlay = true
         imageCarousel.delegate = self
+        imageCarousel.product = self.product
         imageCarousel.imageURLList = dataSource
         imageCarousel.scrollToItem = scrollToItem   //after this index counting isn't working properly due to a bug in ios14
         allImagesNum.text = "\(dataSource.count)"

@@ -294,7 +294,7 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
                     avPlayer?.play()
                 }
             }else
-                if let mediaLink = model.thumbnail?.thumbnail {
+                if let mediaLink = model.thumbnail?.videoThumbnail {
                 cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
             }
         }

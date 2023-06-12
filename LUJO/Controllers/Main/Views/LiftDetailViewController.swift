@@ -220,7 +220,7 @@ class LiftDetailViewController: UIViewController {
 
     @IBAction func galleryButton_onClick(_ sender: UIButton) {
         if !(lift?.aircraft.images.isEmpty ?? true) {
-            let viewController = GalleryViewControllerNEW.instantiate(dataSource: lift!.aircraft.images)
+            let viewController = GalleryViewControllerNEW.instantiate(product: nil, dataSource: lift!.aircraft.images)
             present(viewController, animated: true, completion: nil)
         } else {
             print("There are no images in the gallery, sorry!")

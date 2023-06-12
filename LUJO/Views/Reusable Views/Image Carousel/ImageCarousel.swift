@@ -47,7 +47,8 @@ class ImageCarousel: UIView {
             collectionView.reloadData()
         }
     }
-
+    var product: Product?
+    
     var scrollToItem: Int = 0 {
         didSet {
             if (scrollToItem > 0){
@@ -143,7 +144,47 @@ extension ImageCarousel: UICollectionViewDataSource {
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCarouselCell.identifier,
                                                     for: indexPath) as! ImageCarouselCell
+        
+        //********
+        //GALLERY
+        //********
+
+        cell.primaryImage.isHidden = false;
+        cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        //by default set the image, later on decide if it has a video then hide image and add video
         cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
+        //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+        //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
+        if( self.product?.gallery?[indexPath.row].type == "video"){
+            //Playing the video
+            if let videoLink = URL(string: self.product?.gallery?[indexPath.row].mediaUrl ?? ""){
+                cell.primaryImage.isHidden = true;
+
+                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                avPlayerLayer.name = "videoPlayer"
+                
+                avPlayerLayer.frame = cell.containerView.bounds
+                avPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+//                print(avPlayerLayer.frame,cell.containerView.bounds)
+                
+                cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
+                avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
+                
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                    avPlayer?.seek(to: CMTime.zero)
+                    avPlayer?.play()
+                }
+            }else if let mediaLink = self.product?.gallery?[indexPath.row].videoThumbnail {
+                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+        }else if self.product?.gallery?[indexPath.row].type == "image", let mediaLink = self.product?.gallery?[indexPath.row].mediaUrl {
+            cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+        }
+        
+        
         //*****
         //Home*
         //*****
@@ -169,7 +210,7 @@ extension ImageCarousel: UICollectionViewDataSource {
                         avPlayer?.seek(to: CMTime.zero)
                         avPlayer?.play()
                     }
-                }else if let mediaLink = model.thumbnail?.thumbnail {
+                }else if let mediaLink = model.thumbnail?.videoThumbnail {
                     cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             }
@@ -206,7 +247,7 @@ extension ImageCarousel: UICollectionViewDataSource {
                         avPlayer?.play()
                     }
                 }else
-                    if let mediaLink = model.thumbnail?.thumbnail {
+                    if let mediaLink = model.thumbnail?.videoThumbnail {
                     cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
             }

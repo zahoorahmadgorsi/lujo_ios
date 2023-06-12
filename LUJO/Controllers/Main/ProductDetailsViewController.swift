@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import JGProgressHUD
 import Mixpanel
 import FirebaseCrashlytics
@@ -324,7 +325,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
 //        didTappedOnViewGallery(scrollToThisItem: itemIndex)
         let dataSource = product.getGalleryImagesURL()
         if dataSource.count > 0 {
-            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource , scrollToItem: itemIndex)
+            let viewController = GalleryViewControllerNEW.instantiate(product:product, dataSource: dataSource , scrollToItem: itemIndex)
             self.present(viewController, animated: true, completion: nil)
         } else {
             print("There are no images in the gallery, sorry!")
@@ -341,7 +342,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
             print("There are no images in the gallery, sorry!")
 //            showInformationPopup(withTitle: "Info", message: "There are no images in the gallery, sorry!")
         } else {
-            let viewController = GalleryViewControllerNEW.instantiate(dataSource: dataSource )
+            let viewController = GalleryViewControllerNEW.instantiate(product:product, dataSource: dataSource )
             self.present(viewController, animated: true, completion: nil)
         }
     }
@@ -375,15 +376,42 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
 
 extension ProductDetailsViewController {
     
-    fileprivate func setupEvents(_ product: Product) {
-        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
+    fileprivate func setupEvents(_ model: Product) {
+        
+        mainImageView.isHidden = false;
+        ViewMainImage.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        
+        //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+        //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
+        if( model.thumbnail?.mediaType == "video"){
+            //Playing the video
+            if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
+                mainImageView.isHidden = true;
+
+                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                avPlayerLayer.name = "videoPlayer"
+                avPlayerLayer.frame = ViewMainImage.bounds
+                avPlayerLayer.videoGravity = .resizeAspectFill
+                ViewMainImage.layer.insertSublayer(avPlayerLayer, at: 0)
+                avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
+
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                    avPlayer?.seek(to: CMTime.zero)
+                    avPlayer?.play()
+                }
+            }else if let mediaLink = model.thumbnail?.videoThumbnail {
+                mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+        }else if model.thumbnail?.mediaType == "image", let mediaLink = model.thumbnail?.mediaUrl {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
-        else if let firstImageLink = product.getGalleryImagesURL().first {
+        else if let firstImageLink = model.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-        }else{
-            print("Image not found")
         }
+        
         name.text = product.name
         self.title = name.text
         //checking favourite image red or white
@@ -810,7 +838,7 @@ extension ProductDetailsViewController {
     
     func setUpGallery(_ product: Product){
         //Setting up gallery
-        switch product.gallery?.filter({$0.type == "image"}).count {
+        switch product.gallery?.filter({$0.type == "image" || $0.type == "video"}).count {
         case 0: print("No need to add any gallery")
         case 1:
             let galleryView = GalleryView1()
