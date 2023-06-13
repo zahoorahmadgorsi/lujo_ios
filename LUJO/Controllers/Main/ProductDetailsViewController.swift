@@ -320,9 +320,9 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         sendInitialInformation()
     }
     
+    
     func didTappedOnImage(itemIndex: Int) {
         print("didTappedOnImage")
-//        didTappedOnViewGallery(scrollToThisItem: itemIndex)
         let dataSource = product.getGalleryImagesURL()
         if dataSource.count > 0 {
             let viewController = GalleryViewControllerNEW.instantiate(product:product, dataSource: dataSource , scrollToItem: itemIndex)
@@ -332,8 +332,30 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
         }
     }
     
+    func makeImageFullScreen(_ image: UIImage){
+        let newImageView = UIImageView(image: image)
+        newImageView.frame = UIScreen.main.bounds
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
+
+    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
+    
     @IBAction func viewGalleryButton_onClick(_ sender: UIButton) {
-        didTappedOnViewGallery()
+//        didTappedOnViewGallery()
+        if mainImageView.isHidden == false, let image = mainImageView.image{
+            self.makeImageFullScreen(image)
+        }
     }
 
     func didTappedOnViewGallery() {
@@ -377,7 +399,7 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
 extension ProductDetailsViewController {
     
     fileprivate func setupEvents(_ model: Product) {
-        
+
         mainImageView.isHidden = false;
         ViewMainImage.removeLayer(layerName: "videoPlayer") //removing video player if was added
         var avPlayer: AVPlayer!
@@ -486,14 +508,40 @@ extension ProductDetailsViewController {
     }
     
     fileprivate func setupExperience(_ product: Product) {
-        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
+        mainImageView.isHidden = false;
+        ViewMainImage.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        
+        //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+        //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
+        if( product.thumbnail?.mediaType == "video"){
+            //Playing the video
+            if let videoLink = URL(string: product.thumbnail?.mediaUrl ?? ""){
+                mainImageView.isHidden = true;
+
+                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                avPlayerLayer.name = "videoPlayer"
+                avPlayerLayer.frame = ViewMainImage.bounds
+                avPlayerLayer.videoGravity = .resizeAspectFill
+                ViewMainImage.layer.insertSublayer(avPlayerLayer, at: 0)
+                avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
+
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                    avPlayer?.seek(to: CMTime.zero)
+                    avPlayer?.play()
+                }
+            }else if let mediaLink = product.thumbnail?.videoThumbnail {
+                mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+        }else if product.thumbnail?.mediaType == "image", let mediaLink = product.thumbnail?.mediaUrl {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         else if let firstImageLink = product.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-        }else{
-            print("Image not found")
         }
+        
         name.text = product.name
         self.title = name.text
         //checking favourite image red or white
@@ -522,14 +570,40 @@ extension ProductDetailsViewController {
     }
     
     fileprivate func setupVilla(_ product: Product) {
-        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
+        mainImageView.isHidden = false;
+        ViewMainImage.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        
+        //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+        //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
+        if( product.thumbnail?.mediaType == "video"){
+            //Playing the video
+            if let videoLink = URL(string: product.thumbnail?.mediaUrl ?? ""){
+                mainImageView.isHidden = true;
+
+                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                avPlayerLayer.name = "videoPlayer"
+                avPlayerLayer.frame = ViewMainImage.bounds
+                avPlayerLayer.videoGravity = .resizeAspectFill
+                ViewMainImage.layer.insertSublayer(avPlayerLayer, at: 0)
+                avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
+
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                    avPlayer?.seek(to: CMTime.zero)
+                    avPlayer?.play()
+                }
+            }else if let mediaLink = product.thumbnail?.videoThumbnail {
+                mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+        }else if product.thumbnail?.mediaType == "image", let mediaLink = product.thumbnail?.mediaUrl {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         else if let firstImageLink = product.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-        }else{
-            print("Image not found")
         }
+        
         
         name.text = product.name
         self.title = name.text
@@ -666,14 +740,40 @@ extension ProductDetailsViewController {
     }
     
     fileprivate func setupYacht(_ product: Product) {
-        if let mediaLink = product.thumbnail?.mediaUrl, product.thumbnail?.mediaType == "image" {
+        mainImageView.isHidden = false;
+        ViewMainImage.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        
+        //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+        //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
+        if( product.thumbnail?.mediaType == "video"){
+            //Playing the video
+            if let videoLink = URL(string: product.thumbnail?.mediaUrl ?? ""){
+                mainImageView.isHidden = true;
+
+                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                avPlayerLayer.name = "videoPlayer"
+                avPlayerLayer.frame = ViewMainImage.bounds
+                avPlayerLayer.videoGravity = .resizeAspectFill
+                ViewMainImage.layer.insertSublayer(avPlayerLayer, at: 0)
+                avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
+
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                    avPlayer?.seek(to: CMTime.zero)
+                    avPlayer?.play()
+                }
+            }else if let mediaLink = product.thumbnail?.videoThumbnail {
+                mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+        }else if product.thumbnail?.mediaType == "image", let mediaLink = product.thumbnail?.mediaUrl {
             mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
         }
         else if let firstImageLink = product.getGalleryImagesURL().first {
             mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-        }else{
-            print("Image not found")
         }
+        
         
         name.text = product.name
         self.title = name.text

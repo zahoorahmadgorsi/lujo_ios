@@ -20,8 +20,8 @@ class GalleryViewControllerNEW: UIViewController {
     /// Init method that will init and return view controller.
     class func instantiate(product: Product?, dataSource: [String], scrollToItem:Int = 0) -> GalleryViewControllerNEW {
         let viewController = UIStoryboard.main.instantiate(identifier) as! GalleryViewControllerNEW
-        viewController.product = product
-        viewController.dataSource = dataSource
+        viewController.product = product        //this is used on gallery slider
+        viewController.dataSource = dataSource  //this is used on discover slider and dining slider
         viewController.scrollToItem = scrollToItem
         return viewController
     }

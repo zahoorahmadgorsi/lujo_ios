@@ -156,6 +156,7 @@ extension ImageCarousel: UICollectionViewDataSource {
         cell.primaryImage.downloadImageFrom(link: imageURLList[indexPath.row], contentMode: .scaleAspectFill)
         //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
         //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
+        
         if( self.product?.gallery?[indexPath.row].type == "video"){
             //Playing the video
             if let videoLink = URL(string: self.product?.gallery?[indexPath.row].mediaUrl ?? ""){
@@ -190,12 +191,13 @@ extension ImageCarousel: UICollectionViewDataSource {
         //*****
         if ( itemsList.count > indexPath.row){  //in gallery, itemsList count would be 0
             let model = itemsList[indexPath.row]
+            //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+            //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
             if( model.thumbnail?.mediaType == "video"){
-                cell.primaryImage.isHidden = false;
-                cell.containerView.removeLayer(layerName: "videoPlayer")//removing video player if was added
-                var avPlayer: AVPlayer!
                 //Playing the video
                 if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
+                    cell.primaryImage.isHidden = true;
+
                     avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
                     let avPlayerLayer = AVPlayerLayer(player: avPlayer)
                     avPlayerLayer.name = "videoPlayer"
@@ -204,7 +206,6 @@ extension ImageCarousel: UICollectionViewDataSource {
                     cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
                     avPlayer.play()
                     avPlayer.isMuted = true // To mute the sound
-                    cell.primaryImage.isHidden = true;
 
                     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                         avPlayer?.seek(to: CMTime.zero)
@@ -213,6 +214,11 @@ extension ImageCarousel: UICollectionViewDataSource {
                 }else if let mediaLink = model.thumbnail?.videoThumbnail {
                     cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
+            }else if model.thumbnail?.mediaType == "image", let mediaLink = model.thumbnail?.mediaUrl {
+                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+            else if let firstImageLink = model.getGalleryImagesURL().first {
+                cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
             }
             //checking favourite image red or white
             if (model.isFavourite ?? false){
@@ -226,12 +232,13 @@ extension ImageCarousel: UICollectionViewDataSource {
         //********
         if ( restaurantsList.count > indexPath.row){  //in gallery, itemsList count would be 0
             let model = restaurantsList[indexPath.row]
+            //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+            //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
             if( model.thumbnail?.mediaType == "video"){
-                cell.primaryImage.isHidden = false;
-                cell.containerView.removeLayer(layerName: "videoPlayer")//removing video player if was added
-                var avPlayer: AVPlayer!
                 //Playing the video
                 if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
+                    cell.primaryImage.isHidden = true;
+
                     avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
                     let avPlayerLayer = AVPlayerLayer(player: avPlayer)
                     avPlayerLayer.name = "videoPlayer"
@@ -240,16 +247,19 @@ extension ImageCarousel: UICollectionViewDataSource {
                     cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
                     avPlayer.play()
                     avPlayer.isMuted = true // To mute the sound
-                    cell.primaryImage.isHidden = true;
 
                     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
                         avPlayer?.seek(to: CMTime.zero)
                         avPlayer?.play()
                     }
-                }else
-                    if let mediaLink = model.thumbnail?.videoThumbnail {
+                }else if let mediaLink = model.thumbnail?.videoThumbnail {
                     cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
                 }
+            }else if model.thumbnail?.mediaType == "image", let mediaLink = model.thumbnail?.mediaUrl {
+                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+            else if let firstImageLink = model.getGalleryImagesURL().first {
+                cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
             }
             //checking favourite image red or white
             if (model.isFavourite ?? false){

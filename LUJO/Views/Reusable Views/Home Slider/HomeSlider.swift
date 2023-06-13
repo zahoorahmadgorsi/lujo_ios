@@ -164,39 +164,6 @@ extension HomeSlider: UICollectionViewDataSource {
             cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
         }
         
-//        if let mediaLink = model.thumbnail?.mediaUrl, model.thumbnail?.mediaType == "image" {
-//            cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-//        }
-//        else if let firstImageLink = model.getGalleryImagesURL().first {
-//            cell.primaryImage.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
-//        }
-
-//        cell.primaryImage.isHidden = false;
-//        cell.containerView.removeLayer(layerName: "videoPlayer") //removing video player if was added
-//        var avPlayer: AVPlayer!
-//
-//        if( model.thumbnail?.mediaType == "video"){
-//            //Playing the video
-//            if let videoLink = URL(string: model.thumbnail?.mediaUrl ?? ""){
-//                cell.primaryImage.isHidden = true;
-//
-//                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
-//                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
-//                avPlayerLayer.name = "videoPlayer"
-//                avPlayerLayer.frame = cell.containerView.bounds
-//                avPlayerLayer.videoGravity = .resizeAspectFill
-//                cell.containerView.layer.insertSublayer(avPlayerLayer, at: 0)
-//                avPlayer.play()
-//                avPlayer.isMuted = true // To mute the sound
-//
-//                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
-//                    avPlayer?.seek(to: CMTime.zero)
-//                    avPlayer?.play()
-//                }
-//            }else if let mediaLink = model.thumbnail?.videoThumbnail {
-//                cell.primaryImage.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
-//            }
-//        }
         //checking favourite image red or white
         if (model.isFavourite ?? false){
             cell.imgHeart.image = UIImage(named: "heart_red")
