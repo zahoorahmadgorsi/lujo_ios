@@ -65,6 +65,9 @@ class SearchProductsViewController: UIViewController {
             case .villa:
                 currentLayout?.setCustomCellHeight(170)
                 title = "Search properties"
+        case .hotel:
+            currentLayout?.setCustomCellHeight(170)
+            title = "Search hotels"
             case .gift:
                 currentLayout?.setCustomCellHeight(170)
                 title = "Search gifts"
@@ -228,14 +231,14 @@ extension SearchProductsViewController: UICollectionViewDataSource, UICollection
         }
 
         print("model.type:\(model.type)")
-        if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+        if  model.type == "villa" || model.type == "yacht" || model.type == "travel"{  //showing number of passenger, cabins, washroom and length
             cell.viewMeasurements.isHidden = false
             cell.viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
             if let constraint = cell.viewTitleHeightConstraint{
                 cell.viewTitle.addConstraint(constraint)
             }
             
-            if model.type == "villa"{
+            if model.type == "villa" || model.type == "travel"{
                 
                 cell.viewLength.isHidden = true     //villa dont have length
                 if let val = model.numberOfGuests, val > 0{
@@ -381,7 +384,6 @@ extension SearchProductsViewController {
         switch category {
             case .event:
                 Mixpanel.mainInstance().track(event: "EventSearched", properties: ["searchedText" : term ?? "EmptyString"])
-            //EEAPIManager().getEvents(past: past, term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
             EEAPIManager().getEvents(past: past, term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
@@ -401,7 +403,6 @@ extension SearchProductsViewController {
             case .experience:
                 Mixpanel.mainInstance().track(event: "ExperienceSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-                //EEAPIManager().getExperiences(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
             EEAPIManager().getExperiences(term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
@@ -421,7 +422,6 @@ extension SearchProductsViewController {
             case .villa:
                 Mixpanel.mainInstance().track(event: "VillaSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
-            //EEAPIManager().getVillas(term: term, latitude: nil, longitude: nil, productId: nil, page:page, perPage:perPage) { list, error in
             EEAPIManager().getVillas(term: term, productId: nil, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
@@ -430,7 +430,7 @@ extension SearchProductsViewController {
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             appDelegate.logoutUser()
                         }else{
-                            let error = BackendError.parsing(reason: "Could not obtain villas information")
+                            let error = BackendError.parsing(reason: "Could not obtain properties information")
                             completion([], error)
                         }
                         return
@@ -438,6 +438,25 @@ extension SearchProductsViewController {
                 self.discoverSearchResponse = list
                 completion(list?.docs ?? [], error)
                 }
+        case .hotel:
+            Mixpanel.mainInstance().track(event: "HotelSearched",
+                  properties: ["searchedText" : term ?? "EmptyString"])
+        EEAPIManager().getHotels(term: term, productId: nil, page:page, perPage:perPage) { list, error in
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    //unauthorized token, so forcefully signout the user
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not obtain hotel/travel information")
+                        completion([], error)
+                    }
+                    return
+                }
+            self.discoverSearchResponse = list
+            completion(list?.docs ?? [], error)
+            }
             case .gift:
                 Mixpanel.mainInstance().track(event: "GiftSearched",
                       properties: ["searchedText" : term ?? "EmptyString"])
@@ -489,9 +508,13 @@ extension SearchProductsViewController {
                     subCatParam = "gift"
                 case .villa:
                     subCatParam = "villa"
+                case .hotel:
+                    subCatParam = "travel"
                 case .yacht:
                     subCatParam = "yacht"
-                default:
+                case .none: fallthrough
+                case .recent: fallthrough
+                case .topRated:
                     subCatParam = subCategory?.rawValue.lowercased() ?? ""
                 }
                 EEAPIManager().getTopRated( type: subCatParam, term: term, page:page, perPage:perPage) { list, error in

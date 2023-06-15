@@ -212,14 +212,10 @@ extension HomeSlider: UICollectionViewDataSource {
         }
         
         print("model.type:\(model.type)")
-        if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+        if  model.type == "villa" || model.type == "yacht" || model.type == "travel"{  //showing number of passenger, cabins, washroom and length
             cell.viewMeasurements.isHidden = false
-//            if let constraint = cell.viewTitleHeightConstraint{
-//                cell.viewTitle.addConstraint(constraint)
-//                cell.viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
-//            }
             
-            if model.type == "villa"{
+            if model.type == "villa" || model.type == "travel"{
                 
                 cell.viewLength.isHidden = true     //villa dont have length
                 if let val = model.numberOfGuests, val > 0{

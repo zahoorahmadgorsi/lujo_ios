@@ -203,6 +203,27 @@ class WishListViewController: UIViewController, WishListViewProtocol{
             setupWishListLayout(wishListView: wishListView)
         }
         
+        //******************
+        // Hotels
+        //******************
+        count = (wishListInformations?.hotels?.count ?? 0)
+        if count > 0 , let items = wishListInformations?.hotels{
+            let wishListView: WishListView = {
+                let tv = WishListView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            
+            wishListView.delegate = self
+            wishListView.itemType = .villa
+            wishListView.imgTitle.image = UIImage(named: "travel grey icon")
+            wishListView.lblTitle.text = "Hotels"
+            wishListView.itemsList = items
+            stackView.addArrangedSubview(wishListView)
+            //applying constraints on wishListView
+            setupWishListLayout(wishListView: wishListView)
+        }
+        
         //*******
         // EVENTS
         //*******

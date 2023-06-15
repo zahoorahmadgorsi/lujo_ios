@@ -21,7 +21,6 @@
 		1D618004238A56C600F01199 /* CustomRequests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D618003238A56C600F01199 /* CustomRequests.storyboard */; };
 		1D618010238C3BDE00F01199 /* ikDataPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D61800F238C3BDE00F01199 /* ikDataPickerManager.swift */; };
 		1D618012238D6F6200F01199 /* YachtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D618011238D6F6200F01199 /* YachtViewController.swift */; };
-		1D618014238EA51A00F01199 /* HotelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D618013238EA51A00F01199 /* HotelViewController.swift */; };
 		1D70B11922B95F35007051FA /* ImageCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70B11722B95F35007051FA /* ImageCarouselCell.swift */; };
 		1D70B11A22B95F35007051FA /* ImageCarouselCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D70B11822B95F35007051FA /* ImageCarouselCell.xib */; };
 		1D70B11C22BA2724007051FA /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70B11B22BA2724007051FA /* UILabel.swift */; };
@@ -113,7 +112,6 @@
 		5583730E230D559100F9536C /* SwiftMessagesManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583730D230D559100F9536C /* SwiftMessagesManger.swift */; };
 		88029BA42633BF42003F1E77 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88029BA32633BF42003F1E77 /* NotificationService.swift */; };
 		88029BA82633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 88029BA12633BF42003F1E77 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0625582ABC0070D7CD /* Hotel.swift */; };
 		880B9B0925582E350070D7CD /* Yacht.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0825582E350070D7CD /* Yacht.swift */; };
 		880B9B0D255845B10070D7CD /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B9B0C255845B10070D7CD /* Gift.swift */; };
 		882AAAB826E81B31006B7D03 /* ChatOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */; };
@@ -429,7 +427,6 @@
 		1D618003238A56C600F01199 /* CustomRequests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomRequests.storyboard; sourceTree = "<group>"; };
 		1D61800F238C3BDE00F01199 /* ikDataPickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ikDataPickerManager.swift; sourceTree = "<group>"; };
 		1D618011238D6F6200F01199 /* YachtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YachtViewController.swift; sourceTree = "<group>"; };
-		1D618013238EA51A00F01199 /* HotelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelViewController.swift; sourceTree = "<group>"; };
 		1D70B11722B95F35007051FA /* ImageCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCarouselCell.swift; sourceTree = "<group>"; };
 		1D70B11822B95F35007051FA /* ImageCarouselCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCarouselCell.xib; sourceTree = "<group>"; };
 		1D70B11B22BA2724007051FA /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
@@ -529,7 +526,6 @@
 		88029BB42633C811003F1E77 /* OneSignal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OneSignal.xcframework; path = Carthage/Build/OneSignal.xcframework; sourceTree = "<group>"; };
 		88029BCA2633CBCF003F1E77 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		88029BCF2633CE75003F1E77 /* IQKeyboardManagerSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IQKeyboardManagerSwift.xcframework; path = Carthage/Build/IQKeyboardManagerSwift.xcframework; sourceTree = "<group>"; };
-		880B9B0625582ABC0070D7CD /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
 		880B9B0825582E350070D7CD /* Yacht.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yacht.swift; sourceTree = "<group>"; };
 		880B9B0C255845B10070D7CD /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
 		882AAAB726E81B31006B7D03 /* ChatOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOptionsViewController.swift; sourceTree = "<group>"; };
@@ -846,7 +842,6 @@
 				42C145AF28ACFA2C007436F6 /* Notification.swift */,
 				9ABCF5C12163E55500D062C9 /* EntityProtocols.swift */,
 				880B9B0C255845B10070D7CD /* Gift.swift */,
-				880B9B0625582ABC0070D7CD /* Hotel.swift */,
 				164332CBD01DAAB3FC14056B /* User.swift */,
 				880B9B0825582E350070D7CD /* Yacht.swift */,
 				9ABCF5C02163DDCD00D062C9 /* Aviation */,
@@ -962,7 +957,6 @@
 			isa = PBXGroup;
 			children = (
 				1D618011238D6F6200F01199 /* YachtViewController.swift */,
-				1D618013238EA51A00F01199 /* HotelViewController.swift */,
 				91FF68DE25E2519300B1761E /* VillaViewController.swift */,
 			);
 			name = "Custom Requests";
@@ -2354,7 +2348,6 @@
 				1DBC9C002363355300F0F133 /* PurchaseViewController.swift in Sources */,
 				9A091E4A21EC7BD800B0B5E6 /* DoubleExtension.swift in Sources */,
 				5527642123165D1800380BEB /* ProductsViewController.swift in Sources */,
-				880B9B0725582ABC0070D7CD /* Hotel.swift in Sources */,
 				918BA9AD25BF482C007B4D43 /* CityView4.swift in Sources */,
 				9AC4FE09225CA31F0031E57E /* AppDelegate.swift in Sources */,
 				9156B75B2614A08700404E1D /* GlobalSearchAnimator.swift in Sources */,
@@ -2532,7 +2525,6 @@
 				164330344F7315887695337E /* User.swift in Sources */,
 				8868751127A6A84600563CDC /* ConversationsViewController.swift in Sources */,
 				88CEBCFC265457EC00360CB6 /* PreferredDestinationaViewController.swift in Sources */,
-				1D618014238EA51A00F01199 /* HotelViewController.swift in Sources */,
 				9A4CB3942161C4D900856930 /* JSONDecoder+DataResponse.swift in Sources */,
 				1DEDB9EA22F20D4000903CAC /* HomeSlider.swift in Sources */,
 				8898867F2723E2450030613A /* SingleLineFilterCell.swift in Sources */,
@@ -2635,7 +2627,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.debug.OneSignalNotificationServiceExtension;
@@ -2662,7 +2654,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2688,7 +2680,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2862,7 +2854,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				ONE_SIGNAL = "0c5afe65-5cf1-4ca9-a8f7-9b4def559aed";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo.debug;
@@ -2918,7 +2910,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				ONE_SIGNAL = "eae6e09f-04c0-439f-ac65-6a000e8f77f6";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Baroqueaccess.Lujo;
@@ -3121,7 +3113,7 @@
 					"@executable_path/Frameworks",
 				);
 				LUJO_API_VERSION = v1;
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2;
 				ONE_SIGNAL = "0c5afe65-5cf1-4ca9-a8f7-9b4def559aed";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";

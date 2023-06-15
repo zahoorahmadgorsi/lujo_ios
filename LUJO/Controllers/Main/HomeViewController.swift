@@ -71,6 +71,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBOutlet weak var topRatedViewSeeAll: UIView!
     @IBOutlet weak var giftViewSeeAll: UIView!
     @IBOutlet weak var villaViewSeeAll: UIView!
+    @IBOutlet weak var hotelViewSeeAll: UIView!
     @IBOutlet weak var eventViewSeeAll: UIView!
     @IBOutlet weak var yachtViewSeeAll: UIView!
     @IBOutlet weak var experienceViewSeeAll: UIView!
@@ -80,10 +81,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     @IBOutlet var homeTopRatedSlider: HomeSlider!
     @IBOutlet var homeGiftsSlider: HomeSlider!
     @IBOutlet var homeVillasSlider: HomeSlider!
+    @IBOutlet weak var homeHotelSlider: HomeSlider!
     @IBOutlet var homeYachtsSlider: HomeSlider!
     @IBOutlet var homeEventSlider: HomeSlider!
     @IBOutlet var homeExperienceSlider: HomeSlider!
-    
     
     @IBOutlet var specialEventContainer1: UIView!
     @IBOutlet var specialEventView1: HomeSpecialEventSummary!
@@ -151,6 +152,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         homeTopRatedSlider.delegate = self
         homeGiftsSlider.delegate = self
         homeVillasSlider.delegate = self
+        homeHotelSlider.delegate = self
         homeYachtsSlider.delegate = self
         
         homeEventSlider.delegate = self
@@ -181,6 +183,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         let tgVilla = UITapGestureRecognizer(target: self, action: #selector(btnVillaSeeAllTapped))
         villaViewSeeAll.isUserInteractionEnabled = true
         villaViewSeeAll.addGestureRecognizer(tgVilla)
+        
+        //tap gesture on hotel's see all
+        let tgHotel = UITapGestureRecognizer(target: self, action: #selector(btnHotelSeeAllTapped))
+        hotelViewSeeAll.isUserInteractionEnabled = true
+        hotelViewSeeAll.addGestureRecognizer(tgHotel)
+        
         //tap gesture on event's see all
         let tgEvent = UITapGestureRecognizer(target: self, action: #selector(btnEventSeeAllTapped))
         eventViewSeeAll.isUserInteractionEnabled = true
@@ -402,6 +410,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             homeTopRatedSlider.itemsList = []
             homeGiftsSlider.itemsList = []
             homeVillasSlider.itemsList = []
+            homeHotelSlider.itemsList = []
             homeYachtsSlider.itemsList = []
             
             homeEventSlider.itemsList = []
@@ -522,8 +531,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             self.navigationController?.pushViewController(viewController, animated: true)
             UserDefaults.standard.set(true, forKey: "isTravelPreferencesAlreadyShown")
         }else{
-            let viewController = HotelViewController.instantiate()
-            self.present(viewController, animated: true, completion: nil)
+//            let viewController = HotelViewController.instantiate()
+//            self.present(viewController, animated: true, completion: nil)
+            let viewController = ProductsViewController.instantiate(category: .hotel)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
@@ -544,6 +555,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     @objc func btnVillaSeeAllTapped(_ sender: Any) {
         let viewController = PerCityViewController.instantiate(category: .villa)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @objc func btnHotelSeeAllTapped(_ sender: Any) {
+        let viewController = PerCityViewController.instantiate(category: .hotel)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -744,6 +760,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         homeTopRatedSlider.itemsList = homeObjects?.topRated ?? []
         homeGiftsSlider.itemsList = homeObjects?.gifts ?? []
         homeVillasSlider.itemsList = homeObjects?.villas ?? []
+        homeHotelSlider.itemsList = homeObjects?.hotels ?? []
         homeYachtsSlider.itemsList = homeObjects?.yachts ?? []
         
         homeEventSlider.itemsList = homeObjects?.events ?? []
@@ -979,6 +996,13 @@ extension HomeViewController: ImageCarouselDelegate {
             self.homeVillasSlider.itemsList = items   //re-assigning as it will automatically reload the collection
         }
 
+        items = self.homeHotelSlider.itemsList
+        if let index = items.firstIndex(where: { $0.id == itemId}) {
+            items[index].isFavourite = !(items[index].isFavourite ?? false)
+            self.homeObjects?.hotels = items    // so that updated value can be loaded next time e.g. event detail
+            self.homeHotelSlider.itemsList = items   //re-assigning as it will automatically reload the collection
+        }
+        
         items = self.homeYachtsSlider.itemsList
         if let index = items.firstIndex(where: { $0.id == itemId}) {
             items[index].isFavourite = !(items[index].isFavourite ?? false)
@@ -1039,6 +1063,8 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                 item = homeObjects?.gifts[index]
             case homeVillasSlider:
                 item = homeObjects?.villas[index]
+        case homeHotelSlider:
+            item = homeObjects?.hotels[index]
             case homeYachtsSlider:
                 item = homeObjects?.yachts[index]
             case homeEventSlider:
@@ -1083,6 +1109,8 @@ extension HomeViewController: DidSelectSliderItemProtocol {
                 product = homeObjects?.gifts[indexPath.row]
             case homeVillasSlider:
                 product = homeObjects?.villas[indexPath.row]
+        case homeHotelSlider:
+            product = homeObjects?.hotels[indexPath.row]
             case homeYachtsSlider:
                 product = homeObjects?.yachts[indexPath.row]
             case homeEventSlider:

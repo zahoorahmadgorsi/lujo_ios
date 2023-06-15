@@ -38,6 +38,7 @@ enum EERouter: URLRequestConvertible {
     case cityInfo(cityId: String)
     //case villas(String?, Double?, Double?, String?, AppliedFilters?, Int, Int)
     case villas(String?, String?, AppliedFilters?, Int, Int)
+    case hotels(String?, String?, AppliedFilters?, Int, Int)
     case goods(String?, String?, String?, AppliedFilters?, Int, Int)
     case yachts( String?, String?, String?, AppliedFilters?, Int, Int)
     case restaurants(String)    //get restauurant by id
@@ -81,6 +82,12 @@ enum EERouter: URLRequestConvertible {
         case let .experiences(_, id, _, _, _):    fallthrough
         case let .yachts(_, _, id, _, _, _):         fallthrough
         case let .villas(_, id, _, _, _):
+            if let id = id , id.count > 0 {  //if event is search by id then use different API
+                return .get
+            }else{
+                return .post
+            }
+        case let .hotels(_, id, _, _, _):
             if let id = id , id.count > 0 {  //if event is search by id then use different API
                 return .get
             }else{
@@ -149,6 +156,12 @@ enum EERouter: URLRequestConvertible {
                 }else{
                     newURLComponents.path.append("/villas/search")
                 }
+        case let .hotels(_, id, _, _, _):
+            if let productId = id , !productId.isEmpty {  //if event is search by id then user different API
+                    newURLComponents.path.append("/villas/detail/" + productId)
+            }else{
+                newURLComponents.path.append("/villas/search")
+            }
             case let .goods( _, gift_category_id, id,_, _, _):
                 if let giftId = id , !giftId.isEmpty {  //if gift is search by giftId then user different API (called when push notificatino is receveid )
                         newURLComponents.path.append("/gifts/detail/" + giftId)
@@ -304,6 +317,12 @@ enum EERouter: URLRequestConvertible {
                 return nil
             }else{
                 return getVillasDataAsJSONData(search: term, id: productId, filters, page: page, perPage:perPage)
+            }
+        case let .hotels(term, productId, filters, page, perPage):
+            if let id = productId , id.count > 0 {  //if event is search by id then user different API
+                return nil
+            }else{
+                return getHotelsDataAsJSONData(search: term, id: productId, filters, page: page, perPage:perPage)
             }
         case let .goods(search, giftCategoryId, id, filters, page, perPage):
             if let id = id , id.count > 0 {  //if event is search by id then user different API
@@ -491,12 +510,9 @@ enum EERouter: URLRequestConvertible {
     
     
     fileprivate func getVillasDataAsJSONData( search: String?,
-//                                              _ latitude:Double?,
-//                                              _ longitude:Double?,
                                               id:String?,_ filters:AppliedFilters?,
                                               page: Int,
                                               perPage: Int) -> Data? {
-//        var body: [String: Any] = [:]
         //pagination parameter would in body only in case of villas
         var body: [String: Any] = ["status": "Published"]
         body["page"] = page
@@ -504,13 +520,74 @@ enum EERouter: URLRequestConvertible {
         if let search = search , !search.isEmpty {
             body["search"] = search
         }
-//        if let location = location , !location.isEmpty {
-//            body["location"] = location     //we are sending lat/long instead of location
-//        }
-//        if let _latitude = latitude, let _longitude = longitude, _latitude != 0, _longitude != 0   {
-//            body["latitude"] = _latitude
-//            body["longitude"] = _longitude
-//        }
+        if let id = id , !id.isEmpty {
+            body["id"] = id
+        }
+        //filters
+        if let items = filters?.featuredCities, items.count > 0{
+            body["cities"] = items
+        }
+        if let items = filters?.countryId, items.count > 0{
+            body["countries"] = items
+        }
+        if let item = filters?.villaSaleType{
+            body["sales_type"] = [
+                "buy" : item.buy == true ? true : false,
+                "rent" : item.rent == true ? true : false
+            ]
+        }
+        if let guests = filters?.guests{
+            body["guest_range"] = [
+                "from": guests.from,
+                "to": guests.to
+            ]
+        }
+        if let items = filters?.villaTypes, items.count > 0{
+            body["property_type"] = items
+        }
+        if let items = filters?.villaLifeStyle, items.count > 0{
+            body["lifestyle"] = items
+        }
+        if let price = filters?.price{
+            body["custom_price_range"] = [
+                "from": Int(price.minPrice) as Any,
+                "to": Int(price.maxMax) as Any,
+                "currencyType" : price.currencyCode
+            ]
+            body["orderByPrice"] = "Custom-Range"
+        }
+        if let items = filters?.bedRooms{
+            body["bedroom_range"] = [
+                "from": items.from,
+                "to": items.to
+            ]
+        }
+        if let items = filters?.bathRooms{
+            body["bathroom_range"] = [
+                "from": items.from,
+                "to": items.to
+            ]
+        }
+        if let items = filters?.tagIds, items.count > 0{
+            body["tags"] = items
+        }
+        return try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
+    
+    
+    fileprivate func getHotelsDataAsJSONData( search: String?,
+                                              id:String?,_ filters:AppliedFilters?,
+                                              page: Int,
+                                              perPage: Int) -> Data? {
+        //pagination parameter would in body only in case of villas
+        var body: [String: Any] = ["status": "Published"]
+        body["page"] = page
+        body["per_page"] = perPage
+        body["travels"] = true  //this is the only differencce with getVillasDataAsJSONData, keep this a separate function to handle upcoming changes which are evident
+        
+        if let search = search , !search.isEmpty {
+            body["search"] = search
+        }
         if let id = id , !id.isEmpty {
             body["id"] = id
         }

@@ -198,10 +198,58 @@ class EEAPIManager {
         }
     }
     
-//    func getVillas(term: String?, latitude: Double?, longitude: Double?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping ([Product], Error?) -> Void) {
     func getVillas(term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
         //Alamofire.request(EERouter.villas( term, latitude, longitude, productId,filtersToApply, page, perPage)).responseJSON { response in
         Alamofire.request(EERouter.villas( term, productId,filtersToApply, page, perPage)).responseJSON { response in
+            guard response.result.error == nil else {
+                completion(nil, response.result.error!)
+                return
+            }
+
+            // Special case where status code is not received, should never happen
+            guard let statusCode = response.response?.statusCode else {
+                completion(nil, BackendError.unhandledStatus)
+                return
+            }
+
+            switch statusCode {
+            case 1 ... 199: // Transfer protoco-level information: Unexpected
+                completion(nil, self.handleError(response, statusCode))
+            case 200 ... 299: // Success
+                if let id = productId , !id.isEmpty{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<Product>.self, from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse response"))
+                        return
+                    }
+                    var products = [Product]()
+                    products.append(result.content) //result.content would be an object, but completion is expecting an array
+                    //                    completion(products, nil)
+                                        
+                    let _discoverSearchResponse = DiscoverSearchResponse(docs: products, totalDocs: 1)
+                    completion(_discoverSearchResponse, nil)
+                }else{
+                    guard let result = try? JSONDecoder().decode(LujoServerResponse<DiscoverSearchResponse>.self,
+                                                                 from: response.data!)
+                    else {
+                        completion(nil, BackendError.parsing(reason: "Unable to parse the response"))
+                        return
+                    }
+                    completion(result.content, nil)
+                }
+                return
+            case 300 ... 399: // Redirection: Unexpected
+                completion(nil, self.handleError(response, statusCode))
+            case 400 ... 499: // Client Error
+                completion(nil, self.handleError(response, statusCode))
+            default: // 500 or bigger, Server Error
+                completion(nil, self.handleError(response, statusCode))
+            }
+        }
+    }
+    
+    func getHotels(term: String?, productId: String?, filtersToApply:AppliedFilters? = nil, page: Int, perPage: Int, completion: @escaping (DiscoverSearchResponse?, Error?) -> Void) {
+        Alamofire.request(EERouter.hotels( term, productId,filtersToApply, page, perPage)).responseJSON { response in
             guard response.result.error == nil else {
                 completion(nil, response.result.error!)
                 return

@@ -62,7 +62,7 @@ class GalleryView4: UIView {
     }
     
     private func setupViewUI() {
-        for (index, media) in gallery?.enumerated() ?? [].enumerated() {
+        for (index, media) in gallery?.filter({ $0.type == "image" || $0.type == "video" }).enumerated() ?? [].enumerated() {
             if index == 0 {
                 if (media.type == "image"){
                     imgView1.downloadImageFrom(link: media.mediaUrl, contentMode: .scaleAspectFill)

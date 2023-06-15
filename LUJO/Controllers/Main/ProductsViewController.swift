@@ -15,6 +15,7 @@ enum ProductCategory: String {
     case event = "Events"
     case experience = "Experiences"
     case villa = "Villas"
+    case hotel = "Hotels"
     case gift = "Gifts"
     case yacht = "Yachts"
     case recent = "Recenlty Viewed"
@@ -93,6 +94,8 @@ class ProductsViewController: UIViewController {
                 currentLayout?.setCustomCellHeight(160)
             case .villa:
                 currentLayout?.setCustomCellHeight(172)
+        case .hotel:
+            currentLayout?.setCustomCellHeight(172)
             case .gift:
                 currentLayout?.setCustomCellHeight(160)
             case .yacht:
@@ -123,6 +126,13 @@ class ProductsViewController: UIViewController {
                     self.navigationController?.pushViewController(viewController, animated: true)
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
+        case .hotel:
+            //Loading the preferences related to dining only very first time
+            if !UserDefaults.standard.bool(forKey: "isHotelPreferencesAlreadyShown")  {
+                let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
+                self.navigationController?.pushViewController(viewController, animated: true)
+                UserDefaults.standard.set(true, forKey: "isHotelPreferencesAlreadyShown")
+            }
             case .yacht:
                 //Loading the preferences related to dining only very first time
                 if !UserDefaults.standard.bool(forKey: "isYachtPreferencesAlreadyShown")  {
@@ -137,9 +147,13 @@ class ProductsViewController: UIViewController {
                     self.navigationController?.pushViewController(viewController, animated: true)
                     UserDefaults.standard.set(true, forKey: "isGiftPreferencesAlreadyShown")
                 }
-            default:
-                print("No preferences to load")
+//            default:
+//                print("No preferences to load")
        
+        case .none: fallthrough
+        case .recent: fallthrough
+        case .topRated:
+            print("No preferences to load")
         }
     }
     
@@ -190,12 +204,18 @@ class ProductsViewController: UIViewController {
                 subCategoryType = "experience"
             case .villa:
                 subCategoryType = "villa"
+        case .hotel:
+            subCategoryType = "travel"
             case .yacht:
                 subCategoryType = "yacht"
             case .gift:
                 subCategoryType = "gift"
-            default:
-                subCategoryType = ""    //bring all top rated
+//            default:
+//
+        case .none: fallthrough
+        case .some(.recent): fallthrough
+        case .topRated:
+            subCategoryType = ""    //bring all top rated
         }
         
         if dataSource.count > 0 {
@@ -344,14 +364,14 @@ extension ProductsViewController: UICollectionViewDataSource, UICollectionViewDe
             cell.tagContainerView.isHidden = true
         }
         print("model.type:\(model.type)")
-        if  model.type == "villa" || model.type == "yacht"{  //showing number of passenger, cabins, washroom and length
+        if  model.type == "villa" || model.type == "yacht" || model.type == "travel"{  //showing number of passenger, cabins, washroom and length
             cell.viewMeasurements.isHidden = false
             cell.viewEmpty.isHidden = false  //other wise viewempty will grow bigger instead of viewTitle
             if let constraint = cell.viewTitleHeightConstraint{
                 cell.viewTitle.addConstraint(constraint)
             }
             
-            if model.type == "villa"{
+            if model.type == "villa" || model.type == "travel"{
                 
                 cell.viewLength.isHidden = true     //villa dont have length
                 if let val = model.numberOfGuests, val > 0{
@@ -464,8 +484,6 @@ extension ProductsViewController {
         
         switch category {
             case .event:
-//            EEAPIManager().getEvents( past: past, term: term, latitude: latitude, longitude: longitude, productId: nil,
-//                                      filtersToApply: filtersToApply, page:page, perPage:perPage) { list, error in
             EEAPIManager().getEvents( past: past, term: term, productId: nil,
                                       filtersToApply: filters, page:page, perPage:perPage) { list, error in
                     guard error == nil else {
@@ -517,7 +535,6 @@ extension ProductsViewController {
                 completion(list, error)
             }
             case .villa:
-                //EEAPIManager().getVillas(term: term, latitude: latitude, longitude: longitude, productId: nil, filtersToApply: filtersToApply, page:page, perPage: perPage) { list, error in
             EEAPIManager().getVillas(term: term, productId: nil, filtersToApply: filters, page:page, perPage: perPage) { list, error in
                     guard error == nil else {
                         Crashlytics.crashlytics().record(error: error!)
@@ -533,6 +550,23 @@ extension ProductsViewController {
                 self.discoverSearchResponse = list
                 completion(list, error)
             }
+        case .hotel:
+        EEAPIManager().getHotels(term: term, productId: nil, filtersToApply: filters, page:page, perPage: perPage) { list, error in
+                guard error == nil else {
+                    Crashlytics.crashlytics().record(error: error!)
+                    if error?._code == 403{
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.logoutUser()
+                    }else{
+                        let error = BackendError.parsing(reason: "Could not obtain properties information")
+                        completion(nil, error)
+                    }
+                    return
+                }
+            self.discoverSearchResponse = list
+            completion(list, error)
+        }
+            
             case .gift:
                 //sending category_term_id in case of gifts in the paraeter cityid
                 EEAPIManager().getGoods( term: term, giftCategoryId: cityId, productId: nil,

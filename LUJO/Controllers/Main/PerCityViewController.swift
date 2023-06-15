@@ -95,7 +95,6 @@ class PerCityViewController: UIViewController {
     
     //MARK:-  Filters
     
-    
     var firstFilter:String = ""         //name
     var secondFilter: [Taxonomy] = []   //yacht Charter
     var thirdFilter: String = ""        //yacht Guests
@@ -142,6 +141,15 @@ class PerCityViewController: UIViewController {
                     self.navigationController?.pushViewController(viewController, animated: true)
                     UserDefaults.standard.set(true, forKey: "isVillaPreferencesAlreadyShown")
                 }
+        case .hotel:
+            self.svFilters.isHidden = false
+            //Loading the preferences related to villa only very first time
+            if !UserDefaults.standard.bool(forKey: "isHotelPreferencesAlreadyShown")  {
+                let airportCollViewCell = AirportCollViewCell()
+            let viewController = TwoSliderPrefViewController.instantiate(prefType: .travel, prefInformationType: .travelFrequency)
+                self.navigationController?.pushViewController(viewController, animated: true)
+                UserDefaults.standard.set(true, forKey: "isHotelPreferencesAlreadyShown")
+            }
             case .yacht:
                 self.svFilters.isHidden = false
                 //Loading the preferences related to yacht only very first time
@@ -629,13 +637,15 @@ extension PerCityViewController: CityViewProtocol {
                 categoryType = "experience"
             case .villa:
                 categoryType = "villa"
+        case .hotel:
+            categoryType = "travel"
             case .yacht:
                 categoryType = "yacht"
             case .gift:
                 categoryType = "gift"
-            default:
-                categoryType = "event"
-       
+        case .recent: fallthrough
+        case .topRated:
+            categoryType = "event"
         }
         
         var secondFilterTermId = "" , fourthFilterTermId = "", fifthFilterTermId = "", sixthFilterTermId = "", eighthFilterTermId = "", ninthFilterTermId = "", tenthFilterTermId = ""
@@ -680,12 +690,15 @@ extension PerCityViewController: CityViewProtocol {
                 categoryType = "experience"
             case .villa:
                 categoryType = "villa"
+        case .hotel:
+            categoryType = "travel"
             case .yacht:
                 categoryType = "yacht"
             case .gift:
                 categoryType = "gift"
-            default:
-                categoryType = "event"
+        case .recent: fallthrough
+        case .topRated:
+            categoryType = "event"
        
         }
         EEAPIManager().getFilters(type: categoryType) { list, error in

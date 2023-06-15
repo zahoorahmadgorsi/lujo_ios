@@ -14,8 +14,8 @@ struct WishListObjects: Codable {
     var experiences: [Product]?
     var specialEvents: [Product]?
     var restaurants: [Product]?
-    var hotels: [Hotel]?
     var villas: [Product]?
+    var hotels: [Product]?
     var gifts: [Product]?
     var yachts: [Product]?
     
@@ -24,7 +24,7 @@ struct WishListObjects: Codable {
         case events = "event"
         case specialEvents = "special_event"
         case experiences = "experience"
-//        case hotels = "hotel"
+        case hotels = "travel"
         case villas = "villa"
         case gifts = "gift"
         case yachts = "yacht"
@@ -47,8 +47,8 @@ extension WishListObjects {
             events = try values.decodeIfPresent([Product].self, forKey: .events)
             specialEvents = try values.decodeIfPresent([Product].self, forKey: .specialEvents)
             experiences = try values.decodeIfPresent([Product].self, forKey: .experiences)
-//            hotels = try values.decodeIfPresent([Hotel].self, forKey: .hotels)
             villas = try values.decodeIfPresent([Product].self, forKey: .villas)
+            hotels = try values.decodeIfPresent([Product].self, forKey: .hotels)
             gifts = try values.decodeIfPresent([Product].self, forKey: .gifts)
             yachts = try values.decodeIfPresent([Product].self, forKey: .yachts)
         } catch {
@@ -79,20 +79,6 @@ struct wishListProducts: Codable {
         do {
             var container = try decoder.unkeyedContainer()  // having no key
             self.product = try container.decodeIfPresent(Product.self)
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
-            throw error
-        }
-    }
-}
-
-struct wishListHotel: Codable {
-    let hotel: Hotel?
-
-    init(from decoder: Decoder) throws {
-        do {
-            var container = try decoder.unkeyedContainer()  // having no key
-            self.hotel = try container.decodeIfPresent(Hotel.self)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             throw error

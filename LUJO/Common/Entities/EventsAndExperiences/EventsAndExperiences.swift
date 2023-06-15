@@ -643,6 +643,7 @@ struct HomeObjects: Codable {
     var topRated: [Product]
     var gifts: [Product]
     var villas: [Product]
+    var hotels: [Product]
     var yachts: [Product]
     
     enum CodingKeys: String, CodingKey {
@@ -654,6 +655,7 @@ struct HomeObjects: Codable {
         case topRated = "top-rated"
         case gifts
         case villas
+        case hotels = "travels"
         case yachts
     }
 

@@ -268,17 +268,17 @@ class ProductDetailsViewController: UIViewController, GalleryViewProtocol {
     
     func setUpUi(){
         switch product.type {
-            case "event":           fallthrough
-            case "special-event":   setupEvents(product)
-            case "gift":            fallthrough
-            case "experience":      setupExperience(product)
-            case "yacht":
-                setupYacht(product)
-//                getYachtGallery(product: product)
-            case "villa":           setupVilla(product)
-            default:
-                setupEvents(product)//("It could be restaurant")
-                break
+        case "event":           fallthrough
+        case "special-event":   setupEvents(product)
+        case "gift":            fallthrough
+        case "experience":      setupExperience(product)
+        case "yacht":
+            setupYacht(product)
+        case "villa":           setupVilla(product)
+        case "travel":           setupHotel(product)
+        default:
+            setupEvents(product)//("It could be restaurant")
+            break
         }
         //Setting up ReadMore
         let currentHeight = getTextViewHeight(uiTextView: descriptionTextView)
@@ -717,6 +717,170 @@ extension ProductDetailsViewController {
 //                itemsList.append(ProductDetail(key: "name",value: item.name,isHighSeason: nil))
 //            }
 //        }
+        if (itemsList.count > 0){
+            let productDetailView: ProductDetailView = {
+                let tv = ProductDetailView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            //productDetailView.delegate = self
+            productDetailView.itemType = .amenities
+            productDetailView.lblTitle.text = productDetailView.itemType.rawValue
+            productDetailView.itemsList = itemsList
+            stackView.addArrangedSubview(productDetailView)
+            //applying constraints on wishListView
+            setupProductDetailLayout(productDetailView: productDetailView)
+        }
+        let desc = product.description
+        print("isHtml:\(desc.isHtml())")
+        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML().string.convertToAttributedString() : desc.convertToAttributedString()
+//        descriptionTextView.attributedText = desc.isHtml() ? desc.parseHTML() : convertToAttributedString(desc)
+        
+        requestButton.setTitle("R E Q U E S T", for: .normal)
+    }
+    
+    fileprivate func setupHotel(_ product: Product) {
+        mainImageView.isHidden = false;
+        ViewMainImage.removeLayer(layerName: "videoPlayer") //removing video player if was added
+        var avPlayer: AVPlayer!
+        
+        //This function first checks if thumbnail type is video or image. If video then it checks its media URL, if not found then it looks for video's thumbnail
+        //if it is image then it tries to get media URL, if image or image media url is not found then it tries to get the first image of the gallery.
+        if( product.thumbnail?.mediaType == "video"){
+            //Playing the video
+            if let videoLink = URL(string: product.thumbnail?.mediaUrl ?? ""){
+                mainImageView.isHidden = true;
+
+                avPlayer = AVPlayer(playerItem: AVPlayerItem(url: videoLink))
+                let avPlayerLayer = AVPlayerLayer(player: avPlayer)
+                avPlayerLayer.name = "videoPlayer"
+                avPlayerLayer.frame = ViewMainImage.bounds
+                avPlayerLayer.videoGravity = .resizeAspectFill
+                ViewMainImage.layer.insertSublayer(avPlayerLayer, at: 0)
+                avPlayer.play()
+                avPlayer.isMuted = true // To mute the sound
+
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: .main) { _ in
+                    avPlayer?.seek(to: CMTime.zero)
+                    avPlayer?.play()
+                }
+            }else if let mediaLink = product.thumbnail?.videoThumbnail {
+                mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+            }
+        }else if product.thumbnail?.mediaType == "image", let mediaLink = product.thumbnail?.mediaUrl {
+            mainImageView.downloadImageFrom(link: mediaLink, contentMode: .scaleAspectFill)
+        }
+        else if let firstImageLink = product.getGalleryImagesURL().first {
+            mainImageView.downloadImageFrom(link: firstImageLink, contentMode: .scaleAspectFill)
+        }
+        
+        
+        name.text = product.name
+        self.title = name.text
+        //checking favourite image red or white
+        if (self.product.isFavourite ?? false){
+            self.imgHeart.image = UIImage(named: "heart_red")
+        }else{
+            self.imgHeart.image = UIImage(named: "heart_white")
+        }
+        
+        var locationText = ""
+        if let cityName = product.locations?.city?.name {
+            locationText = "\(cityName), "
+        }
+        locationText += product.locations?.country.name ?? ""
+        locationLabel.text = locationText.uppercased()
+        
+        dateContainerView.isHidden = true
+        //hiding yacht length, passenger and cabins views
+        viewYachtLength.isHidden = true
+//        viewYachtPassengers.isHidden = true
+//        viewYachtCabins.isHidden = true
+        
+        //preparing summary data of collection view
+        var itemsList =  [ProductDetail]()
+        if let val = product.headline , val.count > 0{
+            itemsList.append(ProductDetail(key: "Headline",value: val,isHighSeason: nil))
+        }
+        if let val = product.numberOfBedrooms, val > 0{
+            itemsList.append(ProductDetail(key: "Number Of Bedrooms",value: String(val),isHighSeason: nil))
+//            itemsList.append(ProductDetail(key: "No. Of Bedrooms",value: val,isHighSeason: nil))
+            lblYachtCabins.text = String(val)
+        }else{
+            viewYachtCabins.isHidden = true
+        }
+        
+        if let val = product.numberOfGuests, val > 0{
+            itemsList.append(ProductDetail(key: "Number Of Guests",value: String(val),isHighSeason: nil))
+//            itemsList.append(ProductDetail(key: "No. Of Guests",value: val,isHighSeason: nil))
+            lblYachtPassengers.text = String(val)
+        }else{
+            viewYachtPassengers.isHidden = true
+        }
+        if let val = product.numberOfBathrooms, val > 0{
+            itemsList.append(ProductDetail(key: "Number Of Bathrooms",value: String(val),isHighSeason: nil))
+//            itemsList.append(ProductDetail(key: "No. Of Bathrooms",value: val,isHighSeason: nil))
+            lblBathrooms.text = String(val)
+        }else{
+            viewBathrooms.isHidden = true
+        }
+        
+        
+        if (itemsList.count > 0){
+            
+            let productDetailView: ProductDetailView = {
+                let tv = ProductDetailView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            productDetailView.itemType = .summary
+            productDetailView.lblTitle.text = productDetailView.itemType.rawValue
+            productDetailView.itemsList = itemsList
+            stackView.addArrangedSubview(productDetailView)
+            //applying constraints on productDetailView
+            setupProductDetailLayout(productDetailView: productDetailView)
+        }
+        //preparing price data of collection view
+        
+        itemsList =  [ProductDetail]()
+        if let val = product.rentPricePerWeekHighSeason, val.count > 0{
+            itemsList.append(ProductDetail(key: "Weekly Rent",value: "$" + val.withCommas() ,isHighSeason: true)) //High Season
+//            itemsList.append(ProductDetail(key: "Weekly Rent",value: val,isHighSeason: true)) //High Season
+        }
+        if let val = product.rentPricePerWeekLowSeason, val.count > 0{
+            itemsList.append(ProductDetail(key: "Weekly Rent",value: "$" + val.withCommas() ,isHighSeason: false)) // Low Season
+//            itemsList.append(ProductDetail(key: "Weekly Rent",value:  val,isHighSeason: false)) // Low Season
+        }
+        if let val = product.priceOnRequest , val == true{
+            itemsList.append(ProductDetail(key: "Sale Price",value: "PRICE ON REQUEST" ,isHighSeason: nil))
+        }else{
+            if let val = product.price?.amount , Int(val) ?? 0 > 0{
+                itemsList.append(ProductDetail(key: "Sale Price",value: "$" + val.withCommas() ,isHighSeason: nil))
+            }
+        }
+        if (itemsList.count > 0){
+            let productDetailView: ProductDetailView = {
+                let tv = ProductDetailView()
+                tv.translatesAutoresizingMaskIntoConstraints = false
+                return tv
+            }()
+            //productDetailView.delegate = self
+            productDetailView.itemType = .price
+            productDetailView.lblTitle.text = productDetailView.itemType.rawValue
+            productDetailView.itemsList = itemsList
+            stackView.addArrangedSubview(productDetailView)
+            //applying constraints on wishListView
+            setupProductDetailLayout(productDetailView: productDetailView)
+        }
+        //preparing amenities data of collection view
+        itemsList =  [ProductDetail]()
+        var count = (product.villaAmenities?.count ?? 0)
+        if count > 0 , let items = product.villaAmenities{
+            for item in items{
+                itemsList.append(ProductDetail(key: "name",value: item,isHighSeason: nil))
+            }
+        }
+
         if (itemsList.count > 0){
             let productDetailView: ProductDetailView = {
                 let tv = ProductDetailView()

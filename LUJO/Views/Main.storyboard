@@ -1618,10 +1618,10 @@
                                 <rect key="frame" x="0.0" y="92" width="414" height="1776"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQV-I8-dS9" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3268"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3504"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-94-B9B">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3268"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3504"/>
                                                 <subviews>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mL5-em-HIW">
                                                         <rect key="frame" x="0.0" y="-220" width="414" height="220"/>
@@ -2642,8 +2642,81 @@
                                                             <constraint firstAttribute="height" constant="172" id="X6v-Yd-dRh"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-lg-kvk">
+                                                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUb-W9-rYl">
                                                         <rect key="frame" x="0.0" y="1766" width="414" height="64"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6SI-bf-h6Q">
+                                                                <rect key="frame" x="16" y="0.0" width="382" height="64"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="travel grey icon" translatesAutoresizingMaskIntoConstraints="NO" id="hxb-Om-suc">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="64"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="20" id="BNk-Uq-Oeg"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Hotels" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0b-jd-hjK">
+                                                                        <rect key="frame" x="36" y="0.0" width="56.5" height="64"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <color key="textColor" name="White Text"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="Separate Line" translatesAutoresizingMaskIntoConstraints="NO" id="wWI-I1-Lfv">
+                                                                        <rect key="frame" x="108.5" y="0.0" width="187.5" height="64"/>
+                                                                    </imageView>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBm-PU-nC6">
+                                                                        <rect key="frame" x="312" y="0.0" width="70" height="64"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEE ALL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rau-50-QPx">
+                                                                                <rect key="frame" x="0.0" y="25" width="48" height="13.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                                <color key="textColor" name="White Text"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="See All Icon" translatesAutoresizingMaskIntoConstraints="NO" id="HaN-GU-aWX">
+                                                                                <rect key="frame" x="54" y="24" width="16" height="16"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="16" id="OOa-FU-3Ki"/>
+                                                                                    <constraint firstAttribute="height" constant="16" id="sp5-Th-3Q5"/>
+                                                                                </constraints>
+                                                                            </imageView>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <constraints>
+                                                                            <constraint firstItem="Rau-50-QPx" firstAttribute="leading" secondItem="gBm-PU-nC6" secondAttribute="leading" id="3fJ-4B-uUS"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="HaN-GU-aWX" secondAttribute="trailing" id="4ww-u9-1pA"/>
+                                                                            <constraint firstItem="HaN-GU-aWX" firstAttribute="centerY" secondItem="gBm-PU-nC6" secondAttribute="centerY" id="FvO-4p-XNB"/>
+                                                                            <constraint firstItem="Rau-50-QPx" firstAttribute="centerY" secondItem="gBm-PU-nC6" secondAttribute="centerY" id="KIM-Am-e1v"/>
+                                                                            <constraint firstAttribute="width" constant="70" id="apd-eX-LMD"/>
+                                                                            <constraint firstItem="HaN-GU-aWX" firstAttribute="leading" secondItem="Rau-50-QPx" secondAttribute="trailing" constant="6" id="saP-GN-MIE"/>
+                                                                        </constraints>
+                                                                    </view>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="6SI-bf-h6Q" secondAttribute="bottom" id="DBW-qX-Prf"/>
+                                                            <constraint firstAttribute="trailing" secondItem="6SI-bf-h6Q" secondAttribute="trailing" constant="16" id="GWz-8B-ugX"/>
+                                                            <constraint firstAttribute="height" constant="64" id="XHS-vv-OUN"/>
+                                                            <constraint firstItem="6SI-bf-h6Q" firstAttribute="leading" secondItem="nUb-W9-rYl" secondAttribute="leading" constant="16" id="Xuy-6L-Eh5"/>
+                                                            <constraint firstItem="6SI-bf-h6Q" firstAttribute="top" secondItem="nUb-W9-rYl" secondAttribute="top" id="upC-An-Tne"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LgI-CG-Yaj" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="1830" width="414" height="172"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="172" id="eIS-2L-qyZ"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-lg-kvk">
+                                                        <rect key="frame" x="0.0" y="2002" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ZQE-NX-QXv">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2709,14 +2782,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hY-jc-IjZ" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="1830" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="2066" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="sFl-kS-n5y"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UY5-0D-R0A">
-                                                        <rect key="frame" x="0.0" y="2002" width="414" height="226"/>
+                                                        <rect key="frame" x="0.0" y="2238" width="414" height="226"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6kP-Yd-qTZ" customClass="HomeSpecialEventSummary" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="32" width="382" height="178"/>
@@ -2735,7 +2808,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVf-wF-TA5">
-                                                        <rect key="frame" x="0.0" y="2228" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="2464" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fWl-HU-Ofn">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -2801,14 +2874,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fq2-fW-DyO" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="2292" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="2528" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="oUM-Ye-FrS"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QzT-An-LTP">
-                                                        <rect key="frame" x="0.0" y="2464" width="414" height="72"/>
+                                                        <rect key="frame" x="0.0" y="2700" width="414" height="72"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flight Promotions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6GG-PN-Pv7">
                                                                 <rect key="frame" x="16" y="32" width="382" height="30"/>
@@ -2826,7 +2899,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-tC-X0r">
-                                                        <rect key="frame" x="0.0" y="2536" width="414" height="242"/>
+                                                        <rect key="frame" x="0.0" y="2772" width="414" height="242"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xce-M1-HfE">
                                                                 <rect key="frame" x="0.0" y="16" width="398" height="210"/>
@@ -2954,7 +3027,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpT-Py-B9W">
-                                                        <rect key="frame" x="0.0" y="2778" width="414" height="64"/>
+                                                        <rect key="frame" x="0.0" y="3014" width="414" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WVJ-2K-JM9">
                                                                 <rect key="frame" x="16" y="0.0" width="382" height="64"/>
@@ -3020,14 +3093,14 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rH6-PR-1o6" customClass="HomeSlider" customModule="LUJO" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="2842" width="414" height="172"/>
+                                                        <rect key="frame" x="0.0" y="3078" width="414" height="172"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="172" id="W4w-V0-fdT"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Bz-tS-yAL">
-                                                        <rect key="frame" x="0.0" y="3014" width="414" height="234"/>
+                                                        <rect key="frame" x="0.0" y="3250" width="414" height="234"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZBv-V4-hkh" customClass="HomeSpecialEventSummary" customModule="LUJO" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="32" width="382" height="178"/>
@@ -3046,7 +3119,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eHi-xM-Dno">
-                                                        <rect key="frame" x="0.0" y="3248" width="414" height="20"/>
+                                                        <rect key="frame" x="0.0" y="3484" width="414" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="iKR-4l-RuN"/>
@@ -3064,7 +3137,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnF-XJ-t3F">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3268"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3504"/>
                                         <color key="backgroundColor" white="0.070000000000000007" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -3199,10 +3272,12 @@
                         <outlet property="homeEventSlider" destination="5hY-jc-IjZ" id="k4G-Pw-2lW"/>
                         <outlet property="homeExperienceSlider" destination="rH6-PR-1o6" id="SG0-Al-dET"/>
                         <outlet property="homeGiftsSlider" destination="bz5-uT-nHb" id="4S8-RC-ptM"/>
+                        <outlet property="homeHotelSlider" destination="LgI-CG-Yaj" id="V2G-I0-qTi"/>
                         <outlet property="homeRecentSlider" destination="NEQ-nZ-si2" id="I8A-5i-vRL"/>
                         <outlet property="homeTopRatedSlider" destination="REP-GX-7yF" id="aeE-Br-ZjX"/>
                         <outlet property="homeVillasSlider" destination="BkX-aH-hhz" id="Fkl-bJ-1aW"/>
                         <outlet property="homeYachtsSlider" destination="fq2-fW-DyO" id="shz-3r-yI5"/>
+                        <outlet property="hotelViewSeeAll" destination="gBm-PU-nC6" id="R8E-zS-Evs"/>
                         <outlet property="locationContainerView" destination="zS8-a3-gbq" id="0pG-wo-oqh"/>
                         <outlet property="locationEventContainerView" destination="A1t-vd-DOu" id="67P-AZ-eRS"/>
                         <outlet property="locationEventSlider" destination="uC8-v3-4We" id="QBe-8P-lHa"/>
@@ -9963,7 +10038,7 @@ New York, NY 10011 USA</string>
     </scenes>
     <designables>
         <designable name="ILJ-s6-c9u">
-            <size key="intrinsicContentSize" width="253.5" height="30"/>
+            <size key="intrinsicContentSize" width="225.5" height="30"/>
         </designable>
     </designables>
     <resources>
@@ -10015,6 +10090,7 @@ New York, NY 10011 USA</string>
         <image name="location_home" width="12" height="16"/>
         <image name="placeholder-img" width="600" height="400"/>
         <image name="top_rated" width="16.5" height="13.5"/>
+        <image name="travel grey icon" width="20" height="20"/>
         <image name="vertical_line" width="1" height="46"/>
         <image name="villa cta" width="36" height="36"/>
         <image name="villa grey icon" width="22" height="24.5"/>
