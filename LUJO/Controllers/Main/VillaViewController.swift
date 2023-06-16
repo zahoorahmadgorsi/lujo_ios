@@ -31,6 +31,8 @@ class VillaViewController: UIViewController {
 //    @IBOutlet weak var villaCharterLabel: UILabel!
 //    @IBOutlet weak var villaCharterButton: UIButton!
 //    @IBOutlet weak var destinationTextField: UITextField!
+    @IBOutlet weak var lblTitle: UILabel!
+    
     @IBOutlet weak var villaNameTextField: UITextField!
 //    @IBOutlet weak var villaTypeLabel: UILabel!
 //    @IBOutlet weak var villaTypeButton: UIButton!
@@ -94,6 +96,9 @@ class VillaViewController: UIViewController {
         addGestureRecognizers()
         if let product = self.product{
             self.villaNameTextField.text = product.name
+            if product.type == "travel"{
+                self.lblTitle.text = "Book a hotel"
+            }
         }
     }
 

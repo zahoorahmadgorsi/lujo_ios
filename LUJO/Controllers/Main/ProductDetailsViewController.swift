@@ -1205,7 +1205,7 @@ extension ProductDetailsViewController {
         if (product.type == "yacht" && initialMessage.count == 0){
             let viewController = YachtViewController.instantiate(product: product)
             self.present(viewController, animated: true, completion: nil)
-        }else if (product.type == "villa" && initialMessage.count == 0){
+        }else if ((product.type == "villa" || product.type == "travel" ) && initialMessage.count == 0){
             let viewController = VillaViewController.instantiate(product: product)
             self.present(viewController, animated: true, completion: nil)
         }else if(product.type == "restaurant" && initialMessage.count == 0){

@@ -610,6 +610,7 @@
                     <connections>
                         <outlet property="fromDateLabel" destination="lzB-GM-iqO" id="D6J-MH-GOf"/>
                         <outlet property="guestsLabel" destination="gxi-FL-lcU" id="6Dd-YP-KCI"/>
+                        <outlet property="lblTitle" destination="eO8-0V-xSf" id="OIf-bw-M87"/>
                         <outlet property="toDateLabel" destination="miI-ug-IYo" id="SNW-wc-BG4"/>
                         <outlet property="villaNameTextField" destination="QH1-iE-vgo" id="ddc-8b-MX6"/>
                     </connections>
